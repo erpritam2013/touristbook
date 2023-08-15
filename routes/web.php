@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HotelController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,8 +17,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::prefix('admin')->group(function () {
+
+Route::prefix('admin')->name('admin.')->group(function () {
+
+    // Dashboard
     Route::get('/', function () {
        return view('admin.dashboard');
-    })->name('admin.dashboard');
+    })->name('dashboard');
+
+    // Hotel Resource
+    Route::prefix('hotels')->name('hotels.')->group(function() {
+        Route::get('/', [HotelController::class, 'index'])->name('index');
+        Route::get('create', [HotelController::class, 'create'])->name('create');
+    });
 });
