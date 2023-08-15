@@ -3,6 +3,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\AmenityController;
 use App\Http\Controllers\MedicareAssistanceController;
+use App\Http\Controllers\HotelController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,6 +41,11 @@ Route::name('admin.')->prefix('admin')->group(function () {
     /*Medicare Assistance Routes*/
     Route::resource('medicare-assistances', MedicareAssistanceController::class);
     Route::get('medicare-assistance/ajax-get', [MedicareAssistanceController::class,'getMedicareAssistancesAjax'])->name('ajaxGetMedicareAssistance');
-    Route::get('medicare-assistance/changeStatus', [MedicareAssistanceController::class,'changeStatus'])->name('changeStatusMedicareAssistance');  
-});
+    Route::get('medicare-assistance/changeStatus', [MedicareAssistanceController::class,'changeStatus'])->name('changeStatusMedicareAssistance'); 
+     }); 
+     // Hotel Resource
+    Route::prefix('hotels')->name('hotels.')->group(function() {
+        Route::get('/', [HotelController::class, 'index'])->name('index');
+        Route::get('create', [HotelController::class, 'create'])->name('create');
+    });
 });

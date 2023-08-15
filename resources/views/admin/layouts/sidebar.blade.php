@@ -7,29 +7,45 @@
                 <ul class="metismenu" id="menu">
                     <li class="nav-label first">Main Menu</li>
                     <li class="{{matchRouteGroupName('dashboard','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                                class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>
+                                class="fas fa-dashboard fa-xl"></i>&nbsp;<span class="nav-text">Dashboard</span></a>
                         <ul aria-expanded="false" class="{{matchRouteGroupName('dashboard','child')}}">
                             <li class="{{matchRouteName('admin.dashboard')}}"><a href="{{route('admin.dashboard')}}">Dashboard</a></li>
                             {{--<li><a href="./index2.html">Dashboard 2</a></li>--}}
                         </ul>
                     </li>
                     <li class="{{matchRouteGroupName('terms','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                                class="icon icon-app-store"></i><span class="nav-text">Terms</span></a>
+                                class="fas fa-cogs fa-xl"></i>&nbsp;<span class="nav-text">Terms</span></a>
                         <ul aria-expanded="false" class="{{matchRouteGroupName('terms','child')}}">
                             <li class="{{matchRouteName('admin.terms.facilities.index')}}"><a href="{{route('admin.terms.facilities.index')}}">Facilities</a></li>
                             <li class="{{matchRouteName('admin.terms.amenities.index')}}"><a href="{{route('admin.terms.amenities.index')}}">Amenities</a></li>
                             <li class="{{matchRouteName('admin.terms.medicare-assistances.index')}}"><a href="{{route('admin.terms.medicare-assistances.index')}}">Medicare Assistances</a></li>
-                            {{--<li><a href="./app-profile.html">Profile</a></li>
-                            <li><a href="./app-profile.html">Profile</a></li>
-                            <li><a href="./app-profile.html">Profile</a></li>
-                            <li><a href="./app-profile.html">Profile</a></li>
-                            <li><a href="./app-profile.html">Profile</a></li>
-                            <li><a href="./app-profile.html">Profile</a></li>
-                            <li><a href="./app-profile.html">Profile</a></li>
-                            <li><a href="./app-profile.html">Profile</a></li>--}}
-                           
+                        </ul>
+                            {{--<li><a href="./app-profile.html">Profile</a></li>--}}
+
+                       
+                    </li>
+
+                    <li class="{{matchRouteGroupName('hotels','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="fas fa-hotel fa-xl"></i>&nbsp;<span class="nav-text">Hotels</span></a>
+                        <ul aria-expanded="false" class="{{matchRouteGroupName('hotels','child')}}">
+                            <li class="{{matchRouteName('admin.hotels.index')}}"><a href="{{route('admin.hotels.index')}}">List</a></li>
                         </ul>
                     </li>
+
+                    {{--<li class="nav-label">Apps</li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-app-store"></i><span class="nav-text">Apps</span></a>
+                        <ul aria-expanded="false">
+                            <li><a href="./app-profile.html">Profile</a></li>
+                            <li><a href="./app-profile.html">Profile</a></li>
+                            <li><a href="./app-profile.html">Profile</a></li>
+                            <li><a href="./app-profile.html">Profile</a></li>
+                            <li><a href="./app-profile.html">Profile</a></li>
+                            <li><a href="./app-profile.html">Profile</a></li>
+                            <li><a href="./app-profile.html">Profile</a></li>
+                           
+                        </ul>
+                    </li>--}}
                        {{--<li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                                 class="icon icon-chart-bar-33"></i><span class="nav-text">Charts</span></a>
                         <ul aria-expanded="false">
