@@ -1,5 +1,8 @@
 <?php
-
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\FacilityController;
+use App\Http\Controllers\AmenityController;
+use App\Http\Controllers\MedicareAssistanceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,8 +19,27 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::prefix('admin')->group(function () {
-    Route::get('/', function () {
-       return view('admin.dashboard');
-    })->name('admin.dashboard');
+Route::name('admin.')->prefix('admin')->group(function () {
+    
+    Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+    /*terms grouping*/
+    Route::name('terms.')->prefix('terms')->group(function () {
+     /*Terms Route*/
+     Route::get('/', [AdminController::class, 'terms']);
+
+    /*Facility Routes*/
+    Route::resource('facilities', FacilityController::class);
+    Route::get('facility/ajax-get', [FacilityController::class,'getFacilitiesAjax'])->name('ajaxGet');
+    Route::get('facility/changeStatus', [FacilityController::class,'changeStatus'])->name('changeStatus');
+
+    /*Amenities Routes*/
+    Route::resource('amenities', AmenityController::class);
+    Route::get('amenity/ajax-get', [AmenityController::class,'getAmenitiesAjax'])->name('ajaxGetAmenity');
+    Route::get('amenity/changeStatus', [AmenityController::class,'changeStatus'])->name('changeStatusAmenity');  
+    
+    /*Medicare Assistance Routes*/
+    Route::resource('medicare-assistances', MedicareAssistanceController::class);
+    Route::get('medicare-assistance/ajax-get', [MedicareAssistanceController::class,'getMedicareAssistancesAjax'])->name('ajaxGetMedicareAssistance');
+    Route::get('medicare-assistance/changeStatus', [MedicareAssistanceController::class,'changeStatus'])->name('changeStatusMedicareAssistance');  
+});
 });

@@ -56,7 +56,21 @@ jQuery(".form-valide").validate({
         },
         "val-terms": {
             required: !0
-        }
+        },
+         "name": {
+            required: !0,
+            maxlength: 255,
+        },
+        "medicare_assistance_type": {
+            required: !0
+        },
+        "facility_type": {
+            required: !0
+        },
+        "amenity_type": {
+            required: !0
+        },
+
     },
     messages: {
         "val-username": {
@@ -73,6 +87,12 @@ jQuery(".form-valide").validate({
             minlength: "Your password must be at least 5 characters long",
             equalTo: "Please enter the same password as above"
         },
+
+        "name": {
+            required: "Please enter a name",
+            minlength: "Your name must consist of maximum 255 characters"
+        },
+           
         "val-select2": "Please select a value!",
         "val-select2-multiple": "Please select at least 2 values!",
         "val-suggestions": "What can we do to become better?",
@@ -83,7 +103,10 @@ jQuery(".form-valide").validate({
         "val-digits": "Please enter only digits!",
         "val-number": "Please enter a number!",
         "val-range": "Please enter a number between 1 and 5!",
-        "val-terms": "You must agree to the service terms!"
+        "val-terms": "You must agree to the service terms!",
+        "medicare_assistance_type":"Please enter a valid medicare assistance type",
+        "facility_type":"Please enter a valid facility type",
+        "amenity_type":"Please enter a valid amenity type",
     },
 
     ignore: [],
@@ -99,7 +122,6 @@ jQuery(".form-valide").validate({
         jQuery(e).closest(".form-group").removeClass("is-invalid"), jQuery(e).remove()
     },
 });
-
 
 jQuery(".form-valide-with-icon").validate({
     rules: {

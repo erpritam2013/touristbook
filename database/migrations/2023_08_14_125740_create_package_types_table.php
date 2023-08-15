@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('package_types', function (Blueprint $table) {
+            $table->id();
+             $table->string('name');
+             $table->string('slug');
+             $table->tinyInteger('button')->default(0);
+             $table->integer('parent_package_type')->default(0);
+             $table->longText('description')->nullable();
+             $table->string('icon')->nullable();
+             $table->enum('package_type_type', config('global.post_types'));
+             $table->longText('extra_data')->nullable();
+             $table->tinyInteger('status')->default(1);
+             $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('package_types');
+    }
+};

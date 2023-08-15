@@ -44,6 +44,8 @@
       23 => 'App\\Providers\\AuthServiceProvider',
       24 => 'App\\Providers\\EventServiceProvider',
       25 => 'App\\Providers\\RouteServiceProvider',
+      26 => 'App\\Providers\\RepositoryServiceProvider',
+      27 => 'App\\Providers\\ViewServiceProvider',
     ),
     'aliases' => 
     array (
@@ -397,6 +399,36 @@
       'E:\\xampp\\htdocs\\touristbook\\public\\storage' => 'E:\\xampp\\htdocs\\touristbook\\storage\\app/public',
     ),
   ),
+  'global' => 
+  array (
+    'post_types' => 
+    array (
+      0 => 'Hotel',
+      1 => 'Tour',
+      2 => 'Car',
+      3 => 'Activity',
+      4 => 'Room',
+      5 => 'Flight',
+      6 => 'Rental',
+      7 => 'Location',
+    ),
+    'i_color_dashboard' => 
+    array (
+      0 => 'success',
+      1 => 'primary',
+      2 => 'pink',
+      3 => 'danger',
+    ),
+    'lebal_types' => 
+    array (
+      0 => 'default',
+      1 => 'primary',
+      2 => 'success',
+      3 => 'info',
+      4 => 'warning',
+      5 => 'danger',
+    ),
+  ),
   'hashing' => 
   array (
     'driver' => 'bcrypt',
@@ -678,6 +710,23 @@
     'secure' => NULL,
     'http_only' => true,
     'same_site' => 'lax',
+  ),
+  'sluggable' => 
+  array (
+    'source' => NULL,
+    'maxLength' => NULL,
+    'maxLengthKeepWords' => true,
+    'method' => NULL,
+    'separator' => '-',
+    'unique' => true,
+    'uniqueSuffix' => NULL,
+    'firstUniqueSuffix' => 2,
+    'includeTrashed' => false,
+    'reserved' => NULL,
+    'onUpdate' => false,
+    'slugEngineOptions' => 
+    array (
+    ),
   ),
   'view' => 
   array (

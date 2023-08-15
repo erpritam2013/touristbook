@@ -5,21 +5,27 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Tourist Book Admin :: @yield('title')</title>
     <!-- Favicon icon -->
-    @section('admin_head_css')
     <link rel="icon" type="image/png" sizes="16x16" href="{!! asset('admin-part/images/favicon-16x16.png') !!}">
-    <link rel="stylesheet" href="{!! asset('admin-part/vendor/owl-carousel/css/owl.carousel.min.css') !!}">
-    <link rel="stylesheet" href="{!! asset('admin-part/vendor/owl-carousel/css/owl.theme.default.min.css') !!}">
+    @section('admin_head_css')
     <link href="{!! asset('admin-part/vendor/jqvmap/css/jqvmap.min.css') !!}" rel="stylesheet">
     <link href="{!! asset('admin-part/css/style.css') !!}" rel="stylesheet">
-    <style type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+   <style type="text/css">
         
         .nav-header .logo-abbr {
-   max-width: 70px;
+   max-width: 60px;
 }
 .nav-header .brand-title {
     margin-left: -21px;
     margin-top: 4px;
     max-width: 180px;
+}
+
+@media (min-width: 768px)
+.form-inline .form-control {
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
 }
     </style>
     @show
