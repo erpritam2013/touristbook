@@ -17,14 +17,13 @@ class HotelController extends Controller
 
     public function index()
     {
-        $tasks = $this->hotelRepository->getAllHotels();
-
+        $hotels = $this->hotelRepository->getAllHotels();
         // return view('tasks.index', ['tasks' =>  $tasks]);
     }
 
     public function create()
     {
-        // return view('tasks.create');
+        return view('admin.hotels.create');
     }
 
     public function edit(Request $request)

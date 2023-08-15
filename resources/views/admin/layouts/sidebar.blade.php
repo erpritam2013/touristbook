@@ -10,9 +10,16 @@
                                 class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>
                         <ul aria-expanded="false">
                             <li class="{{(getRouteName() == 'admin.dashboard')?'mm-active':''}}"><a href="{{route('admin.dashboard')}}">Dashboard</a></li>
-                            {{--<li><a href="./index2.html">Dashboard 2</a></li>--}}
                         </ul>
                     </li>
+
+                    <li class="{{(getRouteName() == 'admin.hotels.index')?'mm-active':''}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-single-04"></i><span class="nav-text">Hotels</span></a>
+                        <ul aria-expanded="false">
+                            <li class="{{(getRouteName() == 'admin.hotels.index')?'mm-active':''}}"><a href="{{route('admin.hotels.index')}}">List</a></li>
+                        </ul>
+                    </li>
+
                     {{--<li class="nav-label">Apps</li>
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                                 class="icon icon-app-store"></i><span class="nav-text">Apps</span></a>
