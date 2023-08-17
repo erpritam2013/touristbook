@@ -11,24 +11,35 @@
 
 
 <div class="container-fluid">
-   @include('admin.layouts.breadcrumbs')
+   @include('admin.layout-parts.breadcrumbs')
    <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">{{$title}}</h4>
-                <div align="right"><a href="{{route('admin.terms.medicare-assistances.create')}}" class="btn btn-outline-primary btn-xs">Add New Medicare Assistance</a></div>
+                <div align="right" class="all-a">
+                    @if($medicare_assistances->count())<a href="javascript:void(0);" class="btn btn-outline-danger bulk-delete btn-xs" style="display: none;">Bulk Delete</a>
+                     <form id='bulk_delete_entity_form' method="POST" action="{{route('admin.terms.medicare-assistances.bulk-delete')}}" style="display: none" data-text="medicare assistance">
+                              {{ csrf_field() }}
+                              <input type="hidden" name="ids" id="ids" >
+
+                              {{method_field('DELETE')}}
+
+                          </form>@endif
+                    <a href="{{route('admin.terms.medicare-assistances.create')}}" class="btn btn-outline-primary btn-xs">Add New Medicare Assistance</a></div>
             </div>
 
-            <div class="card-body medicare_assistance_list">
+            <div class="card-body medicare_assistance_list entity-list">
                 @if(Session::has('success'))
                 {!!get_form_success_msg(Session::get('success'))!!}
                 @endif
                 
                 <div class="table-responsive">
+
                     <table id="example" class="display" style="min-width: 845px">
                         <thead>
                             <tr>
+                                <th> @if($medicare_assistances->count())<input type="checkbox" class="css-control-input mr-2 select-all">@endif S.No.</th>
                                 <th>Name</th>
                                 <th>Slug</th>
                                 <th>Icon</th>
@@ -44,18 +55,19 @@
                             @if($medicare_assistances->count())
                             @foreach($medicare_assistances as $medicare_assistance)
                             <tr>
+                                <td><input type="checkbox" class="css-control-input mr-2 select-id" name="id" value="{{$medicare_assistance->id}}">{{++$loop->index}}</td>
                                 <td>{{$medicare_assistance->name}}</td>
                                 <td>{{$medicare_assistance->slug}}</td>
                                 <td>{!!get_fontawesome_icon_html($medicare_assistance->icon,'fa-lg')!!}</td>
                                 <td>{{get_parent_term($medicare_assistances,$medicare_assistance->parent_medicare_assistance)}}</td>
                                 <td>{{$medicare_assistance->medicare_assistance_type}}</td>
-                                <td> <input data-id="{{$medicare_assistance->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $medicare_assistance->status ? 'checked' : '' }}></td>
+                                <td> <input data-id="{{$medicare_assistance->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url=' {{route("admin.terms.changeStatusMedicareAssistance")}}' data-on="Active" data-off="InActive" {{ $medicare_assistance->status ? 'checked' : '' }}></td>
                                 <td>{{get_time_format($medicare_assistance->created_at)}}</td>
                                 <td>{{get_time_format($medicare_assistance->updated_at)}}</td>
                                 <td>
                                     <a href="{{route('admin.terms.medicare-assistances.edit',$medicare_assistance->id)}}" class="btn btn-primary" title="Edit"><i class="fa fa-edit"></i></a>
                                     <a href="{{route('admin.terms.medicare-assistances.show',$medicare_assistance->id)}}" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>
-                                    <a href="javascript:void(0);" class="btn btn-danger del_medicare_assistance_form" title="Delete" item_id="{{$medicare_assistance->id}}"><i class="fa fa-trash"></i></a>
+                                    <a href="javascript:void(0);" class="btn btn-danger del_entity_form" title="Delete" item_id="{{$medicare_assistance->id}}" data-text="medicare assistance"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
 
@@ -79,7 +91,7 @@
                 </table>
             </div>
         </div>
-          <form id='del_medicare_assistance_form' method="POST" action="{{route('admin.terms.medicare-assistances.index')}}" style="display: none">
+          <form id='delete_entity_form' method="POST" action="{{route('admin.terms.medicare-assistances.index')}}" style="display: none">
                               {{ csrf_field() }}
 
                               {{method_field('DELETE')}}
@@ -103,44 +115,4 @@
 <script src="{!! asset('admin-part/js/plugins-init/datatables.init.js') !!}"></script>
 
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-<script type="text/javascript">
-
-   
-
-  $(function() {
-
-     $('.medicare_assistance_list').on('click', '.del_medicare_assistance_form', function(event) {
-
-        event.preventDefault();           
-
-             var id= $(this).attr('item_id');
-
-        if(confirm('Are You sure to delete this medicare assistance')){   
-
-               var action=$('#del_medicare_assistance_form').attr('action');
-
-               $('#del_medicare_assistance_form').attr('action', action+'/'+id);
-
-              $('#del_medicare_assistance_form').submit();
-
-      }
-
-  });
-
-    $('.toggle-class').change(function() {
-        var status = $(this).prop('checked') == true ? 1 : 0; 
-        var medicare_assistance_id = $(this).data('id'); 
-         
-        $.ajax({
-            type: "GET",
-            dataType: "json",
-            url: '{{route("admin.terms.changeStatusMedicareAssistance")}}',
-            data: {'status': status, 'medicare_assistance_id': medicare_assistance_id},
-            success: function(data){
-              console.log(data.success)
-            }
-        });
-    })
-  })
-</script>
 @endsection

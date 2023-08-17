@@ -1,5 +1,5 @@
 @extends('admin.layouts.main')
-@section('medicare_assistance_action', route('admin.terms.medicare-assistances.store'))
+@section('top_service_action', route('admin.terms.top-services.store'))
 @section('title',$title)
 @section('admin_head_css')
 <link rel="stylesheet" href="{!! asset('admin-part/vendor/select2/css/select2.min.css') !!}">
@@ -16,7 +16,7 @@
             <div class="card-header">
                 <h4 class="card-title">{{$title}}</h4>
                 <div align="right">
-                    <a href="{{route('admin.terms.medicare-assistances.index')}}" class="btn btn-dark"><i class="fa fa-arrow-right"></i> Back</a>
+                    <a href="{{route('admin.terms.top-services.index')}}" class="btn btn-dark"><i class="fa fa-arrow-right"></i> Back</a>
                 </div>
             </div>
             <div class="card-body">
@@ -24,7 +24,7 @@
                 {!!get_form_success_msg(Session::get('success'))!!}
                 @endif
                 <div class="form-validation">
-                    <form class="form-valide" id="medicare-assistance-form" action="@yield('medicare_assistance_action')" method="post">
+                    <form class="form-valide" id="top-services-form" action="@yield('top_service_action')" method="post">
                         {{ csrf_field() }}
                         @section('method_field')
                         @show
@@ -35,7 +35,7 @@
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="name" name="name" value="{{$medicareAssistance->name ?? ''}}" placeholder="Enter a name..">
+                                        <input type="text" class="form-control" id="name" name="name" value="{{$top_service->name ?? ''}}" placeholder="Enter a name..">
 
                                         {!! get_form_error_msg($errors, 'name') !!}
                                     </div>
@@ -44,37 +44,37 @@
                                     <label class="col-lg-2 col-form-label" for="description">Description 
                                     </label>
                                     <div class="col-lg-10">
-                                        <textarea class="form-control" id="description" name="description" rows="5" placeholder="Enter Description..">{{$medicareAssistance->description ?? ''}}</textarea>
+                                        <textarea class="form-control" id="description" name="description" rows="5" placeholder="Enter Description..">{{$top_service->description ?? ''}}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label" for="medicare-assistance-type">Medicare Assistance Type
+                                    <label class="col-lg-2 col-form-label" for="top-service-type">top_service Type
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-10">
-                                        <select class="form-control" id="medicare-assistance-type" name="medicare_assistance_type" data-url="{{route('admin.terms.ajaxGetMedicareAssistance')}}" data-existed_f_type="{{$medicareAssistance->medicare_assistance_type ?? ''}}">
+                                        <select class="form-control" id="top-service-type" name="top_service_type" data-url="{{route('admin.terms.ajaxGetTopService')}}" data-existed_f_type="{{$top_service->top_service_type ?? ''}}">
                                             @if(!empty($post_types))
                                             <option value="">Select Type</option>
                                             @foreach($post_types as $type)
-                                            <option value="{{$type}}" {!!get_edit_select_post_types_old_value($type, $medicareAssistance->medicare_assistance_type ?? "",'select')!!}>{{$type}}</option>
+                                            <option value="{{$type}}" {!!get_edit_select_post_types_old_value($type, $top_service->top_service_type ?? "",'select')!!}>{{$type}}</option>
                                             @endforeach
                                             @endif
                                         </select>
-                                        {!! get_form_error_msg($errors, 'medicare_assistance_type') !!}
+                                        {!! get_form_error_msg($errors, 'top_service_type') !!}
 
                                     </div>
                                 </div>
                             
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label" for="medicare-assistance-parent">Medicare Assistance Parent
+                                    <label class="col-lg-2 col-form-label" for="top_service-parent">top_service Parent
                                     </label>
                                     <div class="col-lg-10">
-                                        <select class="form-control multi-select" id="medicare-assistance-parent" name="parent_medicare_assistance" data-existed_parent_facitity="{{$medicareAssistance->parent_medicare_assistance ?? ''}}">
-                                            @isset($medicare_assistances)
-                                            <option value="">Select Medicare Assistance Parent</option>
-                                            @foreach($medicare_assistances as $ma_p)
-                                            <option value="{{$ma_p->id}}" {!!get_edit_select_post_types_old_value($ma_p->id, $medicareAssistance->parent_medicare_assistance ?? "",'select')!!} >{{$ma_p->name}}</option>
+                                        <select class="form-control multi-select" id="top-service-parent" name="parent_top_service" data-existed_parent_top_service="{{$top_service->parent_top_service ?? ''}}">
+                                            @isset($top_services)
+                                            <option value="">Select top_service Parent</option>
+                                            @foreach($top_services as $ts_p)
+                                            <option value="{{$ts_p->id}}" {!!get_edit_select_post_types_old_value($ts_p->id, $top_service->parent_top_service ?? "",'select')!!} >{{$ts_p->name}}</option>
                                             @endforeach
                                             @endisset
                                         </select>
@@ -87,7 +87,7 @@
 
                                     </label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="icon" name="icon" value="{{$medicareAssistance->icon ?? ''}}" placeholder="Enter a icon..">
+                                        <input type="text" class="form-control" id="icon" name="icon" value="{{$top_service->icon ?? ''}}" placeholder="Enter a icon..">
                                     </div>
                                 </div>
 
@@ -98,15 +98,15 @@
                                     <div class="col-lg-10">
 
                                         <label class="col-form-label">
-                                            <input type="radio" name="status" value="1" {!!get_edit_select_check_pvr_old_value('status',$medicareAssistance ?? "",'status',1, 'chacked')!!}>&nbsp;Active</label>
+                                            <input type="radio" name="status" value="1" {!!get_edit_select_check_pvr_old_value('status',$top_service ?? "",'status',1, 'chacked')!!}>&nbsp;Active</label>
                                             <label class="col-form-label">
-                                                <input type="radio" name="status" {!!get_edit_select_check_pvr_old_value('status',$medicareAssistance ?? "",'status',0, 'chacked')!!} value="0">&nbsp;Inactive</label>
+                                                <input type="radio" name="status" {!!get_edit_select_check_pvr_old_value('status',$top_service ?? "",'status',0, 'chacked')!!} value="0">&nbsp;Inactive</label>
                                             </div>
                                         </div>
 
 
-                                        <button type="submit" class="btn btn-primary">@isset($medicareAssistance->id)Update @else Save @endisset</button>
-                                        @if(!isset($medicareAssistance->id))
+                                        <button type="submit" class="btn btn-primary">@isset($top_service->id)Update @else Save @endisset</button>
+                                        @if(!isset($top_service->id))
                                         <button type="button" class="btn btn-light" onclick="window.location.replace('{{ url()->previous() }}')">cancel</button>
                                         @endif
                                     </div>
@@ -128,6 +128,4 @@
     <script src="{!! asset('admin-part/js/plugins-init/jquery.validate-init.js') !!}"></script>
     <script src="{!! asset('admin-part/vendor/select2/js/select2.full.min.js') !!}"></script>
     <script src="{!! asset('admin-part/js/plugins-init/select2-init.js') !!}"></script>
-
-   
     @endsection

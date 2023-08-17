@@ -66,7 +66,7 @@ class AmenityController extends Controller
     }
      public function changeStatus(Request $request): JsonResponse
     {
-        $amenityId = $request->amenity_id;
+        $amenityId = $request->id;
           $amenityDetails = [
             'status' => $request->status,
         ];
@@ -172,6 +172,24 @@ class AmenityController extends Controller
         $amenityId = $amenity->id;
         $this->amenityRepository->deleteAmenity($amenityId);
          Session::flash('success','Amenity Deleted Successfully');
+        return back();
+    }
+
+      /**
+     * Remove the specified all resource from storage.
+     *
+     * @param  \App\Models\Amenity  $amenity
+     * @return \Illuminate\Http\Response
+     */
+
+     public function bulk_delete(Request $request)
+    {
+         if (!empty($request->ids)) {
+        
+        $amenityIds = get_array_mapping(json_decode($request->ids));
+        $this->amenityRepository->deleteBulkAmenity($amenityIds);
+         Session::flash('success','Amenity Bulk Deleted Successfully');
+        }
         return back();
     }
 }

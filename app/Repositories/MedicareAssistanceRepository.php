@@ -25,6 +25,10 @@ class MedicareAssistanceRepository implements MedicareAssistanceRepositoryInterf
     {
         MedicareAssistance::destroy($MedicareAssistanceId);
     }
+    public function deleteBulkMedicareAssistance($MedicareAssistanceIds) 
+    {
+        MedicareAssistance::whereIn('id', $MedicareAssistanceIds)->delete();
+    }
 
     public function createMedicareAssistance(array $MedicareAssistanceDetails) 
     {

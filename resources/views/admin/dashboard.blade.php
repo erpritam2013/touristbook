@@ -580,8 +580,8 @@
 @parent
 
  <!-- Vectormap -->
-    <script src="{!! asset('admin-part/vendor/raphael/raphael.min.js') !!}"></script>
-    {{--<script src="{!! asset('admin-part/vendor/morris/morris.min.js') !!}"></script>--}}
+     {{--<script src="{!! asset('admin-part/vendor/raphael/raphael.min.js') !!}"></script>
+   <script src="{!! asset('admin-part/vendor/morris/morris.min.js') !!}"></script>
 
 
     <script src="{!! asset('admin-part/vendor/circle-progress/circle-progress.min.js') !!}"></script>
@@ -602,5 +602,5 @@
     <script src="{!! asset('admin-part/vendor/jquery.counterup/jquery.counterup.min.js') !!}"></script>
 
 
-    <script src="{!! asset('admin-part/js/dashboard/dashboard-1.js') !!}"></script>
+    <script src="{!! asset('admin-part/js/dashboard/dashboard-1.js') !!}"></script>--}}
 @endsection

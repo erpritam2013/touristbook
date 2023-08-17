@@ -171,4 +171,22 @@ class MedicareAssistanceController extends Controller
          Session::flash('success','Medicare Assistance Deleted Successfully');
         return back();
     }
+
+    /**
+     * Remove the specified all resource from storage.
+     *
+     * @param  \App\Models\MedicareAssistance  $medicareAssistance
+     * @return \Illuminate\Http\Response
+     */
+    public function bulk_delete(Request $request)
+    {
+        
+        if (!empty($request->ids)) {
+
+        $MedicareAssistanceIds = get_array_mapping(json_decode($request->ids));
+        $this->MedicareAssistanceRepository->deleteBulkMedicareAssistance($MedicareAssistanceIds);
+         Session::flash('success','Medicare Assistance Bulk Deleted Successfully');
+        }
+        return back();
+    }
 }

@@ -7,7 +7,7 @@
 
 
 <div class="container-fluid">
-  @include('admin.layouts.breadcrumbs')
+  @include('admin.layout-parts.breadcrumbs')
 <div class="row">
    <div class="col-lg-12">
     <div class="card">
