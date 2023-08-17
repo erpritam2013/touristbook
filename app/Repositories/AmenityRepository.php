@@ -25,6 +25,10 @@ class AmenityRepository implements AmenityRepositoryInterface
     {
         Amenity::destroy($amenityId);
     }
+    public function deleteBulkAmenity($amenityIds) 
+    {
+        Amenity::whereIn('id', $amenityIds)->delete();
+    }
 
     public function createAmenity(array $amenityDetails) 
     {

@@ -9,7 +9,7 @@
 
 
 <div class="container-fluid">
-  @include('admin.layouts.breadcrumbs')
+  @include('admin.layout-parts.breadcrumbs')
   <div class="row">
      <div class="col-lg-12">
         <div class="card">
@@ -53,7 +53,7 @@
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-10">
-                                        <select class="form-control" id="amenity-type" name="amenity_type" data-url="{{route('admin.terms.ajaxGet')}}" data-existed_f_type="{{$amenity->amenity_type ?? ''}}">
+                                        <select class="form-control" id="amenity-type" name="amenity_type" data-url="{{route('admin.terms.ajaxGetAmenity')}}" data-existed_f_type="{{$amenity->amenity_type ?? ''}}">
                                             @if(!empty($post_types))
                                             <option value="">Select Type</option>
                                             @foreach($post_types as $type)
@@ -107,7 +107,7 @@
 
                                         <button type="submit" class="btn btn-primary">@isset($amenity->id)Update @else Save @endisset</button>
                                         @if(!isset($amenity->id))
-                                        <button type="button" class="btn btn-light" onclick="window.location.replace('{{ url()->previous() }}')">cencel</button>
+                                        <button type="button" class="btn btn-light" onclick="window.location.replace('{{ url()->previous() }}')">cancel</button>
                                         @endif
                                     </div>
                                 </div>
@@ -129,54 +129,4 @@
     <script src="{!! asset('admin-part/vendor/select2/js/select2.full.min.js') !!}"></script>
     <script src="{!! asset('admin-part/js/plugins-init/select2-init.js') !!}"></script>
 
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-     // $('#icon').iconpicker();
-       /* When input amenity type */
-            var preloader = $('body div#preloader');
-            $('body').on('input', '#amenity-type', function () {
-              var userURL = $(this).data('url');
-
-              
-              var amenity_type = $(this).children('option:selected').val();
-              var existed_parent_amenity = $('#amenity-parent').data('existed_parent_amenity');
-              var amenity_id = $("#amenity-id").data('id');
-              var data = {amenity_type};
-              if (typeof amenity_id != "undefined") {
-               data = {amenity_type,'id':amenity_id};
-           }
-            preloader.css({'z-index': 1});
-            preloader.show();
-            var amenity_parent = $('#amenity-parent');
-            amenity_parent.after(preloader);
-           $.get(userURL,{amenity_type,'id':amenity_id},function (data) {
-            $options = "";
-            if (data.length != 0) {
-                preloader.css({'z-index': 0});
-                preloader.hide();
-             amenity_parent.find('option').remove();
-             amenity_parent.append(new Option('Select amenity Parent', ""));
-             $.each(data.data,function(index,value){
-                optionText = value.name;
-                optionValue = value.id;
-               
-                if (typeof existed_parent_amenity != "undefined" && optionValue === parseInt(existed_parent_amenity)) {
-                    amenity_parent.append(new Option(optionText, optionValue,true, true));
-                }else{
-
-                amenity_parent.append(new Option(optionText, optionValue));
-                }
-            });
-         }else{
-            alert('something went wrong!');
-         }
-            //$(amenity_type).append(amenity_type);
-     });
-           $('.multi-select').select2();
-       });
-
-        });
-
-    </script>
     @endsection

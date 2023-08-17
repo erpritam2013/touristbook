@@ -13,8 +13,8 @@ if (!function_exists('getRouteName')) {
 }
 if (!function_exists('matchRouteName')) {    
     function matchRouteName($current_route=null){
-       $active_class = "";
-       if (!empty($current_route)) {
+     $active_class = "";
+     if (!empty($current_route)) {
         $routeName = getRouteName();
         if ($routeName == $current_route) {
             $active_class = 'mm-active';
@@ -27,12 +27,12 @@ if (!function_exists('matchRouteName')) {
 
 if (!function_exists('getIconColorClass')) {    
     function getIconColorClass(){
-       
-       $i_color_dashboard = config('global.i_color_dashboard');
-       $get_color = array_rand($i_color_dashboard);
-       return "text-".$i_color_dashboard[$get_color]." border-".$i_color_dashboard[$get_color];
 
-   }
+     $i_color_dashboard = config('global.i_color_dashboard');
+     $get_color = array_rand($i_color_dashboard);
+     return "text-".$i_color_dashboard[$get_color]." border-".$i_color_dashboard[$get_color];
+
+ }
 }
 if (!function_exists('matchRouteGroupName')) {    
     function matchRouteGroupName($route_group_name=null,$group_type){
@@ -61,7 +61,7 @@ if(!function_exists('get_form_error_msg')){
 }
 if(!function_exists('get_form_success_msg')){
     function get_form_success_msg($success){
-     
+
         $form_success='<div class="alert alert-success alert-dismissible alert-alt solid fade show"><button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
         </button><strong>Success!</strong>&nbsp;'.$success.'</div>';
         
@@ -105,7 +105,7 @@ if(!function_exists('get_edit_select_post_types_old_value')){
         if (!empty($current_ele)) {
 
             if ($type == 'select') {
-               if ($compair_prop == $current_ele) {
+             if ($compair_prop == $current_ele) {
                 return 'selected="true"';
             }else{
                 return '';
@@ -147,12 +147,27 @@ if (!function_exists('get_time_format')) {
     function get_time_format($value,$with_t=false) {
         $cenvertedTime = date('d-m-Y H:i:s');
         if ($with_t) {
-           $cenvertedTime = date('d-m-Y H:i:s',strtotime($value));
-       }else{
-           $cenvertedTime = date('d-m-Y',strtotime($value));
-       }
-       return $cenvertedTime;
-   }
+         $cenvertedTime = date('d-m-Y H:i:s',strtotime($value));
+     }else{
+         $cenvertedTime = date('d-m-Y',strtotime($value));
+     }
+     return $cenvertedTime;
+ }
+}
+if (!function_exists('get_array_mapping')) {
+    function get_array_mapping($data) {
+        $result = [];
+        if (!empty($data)) {
+         $collection = collect($data);
+
+         $result = $collection->map(function (int $item, int $key) {
+            return (int)$item;
+        });
+     }
+     return $result->all();
+
+
+ }
 }
 
 
