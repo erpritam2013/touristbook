@@ -174,4 +174,21 @@ class FacilityController extends Controller
          Session::flash('success','Facility Deleted Successfully');
         return back();
     }
+
+    /**
+     * Remove the specified all resource from storage.
+     *
+     * @param  \App\Models\Facility  $facility
+     * @return \Illuminate\Http\Response
+     */
+    public function bulk_delete(Request $request)
+    {
+         if (!empty($request->ids)) {
+        
+        $facilityIds = get_array_mapping(json_decode($request->ids));
+        $this->facilityRepository->deleteBulkFacility($facilityIds);
+         Session::flash('success','Facility Bulk Deleted Successfully');
+        }
+        return back();
+    }
 }

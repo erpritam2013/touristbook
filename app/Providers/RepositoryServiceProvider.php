@@ -8,6 +8,10 @@ use App\Interfaces\AmenityRepositoryInterface;
 use App\Repositories\AmenityRepository;
 use App\Interfaces\MedicareAssistanceRepositoryInterface;
 use App\Repositories\MedicareAssistanceRepository;
+use App\Interfaces\TopServiceRepositoryInterface;
+use App\Repositories\TopServiceRepository;
+use App\Interfaces\PlaceRepositoryInterface;
+use App\Repositories\PlaceRepository;
 use App\Interfaces\HotelRepositoryInterface;
 use App\Repositories\HotelRepository;
 use Illuminate\Support\ServiceProvider;
@@ -24,6 +28,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(FacilityRepositoryInterface::class, FacilityRepository::class);
         $this->app->bind(AmenityRepositoryInterface::class, AmenityRepository::class);
         $this->app->bind(MedicareAssistanceRepositoryInterface::class, MedicareAssistanceRepository::class);
+        $this->app->bind(TopServiceRepositoryInterface::class, TopServiceRepository::class);
+        $this->app->bind(PlaceRepositoryInterface::class, PlaceRepository::class);
         $this->app->bind(HotelRepositoryInterface::class, HotelRepository::class);
 
     }

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
- @include('admin.layouts.head')
+ @include('admin.layout-parts.head')
 
 </head>
 
@@ -28,9 +28,10 @@
         ***********************************-->
         <div id="main-wrapper">
 
-            @include('admin.layouts.nav')
-            @include('admin.layouts.header')
-            @include('admin.layouts.sidebar')
+            @include('admin.layout-parts.nav')
+            @include('admin.layout-parts.header')
+            @include('admin.layout-parts.sidebar')
+          
 
         <!--**********************************
             Content body start
@@ -44,7 +45,7 @@
         <!--**********************************
             Content body end
             ***********************************-->
-            @include('admin.layouts.footer')
+            @include('admin.layout-parts.footer')
 
         <!--**********************************
            Support ticket button start
@@ -59,7 +60,7 @@
     <!--**********************************
         Main wrapper end
         ***********************************-->
-        @include('admin.layouts.foot')
+        @include('admin.layout-parts.foot')
 
     </body>
 
