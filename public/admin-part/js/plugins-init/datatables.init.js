@@ -58,7 +58,10 @@ let dataSet = [
  
         }
     },
-    buttons:{className:'btn btn-primary'}
+    buttons:{className:'btn btn-primary'},
+    columnDefs: [
+  { targets: 0, orderable: false }
+]
 
     });
    

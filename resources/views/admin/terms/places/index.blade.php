@@ -19,19 +19,19 @@
             <div class="card-header">
                 <h4 class="card-title">{{$title}}</h4>
                 <div align="right" class="all-a">
-                    @if($facilities->count())<a href="javascript:void(0);" class="btn btn-outline-danger bulk-delete btn-xs" style="display: none;">Bulk Delete</a>
-                     <form id='bulk_delete_entity_form' method="POST" action="{{route('admin.terms.facilities.bulk-delete')}}" style="display: none" data-text="facility">
+                    @if($places->count())<a href="javascript:void(0);" class="btn btn-outline-danger bulk-delete btn-xs" style="display: none;">Bulk Delete</a>
+                     <form id='bulk_delete_entity_form' method="POST" action="{{route('admin.terms.places.bulk-delete')}}" style="display: none" data-text="place">
                               {{ csrf_field() }}
                               <input type="hidden" name="ids" id="ids" >
 
                               {{method_field('DELETE')}}
 
                           </form>@endif
-                    <a href="{{route('admin.terms.facilities.create')}}" class="btn btn-outline-primary btn-xs">Add New Facility</a>
+                    <a href="{{route('admin.terms.places.create')}}" class="btn btn-outline-primary btn-xs">Add New Place</a>
                 </div>
             </div>
 
-            <div class="card-body facility_list entity-list">
+            <div class="card-body place_list entity-list">
                 @if(Session::has('success'))
                 {!!get_form_success_msg(Session::get('success'))!!}
                 @endif
@@ -40,7 +40,7 @@
                     <table id="example" class="display" style="min-width: 845px">
                         <thead>
                             <tr>
-                                <th>@if($facilities->count())<input type="checkbox" class="css-control-input mr-2 select-all">@endif S.No.</th>
+                                <th>@if($places->count())<input type="checkbox" class="css-control-input mr-2 select-all">@endif S.No.</th>
                                 <th>Name</th>
                                 <th>Slug</th>
                                 <th>Icon</th>
@@ -53,22 +53,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if($facilities->count())
-                            @foreach($facilities as $facility)
+                            @if($places->count())
+                            @foreach($places as $place)
                             <tr>
-                                <td><input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" value="{{$facility->id}}">{{++$loop->index}}</td>
-                                <td>{{$facility->name}}</td>
-                                <td>{{$facility->slug}}</td>
-                                <td>{!!get_fontawesome_icon_html($facility->icon,'fa-lg')!!}</td>
-                                <td>{{get_parent_term($facilities,$facility->parent_facility)}}</td>
-                                <td>{{$facility->facility_type}}</td>
-                                <td> <input data-id="{{$facility->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url=' {{route("admin.terms.changeStatus")}}' data-on="Active" data-off="InActive" {{ $facility->status ? 'checked' : '' }}></td>
-                                <td>{{get_time_format($facility->created_at)}}</td>
-                                <td>{{get_time_format($facility->updated_at)}}</td>
+                                <td><input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" value="{{$place->id}}">{{++$loop->index}}</td>
+                                <td>{{$place->name}}</td>
+                                <td>{{$place->slug}}</td>
+                                <td>{!!get_fontawesome_icon_html($place->icon,'fa-lg')!!}</td>
+                                <td>{{get_parent_term($places,$place->parent_place)}}</td>
+                                <td>{{$place->place_type}}</td>
+                                <td> <input data-id="{{$place->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url=' {{route("admin.terms.changeStatusPlace")}}' data-on="Active" data-off="InActive" {{ $place->status ? 'checked' : '' }}></td>
+                                <td>{{get_time_format($place->created_at)}}</td>
+                                <td>{{get_time_format($place->updated_at)}}</td>
                                 <td>
-                                    <a href="{{route('admin.terms.facilities.edit',$facility->id)}}" class="btn btn-primary" title="Edit"><i class="fa fa-edit"></i></a>
-                                    <a href="{{route('admin.terms.facilities.show',$facility->id)}}" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>
-                                    <a href="javascript:void(0);" class="btn btn-danger del_entity_form" title="Delete" item_id="{{$facility->id}}" data-text="facility"><i class="fa fa-trash"></i></a>
+                                    <a href="{{route('admin.terms.places.edit',$place->id)}}" class="btn btn-primary" title="Edit"><i class="fa fa-edit"></i></a>
+                                    <a href="{{route('admin.terms.places.show',$place->id)}}" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>
+                                    <a href="javascript:void(0);" class="btn btn-danger del_entity_form" title="Delete" item_id="{{$place->id}}" data-text="place"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
 
@@ -92,7 +92,7 @@
                 </table>
             </div>
         </div>
-          <form id='delete_entity_form' method="POST" action="{{route('admin.terms.facilities.index')}}" style="display: none">
+          <form id='delete_entity_form' method="POST" action="{{route('admin.terms.places.index')}}" style="display: none">
                               {{ csrf_field() }}
 
                               {{method_field('DELETE')}}

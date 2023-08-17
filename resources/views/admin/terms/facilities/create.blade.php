@@ -9,7 +9,7 @@
 
 
 <div class="container-fluid">
-  @include('admin.layouts.breadcrumbs')
+  @include('admin.layout-parts.breadcrumbs')
   <div class="row">
      <div class="col-lg-12">
         <div class="card">
@@ -129,54 +129,4 @@
     <script src="{!! asset('admin-part/vendor/select2/js/select2.full.min.js') !!}"></script>
     <script src="{!! asset('admin-part/js/plugins-init/select2-init.js') !!}"></script>
 
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-     // $('#icon').iconpicker();
-       /* When input facility type */
-            var preloader = $('body div#preloader');
-            $('body').on('input', '#facility-type', function () {
-              var userURL = $(this).data('url');
-
-              
-              var facility_type = $(this).children('option:selected').val();
-              var existed_parent_facitity = $('#facility-parent').data('existed_parent_facitity');
-              var facility_id = $("#facility-id").data('id');
-              var data = {facility_type};
-              if (typeof facility_id != "undefined") {
-               data = {facility_type,'id':facility_id};
-           }
-            preloader.css({'z-index': 1});
-            preloader.show();
-            var facility_parent = $('#facility-parent');
-            facility_parent.after(preloader);
-           $.get(userURL,{facility_type,'id':facility_id},function (data) {
-            $options = "";
-            if (data.length != 0) {
-                preloader.css({'z-index': 0});
-                preloader.hide();
-             facility_parent.find('option').remove();
-             facility_parent.append(new Option('Select Facility Parent', ""));
-             $.each(data.data,function(index,value){
-                optionText = value.name;
-                optionValue = value.id;
-               
-                if (typeof existed_parent_facitity != "undefined" && optionValue === parseInt(existed_parent_facitity)) {
-                    facility_parent.append(new Option(optionText, optionValue,true, true));
-                }else{
-
-                facility_parent.append(new Option(optionText, optionValue));
-                }
-            });
-         }else{
-            alert('something went wrong!');
-         }
-            //$(facility_type).append(facility_type);
-     });
-           $('.multi-select').select2();
-       });
-
-        });
-
-    </script>
     @endsection

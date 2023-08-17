@@ -25,6 +25,10 @@ class FacilityRepository implements FacilityRepositoryInterface
     {
         Facility::destroy($facilityId);
     }
+    public function deleteBulkFacility($facilityIds) 
+    {
+         Facility::whereIn('id', $facilityIds)->delete();
+    }
 
     public function createFacility(array $facilityDetails) 
     {

@@ -12,10 +12,10 @@
    <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">{{$title}}&nbsp;{!!get_fontawesome_icon_html($amenity->icon,'fa-lg')!!}</h4>
+            <h4 class="card-title">{{$title}}&nbsp;{!!get_fontawesome_icon_html($top_service->icon,'fa-lg')!!}</h4>
             <div align="right">
-            	<a href="{{route('admin.terms.amenities.edit',$amenity->id)}}" class="btn btn-primary"><i class="fa fa-edit"></i> Edit</a>
-            	<a href="{{route('admin.terms.amenities.index')}}" class="btn btn-dark"><i class="fa fa-arrow-right"></i> Back</a>
+            	<a href="{{route('admin.terms.top-services.edit',$top_service->id)}}" class="btn btn-primary"><i class="fa fa-edit"></i> Edit</a>
+            	<a href="{{route('admin.terms.top-services.index')}}" class="btn btn-dark"><i class="fa fa-arrow-right"></i> Back</a>
             </div>
         </div>
         <div class="card-body">
@@ -25,16 +25,16 @@
                         <div class="card">
 
                         		<div class="col-md-12">
-									<h1>{{$amenity->name}}</h1>
+									<h1>{{$top_service->name}}</h1>
 
-									<p>{{$amenity->description}}</p>
+									<p>{{$top_service->description}}</p>
 									<div>
-										<span class="badge">Last updated {{get_time_format($amenity->updated_at,true)}}</span>
+										<span class="badge">Last updated {{get_time_format($top_service->updated_at,true)}}</span>
 										<div class="pull-right">
-											<span class="label label-default" style="color:#000;">{{$amenity->amenity_type}} Amenity</span>
-                                            @php $parent_amenity = get_parent_term($amenity,$amenity->parent_amenity,true); @endphp
-											<span class="label label-primary">{{(!empty($parent_amenity))?$parent_amenity:"No Parent"}}</span>
-                                            @if($amenity->status == 1)
+											<span class="label label-default">{{$top_service->top_service_type}} top_service</span>
+                                            @php $parent_top_service = get_parent_term($top_service,$top_service->parent_top_service,true); @endphp
+											<span class="label label-primary">{{(!empty($parent_top_service))?$parent_top_service:"No Parent"}}</span>
+                                            @if($top_service->status == 1)
 											<span class="label label-success">Active</span> 
 											@else
 											<span class="label label-danger">Inactive</span>
