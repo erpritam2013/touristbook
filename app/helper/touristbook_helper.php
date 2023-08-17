@@ -35,7 +35,7 @@ if (!function_exists('getIconColorClass')) {
    }
 }
 if (!function_exists('matchRouteGroupName')) {    
-    function matchRouteGroupName($route_group_name=null,$group_type){
+    function matchRouteGroupName($group_type, $route_group_name=null){
         $mm_show = "";
         if (!empty($route_group_name)) {
             $routeName = getRouteName();
