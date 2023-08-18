@@ -13,7 +13,7 @@ class UpdateMeetingAndEventRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class UpdateMeetingAndEventRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|max:255',
+            'meeting_and_event_type' => 'required',
         ];
     }
 }

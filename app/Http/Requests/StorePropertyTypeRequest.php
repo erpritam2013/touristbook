@@ -13,7 +13,7 @@ class StorePropertyTypeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class StorePropertyTypeRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|max:255',
+            'property_type_type' => 'required',
         ];
     }
 }

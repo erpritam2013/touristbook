@@ -5,7 +5,11 @@ use App\Http\Controllers\AmenityController;
 use App\Http\Controllers\MedicareAssistanceController;
 use App\Http\Controllers\TopServiceController;
 use App\Http\Controllers\PlaceController;
+use App\Http\Controllers\AccessibleController;
+use App\Http\Controllers\PropertyTypeController;
+use App\Http\Controllers\MeetingAndEventController;
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\CountryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -60,12 +64,28 @@ Route::name('admin.')->prefix('admin')->group(function () {
     /*Accessibles Routes*/
     Route::resource('accessibles', AccessibleController::class);
      Route::delete('accessible/bulk-delete', [AccessibleController::class,'bulk_delete'])->name('accessibles.bulk-delete');
-    Route::get('accessible/ajax-get', [AccessibleController::class,'getaccessiblesAjax'])->name('ajaxGetAccessible');
+    Route::get('accessible/ajax-get', [AccessibleController::class,'getAccessiblesAjax'])->name('ajaxGetAccessible');
     Route::get('accessible/changeStatus', [AccessibleController::class,'changeStatus'])->name('changeStatusAccessible'); 
+
+    /*Property Type Routes*/
+    Route::resource('property-types', PropertyTypeController::class);
+     Route::delete('property-type/bulk-delete', [PropertyTypeController::class,'bulk_delete'])->name('property-types.bulk-delete');
+    Route::get('property-type/ajax-get', [PropertyTypeController::class,'getPropertyTypesAjax'])->name('ajaxGetPropertyType');
+    Route::get('property-type/changeStatus', [PropertyTypeController::class,'changeStatus'])->name('changeStatusPropertyType'); 
+    /*meeting and events Routes*/
+    Route::resource('meeting-and-events', MeetingAndEventController::class);
+    Route::delete('meeting-and-event/bulk-delete', [MeetingAndEventController::class,'bulk_delete'])->name('meeting-and-events.bulk-delete');
+    Route::get('meeting-and-event/ajax-get', [MeetingAndEventController::class,'getMeetingAndEventsAjax'])->name('ajaxGetMeetingAndEvent');
+    Route::get('meeting-and-event/changeStatus', [MeetingAndEventController::class,'changeStatus'])->name('changeStatusMeetingAndEvent');
+
+    /*countries Routes*/
+    Route::resource('countries', CountryController::class);
+
+    Route::delete('country/bulk-delete', [CountryController::class,'bulk_delete'])->name('countries.bulk-delete');
 
      }); // end terms route grouping
      // Hotel Resource
-    Route::resource('hotels', HotelController::class);
     Route::prefix('hotels')->name('hotels.')->group(function() {
+    Route::resource('/', HotelController::class);
     });
 });
