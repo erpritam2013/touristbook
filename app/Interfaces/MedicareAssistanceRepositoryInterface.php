@@ -11,4 +11,7 @@ interface MedicareAssistanceRepositoryInterface
     public function createMedicareAssistance(array $MedicareAssistanceDetails);
     public function updateMedicareAssistance($MedicareAssistanceId, array $newDetails);
     public function getMedicareAssistancesByType(string $type);
+
+    public function getActiveMedicareAssistancesList($type);
+    public function getActiveHotelMedicareAssistancesList();
 }

@@ -39,4 +39,20 @@ class PlaceRepository implements PlaceRepositoryInterface
     {
         return Place::whereId($placeId)->update($newDetails);
     } 
+
+    // Get all Active Places or by Type
+    public function getActivePlacesList($type = null) {
+        $placeBuilder = Place::where('status', Place::ACTIVE);
+
+        if($type)
+            $placeBuilder->where('place_type',$type);
+
+        return $placeBuilder->get(['id','name']);
+    }
+
+    // Get Active Hotel Type Places
+    public function getActiveHotelPlacesList() {
+        $type = Place::HOTEL_TYPE;
+        return $this->getActivePlacesList($type);
+    }
 }
