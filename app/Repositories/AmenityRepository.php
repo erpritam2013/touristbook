@@ -39,4 +39,22 @@ class AmenityRepository implements AmenityRepositoryInterface
     {
         return Amenity::whereId($amenityId)->update($newDetails);
     } 
+
+
+
+    // Get all Active Amenities or by Type
+    public function getActiveAmenitiesList($type = null) {
+        $amenityBuilder = Amenity::where('status', Amenity::ACTIVE);
+
+        if($type)
+            $amenityBuilder->where('amenity_type',$type);
+
+        return $amenityBuilder->get(['id','name']);
+    }
+
+    // Get Active Hotel Type Amenities
+    public function getActiveHotelAmenitiesList() {
+        $type = Amenity::HOTEL_TYPE;
+        return $this->getActiveAmenitiesList($type);
+    }
 }
