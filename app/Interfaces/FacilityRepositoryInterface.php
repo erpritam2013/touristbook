@@ -11,4 +11,7 @@ interface FacilityRepositoryInterface
     public function createFacility(array $facilityDetails);
     public function updateFacility($facilityId, array $newDetails);
     public function getFacilitiesByType(string $type);
+
+    public function getActiveFacilitiesList($type);
+    public function getActiveHotelFacilitiesList();
 }

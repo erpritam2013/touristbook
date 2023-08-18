@@ -39,4 +39,21 @@ class TopServiceRepository implements TopServiceRepositoryInterface
     {
         return TopService::whereId($TopServiceId)->update($newDetails);
     } 
+
+
+    // Get all Active Top Services or by Type
+    public function getActiveTopServicesList($type = null) {
+        $topServiceBuilder = TopService::where('status', TopService::ACTIVE);
+
+        if($type)
+            $topServiceBuilder->where('top_service_type',$type);
+
+        return $topServiceBuilder->get(['id','name']);
+    }
+
+    // Get Active Hotel Type Medicare Assistances
+    public function getActiveHotelTopServicesList() {
+        $type = TopService::HOTEL_TYPE;
+        return $this->getActiveTopServicesList($type);
+    }
 }

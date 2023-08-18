@@ -11,4 +11,7 @@ interface TopServiceRepositoryInterface
     public function createTopService(array $TopServiceDetails);
     public function updateTopService($TopServiceId, array $newDetails);
     public function getTopServicesByType(string $type);
+
+    public function getActiveTopServicesList($type);
+    public function getActiveHotelTopServicesList();
 }

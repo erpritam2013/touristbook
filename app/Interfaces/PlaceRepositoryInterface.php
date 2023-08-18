@@ -11,4 +11,7 @@ interface PlaceRepositoryInterface
     public function createPlace(array $placeDetails);
     public function updatePlace($placeId, array $newDetails);
     public function getPlacesByType(string $type);
+
+    public function getActivePlacesList($type);
+    public function getActiveHotelPlacesList();
 }

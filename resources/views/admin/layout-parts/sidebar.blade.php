@@ -31,6 +31,7 @@
                                 class="icon icon-home-minimal"></i><span class="nav-text">Hotels</span></a>
                         <ul aria-expanded="false" class="{{matchRouteGroupName('hotels','child')}}">
                             <li class="{{matchRouteName('admin.hotels.index')}}"><a href="{{route('admin.hotels.index')}}">List</a></li>
+                            <li class="{{matchRouteName('admin.hotels.create')}}"><a href="{{route('admin.hotels.create')}}">Add New</a></li>
                         </ul>
                     </li>
 

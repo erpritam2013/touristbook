@@ -10,6 +10,12 @@ class Facility extends Model
 {
     use HasFactory;
     use Sluggable;
+
+    const ACTIVE = 1;
+    const INACTIVE = 0;
+
+    const HOTEL_TYPE = "Hotel";
+    
     
     protected $fillable = [
        'name',
