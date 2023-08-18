@@ -39,4 +39,22 @@ class MedicareAssistanceRepository implements MedicareAssistanceRepositoryInterf
     {
         return MedicareAssistance::whereId($MedicareAssistanceId)->update($newDetails);
     } 
+
+
+    // Get all Active Medicare Assistances or by Type
+    public function getActiveMedicareAssistancesList($type = null) {
+        $medicareBuilder = MedicareAssistance::where('status', MedicareAssistance::ACTIVE);
+
+        if($type)
+            $medicareBuilder->where('medicare_assistance_type',$type);
+
+        return $medicareBuilder->get(['id','name']);
+    }
+
+    // Get Active Hotel Type Medicare Assistances
+    public function getActiveHotelMedicareAssistancesList() {
+        $type = MedicareAssistance::HOTEL_TYPE;
+        return $this->getActiveMedicareAssistancesList($type);
+    }
+
 }

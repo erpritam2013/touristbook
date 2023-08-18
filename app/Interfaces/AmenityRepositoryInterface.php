@@ -11,4 +11,8 @@ interface AmenityRepositoryInterface
     public function createAmenity(array $amenityDetails);
     public function updateAmenity($amenityId, array $newDetails);
     public function getAmenitiesByType(string $type);
+
+    public function getActiveAmenitiesList($type);
+    public function getActiveHotelAmenitiesList();
+    
 }

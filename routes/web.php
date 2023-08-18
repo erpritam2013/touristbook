@@ -65,8 +65,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
 
      }); // end terms route grouping
      // Hotel Resource
+    Route::resource('hotels', HotelController::class);
     Route::prefix('hotels')->name('hotels.')->group(function() {
-        Route::get('/', [HotelController::class, 'index'])->name('index');
-        Route::get('create', [HotelController::class, 'create'])->name('create');
     });
 });
