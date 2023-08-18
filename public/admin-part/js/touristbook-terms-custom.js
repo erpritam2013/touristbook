@@ -224,6 +224,138 @@
        });
 /*place type js end*/
 
+/*meeting and event type js start*/  
+
+  $('body').on('input', '#meeting-and-event-type', function () {
+              var userURL = $(this).data('url');
+
+              
+              var meeting_and_event_type = $(this).children('option:selected').val();
+              var existed_parent_meeting_and_event = $('#meeting-and-event-parent').data('existed_parent_meeting_and_event');
+              var meeting_and_event_id = $("#meeting-and-event-id").data('id');
+              var data = {meeting_and_event_type};
+              if (typeof meeting_and_event_id != "undefined") {
+               data = {meeting_and_event_type,'id':meeting_and_event_id};
+           }
+            preloader.css({'z-index': 1});
+            preloader.show();
+            var meeting_and_event_parent = $('#meeting-and-event-parent');
+            meeting_and_event_parent.after(preloader);
+           $.get(userURL,{meeting_and_event_type,'id':meeting_and_event_id},function (data) {
+            $options = "";
+            if (data.length != 0) {
+                preloader.css({'z-index': 0});
+                preloader.hide();
+             meeting_and_event_parent.find('option').remove();
+             meeting_and_event_parent.append(new Option('Select Meeting And Event Parent', ""));
+             $.each(data.data,function(index,value){
+                optionText = value.name;
+                optionValue = value.id;
+               
+                if (typeof existed_parent_meeting_and_event != "undefined" && optionValue === parseInt(existed_parent_meeting_and_event)) {
+                    meeting_and_event_parent.append(new Option(optionText, optionValue,true, true));
+                }else{
+
+                meeting_and_event_parent.append(new Option(optionText, optionValue));
+                }
+            });
+         }else{
+            alert('something went wrong!');
+         }
+            //$(meeting_and_event_type).append(meeting_and_event_type);
+     });
+           $('.multi-select').select2();
+       });
+/*meeting_and_event type js end*/
+
+ /*accessible type js start*/  
+
+  $('body').on('input', '#accessible-type', function () {
+              var userURL = $(this).data('url');
+
+              
+              var accessible_type = $(this).children('option:selected').val();
+              var existed_parent_accessible = $('#accessible-parent').data('existed_parent_accessible');
+              var accessible_id = $("#accessible-id").data('id');
+              var data = {accessible_type};
+              if (typeof accessible_id != "undefined") {
+               data = {accessible_type,'id':accessible_id};
+           }
+            preloader.css({'z-index': 1});
+            preloader.show();
+            var accessible_parent = $('#accessible-parent');
+            accessible_parent.after(preloader);
+           $.get(userURL,{accessible_type,'id':accessible_id},function (data) {
+            $options = "";
+            if (data.length != 0) {
+                preloader.css({'z-index': 0});
+                preloader.hide();
+             accessible_parent.find('option').remove();
+             accessible_parent.append(new Option('Select accessible Parent', ""));
+             $.each(data.data,function(index,value){
+                optionText = value.name;
+                optionValue = value.id;
+               
+                if (typeof existed_parent_accessible != "undefined" && optionValue === parseInt(existed_parent_accessible)) {
+                    accessible_parent.append(new Option(optionText, optionValue,true, true));
+                }else{
+
+                accessible_parent.append(new Option(optionText, optionValue));
+                }
+            });
+         }else{
+            alert('something went wrong!');
+         }
+            //$(accessible_type).append(accessible_type);
+     });
+           $('.multi-select').select2();
+       });
+/*accessible type js end*/
+
+   /*property type js start*/  
+
+  $('body').on('input', '#property-type-type', function () {
+              var userURL = $(this).data('url');
+
+              
+              var property_type_type = $(this).children('option:selected').val();
+              var existed_parent_property_type = $('#property-type-parent').data('existed_parent_property_type');
+              var property_type_id = $("#property-type-id").data('id');
+              var data = {property_type_type};
+              if (typeof property_type_id != "undefined") {
+               data = {property_type_type,'id':property_type_id};
+           }
+            preloader.css({'z-index': 1});
+            preloader.show();
+            var property_type_parent = $('#property-type-parent');
+            property_type_parent.after(preloader);
+           $.get(userURL,{property_type_type,'id':property_type_id},function (data) {
+            $options = "";
+            if (data.length != 0) {
+                preloader.css({'z-index': 0});
+                preloader.hide();
+             property_type_parent.find('option').remove();
+             property_type_parent.append(new Option('Select Property Type Parent', ""));
+             $.each(data.data,function(index,value){
+                optionText = value.name;
+                optionValue = value.id;
+               
+                if (typeof existed_parent_property_type != "undefined" && optionValue === parseInt(existed_parent_property_type)) {
+                    property_type_parent.append(new Option(optionText, optionValue,true, true));
+                }else{
+
+                property_type_parent.append(new Option(optionText, optionValue));
+                }
+            });
+         }else{
+            alert('something went wrong!');
+         }
+            
+     });
+           $('.multi-select').select2();
+       });
+/*property type js end*/
+
 /*delete entity type js start*/
 
 $('.entity-list').on('click', '.del_entity_form', function(event) {
@@ -257,6 +389,18 @@ $('.entity-list').on('change', '.select-all', function(event) {
     $('.select-id').prop('checked',false);
     $('.all-a .bulk-delete').hide();
   }
+});
+$('.entity-list').on('change', '.select-id', function(event) {
+      
+      $('.select-id').each(function(){
+
+      if (!$(this).is(':checked')) {
+        $('.all-a .bulk-delete').hide();
+        $('.select-all').prop('checked',false);
+      }else{
+        $('.all-a .bulk-delete').show();
+      }
+      });
 });
 
 $('.all-a').on('click', '.bulk-delete', function(event) {

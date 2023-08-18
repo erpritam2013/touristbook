@@ -131,7 +131,7 @@ class AmenityController extends Controller
         if (empty($data['amenity'])) {
             return back();
         }
-        $data['amenities'] = $this->amenityRepository->getamenitiesByType($data['amenity']->amenity_type,$amenityId);
+        $data['amenities'] = $this->amenityRepository->getAmenitiesByType($data['amenity']->amenity_type,$amenityId);
         return view('admin.terms.amenities.edit', $data);
     }
 

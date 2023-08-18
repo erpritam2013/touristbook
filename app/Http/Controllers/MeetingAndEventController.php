@@ -1,13 +1,25 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Interfaces\MeetingAndEventRepositoryInterface;
 use App\Models\Terms\MeetingAndEvent;
 use App\Http\Requests\StoreMeetingAndEventRequest;
 use App\Http\Requests\UpdateMeetingAndEventRequest;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Cviebrock\EloquentSluggable\Services\SlugService;
+use Session;
 
 class MeetingAndEventController extends Controller
 {
+
+    private MeetingAndEventRepositoryInterface $MeetingAndEventRepository;
+
+    public function __construct(MeetingAndEventRepositoryInterface $MeetingAndEventRepository)
+    {
+        $this->MeetingAndEventRepository = $MeetingAndEventRepository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +27,10 @@ class MeetingAndEventController extends Controller
      */
     public function index()
     {
-        //
+        $data['meeting_and_events'] = $this->MeetingAndEventRepository->getAllMeetingAndEvents();
+        $data['title'] = 'Meeting And Event List';
+
+        return view('admin.terms.meeting-and-events.index', $data);
     }
 
     /**
@@ -25,7 +40,34 @@ class MeetingAndEventController extends Controller
      */
     public function create()
     {
-        //
+        $data['title'] = 'Add Meeting And Event';
+        //$data['meeting_and_events'] = $this->MeetingAndEventRepository->getMeetingAndEventsByType();
+        return view('admin.terms.meeting-and-events.create',$data);
+    }
+
+     public function getMeetingAndEventsAjax(Request $request): JsonResponse 
+    {
+        $type = $request->meeting_and_event_type;
+        $id = isset($request->id)?$request->id:"";
+
+        $data = [];
+        if (isset($type) && !empty($type)) {
+             $data = $this->MeetingAndEventRepository->getMeetingAndEventsByType($type,$id);
+
+        }
+        return response()->json([
+            'data' => $data
+        ]);
+    }
+     public function changeStatus(Request $request): JsonResponse
+    {
+        $MeetingAndEventId = $request->id;
+          $MeetingAndEventDetails = [
+            'status' => $request->status,
+        ];
+        $this->MeetingAndEventRepository->updateMeetingAndEvent($MeetingAndEventId, $MeetingAndEventDetails);
+  
+        return response()->json(['success'=>'Status change successfully.']);
     }
 
     /**
@@ -36,7 +78,18 @@ class MeetingAndEventController extends Controller
      */
     public function store(StoreMeetingAndEventRequest $request)
     {
-        //
+         $MeetingAndEventDetails = [
+            'name' => $request->name,
+            'slug' => SlugService::createSlug(MeetingAndEvent::class, 'slug', $request->name),
+            'parent_meeting_and_event' => (!empty($request->parent_meeting_and_event))?$request->parent_meeting_and_event:0,
+            'icon' => (!empty($request->icon))?$request->icon:"",
+            'meeting_and_event_type' => $request->meeting_and_event_type,
+            'description' => $request->description,
+            'extra_data' => json_encode($request->extra_data),
+        ];
+        $this->MeetingAndEventRepository->createMeetingAndEvent($MeetingAndEventDetails);
+        Session::flash('success','Meeting And Event Created Successfully');
+        return redirect()->Route('admin.terms.meeting-and-events.index');
     }
 
     /**
@@ -47,7 +100,14 @@ class MeetingAndEventController extends Controller
      */
     public function show(MeetingAndEvent $meetingAndEvent)
     {
-        //
+       $data['meeting_and_event'] = $meetingAndEvent;
+        $data['title'] = 'Meeting And Event';
+
+        if (empty($data['meeting_and_event'])) {
+            return back();
+        }
+
+        return view('admin.terms.meeting-and-events.show',$data);
     }
 
     /**
@@ -58,7 +118,17 @@ class MeetingAndEventController extends Controller
      */
     public function edit(MeetingAndEvent $meetingAndEvent)
     {
-        //
+        $MeetingAndEventId = $meetingAndEvent->id;
+
+        $data['meeting_and_event'] = $meetingAndEvent;
+
+        $data['title'] = 'Meeting And Event Edit';
+
+        if (empty($data['meeting_and_event'])) {
+            return back();
+        }
+        $data['meeting_and_events'] = $this->MeetingAndEventRepository->getMeetingAndEventsByType($data['meeting_and_event']->meeting_and_event_type,$MeetingAndEventId);
+        return view('admin.terms.meeting-and-events.edit', $data);
     }
 
     /**
@@ -70,7 +140,22 @@ class MeetingAndEventController extends Controller
      */
     public function update(UpdateMeetingAndEventRequest $request, MeetingAndEvent $meetingAndEvent)
     {
-        //
+        $MeetingAndEventId = $meetingAndEvent->id;
+         
+         $MeetingAndEventDetails = [
+            'name' => $request->name,
+            //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
+            'parent_meeting_and_event' => (!empty($request->parent_meeting_and_event))?$request->parent_meeting_and_event:0,
+            'icon' => (!empty($request->icon))?$request->icon:"",
+            'meeting_and_event_type' => $request->meeting_and_event_type,
+            'description' => $request->description,
+            'extra_data' => json_encode($request->extra_data),
+            'status' => $request->status,
+        ];
+
+        $this->MeetingAndEventRepository->updateMeetingAndEvent($MeetingAndEventId, $MeetingAndEventDetails);
+         Session::flash('success','Meeting And Event Updated Successfully');
+        return redirect()->Route('admin.terms.meeting-and-events.edit',$MeetingAndEventId);
     }
 
     /**
@@ -81,6 +166,27 @@ class MeetingAndEventController extends Controller
      */
     public function destroy(MeetingAndEvent $meetingAndEvent)
     {
-        //
+          $MeetingAndEventId = $meetingAndEvent->id;
+        $this->MeetingAndEventRepository->deleteMeetingAndEvent($MeetingAndEventId);
+         Session::flash('success','Meeting And Event Deleted Successfully');
+        return back();
+    }
+
+     /**
+     * Remove the specified all resource from storage.
+     *
+     * @param  \App\Models\MeetingAndEvent  $MeetingAndEvent
+     * @return \Illuminate\Http\Response
+     */
+
+     public function bulk_delete(Request $request)
+    {
+         if (!empty($request->ids)) {
+        
+        $MeetingAndEventIds = get_array_mapping(json_decode($request->ids));
+        $this->MeetingAndEventRepository->deleteBulkMeetingAndEvent($MeetingAndEventIds);
+         Session::flash('success','Meeting And Event Bulk Deleted Successfully');
+        }
+        return back();
     }
 }

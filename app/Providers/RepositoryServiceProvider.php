@@ -12,6 +12,14 @@ use App\Interfaces\TopServiceRepositoryInterface;
 use App\Repositories\TopServiceRepository;
 use App\Interfaces\PlaceRepositoryInterface;
 use App\Repositories\PlaceRepository;
+use App\Interfaces\AccessibleRepositoryInterface;
+use App\Repositories\AccessibleRepository;
+use App\Interfaces\PropertyTypeRepositoryInterface;
+use App\Repositories\PropertyTypeRepository;
+use App\Interfaces\MeetingAndEventRepositoryInterface;
+use App\Repositories\MeetingAndEventRepository;
+use App\Interfaces\CountryRepositoryInterface;
+use App\Repositories\CountryRepository;
 use App\Interfaces\HotelRepositoryInterface;
 use App\Repositories\HotelRepository;
 use Illuminate\Support\ServiceProvider;
@@ -30,6 +38,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(MedicareAssistanceRepositoryInterface::class, MedicareAssistanceRepository::class);
         $this->app->bind(TopServiceRepositoryInterface::class, TopServiceRepository::class);
         $this->app->bind(PlaceRepositoryInterface::class, PlaceRepository::class);
+        $this->app->bind(AccessibleRepositoryInterface::class, AccessibleRepository::class);
+        $this->app->bind(PropertyTypeRepositoryInterface::class, PropertyTypeRepository::class);
+        $this->app->bind(MeetingAndEventRepositoryInterface::class, MeetingAndEventRepository::class);
+        $this->app->bind(CountryRepositoryInterface::class, CountryRepository::class);
         $this->app->bind(HotelRepositoryInterface::class, HotelRepository::class);
 
     }
