@@ -44,12 +44,12 @@ class MeetingAndEventRepository implements MeetingAndEventRepositoryInterface
 
     // Get all Active Meeting And Events or by Type
     public function getActiveMeetingAndEventsList($type = null) {
-        $MeetingAndEventBuilder = MeetingAndEvent::where('status', MeetingAndEvent::ACTIVE);
+        $meetingAndEventBuilder = MeetingAndEvent::where('status', MeetingAndEvent::ACTIVE);
 
         if($type)
-            $MeetingAndEventBuilder->where('meeting_and_event_type',$type);
+            $meetingAndEventBuilder->where('meeting_and_event_type',$type);
 
-        return $MeetingAndEventBuilder->get(['id','name']);
+        return $meetingAndEventBuilder->get(['id','name']);
     }
 
     // Get Active Hotel Type Meeting And Events

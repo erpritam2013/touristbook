@@ -33,6 +33,9 @@
                                     @include('admin.hotels.partials.basic-card', ['hotel'=>$hotel ?? null])
 
                                     @include('admin.hotels.partials.hotel-info-card', ['hotel'=>$hotel ?? null])
+
+                                    @include('admin.hotels.partials.corporate', ['hotel'=>$hotel ?? null])
+                                    
                                 </div>
                                 <div class="col-xl-4">
                                     @include('admin.hotels.partials.publish-card', ['hotel'=>$hotel ?? null])
@@ -46,6 +49,17 @@
                                     @include('admin.partials.cards.top-services', ['topServices'=> $topServices , 'selected'=>[]])
 
                                     @include('admin.partials.cards.places', ['places'=> $places , 'selected'=>[]])
+
+                                    @include('admin.partials.cards.property-types', ['propertyTypes'=> $propertyTypes , 'selected'=>[]])
+
+                                    @include('admin.partials.cards.accessibles', ['accessibles'=> $accessibles , 'selected'=>[]])
+
+                                    @include('admin.partials.cards.meeting-and-events', ['meetingAndEvents'=> $meetingAndEvents , 'selected'=>[]])
+
+
+
+                                    
+
                                 </div>
                             </div>
 

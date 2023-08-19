@@ -19413,4 +19413,12 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
     [data-theme-version="dark"] .footer .copyright p {
       color: #fff; }
 
+
+
+.nav-pills .nav-link {
+  background-color: #343957;
+  color: #fff;
+  border-bottom: 1px solid #fff;
+}
+
 /*# sourceMappingURL=style.css.map */
