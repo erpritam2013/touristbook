@@ -27,6 +27,12 @@
     width: auto;
     vertical-align: middle;
 }
+.extra-data{
+    padding: 15px;
+    border: 5px solid #dddddd;
+    border-radius: 25px;
+    margin: 15px 0px;
+}
     </style>
     @show
 

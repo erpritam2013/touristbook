@@ -27,11 +27,11 @@
                         		<div class="col-md-12">
 									<h1>{{$medicareAssistance->name}}</h1>
 
-									<p>{{$medicareAssistance->description}}</p>
+									@if(!empty($medicareAssistance->description))<div class="extra-data"><p>{{$medicareAssistance->description}}</p></div>@endif
 									<div>
 										<span class="badge">Last updated {{get_time_format($medicareAssistance->updated_at,true)}}</span>
 										<div class="pull-right">
-											<span class="label label-default">{{$medicareAssistance->medicare_assistance_type}} Facility</span>
+											<span class="label label-default">{{$medicareAssistance->medicare_assistance_type}} Medicare Assistance</span>
                                             @php $parent_medicare_assistance = get_parent_term($medicareAssistance,$medicareAssistance->parent_medicare_assistance,true); @endphp
 											<span class="label label-primary">{{(!empty($parent_medicare_assistance))?$parent_medicare_assistance:"No Parent"}}</span>
                                             @if($medicareAssistance->status == 1)
