@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePropertyTypeRequest extends FormRequest
+class UpdateCountryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,9 @@ class UpdatePropertyTypeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
-            'property_type_type' => 'required',
+            'countrycode' => 'required',
+            'countryname' => 'required',
+            'code' => 'required',
         ];
     }
 }

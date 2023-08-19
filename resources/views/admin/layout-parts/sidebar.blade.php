@@ -21,6 +21,10 @@
                             <li class="{{matchRouteName('admin.terms.medicare-assistances.index')}}"><a href="{{route('admin.terms.medicare-assistances.index')}}">Medicare Assistances</a></li>
                             <li class="{{matchRouteName('admin.terms.top-services.index')}}"><a href="{{route('admin.terms.top-services.index')}}">Top Services</a></li>
                             <li class="{{matchRouteName('admin.terms.places.index')}}"><a href="{{route('admin.terms.places.index')}}">Places</a></li>
+                            <li class="{{matchRouteName('admin.terms.accessibles.index')}}"><a href="{{route('admin.terms.accessibles.index')}}">Accessibles</a></li>
+                            <li class="{{matchRouteName('admin.terms.property-types.index')}}"><a href="{{route('admin.terms.property-types.index')}}">Property Type</a></li>
+                            <li class="{{matchRouteName('admin.terms.meeting-and-events.index')}}"><a href="{{route('admin.terms.meeting-and-events.index')}}">Meeting And Events</a></li>
+                            <li class="{{matchRouteName('admin.terms.countries.index')}}"><a href="{{route('admin.terms.countries.index')}}">Countries</a></li>
                         </ul>
                             {{--<li><a href="./app-profile.html">Profile</a></li>--}}
 
