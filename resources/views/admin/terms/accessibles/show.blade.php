@@ -27,7 +27,7 @@
                         		<div class="col-md-12">
 									<h1>{{$accessible->name}}</h1>
 
-									<p>{{$accessible->description}}</p>
+									@if(!empty($accessible->description))<div class="extra-data"><p>{{$accessible->description}}</p></div>@endif
 									<div>
 										<span class="badge">Last updated {{get_time_format($accessible->updated_at,true)}}</span>
 										<div class="pull-right">
