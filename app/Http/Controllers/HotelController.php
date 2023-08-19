@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\AccessibleRepositoryInterface;
 use App\Interfaces\HotelRepositoryInterface;
 use App\Interfaces\FacilityRepositoryInterface;
 use App\Interfaces\AmenityRepositoryInterface;
 use App\Interfaces\MedicareAssistanceRepositoryInterface;
+use App\Interfaces\MeetingAndEventRepositoryInterface;
 use App\Interfaces\PlaceRepositoryInterface;
+use App\Interfaces\PropertyTypeRepositoryInterface;
 use App\Interfaces\TopServiceRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -19,6 +22,9 @@ class HotelController extends Controller
     private MedicareAssistanceRepositoryInterface $medicareAssistanceRepository;
     private TopServiceRepositoryInterface $topServiceRepository;
     private PlaceRepositoryInterface $placeRepository;
+    private PropertyTypeRepositoryInterface $propertyTypeRepository;
+    private AccessibleRepositoryInterface $accessibleRepository;
+    private MeetingAndEventRepositoryInterface $meetingAndEventRepository;
     
 
     public function __construct(
@@ -27,7 +33,10 @@ class HotelController extends Controller
         AmenityRepositoryInterface $amenityRepository,
         MedicareAssistanceRepositoryInterface $medicareAssistanceRepository,
         TopServiceRepositoryInterface $topServiceRepository,
-        PlaceRepositoryInterface $placeRepository
+        PlaceRepositoryInterface $placeRepository,
+        PropertyTypeRepositoryInterface $propertyTypeRepository,
+        AccessibleRepositoryInterface $accessibleRepository,
+        MeetingAndEventRepositoryInterface $meetingAndEventRepository
         )
     {
         $this->hotelRepository = $hotelRepository;
@@ -36,6 +45,9 @@ class HotelController extends Controller
         $this->medicareAssistanceRepository = $medicareAssistanceRepository;
         $this->topServiceRepository = $topServiceRepository;
         $this->placeRepository = $placeRepository;
+        $this->propertyTypeRepository = $propertyTypeRepository;
+        $this->accessibleRepository = $accessibleRepository;
+        $this->meetingAndEventRepository = $meetingAndEventRepository;
     }
 
     public function index()
@@ -53,6 +65,10 @@ class HotelController extends Controller
         $data['medicares'] = $this->medicareAssistanceRepository->getActiveHotelMedicareAssistancesList();
         $data['topServices'] = $this->topServiceRepository->getActiveHotelTopServicesList();
         $data['places'] = $this->placeRepository->getActiveHotelPlacesList();
+        $data['propertyTypes'] = $this->propertyTypeRepository->getActiveHotelPropertyTypesList();
+        $data['accessibles'] = $this->accessibleRepository->getActiveHotelAccessiblesList();
+        $data['meetingAndEvents'] = $this->meetingAndEventRepository->getActiveHotelMeetingAndEventsList();
+        
         
         return view('admin.hotels.create', $data);
     }

@@ -44,12 +44,12 @@ class AccessibleRepository implements AccessibleRepositoryInterface
 
     // Get all Active Accessibles or by Type
     public function getActiveAccessiblesList($type = null) {
-        $AccessibleBuilder = Accessible::where('status', Accessible::ACTIVE);
+        $accessibleBuilder = Accessible::where('status', Accessible::ACTIVE);
 
         if($type)
-            $AccessibleBuilder->where('Accessible_type',$type);
+            $accessibleBuilder->where('accessible_type',$type);
 
-        return $AccessibleBuilder->get(['id','name']);
+        return $accessibleBuilder->get(['id','name']);
     }
 
     // Get Active Hotel Type Accessibles
