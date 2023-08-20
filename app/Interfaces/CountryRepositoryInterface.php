@@ -10,5 +10,6 @@ interface CountryRepositoryInterface
     public function deleteBulkCountry($CountryIds);
     public function createCountry(array $CountryDetails);
     public function updateCountry($CountryId, array $newDetails);
+    public function getCountiesList();
     
 }

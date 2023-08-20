@@ -27,13 +27,13 @@
                         		<div class="col-md-12">
 									<h1>{{$property_type->name}}</h1>
 
-									<p>{{$property_type->description}}</p>
+									@if(!empty($property_type->description))<div class="extra-data"><p>{{$property_type->description}}</p></div>@endif
                                      <br/>
-                                    <p>{{exploreJsonData($property_type->extra_data ?? '','important_note') ?? ''}}</p>
+                                    @if(!empty(exploreJsonData($property_type->extra_data ?? '','important_note')))<div class="extra-data"><p>{{exploreJsonData($property_type->extra_data ?? '','important_note') ?? ''}}</p></div>@endif
 									<div>
 										<span class="badge">Last updated {{get_time_format($property_type->updated_at,true)}}</span>
 										<div class="pull-right">
-											<span class="label label-default">{{$property_type->property_type_type}} property_type</span>
+											<span class="label label-default">{{$property_type->property_type_type}} Property Type</span>
                                             @php $parent_property_type = get_parent_term($property_type,$property_type->parent_property_type,true); @endphp
 											<span class="label label-primary">{{(!empty($parent_property_type))?$parent_property_type:"No Parent"}}</span>
                                             @if($property_type->status == 1)
