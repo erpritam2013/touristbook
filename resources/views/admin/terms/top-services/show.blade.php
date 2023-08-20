@@ -27,7 +27,7 @@
                         		<div class="col-md-12">
 									<h1>{{$top_service->name}}</h1>
 
-									<p>{{$top_service->description}}</p>
+									@if(!empty($top_service->description))<div class="extra-data"><p>{{$top_service->description}}</p></div>@endif
 									<div>
 										<span class="badge">Last updated {{get_time_format($top_service->updated_at,true)}}</span>
 										<div class="pull-right">

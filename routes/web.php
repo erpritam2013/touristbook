@@ -10,6 +10,7 @@ use App\Http\Controllers\PropertyTypeController;
 use App\Http\Controllers\MeetingAndEventController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\StateController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -82,6 +83,10 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::resource('countries', CountryController::class);
 
     Route::delete('country/bulk-delete', [CountryController::class,'bulk_delete'])->name('countries.bulk-delete');
+    /*states Routes*/
+    Route::resource('states', StateController::class);
+
+    Route::delete('state/bulk-delete', [StateController::class,'bulk_delete'])->name('states.bulk-delete');
 
      }); // end terms route grouping
      // Hotel Resource

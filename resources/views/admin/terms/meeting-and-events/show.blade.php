@@ -27,9 +27,11 @@
                         		<div class="col-md-12">
 									<h1>{{$meeting_and_event->name}}</h1>
 
-									<p>{{$meeting_and_event->description}}</p>
+									@if(!empty($meeting_and_event->description))<div class="extra-data"><p>{{$meeting_and_event->description}}</p></div>@endif
                                     <br/>
-                                    <p>{{exploreJsonData($meeting_and_event->extra_data ?? '','important_note') ?? ''}}</p>
+                                    @if(!empty(exploreJsonData($meeting_and_event->extra_data,'important_note')))<h6>Important Note :</h6>
+
+                                    <div class="extra-data"><p>{{exploreJsonData($meeting_and_event->extra_data,'important_note')}}</p></div>@endif
 									<div>
 										<span class="badge">Last updated {{get_time_format($meeting_and_event->updated_at,true)}}</span>
 										<div class="pull-right">
