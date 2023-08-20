@@ -24,5 +24,14 @@
             </div>
         </div>
 
+        <div class="form-group row">
+            <label class="col-lg-2 col-form-label" for="external_link">
+                Hotel Link
+            </label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="external_link" name="external_link" value="{{$hotel->external_link ?? ''}}" >
+            </div>
+        </div>
+
     </div>
 </div>
