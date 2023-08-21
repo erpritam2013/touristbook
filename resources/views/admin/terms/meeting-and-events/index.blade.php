@@ -60,7 +60,7 @@
                                 <td>{{$meeting_and_event->name}}</td>
                                 <td>{{$meeting_and_event->slug}}</td>
                                 <td>{!!get_fontawesome_icon_html($meeting_and_event->icon,'fa-lg')!!}</td>
-                                <td>{{get_parent_term($meeting_and_events,$meeting_and_event->parent_meeting_and_event)}}</td>
+                                <td>{{get_parent_term($meeting_and_events,$meeting_and_event->parent_id)}}</td>
                                 <td>{{$meeting_and_event->meeting_and_event_type}}</td>
                                 <td> <input data-id="{{$meeting_and_event->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url=' {{route("admin.terms.changeStatusMeetingAndEvent")}}' data-on="Active" data-off="InActive" {{ $meeting_and_event->status ? 'checked' : '' }} ></td>
                                 <td>{{get_time_format($meeting_and_event->created_at)}}</td>

@@ -59,7 +59,7 @@
                                 <td>{{$state->name}}</td>
                                 <td>{{$state->slug}}</td>
                                 <td>{!!get_fontawesome_icon_html($state->icon,'fa-lg')!!}</td>
-                                <td>{{get_parent_term($states,$state->parent_state)}}</td>
+                                <td>{{get_parent_term($states,$state->parent_id)}}</td>
                               
                                 <td> <input data-id="{{$state->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url=' {{route("admin.terms.changeStatus")}}' data-on="Active" data-off="InActive" {{ $state->status ? 'checked' : '' }}></td>
                                 <td>{{get_time_format($state->created_at)}}</td>

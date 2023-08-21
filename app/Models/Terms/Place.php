@@ -20,7 +20,7 @@ class Place extends Model
        'slug',
        'description',
        'icon',
-       'parent_place',
+       'parent_id',
        'place_type',
        'status',
    ];

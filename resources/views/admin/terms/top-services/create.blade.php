@@ -70,11 +70,11 @@
                                     <label class="col-lg-2 col-form-label" for="top_service-parent">top_service Parent
                                     </label>
                                     <div class="col-lg-10">
-                                        <select class="form-control multi-select" id="top-service-parent" name="parent_top_service" data-existed_parent_top_service="{{$top_service->parent_top_service ?? ''}}">
+                                        <select class="form-control multi-select" id="parent-id" name="parent_id" data-existed_parent_id="{{$top_service->parent_id ?? ''}}">
                                             @isset($top_services)
                                             <option value="">Select top_service Parent</option>
                                             @foreach($top_services as $ts_p)
-                                            <option value="{{$ts_p->id}}" {!!get_edit_select_post_types_old_value($ts_p->id, $top_service->parent_top_service ?? "",'select')!!} >{{$ts_p->name}}</option>
+                                            <option value="{{$ts_p->id}}" {!!get_edit_select_post_types_old_value($ts_p->id, $top_service->parent_id ?? "",'select')!!} >{{$ts_p->name}}</option>
                                             @endforeach
                                             @endisset
                                         </select>

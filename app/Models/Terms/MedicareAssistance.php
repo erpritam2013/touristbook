@@ -21,7 +21,7 @@ class MedicareAssistance extends Model
        'slug',
        'description',
        'icon',
-       'parent_medicare_assistance',
+       'parent_id',
        'medicare_assistance_type',
        'status',
    ];

@@ -12,5 +12,6 @@ interface StateRepositoryInterface
     public function updateState($StateId, array $newDetails);
 
     public function getActiveStatesList($StateId);
+    public function getParentStatesList($StateId)
     
 }

@@ -82,7 +82,7 @@ class PlaceController extends Controller
         $placeDetails = [
             'name' => $request->name,
             'slug' => SlugService::createSlug(Place::class, 'slug', $request->name),
-            'parent_place' => (!empty($request->parent_place))?$request->parent_place:0,
+            'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'place_type' => $request->place_type,
             'description' => $request->description,
@@ -145,7 +145,7 @@ class PlaceController extends Controller
          $placeDetails = [
             'name' => $request->name,
             //'slug' => SlugService::createSlug(Place::class, 'slug', $request->name),
-            'parent_place' => (!empty($request->parent_place))?$request->parent_place:0,
+            'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'place_type' => $request->place_type,
             'description' => $request->description,

@@ -32,8 +32,8 @@
 										<span class="badge">Last updated {{get_time_format($medicareAssistance->updated_at,true)}}</span>
 										<div class="pull-right">
 											<span class="label label-default">{{$medicareAssistance->medicare_assistance_type}} Medicare Assistance</span>
-                                            @php $parent_medicare_assistance = get_parent_term($medicareAssistance,$medicareAssistance->parent_medicare_assistance,true); @endphp
-											<span class="label label-primary">{{(!empty($parent_medicare_assistance))?$parent_medicare_assistance:"No Parent"}}</span>
+                                            @php $parent_id = get_parent_term($medicareAssistance,$medicareAssistance->parent_id,true); @endphp
+											<span class="label label-primary">{{(!empty($parent_id))?$parent_id:"No Parent"}}</span>
                                             @if($medicareAssistance->status == 1)
 											<span class="label label-success">Active</span> 
 											@else

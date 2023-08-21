@@ -18,7 +18,7 @@ return new class extends Migration
              $table->string('name');
              $table->string('slug');
              $table->tinyInteger('button')->default(0);
-             $table->integer('parent_package_type')->default(0);
+             $table->integer('parent_id')->default(0);
              $table->longText('description')->nullable();
              $table->string('icon')->nullable();
              $table->enum('package_type_type', config('global.post_types'));
