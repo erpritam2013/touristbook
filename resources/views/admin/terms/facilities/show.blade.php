@@ -32,8 +32,8 @@
 										<span class="badge">Last updated {{get_time_format($facility->updated_at,true)}}</span>
 										<div class="pull-right">
 											<span class="label label-default">{{$facility->facility_type}} Facility</span>
-                                            @php $parent_facility = get_parent_term($facility,$facility->parent_facility,true); @endphp
-											<span class="label label-primary">{{(!empty($parent_facility))?$parent_facility:"No Parent"}}</span>
+                                            @php $parent_id = get_parent_term($facility,$facility->parent_id,true); @endphp
+											<span class="label label-primary">{{(!empty($parent_id))?$parent_id:"No Parent"}}</span>
                                             @if($facility->status == 1)
 											<span class="label label-success">Active</span> 
 											@else

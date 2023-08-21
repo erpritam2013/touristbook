@@ -86,7 +86,7 @@ class AmenityController extends Controller
         $amenityDetails = [
             'name' => $request->name,
             'slug' => SlugService::createSlug(Amenity::class, 'slug', $request->name),
-            'parent_amenity' => (!empty($request->parent_amenity))?$request->parent_amenity:0,
+            'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'amenity_type' => $request->amenity_type,
             'description' => $request->description,
@@ -149,7 +149,7 @@ class AmenityController extends Controller
          $amenityDetails = [
             'name' => $request->name,
             //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
-            'parent_amenity' => (!empty($request->parent_amenity))?$request->parent_amenity:0,
+            'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'amenity_type' => $request->amenity_type,
             'description' => $request->description,

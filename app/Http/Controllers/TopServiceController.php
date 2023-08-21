@@ -82,7 +82,7 @@ class TopServiceController extends Controller
         $TopServiceDetails = [
             'name' => $request->name,
             'slug' => SlugService::createSlug(TopService::class, 'slug', $request->name),
-            'parent_top_service' => (!empty($request->parent_top_service))?$request->parent_top_service:0,
+            'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'top_service_type' => $request->top_service_type,
             'description' => $request->description,
@@ -145,7 +145,7 @@ class TopServiceController extends Controller
          $TopServiceDetails = [
             'name' => $request->name,
             //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
-            'parent_top_service' => (!empty($request->parent_top_service))?$request->parent_top_service:0,
+            'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'top_service_type' => $request->top_service_type,
             'description' => $request->description,

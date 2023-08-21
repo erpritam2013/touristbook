@@ -21,7 +21,7 @@ class PropertyType extends Model
        'slug',
        'description',
        'icon',
-       'parent_property_type',
+       'parent_id',
        'property_type_type',
        'extra_data',
        'status',
