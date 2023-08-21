@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
              $table->string('name');
              $table->string('slug');
-             $table->integer('parent_occupancie')->default(0);
+             $table->integer('parent_id')->default(0);
              $table->longText('description')->nullable();
              $table->string('icon')->nullable();
-             $table->enum('occupancie_type', config('global.post_types'));
+             $table->enum('occupancy_type', config('global.post_types'));
              $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });

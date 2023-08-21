@@ -21,7 +21,7 @@ class TopService extends Model
        'slug',
        'description',
        'icon',
-       'parent_top_service',
+       'parent_id',
        'top_service_type',
        'status',
    ];

@@ -60,7 +60,7 @@
                                 <td>{{$facility->name}}</td>
                                 <td>{{$facility->slug}}</td>
                                 <td>{!!get_fontawesome_icon_html($facility->icon,'fa-lg')!!}</td>
-                                <td>{{get_parent_term($facilities,$facility->parent_facility)}}</td>
+                                <td>{{get_parent_term($facilities,$facility->parent_id)}}</td>
                                 <td>{{$facility->facility_type}}</td>
                                 <td> <input data-id="{{$facility->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url=' {{route("admin.terms.changeStatus")}}' data-on="Active" data-off="InActive" {{ $facility->status ? 'checked' : '' }}></td>
                                 <td>{{get_time_format($facility->created_at)}}</td>

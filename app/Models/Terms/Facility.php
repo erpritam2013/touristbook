@@ -22,7 +22,7 @@ class Facility extends Model
        'slug',
        'description',
        'icon',
-       'parent_facility',
+       'parent_id',
        'facility_type',
        'status',
    ];

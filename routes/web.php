@@ -11,6 +11,7 @@ use App\Http\Controllers\MeetingAndEventController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\StateController;
+use App\Http\Controllers\OccupancyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -78,6 +79,11 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::delete('meeting-and-event/bulk-delete', [MeetingAndEventController::class,'bulk_delete'])->name('meeting-and-events.bulk-delete');
     Route::get('meeting-and-event/ajax-get', [MeetingAndEventController::class,'getMeetingAndEventsAjax'])->name('ajaxGetMeetingAndEvent');
     Route::get('meeting-and-event/changeStatus', [MeetingAndEventController::class,'changeStatus'])->name('changeStatusMeetingAndEvent');
+    /*occupancy Routes*/
+    Route::resource('occupancies', OccupancyController::class);
+    Route::delete('occupancy/bulk-delete', [OccupancyController::class,'bulk_delete'])->name('occupancies.bulk-delete');
+    Route::get('occupancy/ajax-get', [OccupancyController::class,'getOccupanciesAjax'])->name('ajaxGetOccupancy');
+    Route::get('occupancy/changeStatus', [OccupancyController::class,'changeStatus'])->name('changeStatusOccupancy');
 
     /*countries Routes*/
     Route::resource('countries', CountryController::class);

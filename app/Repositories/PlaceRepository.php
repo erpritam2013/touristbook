@@ -13,7 +13,15 @@ class PlaceRepository implements PlaceRepositoryInterface
     }
     public function getPlacesByType($type=null,$p_id=null) 
     {
-        return Place::where('place_type',$type)->where('id', '!=', $p_id)->get(['id','name']);
+         $placeTypeBuilder = [];
+        if (!empty($type)){
+        $placeTypeBuilder = Place::where('status', Place::ACTIVE)->where('place_type',$type)->get(['id','name','parent_id']);
+        }
+        if (!empty($p_id)){
+        $placeTypeBuilder = Place::where('status', Place::ACTIVE)->where('id', '!=', $p_id)->where('parent_id', '!=', $p_id)->where('parent_id', 0)->get(['id','name','parent_id']);
+        }
+
+       return $placeTypeBuilder;
     }
 
     public function getPlaceById($placeId) 
@@ -47,7 +55,11 @@ class PlaceRepository implements PlaceRepositoryInterface
         if($type)
             $placeBuilder->where('place_type',$type);
 
-        return $placeBuilder->get(['id','name']);
+           $places = $placeBuilder->get(['id','name', 'parent_id']);
+
+        $nestedResult = $places->toNested();
+
+        return  $nestedResult;
     }
 
     // Get Active Hotel Type Places
