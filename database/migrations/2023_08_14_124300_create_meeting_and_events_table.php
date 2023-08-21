@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
              $table->string('name');
              $table->string('slug');
-             $table->integer('parent_meeting_and_event')->default(0);
+             $table->integer('parent_id')->default(0);
              $table->longText('description')->nullable();
              $table->string('icon')->nullable();
              $table->enum('meeting_and_event_type', config('global.post_types'));

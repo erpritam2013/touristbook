@@ -67,14 +67,14 @@
                                 </div>
                             
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label" for="amenity-parent">Amenity Parent
+                                    <label class="col-lg-2 col-form-label" for="parent-id">Amenity Parent
                                     </label>
                                     <div class="col-lg-10">
-                                        <select class="form-control multi-select" id="amenity-parent" name="parent_amenity" data-existed_parent_amenity="{{$amenity->parent_amenity ?? ''}}">
+                                        <select class="form-control multi-select" id="parent-id" name="parent_id" data-existed_parent_id="{{$amenity->parent_id ?? ''}}">
                                             @isset($amenities)
                                             <option value="">Select Amenity Parent</option>
                                             @foreach($amenities as $ame_p)
-                                            <option value="{{$ame_p->id}}" {!!get_edit_select_post_types_old_value($ame_p->id, $amenity->parent_amenity ?? "",'select')!!} >{{$ame_p->name}}</option>
+                                            <option value="{{$ame_p->id}}" {!!get_edit_select_post_types_old_value($ame_p->id, $amenity->parent_id ?? "",'select')!!} >{{$ame_p->name}}</option>
                                             @endforeach
                                             @endisset
                                         </select>

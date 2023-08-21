@@ -11,9 +11,17 @@ class FacilityRepository implements FacilityRepositoryInterface
     {
         return Facility::all();
     }
-    public function getFacilitiesByType($type=null,$f_id=null) 
+    public function getFacilitiesByType($type=null,$f_id = null) 
     {
-        return Facility::where('facility_type',$type)->where('id', '!=', $f_id)->get(['id','name']);
+        $facilityTypeBuilder = [];
+        if (!empty($type)){
+        $facilityTypeBuilder = Facility::where('status', Facility::ACTIVE)->where('facility_type',$type)->get(['id','name','parent_id']);
+        }
+        if (!empty($f_id)){
+        $facilityTypeBuilder = Facility::where('status', Facility::ACTIVE)->where('id', '!=', $f_id)->where('parent_id', '!=', $f_id)->where('parent_id', 0)->get(['id','name','parent_id']);
+        }
+
+       return $facilityTypeBuilder;
     }
 
     public function getFacilityById($facilityId) 
@@ -48,9 +56,9 @@ class FacilityRepository implements FacilityRepositoryInterface
         if($type)
             $facilityBuilder->where('facility_type',$type);
 
-        $facilities = $facilityBuilder->get(['id','name', 'parent_facility']);
+        $facilities = $facilityBuilder->get(['id','name', 'parent_id']);
 
-        $nestedResult = $facilities->toNested('parent_facility');
+        $nestedResult = $facilities->toNested();
 
         return  $nestedResult;
 

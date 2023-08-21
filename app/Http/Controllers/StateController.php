@@ -70,7 +70,7 @@ class StateController extends Controller
         $StateDetails = [
             'name' => $request->name,
             'slug' => SlugService::createSlug(State::class, 'slug', $request->name),
-            'parent_state' => (!empty($request->parent_state))?$request->parent_state:0,
+            'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'extra_data' => json_encode($request->extra_data),
             'country' => $request->country,
@@ -135,7 +135,7 @@ class StateController extends Controller
          $stateDetails = [
             'name' => $request->name,
             //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
-            'parent_state' => (!empty($request->parent_state))?$request->parent_state:0,
+            'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'extra_data' => json_encode($request->extra_data),
             'country' => $request->country,

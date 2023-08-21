@@ -13,7 +13,15 @@ class PropertyTypeRepository implements PropertyTypeRepositoryInterface
     }
     public function getPropertyTypesByType($type=null,$pt_id=null) 
     {
-        return PropertyType::where('property_type_type',$type)->where('id', '!=', $pt_id)->get(['id','name']);
+                 $propertyTypeTypeBuilder = [];
+        if (!empty($type)){
+        $propertyTypeTypeBuilder = PropertyType::where('status', PropertyType::ACTIVE)->where('property_type_type',$type)->get(['id','name','parent_id']);
+        }
+        if (!empty($pt_id)){
+        $propertyTypeTypeBuilder = PropertyType::where('status', PropertyType::ACTIVE)->where('id', '!=', $pt_id)->where('parent_id', '!=', $pt_id)->where('parent_id', 0)->get(['id','name','parent_id']);
+        }
+
+       return $propertyTypeTypeBuilder;
     }
 
     public function getPropertyTypeById($propertyTypeId) 
@@ -49,7 +57,11 @@ class PropertyTypeRepository implements PropertyTypeRepositoryInterface
         if($type)
             $propertyTypeBuilder->where('property_type_type',$type);
 
-        return $propertyTypeBuilder->get(['id','name']);
+         $property_types = $propertyTypeBuilder->get(['id','name', 'parent_id']);
+
+        $nestedResult = $property_types->toNested();
+
+        return  $nestedResult;
     }
 
     // Get Active Hotel Type PropertyTypes

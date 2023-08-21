@@ -41,8 +41,8 @@
 										<span class="badge">Last updated {{get_time_format($state->updated_at,true)}}</span>
 										<div class="pull-right">
 											<span class="label label-default">{{$state->state_type}} state</span>
-                                            @php $parent_state = get_parent_term($state,$state->parent_state,true); @endphp
-											<span class="label label-primary">{{(!empty($parent_state))?$parent_state:"No Parent"}}</span>
+                                            @php $parent_id = get_parent_term($state,$state->parent_id,true); @endphp
+											<span class="label label-primary">{{(!empty($parent_id))?$parent_id:"No Parent"}}</span>
                                             @if($state->status == 1)
 											<span class="label label-success">Active</span> 
 											@else

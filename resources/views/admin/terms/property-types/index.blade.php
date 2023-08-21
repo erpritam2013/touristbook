@@ -60,7 +60,7 @@
                                 <td>{{$property_type->name}}</td>
                                 <td>{{$property_type->slug}}</td>
                                 <td>{!!get_fontawesome_icon_html($property_type->icon,'fa-lg')!!}</td>
-                                <td>{{get_parent_term($property_types,$property_type->parent_property_type)}}</td>
+                                <td>{{get_parent_term($property_types,$property_type->parent_id)}}</td>
                                 <td>{{$property_type->property_type_type}}</td>
                                 <td> <input data-id="{{$property_type->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url=' {{route("admin.terms.changeStatusPropertyType")}}' data-on="Active" data-off="InActive" {{ $property_type->status ? 'checked' : '' }}></td>
                                 <td>{{get_time_format($property_type->created_at)}}</td>

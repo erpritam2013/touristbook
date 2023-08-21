@@ -13,7 +13,15 @@ class AmenityRepository implements AmenityRepositoryInterface
     }
     public function getAmenitiesByType($type=null,$a_id=null) 
     {
-        return Amenity::where('amenity_type',$type)->where('id', '!=', $a_id)->get(['id','name']);
+        $amenityTypeBuilder = [];
+        if (!empty($type)){
+        $amenityTypeBuilder = Amenity::where('status', Amenity::ACTIVE)->where('amenity_type',$type)->get(['id','name','parent_id']);
+        }
+        if (!empty($a_id)){
+        $amenityTypeBuilder = Amenity::where('status', Amenity::ACTIVE)->where('id', '!=', $a_id)->where('parent_id', '!=', $a_id)->where('parent_id', 0)->get(['id','name','parent_id']);
+        }
+
+       return $amenityTypeBuilder;
     }
 
     public function getAmenityById($amenityId) 
@@ -49,7 +57,11 @@ class AmenityRepository implements AmenityRepositoryInterface
         if($type)
             $amenityBuilder->where('amenity_type',$type);
 
-        return $amenityBuilder->get(['id','name']);
+        $amenities = $amenityBuilder->get(['id','name', 'parent_id']);
+
+        $nestedResult = $amenities->toNested();
+
+        return  $nestedResult;
     }
 
     // Get Active Hotel Type Amenities

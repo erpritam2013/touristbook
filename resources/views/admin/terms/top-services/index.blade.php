@@ -60,7 +60,7 @@
                                 <td>{{$top_service->name}}</td>
                                 <td>{{$top_service->slug}}</td>
                                 <td>{!!get_fontawesome_icon_html($top_service->icon,'fa-lg')!!}</td>
-                                <td>{{get_parent_term($top_services,$top_service->parent_top_service)}}</td>
+                                <td>{{get_parent_term($top_services,$top_service->parent_id)}}</td>
                                 <td>{{$top_service->top_service_type}}</td>
                                 <td> <input data-id="{{$top_service->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url=' {{route("admin.terms.changeStatusTopService")}}' data-on="Active" data-off="InActive" {{ $top_service->status ? 'checked' : '' }}></td>
                                 <td>{{get_time_format($top_service->created_at)}}</td>

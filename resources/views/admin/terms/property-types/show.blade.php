@@ -34,8 +34,8 @@
 										<span class="badge">Last updated {{get_time_format($property_type->updated_at,true)}}</span>
 										<div class="pull-right">
 											<span class="label label-default">{{$property_type->property_type_type}} Property Type</span>
-                                            @php $parent_property_type = get_parent_term($property_type,$property_type->parent_property_type,true); @endphp
-											<span class="label label-primary">{{(!empty($parent_property_type))?$parent_property_type:"No Parent"}}</span>
+                                            @php $parent_id = get_parent_term($property_type,$property_type->parent_id,true); @endphp
+											<span class="label label-primary">{{(!empty($parent_id))?$parent_id:"No Parent"}}</span>
                                             @if($property_type->status == 1)
 											<span class="label label-success">Active</span> 
 											@else
