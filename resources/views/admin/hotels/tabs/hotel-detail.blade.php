@@ -3,10 +3,10 @@
 
     <div class="col-lg-7">
         <label class="col-form-label">
-            <input type="radio" name="is_featured_hotel" value="1" {!!get_edit_select_check_pvr_old_value('is_featured_hotel', $hotel ?? "" ,'is_featured_hotel',1, 'checked' )!!}>&nbsp;On
+            <input type="radio" name="is_featured" value="1" {!!get_edit_select_check_pvr_old_value('is_featured', $hotel ?? "" ,'is_featured',1, 'checked' )!!}>&nbsp;On
         </label>
         <label class="col-form-label">
-            <input type="radio" name="is_featured_hotel" {!!get_edit_select_check_pvr_old_value('status', $hotel ?? "" ,'is_featured_hotel',0, 'checked' )!!} value="0">&nbsp;Off
+            <input type="radio" name="is_featured" {!!get_edit_select_check_pvr_old_value('status', $hotel ?? "" ,'is_featured',0, 'checked' )!!} value="0">&nbsp;Off
         </label>
     </div>
 </div>
