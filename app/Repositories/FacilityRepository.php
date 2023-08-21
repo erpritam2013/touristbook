@@ -48,7 +48,13 @@ class FacilityRepository implements FacilityRepositoryInterface
         if($type)
             $facilityBuilder->where('facility_type',$type);
 
-        return $facilityBuilder->get(['id','name']);
+        $facilities = $facilityBuilder->get(['id','name', 'parent_facility']);
+
+        $nestedResult = $facilities->toNested('parent_facility');
+
+        return  $nestedResult;
+
+
     }
 
     // Get Active Hotel Type Facilities

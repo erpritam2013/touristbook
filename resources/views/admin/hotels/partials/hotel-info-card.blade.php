@@ -23,25 +23,27 @@
                         <p>Location - Coming Soon</p>
                     </div>
                     <div id="v-pills-hotel-detail" class="tab-pane fade">
-                        <p>Hotel Detail - Coming Soon</p>
+                        
+                        @include('admin.hotels.tabs.hotel-detail', ["hotel" => $hotel])
+
                     </div>
                     <div id="v-pills-contact" class="tab-pane fade">
-                        <p>Contact - Coming Soon</p>
+                        @include('admin.hotels.tabs.contact', ["hotel" => $hotel])
                     </div>
                     <div id="v-pills-price" class="tab-pane fade">
-                        <p>Price - Coming Soon</p>
+                        @include('admin.hotels.tabs.price', ["hotel" => $hotel])
                     </div>
                     <div id="v-pills-checkinout" class="tab-pane fade">
-                        <p>Check in-out - Coming Soon</p>
+                        @include('admin.hotels.tabs.check-in-out', ["hotel" => $hotel])
                     </div>
                     <div id="v-pills-otheroptions" class="tab-pane fade">
-                        <p>Other Options - Coming Soon</p>
+                        @include('admin.hotels.tabs.other-options', ["hotel" => $hotel])
                     </div>
                     <div id="v-pills-policy" class="tab-pane fade">
-                        <p>Policy - Coming Soon</p>
+                        @include('admin.hotels.tabs.policy', ["hotel" => $hotel])
                     </div>
                     <div id="v-pills-notices" class="tab-pane fade">
-                        <p>Notices - Coming Soon</p>
+                        @include('admin.hotels.tabs.notices', ["hotel" => $hotel])
                     </div>
                 </div>
             </div>
