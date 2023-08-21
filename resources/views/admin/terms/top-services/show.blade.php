@@ -32,8 +32,8 @@
 										<span class="badge">Last updated {{get_time_format($top_service->updated_at,true)}}</span>
 										<div class="pull-right">
 											<span class="label label-default">{{$top_service->top_service_type}} top_service</span>
-                                            @php $parent_top_service = get_parent_term($top_service,$top_service->parent_top_service,true); @endphp
-											<span class="label label-primary">{{(!empty($parent_top_service))?$parent_top_service:"No Parent"}}</span>
+                                            @php $parent_id = get_parent_term($top_service,$top_service->parent_id,true); @endphp
+											<span class="label label-primary">{{(!empty($parent_id))?$parent_id:"No Parent"}}</span>
                                             @if($top_service->status == 1)
 											<span class="label label-success">Active</span> 
 											@else

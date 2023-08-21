@@ -62,7 +62,7 @@ class MedicareAssistanceController extends Controller
     }
      public function changeStatus(Request $request): JsonResponse
     {
-        $MedicareAssistanceId = $request->medicare_assistance_id;
+        $MedicareAssistanceId = $request->id;
           $MedicareAssistanceDetails = [
             'status' => $request->status,
         ];
@@ -82,7 +82,7 @@ class MedicareAssistanceController extends Controller
         $MedicareAssistanceDetails = [
             'name' => $request->name,
             'slug' => SlugService::createSlug(MedicareAssistance::class, 'slug', $request->name),
-            'parent_medicare_assistance' => (!empty($request->parent_medicare_assistance))?$request->parent_medicare_assistance:0,
+            'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'medicare_assistance_type' => $request->medicare_assistance_type,
             'description' => $request->description,
@@ -146,7 +146,7 @@ class MedicareAssistanceController extends Controller
          $MedicareAssistanceDetails = [
             'name' => $request->name,
             //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
-            'parent_medicare_assistance' => (!empty($request->parent_medicare_assistance))?$request->parent_medicare_assistance:0,
+            'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'medicare_assistance_type' => $request->medicare_assistance_type,
             'description' => $request->description,

@@ -13,7 +13,15 @@ class MeetingAndEventRepository implements MeetingAndEventRepositoryInterface
     }
     public function getMeetingAndEventsByType($type=null,$mae_id=null) 
     {
-        return MeetingAndEvent::where('meeting_and_event_type',$type)->where('id', '!=', $mae_id)->get(['id','name']);
+        $meetingAndEventTypeBuilder = [];
+        if (!empty($type)){
+        $meetingAndEventTypeBuilder = MeetingAndEvent::where('status', MeetingAndEvent::ACTIVE)->where('meeting_and_event_type',$type)->get(['id','name','parent_id']);
+        }
+        if (!empty($mae_id)){
+        $meetingAndEventTypeBuilder = MeetingAndEvent::where('status', MeetingAndEvent::ACTIVE)->where('id', '!=', $mae_id)->where('parent_id', '!=', $mae_id)->where('parent_id', 0)->get(['id','name','parent_id']);
+        }
+
+       return $meetingAndEventTypeBuilder;
     }
 
     public function getMeetingAndEventById($MeetingAndEventId) 
@@ -49,7 +57,11 @@ class MeetingAndEventRepository implements MeetingAndEventRepositoryInterface
         if($type)
             $meetingAndEventBuilder->where('meeting_and_event_type',$type);
 
-        return $meetingAndEventBuilder->get(['id','name']);
+        $meeting_and_events = $meetingAndEventBuilder->get(['id','name', 'parent_id']);
+
+        $nestedResult = $meeting_and_events->toNested();
+
+        return  $nestedResult;
     }
 
     // Get Active Hotel Type Meeting And Events

@@ -10,7 +10,7 @@
 
 
       var amenity_type = $(this).children('option:selected').val();
-      var existed_parent_amenity = $('#amenity-parent').data('existed_parent_amenity');
+      var existed_parent_id = $('#amenity-parent').data('existed_parent_id');
       var amenity_id = $("#amenity-id").data('id');
       var data = {amenity_type};
       if (typeof amenity_id != "undefined") {
@@ -18,24 +18,24 @@
      }
      preloader.css({'z-index': 1});
      preloader.show();
-     var amenity_parent = $('#amenity-parent');
-     amenity_parent.after(preloader);
+     var parent_id = $('#amenity-parent');
+     parent_id.after(preloader);
      $.get(userURL,{amenity_type,'id':amenity_id},function (data) {
         $options = "";
         if (data.length != 0) {
             preloader.css({'z-index': 0});
             preloader.hide();
-            amenity_parent.find('option').remove();
-            amenity_parent.append(new Option('Select amenity Parent', ""));
+            parent_id.find('option').remove();
+            parent_id.append(new Option('Select amenity Parent', ""));
             $.each(data.data,function(index,value){
                 optionText = value.name;
                 optionValue = value.id;
 
-                if (typeof existed_parent_amenity != "undefined" && optionValue === parseInt(existed_parent_amenity)) {
-                    amenity_parent.append(new Option(optionText, optionValue,true, true));
+                if (typeof existed_parent_id != "undefined" && optionValue === parseInt(existed_parent_id)) {
+                    parent_id.append(new Option(optionText, optionValue,true, true));
                 }else{
 
-                    amenity_parent.append(new Option(optionText, optionValue));
+                    parent_id.append(new Option(optionText, optionValue));
                 }
             });
         }else{
@@ -55,7 +55,7 @@
 
               
               var facility_type = $(this).children('option:selected').val();
-              var existed_parent_facitity = $('#facility-parent').data('existed_parent_facitity');
+              var existed_parent_id = $('#parent-id').data('existed_parent_id');
               var facility_id = $("#facility-id").data('id');
               var data = {facility_type};
               if (typeof facility_id != "undefined") {
@@ -63,24 +63,24 @@
            }
             preloader.css({'z-index': 1});
             preloader.show();
-            var facility_parent = $('#facility-parent');
-            facility_parent.after(preloader);
+            var parent_id = $('#parent-id');
+            parent_id.after(preloader);
            $.get(userURL,{facility_type,'id':facility_id},function (data) {
             $options = "";
             if (data.length != 0) {
                 preloader.css({'z-index': 0});
                 preloader.hide();
-             facility_parent.find('option').remove();
-             facility_parent.append(new Option('Select Facility Parent', ""));
+             parent_id.find('option').remove();
+             parent_id.append(new Option('Select Facility Parent', ""));
              $.each(data.data,function(index,value){
                 optionText = value.name;
                 optionValue = value.id;
                
-                if (typeof existed_parent_facitity != "undefined" && optionValue === parseInt(existed_parent_facitity)) {
-                    facility_parent.append(new Option(optionText, optionValue,true, true));
+                if (typeof existed_parent_id != "undefined" && optionValue === parseInt(existed_parent_id)) {
+                    parent_id.append(new Option(optionText, optionValue,true, true));
                 }else{
 
-                facility_parent.append(new Option(optionText, optionValue));
+                parent_id.append(new Option(optionText, optionValue));
                 }
             });
          }else{
@@ -99,7 +99,7 @@
 
               
               var medicare_assistance_type = $(this).children('option:selected').val();
-              var existed_parent_facitity = $('#medicare-assistance-parent').data('existed_parent_facitity');
+              var existed_parent_id = $('#parent-id').data('existed_parent_id');
               var medicare_assistance_id = $("#medicare-assistance-id").data('id');
               var data = {medicare_assistance_type};
               if (typeof medicare_assistance_id != "undefined") {
@@ -107,24 +107,24 @@
            }
             preloader.css({'z-index': 1});
             preloader.show();
-            var medicare_assistance_parent = $('#medicare-assistance-parent');
-            medicare_assistance_parent.after(preloader);
+            var parent_id = $('#parent-id');
+            parent_id.after(preloader);
            $.get(userURL,{medicare_assistance_type,'id':medicare_assistance_id},function (data) {
             $options = "";
             if (data.length != 0) {
                 preloader.css({'z-index': 0});
                 preloader.hide();
-             medicare_assistance_parent.find('option').remove();
-             medicare_assistance_parent.append(new Option('Select Medicare Assistance Parent', ""));
+             parent_id.find('option').remove();
+             parent_id.append(new Option('Select Medicare Assistance Parent', ""));
              $.each(data.data,function(index,value){
                 optionText = value.name;
                 optionValue = value.id;
                
-                if (typeof existed_parent_facitity != "undefined" && optionValue === parseInt(existed_parent_facitity)) {
-                    medicare_assistance_parent.append(new Option(optionText, optionValue,true, true));
+                if (typeof existed_parent_id != "undefined" && optionValue === parseInt(existed_parent_id)) {
+                    parent_id.append(new Option(optionText, optionValue,true, true));
                 }else{
 
-                medicare_assistance_parent.append(new Option(optionText, optionValue));
+                parent_id.append(new Option(optionText, optionValue));
                 }
             });
          }else{
@@ -143,7 +143,7 @@
 
               
               var top_service_type = $(this).children('option:selected').val();
-              var existed_parent_top_service = $('#top-service-parent').data('existed_parent_top_service');
+              var existed_parent_id = $('#parent-id').data('existed_parent_id');
               var top_service_id = $("#top-service-id").data('id');
               var data = {top_service_type};
               if (typeof top_service_id != "undefined") {
@@ -151,24 +151,24 @@
            }
             preloader.css({'z-index': 1});
             preloader.show();
-            var top_service_parent = $('#top-service-parent');
-            top_service_parent.after(preloader);
+            var parent_id = $('#parent-id');
+            parent_id.after(preloader);
            $.get(userURL,{top_service_type,'id':top_service_id},function (data) {
             $options = "";
             if (data.length != 0) {
                 preloader.css({'z-index': 0});
                 preloader.hide();
-             top_service_parent.find('option').remove();
-             top_service_parent.append(new Option('Select Top Service Parent', ""));
+             parent_id.find('option').remove();
+             parent_id.append(new Option('Select Top Service Parent', ""));
              $.each(data.data,function(index,value){
                 optionText = value.name;
                 optionValue = value.id;
                
-                if (typeof existed_parent_top_service != "undefined" && optionValue === parseInt(existed_parent_top_service)) {
-                    top_service_parent.append(new Option(optionText, optionValue,true, true));
+                if (typeof existed_parent_id != "undefined" && optionValue === parseInt(existed_parent_id)) {
+                    parent_id.append(new Option(optionText, optionValue,true, true));
                 }else{
 
-                top_service_parent.append(new Option(optionText, optionValue));
+                parent_id.append(new Option(optionText, optionValue));
                 }
             });
          }else{
@@ -187,7 +187,7 @@
 
               
               var place_type = $(this).children('option:selected').val();
-              var existed_parent_place = $('#place-parent').data('existed_parent_place');
+              var existed_parent_id = $('#parent-id').data('existed_parent_id');
               var place_id = $("#place-id").data('id');
               var data = {place_type};
               if (typeof place_id != "undefined") {
@@ -195,24 +195,24 @@
            }
             preloader.css({'z-index': 1});
             preloader.show();
-            var place_parent = $('#place-parent');
-            place_parent.after(preloader);
+            var parent_id = $('#parent-id');
+            parent_id.after(preloader);
            $.get(userURL,{place_type,'id':place_id},function (data) {
             $options = "";
             if (data.length != 0) {
                 preloader.css({'z-index': 0});
                 preloader.hide();
-             place_parent.find('option').remove();
-             place_parent.append(new Option('Select Place Parent', ""));
+             parent_id.find('option').remove();
+             parent_id.append(new Option('Select Place Parent', ""));
              $.each(data.data,function(index,value){
                 optionText = value.name;
                 optionValue = value.id;
                
-                if (typeof existed_parent_place != "undefined" && optionValue === parseInt(existed_parent_place)) {
-                    place_parent.append(new Option(optionText, optionValue,true, true));
+                if (typeof existed_parent_id != "undefined" && optionValue === parseInt(existed_parent_id)) {
+                    parent_id.append(new Option(optionText, optionValue,true, true));
                 }else{
 
-                place_parent.append(new Option(optionText, optionValue));
+                parent_id.append(new Option(optionText, optionValue));
                 }
             });
          }else{
@@ -231,7 +231,7 @@
 
               
               var meeting_and_event_type = $(this).children('option:selected').val();
-              var existed_parent_meeting_and_event = $('#meeting-and-event-parent').data('existed_parent_meeting_and_event');
+              var existed_parent_id = $('#parent-id').data('existed_parent_id');
               var meeting_and_event_id = $("#meeting-and-event-id").data('id');
               var data = {meeting_and_event_type};
               if (typeof meeting_and_event_id != "undefined") {
@@ -239,24 +239,24 @@
            }
             preloader.css({'z-index': 1});
             preloader.show();
-            var meeting_and_event_parent = $('#meeting-and-event-parent');
-            meeting_and_event_parent.after(preloader);
+            var parent_id = $('#parent-id');
+            parent_id.after(preloader);
            $.get(userURL,{meeting_and_event_type,'id':meeting_and_event_id},function (data) {
             $options = "";
             if (data.length != 0) {
                 preloader.css({'z-index': 0});
                 preloader.hide();
-             meeting_and_event_parent.find('option').remove();
-             meeting_and_event_parent.append(new Option('Select Meeting And Event Parent', ""));
+             parent_id.find('option').remove();
+             parent_id.append(new Option('Select Meeting And Event Parent', ""));
              $.each(data.data,function(index,value){
                 optionText = value.name;
                 optionValue = value.id;
                
-                if (typeof existed_parent_meeting_and_event != "undefined" && optionValue === parseInt(existed_parent_meeting_and_event)) {
-                    meeting_and_event_parent.append(new Option(optionText, optionValue,true, true));
+                if (typeof existed_parent_id != "undefined" && optionValue === parseInt(existed_parent_id)) {
+                    parent_id.append(new Option(optionText, optionValue,true, true));
                 }else{
 
-                meeting_and_event_parent.append(new Option(optionText, optionValue));
+                parent_id.append(new Option(optionText, optionValue));
                 }
             });
          }else{
@@ -275,7 +275,7 @@
 
               
               var accessible_type = $(this).children('option:selected').val();
-              var existed_parent_accessible = $('#accessible-parent').data('existed_parent_accessible');
+              var existed_parent_id = $('#parent-id').data('existed_parent_id');
               var accessible_id = $("#accessible-id").data('id');
               var data = {accessible_type};
               if (typeof accessible_id != "undefined") {
@@ -283,24 +283,24 @@
            }
             preloader.css({'z-index': 1});
             preloader.show();
-            var accessible_parent = $('#accessible-parent');
-            accessible_parent.after(preloader);
+            var parent_id = $('#parent-id');
+            parent_id.after(preloader);
            $.get(userURL,{accessible_type,'id':accessible_id},function (data) {
             $options = "";
             if (data.length != 0) {
                 preloader.css({'z-index': 0});
                 preloader.hide();
-             accessible_parent.find('option').remove();
-             accessible_parent.append(new Option('Select accessible Parent', ""));
+             parent_id.find('option').remove();
+             parent_id.append(new Option('Select accessible Parent', ""));
              $.each(data.data,function(index,value){
                 optionText = value.name;
                 optionValue = value.id;
                
-                if (typeof existed_parent_accessible != "undefined" && optionValue === parseInt(existed_parent_accessible)) {
-                    accessible_parent.append(new Option(optionText, optionValue,true, true));
+                if (typeof existed_parent_id != "undefined" && optionValue === parseInt(existed_parent_id)) {
+                    parent_id.append(new Option(optionText, optionValue,true, true));
                 }else{
 
-                accessible_parent.append(new Option(optionText, optionValue));
+                parent_id.append(new Option(optionText, optionValue));
                 }
             });
          }else{
@@ -319,7 +319,7 @@
 
               
               var property_type_type = $(this).children('option:selected').val();
-              var existed_parent_property_type = $('#property-type-parent').data('existed_parent_property_type');
+              var existed_parent_id = $('#parent-id').data('existed_parent_id');
               var property_type_id = $("#property-type-id").data('id');
               var data = {property_type_type};
               if (typeof property_type_id != "undefined") {
@@ -327,24 +327,24 @@
            }
             preloader.css({'z-index': 1});
             preloader.show();
-            var property_type_parent = $('#property-type-parent');
-            property_type_parent.after(preloader);
+            var parent_id = $('#parent-id');
+            parent_id.after(preloader);
            $.get(userURL,{property_type_type,'id':property_type_id},function (data) {
             $options = "";
             if (data.length != 0) {
                 preloader.css({'z-index': 0});
                 preloader.hide();
-             property_type_parent.find('option').remove();
-             property_type_parent.append(new Option('Select Property Type Parent', ""));
+             parent_id.find('option').remove();
+             parent_id.append(new Option('Select Property Type Parent', ""));
              $.each(data.data,function(index,value){
                 optionText = value.name;
                 optionValue = value.id;
                
-                if (typeof existed_parent_property_type != "undefined" && optionValue === parseInt(existed_parent_property_type)) {
-                    property_type_parent.append(new Option(optionText, optionValue,true, true));
+                if (typeof existed_parent_id != "undefined" && optionValue === parseInt(existed_parent_id)) {
+                    parent_id.append(new Option(optionText, optionValue,true, true));
                 }else{
 
-                property_type_parent.append(new Option(optionText, optionValue));
+                parent_id.append(new Option(optionText, optionValue));
                 }
             });
          }else{
@@ -355,6 +355,51 @@
            $('.multi-select').select2();
        });
 /*property type js end*/
+
+
+/*occupancy type js start*/
+  $('body').on('input', '#occupancy-type', function () {
+              var userURL = $(this).data('url');
+
+              
+              var occupancy_type = $(this).children('option:selected').val();
+              var existed_parent_id = $('#parent-id').data('existed_parent_id');
+              var occupancy_id = $("#occupancy-id").data('id');
+              var data = {occupancy_type};
+              if (typeof occupancy_id != "undefined") {
+               data = {occupancy_type,'id':occupancy_id};
+           }
+            preloader.css({'z-index': 1});
+            preloader.show();
+            var parent_id = $('#parent-id');
+            parent_id.after(preloader);
+           $.get(userURL,{occupancy_type,'id':occupancy_id},function (data) {
+            $options = "";
+            if (data.length != 0) {
+                preloader.css({'z-index': 0});
+                preloader.hide();
+             parent_id.find('option').remove();
+             parent_id.append(new Option('Select occupancy Parent', ""));
+             $.each(data.data,function(index,value){
+                optionText = value.name;
+                optionValue = value.id;
+               
+                if (typeof existed_parent_id != "undefined" && optionValue === parseInt(existed_parent_id)) {
+                    parent_id.append(new Option(optionText, optionValue,true, true));
+                }else{
+
+                parent_id.append(new Option(optionText, optionValue));
+                }
+            });
+         }else{
+            alert('something went wrong!');
+         }
+            //$(occupancy_type).append(occupancy_type);
+     });
+           $('.multi-select').select2();
+       });
+
+/*occupancy type js end*/
 
 /*delete entity type js start*/
 

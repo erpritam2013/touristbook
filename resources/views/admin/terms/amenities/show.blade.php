@@ -32,8 +32,8 @@
 										<span class="badge">Last updated {{get_time_format($amenity->updated_at,true)}}</span>
 										<div class="pull-right">
 											<span class="label label-default" style="color:#000;">{{$amenity->amenity_type}} Amenity</span>
-                                            @php $parent_amenity = get_parent_term($amenity,$amenity->parent_amenity,true); @endphp
-											<span class="label label-primary">{{(!empty($parent_amenity))?$parent_amenity:"No Parent"}}</span>
+                                            @php $parent_id = get_parent_term($amenity,$amenity->parent_id,true); @endphp
+											<span class="label label-primary">{{(!empty($parent_id))?$parent_id:"No Parent"}}</span>
                                             @if($amenity->status == 1)
 											<span class="label label-success">Active</span> 
 											@else

@@ -64,7 +64,7 @@ class FacilityController extends Controller
 
      public function changeStatus(Request $request): JsonResponse
     {
-        $facilityId = $request->facility_id;
+        $facilityId = $request->id;
           $facilityDetails = [
             'status' => $request->status,
         ];
@@ -84,7 +84,7 @@ class FacilityController extends Controller
          $facilityDetails = [
             'name' => $request->name,
             'slug' => SlugService::createSlug(Facility::class, 'slug', $request->name),
-            'parent_facility' => (!empty($request->parent_facility))?$request->parent_facility:0,
+            'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'facility_type' => $request->facility_type,
             'description' => $request->description,
@@ -149,7 +149,7 @@ class FacilityController extends Controller
          $facilityDetails = [
             'name' => $request->name,
             //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
-            'parent_facility' => (!empty($request->parent_facility))?$request->parent_facility:0,
+            'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'facility_type' => $request->facility_type,
             'description' => $request->description,

@@ -49,7 +49,7 @@ class AccessibleRepository implements AccessibleRepositoryInterface
         if($type)
             $accessibleBuilder->where('accessible_type',$type);
 
-        return $accessibleBuilder->get(['id','name']);
+        return $accessibleBuilder->get(['id','name','parent_id']);
     }
 
     // Get Active Hotel Type Accessibles

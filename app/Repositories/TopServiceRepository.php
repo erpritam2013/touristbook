@@ -13,7 +13,15 @@ class TopServiceRepository implements TopServiceRepositoryInterface
     }
     public function getTopServicesByType($type=null,$ts_id=null) 
     {
-        return TopService::where('top_service_type',$type)->where('id', '!=', $ts_id)->get(['id','name']);
+               $topServiceTypeBuilder = [];
+        if (!empty($type)){
+        $topServiceTypeBuilder = TopService::where('status', TopService::ACTIVE)->where('top_service_type',$type)->get(['id','name','parent_id']);
+        }
+        if (!empty($pt_id)){
+        $topServiceTypeBuilder = TopService::where('status', TopService::ACTIVE)->where('id', '!=', $pt_id)->where('parent_id', '!=', $pt_id)->where('parent_id', 0)->get(['id','name','parent_id']);
+        }
+
+       return $topServiceTypeBuilder;
     }
 
     public function getTopServiceById($TopServiceId) 
@@ -48,7 +56,11 @@ class TopServiceRepository implements TopServiceRepositoryInterface
         if($type)
             $topServiceBuilder->where('top_service_type',$type);
 
-        return $topServiceBuilder->get(['id','name']);
+         $top_services = $topServiceBuilder->get(['id','name', 'parent_id']);
+
+        $nestedResult = $top_services->toNested();
+
+        return  $nestedResult;
     }
 
     // Get Active Hotel Type Medicare Assistances

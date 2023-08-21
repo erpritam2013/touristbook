@@ -20,7 +20,7 @@ class Amenity extends Model
        'slug',
        'description',
        'icon',
-       'parent_amenity',
+       'parent_id',
        'amenity_type',
        'status',
    ];
