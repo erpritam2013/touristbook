@@ -10,6 +10,12 @@ class Hotel extends Model
 {
     use HasFactory, Sluggable;
 
+    protected $guarded = [];
+
+    protected $casts = [
+        'hotel_attributes' => 'array',
+    ];
+
     public function sluggable(): Array
     {
         return [

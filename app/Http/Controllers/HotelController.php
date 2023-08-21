@@ -90,7 +90,6 @@ class HotelController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
         $hotelDetails = [
             'name' => $request->name,
             'description' => $request->description,
@@ -102,9 +101,9 @@ class HotelController extends Controller
             'hotel_video' => $request->hotel_video,
             'rating' => $request->rating,
             'coupon_code' => $request->coupon_code,
-            'hotel_attributes' => json_encode($request->hotel_attributes),
+            'hotel_attributes' => $request->hotel_attributes,
             'contact' => json_encode($request->contact),
-            'avg_price' => $request->avg_price,
+            'avg_price' => (float)$request->avg_price,
             'is_allowed_full_day' => $request->is_allowed_full_day,
             'check_in' => $request->check_in,
             'check_out' => $request->check_out,
@@ -117,6 +116,8 @@ class HotelController extends Controller
         ];
 
         $hotel = $this->hotelRepository->createHotel($hotelDetails);
+
+        dd($hotel);
 
         // return redirect()->Route('tasks');
     }
