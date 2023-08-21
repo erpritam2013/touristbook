@@ -11,6 +11,8 @@ use App\Interfaces\MeetingAndEventRepositoryInterface;
 use App\Interfaces\PlaceRepositoryInterface;
 use App\Interfaces\PropertyTypeRepositoryInterface;
 use App\Interfaces\TopServiceRepositoryInterface;
+use App\Models\Hotel;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
 
 class HotelController extends Controller
@@ -88,12 +90,33 @@ class HotelController extends Controller
 
     public function store(Request $request)
     {
+        dd($request->all());
         $hotelDetails = [
-            // 'title' => $request->title,
-            // 'description' => $request->description
+            'name' => $request->name,
+            'description' => $request->description,
+            'slug' => SlugService::createSlug(Hotel::class, 'slug', $request->name),
+            'external_link' => $request->external_link,
+            'food_dining' => $request->food_dining,
+            'is_featured' => $request->is_featured,
+            // TODO: logo and featured_image ----> S3 Integration
+            'hotel_video' => $request->hotel_video,
+            'rating' => $request->rating,
+            'coupon_code' => $request->coupon_code,
+            'hotel_attributes' => json_encode($request->hotel_attributes),
+            'contact' => json_encode($request->contact),
+            'avg_price' => $request->avg_price,
+            'is_allowed_full_day' => $request->is_allowed_full_day,
+            'check_in' => $request->check_in,
+            'check_out' => $request->check_out,
+            'book_before_day' => $request->book_before_day,
+            'book_before_arrival' => $request->book_before_arrival,
+            'policies' => json_encode($request->policies),
+            'notices' => json_encode($request->noticies),
+            'status' => $request->status,
+            // TODO: created_by pending as Authentication is not Yet Completed
         ];
 
-        $this->hotelRepository->createHotel($hotelDetails);
+        $hotel = $this->hotelRepository->createHotel($hotelDetails);
 
         // return redirect()->Route('tasks');
     }
