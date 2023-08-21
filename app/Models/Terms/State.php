@@ -18,7 +18,7 @@ class State extends Model
        'slug',
        'description',
        'icon',
-       'parent_state',
+       'parent_id',
        'country',
        'extra_data',
        'status',

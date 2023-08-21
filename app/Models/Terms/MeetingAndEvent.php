@@ -20,7 +20,7 @@ class MeetingAndEvent extends Model
        'slug',
        'description',
        'icon',
-       'parent_meeting_and_event',
+       'parent_id',
        'meeting_and_event_type',
        'extra_data',
        'status',

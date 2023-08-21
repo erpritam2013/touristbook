@@ -13,7 +13,15 @@ class MedicareAssistanceRepository implements MedicareAssistanceRepositoryInterf
     }
     public function getMedicareAssistancesByType($type=null,$ma_id=null) 
     {
-        return MedicareAssistance::where('medicare_assistance_type',$type)->where('id', '!=', $ma_id)->get(['id','name']);
+        $medicareAssistanceTypeBuilder = [];
+        if (!empty($type)){
+        $medicareAssistanceTypeBuilder = MedicareAssistance::where('status', MedicareAssistance::ACTIVE)->where('medicare_assistance_type',$type)->get(['id','name','parent_id']);
+        }
+        if (!empty($ma_id)){
+        $medicareAssistanceTypeBuilder = MedicareAssistance::where('status', MedicareAssistance::ACTIVE)->where('id', '!=', $ma_id)->where('parent_id', '!=', $ma_id)->where('parent_id', 0)->get(['id','name','parent_id']);
+        }
+
+       return $medicareAssistanceTypeBuilder;
     }
 
     public function getMedicareAssistanceById($MedicareAssistanceId) 
@@ -47,8 +55,12 @@ class MedicareAssistanceRepository implements MedicareAssistanceRepositoryInterf
 
         if($type)
             $medicareBuilder->where('medicare_assistance_type',$type);
+        
+        $medicare_assistances = $medicareBuilder->get(['id','name', 'parent_id']);
 
-        return $medicareBuilder->get(['id','name']);
+        $nestedResult = $medicare_assistances->toNested();
+
+        return  $nestedResult;
     }
 
     // Get Active Hotel Type Medicare Assistances

@@ -36,8 +36,8 @@
 										<span class="badge">Last updated {{get_time_format($meeting_and_event->updated_at,true)}}</span>
 										<div class="pull-right">
 											<span class="label label-default" style="color:#000;">{{$meeting_and_event->meeting_and_event_type}} Meeting And Event</span>
-                                            @php $parent_meeting_and_event = get_parent_term($meeting_and_event,$meeting_and_event->parent_meeting_and_event,true); @endphp
-											<span class="label label-primary">{{(!empty($parent_meeting_and_event))?$parent_meeting_and_event:"No Parent"}}</span>
+                                            @php $parent_id = get_parent_term($meeting_and_event,$meeting_and_event->parent_id,true); @endphp
+											<span class="label label-primary">{{(!empty($parent_id))?$parent_id:"No Parent"}}</span>
                                             @if($meeting_and_event->status == 1)
 											<span class="label label-success">Active</span> 
 											@else

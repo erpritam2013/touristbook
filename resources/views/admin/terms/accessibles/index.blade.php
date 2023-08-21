@@ -60,7 +60,7 @@
                                 <td>{{$accessible->name}}</td>
                                 <td>{{$accessible->slug}}</td>
                                 <td>{!!get_fontawesome_icon_html($accessible->icon,'fa-lg')!!}</td>
-                                <td>{{get_parent_term($accessibles,$accessible->parent_accessible)}}</td>
+                                <td>{{get_parent_term($accessibles,$accessible->parent_id)}}</td>
                                 <td>{{$accessible->accessible_type}}</td>
                                 <td> <input data-id="{{$accessible->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url=' {{route("admin.terms.changeStatusAccessible")}}' data-on="Active" data-off="InActive" {{ $accessible->status ? 'checked' : '' }}></td>
                                 <td>{{get_time_format($accessible->created_at)}}</td>

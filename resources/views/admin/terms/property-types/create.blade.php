@@ -67,14 +67,14 @@
                                 </div>
                             
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label" for="property-type-parent">Property Type Parent
+                                    <label class="col-lg-2 col-form-label" for="parent-id">Property Type Parent
                                     </label>
                                     <div class="col-lg-10">
-                                        <select class="form-control multi-select" id="property-type-parent" name="parent_property_type" data-existed_parent_property_type="{{$property_type->parent_property_type ?? ''}}">
+                                        <select class="form-control multi-select" id="parent-id" name="parent_id" data-existed_parent_id="{{$property_type->parent_id ?? ''}}">
                                             @isset($property_types)
                                             <option value="">Select Property Type Parent</option>
                                             @foreach($property_types as $property_type_p)
-                                            <option value="{{$property_type_p->id}}" {!!get_edit_select_post_types_old_value($property_type_p->id, $property_type->parent_property_type ?? "",'select')!!} >{{$property_type_p->name}}</option>
+                                            <option value="{{$property_type_p->id}}" {!!get_edit_select_post_types_old_value($property_type_p->id, $property_type->parent_id ?? "",'select')!!} >{{$property_type_p->name}}</option>
                                             @endforeach
                                             @endisset
                                         </select>

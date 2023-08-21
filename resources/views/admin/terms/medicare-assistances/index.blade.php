@@ -59,7 +59,7 @@
                                 <td>{{$medicare_assistance->name}}</td>
                                 <td>{{$medicare_assistance->slug}}</td>
                                 <td>{!!get_fontawesome_icon_html($medicare_assistance->icon,'fa-lg')!!}</td>
-                                <td>{{get_parent_term($medicare_assistances,$medicare_assistance->parent_medicare_assistance)}}</td>
+                                <td>{{get_parent_term($medicare_assistances,$medicare_assistance->parent_id)}}</td>
                                 <td>{{$medicare_assistance->medicare_assistance_type}}</td>
                                 <td> <input data-id="{{$medicare_assistance->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url=' {{route("admin.terms.changeStatusMedicareAssistance")}}' data-on="Active" data-off="InActive" {{ $medicare_assistance->status ? 'checked' : '' }}></td>
                                 <td>{{get_time_format($medicare_assistance->created_at)}}</td>

@@ -37,15 +37,29 @@ class StateRepository implements StateRepositoryInterface
     } 
 
 
+    public function getParentStatesList($StateId=null)
+    {
+        $stateTypeBuilder = [];
+        $stateTypeBuilder = State::where('status', State::ACTIVE)->get(['id','name','parent_id']);
+        
+        if (!empty($StateId)){
+        $stateTypeBuilder = State::where('status', State::ACTIVE)->where('id', '!=', $StateId)->where('parent_id', '!=', $StateId)->where('parent_id', 0)->get(['id','name','parent_id']);
+        }
 
+       return $stateTypeBuilder;
+    }
     // Get all Active States or by Type
     public function getActiveStatesList($StateId=null) {
-        $StateBuilder = State::where('status', State::ACTIVE);
+        $stateBuilder = State::where('status', State::ACTIVE);
 
         if($StateId)
             $StateBuilder->where('id','!=',$StateId);
-        
-        return $StateBuilder->get(['id','name']);
+
+        $states = $stateBuilder->get(['id','name', 'parent_id']);
+
+        $nestedResult = $states->toNested();
+
+        return  $nestedResult;
     }
 
    
