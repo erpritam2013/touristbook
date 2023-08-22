@@ -4,7 +4,7 @@
     </div>
     <div class="card-body">
         <div class="form-group row">
-            <p>{{$propertyTypes}}</p>
+            @include('admin.partials.utils.nested_checkbox_list', ['items' => $propertyTypes, 'name'=> 'propertyTypes'])
         </div> 
     </div>
 </div>
