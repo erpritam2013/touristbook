@@ -48,7 +48,7 @@ class TopServiceController extends Controller
 
       public function getTopServicesAjax(Request $request): JsonResponse 
     {
-        $type = $request->top_service_type;
+        $type = $request->term_type;
         $id = isset($request->id)?$request->id:"";
 
         $data = [];

@@ -48,7 +48,7 @@ class PlaceController extends Controller
 
     public function getPlacesAjax(Request $request): JsonResponse 
     {
-        $type = $request->place_type;
+        $type = $request->term_type;
         $id = isset($request->id)?$request->id:"";
 
         $data = [];

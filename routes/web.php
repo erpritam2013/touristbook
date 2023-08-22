@@ -12,6 +12,8 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\OccupancyController;
+use App\Http\Controllers\DealsDiscountController;
+use App\Http\Controllers\TermActivityController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -84,6 +86,16 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::delete('occupancy/bulk-delete', [OccupancyController::class,'bulk_delete'])->name('occupancies.bulk-delete');
     Route::get('occupancy/ajax-get', [OccupancyController::class,'getOccupanciesAjax'])->name('ajaxGetOccupancy');
     Route::get('occupancy/changeStatus', [OccupancyController::class,'changeStatus'])->name('changeStatusOccupancy');
+    /*Deals Discount Routes*/
+    Route::resource('deal-discounts', DealsDiscountController::class);
+    Route::delete('deal-discount/bulk-delete', [DealsDiscountController::class,'bulk_delete'])->name('deal-discounts.bulk-delete');
+    Route::get('deal-discount/ajax-get', [DealsDiscountController::class,'getDealsDiscountAjax'])->name('ajaxGetDealsDiscount');
+    Route::get('deal-discount/changeStatus', [DealsDiscountController::class,'changeStatus'])->name('changeStatusDealsDiscount');
+    /*Term Activity Routes*/
+    Route::resource('term-activities', TermActivityController::class);
+    Route::delete('term-activity/bulk-delete', [TermActivityController::class,'bulk_delete'])->name('term-activities.bulk-delete');
+    Route::get('term-activity/ajax-get', [TermActivityController::class,'getTermActivitiesAjax'])->name('ajaxGetTermActivity');
+    Route::get('term-activity/changeStatus', [TermActivityController::class,'changeStatus'])->name('changeStatusTermActivity');
 
     /*countries Routes*/
     Route::resource('countries', CountryController::class);

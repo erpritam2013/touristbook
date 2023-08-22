@@ -53,7 +53,7 @@
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-10">
-                                        <select class="form-control" id="property-type-type" name="property_type_type" data-url="{{route('admin.terms.ajaxGetPropertyType')}}" data-existed_f_type="{{$property_type->property_type_type ?? ''}}">
+                                        <select class="form-control" id="term-type" name="property_type_type" data-url="{{route('admin.terms.ajaxGetPropertyType')}}" data-term_title="Property Type">
                                             @if(!empty($post_types))
                                             <option value="">Select Type</option>
                                             @foreach($post_types as $type)

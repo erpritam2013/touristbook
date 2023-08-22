@@ -49,11 +49,11 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label" for="medicare-assistance-type">Medicare Assistance Type
+                                    <label class="col-lg-2 col-form-label" for="term-type">Medicare Assistance Type
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-10">
-                                        <select class="form-control" id="medicare-assistance-type" name="medicare_assistance_type" data-url="{{route('admin.terms.ajaxGetMedicareAssistance')}}" data-existed_f_type="{{$medicareAssistance->medicare_assistance_type ?? ''}}">
+                                        <select class="form-control" id="term-type" name="medicare_assistance_type" data-url="{{route('admin.terms.ajaxGetMedicareAssistance')}}" data-term_title="Medicare Assistance">
                                             @if(!empty($post_types))
                                             <option value="">Select Type</option>
                                             @foreach($post_types as $type)
