@@ -25,7 +25,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // TODO : Need Improvement by putting it to separate file. Or May be used it for Custom Collection for Models
-        Collection::macro('toNested', function ($parentKey) {
+        Collection::macro('toNested', function () {
+            $parentKey = "parent_id";
             $grouped = $this->groupBy($parentKey);
 
 

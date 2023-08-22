@@ -26,23 +26,25 @@ return new class extends Migration
             $table->string('hotel_video')->nullable();
             $table->decimal('rating', 3, 2)->default(0);
             $table->string('coupon_code')->nullable();
-            $table->json('hotel_attributes');
-            $table->decimal('avg_price', 10, 2);
+            $table->json('hotel_attributes')->nullable();
+            $table->json('contact')->nullable();
+            $table->decimal('avg_price', 10, 2)->default(0);
             $table->boolean('is_allowed_full_day')->default(false);
             // TODO: Rethink
-            $table->dateTime('check_in');
+            $table->dateTime('check_in')->nullable();
             // TODO: Rethink
-            $table->dateTime('check_out');
-            $table->integer('book_before_day');
-            $table->integer('book_before_arrival');
-            $table->json('policies');
-            $table->json('notices');
+            $table->dateTime('check_out')->nullable();
+            $table->integer('book_before_day')->default(0);
+            $table->integer('book_before_arrival')->default(0);
+            $table->json('policies')->nullable();
+            $table->json('notices')->nullable();
             $table->boolean('check_editing')->default(false);
             
             // Hotel Created By
-            $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('created_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users');
 
+            $table->tinyInteger('status')->default(0);
 
             $table->timestamps();
         });
