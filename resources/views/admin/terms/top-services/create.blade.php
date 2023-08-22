@@ -49,11 +49,11 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label" for="top-service-type">top_service Type
+                                    <label class="col-lg-2 col-form-label" for="term-type">top_service Type
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-10">
-                                        <select class="form-control" id="top-service-type" name="top_service_type" data-url="{{route('admin.terms.ajaxGetTopService')}}" data-existed_f_type="{{$top_service->top_service_type ?? ''}}">
+                                        <select class="form-control" id="term-type" name="top_service_type" data-url="{{route('admin.terms.ajaxGetTopService')}}" data-term_title="Top Service">
                                             @if(!empty($post_types))
                                             <option value="">Select Type</option>
                                             @foreach($post_types as $type)

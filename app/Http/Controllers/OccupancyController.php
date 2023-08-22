@@ -47,7 +47,7 @@ class OccupancyController extends Controller
 
      public function getOccupanciesAjax(Request $request): JsonResponse 
     {
-        $type = $request->occupancy_type;
+        $type = $request->term_type;
         $id = isset($request->id)?$request->id:"";
 
         $data = [];
