@@ -102,7 +102,7 @@ class HotelController extends Controller
             'rating' => $request->rating,
             'coupon_code' => $request->coupon_code,
             'hotel_attributes' => $request->hotel_attributes,
-            'contact' => json_encode($request->contact),
+            'contact' => $request->contact,
             'avg_price' => (float)$request->avg_price,
             'is_allowed_full_day' => $request->is_allowed_full_day,
             'check_in' => $request->check_in,

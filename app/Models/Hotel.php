@@ -14,6 +14,7 @@ class Hotel extends Model
 
     protected $casts = [
         'hotel_attributes' => 'array',
+        'contact' => 'array'
     ];
 
     public function sluggable(): Array
