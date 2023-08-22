@@ -48,7 +48,7 @@ class MedicareAssistanceController extends Controller
        public function getMedicareAssistancesAjax(Request $request): JsonResponse 
     {
         
-        $type = $request->medicare_assistance_type;
+        $type = $request->term_type;
         $id = isset($request->id)?$request->id:"";
 
         $data = [];

@@ -47,7 +47,7 @@ class MeetingAndEventController extends Controller
 
      public function getMeetingAndEventsAjax(Request $request): JsonResponse 
     {
-        $type = $request->meeting_and_event_type;
+        $type = $request->term_type;
         $id = isset($request->id)?$request->id:"";
 
         $data = [];

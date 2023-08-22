@@ -27,6 +27,8 @@
                             <li class="{{matchRouteName('admin.terms.countries.index')}}"><a href="{{route('admin.terms.countries.index')}}">Countries</a></li>
                             <li class="{{matchRouteName('admin.terms.states.index')}}"><a href="{{route('admin.terms.states.index')}}">States</a></li>
                              <li class="{{matchRouteName('admin.terms.occupancies.index')}}"><a href="{{route('admin.terms.occupancies.index')}}">Occupancies</a></li>
+                             <li class="{{matchRouteName('admin.terms.deal-discounts.index')}}"><a href="{{route('admin.terms.deal-discounts.index')}}">Deals Discount</a></li>
+                             <li class="{{matchRouteName('admin.terms.term-activities.index')}}"><a href="{{route('admin.terms.term-activities.index')}}">Term Activities</a></li>
                         </ul>
                             {{--<li><a href="./app-profile.html">Profile</a></li>--}}
 

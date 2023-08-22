@@ -13,7 +13,7 @@ class UpdateTermActivityRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class UpdateTermActivityRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|max:255',
+            'term_activity_type' => 'required',
         ];
     }
 }
