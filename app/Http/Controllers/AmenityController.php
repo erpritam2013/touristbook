@@ -52,7 +52,7 @@ class AmenityController extends Controller
 
       public function getAmenitiesAjax(Request $request): JsonResponse 
     {
-        $type = $request->amenity_type;
+        $type = $request->term_type;
         $id = isset($request->id)?$request->id:"";
 
         $data = [];

@@ -24,6 +24,10 @@ use App\Interfaces\StateRepositoryInterface;
 use App\Repositories\StateRepository;
 use App\Interfaces\OccupancyRepositoryInterface;
 use App\Repositories\OccupancyRepository;
+use App\Interfaces\DealsDiscountRepositoryInterface;
+use App\Repositories\DealsDiscountRepository;
+use App\Interfaces\TermActivityRepositoryInterface;
+use App\Repositories\TermActivityRepository;
 use App\Interfaces\HotelRepositoryInterface;
 use App\Repositories\HotelRepository;
 use Illuminate\Support\ServiceProvider;
@@ -48,6 +52,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CountryRepositoryInterface::class, CountryRepository::class);
         $this->app->bind(OccupancyRepositoryInterface::class, OccupancyRepository::class);
         $this->app->bind(StateRepositoryInterface::class, StateRepository::class);
+        $this->app->bind(DealsDiscountRepositoryInterface::class, DealsDiscountRepository::class);
+        $this->app->bind(TermActivityRepositoryInterface::class, TermActivityRepository::class);
         $this->app->bind(HotelRepositoryInterface::class, HotelRepository::class);
 
     }

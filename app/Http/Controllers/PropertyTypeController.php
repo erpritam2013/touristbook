@@ -47,7 +47,7 @@ class PropertyTypeController extends Controller
 
       public function getPropertyTypesAjax(Request $request): JsonResponse 
     {
-        $type = $request->property_type_type;
+        $type = $request->term_type;
         $id = isset($request->id)?$request->id:"";
 
         $data = [];

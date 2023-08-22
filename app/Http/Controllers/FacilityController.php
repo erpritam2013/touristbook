@@ -49,7 +49,7 @@ class FacilityController extends Controller
 
      public function getFacilitiesAjax(Request $request): JsonResponse 
     {
-        $type = $request->facility_type;
+        $type = $request->term_type;
         $id = isset($request->id)?$request->id:"";
 
         $data = [];

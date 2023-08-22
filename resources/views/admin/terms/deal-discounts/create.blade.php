@@ -1,5 +1,5 @@
 @extends('admin.layouts.main')
-@section('facility_action', route('admin.terms.facilities.store'))
+@section('deal_discount_action', route('admin.terms.deal-discounts.store'))
 @section('title',$title)
 @section('admin_head_css')
 <link rel="stylesheet" href="{!! asset('admin-part/vendor/select2/css/select2.min.css') !!}">
@@ -16,7 +16,7 @@
             <div class="card-header">
                 <h4 class="card-title">{{$title}}</h4>
                 <div align="right">
-                    <a href="{{route('admin.terms.facilities.index')}}" class="btn btn-dark"><i class="fa fa-arrow-right"></i> Back</a>
+                    <a href="{{route('admin.terms.deal-discounts.index')}}" class="btn btn-dark"><i class="fa fa-arrow-right"></i> Back</a>
                 </div>
             </div>
             <div class="card-body">
@@ -24,7 +24,7 @@
                 {!!get_form_success_msg(Session::get('success'))!!}
                 @endif
                 <div class="form-validation">
-                    <form class="form-valide" id="facility-form" action="@yield('facility_action')" method="post">
+                    <form class="form-valide" id="deal_discount-form" action="@yield('deal_discount_action')" method="post">
                         {{ csrf_field() }}
                         @section('method_field')
                         @show
@@ -35,7 +35,7 @@
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="name" name="name" value="{{$facility->name ?? ''}}" placeholder="Enter a name..">
+                                        <input type="text" class="form-control" id="name" name="name" value="{{$deal_discount->name ?? ''}}" placeholder="Enter a name..">
 
                                         {!! get_form_error_msg($errors, 'name') !!}
                                     </div>
@@ -44,37 +44,37 @@
                                     <label class="col-lg-2 col-form-label" for="description">Description 
                                     </label>
                                     <div class="col-lg-10">
-                                        <textarea class="form-control" id="description" name="description" rows="5" placeholder="Enter Description..">{{$facility->description ?? ''}}</textarea>
+                                        <textarea class="form-control" id="description" name="description" rows="5" placeholder="Enter Description..">{{$deal_discount->description ?? ''}}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label" for="term-type">Facility Type
+                                    <label class="col-lg-2 col-form-label" for="term-type">deal_discount Type
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-10">
-                                        <select class="form-control" id="term-type" name="facility_type" data-url="{{route('admin.terms.ajaxGet')}}" data-term_title="Facility">
+                                        <select class="form-control" id="term-type" name="deals_discount_type" data-url="{{route('admin.terms.ajaxGetDealsDiscount')}}" data-term_title="Deals & Discount">
                                             @if(!empty($post_types))
                                             <option value="">Select Type</option>
                                             @foreach($post_types as $type)
-                                            <option value="{{$type}}" {!!get_edit_select_post_types_old_value($type, $facility->facility_type ?? "",'select')!!}>{{$type}}</option>
+                                            <option value="{{$type}}" {!!get_edit_select_post_types_old_value($type, $deal_discount->deals_discount_type ?? "",'select')!!}>{{$type}}</option>
                                             @endforeach
                                             @endif
                                         </select>
-                                        {!! get_form_error_msg($errors, 'facility_type') !!}
+                                        {!! get_form_error_msg($errors, 'deals_discount_type') !!}
 
                                     </div>
                                 </div>
                             
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label" for="parent-id">Facility Parent
+                                    <label class="col-lg-2 col-form-label" for="parent-id">deal_discount Parent
                                     </label>
                                     <div class="col-lg-10">
-                                        <select class="form-control multi-select" id="parent-id" name="parent_id" data-existed_parent_id="{{$facility->parent_id ?? ''}}">
-                                            @isset($facilities)
-                                            <option value="">Select Facility Parent</option>
-                                            @foreach($facilities as $fac_p)
-                                            <option value="{{$fac_p->id}}" {!!get_edit_select_post_types_old_value($fac_p->id, $facility->parent_id ?? "",'select')!!} >{{$fac_p->name}}</option>
+                                        <select class="form-control multi-select" id="parent-id" name="parent_id" data-existed_parent_id="{{$deal_discount->parent_id ?? ''}}">
+                                            @isset($deal_discounts)
+                                            <option value="">Select Deals & Discount Parent</option>
+                                            @foreach($deal_discounts as $dd_p)
+                                            <option value="{{$dd_p->id}}" {!!get_edit_select_post_types_old_value($dd_p->id, $deal_discount->parent_id ?? "",'select')!!} >{{$dd_p->name}}</option>
                                             @endforeach
                                             @endisset
                                         </select>
@@ -87,7 +87,7 @@
 
                                     </label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="icon" name="icon" value="{{$facility->icon ?? ''}}" placeholder="Enter a icon..">
+                                        <input type="text" class="form-control" id="icon" name="icon" value="{{$deal_discount->icon ?? ''}}" placeholder="Enter a icon..">
                                     </div>
                                 </div>
 
@@ -98,15 +98,15 @@
                                     <div class="col-lg-10">
 
                                         <label class="col-form-label">
-                                            <input type="radio" name="status" value="1" {!!get_edit_select_check_pvr_old_value('status',$facility ?? "",'status',1, 'chacked')!!}>&nbsp;Active</label>
+                                            <input type="radio" name="status" value="1" {!!get_edit_select_check_pvr_old_value('status',$deal_discount ?? "",'status',1, 'chacked')!!}>&nbsp;Active</label>
                                             <label class="col-form-label">
-                                                <input type="radio" name="status" {!!get_edit_select_check_pvr_old_value('status',$facility ?? "",'status',0, 'chacked')!!} value="0">&nbsp;Inactive</label>
+                                                <input type="radio" name="status" {!!get_edit_select_check_pvr_old_value('status',$deal_discount ?? "",'status',0, 'chacked')!!} value="0">&nbsp;Inactive</label>
                                             </div>
                                         </div>
 
 
-                                        <button type="submit" class="btn btn-primary">@isset($facility->id)Update @else Save @endisset</button>
-                                        @if(!isset($facility->id))
+                                        <button type="submit" class="btn btn-primary">@isset($deal_discount->id)Update @else Save @endisset</button>
+                                        @if(!isset($deal_discount->id))
                                         <button type="button" class="btn btn-light" onclick="window.location.replace('{{ url()->previous() }}')">cencel</button>
                                         @endif
                                     </div>
