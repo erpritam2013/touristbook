@@ -117,8 +117,17 @@ class HotelController extends Controller
 
         $hotel = $this->hotelRepository->createHotel($hotelDetails);
 
-        dd($hotel);
-
+        if($hotel) {
+            $hotel->facilities()->attach($request->get('facilities'));
+            $hotel->amenities()->attach($request->get('amenities'));
+            $hotel->medicare_assistances()->attach($request->get('medicares'));
+            $hotel->top_services()->attach($request->get('topServices'));
+            $hotel->places()->attach($request->get('places'));
+            $hotel->propertyTypes()->attach($request->get('propertyTypes'));
+            $hotel->accessibles()->attach($request->get('accessibles'));
+            $hotel->meetingEvents()->attach($request->get('meetingAndEvents'));
+        }
+        return $hotel;
         // return redirect()->Route('tasks');
     }
 
