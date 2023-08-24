@@ -40,7 +40,7 @@
                         @include('admin.hotels.tabs.other-options', ["hotel" => $hotel])
                     </div>
                     <div id="v-pills-policy" class="tab-pane fade">
-                        @include('admin.hotels.tabs.policy', ["hotel" => $hotel])
+                        @include('admin.hotels.tabs.policy.policies', ["hotel" => $hotel])
                     </div>
                     <div id="v-pills-notices" class="tab-pane fade">
                         @include('admin.hotels.tabs.notices', ["hotel" => $hotel])
