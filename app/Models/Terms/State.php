@@ -13,7 +13,9 @@ class State extends Model
     const ACTIVE = 1;
     const INACTIVE = 0;
 
-      protected $fillable = [
+    const HOTEL_TYPE = "Hotel";
+
+    protected $fillable = [
        'name',
        'slug',
        'description',
