@@ -10,8 +10,8 @@ interface StateRepositoryInterface
     public function deleteBulkState($StateIds);
     public function createState(array $StateDetails);
     public function updateState($StateId, array $newDetails);
-
-    public function getActiveStatesList($StateId);
     public function getParentStatesList($StateId);
+
+    public function getActiveStatesList();
     
 }
