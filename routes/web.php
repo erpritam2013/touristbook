@@ -14,7 +14,10 @@ use App\Http\Controllers\StateController;
 use App\Http\Controllers\OccupancyController;
 use App\Http\Controllers\DealsDiscountController;
 use App\Http\Controllers\TermActivityController;
+
 use App\Http\Controllers\TypeController;
+
+use App\Http\Controllers\UtilityController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +35,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::name('admin.')->prefix('admin')->group(function () {
+
+    Route::get('template/{type}', [UtilityController::class, 'get_template_by_type'])->name('template');
+
+
     
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
     /*terms grouping*/
