@@ -8,14 +8,14 @@
         <div class="form-group row">
             <label class="col-lg-3 col-form-label" for="policies-title">Title</label>
             <div class="col-lg-9">
-                <input type="text" class="form-control" id="policies-title" name="policies[0][title]" value="{{$hotel->policies[0]->title ?? ''}}" >
+                <input type="text" class="form-control" id="policies-title" name="policies[{{$i}}][title]" value="{{$policy->title ?? ''}}" >
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-lg-3 col-form-label" for="policies-description">Description</label>
             <div class="col-lg-9">
-                <textarea class="form-control" id="policies-description" name="policies[0][description]" >{{$hotel->policies[0]->description ?? ''}}</textarea>
+                <textarea class="form-control" id="policies-description" name="policies[{{$i}}][description]" >{{$policy->description ?? ''}}</textarea>
             </div>
         </div>
 
