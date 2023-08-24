@@ -10310,6 +10310,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
   top: 0.625rem; }
 
 .content-body {
+  background: #34395747;
   margin-left: 17.1875rem;
   z-index: 0;
   transition: all .2s ease; }
@@ -10369,7 +10370,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
     .quixnav .metismenu li {
       position: relative; }
     .quixnav .metismenu ul {
-      background-color: #fb7909de;
+      background-color: #343957bf;
       transition: all .2s ease-in-out; }
       .quixnav .metismenu ul a {
         padding-left: 54px;
@@ -15435,7 +15436,9 @@ button {
     background: #1295bf;
     color: #fff;
     border-color: #1295bf; }
-
+.main-card{
+    background: #3439571f!important;
+}
 .card {
   margin-bottom: 1.875rem;
   background-color: #fff;

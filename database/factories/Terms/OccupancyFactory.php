@@ -1,13 +1,13 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Terms;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Language>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Occupancy>
  */
-class LanguageFactory extends Factory
+class OccupancyFactory extends Factory
 {
     /**
      * Define the model's default state.

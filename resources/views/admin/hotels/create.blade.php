@@ -12,7 +12,7 @@
   @include('admin.layout-parts.breadcrumbs')
     <div class="row">
         <div class="col-lg-12">
-            <div class="card">
+            <div class="card main-card">
                 <div class="card-header">
                     <h4 class="card-title">{{$title}}</h4>
                     <div align="right">
