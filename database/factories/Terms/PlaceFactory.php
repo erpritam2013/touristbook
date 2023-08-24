@@ -1,13 +1,13 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Terms;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PropertyType>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Place>
  */
-class PropertyTypeFactory extends Factory
+class PlaceFactory extends Factory
 {
     /**
      * Define the model's default state.

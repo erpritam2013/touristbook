@@ -14,6 +14,7 @@ use App\Http\Controllers\StateController;
 use App\Http\Controllers\OccupancyController;
 use App\Http\Controllers\DealsDiscountController;
 use App\Http\Controllers\TermActivityController;
+use App\Http\Controllers\TypeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -96,6 +97,11 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::delete('term-activity/bulk-delete', [TermActivityController::class,'bulk_delete'])->name('term-activities.bulk-delete');
     Route::get('term-activity/ajax-get', [TermActivityController::class,'getTermActivitiesAjax'])->name('ajaxGetTermActivity');
     Route::get('term-activity/changeStatus', [TermActivityController::class,'changeStatus'])->name('changeStatusTermActivity');
+    /*Type Routes*/
+    Route::resource('types', TypeController::class);
+    Route::delete('type/bulk-delete', [TypeController::class,'bulk_delete'])->name('types.bulk-delete');
+    Route::get('type/ajax-get', [TypeController::class,'getTypesAjax'])->name('ajaxGetType');
+    Route::get('type/changeStatus', [TypeController::class,'changeStatus'])->name('changeStatusType');
 
     /*countries Routes*/
     Route::resource('countries', CountryController::class);
