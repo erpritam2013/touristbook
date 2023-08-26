@@ -7,7 +7,7 @@
 </head>
 
 <body>
-
+    <input type="hidden" id="base-admin-url" value="{{route('admin.dashboard')}}" />
     <!--*******************
         Preloader start
         ********************-->
