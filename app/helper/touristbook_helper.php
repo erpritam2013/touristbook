@@ -112,6 +112,8 @@ if(!function_exists('get_edit_select_check_pvr_old_value')){
     }
 }
 
+
+
     //get_edit_select_post_types_old_value($type, $facility->facility_type ?? "",'select')
 
 if(!function_exists('get_edit_select_post_types_old_value')){
@@ -121,7 +123,7 @@ if(!function_exists('get_edit_select_post_types_old_value')){
 
             if ($type == 'select') {
                if ($compair_prop == $current_ele) {
-                return 'selected="true"';
+                return 'selected="selected"';
             }else{
                 return '';
             }
