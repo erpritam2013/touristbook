@@ -9,6 +9,7 @@ use App\Http\Controllers\AccessibleController;
 use App\Http\Controllers\PropertyTypeController;
 use App\Http\Controllers\MeetingAndEventController;
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\locationController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\OccupancyController;
@@ -123,5 +124,8 @@ Route::name('admin.')->prefix('admin')->group(function () {
      // Hotel Resource
     Route::prefix('hotels')->name('hotels.')->group(function() {
     Route::resource('/', HotelController::class);
+    });  // Location Resource
+    Route::prefix('locations')->name('locations.')->group(function() {
+    Route::resource('/', locationController::class);
     });
 });

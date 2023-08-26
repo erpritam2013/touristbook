@@ -14,6 +14,8 @@ class Place extends Model
     const INACTIVE = 0;
 
     const HOTEL_TYPE = "Hotel";
+    const LOCATION_TYPE = "Location";
+    const TOUR_TYPE = "Tour";
 
       protected $fillable = [
        'name',
