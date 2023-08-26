@@ -15,6 +15,7 @@
     }
 }
 
+
 $('body .dataTables_paginate .paginate_button').on('click',function(){
      $('.toggle-class').bootstrapToggle()
 });
@@ -165,21 +166,15 @@ $('.entity-list').on('change', '.select-all', function(event) {
 });
 $('.entity-list').on('change', '.select-id', function(event) {
 
+  $('.select-id').each(function(){
 
-     if ($(this).is(':checked')) {
-        $('.all-a .bulk-delete').show();
-     }
-    if ($('.select-id:checkbox:not(:checked)').length < $('.select-id').length) {
+      if (!$(this).is(':checked')) {
+        $('.all-a .bulk-delete').hide();
         $('.select-all').prop('checked',false);
+    }else{
+        $('.all-a .bulk-delete').show();
     }
-     if ($('.select-id:checkbox:not(:checked)').length == $('.select-id').length) {
-       $('.all-a .bulk-delete').hide();
-       $('.select-all').prop('checked',false);
-    }
-
-    if ($('.select-id:checked').length == $('.select-id').length) {
-       $('.select-all').prop('checked',true);
-    }
+});
 });
 
 $('.all-a').on('click', '.bulk-delete', function(event) {
