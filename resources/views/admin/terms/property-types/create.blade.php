@@ -49,7 +49,7 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label" for="property_type-type">Property Type
+                                    <label class="col-lg-2 col-form-label" for="term-type">Property Type
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-10">
