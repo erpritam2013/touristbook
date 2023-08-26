@@ -43,7 +43,7 @@
                                 <th>@if($types->count())<input type="checkbox" class="css-control-input mr-2 select-all">@endif S.No.</th>
                                 <th>Name</th>
                                 <th>Slug</th>
-                                <th>Icon</th>
+                                {{--<th>Icon</th>--}}
                                 <th>Parent</th>
                                 <th>Type</th>
                                 <th>Status</th>
@@ -59,7 +59,7 @@
                                 <td><input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" value="{{$type->id}}">{{++$loop->index}}</td>
                                 <td>{{$type->name}}</td>
                                 <td>{{$type->slug}}</td>
-                                <td>{!!get_fontawesome_icon_html($type->icon,'fa-lg')!!}</td>
+                                {{--<td>{!!get_fontawesome_icon_html($type->icon,'fa-lg')!!}</td>--}}
                                 <td>{{get_parent_term($types,$type->parent_id)}}</td>
                                 <td>{{$type->type}}</td>
                                 <td> <input data-id="{{$type->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url=' {{route("admin.terms.changeStatusType")}}' data-on="Active" data-off="InActive" {{ $type->status ? 'checked' : '' }}></td>
