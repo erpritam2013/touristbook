@@ -57,8 +57,14 @@
                                     @include('admin.partials.cards.accessibles', ['accessibles'=> $accessibles , 'selected'=>[]])
 
                                     @include('admin.partials.cards.meeting-and-events', ['meetingAndEvents'=> $meetingAndEvents , 'selected'=>[]])
+                                    
+                                    @include('admin.partials.cards.states', ['states'=> $states , 'selected'=>[]])
 
-
+                                    @include('admin.partials.cards.occupancies', ['occupancies'=> $occupancies , 'selected'=>[]])
+                                    
+                                    @include('admin.partials.cards.deal-discount', ['deals'=> $deals , 'selected'=>[]])
+                                    
+                                    @include('admin.partials.cards.activities', ['activities'=> $activities , 'selected'=>[]])
 
                                     
 

@@ -6,10 +6,14 @@ use App\Interfaces\AccessibleRepositoryInterface;
 use App\Interfaces\HotelRepositoryInterface;
 use App\Interfaces\FacilityRepositoryInterface;
 use App\Interfaces\AmenityRepositoryInterface;
+use App\Interfaces\DealsDiscountRepositoryInterface;
 use App\Interfaces\MedicareAssistanceRepositoryInterface;
 use App\Interfaces\MeetingAndEventRepositoryInterface;
+use App\Interfaces\OccupancyRepositoryInterface;
 use App\Interfaces\PlaceRepositoryInterface;
 use App\Interfaces\PropertyTypeRepositoryInterface;
+use App\Interfaces\StateRepositoryInterface;
+use App\Interfaces\TermActivityRepositoryInterface;
 use App\Interfaces\TopServiceRepositoryInterface;
 use App\Models\Hotel;
 use Cviebrock\EloquentSluggable\Services\SlugService;
@@ -27,6 +31,10 @@ class HotelController extends Controller
     private PropertyTypeRepositoryInterface $propertyTypeRepository;
     private AccessibleRepositoryInterface $accessibleRepository;
     private MeetingAndEventRepositoryInterface $meetingAndEventRepository;
+    private StateRepositoryInterface $stateRepository;
+    private OccupancyRepositoryInterface $occupancyRepository;
+    private DealsDiscountRepositoryInterface $dealDiscountRepository;
+    private TermActivityRepositoryInterface $activityRepository;
     
 
     public function __construct(
@@ -38,7 +46,11 @@ class HotelController extends Controller
         PlaceRepositoryInterface $placeRepository,
         PropertyTypeRepositoryInterface $propertyTypeRepository,
         AccessibleRepositoryInterface $accessibleRepository,
-        MeetingAndEventRepositoryInterface $meetingAndEventRepository
+        MeetingAndEventRepositoryInterface $meetingAndEventRepository,
+        StateRepositoryInterface $stateRepository,
+        OccupancyRepositoryInterface $occupancyRepository,
+        DealsDiscountRepositoryInterface $dealDiscountRepository,
+        TermActivityRepositoryInterface $activityRepository
         )
     {
         $this->hotelRepository = $hotelRepository;
@@ -50,6 +62,10 @@ class HotelController extends Controller
         $this->propertyTypeRepository = $propertyTypeRepository;
         $this->accessibleRepository = $accessibleRepository;
         $this->meetingAndEventRepository = $meetingAndEventRepository;
+        $this->stateRepository = $stateRepository;
+        $this->occupancyRepository = $occupancyRepository;
+        $this->dealDiscountRepository = $dealDiscountRepository;
+        $this->activityRepository = $activityRepository;
     }
 
     public function index()
@@ -70,7 +86,10 @@ class HotelController extends Controller
         $data['propertyTypes'] = $this->propertyTypeRepository->getActiveHotelPropertyTypesList();
         $data['accessibles'] = $this->accessibleRepository->getActiveHotelAccessiblesList();
         $data['meetingAndEvents'] = $this->meetingAndEventRepository->getActiveHotelMeetingAndEventsList();
-        
+        $data['states'] = $this->stateRepository->getActiveStatesList();
+        $data['occupancies'] = $this->occupancyRepository->getActiveHotelOccupanciesList();
+        $data['deals'] = $this->dealDiscountRepository->getActiveHotelDealsDiscountsList();
+        $data['activities'] = $this->activityRepository->getActiveHotelTermActivitiesList();
         
         return view('admin.hotels.create', $data);
     }

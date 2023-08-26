@@ -34,3 +34,5 @@
         <input type="text" class="form-control" id="coupon_code" name="coupon_code" value="{{$hotel->coupon_code ?? ''}}">
     </div>
 </div>
+
+
