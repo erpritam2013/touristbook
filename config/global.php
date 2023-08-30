@@ -7,4 +7,6 @@ return [
    
     'lebal_types' => ['default', 'primary', 'success', 'info', 'warning', 'danger'],
    
+    'stay' => ['information', 'map', 'hotel', 'tour', 'activity'],
+   
 ];
