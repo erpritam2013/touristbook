@@ -35,4 +35,88 @@
     </div>
 </div>
 
+<div class="border p-2 mb-2">
+    <h4>Highlight</h4>
+    @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotel->highlights ?? null, 'type' => 'highlights', 'btnTitle' => 'Add New'])
+</div>
 
+<div class="border p-2 mb-2">
+    <h4>Facilities/Amenities</h4>
+    @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotel->facilityAmenities ?? null, 'type' => 'facilityAmenities', 'btnTitle' => 'Add New'])
+</div>
+
+<div class="border p-2 mb-2">
+    <h4>Foods</h4>
+    @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotel->foods ?? null, 'type' => 'foods', 'btnTitle' => 'Add New'])
+</div>
+
+<div class="border p-2 mb-2">
+    <h4>Drink & Beverages</h4>
+    @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotel->drinks ?? null, 'type' => 'drinks', 'btnTitle' => 'Add New'])
+</div>
+
+<div class="border p-2 mb-2">
+    <h4>Complimentary Inclusions</h4>
+    @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotel->complimentary ?? null, 'type' => 'complimentary', 'btnTitle' => 'Add New'])
+</div>
+
+<div class="border p-2 mb-2">
+    <h4>Helpful facts</h4>
+    @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotel->helpfulfacts ?? null, 'type' => 'helpfulfacts', 'btnTitle' => 'Add New'])
+</div>
+
+
+<div class="form-group row">
+    <label class="col-lg-5 col-form-label" for="save_pocket">Save Your Pocket
+    </label>
+    <div class="col-lg-7">
+        <textarea class="form-control" id="save_pocket" name="save_pocket" >{{$hotel->save_pocket ?? ''}}</textarea>
+    </div>
+</div>
+
+
+<div class="border p-2 mb-2">
+    <h4>Save Your Pocket PDF Data</h4>
+    @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotel->pocketPDF ?? null, 'type' => 'pocketPDF', 'btnTitle' => 'Add New'])
+</div>
+
+<div class="form-group row">
+    <label class="col-lg-5 col-form-label" for="save_environment">Save The Environment
+    </label>
+    <div class="col-lg-7">
+        <textarea class="form-control" id="save_environment" name="save_environment" >{{$hotel->save_environment ?? ''}}</textarea>
+    </div>
+</div>
+
+<div class="border p-2 mb-2">
+    <h4>Land Mark</h4>
+    @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotel->landmark ?? null, 'type' => 'landmark', 'btnTitle' => 'Add New'])
+</div>
+
+<div class="border p-2 mb-2">
+    <h4>Things To Do</h4>
+    @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotel->todo ?? null, 'type' => 'todo', 'btnTitle' => 'Add New'])
+</div>
+
+<div class="border p-2 mb-2">
+    <h4>Offers & Packages</h4>
+    @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotel->offers ?? null, 'type' => 'offers', 'btnTitle' => 'Add New'])
+</div>
+
+<div class="border p-2 mb-2">
+    <h4>Things To Do Video Link</h4>
+    @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotel->todovideo ?? null, 'type' => 'todovideo', 'btnTitle' => 'Add New'])
+</div>
+
+<div class="border p-2 mb-2">
+    <h4>Events & Meetings</h4>
+    @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotel->eventmeeting ?? null, 'type' => 'eventmeeting', 'btnTitle' => 'Add New'])
+</div>
+
+<div class="form-group row">
+    <label class="col-lg-5 col-form-label" for="tourism_zone">Tourism Zone
+    </label>
+    <div class="col-lg-7">
+        <textarea class="form-control" id="tourism_zone" name="tourism_zone" >{{$hotel->tourism_zone ?? ''}}</textarea>
+    </div>
+</div>
