@@ -8,12 +8,12 @@ use Cviebrock\EloquentSluggable\Sluggable;
 class Location extends Model
 {
     use HasFactory,Sluggable;;
-     protected $guarded = [];
+    //  protected $guarded = [];
 
-    protected $casts = [
-        'location_attributes' => 'array',
-        'contact' => 'array'
-    ];
+    // protected $casts = [
+    //     'location_attributes' => 'array',
+    //     'contact' => 'array'
+    // ];
 
     public function sluggable(): Array
     {
