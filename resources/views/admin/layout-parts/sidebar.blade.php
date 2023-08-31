@@ -44,6 +44,14 @@
                         </ul>
                     </li>
 
+                    <li class="{{matchRouteGroupName('locations','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-marker-3"></i><span class="nav-text">Locations</span></a>
+                        <ul aria-expanded="false" class="{{matchRouteGroupName('locations','child')}}">
+                            <li class="{{matchRouteName('admin.locations.index')}}"><a href="{{route('admin.locations.index')}}">List</a></li>
+                            <li class="{{matchRouteName('admin.locations.create')}}"><a href="{{route('admin.locations.create')}}">Add New</a></li>
+                        </ul>
+                    </li>
+
                     {{--<li class="nav-label">Apps</li>
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                                 class="icon icon-app-store"></i><span class="nav-text">Apps</span></a>

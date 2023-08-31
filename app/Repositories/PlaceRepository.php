@@ -67,4 +67,9 @@ class PlaceRepository implements PlaceRepositoryInterface
         $type = Place::HOTEL_TYPE;
         return $this->getActivePlacesList($type);
     }
+    // Get Active Loction Type Places
+    public function getActiveLocationPlacesList() {
+        $type = Place::LOCATION_TYPE;
+        return $this->getActivePlacesList($type);
+    }
 }

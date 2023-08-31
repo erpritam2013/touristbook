@@ -2,12 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\PlaceRepositoryInterface;
+use App\Interfaces\StateRepositoryInterface;
+use App\Interfaces\TypeRepositoryInterface;
 use App\Models\Location;
 use App\Http\Requests\StoreLocationRequest;
 use App\Http\Requests\UpdateLocationRequest;
 
 class LocationController extends Controller
 {
+
+  private PlaceRepositoryInterface $placeRepository;
+  private StateRepositoryInterface $stateRepository;
+  private TypeRepositoryInterface $typeRepository;
+
+  public function __construct(
+    PlaceRepositoryInterface $placeRepository,
+    StateRepositoryInterface $stateRepository,
+    TypeRepositoryInterface $typeRepository,
+
+)
+  {
+    $this->placeRepository = $placeRepository;
+    $this->stateRepository = $stateRepository;
+    $this->typeRepository = $typeRepository;
+
+}
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +45,13 @@ class LocationController extends Controller
      */
     public function create()
     {
-        //
+         $data['title'] = 'Hotel';
+        // TODO: Need to Improve here (Fetch from Cache)
+        $data['places'] = $this->placeRepository->getActiveLocationPlacesList();
+        $data['states'] = $this->stateRepository->getActiveStatesList();
+        $data['types'] = $this->typeRepository->getActiveLocationTypesList();
+        
+        return view('admin.locations.create', $data);
     }
 
     /**
