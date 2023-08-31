@@ -17,8 +17,6 @@ use App\Http\Controllers\DealsDiscountController;
 use App\Http\Controllers\TermActivityController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UtilityController;
-use App\Http\Controllers\UtilityController;
-use App\Http\Controllers\TypeController;
 use Illuminate\Support\Facades\Route;
 
 /*
