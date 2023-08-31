@@ -120,3 +120,54 @@
         <textarea class="form-control" id="tourism_zone" name="tourism_zone" >{{$hotel->tourism_zone ?? ''}}</textarea>
     </div>
 </div>
+
+<div class="form-group row">
+    <label class="col-lg-5 col-form-label" for="tourism_zone_heading">Tourism Zone Heading Description</label>
+    <div class="col-lg-7">
+        <textarea class="form-control" id="tourism_zone_heading" name="tourism_zone_heading" >{{$hotel->tourism_zone_heading ?? ''}}</textarea>
+    </div>
+</div>
+
+<div class="border p-2 mb-2">
+    <h4>Tourism Zone PDF Data</h4>
+    @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotel->tourismzonepdf ?? null, 'type' => 'tourismzonepdf', 'btnTitle' => 'Add New'])
+</div>
+
+<div class="border p-2 mb-2">
+    <h4>Activities</h4>
+    @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotel->activities ?? null, 'type' => 'activities', 'btnTitle' => 'Add New'])
+</div>
+
+<div class="form-group row">
+    <label class="col-lg-5 col-form-label" for="room_amenities">Rooms Amenities</label>
+    <div class="col-lg-7">
+        <textarea class="form-control" id="room_amenities" name="room_amenities" >{{$hotel->room_amenities ?? ''}}</textarea>
+    </div>
+</div>
+
+<div class="border p-2 mb-2">
+    <h4>Transport</h4>
+    @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotel->transport ?? null, 'type' => 'transport', 'btnTitle' => 'Add New'])
+</div>
+
+
+<div class="form-group row">
+    <label class="col-lg-5 col-form-label" for="payment_mode">Payment mode</label>
+    <div class="col-lg-7">
+        <textarea class="form-control" id="payment_mode" name="payment_mode" >{{$hotel->payment_mode ?? ''}}</textarea>
+    </div>
+</div>
+
+
+<div class="form-group row">
+    <label class="col-lg-5 col-form-label" for="id_proofs">ID Proofs</label>
+    <div class="col-lg-7">
+        <textarea class="form-control" id="id_proofs" name="id_proofs" >{{$hotel->id_proofs ?? ''}}</textarea>
+    </div>
+</div>
+
+
+<div class="border p-2 mb-2">
+    <h4>Emergency Links</h4>
+    @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotel->emergencyLinks ?? null, 'type' => 'emergencyLinks', 'btnTitle' => 'Add New'])
+</div>

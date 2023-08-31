@@ -12,7 +12,7 @@ return [
                     'control' => 'textarea'
                 ]
             ]
-            
+
         ],
     'notices' => [
             "fields" => [
@@ -25,7 +25,7 @@ return [
                     'control' => 'textarea'
                 ]
             ]
-            
+
         ],
     'highlights' => [
             "fields" => [
@@ -42,7 +42,7 @@ return [
                     'control' => 'media'
                 ]
             ]
-            
+
         ],
     'facilityAmenities' => [
             "fields" => [
@@ -55,7 +55,7 @@ return [
                     'control' => 'textarea'
                 ]
             ]
-            
+
         ],
     'foods' => [
             "fields" => [
@@ -68,7 +68,7 @@ return [
                     'control' => 'text'
                 ]
             ]
-            
+
         ],
     'drinks' => [
             "fields" => [
@@ -81,7 +81,7 @@ return [
                     'control' => 'text'
                 ]
             ]
-            
+
         ],
     'complimentary' => [
             "fields" => [
@@ -94,7 +94,7 @@ return [
                     'control' => 'text'
                 ]
             ]
-            
+
         ],
     'helpfulfacts' => [
             "fields" => [
@@ -111,7 +111,7 @@ return [
                     'control' => 'textarea'
                 ]
             ]
-            
+
         ],
     'pocketPDF' => [
             "fields" => [
@@ -124,7 +124,7 @@ return [
                     'control' => 'textarea'
                 ]
             ]
-            
+
         ],
     'landmark' => [
             "fields" => [
@@ -141,7 +141,7 @@ return [
                     'control' => 'textarea'
                 ]
             ]
-            
+
         ],
     'todo' => [
             "fields" => [
@@ -154,7 +154,7 @@ return [
                     'control' => 'text'
                 ]
             ]
-            
+
         ],
     'offers' => [
             "fields" => [
@@ -167,7 +167,7 @@ return [
                     'control' => 'textarea'
                 ]
             ]
-            
+
         ],
     'todovideo' => [
             "fields" => [
@@ -184,7 +184,7 @@ return [
                     'control' => 'text'
                 ]
             ]
-            
+
         ],
     'eventmeeting' => [
             "fields" => [
@@ -205,12 +205,74 @@ return [
                     'control' => 'text'
                 ]
             ]
-            
+
         ],
-        
 
-        
+    'tourismzonepdf' => [
+            "fields" => [
+                "tourismzonepdf-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "tourismzonepdf-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea'
+                ],
+                "todovideo-url" => [
+                    'label' => "Youtube Link",
+                    'control' => 'text'
+                ]
+            ]
 
-        
+        ],
+    'activities' => [
+            "fields" => [
+                "activities-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "activities-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea'
+                ]
+            ]
+
+        ],
+    'transport' => [
+            "fields" => [
+                "transport-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "transport-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea'
+                ]
+            ]
+
+        ],
+    'emergencyLinks' => [
+            "fields" => [
+                "emergencyLinks-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "emergencyLinks-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea'
+                ],
+                "emergencyLinks-link" => [
+                    'label' => "Link",
+                    'control' => 'text'
+                ]
+            ]
+
+        ],
+
+
+
+
+
+
 
 ];
