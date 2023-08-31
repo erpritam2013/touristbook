@@ -20,10 +20,10 @@
             <div class="col-xl-9">
                 <div class="tab-content">
                     <div id="v-pills-location" class="tab-pane fade active show">
-                        <p>Location - Coming Soon</p>
+                        @include('admin.hotels.tabs.location', ["hotel" => $hotel])
                     </div>
                     <div id="v-pills-hotel-detail" class="tab-pane fade">
-                        
+
                         @include('admin.hotels.tabs.hotel-detail', ["hotel" => $hotel])
 
                     </div>
