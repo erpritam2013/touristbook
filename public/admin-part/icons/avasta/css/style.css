@@ -233,6 +233,7 @@ Generated using nucleoapp.com
 .icon-minimal-right::before {
   content: "\ea15";
 }
+.icon-map:before { content: "\eaf3" }
 
 .icon-tail-left::before {
   content: "\ea16";
