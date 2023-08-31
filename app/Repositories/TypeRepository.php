@@ -62,9 +62,9 @@ class TypeRepository implements TypeRepositoryInterface
         return  $nestedResult;
     }
 
-    // Get Active Hotel Type Types
-    public function getActiveHotelTypesList() {
-        $type = Type::HOTEL_TYPE;
+    // Get Active Location Type Types
+    public function getActiveLocationTypesList() {
+        $type = Type::LOCATION_TYPE;
         return $this->getActiveTypesList($type);
     }
 }
