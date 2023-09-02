@@ -36,13 +36,31 @@ $(document).ready(function () {
             console.log(newIndex)
             // Update HTML
             let pattern = /\[(\d+)\]/g; // pattern [<number>] TODO: think better Solution
+            let cardTitlePattern = '<h4 class="card-title">(.*?)</h4>';
 
             // Change Pattern
             let newHtmlContent = html.replace(pattern, "[" + newIndex + "]");
+            const match = new RegExp(cardTitlePattern).exec(newHtmlContent);
+            if(match) {
+                const newSubHtml = '<h4 class="card-title"></h4>';
+                newHtmlContent = newHtmlContent.replace(match[0], newSubHtml);
+            }
+
 
 
             targetElem.append(newHtmlContent)
             targetElem.attr("index", newIndex)
+
+            // Sortable
+            if(targetElem.hasClass('ui-sortable')) {
+                // Refresh
+                targetElem.sortable('refresh')
+            }else {
+                // Create
+                targetElem.sortable({
+                    update: function() {}
+                });
+            }
 
         }
 
@@ -65,7 +83,42 @@ $(document).ready(function () {
 
 
         }) // On Click Event Block Ends
+
+        // Delete the Card
+        $('body').on('click', '.delete-card', function() {
+            $(this).parents('.subform-card').first().remove();
+        });
+
+        // Edit the Card
+        $('body').on('click', '.edit-card', function() {
+            $(this).parents('.subform-card').first().find('.card-body').first().toggle();
+        });
+
+        // Title Added
+        $('body').on('keyup', '.subform-card .card-body input[type=text]', function() {
+            $(this).parents('.subform-card').each(function() {
+                $(this).find('.card-title').text($(this).find('input[type=text]').val());
+            });
+        });
+
+        // Sortable Added
+        // TODO: It might require each (iteration)
+        let cardListElm = $('.list-types')
+        if(cardListElm.length > 0) {
+            cardListElm.sortable({
+                update: function() {}
+            });
+        }
+
+
+
+
+
     } // If Block Ends
+
+
+
+
 
     // Initialize Map
     function initMap() {
