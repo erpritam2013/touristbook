@@ -8,10 +8,14 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{!! asset('admin-part/images/favicon-16x16.png') !!}">
     @section('admin_head_css')
     <link href="{!! asset('admin-part/vendor/jqvmap/css/jqvmap.min.css') !!}" rel="stylesheet">
+
+    {{-- Sortable --}}
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
     <link href="{!! asset('admin-part/css/style.css') !!}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
    <style type="text/css">
-        
+
         .nav-header .logo-abbr {
    max-width: 60px;
 }
