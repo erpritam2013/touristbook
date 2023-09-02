@@ -1,4 +1,4 @@
-<div class="list-{{$type}}" index="{{$subformData ? count($subformData) - 1 : -1}}">
+<div class="list-{{$type}} list-types"  index="{{$subformData ? count($subformData) - 1 : -1}}">
     @if($subformData)
         @foreach($subformData as $key => $typeData)
             @include('admin.partials.utils.subform', ['typeData'=> $typeData, 'type'=> $type, 'typeFields' => Config::get('subform.'.$type.'.fields') ])
