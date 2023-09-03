@@ -14,7 +14,11 @@ if (!function_exists('exploreJsonData')) {
 
         $result = "";
         if (!empty($json_data)) {
+            if (!is_array($json_data)) {
             $json_decode = json_decode($json_data);
+            }else{
+            $json_decode = $json_data;
+            }   
             if (empty($key)) {
                 $result = $json_decode;
             }else{
@@ -22,6 +26,7 @@ if (!function_exists('exploreJsonData')) {
  
              $result = $collection->get($key);
             }
+
             return $result;
         }
     }

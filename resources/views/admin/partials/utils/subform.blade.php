@@ -9,15 +9,27 @@
         @foreach($card as $controlId => $value)
             @if(isset($typeFields[$controlId]))
             <div class="form-group row">
-                <label class="col-lg-3 col-form-label">{{ $typeFields[$controlId]['label'] }}</label>
-                <div class="col-lg-9">
+               
+                <div class="col-lg-12">
+
+                <label>{{ $typeFields[$controlId]['label'] }}</label>
+                 @if(isset($typeFields[$controlId]['desc']) && !empty($typeFields[$controlId]['desc']))<p>{{$typeFields[$controlId]['desc']}}</p>
+                    @endif
                     @if($typeFields[$controlId]['control'] == "text")
                         <input type="text" class="form-control" name="{{$type}}[{{$key}}][{{$controlId}}]" value="{{$value ?? ''}}" >
                     @elseif($typeFields[$controlId]['control'] == "textarea")
-                        <textarea class="form-control" name="{{$type}}[{{$key}}][{{$controlId}}]" >{{$value ?? ''}}</textarea>
+                    @php
+                       $class = "";
+                       if(isset($typeFields[$controlId]['class']) && !empty($typeFields[$controlId]['class'])){
+                        $class = $typeFields[$controlId]['class'];
+                       }
+                     @endphp
+
+                        <textarea class="form-control {{$class}}" name="{{$type}}[{{$key}}][{{$controlId}}]" >{{$value ?? ''}}</textarea>
                     @endif
                 </div>
             </div>
+           
             @endif
         @endforeach
         </div>

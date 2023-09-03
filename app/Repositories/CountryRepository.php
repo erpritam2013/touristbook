@@ -39,9 +39,9 @@ class CountryRepository implements CountryRepositoryInterface
 
      // Get all Active Counties or by Type
     public function getCountiesList() {
-        $StateBuilder = Country::get(['id','countrycode','countryname','code']);
+        $CountryBuilder = Country::get(['id','countrycode','countryname','code']);
         
-        return $StateBuilder;
+        return $CountryBuilder;
     }
 
 }

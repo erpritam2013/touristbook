@@ -3241,7 +3241,22 @@ input[type="button"].btn-block {
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: #fff;
-  background-color: #fba009; }
+  background-color: #fba009;
+  position: relative;
+   }
+  .nav-pills .nav-link.active:after{
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-left: 10px solid #fba009;
+    border-bottom: 11px solid transparent;
+    right: -9px;
+    top: 50%;
+    margin-top: -9px;
+    z-index: 1;
+}
 
 .nav-fill .nav-item {
   flex: 1 1 auto;

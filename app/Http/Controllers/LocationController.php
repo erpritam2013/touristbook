@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Interfaces\PlaceRepositoryInterface;
 use App\Interfaces\StateRepositoryInterface;
 use App\Interfaces\TypeRepositoryInterface;
+use App\Interfaces\CountryRepositoryInterface;
 use App\Models\Location;
 use App\Http\Requests\StoreLocationRequest;
 use App\Http\Requests\UpdateLocationRequest;
@@ -15,17 +16,20 @@ class LocationController extends Controller
   private PlaceRepositoryInterface $placeRepository;
   private StateRepositoryInterface $stateRepository;
   private TypeRepositoryInterface $typeRepository;
+  private CountryRepositoryInterface $countryRepository;
 
   public function __construct(
     PlaceRepositoryInterface $placeRepository,
     StateRepositoryInterface $stateRepository,
     TypeRepositoryInterface $typeRepository,
+    CountryRepositoryInterface $countryRepository,
 
 )
   {
     $this->placeRepository = $placeRepository;
     $this->stateRepository = $stateRepository;
     $this->typeRepository = $typeRepository;
+    $this->countryRepository = $countryRepository;
 
 }
     /**
@@ -50,6 +54,7 @@ class LocationController extends Controller
         $data['places'] = $this->placeRepository->getActiveLocationPlacesList();
         $data['states'] = $this->stateRepository->getActiveStatesList();
         $data['types'] = $this->typeRepository->getActiveLocationTypesList();
+        $data['countries'] = $this->countryRepository->getCountiesList();
         
         return view('admin.locations.create', $data);
     }
