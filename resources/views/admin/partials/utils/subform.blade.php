@@ -1,8 +1,12 @@
 @if(!empty($typeData))
     @foreach($typeData as $key => $card)
-    <div class="card subform-card">
+    <div class="card subform-card ui-state-default">
         <div class="card-header border-bottom">
             <h4 class="card-title">&nbsp;</h4>
+            <div class="float-left">
+                <a href="javascript:void(0);" class="edit-card"><i class="fa fa-edit"></i></a>
+                <a href="javascript:void(0);" class="delete-card"><i class="fa fa-times-circle"></i></a>
+            </div>
         </div>
 
         <div class="card-body">
