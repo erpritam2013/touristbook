@@ -22,6 +22,10 @@
     ></script>
   <!-- ckediter -->
     <script src="{!! asset('admin-part/vendor/ckeditor/ckeditor.js') !!}"></script>
+
+    {{-- Sortable JS --}}
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
     <script src="{!! asset('admin-part/js/touristbook-terms-custom.js') !!}"></script>
     <script src="{!! asset('admin-part/js/tourist-lib.js') !!}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
