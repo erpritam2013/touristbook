@@ -36,13 +36,13 @@ $(document).ready(function () {
             console.log(newIndex)
             // Update HTML
             let pattern = /\[(\d+)\]/g; // pattern [<number>] TODO: think better Solution
-            let cardTitlePattern = '<h4 class="card-title">(.*?)</h4>';
+            let cardTitlePattern = '<span class="card-title-text">(.*?)</span>';
 
             // Change Pattern
             let newHtmlContent = html.replace(pattern, "[" + newIndex + "]");
             const match = new RegExp(cardTitlePattern).exec(newHtmlContent);
             if(match) {
-                const newSubHtml = '<h4 class="card-title"></h4>';
+                const newSubHtml = '<span class="card-title-text"></span>';
                 newHtmlContent = newHtmlContent.replace(match[0], newSubHtml);
             }
 
@@ -97,7 +97,8 @@ $(document).ready(function () {
         // Title Added
         $('body').on('keyup', '.subform-card .card-body input[type=text]', function() {
             $(this).parents('.subform-card').each(function() {
-                $(this).find('.card-title').text($(this).find('input[type=text]').val());
+                // TODO: Dynamic par is missing
+                $(this).find('.card-title-text').text($(this).find('input[type=text]').val());
             });
         });
 
@@ -115,9 +116,6 @@ $(document).ready(function () {
 
 
     } // If Block Ends
-
-
-
 
 
     // Initialize Map
