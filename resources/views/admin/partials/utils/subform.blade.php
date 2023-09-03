@@ -9,7 +9,7 @@
             </div>
         </div>
 
-        <div class="card-body">
+        <div class="card-body" style="display: none;">
         @foreach($card as $controlId => $value)
             @if(isset($typeFields[$controlId]))
             <div class="form-group row">
