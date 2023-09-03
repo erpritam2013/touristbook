@@ -207,6 +207,19 @@ return [
             ]
 
         ],
+    'location_for_filter' => [
+            "fields" => [
+                "location_for_filter-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "location_for_filter-icon" => [
+                    'label' => "Icon",
+                    'control' => 'text'
+                ],
+            ]
+
+        ],
 
     'tourismzonepdf' => [
             "fields" => [
@@ -268,11 +281,159 @@ return [
             ]
 
         ],
+    'place_to_visit' => [
+            "fields" => [
+                "place_to_visit-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "place_to_visit-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea',
+                    'class'   => 'ckeditor'
+                ],
+                "place_to_visit-image" => [
+                    'label' => "Image",
+                    'control' => 'media'
+                ],
+            ]
 
+        ],
+    'best_time_to_visit' => [
+            "fields" => [
+                "place_to_visit-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "place_to_visit-travel_seasons" => [
+                    'label' => "Travel Seasons",
+                    'control' => 'text',
+                    'desc' => 'Travel Seasons'
+                ],
+                "place_to_visit-min_max_temperature" => [
+                    'label' => "Min/Max Temperature",
+                    'control' => 'text',
+                    'desc' => 'Min/Max Temperature'
+                ],
+                "place_to_visit-season" => [
+                    'label' => "Season",
+                    'control' => 'text',
+                    'desc' => 'Season'
+                ]
+                
+            ]
 
+        ],
+        'how_to_reach' => [
+            "fields" => [
+                "how_to_reach-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "how_to_reach-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea',
+                    'class'   => 'ckeditor'
+                ],
+                "how_to_reach-link" => [
+                    'label' => "Link",
+                    'control' => 'text'
+                ],
+            ]
 
+        ],
+        'fair_and_festivals' => [
+            "fields" => [
+                "fair_and_festivals-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "fair_and_festivals-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea',
+                    // 'class'   => 'ckeditor'
+                ],
+                "fair_and_festivals-image" => [
+                    'label' => "Image",
+                    'control' => 'media'
+                ],
 
+                "fair_and_festivals-is_description" => [
+                    'label' => "Set this only description",
+                    'control' => 'radio',
+                    'desc'=>'Set this only description'
+                ],
+            ]
 
+        ],
+        'culinary_retreat' => [
+            "fields" => [
+                "culinary_retreat-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "culinary_retreat-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea',
+                    // 'class'   => 'ckeditor'
+                ],
+                "culinary_retreat-image" => [
+                    'label' => "Image",
+                    'control' => 'media'
+                ]
+            ]
 
+        ],
+        'shopaholics_anonymous' => [
+            "fields" => [
+                "shopaholics_anonymous-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "shopaholics_anonymous-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea',
+                    // 'class'   => 'ckeditor'
+                ],
+                "shopaholics_anonymous-image" => [
+                    'label' => "Image",
+                    'control' => 'media'
+                ]
+            ]
+
+        ],
+
+        'weather' => [
+            "fields" => [
+                "weather-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "weather-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea',
+                    // 'class'   => 'ckeditor'
+                ],
+                "weather-link" => [
+                    'label' => "Link",
+                    'control' => 'text'
+                ],
+            ]
+
+        ],
+        
+        'location_map' => [
+            "fields" => [
+                "location_map-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "location_map-link" => [
+                    'label' => "Google Link",
+                    'control' => 'text'
+                ],
+            ]
+
+        ],
 
 ];

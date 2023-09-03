@@ -11,6 +11,7 @@ class UtilityController extends Controller
     public function get_template_by_type($type) {
         // Source is Config File
         $subforms = config('subform');
+       
         if(!isset($subforms[$type])) {
             // Type Not Found
             return response()->json(['html' => '']);

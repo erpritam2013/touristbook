@@ -7,9 +7,11 @@
         <div class="row">
             <div class="col-xl-3">
                 <div class="nav flex-column nav-pills">
-                    <a href="#v-pills-location" data-toggle="pill" class="nav-link active show">Location</a>
-                    <a href="#v-pills-location-detail" data-toggle="pill" class="nav-link">Location Detail</a>
-                    <a href="#v-pills-contact" data-toggle="pill" class="nav-link">Contact Information</a>
+                    <a href="#v-pills-location" data-toggle="pill" class="nav-link active show">Hotel Near By Location Select</a>
+                    <a href="#v-pills-location-filter-add" data-toggle="pill" class="nav-link">Location Filter Add</a>
+                    <a href="#v-pills-location-setting" data-toggle="pill" class="nav-link">Location Settings</a>
+                    <a href="#v-pills-place-to-visit" data-toggle="pill" class="nav-link">Place To Visit</a>
+                    <a href="#v-pills-need-to-know" data-toggle="pill" class="nav-link">Need To Know</a>
                     <a href="#v-pills-price" data-toggle="pill" class="nav-link">Price</a>
                     <a href="#v-pills-checkinout" data-toggle="pill" class="nav-link">Check in/out time</a>
                     <a href="#v-pills-otheroptions" data-toggle="pill" class="nav-link">Other Options</a>
@@ -22,13 +24,21 @@
                     <div id="v-pills-location" class="tab-pane fade active show">
                         <p>Location - Coming Soon</p>
                     </div>
-                    <div id="v-pills-location-detail" class="tab-pane fade">
+                    <div id="v-pills-location-filter-add" class="tab-pane fade">
                         
-                        @include('admin.locations.tabs.location-detail', ["location" => $location])
+                        @include('admin.locations.tabs.location-filter-add', ["location" => $location])
 
                     </div>
-                    <div id="v-pills-contact" class="tab-pane fade">
-                        @include('admin.locations.tabs.contact', ["location" => $location])
+                    <div id="v-pills-location-setting" class="tab-pane fade">
+                        
+                        @include('admin.locations.tabs.location-setting', ["location" => $location,'countries'=>$countries])
+
+                    </div>
+                    <div id="v-pills-place-to-visit" class="tab-pane fade">
+                        @include('admin.locations.tabs.place-to-visit', ["location" => $location])
+                    </div>
+                    <div id="v-pills-need-to-know" class="tab-pane fade">
+                        @include('admin.locations.tabs.need-to-know', ["location" => $location])
                     </div>
                     <div id="v-pills-price" class="tab-pane fade">
                         @include('admin.locations.tabs.price', ["location" => $location])

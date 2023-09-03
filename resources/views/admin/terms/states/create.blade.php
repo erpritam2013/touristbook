@@ -145,8 +145,7 @@
 @endsection
 @section('admin_jscript')
 @parent
-    <!-- ckediter -->
-<script src="{!! asset('admin-part/vendor/ckeditor/ckeditor.js') !!}"></script>
+
 <!-- Jquery Validation -->
 <script src="{!! asset('admin-part/vendor/jquery-validation/jquery.validate.min.js') !!}"></script>
 <!-- Form validate init -->

@@ -62,7 +62,40 @@ return new class extends Migration
     public function down()
     {
         Schema::table('locations', function (Blueprint $table) {
-            //
+            $table->string('name');
+            $table->string('slug');
+            // $table->bigInteger('user_id');
+            $table->longText('description');
+            $table->text('excerpt');
+             $table->json('hotel_locations');
+            $table->integer('country');
+            $table->integer('zipcode');
+            $table->decimal('lat');
+            $table->decimal('lng');
+            $table->integer('map_zoom');
+            $table->string('map_type');
+            $table->text('address');
+            $table->json('location_content');
+            $table->longText('helpful_facts');
+            $table->json('place_to_visit');
+            $table->json('what_to_do');
+            $table->enum('stay');
+            $table->enum('packages');
+            $table->json('need_to_know');
+            $table->json('gallery');
+            $table->json('location_video');
+            $table->json('hotel_activities');
+            $table->json('location_packages');
+            $table->longText('important_note');
+            $table->longText('sanstive_data');
+            $table->boolean('is_featured');
+            $table->bigInteger('parent_id');
+            $table->tinyInteger('menu_order');
+            $table->string('logo');
+            $table->string('featured_image');
+            $table->unsignedBigInteger('created_by');
+            $table->tinyInteger('status');
+            
         });
     }
 };
