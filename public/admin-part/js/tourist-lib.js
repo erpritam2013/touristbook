@@ -86,12 +86,17 @@ $(document).ready(function () {
 
         // Delete the Card
         $('body').on('click', '.delete-card', function() {
-            $(this).parents('.subform-card').first().remove();
+            if (confirm('Are you sure you want to remove this?')) {
+               $(this).parents('.subform-card').first().remove();
+            }else{
+                return false;
+            }
         });
 
         // Edit the Card
         $('body').on('click', '.edit-card', function() {
-            $(this).parents('.subform-card').first().find('.card-body').first().toggle();
+            let $target = $(this).parents('.subform-card').first().find('.card-body').first().toggle();
+            $('.subform-card .card-body').not($target).hide();
         });
 
         // Title Added

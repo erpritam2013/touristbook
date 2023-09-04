@@ -56,7 +56,7 @@
      -moz-border-radius: 2px;
           border-radius: 2px;
 }
-.subform-card{
+.main-card-tab{
     border: 1px solid rgba(0, 0, 0, 0.125);
 }
 label.subform-card-label {
