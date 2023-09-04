@@ -1,6 +1,7 @@
 @if(!empty($typeData))
     @foreach($typeData as $key => $card)
-    <div class="card subform-card ui-state-default">
+    <li class="subform-card">
+    <div class="card main-card-tab">
         <div class="card-header border-bottom">
             <h4 class="card-title">&nbsp;</h4>
             <div class="float-left">
@@ -39,6 +40,6 @@
         </div>
     </div>
 
-
+</li>
     @endforeach
 @endif

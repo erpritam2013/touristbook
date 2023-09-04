@@ -7877,7 +7877,7 @@ li {
 a {
   color: #BDBDC7; }
   a:hover, a:focus, a.active {
-    color: #fba009;
+    color: #ffffff;
     text-decoration: none; }
 
 .content-body .container {
@@ -19440,6 +19440,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 }
 
 .subform-card .card-header {
+    background: #343957bf;
     cursor: pointer;
 }
 
