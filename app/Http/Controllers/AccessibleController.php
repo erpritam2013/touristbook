@@ -81,7 +81,7 @@ class AccessibleController extends Controller
         $accessibleDetails = [
             'name' => $request->name,
             'slug' => SlugService::createSlug(Accessible::class, 'slug', $request->name),
-            'parent_accessible' => (!empty($request->parent_accessible))?$request->parent_accessible:0,
+            'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'accessible_type' => $request->accessible_type,
             'description' => $request->description,
@@ -144,7 +144,7 @@ class AccessibleController extends Controller
          $accessibleDetails = [
             'name' => $request->name,
             //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
-            'parent_accessible' => (!empty($request->parent_accessible))?$request->parent_accessible:0,
+            'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'accessible_type' => $request->accessible_type,
             'description' => $request->description,

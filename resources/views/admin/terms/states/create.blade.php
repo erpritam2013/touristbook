@@ -48,7 +48,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        {{--<div class="form-group row">
                             <label class="col-lg-2 col-form-label" for="parent-id">state Parent
                             </label>
                             <div class="col-lg-10">
@@ -62,7 +62,7 @@
                                 </select>
 
                             </div>
-                        </div>
+                        </div>--}}
 
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label" for="icon">Icon

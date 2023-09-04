@@ -19443,5 +19443,10 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
     background: #343957bf;
     cursor: pointer;
 }
-
+.border.p-2.mb-2 {
+    border: 1px solid #00000020!important;
+}
+.col-form-label {
+    font-weight: 500!important;
+}
 /*# sourceMappingURL=style.css.map */

@@ -14,12 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::table('locations', function (Blueprint $table) {
-             $table->string('name');
+            $table->string('name');
             $table->string('slug')->unique();
             // $table->bigInteger('user_id');
             $table->longText('description')->nullable();
             $table->text('excerpt')->nullable();
-             $table->json('hotel_locations')->nullable();
+            $table->json('hotel_locations')->nullable();
             $table->integer('country')->nullable();
             $table->integer('zipcode')->nullable();
             $table->decimal('lat');
@@ -67,7 +67,7 @@ return new class extends Migration
             // $table->bigInteger('user_id');
             $table->longText('description');
             $table->text('excerpt');
-             $table->json('hotel_locations');
+            $table->json('hotel_locations');
             $table->integer('country');
             $table->integer('zipcode');
             $table->decimal('lat');

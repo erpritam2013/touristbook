@@ -23,8 +23,9 @@ class StoreAccessibleRequest extends FormRequest
      */
     public function rules()
     {
+       
         return [
-            'name' => 'required|max:255',
+            'name' => 'required|max:255|unique_custom:accessibles,name,accessible_type,'.request()->accessible_type,
             'accessible_type' => 'required',
         ];
     }
