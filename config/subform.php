@@ -403,6 +403,82 @@ return [
 
         ],
 
+        'hotel_activities' => [
+            "fields" => [
+                "hotel_activities-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "hotel_activities-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea',
+                    // 'class'   => 'ckeditor'
+                ],
+                "hotel_activities-image" => [
+                    'label' => "Image",
+                    'control' => 'media'
+                ]
+            ]
+
+        ],
+
+        'by_aggregators' => [
+            "fields" => [
+                "by_aggregators-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "by_aggregators-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea',
+                    'class'   => 'ckeditor'
+                ],
+                "by_aggregators-image" => [
+                    'label' => "Image",
+                    'control' => 'media'
+                ]
+            ]
+
+        ],
+
+        'b_govt_subsidiaries' => [
+            "fields" => [
+                "b_govt_subsidiaries-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "b_govt_subsidiaries-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea',
+                    'class'   => 'ckeditor'
+                ],
+                "b_govt_subsidiaries-image" => [
+                    'label' => "Image",
+                    'control' => 'media'
+                ]
+            ]
+
+        ],
+
+        'by_hotels' => [
+            "fields" => [
+                "by_hotels-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "by_hotels-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea',
+                    'class'   => 'ckeditor'
+                ],
+                "by_hotels-image" => [
+                    'label' => "Image",
+                    'control' => 'media'
+                ]
+            ]
+
+        ],
+
         'weather' => [
             "fields" => [
                 "weather-title" => [
@@ -432,6 +508,66 @@ return [
                     'label' => "Google Link",
                     'control' => 'text'
                 ],
+            ]
+
+        ],
+
+           'get_to_know' => [
+            "fields" => [
+                "get_to_know-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "get_to_know-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea',
+                     'class'   => 'ckeditor'
+                ]
+            ]
+
+        ],
+
+           'save_your_pocket' => [
+            "fields" => [
+                "save_your_pocket-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "save_your_pocket-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea',
+                    'class'   => 'ckeditor'
+                ]
+            ]
+
+        ],
+
+           'save_your_environment' => [
+            "fields" => [
+                "save_your_environment-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "save_your_environment-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea',
+                    'class'   => 'ckeditor'
+                ]
+            ]
+
+        ],
+
+           'faqs' => [
+            "fields" => [
+                "faqs-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "faqs-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea',
+                    'class'   => 'ckeditor'
+                ]
             ]
 
         ],

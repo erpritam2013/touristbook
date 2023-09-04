@@ -54,7 +54,8 @@ class StateRepository implements StateRepositoryInterface
 
         $states = $stateBuilder->get(['id','name', 'parent_id']);
 
-        $nestedResult = $states->toNested();
+        // $nestedResult = $states->toNested();
+        $nestedResult = $states;
 
         return  $nestedResult;
     }

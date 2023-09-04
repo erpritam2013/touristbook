@@ -58,7 +58,7 @@
 
                                     @include('admin.partials.cards.meeting-and-events', ['meetingAndEvents'=> $meetingAndEvents , 'selected'=>[]])
                                     
-                                    @include('admin.partials.cards.states', ['states'=> $states , 'selected'=>[]])
+                                     @include('admin.partials.cards.states', ['states'=> $states , 'selected'=>$location->state_id ?? null])
 
                                     @include('admin.partials.cards.occupancies', ['occupancies'=> $occupancies , 'selected'=>[]])
                                     
