@@ -35,7 +35,7 @@ class HotelController extends Controller
     private OccupancyRepositoryInterface $occupancyRepository;
     private DealsDiscountRepositoryInterface $dealDiscountRepository;
     private TermActivityRepositoryInterface $activityRepository;
-    
+
 
     public function __construct(
         HotelRepositoryInterface $hotelRepository,
@@ -90,7 +90,7 @@ class HotelController extends Controller
         $data['occupancies'] = $this->occupancyRepository->getActiveHotelOccupanciesList();
         $data['deals'] = $this->dealDiscountRepository->getActiveHotelDealsDiscountsList();
         $data['activities'] = $this->activityRepository->getActiveHotelTermActivitiesList();
-        
+
         return view('admin.hotels.create', $data);
     }
 
@@ -124,8 +124,9 @@ class HotelController extends Controller
             'contact' => $request->contact,
             'avg_price' => (float)$request->avg_price,
             'is_allowed_full_day' => $request->is_allowed_full_day,
-            'check_in' => $request->check_in,
-            'check_out' => $request->check_out,
+            // TODO: check_in, check_out jquery plugin for time setup
+            // 'check_in' => $request->check_in,
+            // 'check_out' => $request->check_out,
             'book_before_day' => $request->book_before_day,
             'book_before_arrival' => $request->book_before_arrival,
             'policies' => json_encode($request->policies),
@@ -137,6 +138,38 @@ class HotelController extends Controller
         $hotel = $this->hotelRepository->createHotel($hotelDetails);
 
         if($hotel) {
+            // TODO: Move this to Repository
+            $hotel->detail()->create($request->only([
+                    'map_address',
+                    'latitude',
+                    'longitude',
+                    'zoom_level',
+                    'highlights',
+                    'facilityAmenities',
+                    'foods',
+                    'drinks',
+                    'complimentary',
+                    'helpfulfacts',
+                    'save_pocket',
+                    'pocketPDF',
+                    'save_environment',
+                    'landmark',
+                    'todo',
+                    'offers',
+                    'todovideo',
+                    'eventmeeting',
+                    'tourism_zone',
+                    'tourism_zone_heading',
+                    'tourismzonepdf',
+                    'activities',
+                    'room_amenities',
+                    'transport',
+                    'payment_mode',
+                    'id_proofs',
+                    'emergencyLinks',
+            ]));
+
+
             $hotel->facilities()->attach($request->get('facilities'));
             $hotel->amenities()->attach($request->get('amenities'));
             $hotel->medicare_assistances()->attach($request->get('medicares'));
@@ -146,8 +179,8 @@ class HotelController extends Controller
             $hotel->accessibles()->attach($request->get('accessibles'));
             $hotel->meetingEvents()->attach($request->get('meetingAndEvents'));
         }
-        return $hotel;
-        // return redirect()->Route('tasks');
+        // return $hotel;
+        return redirect()->Route('hotels');
     }
 
     public function show(Request $request)
@@ -170,7 +203,7 @@ class HotelController extends Controller
             // 'title' => $request->title,
             // 'description' => $request->description
         ];
-        
+
         $this->hotelRepository->updateHotel($hotelId, $hotelDetails);
 
         // return redirect()->Route('tasks');
@@ -184,5 +217,5 @@ class HotelController extends Controller
 
         return back();
     }
-    
+
 }

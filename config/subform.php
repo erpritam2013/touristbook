@@ -9,7 +9,8 @@ return [
                 ],
                 "policy-description" => [
                     'label' => "Policy Description",
-                    'control' => 'textarea'
+                    'control' => 'textarea',
+                    'class' => 'ck-editor'
                 ]
             ]
 
