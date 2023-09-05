@@ -31,9 +31,7 @@ $(document).ready(function () {
         // Processed and Append HTML
         const processedSubForm = (html, targetElem) => {
             let recentUsedIndex = parseInt(targetElem.attr('index'));
-            console.log(recentUsedIndex)
             let newIndex = recentUsedIndex + 1
-            console.log(newIndex)
             // Update HTML
             let pattern = /\[(\d+)\]/g; // pattern [<number>] TODO: think better Solution
             let cardTitlePattern = '<span class="card-title-text">(.*?)</span>';
@@ -51,6 +49,8 @@ $(document).ready(function () {
             targetElem.append(newHtmlContent)
             targetElem.attr("index", newIndex)
 
+
+
             // Sortable
             if(targetElem.hasClass('ui-sortable')) {
                 // Refresh
@@ -58,11 +58,41 @@ $(document).ready(function () {
             }else {
                 // Create
                 targetElem.sortable({
+                    cancel: ".unsortable",
                     update: function() {}
                 });
             }
 
         }
+
+        // let myEditor;
+        // $("body").on("dblclick", ".ck-editor", function() {
+        //     $(this).parents(".subform-card").first().addClass("unsortable");
+        //     console.log("#"+$(this).attr("id"))
+        //     myEditor = ClassicEditor
+        //                 .create( document.querySelector( "#"+$(this).attr("id") ) )
+        //                 .catch( error => {
+        //                     console.error( error );
+        //                 } );
+        //     // editors.push(myEditor)
+        // })
+
+        // $("body").on("blur", ".ck-editor", function() {
+        //     myEditor.destroy().then(editor => $(this).removeClass("unsortable"))
+        // })
+
+        // document.querySelector( '.ck-editor' ).addEventListener('dblclick', function() {
+        //     $(this).addClass('unsortable');
+        //     myEditor = InlineEditor
+        //       .create( document.querySelector( '#editor' ) )
+        //       .catch( error => {
+        //           console.error( error );
+        //       }).then(editor => myEditor = editor)
+        // });
+
+        // document.querySelector( '#editor' ).addEventListener('blur', function() {
+        //     myEditor.destroy().then(editor => $(this).removeClass('unsortable'))
+        // });
 
 
         // Button Clicked Event
