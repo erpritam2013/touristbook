@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card {{!empty($facilities)?'term-card':''}}">
     <div class="card-header border-bottom">
         <h4 class="card-title">Facilities</h4>
     </div>

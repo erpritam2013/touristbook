@@ -66,6 +66,7 @@ label.subform-card-label {
     color: #3d4465;
     font-size: 1.125rem;
 }
+
     </style>
     @show
 

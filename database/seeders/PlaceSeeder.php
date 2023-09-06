@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Terms\Place;
 
 class PlaceSeeder extends Seeder
 {
@@ -14,6 +15,8 @@ class PlaceSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Place::factory()
+        ->count(10)
+        ->create();
     }
 }

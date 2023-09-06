@@ -12,6 +12,7 @@ class LocationMeta extends Model
     protected $guarded = [];
     protected $casts = [
         'location_content'=>'array',
+        'child_tabs'=>'array',
         'place_to_visit'=>'array',
         'best_time_to_visit'=>'array',
         'how_to_reach'=>'array',
@@ -31,8 +32,8 @@ class LocationMeta extends Model
         'gallery'=>'array',
         'location_video'=>'array',
         'hotel_activities'=>'array',
-        'location_packages'=>'array'
-        'location_for_filter'=>'array'
+        'location_packages'=>'array',
+        'location_for_filter'=>'array',
         'hotel_locations'=>'array'
     ];
 }

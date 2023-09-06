@@ -527,6 +527,25 @@ return [
 
         ],
 
+             'what_to_do' => [
+            "fields" => [
+                "what_to_do-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "what_to_do-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea',
+                    'class'   => 'ckeditor'
+                ],
+                "what_to_do-image" => [
+                    'label' => "Image",
+                    'control' => 'media'
+                ]
+            ]
+
+        ],
+
            'save_your_pocket' => [
             "fields" => [
                 "save_your_pocket-title" => [

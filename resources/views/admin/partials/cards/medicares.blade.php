@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card {{!empty($medicares)?'term-card':''}}">
     <div class="card-header border-bottom">
         <h4 class="card-title">Medicare Assistance</h4>
     </div>

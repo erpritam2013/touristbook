@@ -24,7 +24,7 @@ class UpdateDealsDiscountRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
+            'name' => 'required|max:255|unique_custom:deals_discounts,name,deals_discount_type,'.request()->deals_discount_type.',id,'.request()->id,
             'deals_discount_type' => 'required',
         ];
     }

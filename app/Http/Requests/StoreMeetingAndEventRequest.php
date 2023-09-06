@@ -24,7 +24,7 @@ class StoreMeetingAndEventRequest extends FormRequest
     public function rules()
     {
         return [
-             'name' => 'required|max:255',
+             'name' => 'required|max:255|unique_custom:meeting_and_events,name,meeting_and_event_type,'.request()->meeting_and_event_type,
             'meeting_and_event_type' => 'required',
         ];
     }

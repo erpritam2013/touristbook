@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\LocationRepositoryInterface;
 use App\Models\Location;
+use App\Models\LocationMeta;
 
 class LocationRepository implements LocationRepositoryInterface
 {
@@ -26,6 +27,14 @@ class LocationRepository implements LocationRepositoryInterface
     public function updateLocation($locationId, array $newDetails)
     {
         return Location::whereId($locationId)->update($newDetails);
+    }
+    public function createLocationMeta(array $locationMetaDetails)
+    {
+        return LocationMeta::create($locationMetaDetails);
+    }
+    public function updateLocationMeta($locationId, array $newLocationMetaDetails)
+    {
+        return LocationMeta::where('location_id',$locationId)->update($newLocationMetaDetails);
     }
     
 }

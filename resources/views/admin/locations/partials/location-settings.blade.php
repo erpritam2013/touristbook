@@ -7,8 +7,8 @@
         <div class="row">
             <div class="col-xl-3">
                 <div class="nav flex-column nav-pills">
-                    <a href="#v-pills-location" data-toggle="pill" class="nav-link active show">Hotel Near By Location Select</a>
-                    <a href="#v-pills-location-filter-add" data-toggle="pill" class="nav-link">Location Filter Add</a>
+                    {{--<a href="#v-pills-location" data-toggle="pill" class="nav-link active show">Hotel Near By Location Select</a>--}}
+                    <a href="#v-pills-location-filter-add" data-toggle="pill" class="nav-link active show">Location Filter Add</a>
                     <a href="#v-pills-location-setting" data-toggle="pill" class="nav-link">Location Settings</a>
                     <a href="#v-pills-location-content" data-toggle="pill" class="nav-link">Location Content</a>
                     <a href="#v-pills-child-tabs" data-toggle="pill" class="nav-link">Child Tabs</a>
@@ -26,10 +26,10 @@
             </div>
             <div class="col-xl-9">
                 <div class="tab-content">
-                    <div id="v-pills-location" class="tab-pane fade active show">
+                    {{--<div id="v-pills-location" class="tab-pane fade active show">
                         <p>Location - Coming Soon</p>
-                    </div>
-                    <div id="v-pills-location-filter-add" class="tab-pane fade">
+                    </div>--}}
+                    <div id="v-pills-location-filter-add" class="tab-pane fade active show">
                         
                         @include('admin.locations.tabs.location-filter-add', ["location" => $location])
 

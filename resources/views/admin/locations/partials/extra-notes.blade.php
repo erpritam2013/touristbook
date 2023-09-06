@@ -10,7 +10,7 @@
             <div class="col-lg-12">
                 <label class="subform-card-label" for="important-note">Activity Important Notes 
                 </label>
-                <textarea class="form-control" id="important-note" name="important_note" rows="8" placeholder="Enter Important Note..">{{ $location->locationMeta->important_note ?? ''}}</textarea>
+                <textarea class="form-control" id="important-note" name="important_note" rows="8" placeholder="Enter Important Note..">{{ $location->locationMeta->important_note ?? $important_note}}</textarea>
             </div>
         </div>
         <hr>
@@ -26,7 +26,7 @@
             <div class="col-lg-12">
                 <label class="subform-card-label" for="helpful-facts">Helpful Facts
                 </label>
-                <textarea class="form-control" id="helpful-facts" name="helpful_facts" rows="8" placeholder="Enter Helpful Facts..">{{ $location->locationMeta->helpful_facts ?? ''}}</textarea>
+                <textarea class="form-control" id="helpful-facts" name="helpful_facts" rows="8" placeholder="Enter Helpful Facts..">{{ $location->locationMeta->helpful_facts ?? $helpful_facts}}</textarea>
             </div>
         </div>
 
