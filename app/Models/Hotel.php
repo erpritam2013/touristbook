@@ -67,4 +67,8 @@ class Hotel extends Model
         return $this->belongsToMany(MeetingAndEvent::class, 'hotel_meeting_events', 'hotel_id', 'meeting_id');
     }
 
+    public function detail() {
+        return $this->hasOne(HotelDetail::class);
+    }
+
 }
