@@ -24,7 +24,7 @@ class UpdatePropertyTypeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
+            'name' => 'required|max:255|unique_custom:  property_types,name,property_type_type,'.request()->property_type_type.',id,'.request()->id,
             'property_type_type' => 'required',
         ];
     }

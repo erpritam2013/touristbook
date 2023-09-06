@@ -24,7 +24,7 @@ class UpdateOccupancyRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
+            'name' => 'required|max:255|unique_custom:occupancies,name,occupancy_type,'.request()->occupancy_type.',id,'.request()->id,
             'occupancy_type' => 'required',
         ];
     }

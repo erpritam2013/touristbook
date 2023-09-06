@@ -24,7 +24,7 @@ class UpdateFacilityRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
+            'name' => 'required|max:255|unique_custom:facilities,name,facility_type,'.request()->facility_type.',id,'.request()->id,
             'facility_type' => 'required',
         ];
     }

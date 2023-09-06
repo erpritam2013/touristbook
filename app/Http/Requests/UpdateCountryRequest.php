@@ -24,9 +24,9 @@ class UpdateCountryRequest extends FormRequest
     public function rules()
     {
         return [
-            'countrycode' => 'required',
-            'countryname' => 'required',
-            'code' => 'required',
+            'countrycode' => 'required|unique:countries',
+            'countryname' => 'required|unique:countries',
+            'code' => 'required|unique:countries',
         ];
     }
 }

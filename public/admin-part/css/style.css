@@ -19440,13 +19440,29 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 }
 
 .subform-card .card-header {
-    background: #343957bf;
+    background: #777;
     cursor: pointer;
+    padding: 12px;
 }
 .border.p-2.mb-2 {
     border: 1px solid #00000020!important;
 }
 .col-form-label {
     font-weight: 500!important;
+}
+
+body .term-card .card-body{
+      overflow: auto;
+      height: 300px;
+}
+body .term-card .card-body{
+     padding: 2.25rem;
+}
+.all-a a:focus{
+     color:#07509e;
+    border-color: #07509e;
+}
+.card-title-text {
+    color: #fff;
 }
 /*# sourceMappingURL=style.css.map */

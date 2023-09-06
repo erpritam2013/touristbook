@@ -70,6 +70,33 @@ jQuery(".form-valide").validate({
         "amenity_type": {
             required: !0
         },
+        "accessible_type": {
+            required: !0
+        },
+        "deals_discount_type": {
+            required: !0
+        },
+        "meeting_and_event_type": {
+            required: !0
+        },
+        "occupancy_type": {
+            required: !0
+        },
+        "place_type": {
+            required: !0
+        },
+        "property_type_type": {
+            required: !0
+        },
+        "term_activity_type": {
+            required: !0
+        },
+        "top_service_type": {
+            required: !0
+        },
+        "type": {
+            required: !0
+        },
 
     },
     messages: {
@@ -107,6 +134,15 @@ jQuery(".form-valide").validate({
         "medicare_assistance_type":"Please enter a valid medicare assistance type",
         "facility_type":"Please enter a valid facility type",
         "amenity_type":"Please enter a valid amenity type",
+        "accessible_type":"Please enter a valid accessible type",
+        "deals_discount_type":"Please enter a valid deals discount type",
+        "meeting_and_event_type":"Please enter a valid meeting and event type",
+        "occupancy_type":"Please enter a valid occupancy type",
+        "place_type":"Please enter a valid place type",
+        "property_type_type":"Please enter a valid property type",
+        "term_activity_type":"Please enter a valid term activity type",
+        "top_service_type":"Please enter a valid top service type",
+        "type":"Please enter a valid type",
     },
 
     ignore: [],
