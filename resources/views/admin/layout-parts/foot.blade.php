@@ -12,9 +12,8 @@
         defer
     ></script>
 
-    {{-- CkEDitor --}}
-    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
-
+    <!-- ckediter -->
+    <script src="{!! asset('admin-part/vendor/ckeditor/ckeditor.js') !!}"></script>
 
     {{-- Sortable JS --}}
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>

@@ -5,9 +5,10 @@ $(document).ready(function () {
     const longitudeTextbox = document.getElementById('longitude');
     const zoomTextbox = document.getElementById('zoom_level');
 
+    let touristEditorsElems = $(".tourist-editor")
+
     // Markers on Map : Assuming there will be one Map on a Page
     var markers = [];
-
 
     var base_admin_url = $('#base-admin-url').val()
     let btnAddSubForm = $(".btn-add-subform")
@@ -34,22 +35,28 @@ $(document).ready(function () {
             let newIndex = recentUsedIndex + 1
             // Update HTML
             let pattern = /\[(\d+)\]/g; // pattern [<number>] TODO: think better Solution
+            let intentionPattern = /\-tsign-(\d+)\-tsign-/g;
             let cardTitlePattern = '<span class="card-title-text">(.*?)</span>';
 
             // Change Pattern
-            let newHtmlContent = html.replace(pattern, "[" + newIndex + "]");
+            let newHtmlContent = html.replace(pattern, "[" + newIndex + "]").replace(intentionPattern, "-tsign-"+newIndex+"-tsign-");
             const match = new RegExp(cardTitlePattern).exec(newHtmlContent);
             if(match) {
                 const newSubHtml = '<span class="card-title-text"></span>';
                 newHtmlContent = newHtmlContent.replace(match[0], newSubHtml);
             }
 
-
-
             targetElem.append(newHtmlContent)
             targetElem.attr("index", newIndex)
 
-
+            // Ck Editor Added
+            targetElem.find(".tourist-editor").each((idx, te) => {
+                // let teId = $(te).attr("id")
+                // let editorId = "#ck_"+teId
+                // targetElem.find(editorId).first().remove();
+                if(!$(te).next().hasClass("cke"))
+                    CKEDITOR.replace(te)
+            })
 
             // Sortable
             if(targetElem.hasClass('ui-sortable')) {
@@ -65,35 +72,6 @@ $(document).ready(function () {
 
         }
 
-        // let myEditor;
-        // $("body").on("dblclick", ".ck-editor", function() {
-        //     $(this).parents(".subform-card").first().addClass("unsortable");
-        //     console.log("#"+$(this).attr("id"))
-        //     myEditor = ClassicEditor
-        //                 .create( document.querySelector( "#"+$(this).attr("id") ) )
-        //                 .catch( error => {
-        //                     console.error( error );
-        //                 } );
-        //     // editors.push(myEditor)
-        // })
-
-        // $("body").on("blur", ".ck-editor", function() {
-        //     myEditor.destroy().then(editor => $(this).removeClass("unsortable"))
-        // })
-
-        // document.querySelector( '.ck-editor' ).addEventListener('dblclick', function() {
-        //     $(this).addClass('unsortable');
-        //     myEditor = InlineEditor
-        //       .create( document.querySelector( '#editor' ) )
-        //       .catch( error => {
-        //           console.error( error );
-        //       }).then(editor => myEditor = editor)
-        // });
-
-        // document.querySelector( '#editor' ).addEventListener('blur', function() {
-        //     myEditor.destroy().then(editor => $(this).removeClass('unsortable'))
-        // });
-
 
         // Button Clicked Event
         btnAddSubForm.on("click", function () {
@@ -102,14 +80,17 @@ $(document).ready(function () {
             let targetSelector = elemRef.attr("target-selector")
             let targetElem = $(targetSelector)
 
-            if (targetElem.find(".subform-card").length <= 0) {
-                // Call Ajax Call
-                fetchSubForm(subformType, targetElem)
-            } else {
-                // Grab First Element
-                let html = targetElem.find(".subform-card")[0].outerHTML
-                processedSubForm(html, targetElem)
-            }
+            // Call Ajax Call
+            fetchSubForm(subformType, targetElem)
+
+            // if (targetElem.find(".subform-card").length <= 0) {
+            //     // Call Ajax Call
+            //     fetchSubForm(subformType, targetElem)
+            // } else {
+            //     // Grab First Element
+            //     let html = targetElem.find(".subform-card")[0].outerHTML
+            //     processedSubForm(html, targetElem)
+            // }
 
 
         }) // On Click Event Block Ends
@@ -146,6 +127,14 @@ $(document).ready(function () {
 
 
     } // If Block Ends
+
+    // ------------------- CK Editor Setup -----------------------
+    if(touristEditorsElems.length > 0) {
+        touristEditorsElems.each(function(idx, te) {
+            CKEDITOR.replace(te)
+        })
+    }
+
 
 
     // Initialize Map

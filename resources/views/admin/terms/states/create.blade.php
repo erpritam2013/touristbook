@@ -41,7 +41,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-lg-2 col-form-label" for="description">Description 
+                            <label class="col-lg-2 col-form-label" for="description">Description
                             </label>
                             <div class="col-lg-10">
                                 <textarea class="form-control" id="description" name="description" rows="5" placeholder="Enter Description..">{{$state->description ?? ''}}</textarea>
@@ -91,14 +91,14 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-lg-2 col-form-label" for="important-note">Important Note 
+                            <label class="col-lg-2 col-form-label" for="important-note">Important Note
                             </label>
                             <div class="col-lg-10">
                                 <textarea class="form-control" id="important-note" name="extra_data[important_note]" rows="5" placeholder="Enter Important Note..">{{exploreJsonData($state->extra_data ?? '','important_note') ?? ''}}</textarea>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-lg-2 col-form-label" for="sanstive-data">Sanstive Data 
+                            <label class="col-lg-2 col-form-label" for="sanstive-data">Sanstive Data
                             </label>
                             <div class="col-lg-10">
                                 <textarea class="form-control ckeditor" id="sanstive-data" name="extra_data[sanstive_data]" rows="8" placeholder="Enter Sanstive Data..">{!!exploreJsonData($state->extra_data ?? '','sanstive_data') ?? '' !!}</textarea>
@@ -107,7 +107,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-lg-2 col-form-label" for="helpful-facts">Helpful Facts 
+                            <label class="col-lg-2 col-form-label" for="helpful-facts">Helpful Facts
                             </label>
                             <div class="col-lg-10">
                                 <textarea class="form-control" id="helpful-facts" name="extra_data[helpful_facts]" rows="5" placeholder="Enter Helpful Facts..">{{exploreJsonData($state->extra_data ?? '','helpful_facts') ?? ''}}</textarea>
@@ -145,8 +145,7 @@
 @endsection
 @section('admin_jscript')
 @parent
-    <!-- ckediter -->
-<script src="{!! asset('admin-part/vendor/ckeditor/ckeditor.js') !!}"></script>
+
 <!-- Jquery Validation -->
 <script src="{!! asset('admin-part/vendor/jquery-validation/jquery.validate.min.js') !!}"></script>
 <!-- Form validate init -->
