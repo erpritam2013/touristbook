@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Language;
+use App\Models\Terms\Language;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -30,7 +30,7 @@ class LanguageDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Language $model
+     * @param \App\Models\Terms\Language $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Language $model): QueryBuilder

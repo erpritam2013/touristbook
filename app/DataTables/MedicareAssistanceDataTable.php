@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\MedicareAssistance;
+use App\Models\Terms\MedicareAssistance;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -30,7 +30,7 @@ class MedicareAssistanceDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\MedicareAssistance $model
+     * @param \App\Models\Terms\MedicareAssistance $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(MedicareAssistance $model): QueryBuilder

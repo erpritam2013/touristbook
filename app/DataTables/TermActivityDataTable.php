@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\TermActivity;
+use App\Models\Terms\TermActivity;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -30,7 +30,7 @@ class TermActivityDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\TermActivity $model
+     * @param \App\Models\Terms\TermActivity $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(TermActivity $model): QueryBuilder

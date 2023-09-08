@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Amenity;
+use App\Models\Terms\Amenity;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -30,7 +30,7 @@ class AmenityDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Amenity $model
+     * @param \App\Models\Terms\Amenity $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Amenity $model): QueryBuilder
