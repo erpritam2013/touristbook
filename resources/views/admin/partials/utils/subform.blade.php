@@ -20,8 +20,8 @@
                         $elemClass = isset($typeFields[$controlId]['class']) ? $typeFields[$controlId]['class'] : '';
                     @endphp
                 <div class="form-group row">
-                    <label class="col-lg-3 col-form-label">{{ $typeFields[$controlId]['label'] }}</label>
-                    <div class="col-lg-9">
+                    <div class="col-lg-12">
+                        <label class="subform-card-label">{{ $typeFields[$controlId]['label'] }}</label>
                         @if($typeFields[$controlId]['control'] == "text")
                             <input type="text" class="form-control {{$elemClass}} " name="{{$type}}[{{$key}}][{{$controlId}}]" value="{{$value ?? ''}}" id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}" >
                         @elseif($typeFields[$controlId]['control'] == "textarea")

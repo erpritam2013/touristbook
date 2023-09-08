@@ -1,16 +1,6 @@
-
 @extends('admin.layouts.main')
 @section('title',$title)
-@section('admin_head_css')
-@parent
-<!-- Datatable -->
-<link href="{!! asset('admin-part/vendor/datatables/css/jquery.dataTables.min.css') !!}" rel="stylesheet">
-{{--<link href="https://cdn.datatables.net/searchbuilder/1.5.0/css/searchBuilder.dataTables.min.css" rel="stylesheet">--}}
-<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-@endsection
 @section('content')
-
-
 <div class="container-fluid">
    @include('admin.layout-parts.breadcrumbs')
    <div class="row">
@@ -50,24 +40,5 @@
     </div>
 </div>
 </div>
-
 </div>
-@endsection
-@section('admin_jscript')
-
-@parent
-<!-- Datatable -->
-<script src="{!! asset('admin-part/vendor/datatables/js/jquery.dataTables.min.js') !!}"></script>
-
-{{--<script src="https://cdn.datatables.net/searchbuilder/1.5.0/js/dataTables.searchBuilder.min.js"></script>--}}
-<script src="https://cdn.datatables.net/datetime/1.5.1/js/dataTables.dateTime.min.js"></script>
-
-<script src="{!! asset('admin-part/js/plugins-init/datatables.init.js') !!}"></script>
-
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-
-  
-
-    {!! $dataTable->scripts() !!}
-
 @endsection

@@ -303,21 +303,21 @@ return [
         ],
     'best_time_to_visit' => [
             "fields" => [
-                "place_to_visit-title" => [
+                "best_time_to_visit-title" => [
                     'label' => "Title",
                     'control' => 'text'
                 ],
-                "place_to_visit-travel_seasons" => [
+                "best_time_to_visit-travel_seasons" => [
                     'label' => "Travel Seasons",
                     'control' => 'text',
                     'desc' => 'Travel Seasons'
                 ],
-                "place_to_visit-min_max_temperature" => [
+                "best_time_to_visit-min_max_temperature" => [
                     'label' => "Min/Max Temperature",
                     'control' => 'text',
                     'desc' => 'Min/Max Temperature'
                 ],
-                "place_to_visit-season" => [
+                "best_time_to_visit-season" => [
                     'label' => "Season",
                     'control' => 'text',
                     'desc' => 'Season'

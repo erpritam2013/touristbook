@@ -116,6 +116,8 @@ Route::name('admin.')->prefix('admin')->group(function () {
     /*states Routes*/
     Route::resource('states', StateController::class);
 
+    Route::get('state/changeStatus', [StateController::class,'changeStatus'])->name('changeStatusState');
+
     Route::delete('state/bulk-delete', [StateController::class,'bulk_delete'])->name('states.bulk-delete');
 
      }); // end terms route grouping

@@ -6,7 +6,7 @@ use App\Models\Terms\Country;
 use App\Http\Requests\StoreCountryRequest;
 use App\Http\Requests\UpdateCountryRequest;
 use Illuminate\Http\Request;
-
+use App\DataTables\CountryDataTable;
 class CountryController extends Controller
 {
 
@@ -21,12 +21,13 @@ class CountryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(CountryDataTable $dataTable)
     {
-        $data['countries'] = $this->countryRepository->getAllCountries();
+        // $data['countries'] = $this->countryRepository->getAllCountries();
+        $data['countries'] = Country::count();
         $data['title'] = 'Country List';
 
-        return view('admin.terms.countries.index', $data);
+        return $dataTable->render('admin.terms.countries.index', $data);
     }
 
     /**

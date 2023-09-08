@@ -78,7 +78,7 @@ class FacilityDataTable extends DataTable
                         Button::make('print'),
                         Button::make('reset'),
                         Button::make('reload')
-                    ]);
+                    ])->parameters($this->getParameters());
     }
 
     /**
@@ -120,6 +120,22 @@ class FacilityDataTable extends DataTable
             ->printable(false)
             ->width(120)
             ->addClass('text-center'),
+        ];
+    }
+
+       /**
+     * Get Parameters.
+     *
+     * @return array
+     */
+
+    public function getParameters(): array
+    {
+        return [
+            'fnDrawCallback'=> 'function(){$(".toggle-class").bootstrapToggle()}',
+            'paging' => true,
+            'searching' => true,
+            'info' => false,  
         ];
     }
 

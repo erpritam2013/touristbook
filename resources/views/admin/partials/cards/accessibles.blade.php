@@ -1,4 +1,4 @@
-<div class="card {{(count($accessibles) > 10)?'term-card':''}}">
+<div class="card {{(count($accessibles) > 5)?'term-card':'term-card-padding'}}">
     <div class="card-header border-bottom">
         <h4 class="card-title">Accessible</h4>
     </div>

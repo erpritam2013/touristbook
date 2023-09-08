@@ -19458,6 +19458,9 @@ body .term-card .card-body{
 body .term-card .card-body{
      padding: 2.25rem;
 }
+body .term-card-padding .card-body{
+     padding: 2.25rem;
+}
 .all-a a:focus{
      color:#07509e;
     border-color: #07509e;
@@ -19478,4 +19481,31 @@ body #touristbook-datatable tbody tr td.text-center a{
 body .select-id{
   margin:10px!important;
 }*/
+
+/* Webkit-based browsers */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #fba009;
+}
+
+/* Mozilla Firefox */
+::-moz-scrollbar {
+  width: 10px;
+}
+
+::-moz-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-moz-scrollbar-thumb {
+  background: #fba009;
+}
+
 /*# sourceMappingURL=style.css.map */
