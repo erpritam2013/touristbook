@@ -9,7 +9,7 @@ class TypeRepository implements TypeRepositoryInterface
 {
     public function getAllTypes() 
     {
-        return Type::all();
+        return Type::orderBy('id','desc')->get();
     }
     public function getTypesByType($type=null,$t_id=null) 
     {

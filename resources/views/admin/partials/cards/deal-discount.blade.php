@@ -1,4 +1,4 @@
-<div class="card  {{!empty($deals)?'term-card':''}}">
+<div class="card  {{(count($deals) > 10)?'term-card':''}}">
     <div class="card-header border-bottom">
         <h4 class="card-title">Deal & Discounts</h4>
     </div>

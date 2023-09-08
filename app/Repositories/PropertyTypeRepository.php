@@ -9,7 +9,7 @@ class PropertyTypeRepository implements PropertyTypeRepositoryInterface
 {
     public function getAllPropertyTypes()
     {
-        return PropertyType::all();
+        return PropertyType::orderBy('id','desc')->get();
     }
     public function getPropertyTypesByType($type=null,$pt_id=null) 
     {

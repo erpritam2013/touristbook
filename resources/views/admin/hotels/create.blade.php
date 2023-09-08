@@ -41,7 +41,6 @@
                                 </div>
                                 <div class="col-xl-4">
                                     @include('admin.hotels.partials.publish-card', ['hotel'=>$hotel ?? null])
-
                                     @include('admin.partials.cards.facilities', ['facilities'=> $facilities , 'selected'=>[]])
 
                                     @include('admin.partials.cards.amenities', ['amenities'=> $amenities , 'selected'=>[]])

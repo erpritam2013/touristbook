@@ -1,4 +1,4 @@
-<div class="card {{!empty($activities)?'term-card':''}}">
+<div class="card {{(count($activities) > 10)?'term-card':''}}">
     <div class="card-header border-bottom">
         <h4 class="card-title">Activities</h4>
     </div>

@@ -9,7 +9,7 @@ class CountryRepository implements CountryRepositoryInterface
 {
     public function getAllCountries()
     {
-        return Country::all();
+        return Country::orderBy('id','desc')->get();
     }
     
 

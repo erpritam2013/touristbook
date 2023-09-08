@@ -1,4 +1,4 @@
-<div class="card {{!empty($topServices)?'term-card':''}}">
+<div class="card {{(count($topServices) > 10)?'term-card':''}}">
     <div class="card-header border-bottom">
         <h4 class="card-title">Top Services</h4>
     </div>

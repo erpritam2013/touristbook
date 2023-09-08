@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('location_meta', function (Blueprint $table) {
 
             $table->id();
-            $table->bigInteger('location_id')->default(0);
+            $table->unsignedBigInteger('location_id');
+            $table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade');
             $table->json('location_content')->nullable();
             $table->longText('helpful_facts')->nullable();
             $table->json('place_to_visit')->nullable();

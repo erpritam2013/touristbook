@@ -8,8 +8,6 @@ use App\Models\LocationMeta;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 class Location extends Model
 {
     use HasFactory,Sluggable;
@@ -36,12 +34,12 @@ class Location extends Model
     public function types() {
         return $this->belongsToMany(Type::class, 'location_types', 'location_id', 'type_id');
     }
-    public function state(): BelongsTo {
+    public function state() {
 
-        return $this->belongsTo(State::class, 'state_id', 'id');
+        return $this->belongsTo(State::class);
     }
-    public function locationMeta(): HasOne
+    public function locationMeta()
     {
-        return $this->hasOne(LocationMeta::class, 'location_id', 'id');
+        return $this->hasOne(LocationMeta::class);
     }
 }

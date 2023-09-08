@@ -22,9 +22,9 @@ return new class extends Migration
             $table->json('hotel_locations')->nullable();
             $table->integer('country')->nullable();
             $table->integer('zipcode')->nullable();
-            $table->decimal('lat');
-            $table->decimal('lng');
-            $table->integer('map_zoom')->nullable();
+            $table->decimal('lat', 12, 9)->nullable();
+            $table->decimal('lng', 12, 9)->nullable();
+            $table->unsignedInteger('map_zoom')->default(1);
             $table->string('map_type')->nullable();
             $table->text('address')->nullable();
             $table->json('location_content')->nullable();
@@ -51,6 +51,8 @@ return new class extends Migration
             $table->foreign('created_by')->references('id')->on('users');
 
             $table->tinyInteger('status')->default(0);
+            
+            $table->timestamps();
         });
     }
 

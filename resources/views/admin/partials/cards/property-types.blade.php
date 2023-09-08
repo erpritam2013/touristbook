@@ -1,4 +1,4 @@
-<div class="card {{!empty($propertyTypes)?'term-card':''}}">
+<div class="card {{(count($propertyTypes) > 10)?'term-card':''}}">
     <div class="card-header border-bottom">
         <h4 class="card-title">Property Types</h4>
     </div>

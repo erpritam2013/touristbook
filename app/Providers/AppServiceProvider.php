@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-
+use Yajra\DataTables\Html\Builder;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -61,7 +61,7 @@ class AppServiceProvider extends ServiceProvider
     // Check the table and return true only if there are no entries matching
     // both the first field name and the user input value as well as
     // the second field name and the second field value
-        
+        Builder::useVite();
         
     });
 

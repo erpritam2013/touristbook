@@ -11,11 +11,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Session;
+use App\DataTables\PlacesDataTable;
 
 class PlaceController extends Controller
 {
 
-      private PlaceRepositoryInterface $PlaceRepository;
+      private PlaceRepositoryInterface $placeRepository;
 
     public function __construct(PlaceRepositoryInterface $placeRepository)
     {
@@ -26,12 +27,14 @@ class PlaceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(PlacesDataTable $dataTable)
     {
-        $data['places'] = $this->placeRepository->getAllPlaces();
-        $data['title'] = 'Place List';
-
-        return view('admin.terms.places.index', $data);
+        $places = $this->placeRepository->getAllPlaces();
+        $data = [
+            'title'     => 'Place List',
+            'places'     => $places->count()
+        ];
+        return $dataTable->render('admin.terms.places.index',$data);
     }
 
     /**

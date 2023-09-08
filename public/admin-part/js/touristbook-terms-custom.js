@@ -17,7 +17,7 @@
 
 
 $('body .dataTables_paginate .paginate_button').on('click',function(){
-     $('.toggle-class').bootstrapToggle()
+ $('.toggle-class').bootstrapToggle()
 });
 const hideInput = (input_class,input_id,e_status) =>{
     $(`.${input_class}`).addClass('d-none');
@@ -33,15 +33,15 @@ const hideInput = (input_class,input_id,e_status) =>{
 }
 
 const callAjax = (ajaxurl,data) => {
-     $.ajax({
-        type: "GET",
-        dataType: "json",
-        url: ajaxurl,
-        data: data,
-        success: function(data){
-          console.log(data.success)
-      }
-  });
+ $.ajax({
+    type: "GET",
+    dataType: "json",
+    url: ajaxurl,
+    data: data,
+    success: function(data){
+      console.log(data.success)
+  }
+});
 }
 const showInput = (input_class,input_id) =>{
     $(`.${input_class}`).removeClass('d-none');
@@ -71,6 +71,14 @@ const showInputByType = (type) => {
         hideInput('lebal-type','lebal-type');
         showInput('icon','icon');
     }
+}
+
+
+const checkbox_false = () =>{
+    $('body .select-all').prop('checked',false);
+}
+const checkbox_true = () =>{
+    $('body .select-all').prop('checked',true);
 }
 
 let term_type_input = $('#term-type');
@@ -153,9 +161,13 @@ $('.entity-list').on('click', '.del_entity_form', function(event) {
 /*delete entity type js end*/ 
 /*bulk delete js start*/ 
 
-$('.entity-list').on('change', '.select-all', function(event) {
+// $('.entity-list').on('change', '.select-all', function(event) {
 
-  if ($(this).is(':checked')) {
+
+// });
+
+window.CustomSelectCheckboxAll = function(ele){
+  if ($(ele).is(':checked')) {
       $('.select-id').prop('checked',true);
       $('.all-a .bulk-delete').show();
   }else{
@@ -163,29 +175,45 @@ $('.entity-list').on('change', '.select-all', function(event) {
     $('.select-id').prop('checked',false);
     $('.all-a .bulk-delete').hide();
 }
-});
-$('.entity-list').on('change', '.select-id', function(event) {
+}
 
-  $('.select-id').each(function(){
+window.CustomSelectCheckboxSingle = function(ele){
+    let unchecked_cb = $('.select-id:not(:checked)').length;
+     $('.select-id').each(function(){
 
-      if (!$(this).is(':checked')) {
+      if (!$(ele).is(':checked')) {
+        if (unchecked_cb != 0) {
         $('.all-a .bulk-delete').hide();
-        $('.select-all').prop('checked',false);
+        checkbox_false();
+
+        }
     }else{
+        if (unchecked_cb == 0) {
+            checkbox_true();
+        }
         $('.all-a .bulk-delete').show();
     }
 });
-});
+ 
 
+}
+// $('.entity-list').on('change', '.select-id', function(event) {
+
+
+// });
+const bulk_ids_fu = function(){
+    bulk_ids = [];
+ $('.select-id:checked').each(function(){
+     bulk_ids.push(parseInt($(this).val()));
+ })
+}
 $('.all-a').on('click', '.bulk-delete', function(event) {
 
     event.preventDefault();           
-    bulk_ids = [];
+    
        // var id= $(this).attr('item_id');
     let text= $('#bulk_delete_entity_form').data('text');
-    $('.select-id:checked').each(function(){
-     bulk_ids.push(parseInt($(this).val()));
- })
+    bulk_ids_fu();
     if (bulk_ids.length == 0) {
         alert('Please first check checkbox');
         return false;
