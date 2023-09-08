@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Occupancy;
+use App\Models\Terms\Occupancy;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -30,7 +30,7 @@ class OccupancyDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Occupancy $model
+     * @param \App\Models\Terms\Occupancy $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Occupancy $model): QueryBuilder

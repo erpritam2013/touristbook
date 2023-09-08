@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\TopService;
+use App\Models\Terms\TopService;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -30,7 +30,7 @@ class TopServiceDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\TopService $model
+     * @param \App\Models\Terms\TopService $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(TopService $model): QueryBuilder

@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\PackageType;
+use App\Models\Terms\PackageType;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -30,7 +30,7 @@ class PackageTypeDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\PackageType $model
+     * @param \App\Models\Terms\PackageType $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(PackageType $model): QueryBuilder

@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\State;
+use App\Models\Terms\State;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -30,7 +30,7 @@ class StateDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\State $model
+     * @param \App\Models\Terms\State $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(State $model): QueryBuilder

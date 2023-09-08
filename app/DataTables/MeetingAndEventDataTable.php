@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\MeetingAndEvent;
+use App\Models\Terms\MeetingAndEvent;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -30,7 +30,7 @@ class MeetingAndEventDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\MeetingAndEvent $model
+     * @param \App\Models\Terms\MeetingAndEvent $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(MeetingAndEvent $model): QueryBuilder

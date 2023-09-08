@@ -24,17 +24,17 @@ class PlacesDataTable extends DataTable
     {
         return (new EloquentDataTable($query))->addIndexColumn()->addColumn('icon',function($row){
                 return get_fontawesome_icon_html($row->icon,'fa-lg');
-            })->addColumn('action', function (Place $place) {
-                    $html = ' <a href="'.route("admin.terms.places.edit",$place->id).'" class="btn btn-primary" title="Edit"><i class="fa fa-edit"></i></a>';
-                    $html .= '<a href="'.route("admin.terms.places.show",$place->id).'" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>';
-                    $html .= '<a href="javascript:void(0);" class="btn btn-danger del_entity_form" title="Delete" item_id="'.$place->id.'" data-text="place"><i class="fa fa-trash"></i></a>';
+            })->addColumn('action', function ($row) {
+                    $html = ' <a href="'.route("admin.terms.places.edit",$row->id).'" class="btn btn-primary" title="Edit"><i class="fa fa-edit"></i></a>';
+                    $html .= '<a href="'.route("admin.terms.places.show",$row->id).'" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>';
+                    $html .= '<a href="javascript:void(0);" class="btn btn-danger del_entity_form" title="Delete" item_id="'.$row->id.'" data-text="place"><i class="fa fa-trash"></i></a>';
                     return $html;
                 })->editColumn('parent_id', function($row) {
                     return get_parent_term($row,$row->parent_id);
-                })->editColumn('created_at', function(Place $place) {
-                    return date('d-m-Y',strtotime($place->created_at));
-                })->editColumn('updated_at', function(Place $place) {
-                    return date('d-m-Y',strtotime($place->updated_at));
+                })->editColumn('created_at', function($row) {
+                    return date('d-m-Y',strtotime($row->created_at));
+                })->editColumn('updated_at', function($row) {
+                    return date('d-m-Y',strtotime($row->updated_at));
                 })->addColumn('status', function($row) {
                     $checked = "";
                     if ($row->status == 1) {
@@ -49,7 +49,7 @@ class PlacesDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Place $model
+     * @param \App\Models\Terms\Place $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Place $model): QueryBuilder
@@ -91,7 +91,7 @@ class PlacesDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('del')->title('<input type="checkbox" class="css-control-input mr-2 select-all text-center" onchange="CustomSelectCheckboxAll(this);">')->searchable(false)
+            Column::make('del')->title('<input type="checkbox" class="css-control-input mr-2 select-all text-center" onchange="CustomSelectCheckboxAll(this);" '.$this->disabledInput().'>')->searchable(false)
             ->orderable(false)
             ->exportable(false)
             ->printable(false)->width(5)
@@ -124,6 +124,12 @@ class PlacesDataTable extends DataTable
         ];
     }
 
+    /**
+     * Get Parameters.
+     *
+     * @return array
+     */
+
     public function getParameters(): array
     {
         return [
@@ -132,6 +138,32 @@ class PlacesDataTable extends DataTable
             'searching' => true,
             'info' => false,  
         ];
+    }
+
+     /**
+     * Get Place Status.
+     *
+     * @return bool
+     */
+    public function getPlaceStatus(): bool
+    {
+        return Place::count();
+    }
+
+    /**
+     * Get Disabled Status.
+     *
+     * @return string
+     */
+    public function disabledInput():string
+    {
+
+ 
+        $disabledInput = "";
+        if (!$this->getPlaceStatus()) {
+            $disabledInput = "disabled";
+        }
+        return $disabledInput;
     }
 
     /**

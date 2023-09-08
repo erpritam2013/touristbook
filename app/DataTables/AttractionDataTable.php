@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Attraction;
+use App\Models\Terms\Attraction;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -30,7 +30,7 @@ class AttractionDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Attraction $model
+     * @param \App\Models\Terms\Attraction $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Attraction $model): QueryBuilder

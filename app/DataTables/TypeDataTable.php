@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Type;
+use App\Models\Terms\Type;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -30,7 +30,7 @@ class TypeDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Type $model
+     * @param \App\Models\Terms\Type $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Type $model): QueryBuilder

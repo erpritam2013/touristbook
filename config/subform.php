@@ -292,7 +292,7 @@ return [
                 "place_to_visit-description" => [
                     'label' => "Description",
                     'control' => 'textarea',
-                    'class'   => 'ckeditor'
+                    'class'   => 'tourist-editor'
                 ],
                 "place_to_visit-image" => [
                     'label' => "Image",
@@ -335,7 +335,7 @@ return [
                 "how_to_reach-description" => [
                     'label' => "Description",
                     'control' => 'textarea',
-                    'class'   => 'ckeditor'
+                    'class'   => 'tourist-editor'
                 ],
                 "how_to_reach-link" => [
                     'label' => "Link",
@@ -353,7 +353,7 @@ return [
                 "fair_and_festivals-description" => [
                     'label' => "Description",
                     'control' => 'textarea',
-                    // 'class'   => 'ckeditor'
+                    // 'class'   => 'tourist-editor'
                 ],
                 "fair_and_festivals-image" => [
                     'label' => "Image",
@@ -377,7 +377,7 @@ return [
                 "culinary_retreat-description" => [
                     'label' => "Description",
                     'control' => 'textarea',
-                    // 'class'   => 'ckeditor'
+                    // 'class'   => 'tourist-editor'
                 ],
                 "culinary_retreat-image" => [
                     'label' => "Image",
@@ -395,7 +395,7 @@ return [
                 "shopaholics_anonymous-description" => [
                     'label' => "Description",
                     'control' => 'textarea',
-                    // 'class'   => 'ckeditor'
+                    // 'class'   => 'tourist-editor'
                 ],
                 "shopaholics_anonymous-image" => [
                     'label' => "Image",
@@ -414,7 +414,7 @@ return [
                 "hotel_activities-description" => [
                     'label' => "Description",
                     'control' => 'textarea',
-                    // 'class'   => 'ckeditor'
+                    // 'class'   => 'tourist-editor'
                 ],
                 "hotel_activities-image" => [
                     'label' => "Image",
@@ -433,7 +433,7 @@ return [
                 "by_aggregators-description" => [
                     'label' => "Description",
                     'control' => 'textarea',
-                    'class'   => 'ckeditor'
+                    'class'   => 'tourist-editor'
                 ],
                 "by_aggregators-image" => [
                     'label' => "Image",
@@ -452,7 +452,7 @@ return [
                 "b_govt_subsidiaries-description" => [
                     'label' => "Description",
                     'control' => 'textarea',
-                    'class'   => 'ckeditor'
+                    'class'   => 'tourist-editor'
                 ],
                 "b_govt_subsidiaries-image" => [
                     'label' => "Image",
@@ -471,7 +471,7 @@ return [
                 "by_hotels-description" => [
                     'label' => "Description",
                     'control' => 'textarea',
-                    'class'   => 'ckeditor'
+                    'class'   => 'tourist-editor'
                 ],
                 "by_hotels-image" => [
                     'label' => "Image",
@@ -490,7 +490,7 @@ return [
                 "weather-description" => [
                     'label' => "Description",
                     'control' => 'textarea',
-                    // 'class'   => 'ckeditor'
+                    // 'class'   => 'tourist-editor'
                 ],
                 "weather-link" => [
                     'label' => "Link",
@@ -523,7 +523,7 @@ return [
                 "get_to_know-description" => [
                     'label' => "Description",
                     'control' => 'textarea',
-                     'class'   => 'ckeditor'
+                     'class'   => 'tourist-editor'
                 ]
             ]
 
@@ -538,7 +538,7 @@ return [
                 "what_to_do-description" => [
                     'label' => "Description",
                     'control' => 'textarea',
-                    'class'   => 'ckeditor'
+                    'class'   => 'tourist-editor'
                 ],
                 "what_to_do-image" => [
                     'label' => "Image",
@@ -557,7 +557,7 @@ return [
                 "save_your_pocket-description" => [
                     'label' => "Description",
                     'control' => 'textarea',
-                    'class'   => 'ckeditor'
+                    'class'   => 'tourist-editor'
                 ]
             ]
 
@@ -572,7 +572,7 @@ return [
                 "save_your_environment-description" => [
                     'label' => "Description",
                     'control' => 'textarea',
-                    'class'   => 'ckeditor'
+                    'class'   => 'tourist-editor'
                 ]
             ]
 
@@ -587,7 +587,7 @@ return [
                 "faqs-description" => [
                     'label' => "Description",
                     'control' => 'textarea',
-                    'class'   => 'ckeditor'
+                    'class'   => 'tourist-editor'
                 ]
             ]
 
