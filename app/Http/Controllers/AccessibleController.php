@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Session;
-
+use App\DataTables\AccessibleDataTable;
 class AccessibleController extends Controller
 {
 
@@ -25,12 +25,13 @@ class AccessibleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(AccessibleDataTable $dataTable)
     {
-        $data['accessibles'] = $this->accessibleRepository->getAllAccessibles();
+        // $data['accessibles'] = $this->accessibleRepository->getAllAccessibles();
+        $data['accessibles'] = Accessible::count();
         $data['title'] = 'Accessible List';
 
-        return view('admin.terms.accessibles.index', $data);
+        return $dataTable->render('admin.terms.accessibles.index', $data);
     }
 
     /**

@@ -22,9 +22,38 @@ class AttractionDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        return (new EloquentDataTable($query))
-            ->addColumn('action', 'attraction.action')
-            ->setRowId('id');
+         return [
+            Column::make('del')->title('<input type="checkbox" class="css-control-input mr-2 select-all text-center" onchange="CustomSelectCheckboxAll(this);" '.$this->disabledInput().'>')->searchable(false)
+            ->orderable(false)
+            ->exportable(false)
+            ->printable(false)->width(5)
+            ->addClass('text-center'),
+            Column::make('loopIndex')->title('S.No.')->searchable(false)
+            ->orderable(false)
+            ->exportable(false)
+            ->printable(false)->width(10)
+            ->addClass('text-center'),
+            Column::make('name'),
+            Column::make('slug')->searchable(false)
+            ->orderable(false)
+            ->exportable(false)
+            ->printable(false),
+            Column::make('icon')->width(10)
+            ->addClass('text-center'),
+            Column::make('parent_id')->title('Parent')->searchable(false)
+            ->orderable(true)
+            ->exportable(false)
+            ->printable(false),
+            Column::make('accessible_type')->title('Type'),
+            Column::make('status'),
+            Column::make('created_at')->title('Created'),
+            Column::make('updated_at')->title('Updated'),
+            Column::make('action')
+            ->exportable(false)
+            ->printable(false)
+            ->width(120)
+            ->addClass('text-center'),
+        ];
     }
 
     /**
@@ -59,7 +88,7 @@ class AttractionDataTable extends DataTable
                         Button::make('print'),
                         Button::make('reset'),
                         Button::make('reload')
-                    ]);
+                    ])->parameters($this->getParameters());
     }
 
     /**
@@ -69,17 +98,78 @@ class AttractionDataTable extends DataTable
      */
     public function getColumns(): array
     {
-        return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+         return [
+            Column::make('del')->title('<input type="checkbox" class="css-control-input mr-2 select-all text-center" onchange="CustomSelectCheckboxAll(this);" '.$this->disabledInput().'>')->searchable(false)
+            ->orderable(false)
+            ->exportable(false)
+            ->printable(false)->width(5)
+            ->addClass('text-center'),
+            Column::make('loopIndex')->title('S.No.')->searchable(false)
+            ->orderable(false)
+            ->exportable(false)
+            ->printable(false)->width(10)
+            ->addClass('text-center'),
+            Column::make('name'),
+            Column::make('slug')->searchable(false)
+            ->orderable(false)
+            ->exportable(false)
+            ->printable(false),
+            Column::make('icon')->width(10)
+            ->addClass('text-center'),
+            Column::make('parent_id')->title('Parent')->searchable(false)
+            ->orderable(true)
+            ->exportable(false)
+            ->printable(false),
+            Column::make('attraction_type')->title('Type'),
+            Column::make('status'),
+            Column::make('created_at')->title('Created'),
+            Column::make('updated_at')->title('Updated'),
+            Column::make('action')
+            ->exportable(false)
+            ->printable(false)
+            ->width(120)
+            ->addClass('text-center'),
         ];
+    }
+        /**
+     * Get Parameters.
+     *
+     * @return array
+     */
+
+    public function getParameters(): array
+    {
+        return [
+            'fnDrawCallback'=> 'function(){$(".toggle-class").bootstrapToggle()}',
+            'paging' => true,
+            'searching' => true,
+            'info' => false,  
+        ];
+    }
+          /**
+     * Get Status.
+     *
+     * @return bool
+     */
+    public function getCustomStatus(): bool
+    {
+        return Attraction::count();
+    }
+
+    /**
+     * Get Disabled Status.
+     *
+     * @return string
+     */
+    public function disabledInput():string
+    {
+
+ 
+        $disabledInput = "";
+        if (!$this->getCustomStatus()) {
+            $disabledInput = "disabled";
+        }
+        return $disabledInput;
     }
 
     /**

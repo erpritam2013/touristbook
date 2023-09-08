@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Session;
-
+use App\DataTables\TopServiceDataTable;
 class TopServiceController extends Controller
 {
 
@@ -26,12 +26,13 @@ class TopServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(TopServiceDataTable $dataTable)
     {
-         $data['top_services'] = $this->topserviceRepository->getAllTopServices();
+         //$data['top_services'] = $this->topserviceRepository->getAllTopServices();
+         $data['top_services'] = TopService::count();
         $data['title'] = 'Top Service List';
 
-        return view('admin.terms.top-services.index', $data);
+        return $dataTable->render('admin.terms.top-services.index', $data);
     }
 
     /**
