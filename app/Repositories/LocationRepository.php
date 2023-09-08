@@ -10,7 +10,7 @@ class LocationRepository implements LocationRepositoryInterface
 {
     public function getAllLocations()
     {
-        return Location::all();
+        return Location::orderBy('id','desc')->get();
     }
     public function getLocationById($locationId)
     {

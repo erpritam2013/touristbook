@@ -9,7 +9,7 @@ class FacilityRepository implements FacilityRepositoryInterface
 {
     public function getAllFacilities() 
     {
-        return Facility::all();
+        return Facility::orderBy('id','desc')->get();
     }
     public function getFacilitiesByType($type=null,$f_id = null) 
     {

@@ -9,7 +9,7 @@ class TermActivityRepository implements TermActivityRepositoryInterface
 {
     public function getAllTermActivities() 
     {
-        return TermActivity::all();
+        return TermActivity::orderBy('id','desc')->get();
     }
     public function getTermActivitiesByType($type=null,$ta_id=null) 
     {

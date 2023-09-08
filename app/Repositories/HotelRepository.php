@@ -9,7 +9,7 @@ class HotelRepository implements HotelRepositoryInterface
 {
     public function getAllHotels()
     {
-        return Hotel::all();
+        return Hotel::orderBy('id','desc')->get();
     }
     public function getHotelById($hotelId)
     {

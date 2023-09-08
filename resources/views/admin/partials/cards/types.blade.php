@@ -1,4 +1,4 @@
-<div class="card {{!empty($types)?'term-card':''}}">
+<div class="card {{(count($types) > 10)?'term-card':''}}">
     <div class="card-header border-bottom">
         <h4 class="card-title">Location Type</h4>
     </div>

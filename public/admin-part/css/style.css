@@ -261,7 +261,7 @@ body {
   font-weight: 400;
   line-height: 1.5;
 /*  color: #BDBDC7;*/
-  color: #6c757d;
+  color: #6c757d!important;
   text-align: left;
   background-color: rgba(88, 115, 254, 0.04); }
 
@@ -19465,4 +19465,17 @@ body .term-card .card-body{
 .card-title-text {
     color: #fff;
 }
+
+body #touristbook-datatable tbody tr{
+  color: #6c757d!important;
+}
+
+body #touristbook-datatable tbody tr td.text-center a{
+  margin: 2px;
+  padding: 0.150rem 0.25rem;
+}
+/*
+body .select-id{
+  margin:10px!important;
+}*/
 /*# sourceMappingURL=style.css.map */

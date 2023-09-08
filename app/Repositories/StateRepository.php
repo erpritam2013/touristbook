@@ -9,7 +9,7 @@ class StateRepository implements StateRepositoryInterface
 {
     public function getAllStates()
     {
-        return State::all();
+        return State::orderBy('id','desc')->get();
     }
     
     public function getStateById($StateId) 

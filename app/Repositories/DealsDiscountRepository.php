@@ -9,7 +9,7 @@ class DealsDiscountRepository implements DealsDiscountRepositoryInterface
 {
     public function getAllDealsDiscounts() 
     {
-        return DealsDiscount::all();
+        return DealsDiscount::orderBy('id','desc')->get();
     }
     public function getDealsDiscountsByType($type=null,$dd_id=null) 
     {

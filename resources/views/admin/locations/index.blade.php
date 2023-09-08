@@ -1,1 +1,1 @@
-{{dd($locations[0]->locationMeta->how_to_reach)}}
+{{dd($locations[0]->state)}}

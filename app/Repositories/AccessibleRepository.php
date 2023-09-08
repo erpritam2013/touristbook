@@ -9,7 +9,7 @@ class AccessibleRepository implements AccessibleRepositoryInterface
 {
     public function getAllAccessibles()
     {
-        return Accessible::all();
+        return Accessible::orderBy('id','desc')->get();
     }
     public function getAccessiblesByType($type=null,$a_id=null) 
     {

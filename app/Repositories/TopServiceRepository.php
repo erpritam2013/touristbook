@@ -9,7 +9,7 @@ class TopServiceRepository implements TopServiceRepositoryInterface
 {
     public function getAllTopServices() 
     {
-        return TopService::all();
+        return TopService::orderBy('id','desc')->get();
     }
     public function getTopServicesByType($type=null,$ts_id=null) 
     {

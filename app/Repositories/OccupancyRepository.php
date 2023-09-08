@@ -9,7 +9,7 @@ class OccupancyRepository implements OccupancyRepositoryInterface
 {
     public function getAllOccupancies() 
     {
-        return Occupancy::all();
+        return Occupancy::orderBy('id','desc')->get();
     }
     public function getOccupanciesByType($type=null,$o_id=null) 
     {
