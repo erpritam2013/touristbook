@@ -10,7 +10,7 @@ return [
                 "policy-description" => [
                     'label' => "Policy Description",
                     'control' => 'textarea',
-                    'class' => 'ck-editor'
+                    'class' => 'tourist-editor'
                 ]
             ]
 
@@ -53,7 +53,8 @@ return [
                 ],
                 "facilityAmenities-description" => [
                     'label' => "Description",
-                    'control' => 'textarea'
+                    'control' => 'textarea',
+                    'class' => 'tourist-editor'
                 ]
             ]
 

@@ -11,7 +11,8 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCF8MnYK1Ft-lPa3_B6rirg2IJzptB4m1Y&v=weekly&libraries=places"
         defer
     ></script>
-  <!-- ckediter -->
+
+    <!-- ckediter -->
     <script src="{!! asset('admin-part/vendor/ckeditor/ckeditor.js') !!}"></script>
 
     {{-- Sortable JS --}}

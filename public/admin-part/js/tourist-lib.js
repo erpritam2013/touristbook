@@ -5,9 +5,10 @@ $(document).ready(function () {
     const longitudeTextbox = document.getElementById('longitude');
     const zoomTextbox = document.getElementById('zoom_level');
 
+    let touristEditorsElems = $(".tourist-editor")
+
     // Markers on Map : Assuming there will be one Map on a Page
     var markers = [];
-
 
     var base_admin_url = $('#base-admin-url').val()
     let btnAddSubForm = $(".btn-add-subform")
@@ -31,25 +32,31 @@ $(document).ready(function () {
         // Processed and Append HTML
         const processedSubForm = (html, targetElem) => {
             let recentUsedIndex = parseInt(targetElem.attr('index'));
-            console.log(recentUsedIndex)
             let newIndex = recentUsedIndex + 1
-            console.log(newIndex)
             // Update HTML
             let pattern = /\[(\d+)\]/g; // pattern [<number>] TODO: think better Solution
+            let intentionPattern = /\-tsign-(\d+)\-tsign-/g;
             let cardTitlePattern = '<span class="card-title-text">(.*?)</span>';
 
             // Change Pattern
-            let newHtmlContent = html.replace(pattern, "[" + newIndex + "]");
+            let newHtmlContent = html.replace(pattern, "[" + newIndex + "]").replace(intentionPattern, "-tsign-"+newIndex+"-tsign-");
             const match = new RegExp(cardTitlePattern).exec(newHtmlContent);
             if(match) {
                 const newSubHtml = '<span class="card-title-text"></span>';
                 newHtmlContent = newHtmlContent.replace(match[0], newSubHtml);
             }
 
-
-
             targetElem.append(newHtmlContent)
             targetElem.attr("index", newIndex)
+
+            // Ck Editor Added
+            targetElem.find(".tourist-editor").each((idx, te) => {
+                // let teId = $(te).attr("id")
+                // let editorId = "#ck_"+teId
+                // targetElem.find(editorId).first().remove();
+                if(!$(te).next().hasClass("cke"))
+                    CKEDITOR.replace(te)
+            })
 
             // Sortable
             if(targetElem.hasClass('ui-sortable')) {
@@ -58,6 +65,7 @@ $(document).ready(function () {
             }else {
                 // Create
                 targetElem.sortable({
+                    cancel: ".unsortable",
                     update: function() {}
                 });
             }
@@ -72,37 +80,35 @@ $(document).ready(function () {
             let targetSelector = elemRef.attr("target-selector")
             let targetElem = $(targetSelector)
 
-            if (targetElem.find(".subform-card").length <= 0) {
-                // Call Ajax Call
-                fetchSubForm(subformType, targetElem)
-            } else {
-                // Grab First Element
-                let html = targetElem.find(".subform-card")[0].outerHTML
-                processedSubForm(html, targetElem)
-            }
+            // Call Ajax Call
+            fetchSubForm(subformType, targetElem)
+
+            // if (targetElem.find(".subform-card").length <= 0) {
+            //     // Call Ajax Call
+            //     fetchSubForm(subformType, targetElem)
+            // } else {
+            //     // Grab First Element
+            //     let html = targetElem.find(".subform-card")[0].outerHTML
+            //     processedSubForm(html, targetElem)
+            // }
 
 
         }) // On Click Event Block Ends
 
         // Delete the Card
         $('body').on('click', '.delete-card', function() {
-            if (confirm('Are you sure you want to remove this?')) {
-               $(this).parents('.subform-card').first().remove();
-            }else{
-                return false;
-            }
+            $(this).parents('.subform-card').first().remove();
         });
 
         // Edit the Card
         $('body').on('click', '.edit-card', function() {
-            let $target = $(this).parents('.subform-card').first().find('.card-body').first().toggle();
-            $('.subform-card .card-body').not($target).hide();
+            $(this).parents('.subform-card').first().find('.card-body').first().toggle();
         });
 
         // Title Added
         $('body').on('keyup', '.subform-card .card-body input[type=text]', function() {
             $(this).parents('.subform-card').each(function() {
-                // TODO: Dynamic par is missing 
+                // TODO: Dynamic par is missing
                 $(this).find('.card-title-text').text($(this).find('input[type=text]').val());
             });
         });
@@ -121,6 +127,14 @@ $(document).ready(function () {
 
 
     } // If Block Ends
+
+    // ------------------- CK Editor Setup -----------------------
+    if(touristEditorsElems.length > 0) {
+        touristEditorsElems.each(function(idx, te) {
+            CKEDITOR.replace(te)
+        })
+    }
+
 
 
     // Initialize Map

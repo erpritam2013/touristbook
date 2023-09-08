@@ -17,10 +17,10 @@
         </div>
 
         <div class="form-group row">
-            <label class="col-lg-2 col-form-label" for="description">Description 
+            <label class="col-lg-2 col-form-label" for="description">Description
             </label>
             <div class="col-lg-10">
-                <textarea class="form-control" id="description" name="description" rows="5" placeholder="Enter Description..">{{$hotel->description ?? ''}}</textarea>
+                <textarea class="form-control tourist-editor" id="description" name="description" rows="5" placeholder="Enter Description..">{{$hotel->description ?? ''}}</textarea>
             </div>
         </div>
 
