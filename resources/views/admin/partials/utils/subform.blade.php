@@ -23,12 +23,16 @@
                     <label class="col-lg-3 col-form-label">{{ $typeFields[$controlId]['label'] }}</label>
                     <div class="col-lg-9">
                         @if($typeFields[$controlId]['control'] == "text")
+
                             <input type="text" class="form-control" name="{{$type}}[{{$key}}][{{$controlId}}]" value="{{$value ?? ''}}" id="{{$type.'-'.$key.'-'.$controlId}}" >
                         @elseif($typeFields[$controlId]['control'] == "textarea")
                             <textarea class="form-control" name="{{$type}}[{{$key}}][{{$controlId}}]"  id="{{$type.'-'.$key.'-'.$controlId}}">{{$value ?? ''}}</textarea>
                             <input type="text" class="form-control {{$elemClass}} " name="{{$type}}[{{$key}}][{{$controlId}}]" value="{{$value ?? ''}}" id="{{$type.'-'.$key.'-'.$controlId}}" >
+
+                            <input type="text" class="form-control {{$elemClass}} " name="{{$type}}[{{$key}}][{{$controlId}}]" value="{{$value ?? ''}}" id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}" >
+
                         @elseif($typeFields[$controlId]['control'] == "textarea")
-                            <textarea class="form-control {{$elemClass}} " name="{{$type}}[{{$key}}][{{$controlId}}]"  id="{{$type.'-'.$key.'-'.$controlId}}">{{$value ?? ''}}</textarea>
+                            <textarea class="form-control {{$elemClass}} " name="{{$type}}[{{$key}}][{{$controlId}}]"  id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}">{{$value ?? ''}}</textarea>
                         @endif
                     </div>
                 </div>
