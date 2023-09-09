@@ -9,8 +9,7 @@ return [
                 ],
                 "policy-description" => [
                     'label' => "Policy Description",
-                    'control' => 'textarea',
-                    'class' => 'tourist-editor'
+                    'control' => 'textarea'
                 ]
             ]
 
@@ -54,7 +53,6 @@ return [
                 "facilityAmenities-description" => [
                     'label' => "Description",
                     'control' => 'textarea',
-                    'class' => 'tourist-editor'
                 ]
             ]
 
@@ -248,7 +246,8 @@ return [
                 ],
                 "transport-description" => [
                     'label' => "Description",
-                    'control' => 'textarea'
+                    'control' => 'textarea',
+                    'class' => 'tourist-editor'
                 ]
             ]
 
@@ -261,7 +260,8 @@ return [
                 ],
                 "emergencyLinks-description" => [
                     'label' => "Description",
-                    'control' => 'textarea'
+                    'control' => 'textarea',
+                    'class' => 'tourist-editor'
                 ],
                 "emergencyLinks-link" => [
                     'label' => "Link",
