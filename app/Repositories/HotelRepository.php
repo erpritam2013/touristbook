@@ -20,7 +20,7 @@ class HotelRepository implements HotelRepositoryInterface
         Hotel::destroy($hotelId);
     }
 
-    public function deleteBulkHotel($hotelId) 
+    public function deleteBulkHotel($hotelId)
     {
          Hotel::whereIn('id', $hotelId)->delete();
     }
@@ -32,5 +32,5 @@ class HotelRepository implements HotelRepositoryInterface
     {
         return Hotel::whereId($hotelId)->update($newDetails);
     }
-    
+
 }
