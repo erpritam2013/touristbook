@@ -4,11 +4,15 @@ namespace App\Models;
 
 use App\Models\Terms\Accessible;
 use App\Models\Terms\Amenity;
+use App\Models\Terms\DealsDiscount;
 use App\Models\Terms\Facility;
 use App\Models\Terms\MedicareAssistance;
 use App\Models\Terms\MeetingAndEvent;
+use App\Models\Terms\Occupancy;
 use App\Models\Terms\Place;
 use App\Models\Terms\PropertyType;
+use App\Models\Terms\State;
+use App\Models\Terms\TermActivity;
 use App\Models\Terms\TopService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,7 +26,9 @@ class Hotel extends Model
 
     protected $casts = [
         'hotel_attributes' => 'array',
-        'contact' => 'array'
+        'contact' => 'array',
+        'policies' => 'array',
+        'notices' => 'array'
     ];
 
     public function sluggable(): Array
@@ -65,6 +71,22 @@ class Hotel extends Model
 
     public function meetingEvents() {
         return $this->belongsToMany(MeetingAndEvent::class, 'hotel_meeting_events', 'hotel_id', 'meeting_id');
+    }
+
+    public function states() {
+        return $this->belongsToMany(State::class, 'hotel_states', 'hotel_id', 'state_id');
+    }
+
+    public function occupancies() {
+        return $this->belongsToMany(Occupancy::class, 'hotel_occupancies', 'hotel_id', 'occupancies_id');
+    }
+
+    public function deals() {
+        return $this->belongsToMany(DealsDiscount::class, 'hotel_deals', 'hotel_id', 'deal_id');
+    }
+
+    public function activities() {
+        return $this->belongsToMany(TermActivity::class, 'hotel_activities', 'hotel_id', 'activity_id');
     }
 
     public function detail() {

@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('types', function (Blueprint $table) {
-              $table->text('attachment')->after('slug')->nullable();
-             $table->string('lebal_type')->after('slug')->nullable();
+            $table->text('attachment')->after('slug')->nullable();
+            $table->string('lebal_type')->after('slug')->nullable();
         });
     }
 
