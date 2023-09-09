@@ -7,4 +7,21 @@ return [
    
     'lebal_types' => ['default', 'primary', 'success', 'info', 'warning', 'danger'],
    
+    'stay' => ['information', 'map', 'hotel', 'tour', 'activity'],
+    'important_note' => "To go through a hotel's Cancellation and Refund Policy before you confirm your booking. 
+To notice single occupancy, double occupancy, and third Person policy/child policy.
+To Make sure that your personal data/ information must be safe while booking.
+To notice direct booking benefits, offers, discounts, complementary and package details too.
+To visit the social media linkages of the hotel/company/host to get more information/authenticity.",
+    'helpful_facts' => "Accommodation and Food Quality, Prominent Reviews, Download offline Location.
+Inclusions/Exclusions of your package.
+Terms & Conditions, Cancellation Policy and Refund Policy too.
+Emergency Contacts and Helplines.
+Security of Your Credentials,Personal and Sensitive Data.
+Your Reporting Time and Place, Luggage Quantity For Helicopter Trip and Child Policy in this Concern (if so), Sightseeing, Activities,Local Market and Education Buffs.
+Transport Information- Air, Rail and Road.
+Must Visit the State Tourism Website and View Tourism Zone for Comprehensive Details.
+Please Do Notice Direct Booking Benefits, Offers, Discounts, Complimentaries and Package Details too.
+Please Visit the Social Media Linkages of the Hotel to get more Information and Authenticity.",
+   
 ];

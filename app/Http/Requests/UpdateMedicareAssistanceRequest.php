@@ -24,7 +24,7 @@ class UpdateMedicareAssistanceRequest extends FormRequest
     public function rules()
     {
         return [
-             'name' => 'required|max:255',
+             'name' => 'required|max:255|unique_custom:medicare_assistances,name,medicare_assistance_type,'.request()->medicare_assistance_type.',id,'.request()->id,
             'medicare_assistance_type' => 'required',
         ];
     }

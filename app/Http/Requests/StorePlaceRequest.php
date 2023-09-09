@@ -24,7 +24,7 @@ class StorePlaceRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
+            'name' => 'required|max:255|unique_custom:places,name,place_type,'.request()->place_type,
             'place_type' => 'required',
         ];
     }

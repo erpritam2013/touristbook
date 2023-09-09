@@ -9,7 +9,7 @@ class StateRepository implements StateRepositoryInterface
 {
     public function getAllStates()
     {
-        return State::all();
+        return State::orderBy('id','desc')->get();
     }
     
     public function getStateById($StateId) 
@@ -54,7 +54,8 @@ class StateRepository implements StateRepositoryInterface
 
         $states = $stateBuilder->get(['id','name', 'parent_id']);
 
-        $nestedResult = $states->toNested();
+        // $nestedResult = $states->toNested();
+        $nestedResult = $states;
 
         return  $nestedResult;
     }

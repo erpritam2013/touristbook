@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Session;
-
+use App\DataTables\TypeDataTable;
 class TypeController extends Controller
 {
 
@@ -26,12 +26,13 @@ class TypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(TypeDataTable $dataTable)
     {
-        $data['types'] = $this->typeRepository->getAllTypes();
+        // $data['types'] = $this->typeRepository->getAllTypes();
+        $data['types'] = Type::count();
         $data['title'] = 'Type List';
 
-        return view('admin.terms.types.index', $data);
+        return $dataTable->render('admin.terms.types.index', $data);
     }
 
     /**

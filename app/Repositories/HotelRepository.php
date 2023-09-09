@@ -9,7 +9,7 @@ class HotelRepository implements HotelRepositoryInterface
 {
     public function getAllHotels()
     {
-        return Hotel::all();
+        return Hotel::orderBy('id','desc')->get();
     }
     public function getHotelById($hotelId)
     {
@@ -18,6 +18,11 @@ class HotelRepository implements HotelRepositoryInterface
     public function deleteHotel($hotelId)
     {
         Hotel::destroy($hotelId);
+    }
+
+    public function deleteBulkHotel($hotelId) 
+    {
+         Hotel::whereIn('id', $hotelId)->delete();
     }
     public function createHotel(array $hotelDetails)
     {

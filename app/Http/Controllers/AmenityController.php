@@ -10,10 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Session;
-
-
-
-
+use App\DataTables\AmenityDataTable;
 class AmenityController extends Controller
 {
 
@@ -29,12 +26,12 @@ class AmenityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(AmenityDataTable $dataTable)
     {
-       $data['amenities'] = $this->amenityRepository->getAllAmenities();
+        $data['amenities'] = Amenity::count();
         $data['title'] = 'Amenity List';
 
-        return view('admin.terms.amenities.index', $data);
+        return $dataTable->render('admin.terms.amenities.index', $data);
     }
 
     /**

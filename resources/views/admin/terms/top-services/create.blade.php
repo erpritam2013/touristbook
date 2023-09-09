@@ -49,7 +49,7 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label" for="term-type">top_service Type
+                                    <label class="col-lg-2 col-form-label" for="term-type">Top Service Type
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-10">
@@ -67,7 +67,7 @@
                                 </div>
                             
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label" for="top_service-parent">top_service Parent
+                                    <label class="col-lg-2 col-form-label" for="top_service-parent">Top Service Parent
                                     </label>
                                     <div class="col-lg-10">
                                         <select class="form-control multi-select" id="parent-id" name="parent_id" data-existed_parent_id="{{$top_service->parent_id ?? ''}}">

@@ -24,7 +24,7 @@ class UpdateAmenityRequest extends FormRequest
     public function rules()
     {
          return [
-            'name' => 'required|max:255',
+            'name' => 'required|max:255|unique_custom:amenities,name,amenity_type,'.request()->amenity_type.',id,'.request()->id,
             'amenity_type' => 'required',
         ];
     }

@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Session;
-
+use App\DataTables\FacilityDataTable;
 class FacilityController extends Controller
 {
 
@@ -27,13 +27,15 @@ class FacilityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(FacilityDataTable $dataTable)
     {
-        $data['facilities'] = $this->facilityRepository->getAllFacilities();
+        //$facilities = $this->facilityRepository->getAllFacilities();
+        $data['facilities'] = Facility::count();
         $data['title'] = 'Facility List';
 
-        return view('admin.terms.facilities.index', $data);
+        return $dataTable->render('admin.terms.facilities.index', $data);
     }
+   
 
     /**
      * Show the form for creating a new resource.

@@ -21,7 +21,7 @@ class Accessible extends Model
        'slug',
        'description',
        'icon',
-       'parent_accessible',
+       'parent_id',
        'accessible_type',
        'status',
    ];

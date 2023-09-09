@@ -4,12 +4,12 @@ namespace App\Repositories;
 
 use App\Interfaces\PlaceRepositoryInterface;
 use App\Models\Terms\Place;
-
+use DataTables;
 class PlaceRepository implements PlaceRepositoryInterface 
 {
     public function getAllPlaces() 
     {
-        return Place::all();
+        return Place::orderBy('id','desc')->get();
     }
     public function getPlacesByType($type=null,$p_id=null) 
     {

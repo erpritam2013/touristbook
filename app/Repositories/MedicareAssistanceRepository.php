@@ -9,7 +9,7 @@ class MedicareAssistanceRepository implements MedicareAssistanceRepositoryInterf
 {
     public function getAllMedicareAssistances() 
     {
-        return MedicareAssistance::all();
+        return MedicareAssistance::orderBy('id','desc')->get();
     }
     public function getMedicareAssistancesByType($type=null,$ma_id=null) 
     {

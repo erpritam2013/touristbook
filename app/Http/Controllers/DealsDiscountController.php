@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Session;
-
+use App\DataTables\DealsDiscountDataTable;
 class DealsDiscountController extends Controller
 {
 
@@ -26,12 +26,14 @@ class DealsDiscountController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(DealsDiscountDataTable $dataTable)
     {
-        $data['deal_discounts'] = $this->dealsDiscountRepository->getAllDealsDiscounts();
+        // $data['deal_discounts'] = $this->dealsDiscountRepository->getAllDealsDiscounts();
+        $data['deal_discounts'] = DealsDiscount::count();
         $data['title'] = 'Deals & Discount List';
 
-        return view('admin.terms.deal-discounts.index', $data);
+       return $dataTable->render('admin.terms.deal-discounts.index', $data);
+
     }
 
     /**
