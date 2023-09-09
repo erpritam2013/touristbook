@@ -23,7 +23,7 @@
 @endif
 <!-- For create and edit page css -->
 @if(Route::getRoutes()->match(request())->methods[0] == 'GET' && (matchRouteNameMatch('create') || matchRouteNameMatch('edit')))
-        //no css
+      <!-- no css -->
         @endif
 <style type="text/css">
 

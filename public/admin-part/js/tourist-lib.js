@@ -102,9 +102,9 @@ $(document).ready(function () {
 
         // Edit the Card
         $('body').on('click', '.edit-card', function() {
-            console.log($(this).parents('.subform-card').find('.card-body').not(":eq(0)"));
-            $(this).parents('.subform-card').find('.card-body').not(":eq(0)").hide();
-            $(this).parents('.subform-card').first().find('.card-body').first().toggle();
+            //  let $target = $(this).parents('.subform-card').first().find('.card-body').first().toggle();
+            // $('.subform-card .card-body').not($target).hide();
+             $(this).parents('.subform-card').first().find('.card-body').first().toggle();
         });
 
         // Title Added
