@@ -19,6 +19,11 @@ class HotelRepository implements HotelRepositoryInterface
     {
         Hotel::destroy($hotelId);
     }
+
+    public function deleteBulkHotel($hotelId) 
+    {
+         Hotel::whereIn('id', $hotelId)->delete();
+    }
     public function createHotel(array $hotelDetails)
     {
         return Hotel::create($hotelDetails);

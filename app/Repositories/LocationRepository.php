@@ -20,6 +20,12 @@ class LocationRepository implements LocationRepositoryInterface
     {
         Location::destroy($locationId);
     }
+
+    public function deleteBulkLocation($locationIds) 
+    {
+         Location::whereIn('id', $locationIds)->delete();
+    }
+
     public function createLocation(array $locationDetails)
     {
         return Location::create($locationDetails);

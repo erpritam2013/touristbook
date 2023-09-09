@@ -9,19 +9,19 @@
             <div class="card-header">
                 <h4 class="card-title">{{$title}}</h4>
                 <div align="right" class="all-a">
-                    @if($locations)<a href="javascript:void(0);" class="btn btn-outline-danger bulk-delete btn-xs" style="display: none;">Bulk Delete</a>
-                    <form id='bulk_delete_entity_form' method="POST" action="{{route('admin.location.bulk-delete')}}" style="display: none" data-text="location">
+                    @if($hotels)<a href="javascript:void(0);" class="btn btn-outline-danger bulk-delete btn-xs" style="display: none;">Bulk Delete</a>
+                    <form id='bulk_delete_entity_form' method="POST" action="{{route('admin.hotel.bulk-delete')}}" style="display: none" data-text="hotel">
                       {{ csrf_field() }}
                       <input type="hidden" name="ids" id="ids" >
 
                       {{method_field('DELETE')}}
 
                   </form>@endif
-                  <a href="{{route('admin.locations.create')}}" class="btn btn-outline-primary btn-xs">Add New Location</a>
+                  <a href="{{route('admin.hotels.create')}}" class="btn btn-outline-primary btn-xs">Add New hotel</a>
               </div>
           </div>
 
-          <div class="card-body location_list entity-list">
+          <div class="card-body hotel_list entity-list">
             @if(Session::has('success'))
             {!!get_form_success_msg(Session::get('success'))!!}
             @endif
@@ -30,7 +30,7 @@
              {{ $dataTable->table() }}
          </div>
      </div>
-     <form id='delete_entity_form' method="POST" action="{{route('admin.locations.index')}}" style="display: none">
+     <form id='delete_entity_form' method="POST" action="{{route('admin.hotels.index')}}" style="display: none">
       {{ csrf_field() }}
 
       {{method_field('DELETE')}}

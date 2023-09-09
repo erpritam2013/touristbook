@@ -17,8 +17,10 @@ use App\Interfaces\TermActivityRepositoryInterface;
 use App\Interfaces\TopServiceRepositoryInterface;
 use App\Models\Hotel;
 use Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-
+use Illuminate\Http\Response;
+use App\DataTables\HotelDataTable;
 class HotelController extends Controller
 {
 
@@ -68,11 +70,15 @@ class HotelController extends Controller
         $this->activityRepository = $activityRepository;
     }
 
-    public function index()
+   public function index(HotelDataTable $dataTable)
     {
-        $hotels = $this->hotelRepository->getAllHotels();
-        // return view('tasks.index', ['tasks' =>  $tasks]);
-    }
+
+     // $data['locations'] = $this->locationRepository->getAllLocations();
+      $data['hotels'] = Hotel::count();
+      $data['title'] = 'Hotel List';
+     return $dataTable->render('admin.hotels.index', $data);
+ }
+
 
     public function create()
     {
@@ -183,6 +189,17 @@ class HotelController extends Controller
         return redirect()->Route('hotels');
     }
 
+     public function changeStatus(Request $request): JsonResponse
+    {
+        $hotelId = $request->id;
+          $hotelDetails = [
+            'status' => $request->status,
+        ];
+        $this->hotelRepository->updateHotel($hotelId, $hotelDetails);
+  
+        return response()->json(['success'=>'Status change successfully.']);
+    }
+
     public function show(Request $request)
     {
         $hotelId = $request->route('hotelId');
@@ -215,6 +232,18 @@ class HotelController extends Controller
 
         $this->hotelRepository->deleteHotel($hotelId);
 
+        return back();
+    }
+
+
+      public function bulk_delete(Request $request)
+    {
+         if (!empty($request->ids)) {
+        
+        $hotelIds = get_array_mapping(json_decode($request->ids));
+        $this->hotelRepository->deleteBulkHotel($hotelIds);
+         Session::flash('success','Hotel Bulk Deleted Successfully');
+        }
         return back();
     }
 

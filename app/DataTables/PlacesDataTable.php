@@ -40,7 +40,7 @@ class PlacesDataTable extends DataTable
                     if ($row->status == 1) {
                        $checked = 'checked';
                     }
-                    return '<input data-id="'.$row->id.'" class="toggle-class" type="checkbox" data-size="sm" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url="'.route("admin.terms.changeStatusPlace").'" data-on="Active" data-off="InActive" '.$checked.' '.json_encode($row).'>';
+                    return '<input data-id="'.$row->id.'" class="toggle-class" type="checkbox" data-size="sm" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url="'.route("admin.terms.changeStatusPlace").'" data-on="Active" data-off="InActive" '.$checked.'>';
                 })->addColumn('del',function($row){
                  return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'">';
             })->rawColumns(['status','action','icon','del']);
@@ -91,7 +91,7 @@ class PlacesDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('del')->title('<input type="checkbox" class="css-control-input mr-2 select-all text-center" onchange="CustomSelectCheckboxAll(this);" '.$this->disabledInput().'>')->searchable(false)
+            Column::computed('del')->title('<input type="checkbox" class="css-control-input mr-2 select-all text-center" onchange="CustomSelectCheckboxAll(this);" '.$this->disabledInput().'>')->searchable(false)
             ->orderable(false)
             ->exportable(false)
             ->printable(false)->width(5)

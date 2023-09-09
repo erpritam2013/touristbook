@@ -7,10 +7,13 @@ use App\Interfaces\PlaceRepositoryInterface;
 use App\Interfaces\StateRepositoryInterface;
 use App\Interfaces\TypeRepositoryInterface;
 use App\Interfaces\CountryRepositoryInterface;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Models\Location;
 use App\Http\Requests\StoreLocationRequest;
 use App\Http\Requests\UpdateLocationRequest;
-
+use App\DataTables\LocationDataTable;
 class LocationController extends Controller
 {
 
@@ -41,11 +44,14 @@ class LocationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(LocationDataTable $dataTable)
     {
-           $data['locations'] = $this->locationRepository->getAllLocations();
-        return view('admin.locations.index', $data);
-    }
+
+     // $data['locations'] = $this->locationRepository->getAllLocations();
+      $data['locations'] = Location::count();
+      $data['title'] = 'Location List';
+     return $dataTable->render('admin.locations.index', $data);
+ }
 
     /**
      * Show the form for creating a new resource.
@@ -54,7 +60,7 @@ class LocationController extends Controller
      */
     public function create()
     {
-        $data['title'] = 'Location';
+        $data['title'] = 'Location Add';
         // TODO: Need to Improve here (Fetch from Cache)
         $data['places'] = $this->placeRepository->getActiveLocationPlacesList();
         $data['states'] = $this->stateRepository->getActiveStatesList();
@@ -95,54 +101,67 @@ class LocationController extends Controller
     $location = $this->locationRepository->createLocation($locationDetails);
 
     if($location) {
-        $locationMeta = [ 
 
-         "location_id" => $location->id,
-         "location_for_filter" => json_encode($request->location_for_filter),
-         "location_content" => json_encode($request->location_content),
-         "child_tabs" => json_encode($request->child_tabs),
-         "place_to_visit_description" => $request->place_to_visit_description,
-         "place_to_visit" => json_encode($request->place_to_visit),
-         "best_time_to_visit" => json_encode($request->best_time_to_visit),
-         "best_time_to_visit_description" => $request->best_time_to_visit_description,
-         "how_to_reach_description" => $request->how_to_reach_description,
-         "how_to_reach" => json_encode($request->how_to_reach),
-         "fair_and_festivals_description" => $request->fair_and_festivals_description,
-         "fair_and_festivals_image" => $request->fair_and_festivals_image,
-         "fair_and_festivals" => json_encode($request->fair_and_festivals),
-         "culinary_retreat_description" => $request->culinary_retreat_description,
-         "culinary_retreat" => json_encode($request->culinary_retreat),
-         "shopaholics_anonymous_description" => $request->shopaholics_anonymous_description,
-         "shopaholics_anonymous" => json_encode($request->shopaholics_anonymous),
-         "weather" => json_encode($request->weather),
-         "location_map" => json_encode($request->location_map),
-         "what_to_do" => json_encode($request->what_to_do),
-         "stay" => $request->stay,
-         "packages" => $request->packages,
-         "get_to_know_image" => $request->get_to_know_image,
-         "save_your_pocket_image" => $request->save_your_pocket_image,
-         "save_your_pocket" => json_encode($request->save_your_pocket),
-         "save_your_environment_image" => $request->save_your_environment_image,
-         "save_your_environment" => json_encode($request->save_your_environment),
-         "faqs" => json_encode($request->faqs),
-         "hotel_activities" => json_encode($request->hotel_activities),
-         "by_aggregators" => json_encode($request->by_aggregators),
-         "location_video" => json_encode($request->location_video),
-         "gallery" => json_encode($request->gallery),
-         "b_govt_subsidiaries" => json_encode($request->b_govt_subsidiaries),
-         "by_hotels" => json_encode($request->by_hotels),
-         "important_note" => $request->important_note,
-         "sanstive_data" => $request->sanstive_data,
-         "helpful_facts" => $request->helpful_facts
-     ];
 
-     $this->locationRepository->createLocationMeta($locationMeta);
-     $location->types()->attach($request->get('location_type'));
-     $location->places()->attach($request->get('places'));
- }
- return $location;
-        // return redirect()->Route('tasks');
+       $location->locationMeta()->create($request->only([
+
+        "location_id",
+        "location_for_filter",
+        "location_content",
+        "child_tabs",
+        "place_to_visit_description",
+        "place_to_visit",
+        "best_time_to_visit",
+        "best_time_to_visit_description",
+        "how_to_reach_description",
+        "how_to_reach",
+        "fair_and_festivals_description",
+        "fair_and_festivals_image",
+        "fair_and_festivals",
+        "culinary_retreat_description",
+        "culinary_retreat",
+        "shopaholics_anonymous_description",
+        "shopaholics_anonymous",
+        "weather",
+        "location_map",
+        "what_to_do",
+        "stay",
+        "packages",
+        "get_to_know_image",
+        "save_your_pocket_image",
+        "save_your_pocket",
+        "save_your_environment_image",
+        "save_your_environment",
+        "faqs",
+        "hotel_activities",
+        "by_aggregators",
+        "location_video",
+        "gallery",
+        "b_govt_subsidiaries",
+        "by_hotels",
+        "important_note",
+        "sanstive_data",
+        "helpful_facts",
+
+    ]));
+
+       $location->types()->attach($request->get('location_type'));
+       $location->places()->attach($request->get('places'));
+   }
+   //return $location;
+     return redirect()->Route('admin.locations.index');
 }
+
+   public function changeStatus(Request $request): JsonResponse
+    {
+        $locationId = $request->id;
+          $locationDetails = [
+            'status' => $request->status,
+        ];
+        $this->locationRepository->updateLocation($locationId, $locationDetails);
+  
+        return response()->json(['success'=>'Status change successfully.']);
+    }
 
     /**
      * Display the specified resource.
@@ -163,7 +182,24 @@ class LocationController extends Controller
      */
     public function edit(Location $location)
     {
-        //
+
+     
+       $locationId = $location->id;
+
+       //$location = $this->locationRepository->getlocationById($locationId);
+
+        if (empty($location)) {
+            return back();
+        }
+         $data['title'] = 'Location Edit';
+        // TODO: Need to Improve here (Fetch from Cache)
+        $data['places'] = $this->placeRepository->getActiveLocationPlacesList();
+        $data['states'] = $this->stateRepository->getActiveStatesList();
+        $data['types'] = $this->typeRepository->getActiveLocationTypesList();
+        $data['countries'] = $this->countryRepository->getCountiesList();
+        $data['location'] = $location;
+        
+        return view('admin.locations.edit', $data);
     }
 
     /**
@@ -187,5 +223,16 @@ class LocationController extends Controller
     public function destroy(Location $location)
     {
         //
+    }
+
+     public function bulk_delete(Request $request)
+    {
+         if (!empty($request->ids)) {
+        
+        $locationIds = get_array_mapping(json_decode($request->ids));
+        $this->locationRepository->deleteBulkLocation($locationIds);
+         Session::flash('success','Location Bulk Deleted Successfully');
+        }
+        return back();
     }
 }

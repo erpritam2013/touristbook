@@ -11,4 +11,5 @@ interface LocationRepositoryInterface
     public function updateLocation($locationId, array $newDetails);
     public function createLocationMeta(array $locationMetaDetails);
     public function updateLocationMeta($locationId, array $newLocationMetaDetails);
+    public function deleteBulkLocation($locationId);
 }

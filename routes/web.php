@@ -123,9 +123,16 @@ Route::name('admin.')->prefix('admin')->group(function () {
      }); // end terms route grouping
      // Hotel Resource
     Route::prefix('hotels')->name('hotels.')->group(function() {
-    Route::resource('/', HotelController::class);
-    });  // Location Resource
+    Route::resource('/', HotelController::class)->parameters(['' => 'hotel']);
+    }); 
+    Route::delete('hotel/bulk-delete', [HotelController::class,'bulk_delete'])->name('hotel.bulk-delete');
+     Route::get('hotel/changeStatus', [HotelController::class,'changeStatus'])->name('changeStatusHotel');
+
+     // Location Resource
     Route::prefix('locations')->name('locations.')->group(function() {
-    Route::resource('/', locationController::class);
+    Route::resource('/', locationController::class)->parameters(['' => 'location']);
+
     });
+    Route::delete('location/bulk-delete', [locationController::class,'bulk_delete'])->name('location.bulk-delete');
+    Route::get('location/changeStatus', [locationController::class,'changeStatus'])->name('changeStatusLocation');
 });

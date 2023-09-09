@@ -14,6 +14,8 @@
             </div>
 
             <div class="card-body">
+            @if(is_array($card))
+
             @foreach($card as $controlId => $value)
                 @if(isset($typeFields[$controlId]))
                     @php
@@ -31,6 +33,7 @@
                 </div>
                 @endif
             @endforeach
+            @endif
             </div>
         </div>
     </li>
