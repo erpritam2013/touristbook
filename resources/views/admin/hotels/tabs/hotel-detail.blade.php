@@ -124,7 +124,7 @@
 <div class="form-group row">
     <label class="col-lg-5 col-form-label" for="tourism_zone_heading">Tourism Zone Heading Description</label>
     <div class="col-lg-7">
-        <textarea class="form-control" id="tourism_zone_heading" name="tourism_zone_heading" >{{$hotel->tourism_zone_heading ?? ''}}</textarea>
+        <textarea class="form-control tourist-editor" id="tourism_zone_heading" name="tourism_zone_heading" >{{$hotel->tourism_zone_heading ?? ''}}</textarea>
     </div>
 </div>
 

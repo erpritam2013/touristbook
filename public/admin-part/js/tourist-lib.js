@@ -5,10 +5,40 @@ $(document).ready(function () {
     const longitudeTextbox = document.getElementById('longitude');
     const zoomTextbox = document.getElementById('zoom_level');
 
+    const mapElem = document.getElementById("map");
+
     let touristEditorsElems = $(".tourist-editor")
 
     // Markers on Map : Assuming there will be one Map on a Page
     var markers = [];
+
+    // Change Indexes of Subform
+    const subformIndexChanges = (text, idx) => {
+        let pattern = /\[(\d+)\]/g; // pattern [<number>] TODO: think better Solution
+        let intentionPattern = /\-tsign-(\d+)\-tsign-/g;
+
+        let updatedText = text.replace(pattern, `[${idx}]`).replace(intentionPattern, `-tsign-${idx}-tsign-`)
+
+        return updatedText
+    }
+
+    // Change Subform Ordering
+    const changeSubformOrder = (parentElem) => {
+
+        let liElements = parentElem.find('li')
+        liElements.each((idx, liElem) => {
+            $(liElem).find("input, textarea").each((controlIdx, control) => {
+                let controlElem = $(control)
+                let updatedName = subformIndexChanges(controlElem.attr("name"), idx)
+                let updatedId = subformIndexChanges(controlElem.attr("id"), idx)
+                controlElem.attr("name", updatedName);
+                controlElem.attr("id", updatedId);
+            })
+
+        })
+        parentElem.attr("index", liElements.length)
+
+    }
 
     var base_admin_url = $('#base-admin-url').val()
     let btnAddSubForm = $(".btn-add-subform")
@@ -33,13 +63,10 @@ $(document).ready(function () {
         const processedSubForm = (html, targetElem) => {
             let recentUsedIndex = parseInt(targetElem.attr('index'));
             let newIndex = recentUsedIndex + 1
-            // Update HTML
-            let pattern = /\[(\d+)\]/g; // pattern [<number>] TODO: think better Solution
-            let intentionPattern = /\-tsign-(\d+)\-tsign-/g;
             let cardTitlePattern = '<span class="card-title-text">(.*?)</span>';
 
-            // Change Pattern
-            let newHtmlContent = html.replace(pattern, "[" + newIndex + "]").replace(intentionPattern, "-tsign-"+newIndex+"-tsign-");
+            // Change Based on Pattern
+            let newHtmlContent = subformIndexChanges(html, newIndex)
             const match = new RegExp(cardTitlePattern).exec(newHtmlContent);
             if(match) {
                 const newSubHtml = '<span class="card-title-text"></span>';
@@ -51,9 +78,6 @@ $(document).ready(function () {
 
             // Ck Editor Added
             targetElem.find(".tourist-editor").each((idx, te) => {
-                // let teId = $(te).attr("id")
-                // let editorId = "#ck_"+teId
-                // targetElem.find(editorId).first().remove();
                 if(!$(te).next().hasClass("cke"))
                     CKEDITOR.replace(te)
             })
@@ -65,8 +89,9 @@ $(document).ready(function () {
             }else {
                 // Create
                 targetElem.sortable({
-                    cancel: ".unsortable",
-                    update: function() {}
+                    update: function(event, ui) {
+                        changeSubformOrder(targetElem)
+                    }
                 });
             }
 
@@ -82,17 +107,6 @@ $(document).ready(function () {
 
             // Call Ajax Call
             fetchSubForm(subformType, targetElem)
-
-            // if (targetElem.find(".subform-card").length <= 0) {
-            //     // Call Ajax Call
-            //     fetchSubForm(subformType, targetElem)
-            // } else {
-            //     // Grab First Element
-            //     let html = targetElem.find(".subform-card")[0].outerHTML
-            //     processedSubForm(html, targetElem)
-            // }
-
-
         }) // On Click Event Block Ends
 
         // Delete the Card
@@ -115,18 +129,15 @@ $(document).ready(function () {
             });
         });
 
-        // Sortable Added
-        // TODO: It might require each (iteration)
+        // Sortable Initialized
         let cardListElm = $('.list-types')
         if(cardListElm.length > 0) {
             cardListElm.sortable({
-                update: function() {}
+                update: function(event, ui) {
+                    changeSubformOrder($(this))
+                }
             });
         }
-
-
-
-
 
     } // If Block Ends
 
@@ -141,7 +152,7 @@ $(document).ready(function () {
 
     // Initialize Map
     function initMap() {
-        map = new google.maps.Map(document.getElementById("map"), {
+        map = new google.maps.Map(mapElem, {
             zoom: 1, // Default
             center: new google.maps.LatLng(30.704649, 76.717873),
             mapTypeId: "terrain",
@@ -149,8 +160,11 @@ $(document).ready(function () {
 
         console.log(google.maps.places)
     }
-    // TODO: Call If I need to Load Map
-    initMap();
+
+    // Call InitMap if Exists
+    if(mapElem) {
+        initMap();
+    }
 
     // Set markup on Map
     const setMarkupOnMap = (geometryList) => {
@@ -224,11 +238,5 @@ $(document).ready(function () {
     longitudeTextbox.onchange = onPlaceChanged
     zoomTextbox.onchange = onPlaceChanged
     zoomTextbox.onkeyup = onPlaceChanged
-
-
-
-
-
-
 
 })
