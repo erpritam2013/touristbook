@@ -24,7 +24,7 @@ class UpdateTermActivityRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
+            'name' => 'required|max:255|unique_custom:term_activities,name,term_activity_type,'.request()->term_activity_type.',id,'.request()->id,
             'term_activity_type' => 'required',
         ];
     }

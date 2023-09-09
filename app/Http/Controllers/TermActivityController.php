@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Session;
-
+use App\DataTables\TermActivityDataTable;
 class TermActivityController extends Controller
 {
 
@@ -27,12 +27,13 @@ class TermActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(TermActivityDataTable $dataTable)
     {
-        $data['term_activities'] = $this->termActivityRepository->getAllTermActivities();
+        // $data['term_activities'] = $this->termActivityRepository->getAllTermActivities();
+        $data['term_activities'] = TermActivity::count();
         $data['title'] = 'Term Activity List';
 
-        return view('admin.terms.term-activities.index', $data);
+        return $dataTable->render('admin.terms.term-activities.index', $data);
     }
 
     /**

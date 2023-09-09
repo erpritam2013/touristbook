@@ -9,7 +9,7 @@ class AmenityRepository implements AmenityRepositoryInterface
 {
     public function getAllAmenities()
     {
-        return Amenity::all();
+        return Amenity::orderBy('id','desc')->get();
     }
     public function getAmenitiesByType($type=null,$a_id=null) 
     {

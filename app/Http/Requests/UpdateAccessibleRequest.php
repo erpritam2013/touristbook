@@ -23,8 +23,10 @@ class UpdateAccessibleRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required|max:255',
+
+
+         return [
+            'name' => 'required|max:255|unique_custom:accessibles,name,accessible_type,'.request()->accessible_type.',id,'.request()->id,
             'accessible_type' => 'required',
         ];
     }

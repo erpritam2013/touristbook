@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Session;
-
+use App\DataTables\StateDataTable;
 class StateController extends Controller
 {
 
@@ -28,12 +28,13 @@ class StateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(StateDataTable $dataTable)
     {
-        $data['states'] = $this->stateRepository->getAllStates();
+        // $data['states'] = $this->stateRepository->getAllStates();
+        $data['states'] = State::count();
         $data['title'] = 'State List';
 
-        return view('admin.terms.states.index', $data);
+       return $dataTable->render('admin.terms.states.index', $data);
     }
 
     /**

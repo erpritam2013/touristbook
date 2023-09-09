@@ -36,6 +36,9 @@ class BreadcrumbComposer
         $view->with('breadcrumbs', $this->parseSegments());
         $view->with('post_types', config('global.post_types'));
         $view->with('lebal_types', config('global.lebal_types'));
+        $view->with('stays', config('global.stay'));
+        $view->with('important_note', config('global.important_note'));
+        $view->with('helpful_facts', config('global.helpful_facts'));
         
     }
 

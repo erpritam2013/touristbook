@@ -4,12 +4,13 @@ namespace App\Repositories;
 
 use App\Interfaces\LocationRepositoryInterface;
 use App\Models\Location;
+use App\Models\LocationMeta;
 
 class LocationRepository implements LocationRepositoryInterface
 {
     public function getAllLocations()
     {
-        return Location::all();
+        return Location::orderBy('id','desc')->get();
     }
     public function getLocationById($locationId)
     {
@@ -19,6 +20,12 @@ class LocationRepository implements LocationRepositoryInterface
     {
         Location::destroy($locationId);
     }
+
+    public function deleteBulkLocation($locationIds) 
+    {
+         Location::whereIn('id', $locationIds)->delete();
+    }
+
     public function createLocation(array $locationDetails)
     {
         return Location::create($locationDetails);
@@ -26,6 +33,14 @@ class LocationRepository implements LocationRepositoryInterface
     public function updateLocation($locationId, array $newDetails)
     {
         return Location::whereId($locationId)->update($newDetails);
+    }
+    public function createLocationMeta(array $locationMetaDetails)
+    {
+        return LocationMeta::create($locationMetaDetails);
+    }
+    public function updateLocationMeta($locationId, array $newLocationMetaDetails)
+    {
+        return LocationMeta::where('location_id',$locationId)->update($newLocationMetaDetails);
     }
     
 }

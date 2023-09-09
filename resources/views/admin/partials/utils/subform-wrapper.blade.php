@@ -6,4 +6,5 @@
     @endif
 
 </ul>
+<p>You can re-order with drag & drop, the order will update after saving.</p>
 <a href="javascript:void(0);" class="btn btn-primary btn-add-subform" subform-type="{{$type}}" target-selector=".list-{{$type}}" >{{$btnTitle}}</a>

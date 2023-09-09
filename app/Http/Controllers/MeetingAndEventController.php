@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Session;
-
+use App\DataTables\MeetingAndEventDataTable;
 class MeetingAndEventController extends Controller
 {
 
@@ -25,12 +25,13 @@ class MeetingAndEventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(MeetingAndEventDataTable $dataTable)
     {
-        $data['meeting_and_events'] = $this->MeetingAndEventRepository->getAllMeetingAndEvents();
+        // $data['meeting_and_events'] = $this->MeetingAndEventRepository->getAllMeetingAndEvents();
+        $data['meeting_and_events'] =MeetingAndEvent::count();
         $data['title'] = 'Meeting And Event List';
 
-        return view('admin.terms.meeting-and-events.index', $data);
+        return $dataTable->render('admin.terms.meeting-and-events.index', $data);
     }
 
     /**

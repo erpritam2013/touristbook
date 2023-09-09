@@ -32,17 +32,19 @@
                                 <div class="col-xl-8">
                                     @include('admin.locations.partials.basic-card', ['location'=>$location ?? null])
 
-                                    @include('admin.locations.partials.location-info-card', ['location'=>$location ?? null])
+                                    @include('admin.locations.partials.location-settings', ['location'=>$location ?? null])
 
-                                    @include('admin.locations.partials.corporate', ['location'=>$location ?? null])
-
-                                    @include('admin.locations.partials.food-dining', ['location'=>$location ?? null])
+                                    @include('admin.locations.partials.extra-notes', ['location'=>$location ?? null])
                                     
                                 </div>
                                 <div class="col-xl-4">
                                     @include('admin.locations.partials.publish-card', ['location'=>$location ?? null])
 
+                                    @include('admin.partials.cards.types', ['types'=> $types , 'selected'=>[]])
+
                                     @include('admin.partials.cards.places', ['places'=> $places , 'selected'=>[]])
+
+                                    @include('admin.partials.cards.states', ['states'=> $states , 'selected'=>$location->state_id ?? null])
 
                                 </div>
                             </div>

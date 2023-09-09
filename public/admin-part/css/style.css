@@ -261,7 +261,7 @@ body {
   font-weight: 400;
   line-height: 1.5;
 /*  color: #BDBDC7;*/
-  color: #6c757d;
+  color: #6c757d!important;
   text-align: left;
   background-color: rgba(88, 115, 254, 0.04); }
 
@@ -3241,7 +3241,22 @@ input[type="button"].btn-block {
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: #fff;
-  background-color: #fba009; }
+  background-color: #fba009;
+  position: relative;
+   }
+  .nav-pills .nav-link.active:after{
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-left: 10px solid #fba009;
+    border-bottom: 11px solid transparent;
+    right: -9px;
+    top: 50%;
+    margin-top: -9px;
+    z-index: 1;
+}
 
 .nav-fill .nav-item {
   flex: 1 1 auto;
@@ -7862,7 +7877,7 @@ li {
 a {
   color: #BDBDC7; }
   a:hover, a:focus, a.active {
-    color: #fba009;
+    color: #ffffff;
     text-decoration: none; }
 
 .content-body .container {
@@ -19425,7 +19440,72 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 }
 
 .subform-card .card-header {
+    background: #777;
     cursor: pointer;
+    padding: 12px;
+}
+.border.p-2.mb-2 {
+    border: 1px solid #00000020!important;
+}
+.col-form-label {
+    font-weight: 500!important;
+}
+
+body .term-card .card-body{
+      overflow: auto;
+      height: 300px;
+}
+body .term-card .card-body{
+     padding: 2.25rem;
+}
+body .term-card-padding .card-body{
+     padding: 2.25rem;
+}
+.all-a a:focus{
+     color:#07509e;
+    border-color: #07509e;
+}
+.card-title-text {
+    color: #fff;
+}
+
+body #touristbook-datatable tbody tr{
+  color: #6c757d!important;
+}
+
+body #touristbook-datatable tbody tr td.text-center a{
+  margin: 2px;
+  padding: 0.150rem 0.25rem;
+}
+/*
+body .select-id{
+  margin:10px!important;
+}*/
+
+/* Webkit-based browsers */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #fba009;
+}
+
+/* Mozilla Firefox */
+::-moz-scrollbar {
+  width: 10px;
+}
+
+::-moz-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-moz-scrollbar-thumb {
+  background: #fba009;
 }
 
 /*# sourceMappingURL=style.css.map */

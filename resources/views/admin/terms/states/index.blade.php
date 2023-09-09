@@ -1,119 +1,44 @@
-
 @extends('admin.layouts.main')
 @section('title',$title)
-@section('admin_head_css')
-@parent
-<!-- Datatable -->
-<link href="{!! asset('admin-part/vendor/datatables/css/jquery.dataTables.min.css') !!}" rel="stylesheet">
-<link href="https://cdn.datatables.net/searchbuilder/1.5.0/css/searchBuilder.dataTables.min.css" rel="stylesheet">
-<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-@endsection
 @section('content')
-
-
 <div class="container-fluid">
-   @include('admin.layout-parts.breadcrumbs')
-   <div class="row">
+ @include('admin.layout-parts.breadcrumbs')
+ <div class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">{{$title}}</h4>
                 <div align="right" class="all-a">
-                    @if($states->count())<a href="javascript:void(0);" class="btn btn-outline-danger bulk-delete btn-xs" style="display: none;">Bulk Delete</a>
-                     <form id='bulk_delete_entity_form' method="POST" action="{{route('admin.terms.states.bulk-delete')}}" style="display: none" data-text="state">
-                              {{ csrf_field() }}
-                              <input type="hidden" name="ids" id="ids" >
+                    @if($states)<a href="javascript:void(0);" class="btn btn-outline-danger bulk-delete btn-xs" style="display: none;">Bulk Delete</a>
+                    <form id='bulk_delete_entity_form' method="POST" action="{{route('admin.terms.states.bulk-delete')}}" style="display: none" data-text="state">
+                      {{ csrf_field() }}
+                      <input type="hidden" name="ids" id="ids" >
 
-                              {{method_field('DELETE')}}
+                      {{method_field('DELETE')}}
 
-                          </form>@endif
-                    <a href="{{route('admin.terms.states.create')}}" class="btn btn-outline-primary btn-xs">Add New State</a>
-                </div>
-            </div>
+                  </form>@endif
+                  <a href="{{route('admin.terms.states.create')}}" class="btn btn-outline-primary btn-xs">Add New State</a>
+              </div>
+          </div>
 
-            <div class="card-body state_list entity-list">
-                @if(Session::has('success'))
-                {!!get_form_success_msg(Session::get('success'))!!}
-                @endif
-                
-                <div class="table-responsive">
-                    <table id="example" class="display" style="min-width: 845px">
-                        <thead>
-                            <tr>
-                                <th>@if($states->count())<input type="checkbox" class="css-control-input mr-2 select-all">@endif S.No.</th>
-                                <th>Name</th>
-                                <th>Slug</th>
-                                <th>Icon</th>
-                                <th>Parent</th>
-                                <th>Status</th>
-                                <th>Created</th>
-                                <th>Updated</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if($states->count())
-                            @foreach($states as $state)
-                            <tr>
-                                <td><input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" value="{{$state->id}}">{{++$loop->index}}</td>
-                                <td>{{$state->name}}</td>
-                                <td>{{$state->slug}}</td>
-                                <td>{!!get_fontawesome_icon_html($state->icon,'fa-lg')!!}</td>
-                                <td>{{get_parent_term($states,$state->parent_id)}}</td>
-                              
-                                <td> <input data-id="{{$state->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url=' {{route("admin.terms.changeStatus")}}' data-on="Active" data-off="InActive" {{ $state->status ? 'checked' : '' }}></td>
-                                <td>{{get_time_format($state->created_at)}}</td>
-                                <td>{{get_time_format($state->updated_at)}}</td>
-                                <td>
-                                    <a href="{{route('admin.terms.states.edit',$state->id)}}" class="btn btn-primary" title="Edit"><i class="fa fa-edit"></i></a>
-                                    <a href="{{route('admin.terms.states.show',$state->id)}}" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>
-                                    <a href="javascript:void(0);" class="btn btn-danger del_entity_form" title="Delete" item_id="{{$state->id}}" data-text="state"><i class="fa fa-trash"></i></a>
-                                </td>
-                            </tr>
-
-                           
-
-                          @endforeach
-                           
-                          @endif
-                          
-                      </tbody>
-                      {{--<tfoot>
-                        <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
-                        </tr>
-                    </tfoot>--}}
-                </table>
+          <div class="card-body state_list entity-list">
+            @if(Session::has('success'))
+            {!!get_form_success_msg(Session::get('success'))!!}
+            @endif
+            
+            <div class="table-responsive">
+                {{ $dataTable->table() }}
             </div>
         </div>
-          <form id='delete_entity_form' method="POST" action="{{route('admin.terms.states.index')}}" style="display: none">
-                              {{ csrf_field() }}
+        <form id='delete_entity_form' method="POST" action="{{route('admin.terms.states.index')}}" style="display: none">
+          {{ csrf_field() }}
 
-                              {{method_field('DELETE')}}
+          {{method_field('DELETE')}}
 
-                          </form>  
-    </div>
+      </form>  
+  </div>
 </div>
 </div>
 
 </div>
-@endsection
-@section('admin_jscript')
-
-@parent
-<!-- Datatable -->
-<script src="{!! asset('admin-part/vendor/datatables/js/jquery.dataTables.min.js') !!}"></script>
-
-<script src="https://cdn.datatables.net/searchbuilder/1.5.0/js/dataTables.searchBuilder.min.js"></script>
-<script src="https://cdn.datatables.net/datetime/1.5.1/js/dataTables.dateTime.min.js"></script>
-
-<script src="{!! asset('admin-part/js/plugins-init/datatables.init.js') !!}"></script>
-
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-
 @endsection

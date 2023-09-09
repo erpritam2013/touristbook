@@ -23,7 +23,7 @@ class StoreFacilityRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
+            'name' => 'required|max:255|unique_custom:facilities,name,facility_type,'.request()->facility_type,
             //'slug' => 'required|max:255',
             'facility_type' => 'required',
         ];

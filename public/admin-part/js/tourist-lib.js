@@ -116,7 +116,9 @@ $(document).ready(function () {
 
         // Edit the Card
         $('body').on('click', '.edit-card', function() {
-            $(this).parents('.subform-card').first().find('.card-body').first().toggle();
+            //  let $target = $(this).parents('.subform-card').first().find('.card-body').first().toggle();
+            // $('.subform-card .card-body').not($target).hide();
+             $(this).parents('.subform-card').first().find('.card-body').first().toggle();
         });
 
         // Title Added

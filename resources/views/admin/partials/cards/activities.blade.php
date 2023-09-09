@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card {{(count($activities) > 5)?'term-card':'term-card-padding'}}">
     <div class="card-header border-bottom">
         <h4 class="card-title">Activities</h4>
     </div>

@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Session;
-
+use App\DataTables\MedicareAssistanceDataTable;
 class MedicareAssistanceController extends Controller
 {
 
@@ -26,12 +26,13 @@ class MedicareAssistanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(MedicareAssistanceDataTable $dataTable)
     {
-        $data['medicare_assistances'] = $this->MedicareAssistanceRepository->getAllMedicareAssistances();
+        // $data['medicare_assistances'] = $this->MedicareAssistanceRepository->getAllMedicareAssistances(); 
+        $data['medicare_assistances'] = MedicareAssistance::count();
         $data['title'] = 'Medicare Assistance List';
 
-        return view('admin.terms.medicare-assistances.index', $data);
+        return $dataTable->render('admin.terms.medicare-assistances.index', $data);
     }
 
     /**
