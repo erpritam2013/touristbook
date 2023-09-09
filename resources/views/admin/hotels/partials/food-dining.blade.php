@@ -8,7 +8,7 @@
         <div class="form-group row">
             <label class="col-lg-2 col-form-label" for="food-dining">Food Dining</label>
             <div class="col-lg-10">
-                <textarea class="form-control" id="food-dining" name="food_dining" rows="5" placeholder="Food Dining..">{{$hotel->food_dining ?? ''}}</textarea>
+                <textarea class="form-control tourist-editor" id="food-dining" name="food_dining" rows="5" placeholder="Food Dining..">{{$hotel->food_dining ?? ''}}</textarea>
             </div>
         </div>
 
