@@ -38,7 +38,8 @@ class HotelDataTable extends DataTable
                     }
                     return '<input data-id="'.$row->id.'" class="toggle-class" type="checkbox" data-size="sm" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url="'.route("admin.changeStatusHotel").'" data-on="Active" data-off="InActive" '.$checked.'>';
                 })->addColumn('address',function($row){
-                    return $row->detail->map_address;
+                    $hotelDetail = $row->detail;
+                    return ($hotelDetail) ? $hotelDetail->map_address : '';
                 })->addColumn('del',function($row){
                  return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'">';
             })->rawColumns(['status','action','del','address']);
@@ -127,7 +128,7 @@ class HotelDataTable extends DataTable
             'fnDrawCallback'=> 'function(){$(".toggle-class").bootstrapToggle()}',
             'paging' => true,
             'searching' => true,
-            'info' => false,  
+            'info' => false,
         ];
     }
 
@@ -149,7 +150,7 @@ class HotelDataTable extends DataTable
     public function disabledInput():string
     {
 
- 
+
         $disabledInput = "";
         if (!$this->getCustomStatus()) {
             $disabledInput = "disabled";
