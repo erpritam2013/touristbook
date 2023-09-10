@@ -1,11 +1,13 @@
 @if(!empty($typeData))
-    @foreach($typeData as $key => $card)
+    @php
+    $first_element = reset($typeData);
+    @endphp
     <li class="subform-card">
         <div class="card">
             <div class="card-header border-bottom">
                 <h4 class="card-title">
                     <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
-                    <span class="card-title-text">&nbsp;</span>
+                    <span class="card-title-text">{{$first_element}}</span>
                 </h4>
                 <div class="float-left">
                     <a href="javascript:void(0);" class="edit-card"><i class="fa fa-edit"></i></a>
@@ -14,9 +16,7 @@
             </div>
 
             <div class="card-body">
-            @if(is_array($card))
-
-            @foreach($card as $controlId => $value)
+            @foreach($typeData as $controlId => $value)
                 @if(isset($typeFields[$controlId]))
                     @php
                         $elemClass = isset($typeFields[$controlId]['class']) ? $typeFields[$controlId]['class'] : '';
@@ -33,11 +33,7 @@
                 </div>
                 @endif
             @endforeach
-            @endif
             </div>
         </div>
     </li>
-
-
-    @endforeach
 @endif
