@@ -40,9 +40,9 @@
                                 <div class="col-xl-4">
                                     @include('admin.locations.partials.publish-card', ['location'=>$location ?? null])
 
-                                    @include('admin.partials.cards.types', ['types'=> $types , 'selected'=>[]])
+                                    @include('admin.partials.cards.types', ['types'=> $types , 'selected'=>$location->types()->get()->toArray()])
 
-                                    @include('admin.partials.cards.places', ['places'=> $places , 'selected'=>[]])
+                                    @include('admin.partials.cards.places', ['places'=> $places , 'selected'=>$location->places()->get()->toArray()])
 
                                     @include('admin.partials.cards.states', ['states'=> $states , 'selected'=>$location->state_id ?? null])
 

@@ -2,11 +2,11 @@
     @foreach ($items as $item)
         <li>
             <label class="{{ $item['children'] ? 'parent' : 'child' }}">
-                <input type="checkbox" name="{{$name}}[]" value="{{ $item['id'] }}"> {{ $item['name'] }}
+                <input type="checkbox" name="{{$name}}[]" value="{{ $item['id'] }}" @if (in_array($item['id'], $selected)) checked="checked" @endif> {{ $item['name'] }}
             </label>
             @if (!empty($item['children']))
                 <div class="indent">
-                    @include('admin.partials.utils.nested_checkbox_list', ['items' => $item['children'], 'name'=> $name])
+                    @include('admin.partials.utils.nested_checkbox_list', ['items' => $item['children'], 'name'=> $name,'selected'=>$selected])
                 </div>
             @endif
         </li>
@@ -26,3 +26,4 @@
     margin-left: 20px; /* Adjust as needed for indentation */
 }
 </style>
+
