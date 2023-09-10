@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
-@section('hotel_action', route('admin.hotels.store'))
-@section('hotel_form_method', method_field('POST'))
+@section('hotel_action', route('admin.hotels.update', $hotel->id))
+@section('hotel_form_method', method_field('PUT'))
 @section('title',$title)
 @section('admin_head_css')
 <link rel="stylesheet" href="{!! asset('admin-part/vendor/select2/css/select2.min.css') !!}">

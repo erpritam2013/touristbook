@@ -4,7 +4,7 @@
     </div>
     <div class="card-body">
        <div class="form-group row">
-            @include('admin.partials.utils.select_box', ['items' => $states, 'name'=> 'state_id','selected'=>$selected,'lebal'=>'State'])
+            @include('admin.partials.utils.select_box', ['items' => $states, 'name'=> 'state_id[]','selected'=>$selected,'lebal'=>'State'])
         </div>
     </div>
 </div>

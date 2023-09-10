@@ -11,7 +11,7 @@ class UtilityController extends Controller
     public function get_template_by_type($type) {
         // Source is Config File
         $subforms = config('subform');
-       
+
         if(!isset($subforms[$type])) {
             // Type Not Found
             return response()->json(['html' => '']);
@@ -22,7 +22,8 @@ class UtilityController extends Controller
         $html = View::make('admin.partials.utils.subform', [
             'typeData' => $data,
             'type' => $type,
-            'typeFields' => $typeInfo['fields']
+            'typeFields' => $typeInfo['fields'],
+            'key' => 0
         ])->render();
         return response()->json(['html' => $html]);
 
@@ -32,13 +33,11 @@ class UtilityController extends Controller
     private function generate_single_data($type) {
         $subforms = config('subform');
         $data = [
-            [
                 'subform_id' => $type
-            ]
         ];
         if(isset($subforms[$type])) {
             foreach($subforms[$type]['fields'] as $key => $field) {
-                $data[0][$key] = "";
+                $data[$key] = "";
             }
         }
         return $data;
