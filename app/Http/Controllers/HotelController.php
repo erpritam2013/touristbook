@@ -122,7 +122,7 @@ class HotelController extends Controller
         $data['title'] = 'Hotel';
         $data['hotel'] = $hotel;
         $data = array_merge_recursive($data, $this->_prepareBasicData());
-
+        dd($data);
         return view('admin.hotels.edit', $data);
     }
 
