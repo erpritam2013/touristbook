@@ -4,8 +4,6 @@
 @parent
 @endsection
 @section('content')
-
-
 <div class="container-fluid">
   @include('admin.layout-parts.breadcrumbs')
 <div class="row">

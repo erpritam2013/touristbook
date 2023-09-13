@@ -18,12 +18,12 @@ class LocationRepository implements LocationRepositoryInterface
     }
     public function deleteLocation($locationId)
     {
-        Location::destroy($locationId);
+        return Location::destroy($locationId);
     }
 
     public function deleteBulkLocation($locationIds) 
     {
-         Location::whereIn('id', $locationIds)->delete();
+         return Location::whereIn('id', $locationIds)->delete();
     }
 
     public function createLocation(array $locationDetails)
@@ -32,7 +32,8 @@ class LocationRepository implements LocationRepositoryInterface
     }
     public function updateLocation($locationId, array $newDetails)
     {
-        return Location::whereId($locationId)->update($newDetails);
+      $result = Location::whereId($locationId)->update($newDetails);
+      return Location::findOrFail($result);
     }
     public function createLocationMeta(array $locationMetaDetails)
     {

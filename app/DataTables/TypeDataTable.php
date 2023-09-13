@@ -23,7 +23,13 @@ class TypeDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
          return (new EloquentDataTable($query))->addIndexColumn()->addColumn('icon',function($row){
+               if ($row->icon) {
                 return get_fontawesome_icon_html($row->icon,'fa-lg');
+               }elseif($row->lebal_type){
+               return $row->lebal_type;
+               }elseif($row->attachment){
+                return '<img src="'.$row->attachment.'" width="50">';
+               }
             })->addColumn('action', function ($row) {
                     $html = ' <a href="'.route("admin.terms.types.edit",$row->id).'" class="btn btn-primary" title="Edit"><i class="fa fa-edit"></i></a>';
                     $html .= '<a href="'.route("admin.terms.types.show",$row->id).'" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>';
@@ -65,7 +71,7 @@ class TypeDataTable extends DataTable
     public function html(): HtmlBuilder
     {
        return $this->builder()
-                    ->setTableId('touristbook-table')
+                    ->setTableId('touristbook-datatable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
@@ -104,8 +110,7 @@ class TypeDataTable extends DataTable
             ->orderable(false)
             ->exportable(false)
             ->printable(false),
-            Column::make('icon')->width(10)
-            ->addClass('text-center'),
+            Column::make('icon')->title('Icon | Attachment |Type Lebal')->width(10)->addClass('text-center'),
             Column::make('parent_id')->title('Parent')->searchable(false)
             ->orderable(true)
             ->exportable(false)

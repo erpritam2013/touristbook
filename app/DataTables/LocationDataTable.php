@@ -31,8 +31,6 @@ class LocationDataTable extends DataTable
                     return date('d-m-Y',strtotime($row->created_at));
                 })->editColumn('updated_at', function($row) {
                     return date('d-m-Y',strtotime($row->updated_at));
-                })->editColumn('state_id', function($row) {
-                    return $row->state->name;
                 })->addColumn('status', function($row) {
                     $checked = "";
                     if ($row->status == 1) {
@@ -104,7 +102,6 @@ class LocationDataTable extends DataTable
             ->orderable(false)
             ->exportable(false)
             ->printable(false),
-            Column::make('state_id')->title('State'),
             Column::make('address'),
             Column::make('status'),
             Column::make('created_at')->title('Created'),

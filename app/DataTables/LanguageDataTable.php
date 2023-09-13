@@ -46,7 +46,7 @@ class LanguageDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('language-table')
+                    ->setTableId('touristbook-datatable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')

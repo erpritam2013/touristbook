@@ -9,7 +9,7 @@
             <div class="card-header">
                 <h4 class="card-title">{{$title}}</h4>
                 <div align="right" class="all-a">
-                    @if($types->count())<a href="javascript:void(0);" class="btn btn-outline-danger bulk-delete btn-xs" style="display: none;">Bulk Delete</a>
+                    @if($types)<a href="javascript:void(0);" class="btn btn-outline-danger bulk-delete btn-xs" style="display: none;">Bulk Delete</a>
                     <form id='bulk_delete_entity_form' method="POST" action="{{route('admin.terms.types.bulk-delete')}}" style="display: none" data-text="type">
                       {{ csrf_field() }}
                       <input type="hidden" name="ids" id="ids" >
