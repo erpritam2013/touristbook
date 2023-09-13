@@ -9,6 +9,57 @@ if (!function_exists('getRouteName')) {
     }
 }
 
+if (!function_exists('getCountries')) {    
+    function getCountries(){
+      
+        $NamespacedModel = 'App\\Models\\Terms\\Country' ;
+        $getCountries = $NamespacedModel::get(['id','countryname','code'])->map(function($country, $key) {                                  
+    return [
+            'id' => $country->code,
+            'value' => $country->countryname
+        ];
+    });
+
+        return $getCountries;
+    }
+}
+
+if (!function_exists('getTerms')) {    
+    function getTerms($model=null){
+
+        $getTerms = [];
+       if (!empty($model)) {
+        $NamespacedModel = 'App\\Models\\Terms\\' . $model;
+        $getTerms = $NamespacedModel::get(['id','name','parent_id'])->map(function($term, $key) {                                  
+    return [
+            'id' => $term->id,
+            'value' => $term->name,
+            'parent_id'=>$term->parent_id
+        ];
+    });
+       }
+
+        return $getTerms;
+    }
+}
+if (!function_exists('getPostData')) {    
+    function getPostData($model=null,$parameters=[]){
+
+        $getPostData = [];
+       if (!empty($model) && !empty($parameters)) {
+        $NamespacedModel = 'App\\Models\\' . $model;
+        $getPostData = $NamespacedModel::get($parameters)->map(function($post, $key) {                                  
+    return [
+            'id' => $post->id,
+            'value' => (isset($post->name))?$post->name:$post->title,
+        ];
+    });
+       }
+
+        return $getPostData;
+    }
+}
+
 if (!function_exists('exploreJsonData')) {    
     function exploreJsonData($json_data="",$key=null){
 

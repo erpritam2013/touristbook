@@ -24,7 +24,7 @@ class UpdateActivityListsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required|max:255'
         ];
     }
 }

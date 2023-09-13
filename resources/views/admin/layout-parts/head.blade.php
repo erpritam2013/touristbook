@@ -13,6 +13,7 @@
 @stack('font-awesome-css')
 @else
 
+
 @stack('select2_css')
 @stack('asColorPicker-min-css')
 @stack('jquery-ui.css')
