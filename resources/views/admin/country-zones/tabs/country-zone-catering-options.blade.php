@@ -2,7 +2,7 @@
     <div class="col-lg-12">
         <label class="subform-card-label" for="country-zone-section-title">Title
         </label>
-        <input type="text" class="form-control" id="country-zone-section-title" name="country_zone_catering[title]" rows="8" placeholder="Enter Title.." value="{{$country_zone->country_zone_catering['title'] ?? ''}}">
+        <input type="text" class="form-control" id="country-zone-section-title" name="country_zone_catering[title]" placeholder="Enter Title.." value="{{$country_zone->country_zone_catering['title'] ?? ''}}">
 
     </div>
 </div> 

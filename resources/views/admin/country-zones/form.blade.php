@@ -3,7 +3,7 @@
         @section('method_field')
         @show
         <div class="row">
-            <div class="col-xl-8">
+            <div class="col-xl-12">
                 @include('admin.country-zones.partials.basic-card', ['country_zone'=>$country_zone ?? null])
 
                 @include('admin.country-zones.partials.country-zone-options', ['country_zone'=>$country_zone ?? null])
@@ -12,13 +12,9 @@
 
                 {{--@include('admin.partials.cards.users_section', ['users'=> $users , 'selected'=>$country_zone->users->pluck('id')->toArray() ?? []])--}}
                 
-            </div>
-            <div class="col-xl-4">
                 @include('admin.country-zones.partials.publish-card', ['country_zone'=>$country_zone ?? null])
-
-                
-
             </div>
+            
         </div>
 
 
