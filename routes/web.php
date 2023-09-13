@@ -17,6 +17,7 @@ use App\Http\Controllers\DealsDiscountController;
 use App\Http\Controllers\TermActivityController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UtilityController;
+use App\Http\Controllers\CountryZoneController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -134,7 +135,15 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::prefix('locations')->name('locations.')->group(function() {
     Route::resource('/', locationController::class)->parameters(['' => 'location']);
 
-    });
+    }); 
     Route::delete('location/bulk-delete', [locationController::class,'bulk_delete'])->name('location.bulk-delete');
     Route::get('location/changeStatus', [locationController::class,'changeStatus'])->name('changeStatusLocation');
+
+    // Country Zone Resource
+    Route::prefix('country-zones')->name('country-zones.')->group(function() {
+    Route::resource('/', CountryZoneController::class)->parameters(['' => 'country_zone']);
+    });
+    
+    Route::delete('country-zone/bulk-delete', [CountryZoneController::class,'bulk_delete'])->name('country-zones.bulk-delete');
+    Route::get('country-zone/changeStatus', [CountryZoneController::class,'changeStatus'])->name('changeStatusCountryZone');
 });

@@ -15,7 +15,6 @@
     }
 }
 
-
 $('body .dataTables_paginate .paginate_button').on('click',function(){
  $('.toggle-class').bootstrapToggle()
 });

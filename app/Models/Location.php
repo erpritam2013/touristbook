@@ -34,9 +34,9 @@ class Location extends Model
     public function types() {
         return $this->belongsToMany(Type::class, 'location_types', 'location_id', 'type_id');
     }
-    public function state() {
+    public function states() {
 
-        return $this->belongsTo(State::class);
+    return $this->belongsToMany(State::class, 'location_states', 'location_id', 'state_id');
     }
     public function locationMeta()
     {

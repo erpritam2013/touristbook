@@ -61,6 +61,10 @@ jQuery(".form-valide").validate({
             required: !0,
             maxlength: 255,
         },
+         "title": {
+            required: !0,
+            maxlength: 255,
+        },
         "medicare_assistance_type": {
             required: !0
         },
@@ -118,6 +122,11 @@ jQuery(".form-valide").validate({
         "name": {
             required: "Please enter a name",
             minlength: "Your name must consist of maximum 255 characters"
+        },
+
+        "title": {
+            required: "Please enter a title",
+            minlength: "Your title must consist of maximum 255 characters"
         },
            
         "val-select2": "Please select a value!",

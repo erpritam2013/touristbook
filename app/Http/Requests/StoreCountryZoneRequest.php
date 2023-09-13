@@ -13,7 +13,7 @@ class StoreCountryZoneRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,10 @@ class StoreCountryZoneRequest extends FormRequest
      */
     public function rules()
     {
+
+
         return [
-            //
+            'title' => 'required|max:255|unique_custom:country_zones,title,country,'.request()->country,
         ];
     }
 }

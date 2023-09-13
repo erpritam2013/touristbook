@@ -51,6 +51,13 @@
                             <li class="{{matchRouteName('admin.locations.create')}}"><a href="{{route('admin.locations.create')}}">Add New</a></li>
                         </ul>
                     </li>
+                    <li class="{{matchRouteGroupName('country-zones','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-marker-3"></i><span class="nav-text">Country Zones</span></a>
+                        <ul aria-expanded="false" class="{{matchRouteGroupName('country-zones','child')}}">
+                            <li class="{{matchRouteName('admin.country-zones.index')}}"><a href="{{route('admin.country-zones.index')}}">List</a></li>
+                            <li class="{{matchRouteName('admin.country-zones.create')}}"><a href="{{route('admin.country-zones.create')}}">Add New</a></li>
+                        </ul>
+                    </li>
 
                     {{--<li class="nav-label">Apps</li>
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
