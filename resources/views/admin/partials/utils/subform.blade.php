@@ -28,6 +28,18 @@
                             <input type="text" class="form-control {{$elemClass}} " name="{{$type}}[{{$key}}][{{$controlId}}]" value="{{$value ?? ''}}" id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}" >
                         @elseif($typeFields[$controlId]['control'] == "textarea")
                             <textarea class="form-control {{$elemClass}} " name="{{$type}}[{{$key}}][{{$controlId}}]"  id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}">{{$value ?? ''}}</textarea>
+                        @elseif($typeFields[$controlId]['control'] == "media")
+                            <div class="media-controls">
+                                <input type="text" class="form-control media-input {{$elemClass}}" name="{{$type}}[{{$key}}][{{$controlId}}]" value="{{$value ?? ''}}" id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}" />
+                                <button type="button" class="btn btn-primary mt-2 add-media-btn">+</button>
+                                <button type="button" class="btn btn-danger mt-2 remove-media-btn">-</button>
+                                <div class="media-preview">
+                                    @php
+                                        $imgSrc = $value ?? ''
+                                    @endphp
+                                    <img src="{{$imgSrc}}" class="img" height="150" width="auto" />
+                                </div>
+                            </div>
                         @endif
                     </div>
                 </div>
