@@ -31,7 +31,7 @@
             @include('admin.layout-parts.nav')
             @include('admin.layout-parts.header')
             @include('admin.layout-parts.sidebar')
-          
+
 
         <!--**********************************
             Content body start
@@ -40,7 +40,7 @@
                 <!-- row -->
 
                 @yield('content')
-                
+
             </div>
         <!--**********************************
             Content body end
@@ -48,8 +48,9 @@
             @include('admin.layout-parts.footer')
 
         <!--**********************************
-           Support ticket button start
+           Include Modals
            ***********************************-->
+           @include('admin.partials.modals.file')
 
         <!--**********************************
            Support ticket button end
