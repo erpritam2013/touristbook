@@ -160,6 +160,6 @@ class ActivityListsDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'ActivityListss_' . date('YmdHis');
+        return 'ActivityLists_' . date('YmdHis');
     }
 }

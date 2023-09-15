@@ -73,6 +73,14 @@
                         </ul>
                     </li>
 
+                    <li class="{{matchRouteGroupName('activity-packages','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-marker-3"></i><span class="nav-text">Activity Packages</span></a>
+                        <ul aria-expanded="false" class="{{matchRouteGroupName('activity-packages','child')}}">
+                            <li class="{{matchRouteName('admin.activity-packages.index')}}"><a href="{{route('admin.activity-packages.index')}}">List</a></li>
+                            <li class="{{matchRouteName('admin.activity-packages.create')}}"><a href="{{route('admin.activity-packages.create')}}">Add New</a></li>
+                        </ul>
+                    </li>
+
                     {{--<li class="nav-label">Apps</li>
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                                 class="icon icon-app-store"></i><span class="nav-text">Apps</span></a>

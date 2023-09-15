@@ -19,9 +19,9 @@
                 @endif
                 <div class="form-validation">
                   @include('admin.activity-packages.form', [
-                  'activity_package' => $activity_package,
-                  'custom_icons' => $custom_icons,
-                  'activities' => $activities,
+                  'activity_package' => $activity_package ?? "",
+                  'custom_icons' => $custom_icons ?? "",
+                  'activities' => $activities ?? "",
                   ])
               </div> <!-- Form Validation Tag End -->
           </div> <!-- Card Body End -->
