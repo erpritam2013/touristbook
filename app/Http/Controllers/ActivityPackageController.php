@@ -2,21 +2,61 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\ActivityPackageRepositoryInterface;
 use App\Models\ActivityPackage;
 use App\Http\Requests\StoreActivityPackageRequest;
 use App\Http\Requests\UpdateActivityPackageRequest;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Cviebrock\EloquentSluggable\Services\SlugService;
+use Session;
+use App\DataTables\ActivityPackageDataTable;
 
 class ActivityPackageController extends Controller
 {
+
+     private ActivityPackageRepositoryInterface $activityPackageRepository;
+
+   public function __construct(
+    ActivityPackageRepositoryInterface $activityPackageRepository,
+) {
+    $this->activityPackageRepository = $activityPackageRepository;
+}
+
+private function _prepareBasicData() {
+
+        // TODO: Need to Improve here (Fetch from Cache)
+   $data['custom_icons'] = getPostData('CustomIcon',['id','title']);
+   // $data['activities'] = getPostData('Activity',['id','name']);
+   $data['activities'] = [];
+    return $data;
+
+}
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ActivityPackageDataTable $dataTable)
     {
-        //
+        $data['activity_packages'] = ActivityPackage::count();
+       $data['title'] = 'Activity Package';
+
+       return $dataTable->render('admin.activity-packages.index', $data);
     }
+
+     public function changeStatus(Request $request): JsonResponse
+   {
+    $Id = $request->id;
+    $newDetails = [
+        'status' => $request->status,
+    ];
+    $this->activityPackageRepository->updateActivityPackage($Id, $newDetails);
+
+    return response()->json(['success' => 'Status change successfully.']);
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -25,7 +65,10 @@ class ActivityPackageController extends Controller
      */
     public function create()
     {
-        //
+     $data['title'] = 'Activity Package Add';
+     $data['activity_package'] = new ActivityPackage();
+     $data = array_merge_recursive($data, $this->_prepareBasicData());
+     return view('admin.activity-packages.create', $data);
     }
 
     /**
@@ -36,7 +79,21 @@ class ActivityPackageController extends Controller
      */
     public function store(StoreActivityPackageRequest $request)
     {
-        //
+        $activityPackageDetails = [
+        'title' => $request->title,
+        'slug' => SlugService::createSlug(ActivityPackage::class, 'slug', $request->title),
+        'description' => $request->description,
+        'duration' => $request->duration,
+        'price' => $request->price ?? 0,
+        'amenities' => $request->amenities,
+        'custom_icon' => $request->custom_icon,
+        'status' => $request->status,
+            // TODO: created_by pending as Authentication is not Yet Completed
+    ];
+
+    $activity_packages = $this->activityPackageRepository->createActivityPackage($activityPackageDetails);
+    Session::flash('success','Activity Package Created Successfully');
+    return redirect()->Route('admin.activity-packages.index');
     }
 
     /**
@@ -47,7 +104,13 @@ class ActivityPackageController extends Controller
      */
     public function show(ActivityPackage $activityPackage)
     {
-        //
+       $activityPackageId = $activityPackage->id;
+
+       $activity_package = $this->activityPackageRepository->getActivityPackageById($activityPackageId);
+
+       if (empty($activity_package)) {
+        return back();
+    }
     }
 
     /**
@@ -56,9 +119,18 @@ class ActivityPackageController extends Controller
      * @param  \App\Models\ActivityPackage  $activityPackage
      * @return \Illuminate\Http\Response
      */
-    public function edit(ActivityPackage $activityPackage)
+    public function edit($id)
     {
-        //
+          $activity_package = ActivityPackage::find($id);
+
+     if (empty($activity_package)) {
+        return back();
+    }
+
+    $data['title'] = 'Activity Package Edit';
+    $data['activity_package'] = $activity_package;
+    $data = array_merge_recursive($data, $this->_prepareBasicData());
+    return view('admin.activity-packages.edit', $data);
     }
 
     /**
@@ -68,9 +140,24 @@ class ActivityPackageController extends Controller
      * @param  \App\Models\ActivityPackage  $activityPackage
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateActivityPackageRequest $request, ActivityPackage $activityPackage)
+    public function update(UpdateActivityPackageRequest $request, $id)
     {
-        //
+        $activityPackage = ActivityPackage::find($id);
+       $activityPackageDetails = [
+        'title' => $request->title,
+        //'slug' => SlugService::createSlug(ActivityPackage::class, 'slug', $request->title),
+        'description' => $request->description,
+        'duration' => $request->duration,
+        'price' => $request->price ?? 0,
+        'amenities' => $request->amenities,
+        'custom_icon' => $request->custom_icon,
+        'status' => $request->status,
+            // TODO: created_by pending as Authentication is not Yet Completed
+    ];
+
+    $activity_packages = $this->activityPackageRepository->updateActivityPackage($activityPackage->id,$activityPackageDetails);
+    Session::flash('success','Activity Package Updated Successfully');
+    return redirect()->Route('admin.activity-packages.edit',$activityPackage->id);
     }
 
     /**
@@ -79,8 +166,21 @@ class ActivityPackageController extends Controller
      * @param  \App\Models\ActivityPackage  $activityPackage
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ActivityPackage $activityPackage)
+    public function destroy($id)
     {
-        //
+        $this->activityPackageRepository->deleteActivityPackage($id);
+        Session::flash('success','Activity Package Deleted Successfully');
+        return back();
+    }
+
+     public function bulk_delete(Request $request)
+    {
+        if (!empty($request->ids)) {
+
+            $activityPackageIds = get_array_mapping(json_decode($request->ids));
+            $this->activityPackageRepository->deleteBulkActivityPackage($activityPackageIds);
+            Session::flash('success', 'Activity Package Bulk Deleted Successfully');
+        }
+        return back();
     }
 }

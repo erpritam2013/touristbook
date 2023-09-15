@@ -4,12 +4,6 @@
     </div>
 
     <div class="card-body">
-        <div class="form-group row">
-          
             @include('admin.partials.utils.select_box', ['items' => $activities, 'name'=> 'activity_id[]','selected'=>[],'lebal'=>'Activity'])
-            
-        </div>
-        
-
     </div>
 </div>

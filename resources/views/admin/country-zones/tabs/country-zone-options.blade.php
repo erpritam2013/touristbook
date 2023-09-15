@@ -1,28 +1,6 @@
-<div class="form-group row">
+@include('admin.partials.utils.input', ['name'=> 'sub_title','label'=>'Country Zone Title','value'=>$country_zone->sub_title ?? '','id' => ""])
 
-    <div class="col-lg-12">
-        <label class="subform-card-label" for="sub-title">Title
-        </label>
-        <input type="text" class="form-control" id="sub-title" name="sub_title"placeholder="Enter Country Zone Title.." value="{{$country_zone->sub_title ?? ''}}">
-
-    </div>
-</div> 
-
-<div class="form-group row">
-    
-    <div class="col-lg-12">
-        <label class="subform-card-label" for="country">Country</label>
-        <select class="form-control multi-select" id="country" name="country" data-existed_parent_id="{{$country_zone->country ?? ''}}">
-            @isset($countries)
-            <option value="">Select Country</option>
-            @foreach($countries as $country)
-            <option value="{{$country->code}}" {!!get_edit_select_post_types_old_value($country->code, $country_zone->country ?? "",'select')!!} >{{$country->countryname}}</option>
-            @endforeach
-            @endisset
-        </select>
-
-    </div>
-</div>
+@include('admin.partials.utils.select_box', ['items' => $countries, 'name'=> 'country','selected'=>$country_zone->country ?? "",'label'=>'Country'])
 
  <div class="form-group row">
 
