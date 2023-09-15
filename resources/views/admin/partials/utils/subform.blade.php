@@ -32,8 +32,6 @@ $first_element = reset($typeData);
                     @elseif($typeFields[$controlId]['control'] == "number")
                     <input type="number" class="form-control {{$elemClass}} " name="{{$type}}[{{$key}}][{{$controlId}}]" value="{{$value ?? ''}}" id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}" placeholder="{{}}">
                     @elseif($typeFields[$controlId]['control'] == "select")
-                    <input type="number" class="form-control {{$elemClass}} " name="{{$type}}[{{$key}}][{{$controlId}}]" value="{{$value ?? ''}}" id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}" placeholder="{{}}">
-
                     @if(is_array($elemOptions) && !empty($elemOptions))
                     <select class="form-control {{$elemClass}}" id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}" name="{{$type}}[{{$key}}][{{$controlId}}]" >
                         <option value="">--Select--</option>

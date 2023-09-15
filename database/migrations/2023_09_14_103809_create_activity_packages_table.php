@@ -13,13 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('activity_lists', function (Blueprint $table) {
-          $table->id();
+        Schema::create('activity_packages', function (Blueprint $table) {
+            $table->id();
 
             $table->string('title');
             $table->longText('description')->nullable();
             $table->text('excerpt')->nullable();
             $table->string('slug')->unique();
+            $table->string('duration')->nullable();
+            $table->decimal('price',10, 2)->default(0);
+            $table->longText('amenities')->nullable();
             // $table->bigInteger('user_id');
             /*country zone tab */
             $table->string('custom_icon',10)->nullable();
@@ -42,6 +45,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('activity_lists');
+        Schema::dropIfExists('activity_packages');
     }
 };

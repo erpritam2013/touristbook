@@ -162,4 +162,11 @@ Route::name('admin.')->prefix('admin')->group(function () {
     
     Route::delete('activity-list/bulk-delete', [ActivityListsController::class,'bulk_delete'])->name('activity-lists.bulk-delete');
     Route::get('activity-list/changeStatus', [ActivityListsController::class,'changeStatus'])->name('changeStatusActivityLists');
+    // Activity package Resource
+    Route::prefix('activity-Packages')->name('activity-Packages.')->group(function() {
+    Route::resource('/', ActivityPackagesController::class)->parameters(['' => 'activity_list']);
+    });
+    
+    Route::delete('activity-Package/bulk-delete', [ActivityPackagesController::class,'bulk_delete'])->name('activity-Packages.bulk-delete');
+    Route::get('activity-Package/changeStatus', [ActivityPackagesController::class,'changeStatus'])->name('changeStatusActivityPackages');
 });

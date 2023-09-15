@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\ActivityListRepositoryInterface;
+use App\Interfaces\ActivityListsRepositoryInterface;
 use App\Models\ActivityLists;
 
 class ActivityListsRepository implements ActivityListsRepositoryInterface
