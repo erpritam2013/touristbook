@@ -14,6 +14,7 @@ use App\Http\Controllers\CountryController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\OccupancyController;
 use App\Http\Controllers\DealsDiscountController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\TermActivityController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UtilityController;
@@ -40,6 +41,10 @@ Route::name('admin.')->prefix('admin')->group(function () {
 
     Route::get('template/{type}', [UtilityController::class, 'get_template_by_type'])->name('template');
 
+    Route::name('files.')->prefix('files')->group(function() {
+        Route::get('load-images', [FileController::class, 'loadImages'])->name('load');
+        Route::post('upload', [FileController::class, 'uploadImages'])->name('upload');
+    });
 
 
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');

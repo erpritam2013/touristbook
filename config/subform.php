@@ -358,7 +358,7 @@ return [
                     'control' => 'text',
                     'desc' => 'Season'
                 ]
-                
+
             ]
 
         ],
@@ -535,7 +535,7 @@ return [
             ]
 
         ],
-        
+
         'location_map' => [
             "fields" => [
                 "location_map-title" => [
