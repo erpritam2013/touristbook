@@ -19511,5 +19511,7 @@ body .select-id{
 ::-moz-scrollbar-thumb {
   background: #fba009;
 }
-
+.select2-drop, .select2-dropdown, .select2-container {
+    z-index : 0!important;
+}
 /*# sourceMappingURL=style.css.map */

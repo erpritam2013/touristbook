@@ -27,7 +27,9 @@ class ActivityListsController extends Controller
 private function _prepareBasicData() {
 
         // TODO: Need to Improve here (Fetch from Cache)
-   // $data['countries'] = Country::get(['id','countryname','code']);
+   $data['custom_icons'] = getPostData('CustomIcon',['id','title']);
+   // $data['activities'] = getPostData('Activity',['id','name']);
+   $data['activities'] = [];
     return $data;
 
 }
@@ -78,17 +80,12 @@ private function _prepareBasicData() {
      */
     public function store(StoreActivityListsRequest $request)
     {
+
      $activityListsDetails = [
         'title' => $request->title,
-        'sub_title' => $request->sub_title,
         'slug' => SlugService::createSlug(ActivityLists::class, 'slug', $request->title),
-        
-        'country' => $request->country,
-            // 'icon' => $request->icon, //s3 integration pending
-            // 'image' => $request->image, //s3 integration pending
-        'activity_list_description' => $request->activity_list_description,
-        'activity_list_section' => $request->activity_list_section,
-        'activity_list_pdf' => $request->activity_list_pdf,
+        'description' => $request->description,
+        'custom_icon' => $request->custom_icon,
         'status' => $request->status,
             // TODO: created_by pending as Authentication is not Yet Completed
     ];
@@ -121,9 +118,9 @@ private function _prepareBasicData() {
      * @param  \App\Models\ActivityLists  $activityLists
      * @return \Illuminate\Http\Response
      */
-    public function edit(ActivityLists $activityLists)
+    public function edit($id)
     {
-     $activity_list = $ActivityLists;
+     $activity_list = ActivityLists::find($id);
 
      if (empty($activity_list)) {
         return back();
@@ -142,19 +139,15 @@ private function _prepareBasicData() {
      * @param  \App\Models\ActivityLists  $activityLists
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateActivityListsRequest $request, ActivityLists $activityLists)
+    public function update(UpdateActivityListsRequest $request,$id)
     {
+
+       $activityLists = ActivityLists::find($id);
        $activityListsDetails = [
         'title' => $request->title,
-        'sub_title' => $request->sub_title,
-        'slug' => SlugService::createSlug(ActivityLists::class, 'slug', $request->title),
-        
-        'country' => $request->country,
-            // 'icon' => $request->icon, //s3 integration pending
-            // 'image' => $request->image, //s3 integration pending
-        'activity_list_description' => $request->activity_list_description,
-        'activity_list_section' => $request->activity_list_section,
-        'activity_list_pdf' => $request->activity_list_pdf,
+        //'slug' => SlugService::createSlug(ActivityLists::class, 'slug', $request->title),
+        'description' => $request->description,
+        'custom_icon' => $request->custom_icon,
         'status' => $request->status,
             // TODO: created_by pending as Authentication is not Yet Completed
     ];
