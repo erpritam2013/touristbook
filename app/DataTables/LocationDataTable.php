@@ -24,15 +24,13 @@ class LocationDataTable extends DataTable
     {
          return (new EloquentDataTable($query))->addIndexColumn()->addColumn('action', function ($row) {
                     $html = ' <a href="'.route("admin.locations.edit",$row->id).'" class="btn btn-primary" title="Edit"><i class="fa fa-edit"></i></a>';
-                    $html .= '<a href="'.route("admin.locations.show",$row->id).'" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>';
+                    //$html .= '<a href="'.route("admin.locations.show",$row->id).'" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>';
                     $html .= '<a href="javascript:void(0);" class="btn btn-danger del_entity_form" title="Delete" item_id="'.$row->id.'" data-text="location"><i class="fa fa-trash"></i></a>';
                     return $html;
                 })->editColumn('created_at', function($row) {
                     return date('d-m-Y',strtotime($row->created_at));
                 })->editColumn('updated_at', function($row) {
                     return date('d-m-Y',strtotime($row->updated_at));
-                })->editColumn('state_id', function($row) {
-                    return $row->state->name;
                 })->addColumn('status', function($row) {
                     $checked = "";
                     if ($row->status == 1) {
@@ -104,7 +102,6 @@ class LocationDataTable extends DataTable
             ->orderable(false)
             ->exportable(false)
             ->printable(false),
-            Column::make('state_id')->title('State'),
             Column::make('address'),
             Column::make('status'),
             Column::make('created_at')->title('Created'),

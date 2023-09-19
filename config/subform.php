@@ -207,6 +207,42 @@ return [
             ]
 
         ],
+    'country_zone_section' => [
+            "fields" => [
+                "country_zone_section-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "country_zone_section-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea',
+                    'class' => 'tourist-editor'
+                ],
+                "country_zone_section-url" => [
+                    'label' => "Video Link",
+                    'control' => 'text'
+                ]
+            ]
+
+        ],
+    'activity_zone_section' => [
+            "fields" => [
+                "activity_zone_section-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "activity_zone_section-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea',
+                    'class' => 'tourist-editor'
+                ],
+                "activity_zone_section-url" => [
+                    'label' => "Video Link",
+                    'control' => 'text'
+                ]
+            ]
+
+        ],
     'location_for_filter' => [
             "fields" => [
                 "location_for_filter-title" => [

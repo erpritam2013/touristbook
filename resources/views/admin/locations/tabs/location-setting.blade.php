@@ -3,8 +3,10 @@
 
     <div class="col-lg-12">
          <label class="subform-card-label" for="location-as-feature">Coler</label>
+         <div class="example">
          <p>Upload feature image for this location</p>
-        <input type="color" class="form-control" name="color" value="{{$location->color ?? ''}}">
+        <input type="text" class="form-control complex-colorpicker" name="color" value="{{$location->color ?? '#000000'}}">
+        </div>
     </div>
 </div>
 <hr>
@@ -50,7 +52,7 @@
             @isset($countries)
             <option value="">Select Country</option>
             @foreach($countries as $country)
-            <option value="{{$country->id}}" {!!get_edit_select_post_types_old_value($country->id, $location->country ?? "",'select')!!} >{{$country->countryname}}</option>
+            <option value="{{$country->code}}" {!!get_edit_select_post_types_old_value($country->code, $location->country ?? "",'select')!!} >{{$country->countryname}}</option>
             @endforeach
             @endisset
         </select>

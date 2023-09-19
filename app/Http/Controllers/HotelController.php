@@ -21,6 +21,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\DataTables\HotelDataTable;
+use Session;
 
 class HotelController extends Controller
 {
@@ -122,7 +123,6 @@ class HotelController extends Controller
         $data['title'] = 'Hotel';
         $data['hotel'] = $hotel;
         $data = array_merge_recursive($data, $this->_prepareBasicData());
-
         return view('admin.hotels.edit', $data);
     }
 
@@ -204,6 +204,7 @@ class HotelController extends Controller
             // activitiescard
         }
         // return $hotel;
+         Session::flash('success','Hotel Created Successfully');
         return redirect()->Route('admin.hotels.index');
     }
 
@@ -308,6 +309,7 @@ class HotelController extends Controller
             // activitiescard
         }
         // return $hotel;
+         Session::flash('success','Hotel Created Successfully');
         return redirect()->Route('admin.hotels.index');
     }
 
@@ -316,7 +318,7 @@ class HotelController extends Controller
         $hotelId = $request->route('hotelId');
 
         $this->hotelRepository->deleteHotel($hotelId);
-
+        Session::flash('success','Hotel Deleted Successfully');
         return back();
     }
 

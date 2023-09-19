@@ -34,6 +34,14 @@ use App\Interfaces\LocationRepositoryInterface;
 use App\Repositories\LocationRepository;
 use App\Interfaces\HotelRepositoryInterface;
 use App\Repositories\HotelRepository;
+use App\Interfaces\CountryZoneRepositoryInterface;
+use App\Repositories\CountryZoneRepository;
+use App\Interfaces\ActivityZoneRepositoryInterface;
+use App\Repositories\ActivityZoneRepository;
+use App\Interfaces\ActivityListsRepositoryInterface;
+use App\Repositories\ActivityListsRepository;
+use App\Interfaces\ActivityPackageRepositoryInterface;
+use App\Repositories\ActivityPackageRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -61,6 +69,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(LocationRepositoryInterface::class, LocationRepository::class);
         $this->app->bind(TypeRepositoryInterface::class, TypeRepository::class);
         $this->app->bind(HotelRepositoryInterface::class, HotelRepository::class);
+        $this->app->bind(CountryZoneRepositoryInterface::class, CountryZoneRepository::class);
+        $this->app->bind(ActivityZoneRepositoryInterface::class, ActivityZoneRepository::class);
+        $this->app->bind(ActivityListsRepositoryInterface::class, ActivityListsRepository::class);
+        $this->app->bind(ActivityPackageRepositoryInterface::class, ActivityPackageRepository::class);
 
     }
 
