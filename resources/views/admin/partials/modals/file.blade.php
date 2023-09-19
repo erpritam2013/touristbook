@@ -1,4 +1,4 @@
-<div class="modal fade" id="file-modal">
+<div class="modal fade bd-example-modal-lg" id="file-modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -32,7 +32,8 @@
                         </div>
                         <div class="tab-pane fade" id="list-media">
                             <div class="pt-4">
-                                Cards will be here
+                                <div class="file-list row"></div>
+                                <div class="file-pagination"></div>
                             </div>
                         </div>
 
@@ -44,7 +45,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary submit-media">Submit</button>
             </div>
         </div>
     </div>
