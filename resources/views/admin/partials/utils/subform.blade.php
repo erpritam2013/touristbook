@@ -34,7 +34,7 @@
                         @elseif($typeFields[$controlId]['control'] == "media")
                             <div class="media-controls">
                                 <input type="text" class="form-control media-input {{$elemClass}}" name="{{$type}}[{{$key}}][{{$controlId}}]" value="{{$value ?? ''}}" id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}" placeholder="Enter {{$typeFields[$controlId]['label']}}..."/>
-                                <button type="button" class="btn btn-primary mt-2 add-media-btn">+</button>
+                                <button type="button" class="btn btn-primary mt-2 add-media-btn" smode="single" selectedImages="{{$value ?? ''}}"  >+</button>
                                 <button type="button" class="btn btn-danger mt-2 remove-media-btn">-</button>
                                 <div class="media-preview">
                                     @php
@@ -52,7 +52,7 @@
                     <select class="form-control {{$elemClass}}" id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}" name="{{$type}}[{{$key}}][{{$controlId}}]" placeholder="Enter {{$typeFields[$controlId]['label']}}...">
                         <option value="">--Select--</option>
                         @foreach($elemOptions as $option)
-                        @php 
+                        @php
                         $selected = "";
                         if(is_array($value)){
                           if(in_array($option->id, $value)){
@@ -63,7 +63,7 @@
                             $selected = "selected";
                         }
                     }
-                    @endphp   
+                    @endphp
                     <option value="{{$option->id}}" {{$selected}} >{{$option->value}}</option>
                     @endforeach
 

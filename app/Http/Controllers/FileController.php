@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 class FileController extends Controller
 {
     public function loadImages() {
-        $media_list = Media::get();
-        return $media_list;
+        $media_list = Media::orderBy("created_at", "desc")->paginate();
+        return response()->json($media_list);
     }
 
     public function uploadImages(Request $request) {

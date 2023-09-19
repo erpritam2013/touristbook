@@ -11,6 +11,9 @@ $(document).ready(function () {
 
     let touristEditorsElems = $(".tourist-editor");
 
+    let mediaMode = "multiple"; // single / multiple
+    let selectedImages = [];
+
     // Markers on Map : Assuming there will be one Map on a Page
     var markers = [];
 
@@ -260,6 +263,84 @@ $(document).ready(function () {
 
     // Media JS
 
+    function hasValueForKey(array, key, value) {
+        for (const object of array) {
+          if (object.hasOwnProperty(key) && object[key] == value) {
+            return true;
+          }
+        }
+
+        return false;
+      }
+
+    const fillImagesToList = (filesWrapper) => {
+        let files = filesWrapper.data
+        let mediaListHtml = ''
+        if(files.length > 0) {
+            console.log("Entering")
+            files.forEach((file, idx) => {
+                console.log(hasValueForKey(selectedImages, 'id', file.id))
+                let active_class = hasValueForKey(selectedImages, 'id', file.id) ? 'active' : ''
+
+                mediaListHtml += `
+                    <div class="col-md-3 file  ${active_class} " style="background-image: url(${file.original_url})">
+                        <a href="javascript:void(0);" data-id="${file.id}" data-url="${file.original_url}" class="file-thumb">
+                            <img src="${file.original_url}" class="img-responsive img-holder" />
+                        </a>
+                    </div>
+                `
+            });
+        }
+        $('.file-list').html(mediaListHtml)
+        // TODO: Refresh Pagination
+
+    }
+
+
+
+    $('.file-list').on("click", ".file", function() {
+
+        let fileId = $(this).find('a').first().attr('data-id');
+        let fileUrl = $(this).find('a').first().attr('data-url')
+
+        if(!$(this).hasClass('active')) {
+            // adding
+            if(mediaMode == "single") {
+                // Remove active class from All
+                $(this).parent().find('.file').removeClass('active');
+                $(this).addClass('active')
+                selectedImages = [{
+                    'id': fileId,
+                    'url': fileUrl,
+                }];
+            }else {
+                // Multiple Selection
+                $(this).addClass('active')
+                selectedImages.push({
+                    'id': fileId,
+                    'url': fileUrl,
+                })
+            }
+
+        }else {
+            // removing
+            if(mediaMode == "single") {
+                // Remove active class from All
+                $(this).parent().find('.file').removeClass('active');
+                selectedImages = []
+            }else {
+                // Multiple Selection
+                $(this).removeClass('active')
+                selectedImages = selectedImages.filter((selectedImg, idx) => {
+                    return selectedImg.id != fileId
+                })
+            }
+        }
+
+        // TODO: Assign selectedImages to target Element
+
+    })
+
     const loadImages = () => {
         let image_url = base_admin_url + "/files/load-images";
         $.ajax({
@@ -267,7 +348,7 @@ $(document).ready(function () {
             dataType: "json",
             url: image_url,
             success: function (data) {
-                console.log(data);
+                fillImagesToList(data)
             },
         });
     };
@@ -362,6 +443,10 @@ $(document).ready(function () {
         files.forEach(previewFile)
     }
 
+    const changeTabToFileList = () => {
+        $('a[href="#list-media"]').tab('show');
+    }
+
     function uploadFile(file, i) {
         let url = base_admin_url + '/files/upload'
         let xhr = new XMLHttpRequest()
@@ -377,7 +462,15 @@ $(document).ready(function () {
 
         xhr.addEventListener('readystatechange', function(e) {
             if (xhr.readyState == 4 && xhr.status == 200) {
-            updateProgress(i, 100) // <- Add this
+                updateProgress(i, 100) // <- Add this
+                // Refresh the Listing
+                loadImages()
+                // Tab Change
+                changeTabToFileList()
+                // Reset Progressbar
+                updateProgress(i, 0)
+
+
             }
             else if (xhr.readyState == 4 && xhr.status != 200) {
             // Error. Inform the user
@@ -390,12 +483,46 @@ $(document).ready(function () {
     }
 
 
-    $("body").on("click", ".add-media-btn", () => {
+    $(".submit-media").on("click", function() {
+        let targetElem = $(this)[0].targetElem
+        targetElem.attr("selectedImages", JSON.stringify(selectedImages))
+
+        let imageHtml = '';
+        selectedImages.forEach((imageObj, idx) => {
+            imageHtml += `<img src="${imageObj.url}" class="img" height="150" width="auto" id="image-path-${imageObj.id}" />`
+        })
+
+        targetElem.parent().find(".media-preview").first().html(imageHtml)
+
+        $("#file-modal").modal("hide");
+
+    })
+
+    // Specifically for Subform
+    $("body").on("click", ".add-media-btn", function(){
         // Grab Selected File (If Any)
         // Change in Model DOM
         // Model Open
         $("#file-modal").modal("show");
-        // Load Images
+        // Store Element
+        $("#file-modal").find(".submit-media").first()[0].targetElem =$(this)
+        // TODO: Set Selected Items
+        let sImages = $(this).attr("selectedImages")
+        selectedImages = []
+        if(sImages) {
+            selectedImages = JSON.parse(sImages)
+        }
+
+
+        // TODO: Set Mode (Single/Multi)
+        mediaMode = $(this).attr("smode")
+        console.log("mediaMode", mediaMode)
+
+        // Load Images / Refresh Images
         loadImages();
     });
+
+    // Load Image on load
+    loadImages();
+
 });
