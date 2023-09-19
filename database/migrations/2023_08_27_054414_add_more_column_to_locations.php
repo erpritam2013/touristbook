@@ -20,7 +20,7 @@ return new class extends Migration
             $table->longText('description')->nullable();
             $table->text('excerpt')->nullable();
             $table->json('hotel_locations')->nullable();
-            $table->integer('country')->nullable();
+            $table->string('country',10)->nullable();
             $table->integer('zipcode')->nullable();
             $table->decimal('lat', 12, 9)->nullable();
             $table->decimal('lng', 12, 9)->nullable();

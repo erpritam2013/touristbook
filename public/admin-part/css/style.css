@@ -19477,6 +19477,10 @@ body #touristbook-datatable tbody tr td.text-center a{
   margin: 2px;
   padding: 0.150rem 0.25rem;
 }
+
+li.subform-card .card {
+    margin-bottom: 0.275rem;
+}
 /*
 body .select-id{
   margin:10px!important;
@@ -19507,5 +19511,7 @@ body .select-id{
 ::-moz-scrollbar-thumb {
   background: #fba009;
 }
-
+.select2-drop, .select2-dropdown, .select2-container {
+    z-index : 0!important;
+}
 /*# sourceMappingURL=style.css.map */

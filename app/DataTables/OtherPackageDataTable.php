@@ -46,7 +46,7 @@ class OtherPackageDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('otherpackage-table')
+                    ->setTableId('touristbook-datatable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')

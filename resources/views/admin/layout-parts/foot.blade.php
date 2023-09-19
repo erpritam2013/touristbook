@@ -1,37 +1,22 @@
-  @section('admin_jscript')
-  <!--**********************************
-        Scripts
-        ***********************************-->
-        <!-- Required vendors -->
-        <script src="{!! asset('admin-part/vendor/global/global.min.js') !!}"></script>
-        <script src="{!! asset('admin-part/js/quixnav-init.js') !!}"></script>
-        <script src="{!! asset('admin-part/js/custom.min.js') !!}"></script>
+@section('admin_jscript')
 
-        <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCF8MnYK1Ft-lPa3_B6rirg2IJzptB4m1Y&v=weekly&libraries=places"
-        defer
-        ></script>
+@include('admin.layout-parts.js.all-js')
 
-        <!-- ckediter -->
-        <script src="{!! asset('admin-part/vendor/ckeditor/ckeditor.js') !!}"></script>
-        <script src="{!! asset('admin-part/vendor/ckeditor/config.js') !!}"></script>
+@if(Route::getRoutes()->match(request())->methods[0] == 'GET' && matchRouteNameMatch('show'))
+@stack('global_js')
+@else
 
-        {{-- Sortable JS --}}
-        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+@stack('global_js')
+@stack('map_js')
+@stack('ckeditor_js')
+@stack('sortable_js')
+@stack('asColorPicker-js')
+@stack('touristbook-terms-custom-js')
+@stack('tourist-lib-js')
+@stack('all-min-js')
+@stack('dataTable_js')
+@stack('jquery_validation-js')
+@stack('select2_js')
+@endif
 
-        <script src="{!! asset('admin-part/js/touristbook-terms-custom.js') !!}"></script>
-        <script src="{!! asset('admin-part/js/tourist-lib.js') !!}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
-        <!-- For list or index page js -->
-        @if(Route::getRoutes()->match(request())->methods[0] == 'GET' && matchRouteNameMatch('index'))
-        <!-- Datatable -->
-        <script src="{!! asset('admin-part/vendor/datatables/js/jquery.dataTables.min.js') !!}"></script>
-        <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-        {!! $dataTable->scripts() !!}
-        @endif
-        <!-- For create and edit page js -->
-        @if(Route::getRoutes()->match(request())->methods[0] == 'GET' && (matchRouteNameMatch('create') || matchRouteNameMatch('edit')))
-        //no js
-        @endif
-
-        @show
+@show
