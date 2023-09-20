@@ -13,7 +13,7 @@ class UpdateTermActivityListRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class UpdateTermActivityListRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|max:255|unique_custom:term_activity_lists,name,id,'.request()->id,
+            //   'name' => 'required|max:255|unique_custom:term_activity_lists,name,term_activity_list_type,'.request()->term_activity_list_type.',id,'.request()->id,
+            // 'term_activity_list_type' => 'required',
         ];
     }
 }

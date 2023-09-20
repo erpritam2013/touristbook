@@ -9,52 +9,98 @@ if (!function_exists('getRouteName')) {
     }
 }
 
+if (!function_exists('customStringReplaceWithStrCase')) {    
+    function customStringReplaceWithStrCase($search,$replace_value,$subject,$str_case){
+        $result = "";
+        if ($str_case == "ucwords") {
+        $result = ucwords(str_replace($search, $replace_value, $subject));
+        }elseif($str_case == "strtolower"){
+         $result = strtolower(str_replace($search, $replace_value, $subject));
+        }elseif($str_case == "strtoupper"){
+          $result = strtoupper(str_replace($search, $replace_value, $subject));
+        }else{
+           $result = str_replace($search, $replace_value, $subject);
+        }
+
+        return $result;
+    }
+}
+
 if (!function_exists('getCountries')) {    
-    function getCountries(){
-      
+    function getCountries($type='object'){
+
         $NamespacedModel = 'App\\Models\\Terms\\Country' ;
-        $getCountries = $NamespacedModel::get(['id','countryname','code'])->map(function($country, $key) {                                  
-    return [
-            'id' => $country->code,
-            'value' => $country->countryname
-        ];
+        $getCountries = $NamespacedModel::get(['id','countryname','code'])->map(function($country, $key) use($type){  
+            if ($type == 'object') {
+              return (object)[
+                'id' => $country->code,
+                'value' => $country->countryname
+            ];                 
+        }else{
+            return [
+                'id' => $country->code,
+                'value' => $type
+            ];
+        }                                
+
     });
 
         return $getCountries;
     }
 }
 
-if (!function_exists('getTerms')) {    
-    function getTerms($model=null){
+if (!function_exists('getTermsForSelectBox')) {    
+    function getTermsForSelectBox($model=null,$term_type=null,$type='object'){
 
         $getTerms = [];
-       if (!empty($model)) {
-        $NamespacedModel = 'App\\Models\\Terms\\' . $model;
-        $getTerms = $NamespacedModel::get(['id','name','parent_id'])->map(function($term, $key) {                                  
-    return [
-            'id' => $term->id,
-            'value' => $term->name,
-            'parent_id'=>$term->parent_id
-        ];
-    });
-       }
+        if (!empty($model)) {
+            $NamespacedModel = 'App\\Models\\Terms\\' . $model;
+             $getTerms_type = $NamespacedModel::get(['id','name','parent_id']);
+            if (!empty($term_type)) {
+                $getTerms_type = $NamespacedModel::where(['type'=>$term_type])->get(['id','name','parent_id']);
+            }
+            $getTerms = $getTerms_type->map(function($term, $key) use($type){ 
+                if ($type == 'object') {
+                    return (object)[
+                        'id' => $term->id,
+                        'value' => $term->name,
+                        'parent_id'=>$term->parent_id
+                ];
+            }else{
+                return [
+                    'id' => $term->id,
+                    'value' => $term->name,
+                    'parent_id'=>$term->parent_id
+                ];
+            }                                
+
+        });
+        }
 
         return $getTerms;
     }
 }
 if (!function_exists('getPostData')) {    
-    function getPostData($model=null,$parameters=[]){
+    function getPostData($model=null,$parameters=[],$type='object'){
 
         $getPostData = [];
-       if (!empty($model) && !empty($parameters)) {
-        $NamespacedModel = 'App\\Models\\' . $model;
-        $getPostData = $NamespacedModel::get($parameters)->map(function($post, $key) {                                  
-    return [
-            'id' => $post->id,
-            'value' => (isset($post->name))?$post->name:$post->title,
-        ];
+        if (!empty($model) && !empty($parameters)) {
+            $NamespacedModel = 'App\\Models\\' . $model;
+            $getPostData = $NamespacedModel::get($parameters)->map(function($post, $key) use($type){
+             if ($type == 'object') {
+                 return (object)[
+                    'id' => $post->id,
+                    'value' => (isset($post->name))?$post->name:$post->title,
+                ];
+            }else{
+              return [
+                'id' => $post->id,
+                'value' => (isset($post->name))?$post->name:$post->title,
+            ];    
+        }                                 
+
     });
-       }
+        }
 
         return $getPostData;
     }
@@ -66,26 +112,26 @@ if (!function_exists('exploreJsonData')) {
         $result = "";
         if (!empty($json_data)) {
             if (!is_array($json_data)) {
-            $json_decode = json_decode($json_data);
+                $json_decode = json_decode($json_data);
             }else{
-            $json_decode = $json_data;
+                $json_decode = $json_data;
             }   
             if (empty($key)) {
                 $result = $json_decode;
             }else{
-             $collection = collect($json_decode);
- 
-             $result = $collection->get($key);
-            }
+               $collection = collect($json_decode);
 
-            return $result;
-        }
-    }
+               $result = $collection->get($key);
+           }
+
+           return $result;
+       }
+   }
 }
 if (!function_exists('matchRouteName')) {    
     function matchRouteName($current_route=null){
-       $active_class = "";
-       if (!empty($current_route)) {
+     $active_class = "";
+     if (!empty($current_route)) {
         $routeName = getRouteName();
         if ($routeName == $current_route) {
             $active_class = 'mm-active';
@@ -97,8 +143,8 @@ if (!function_exists('matchRouteName')) {
 }
 if (!function_exists('matchRouteNameMatch')) {    
     function matchRouteNameMatch($current_route=null){
-       $active_class = false;
-       if (!empty($current_route)) {
+     $active_class = false;
+     if (!empty($current_route)) {
         $routeName = getRouteName();
         $arr = explode('.', $routeName);
         if (in_array($current_route, $arr)) {
@@ -113,11 +159,11 @@ if (!function_exists('matchRouteNameMatch')) {
 if (!function_exists('getIconColorClass')) {    
     function getIconColorClass(){
 
-       $i_color_dashboard = config('global.i_color_dashboard');
-       $get_color = array_rand($i_color_dashboard);
-       return "text-".$i_color_dashboard[$get_color]." border-".$i_color_dashboard[$get_color];
+     $i_color_dashboard = config('global.i_color_dashboard');
+     $get_color = array_rand($i_color_dashboard);
+     return "text-".$i_color_dashboard[$get_color]." border-".$i_color_dashboard[$get_color];
 
-   }
+ }
 }
 if (!function_exists('matchRouteGroupName')) {    
     function matchRouteGroupName($group_type, $route_group_name=null){
@@ -192,7 +238,7 @@ if(!function_exists('get_edit_select_post_types_old_value')){
         if (!empty($current_ele)) {
 
             if ($type == 'select') {
-               if ($compair_prop == $current_ele) {
+             if ($compair_prop == $current_ele) {
                 return 'selected="selected"';
             }else{
                 return '';
@@ -234,27 +280,36 @@ if (!function_exists('get_time_format')) {
     function get_time_format($value,$with_t=false) {
         $cenvertedTime = date('d-m-Y H:i:s');
         if ($with_t) {
-           $cenvertedTime = date('d-m-Y H:i:s',strtotime($value));
-       }else{
-           $cenvertedTime = date('d-m-Y',strtotime($value));
-       }
-       return $cenvertedTime;
-   }
+         $cenvertedTime = date('d-m-Y H:i:s',strtotime($value));
+     }else{
+         $cenvertedTime = date('d-m-Y',strtotime($value));
+     }
+     return $cenvertedTime;
+ }
 }
 if (!function_exists('get_array_mapping')) {
-    function get_array_mapping($data) {
+    function get_array_mapping($data,$field=false) {
         $result = [];
         if (!empty($data)) {
-           $collection = collect($data);
+         $collection = collect($data);
+         if ($field) {
+            $result = $collection->map(function ($value,$key) {
+             return (object)[
+                'id'=> $key,
+                'value'=>$value
+            ];
+        });
+         }else{
 
-           $result = $collection->map(function (int $item, int $key) {
+         $result = $collection->map(function (int $item, int $key) {
             return (int)$item;
         });
-       }
-       return $result->all();
+         }
+     }
+     return $result->all();
 
 
-   }
+ }
 }
 
 

@@ -13,7 +13,7 @@ class StoreAttractionRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class StoreAttractionRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|max:255|unique_custom:attractions,name,attraction_type,'.request()->attraction_type,
+            'attraction_type' => 'required',
         ];
     }
 }

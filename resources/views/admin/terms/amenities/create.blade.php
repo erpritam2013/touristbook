@@ -1,13 +1,7 @@
 @extends('admin.layouts.main')
 @section('amenity_action', route('admin.terms.amenities.store'))
 @section('title',$title)
-@section('admin_head_css')
-<link rel="stylesheet" href="{!! asset('admin-part/vendor/select2/css/select2.min.css') !!}">
-@parent
-@endsection
 @section('content')
-
-
 <div class="container-fluid">
   @include('admin.layout-parts.breadcrumbs')
   <div class="row">
@@ -40,6 +34,15 @@
                                         {!! get_form_error_msg($errors, 'name') !!}
                                     </div>
                                 </div>
+                                 @isset($amenity->slug)
+                                <div class="form-group row">
+                                    <label class="col-lg-2 col-form-label" for="slug">Slug
+                                    </label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control" id="slug" name="slug" value="{{$amenity->slug ?? ''}}" placeholder="Enter a slug..">
+                                    </div>
+                                </div>
+                                @endisset
                                 <div class="form-group row">
                                     <label class="col-lg-2 col-form-label" for="description">Description 
                                     </label>
@@ -53,7 +56,7 @@
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-10">
-                                        <select class="form-control" id="term-type" name="amenity_type" data-url="{{route('admin.terms.ajaxGetAmenity')}}" data-term_title="Amenity">
+                                        <select class="form-control single-select-placeholder-touristbook" id="term-type" name="amenity_type" data-url="{{route('admin.terms.ajaxGetAmenity')}}" data-term_title="Amenity">
                                             @if(!empty($post_types))
                                             <option value="">Select Type</option>
                                             @foreach($post_types as $type)
@@ -70,9 +73,9 @@
                                     <label class="col-lg-2 col-form-label" for="parent-id">Amenity Parent
                                     </label>
                                     <div class="col-lg-10">
-                                        <select class="form-control multi-select" id="parent-id" name="parent_id" data-existed_parent_id="{{$amenity->parent_id ?? ''}}">
-                                            @isset($amenities)
+                                        <select class="form-control single-select-placeholder-touristbook" id="parent-id" name="parent_id" data-existed_parent_id="{{$amenity->parent_id ?? ''}}">
                                             <option value="">Select Amenity Parent</option>
+                                            @isset($amenities)
                                             @foreach($amenities as $ame_p)
                                             <option value="{{$ame_p->id}}" {!!get_edit_select_post_types_old_value($ame_p->id, $amenity->parent_id ?? "",'select')!!} >{{$ame_p->name}}</option>
                                             @endforeach

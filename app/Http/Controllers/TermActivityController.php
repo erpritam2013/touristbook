@@ -149,7 +149,7 @@ class TermActivityController extends Controller
          
          $termActivityDetails = [
             'name' => $request->name,
-            //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
+             'slug' => (!empty($request->slug) && $termActivity->slug != $request->slug)?SlugService::createSlug(TermActivity::class, 'slug', $request->slug):$termActivity->slug,
             'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'term_activity_type' => $request->term_activity_type,

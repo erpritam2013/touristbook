@@ -17,9 +17,9 @@ class ActivityZoneController extends Controller
 {
 
 
-   private ActivityZoneRepositoryInterface $activityZoneRepository;
+ private ActivityZoneRepositoryInterface $activityZoneRepository;
 
-   public function __construct(
+ public function __construct(
     ActivityZoneRepositoryInterface $activityZoneRepository,
 ) {
     $this->activityZoneRepository = $activityZoneRepository;
@@ -28,7 +28,7 @@ class ActivityZoneController extends Controller
 private function _prepareBasicData() {
 
         // TODO: Need to Improve here (Fetch from Cache)
-    $data['countries'] = Country::get(['id','countryname','code']);
+    $data['countries'] = getCountries();
     return $data;
 
 }
@@ -41,14 +41,14 @@ private function _prepareBasicData() {
     {
 
 
-     $data['activity_zones'] = ActivityZone::count();
-     $data['title'] = 'Activity Zone List';
+       $data['activity_zones'] = ActivityZone::count();
+       $data['title'] = 'Activity Zone List';
 
-     return $dataTable->render('admin.activity-zones.index', $data);
- }
+       return $dataTable->render('admin.activity-zones.index', $data);
+   }
 
- public function changeStatus(Request $request): JsonResponse
- {
+   public function changeStatus(Request $request): JsonResponse
+   {
     $Id = $request->id;
     $newDetails = [
         'status' => $request->status,
@@ -80,11 +80,11 @@ private function _prepareBasicData() {
      */
     public function store(StoreActivityZoneRequest $request)
     {
-       $activityZoneDetails = [
+     $activityZoneDetails = [
         'title' => $request->title,
         'sub_title' => $request->sub_title,
         'slug' => SlugService::createSlug(ActivityZone::class, 'slug', $request->title),
-        
+
         'country' => $request->country,
             // 'icon' => $request->icon, //s3 integration pending
             // 'image' => $request->image, //s3 integration pending
@@ -108,11 +108,11 @@ private function _prepareBasicData() {
      */
     public function show(ActivityZone $activityZone)
     {
-       $activityZoneId = $activityZone->id;
+     $activityZoneId = $activityZone->id;
 
-       $activity_zone = $this->activityZoneRepository->getActivityZoneById($activityZoneId);
+     $activity_zone = $this->activityZoneRepository->getActivityZoneById($activityZoneId);
 
-       if (empty($activity_zone)) {
+     if (empty($activity_zone)) {
         return back();
     }
 }
@@ -146,11 +146,11 @@ private function _prepareBasicData() {
      */
     public function update(UpdateActivityZoneRequest $request, ActivityZone $activityZone)
     {
-       $activityZoneDetails = [
+     $activityZoneDetails = [
         'title' => $request->title,
         'sub_title' => $request->sub_title,
-        'slug' => SlugService::createSlug(ActivityZone::class, 'slug', $request->title),
-        
+        'slug' => (!empty($request->slug) && $activityZone->slug != $request->slug)?SlugService::createSlug(ActivityZone::class, 'slug', $request->slug):$activityZone->slug,
+
         'country' => $request->country,
             // 'icon' => $request->icon, //s3 integration pending
             // 'image' => $request->image, //s3 integration pending
@@ -184,6 +184,8 @@ private function _prepareBasicData() {
 
     public function bulk_delete(Request $request)
     {
+
+
         if (!empty($request->ids)) {
 
             $activityZoneIds = get_array_mapping(json_decode($request->ids));

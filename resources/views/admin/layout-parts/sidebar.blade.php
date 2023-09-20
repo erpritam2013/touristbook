@@ -29,7 +29,11 @@
                              <li class="{{matchRouteName('admin.terms.occupancies.index')}}"><a href="{{route('admin.terms.occupancies.index')}}">Occupancies</a></li>
                              <li class="{{matchRouteName('admin.terms.deal-discounts.index')}}"><a href="{{route('admin.terms.deal-discounts.index')}}">Deals Discount</a></li>
                              <li class="{{matchRouteName('admin.terms.term-activities.index')}}"><a href="{{route('admin.terms.term-activities.index')}}">Term Activities</a></li>
+                             <li class="{{matchRouteName('admin.terms.languages.index')}}"><a href="{{route('admin.terms.languages.index')}}">Languages</a></li>
+                             <li class="{{matchRouteName('admin.terms.attractions.index')}}"><a href="{{route('admin.terms.attractions.index')}}">Attractions</a></li>
+                             <li class="{{matchRouteName('admin.terms.term-activity-lists.index')}}"><a href="{{route('admin.terms.term-activity-lists.index')}}">Term Activity Lists</a></li>
                              <li class="{{matchRouteName('admin.terms.types.index')}}"><a href="{{route('admin.terms.types.index')}}">Types</a></li>
+                             
                         </ul>
                             {{--<li><a href="./app-profile.html">Profile</a></li>--}}
 
@@ -41,6 +45,14 @@
                         <ul aria-expanded="false" class="{{matchRouteGroupName('hotels','child')}}">
                             <li class="{{matchRouteName('admin.hotels.index')}}"><a href="{{route('admin.hotels.index')}}">List</a></li>
                             <li class="{{matchRouteName('admin.hotels.create')}}"><a href="{{route('admin.hotels.create')}}">Add New</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="{{matchRouteGroupName('activities','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="icon icon-home-minimal"></i><span class="nav-text">Activities</span></a>
+                        <ul aria-expanded="false" class="{{matchRouteGroupName('activities','child')}}">
+                            <li class="{{matchRouteName('admin.activities.index')}}"><a href="{{route('admin.activities.index')}}">List</a></li>
+                            <li class="{{matchRouteName('admin.activities.create')}}"><a href="{{route('admin.activities.create')}}">Add New</a></li>
                         </ul>
                     </li>
 

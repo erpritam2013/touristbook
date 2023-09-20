@@ -16,7 +16,7 @@
 }
 
 $('body .dataTables_paginate .paginate_button').on('click',function(){
- $('.toggle-class').bootstrapToggle()
+   $('.toggle-class').bootstrapToggle()
 });
 const hideInput = (input_class,input_id,e_status) =>{
     $(`.${input_class}`).addClass('d-none');
@@ -26,13 +26,13 @@ const hideInput = (input_class,input_id,e_status) =>{
         $(`#${input_id}`).val('');
     }else{
 
-       $(`#${input_id}`).val(existed_value);
+     $(`#${input_id}`).val(existed_value);
 
-   }
+ }
 }
 
 const callAjax = (ajaxurl,data) => {
- $.ajax({
+   $.ajax({
     type: "GET",
     dataType: "json",
     url: ajaxurl,
@@ -88,8 +88,8 @@ if (term_type_input.length != 0) {{
     }
 }}
 /*term type js start*/
-$('body').on('input', '#term-type', function () {
-
+$('body').on('change', '#term-type', function () {
+  let first_option_text = {'text':$(this).children('option:first-child').text()}
   let userURL = $(this).data('url');
   let term_title = $(this).data('term_title');
   let term_name = $(this).attr('name');
@@ -102,13 +102,13 @@ $('body').on('input', '#term-type', function () {
   let term_id = $("#term-id").data('id');
   let data = {term_type};
   if (typeof term_id != "undefined") {
-     data = {term_type,'id':term_id};
- }
- preloader.css({'z-index': 1});
- preloader.show();
- let parent_id = $('#parent-id');
- parent_id.after(preloader);
- $.get(userURL,{term_type,'id':term_id},function (data) {
+   data = {term_type,'id':term_id};
+}
+preloader.css({'z-index': 1});
+preloader.show();
+let parent_id = $('#parent-id');
+parent_id.after(preloader);
+$.get(userURL,{term_type,'id':term_id},function (data) {
     $options = "";
     if (data.length != 0) {
         preloader.css({'z-index': 0});
@@ -131,7 +131,19 @@ $('body').on('input', '#term-type', function () {
     }
             //$(term_type).append(term_type);
 });
- $('.multi-select').select2();
+
+// $('body').on('click','.select2-selection__clear',function(){
+
+//    $(this).closest('select').children('option:first-child').attr('selected','selected');
+// })
+// $('.single-select-placeholder-touristbook').select2({
+//   placeholder: {
+//           id: '-1', // the value of the option
+          
+//       },
+//       allowClear: true
+//   });
+// delete first_option_text;
 });
 
 /*term type js end*/
@@ -148,13 +160,13 @@ $('.entity-list').on('click', '.del_entity_form', function(event) {
 
     if(confirm('Are You sure to delete this '+text)){   
 
-       let action=$('#delete_entity_form').attr('action');
+     let action=$('#delete_entity_form').attr('action');
 
-       $('#delete_entity_form').attr('action', action+'/'+id);
+     $('#delete_entity_form').attr('action', action+'/'+id);
 
-       $('#delete_entity_form').submit();
+     $('#delete_entity_form').submit();
 
-   }
+ }
 
 });
 /*delete entity type js end*/ 
@@ -178,12 +190,12 @@ window.CustomSelectCheckboxAll = function(ele){
 
 window.CustomSelectCheckboxSingle = function(ele){
     let unchecked_cb = $('.select-id:not(:checked)').length;
-     $('.select-id').each(function(){
+    $('.select-id').each(function(){
 
       if (!$(ele).is(':checked')) {
         if (unchecked_cb != 0) {
-        $('.all-a .bulk-delete').hide();
-        checkbox_false();
+            $('.all-a .bulk-delete').hide();
+            checkbox_false();
 
         }
     }else{
@@ -193,7 +205,7 @@ window.CustomSelectCheckboxSingle = function(ele){
         $('.all-a .bulk-delete').show();
     }
 });
- 
+
 
 }
 // $('.entity-list').on('change', '.select-id', function(event) {
@@ -202,9 +214,9 @@ window.CustomSelectCheckboxSingle = function(ele){
 // });
 const bulk_ids_fu = function(){
     bulk_ids = [];
- $('.select-id:checked').each(function(){
-     bulk_ids.push(parseInt($(this).val()));
- })
+    $('.select-id:checked').each(function(){
+       bulk_ids.push(parseInt($(this).val()));
+   })
 }
 $('.all-a').on('click', '.bulk-delete', function(event) {
 
@@ -226,9 +238,9 @@ $('.all-a').on('click', '.bulk-delete', function(event) {
 
          // $('#delete_entity_form').attr('action', action);
 
-       $('#bulk_delete_entity_form').submit();
+     $('#bulk_delete_entity_form').submit();
 
-   }else{
+ }else{
     bulk_ids = [];
     $('#bulk_delete_entity_form input#ids').val("");
 }

@@ -1,10 +1,10 @@
    .nav-header .logo-abbr {
-     max-width: 60px;
+     max-width: 60px!important;
  }
  .nav-header .brand-title {
-    margin-left: -21px;
-    margin-top: 4px;
-    max-width: 180px;
+    margin-left: -21px!important;
+    margin-top: 4px!important;
+    max-width: 180px!important;
 }
 
 @media (min-width: 768px)
@@ -47,4 +47,8 @@ label.subform-card-label {
     line-height: 1.2;
     color: #3d4465;
     font-size: 1.125rem;
+}
+
+input#slug {
+    background: #eaeaea7a;
 }

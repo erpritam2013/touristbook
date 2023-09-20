@@ -145,7 +145,7 @@ class AmenityController extends Controller
          
          $amenityDetails = [
             'name' => $request->name,
-            //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
+            'slug' => (!empty($request->slug) && $amenity->slug != $request->slug)?SlugService::createSlug(Amenity::class, 'slug', $request->slug):$amenity->slug,
             'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'amenity_type' => $request->amenity_type,

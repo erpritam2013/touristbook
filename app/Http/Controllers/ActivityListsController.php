@@ -145,7 +145,7 @@ private function _prepareBasicData() {
        $activityLists = ActivityLists::find($id);
        $activityListsDetails = [
         'title' => $request->title,
-        //'slug' => SlugService::createSlug(ActivityLists::class, 'slug', $request->title),
+        'slug' => (!empty($request->slug) && $activityLists->slug != $request->slug)?SlugService::createSlug(ActivityLists::class, 'slug', $request->slug):$activityLists->slug,
         'description' => $request->description,
         'custom_icon' => $request->custom_icon,
         'status' => $request->status,

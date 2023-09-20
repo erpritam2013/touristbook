@@ -9,7 +9,7 @@
         @endpush
         @push('map_js')
         <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCF8MnYK1Ft-lPa3_B6rirg2IJzptB4m1Y&v=weekly&libraries=places"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCF8MnYK1Ft-lPa3_B6rirg2IJzptB4m1Y&v=weekly&libraries=places&callback=Function.prototype"
         defer
         ></script>
         @endpush

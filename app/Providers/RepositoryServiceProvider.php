@@ -42,6 +42,14 @@ use App\Interfaces\ActivityListsRepositoryInterface;
 use App\Repositories\ActivityListsRepository;
 use App\Interfaces\ActivityPackageRepositoryInterface;
 use App\Repositories\ActivityPackageRepository;
+use App\Interfaces\TermActivityListRepositoryInterface;
+use App\Repositories\TermActivityListRepository;
+use App\Interfaces\AttractionRepositoryInterface;
+use App\Repositories\AttractionRepository;
+use App\Interfaces\LanguageRepositoryInterface;
+use App\Repositories\LanguageRepository;
+use App\Interfaces\ActivityRepositoryInterface;
+use App\Repositories\ActivityRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -73,6 +81,12 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ActivityZoneRepositoryInterface::class, ActivityZoneRepository::class);
         $this->app->bind(ActivityListsRepositoryInterface::class, ActivityListsRepository::class);
         $this->app->bind(ActivityPackageRepositoryInterface::class, ActivityPackageRepository::class);
+        $this->app->bind(TermActivityListRepositoryInterface::class, TermActivityListRepository::class);
+        $this->app->bind(TermActivityListRepositoryInterface::class, TermActivityListRepository::class);
+        $this->app->bind(LanguageRepositoryInterface::class, LanguageRepository::class);
+        $this->app->bind(ActivityRepositoryInterface::class, ActivityRepository::class);
+        $this->app->bind(AttractionRepositoryInterface::class, AttractionRepository::class);
+
 
     }
 

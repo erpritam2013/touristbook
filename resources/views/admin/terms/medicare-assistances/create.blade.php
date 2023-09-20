@@ -1,10 +1,6 @@
 @extends('admin.layouts.main')
 @section('medicare_assistance_action', route('admin.terms.medicare-assistances.store'))
 @section('title',$title)
-@section('admin_head_css')
-<link rel="stylesheet" href="{!! asset('admin-part/vendor/select2/css/select2.min.css') !!}">
-@parent
-@endsection
 @section('content')
 
 
@@ -40,6 +36,15 @@
                                         {!! get_form_error_msg($errors, 'name') !!}
                                     </div>
                                 </div>
+                                 @isset($medicareAssistance->slug)
+                                <div class="form-group row">
+                                    <label class="col-lg-2 col-form-label" for="slug">Slug
+                                    </label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control" id="slug" name="slug" value="{{$medicareAssistance->slug ?? ''}}" placeholder="Enter a slug..">
+                                    </div>
+                                </div>
+                                @endisset
                                 <div class="form-group row">
                                     <label class="col-lg-2 col-form-label" for="description">Description 
                                     </label>
@@ -53,9 +58,9 @@
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-10">
-                                        <select class="form-control" id="term-type" name="medicare_assistance_type" data-url="{{route('admin.terms.ajaxGetMedicareAssistance')}}" data-term_title="Medicare Assistance">
-                                            @if(!empty($post_types))
+                                        <select class="form-control single-select-placeholder-touristbook" id="term-type" name="medicare_assistance_type" data-url="{{route('admin.terms.ajaxGetMedicareAssistance')}}" data-term_title="Medicare Assistance">
                                             <option value="">Select Type</option>
+                                            @if(!empty($post_types))
                                             @foreach($post_types as $type)
                                             <option value="{{$type}}" {!!get_edit_select_post_types_old_value($type, $medicareAssistance->medicare_assistance_type ?? "",'select')!!}>{{$type}}</option>
                                             @endforeach
@@ -70,9 +75,9 @@
                                     <label class="col-lg-2 col-form-label" for="parent-id">Medicare Assistance Parent
                                     </label>
                                     <div class="col-lg-10">
-                                        <select class="form-control multi-select" id="parent-id" name="parent_id" data-existed_parent_facitity="{{$medicareAssistance->parent_id ?? ''}}">
-                                            @isset($medicare_assistances)
+                                        <select class="form-control single-select-placeholder-touristbook" id="parent-id" name="parent_id" data-existed_parent_facitity="{{$medicareAssistance->parent_id ?? ''}}">
                                             <option value="">Select Medicare Assistance Parent</option>
+                                            @isset($medicare_assistances)
                                             @foreach($medicare_assistances as $ma_p)
                                             <option value="{{$ma_p->id}}" {!!get_edit_select_post_types_old_value($ma_p->id, $medicareAssistance->parent_id ?? "",'select')!!} >{{$ma_p->name}}</option>
                                             @endforeach
@@ -119,15 +124,4 @@
         </div>
 
     </div>
-    @endsection
-    @section('admin_jscript')
-    @parent
-    <!-- Jquery Validation -->
-    <script src="{!! asset('admin-part/vendor/jquery-validation/jquery.validate.min.js') !!}"></script>
-    <!-- Form validate init -->
-    <script src="{!! asset('admin-part/js/plugins-init/jquery.validate-init.js') !!}"></script>
-    <script src="{!! asset('admin-part/vendor/select2/js/select2.full.min.js') !!}"></script>
-    <script src="{!! asset('admin-part/js/plugins-init/select2-init.js') !!}"></script>
-
-   
     @endsection

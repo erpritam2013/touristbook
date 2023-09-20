@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class CountryZone extends Model
+class CountryZone extends Model implements HasMedia
 {
-    use HasFactory,Sluggable;
+    use HasFactory,Sluggable,InteractsWithMedia;
 
     protected $table = "country_zones";
     protected $guarded = [];

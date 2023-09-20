@@ -51,7 +51,12 @@ class AppServiceProvider extends ServiceProvider
     // Get the parameters passed to the rule
            if (count($parameters) == 4) {
             list($table, $field, $field2, $field2Value) = $parameters;
-            return DB::table($table)->where($field, $value)->where($field2, $field2Value)->count() == 0;
+            if ($field2 == 'id') {
+                return DB::table($table)->where($field,$value)->where($field2,'!=', $field2Value)->count() == 0;
+            }else{
+                return DB::table($table)->where($field, $value)->where($field2, $field2Value)->count() == 0;
+            }
+            
         }
         if (count($parameters) == 6) {
             list($table, $field, $field2, $field2Value, $field3, $field3Value) = $parameters;

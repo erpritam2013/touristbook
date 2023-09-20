@@ -152,7 +152,7 @@ class DealsDiscountController extends Controller
          
          $dealsDiscountDetails = [
             'name' => $request->name,
-            //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
+           'slug' => (!empty($request->slug) && $dealsDiscount->slug != $request->slug)?SlugService::createSlug(DealsDiscount::class, 'slug', $request->slug):$dealsDiscount->slug,
             'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'deals_discount_type' => $request->deals_discount_type,

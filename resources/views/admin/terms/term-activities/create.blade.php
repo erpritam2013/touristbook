@@ -1,13 +1,7 @@
 @extends('admin.layouts.main')
 @section('term_activity_action', route('admin.terms.term-activities.store'))
 @section('title',$title)
-@section('admin_head_css')
-<link rel="stylesheet" href="{!! asset('admin-part/vendor/select2/css/select2.min.css') !!}">
-@parent
-@endsection
 @section('content')
-
-
 <div class="container-fluid">
   @include('admin.layout-parts.breadcrumbs')
   <div class="row">
@@ -40,6 +34,15 @@
                                         {!! get_form_error_msg($errors, 'name') !!}
                                     </div>
                                 </div>
+                                 @isset($term_activity->slug)
+                                <div class="form-group row">
+                                    <label class="col-lg-2 col-form-label" for="slug">Slug
+                                    </label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control" id="slug" name="slug" value="{{$term_activity->slug ?? ''}}" placeholder="Enter a slug..">
+                                    </div>
+                                </div>
+                                @endisset
                                 <div class="form-group row">
                                     <label class="col-lg-2 col-form-label" for="description">Description 
                                     </label>
@@ -53,7 +56,7 @@
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-10">
-                                        <select class="form-control" id="term-type" name="term_activity_type" data-url="{{route('admin.terms.ajaxGetTermActivity')}}" data-term_title="Term Activity">
+                                        <select class="form-control single-select-placeholder-touristbook" id="term-type" name="term_activity_type" data-url="{{route('admin.terms.ajaxGetTermActivity')}}" data-term_title="Term Activity">
                                             @if(!empty($post_types))
                                             <option value="">Select Type</option>
                                             @foreach($post_types as $type)
@@ -70,7 +73,7 @@
                                     <label class="col-lg-2 col-form-label" for="parent-id">term_activity Parent
                                     </label>
                                     <div class="col-lg-10">
-                                        <select class="form-control multi-select" id="parent-id" name="parent_id" data-existed_parent_facitity="{{$term_activity->parent_id ?? ''}}">
+                                        <select class="form-control single-select-placeholder-touristbook" id="parent-id" name="parent_id" data-existed_parent_facitity="{{$term_activity->parent_id ?? ''}}">
                                             @isset($term_activities)
                                             <option value="">Select Term Activity Parent</option>
                                             @foreach($term_activities as $ta_p)
@@ -119,14 +122,4 @@
         </div>
 
     </div>
-    @endsection
-    @section('admin_jscript')
-    @parent
-    <!-- Jquery Validation -->
-    <script src="{!! asset('admin-part/vendor/jquery-validation/jquery.validate.min.js') !!}"></script>
-    <!-- Form validate init -->
-    <script src="{!! asset('admin-part/js/plugins-init/jquery.validate-init.js') !!}"></script>
-    <script src="{!! asset('admin-part/vendor/select2/js/select2.full.min.js') !!}"></script>
-    <script src="{!! asset('admin-part/js/plugins-init/select2-init.js') !!}"></script>
-
     @endsection
