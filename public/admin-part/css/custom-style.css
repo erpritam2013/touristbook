@@ -52,3 +52,26 @@ label.subform-card-label {
 input#slug {
     background: #eaeaea7a;
 }
+
+.file-thumb img.img-holder {
+    visibility: hidden;
+    width: 100px;
+    height: 100px;
+}
+
+.file-list .file {
+    display: block;
+    min-width: 100px;
+    min-height: 100px;
+    background-size: cover;
+    margin: 10px;
+    border: 1px solid #000;
+}
+
+.file-list .file.active {
+    border: 3px solid #000;
+}
+
+.file-list .file-thumb {
+    display: block;
+}
