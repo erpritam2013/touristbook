@@ -1,13 +1,7 @@
 @extends('admin.layouts.main')
 @section('accessible_action', route('admin.terms.accessibles.store'))
 @section('title',$title)
-@section('admin_head_css')
-<link rel="stylesheet" href="{!! asset('admin-part/vendor/select2/css/select2.min.css') !!}">
-@parent
-@endsection
 @section('content')
-
-
 <div class="container-fluid">
   @include('admin.layout-parts.breadcrumbs')
   <div class="row">
@@ -40,6 +34,15 @@
                                         {!! get_form_error_msg($errors, 'name') !!}
                                     </div>
                                 </div>
+                                 @isset($accessible->slug)
+                                <div class="form-group row">
+                                    <label class="col-lg-2 col-form-label" for="slug">Slug
+                                    </label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control" id="slug" name="slug" value="{{$accessible->slug ?? ''}}" placeholder="Enter a slug..">
+                                    </div>
+                                </div>
+                                @endisset
                                 <div class="form-group row">
                                     <label class="col-lg-2 col-form-label" for="description">Description 
                                     </label>
@@ -49,11 +52,11 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label" for="accessible-type">accessible Type
+                                    <label class="col-lg-2 col-form-label" for="term-type">accessible Type
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-10">
-                                        <select class="form-control" id="accessible-type" name="accessible_type" data-url="{{route('admin.terms.ajaxGetAccessible')}}" data-existed_f_type="{{$accessible->accessible_type ?? ''}}">
+                                        <select class="form-control single-select-placeholder-touristbook" id="term-type" name="accessible_type" data-url="{{route('admin.terms.ajaxGetAccessible')}}" data-existed_f_type="{{$accessible->accessible_type ?? ''}}" data-term_title="Accessible">
                                             @if(!empty($post_types))
                                             <option value="">Select Type</option>
                                             @foreach($post_types as $type)
@@ -67,12 +70,12 @@
                                 </div>
                             
                                 <div class="form-group row">
-                                    <label class="col-lg-2 col-form-label" for="parent-id">accessible Parent
+                                    <label class="col-lg-2 col-form-label" for="parent-id">Accessible Parent
                                     </label>
                                     <div class="col-lg-10">
-                                        <select class="form-control multi-select" id="parent-id" name="parent_id" data-existed_parent_id="{{$accessible->parent_id ?? ''}}">
-                                            @isset($accessibles)
+                                        <select class="form-control single-select-placeholder-touristbook" id="parent-id" name="parent_id" data-existed_parent_id="{{$accessible->parent_id ?? ''}}">
                                             <option value="">Select accessible Parent</option>
+                                            @isset($accessibles)
                                             @foreach($accessibles as $accessible_p)
                                             <option value="{{$accessible_p->id}}" {!!get_edit_select_post_types_old_value($accessible_p->id, $accessible->parent_id ?? "",'select')!!} >{{$accessible_p->name}}</option>
                                             @endforeach
@@ -120,13 +123,4 @@
 
     </div>
     @endsection
-    @section('admin_jscript')
-    @parent
-    <!-- Jquery Validation -->
-    <script src="{!! asset('admin-part/vendor/jquery-validation/jquery.validate.min.js') !!}"></script>
-    <!-- Form validate init -->
-    <script src="{!! asset('admin-part/js/plugins-init/jquery.validate-init.js') !!}"></script>
-    <script src="{!! asset('admin-part/vendor/select2/js/select2.full.min.js') !!}"></script>
-    <script src="{!! asset('admin-part/js/plugins-init/select2-init.js') !!}"></script>
-
-    @endsection
+  

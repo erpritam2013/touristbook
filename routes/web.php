@@ -22,6 +22,10 @@ use App\Http\Controllers\CountryZoneController;
 use App\Http\Controllers\ActivityZoneController;
 use App\Http\Controllers\ActivityListsController;
 use App\Http\Controllers\ActivityPackageController;
+use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\TermActivityListController;
+use App\Http\Controllers\AttractionController;
+use App\Http\Controllers\LanguageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -60,6 +64,12 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::get('facility/ajax-get', [FacilityController::class,'getFacilitiesAjax'])->name('ajaxGet');
     Route::get('facility/changeStatus', [FacilityController::class,'changeStatus'])->name('changeStatus');
 
+    /*Attraction Routes*/
+    Route::resource('attractions', AttractionController::class);
+    Route::delete('attraction/bulk-delete', [AttractionController::class,'bulk_delete'])->name('attractions.bulk-delete');
+    Route::get('attraction/ajax-get', [AttractionController::class,'getAttractionsAjax'])->name('ajaxGetAttraction');
+    Route::get('attraction/changeStatus', [AttractionController::class,'changeStatus'])->name('changeStatusAttraction');
+
     /*Amenities Routes*/
     Route::resource('amenities', AmenityController::class);
         Route::delete('amenity/bulk-delete', [AmenityController::class,'bulk_delete'])->name('amenities.bulk-delete');
@@ -86,6 +96,11 @@ Route::name('admin.')->prefix('admin')->group(function () {
      Route::delete('accessible/bulk-delete', [AccessibleController::class,'bulk_delete'])->name('accessibles.bulk-delete');
     Route::get('accessible/ajax-get', [AccessibleController::class,'getAccessiblesAjax'])->name('ajaxGetAccessible');
     Route::get('accessible/changeStatus', [AccessibleController::class,'changeStatus'])->name('changeStatusAccessible');
+    /*languages Routes*/
+    Route::resource('languages', LanguageController::class);
+     Route::delete('language/bulk-delete', [LanguageController::class,'bulk_delete'])->name('languages.bulk-delete');
+    Route::get('language/ajax-get', [LanguageController::class,'getlanguagesAjax'])->name('ajaxGetlanguage');
+    Route::get('language/changeStatus', [LanguageController::class,'changeStatus'])->name('changeStatusLanguage');
 
     /*Property Type Routes*/
     Route::resource('property-types', PropertyTypeController::class);
@@ -112,6 +127,11 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::delete('term-activity/bulk-delete', [TermActivityController::class,'bulk_delete'])->name('term-activities.bulk-delete');
     Route::get('term-activity/ajax-get', [TermActivityController::class,'getTermActivitiesAjax'])->name('ajaxGetTermActivity');
     Route::get('term-activity/changeStatus', [TermActivityController::class,'changeStatus'])->name('changeStatusTermActivity');
+  /*Term Activity List Routes*/
+    Route::resource('term-activity-lists', TermActivityListController::class);
+    Route::delete('term-activity-list/bulk-delete', [TermActivityListController::class,'bulk_delete'])->name('term-activity-lists.bulk-delete');
+    Route::get('term-activity-list/ajax-get', [TermActivityListController::class,'getTermActivitiesAjax'])->name('ajaxGetTermActivityList');
+    Route::get('term-activity-list/changeStatus', [TermActivityListController::class,'changeStatus'])->name('changeStatusTermActivityList');
     /*Type Routes*/
     Route::resource('types', TypeController::class);
     Route::delete('type/bulk-delete', [TypeController::class,'bulk_delete'])->name('types.bulk-delete');
@@ -175,4 +195,11 @@ Route::name('admin.')->prefix('admin')->group(function () {
     
     Route::delete('activity-package/bulk-delete', [ActivityPackageController::class,'bulk_delete'])->name('activity-packages.bulk-delete');
     Route::get('activity-package/changeStatus', [ActivityPackageController::class,'changeStatus'])->name('changeStatusActivityPackage');
+    // Activity package Resource
+    Route::prefix('activities')->name('activities.')->group(function() {
+    Route::resource('/', ActivityController::class)->parameters([''=>'activity']);
+    });
+    
+    Route::delete('activity/bulk-delete', [ActivityController::class,'bulk_delete'])->name('activities.bulk-delete');
+    Route::get('activity/changeStatus', [ActivityController::class,'changeStatus'])->name('changeStatusActivity');
 });

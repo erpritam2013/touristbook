@@ -1,13 +1,7 @@
 @extends('admin.layouts.main')
 @section('deal_discount_action', route('admin.terms.deal-discounts.store'))
 @section('title',$title)
-@section('admin_head_css')
-<link rel="stylesheet" href="{!! asset('admin-part/vendor/select2/css/select2.min.css') !!}">
-@parent
-@endsection
 @section('content')
-
-
 <div class="container-fluid">
   @include('admin.layout-parts.breadcrumbs')
   <div class="row">
@@ -40,6 +34,15 @@
                                         {!! get_form_error_msg($errors, 'name') !!}
                                     </div>
                                 </div>
+                                 @isset($deal_discount->slug)
+                                <div class="form-group row">
+                                    <label class="col-lg-2 col-form-label" for="slug">Slug
+                                    </label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control" id="slug" name="slug" value="{{$deal_discount->slug ?? ''}}" placeholder="Enter a slug..">
+                                    </div>
+                                </div>
+                                @endisset
                                 <div class="form-group row">
                                     <label class="col-lg-2 col-form-label" for="description">Description 
                                     </label>
@@ -53,9 +56,9 @@
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-10">
-                                        <select class="form-control" id="term-type" name="deals_discount_type" data-url="{{route('admin.terms.ajaxGetDealsDiscount')}}" data-term_title="Deals & Discount">
-                                            @if(!empty($post_types))
+                                        <select class="form-control single-select-placeholder-touristbook" id="term-type" name="deals_discount_type" data-url="{{route('admin.terms.ajaxGetDealsDiscount')}}" data-term_title="Deals & Discount">
                                             <option value="">Select Type</option>
+                                            @if(!empty($post_types))
                                             @foreach($post_types as $type)
                                             <option value="{{$type}}" {!!get_edit_select_post_types_old_value($type, $deal_discount->deals_discount_type ?? "",'select')!!}>{{$type}}</option>
                                             @endforeach
@@ -70,9 +73,9 @@
                                     <label class="col-lg-2 col-form-label" for="parent-id">deal_discount Parent
                                     </label>
                                     <div class="col-lg-10">
-                                        <select class="form-control multi-select" id="parent-id" name="parent_id" data-existed_parent_id="{{$deal_discount->parent_id ?? ''}}">
-                                            @isset($deal_discounts)
+                                        <select class="form-control single-select-placeholder-touristbook" id="parent-id" name="parent_id" data-existed_parent_id="{{$deal_discount->parent_id ?? ''}}">
                                             <option value="">Select Deals & Discount Parent</option>
+                                            @isset($deal_discounts)
                                             @foreach($deal_discounts as $dd_p)
                                             <option value="{{$dd_p->id}}" {!!get_edit_select_post_types_old_value($dd_p->id, $deal_discount->parent_id ?? "",'select')!!} >{{$dd_p->name}}</option>
                                             @endforeach
@@ -119,14 +122,4 @@
         </div>
 
     </div>
-    @endsection
-    @section('admin_jscript')
-    @parent
-    <!-- Jquery Validation -->
-    <script src="{!! asset('admin-part/vendor/jquery-validation/jquery.validate.min.js') !!}"></script>
-    <!-- Form validate init -->
-    <script src="{!! asset('admin-part/js/plugins-init/jquery.validate-init.js') !!}"></script>
-    <script src="{!! asset('admin-part/vendor/select2/js/select2.full.min.js') !!}"></script>
-    <script src="{!! asset('admin-part/js/plugins-init/select2-init.js') !!}"></script>
-
     @endsection

@@ -147,7 +147,7 @@ class PlaceController extends Controller
          
          $placeDetails = [
             'name' => $request->name,
-            //'slug' => SlugService::createSlug(Place::class, 'slug', $request->name),
+             'slug' => (!empty($request->slug) && $place->slug != $request->slug)?SlugService::createSlug(Place::class, 'slug', $request->slug):$place->slug,
             'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'place_type' => $request->place_type,

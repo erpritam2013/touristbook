@@ -149,7 +149,7 @@ class TypeController extends Controller
          
          $typeDetails = [
             'name' => $request->name,
-            //'slug' => SlugService::createSlug(Type::class, 'slug', $request->name),
+             'slug' => (!empty($request->slug) && $type->slug != $request->slug)?SlugService::createSlug(Type::class, 'slug', $request->slug):$type->slug,
             'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'type' => $request->type,

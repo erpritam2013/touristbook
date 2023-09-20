@@ -78,7 +78,7 @@ class AccessibleDataTable extends DataTable
                         Button::make('print'),
                         Button::make('reset'),
                         Button::make('reload')
-                    ])->parameters($this->getParameters());;
+                    ])->parameters($this->getParameters());
     }
 
     /**

@@ -1,13 +1,7 @@
 @extends('admin.layouts.main')
 @section('state_action', route('admin.terms.states.store'))
 @section('title',$title)
-@section('admin_head_css')
-<link rel="stylesheet" href="{!! asset('admin-part/vendor/select2/css/select2.min.css') !!}">
-@parent
-@endsection
 @section('content')
-
-
 <div class="container-fluid">
   @include('admin.layout-parts.breadcrumbs')
   <div class="row">
@@ -40,6 +34,15 @@
                                 {!! get_form_error_msg($errors, 'name') !!}
                             </div>
                         </div>
+                         @isset($state->slug)
+                                <div class="form-group row">
+                                    <label class="col-lg-2 col-form-label" for="slug">Slug
+                                    </label>
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control" id="slug" name="slug" value="{{$state->slug ?? ''}}" placeholder="Enter a slug..">
+                                    </div>
+                                </div>
+                                @endisset
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label" for="description">Description
                             </label>
@@ -52,7 +55,7 @@
                             <label class="col-lg-2 col-form-label" for="parent-id">state Parent
                             </label>
                             <div class="col-lg-10">
-                                <select class="form-control multi-select" id="parent-id" name="parent_id" data-existed_parent_facitity="{{$state->parent_id ?? ''}}">
+                                <select class="form-control single-select-placeholder-touristbook" id="parent-id" name="parent_id" data-existed_parent_facitity="{{$state->parent_id ?? ''}}">
                                     @isset($states)
                                     <option value="">Select State Parent</option>
                                     @foreach($states as $s_p)
@@ -142,16 +145,4 @@
 </div>
 
 </div>
-@endsection
-@section('admin_jscript')
-@parent
-
-<!-- Jquery Validation -->
-<script src="{!! asset('admin-part/vendor/jquery-validation/jquery.validate.min.js') !!}"></script>
-<!-- Form validate init -->
-<script src="{!! asset('admin-part/js/plugins-init/jquery.validate-init.js') !!}"></script>
-<script src="{!! asset('admin-part/vendor/select2/js/select2.full.min.js') !!}"></script>
-<script src="{!! asset('admin-part/js/plugins-init/select2-init.js') !!}"></script>
-
-
 @endsection

@@ -12,16 +12,13 @@
 @stack('style-css')
 @stack('font-awesome-css')
 @else
-
-
-@stack('select2_css')
+@stack('select2_css') 
 @stack('asColorPicker-min-css')
 @stack('jquery-ui.css')
 @stack('jqvmap-min-css')
 @stack('style-css')
 @stack('font-awesome-css')
 @stack('dataTable_css')
-@stack('custom_style')
 @endif
 @show
 
