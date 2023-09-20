@@ -44,6 +44,9 @@
         @push('tourist-lib-js')
         <script src="{!! asset('admin-part/js/tourist-lib.js') !!}"></script>
         @endpush
+        @push('inline-custom-function')
+        <script src="{!! asset('admin-part/js/inline-custom-function.js') !!}"></script>
+        @endpush
         @push('all-min-js')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
         @endpush

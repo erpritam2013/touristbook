@@ -26,7 +26,7 @@ if(empty($id)){
  @endif
  <div class="col-lg-10">
     @endif
-    <select class="form-control single-select-placeholder-touristbook {{$class ?? ''}}" id="{{$id}}" name="{{$name}}" {{$multiple}}>
+    <select class="form-control single-select-placeholder-touristbook {{$class ?? ''}}" id="{{$id}}" name="{{$name}}" {{$multiple}} {!!$attr ?? ""!!}>
         @if(isset($label) && !empty($label))
         <option value="">Select {{ucwords($label)}}</option>
         @else

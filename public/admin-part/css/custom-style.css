@@ -75,3 +75,13 @@ input#slug {
 .file-list .file-thumb {
     display: block;
 }
+
+body .media-preview img{
+    margin: 5px;
+    margin-left: 0px;
+    border: 1px solid #3439574d;
+}
+body .tab-content .col-lg-12 {
+    border: 1px solid #DDD;
+    padding: 10px;
+}

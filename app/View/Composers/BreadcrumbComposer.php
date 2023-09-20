@@ -42,6 +42,7 @@ class BreadcrumbComposer
         $view->with('booking_options', get_array_mapping(config('global.booking_options'),true));
         $view->with('type_activity', get_array_mapping(config('global.show_agent_contact_info'),true));
         $view->with('show_agent_contact_info', get_array_mapping(config('global.type_activity'),true));
+        $view->with('activity_program_style', get_array_mapping(config('global.activity_program_style'),true));
         $view->with('helpful_facts', config('global.helpful_facts'));
         $view->with('term_activity_list_parent', config('global.term_activity_list_parent'));
         
