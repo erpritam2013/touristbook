@@ -488,10 +488,13 @@ $(document).ready(function () {
         targetElem.attr("selectedImages", JSON.stringify(selectedImages))
 
         let imageHtml = '';
+        imageHtml +='<div class="row">';
         selectedImages.forEach((imageObj, idx) => {
-            imageHtml += `<img src="${imageObj.url}" class="img" height="150" width="auto" id="image-path-${imageObj.id}" />`
+        imageHtml +='<div class="col-xl-3">';
+            imageHtml += `<img src="${imageObj.url}" class="img" height="100" width="100" id="image-path-${imageObj.id}" />`
+         imageHtml +='</div>';
         })
-
+         imageHtml +='</div>';
         targetElem.parent().find(".media-preview").first().html(imageHtml)
 
         $("#file-modal").modal("hide");

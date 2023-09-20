@@ -10,24 +10,9 @@
     </div>
 </div>
 <hr>
-<div class="form-group row">
-   
-    <div class="col-lg-12">
-         <label class="subform-card-label" for="attachment">Feature image</label>
-         <p>Upload feature image for this location</p>
 
-        <div class="input-group mb-3">
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="get_image"  value="{{$location->logo ?? ''}}" accept="image/jpeg" data-existed_value="{{$location->logo ?? ''}}">
-                <label class="custom-file-label">Choose Feature Image</label>
-            </div>
-            <div class="input-group-append">
-                <span class="input-group-text">Upload</span>
-            </div>
-        </div>
-        <img id="show_image" src="{{asset('admin-part\images\t-b-logo.png')}}" alt="your image" width="120" />
-    </div>
-</div>
+@include('admin.partials.utils.media', ['name'=> 'image','label'=>'Feature image','desc'=>"Upload feature image for this location",'value'=>$location->logo ?? '','id' => ""])
+
 <hr>
 <div class="form-group row">
    

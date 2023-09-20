@@ -16,6 +16,11 @@ return [
       'user_agent_info' => 'Use agent contact info', 
       'user_item_info' => 'Use item info' 
   ],
+    'activity_program_style' => [
+      'style1' => 'Image with text',
+      'style2' => 'Background image', 
+      'style3' => 'Text with icon' 
+  ],
   'i_color_dashboard' => ['success', 'primary', 'pink', 'danger'],
 
   'lebal_types' => ['default', 'primary', 'success', 'info', 'warning', 'danger'],
