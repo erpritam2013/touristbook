@@ -218,8 +218,13 @@ if(!function_exists('get_edit_select_check_pvr_old_value')){
                 return '';
             }
         }else{
-            if ($current_ele == 1) {
-                return 'checked="true"';
+            if ($current_ele == 0) {
+                 if($type =='checked'){
+                    return 'checked="true"';
+                }else{
+                    return '';
+                }
+                
             }else{
                 return '';
             }

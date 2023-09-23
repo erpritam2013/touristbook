@@ -21,3 +21,14 @@
 <!-- Activity program style -->
 @include('admin.partials.utils.select_box', ['items' => $activity_program_style, 'name'=> 'activity_program_style','selected'=>$activity->activity_program_style ?? "",'label'=>'Activity program style','attr'=>'onchange="inputCondition(this)"'])
 
+
+<div class="border p-2 mb-2">
+    <h4>Activity program</h4>
+    @include('admin.partials.utils.subform-wrapper', ["subformData" => $activity_zone->details->activity_program ?? null, 'type' => 'activity_program', 'btnTitle' => 'Add New'])
+</div>
+
+<div class="border p-2 mb-2">
+    <h4>Activity FAQ</h4>
+    @include('admin.partials.utils.subform-wrapper', ["subformData" => $activity_zone->details->activity_faq ?? null, 'type' => 'activity_faq', 'btnTitle' => 'Add New'])
+</div>
+

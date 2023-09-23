@@ -21,6 +21,14 @@ return [
       'style2' => 'Background image', 
       'style3' => 'Text with icon' 
   ],
+    'discount_by_people_type' => [
+      'percent' => 'Percent',
+      'amount' => 'Amount'
+  ],
+    'calculator_discount_by_people_type' => [
+      'total' => 'Total',
+      'person' => 'Person'
+  ], 
   'i_color_dashboard' => ['success', 'primary', 'pink', 'danger'],
 
   'lebal_types' => ['default', 'primary', 'success', 'info', 'warning', 'danger'],
