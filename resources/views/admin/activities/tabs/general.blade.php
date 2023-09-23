@@ -6,7 +6,7 @@
             <input type="radio" name="is_featured" value="1" {!!get_edit_select_check_pvr_old_value('is_featured', $activity ?? "" ,'is_featured',1, 'checked' )!!}>&nbsp;On
         </label>
         <label class="col-form-label">
-            <input type="radio" name="is_featured" {!!get_edit_select_check_pvr_old_value('status', $activity ?? "" ,'is_featured',0, 'checked' )!!} value="0">&nbsp;Off
+            <input type="radio" name="is_featured" {!!get_edit_select_check_pvr_old_value('is_featured', $activity ?? "" ,'is_featured',0, 'checked' )!!} value="0">&nbsp;Off
         </label>
     </div>
 </div>

@@ -7,9 +7,9 @@
 
             @include('admin.activities.partials.activity-info-card', ['activity'=>$activity ?? null])
 
-            @include('admin.activities.partials.corporate', ['activity'=>$activity ?? null])
+            @include('admin.activities.partials.policies-section', ['activity'=>$activity ?? null])
 
-            @include('admin.activities.partials.food-dining', ['activity'=>$activity ?? null])
+            @include('admin.activities.partials.extra-fields-section', ['activity'=>$activity ?? null])
 
         </div>
         <div class="col-xl-4">

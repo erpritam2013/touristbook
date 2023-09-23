@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Storage;
 use App\Interfaces\CountryZoneRepositoryInterface;
 use App\Models\Terms\Country;
 use App\Models\CountryZone;
@@ -75,12 +74,7 @@ private function _prepareBasicData() {
      */
     public function store(StoreCountryZoneRequest $request)
     {
-
-        $newsItem = new CountryZone;
-
-        //$path = Storage::disk('s3')->put('images', $request->image);
-        $newsItem->addMedia($request->file('image'))->toMediaCollection('images', 's3');
-        dd($newsItem);
+    
        $countryZoneDetails = [
         'title' => $request->title,
         'sub_title' => $request->sub_title,
