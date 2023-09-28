@@ -1,75 +1,138 @@
 <!-- =======================
  footer  -->
-<footer class="footer footer-dark pt-6 position-relative">
+<footer class="footer pt-6 position-relative">
     <div class="footer-content">
         <div class="container">
             <div class="row">
                 <!-- Footer widget 1 -->
-                <div class="col-md-3 col-sm-6 order-sm-1">
-                    <div class="widget address"> <a href="index-2.html" class="footer-logo mb-3 d-block">
-                            <!-- SVG Logo Start -->
-                            <img src="{{asset('sites/images/logo-footer.png')}}">
-                            <!-- SVG Logo End -->
-                        </a>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua.</p>
+                <div class="col-md-4 col-sm-6 order-sm-1">
+                    <h4 class="footer-title">NEED HELP?</h4>
+                    <div class="separater">&nbsp;</div>
+
+                    <div class="footer-box-content">
+                        <div class="footer-wrapper">
+                            <p><span style="color: #5e6d77;">Address</span></p>
+                            <h4>Ambala City – 134007, Haryana, India</h4>
+                        </div>
                     </div>
+
+                    <div class="footer-box-content">
+                        <div class="footer-wrapper">
+                            <p><span style="color: #5e6d77;">Call Us</span></p>
+                            <h4>+91 98177-02160, 61, 62, 63</h4>
+                        </div>
+                    </div>
+
+                    <div class="footer-box-content">
+                        <div class="footer-wrapper">
+                            <p><span style="color: #5e6d77;">Email for Us</span></p>
+                            <h4>touristbook77@gmail.com</h4>
+                        </div>
+                    </div>
+
+                    <div class="footer-box-content">
+                        <div class="footer-wrapper">
+                            <p><span style="color: #5e6d77; margin-bottom: 5px;">Follow Us<br></span><br>
+                                <a style="margin-right: 20px;" href="https://m.facebook.com/tourist.book.9"><img
+                                        decoding="async" loading="lazy" class="alignnone wp-image-7794 size-full"
+                                        src="https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2021/08/ico_facebook_footer.webp"
+                                        alt="" width="21" height="25"></a><a style="margin-right: 20px;"
+                                    href="https://twitter.com/TouristBook07"><img decoding="async" loading="lazy"
+                                        class="alignnone wp-image-7795 size-full"
+                                        src="https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2021/08/ico_twitter_footer.webp"
+                                        alt="" width="32" height="24"></a><a style="margin-right: 20px;"
+                                    href="https://www.instagram.com/tourist.book/"><img decoding="async" loading="lazy"
+                                        class="alignnone wp-image-7796 size-full"
+                                        src="https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2021/08/ico_instagram_footer.webp"
+                                        alt="" width="24" height="22"></a>
+                            </p>
+                        </div>
+                    </div>
+
+
                 </div>
-                <!-- Footer widget 2 -->
-                <div class="col-md-2 col-sm-4 order-sm-3">
+
+                {{-- Footer Widget 2 --}}
+                <div class="col-md-2 col-sm-6 order-sm-1">
+                    <h4 class="footer-title">FORWARD</h4>
+                    <div class="separater">&nbsp;</div>
+
                     <div class="widget">
-                        <h6>Quick LInks</h6>
                         <ul class="nav flex-column">
-                            <li class="nav-item"><a class="nav-link" href="#">About</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-                            <li class="nav-item"><a class="nav-link" href="index-2.html">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Portfolio</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Term &amp; Conditions</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Social Media</a></li>
+                            <li class="nav-item"><a class="nav-link" href="https://test-touristbook.com/about/">About</a></li>
+                            <li class="nav-item"><a class="nav-link" href="https://test-touristbook.com/contact-us/">Contact Us</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Bloggers Point</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Chat Bot</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">List Your Property</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Privacy &amp; Cookie Policy</a></li>
                         </ul>
+
                     </div>
+
+
                 </div>
-                <!-- Footer widget 3 -->
-                <div class="col-md-2 col-sm-4 order-sm-4">
+
+                {{-- Footer Widget 3 --}}
+                <div class="col-md-2 col-sm-6 order-sm-1">
+                    <h4 class="footer-title">COUNTRY/REGION</h4>
+                    <div class="separater">&nbsp;</div>
+
                     <div class="widget">
-                        <h6>Company</h6>
-                        <ul class="nav flex-column primary-hover">
-                            <li class="nav-item"><a class="nav-link" href="#">Help</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Careers</a></li>
-                            <li class="nav-item"><a class="nav-link" href="index-2.html">Terms & Conditions</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Privacy & Policy</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">FAQs</a></li>
+                        <ul class="nav flex-column">
+                            <li class="nav-item"><a class="nav-link" href="#">Africa</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Antartica</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Asia</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Europe</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Middle East</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">North America</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Oceania</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">South America</a></li>
                         </ul>
                     </div>
                 </div>
-                <!-- Footer widget 4 -->
-                <div class="col-md-2 col-sm-4 order-sm-5">
+
+                {{-- Footer Widget 4 --}}
+                <div class="col-md-2 col-sm-6 order-sm-1">
+                    <h4 class="footer-title">Working with us</h4>
+                    <div class="separater">&nbsp;</div>
+
                     <div class="widget">
-                        <h6>Support</h6>
-                        <ul class="nav flex-column primary-hover">
-                            <li class="nav-item"><a class="nav-link" href="#">Documentation</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Knowledge Base</a></li>
-                            <li class="nav-item"><a class="nav-link" href="index-2.html">Forum</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Terms of Use</a></li>
+                        <ul class="nav flex-column">
+                            <li class="nav-item"><a class="nav-link" href="#">Advertisement</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">News Letter</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Legal Policy</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Forex Info</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Youtube Videos</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Useful Links</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Secret Deals</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Things You Should Know</a></li>
                         </ul>
                     </div>
                 </div>
-                <!-- Footer widget 5 -->
-                <div class="col-md-3 col-sm-6 order-sm-2">
-                    <div class="widget address">
-                        <ul class="list-unstyled">
-                            <li class="media mb-3"><i class="fas fa-map-marked-alt mr-3 display-8"></i>216 Coburn Shahi
-                                Road Mumbai, Near Center Road, IL 54785. </li>
-                            <li class="media mb-3"><i class="mr-3 display-8 fas fa-headphones-alt"></i> (547) 457-5757
-                            </li>
-                            <li class="media mb-3"><i class="mr-3 display-8 far fa-envelope"></i> help@travelGo.com</li>
-                            <li class="media mb-3"><i class="mr-3 display-8 far fa-clock"></i>
-                                <p>Mon - Fri: <strong>09:00 - 21:00</strong> <br>
-                                    Sat & Sun: <strong>Closed</strong></p>
-                            </li>
+
+
+                {{-- Footer Widget 4 --}}
+                <div class="col-md-2 col-sm-6 order-sm-1">
+                    <h4 class="footer-title">PRODUCT</h4>
+                    <div class="separater">&nbsp;</div>
+
+                    <div class="widget">
+                        <ul class="nav flex-column">
+                            <li class="nav-item"><a class="nav-link" href="#">Hotels</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Chain Hotels</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Destinations</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Packages</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Tourism Types</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Unique Place to Stay</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Transport</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Airport</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Communities</a></li>
                         </ul>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

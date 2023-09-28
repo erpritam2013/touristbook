@@ -10423,3 +10423,47 @@ h2.title {
 .dropdown-menu li:not(:last-child) a {
     border-bottom: 1px solid #EEEEEE;
 }
+.footer-content .container {
+    max-width: 1400px;
+}
+.footer-content .footer-title {
+    font-size: 14px;
+    font-family: "Poppins";
+    font-weight: 500;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.footer-content .separater {
+    width: 40%;
+    height: 1px;
+    border-top: 1px solid #ebebeb;
+    margin-bottom: 20px;
+}
+
+.footer-box-content {
+    border-left-width: 3px !important;
+    padding-left: 20px !important;
+    border-left-color: #5191fa !important;
+    border-left-style: solid !important;
+    margin-bottom: 20px;
+    color: #000;
+}
+.footer-box-content p {
+    margin: 0 0 10px;
+    font-size: 11.0pt!important;
+    font-family: "Poppins";
+}
+.footer-box-content h4 {
+    font-size: 13px;
+    font-family: "Poppins";
+}
+.widget .nav-link {
+    margin-bottom: 13px;
+    font-size: 11px;
+    font-weight: 500;
+    display: block;
+    color: #07509e;
+    padding: 0px !important;
+}
+
