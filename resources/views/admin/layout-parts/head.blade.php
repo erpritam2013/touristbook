@@ -19,6 +19,7 @@
 @stack('style-css')
 @stack('font-awesome-css')
 @stack('dataTable_css')
+@stack('custom_style')
 @endif
 @show
 

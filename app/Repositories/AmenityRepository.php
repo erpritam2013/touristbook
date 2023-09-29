@@ -57,7 +57,7 @@ class AmenityRepository implements AmenityRepositoryInterface
         if($type)
             $amenityBuilder->where('amenity_type',$type);
 
-        $amenities = $amenityBuilder->get(['id','name', 'parent_id']);
+        $amenities = $amenityBuilder->latest()->get(['id','name', 'parent_id']);
 
         $nestedResult = $amenities->toNested();
 

@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Interfaces\ActivityRepositoryInterface;
+use App\Interfaces\ActivityZoneRepositoryInterface;
+use App\Interfaces\LocationRepositoryInterface;
 use App\Interfaces\TermActivityListRepositoryInterface;
 use App\Interfaces\StateRepositoryInterface;
 use App\Interfaces\AttractionRepositoryInterface;
@@ -19,32 +21,40 @@ use Session;
 class ActivityController extends Controller
 {
 
-
+    private LocationRepositoryInterface $locationRepository;
+    private ActivityZoneRepositoryInterface $activityZoneRepository;
     private TermActivityListRepositoryInterface $termActivityListRepository;
     private StateRepositoryInterface $stateRepository;
     private AttractionRepositoryInterface $attractionRepository;
     private LanguageRepositoryInterface $languageRepository;
+    private ActivityRepositoryInterface $activityRepository;
 
     public function __construct(
+        ActivityZoneRepositoryInterface $activityZoneRepository,
         TermActivityListRepositoryInterface $termActivityListRepository,
+        ActivityRepositoryInterface $activityRepository,
+        LocationRepositoryInterface $locationRepository,
         StateRepositoryInterface $stateRepository,
         AttractionRepositoryInterface $attractionRepository,
         LanguageRepositoryInterface $languageRepository
-       
+
     ) {
+        $this->activityZoneRepository = $activityZoneRepository;
+        $this->locationRepository = $locationRepository;
         $this->termActivityListRepository = $termActivityListRepository;
         $this->stateRepository = $stateRepository;
+        $this->activityRepository = $activityRepository;
         $this->attractionRepository = $attractionRepository;
         $this->languageRepository = $languageRepository;
-      
+
     }
 
-      private function _prepareBasicData() {
+    private function _prepareBasicData() {
 
         // TODO: Need to Improve here (Fetch from Cache)
         $data['term_activity_lists'] = $this->termActivityListRepository->getActiveTermActivityList();
-         $data['states'] = $this->stateRepository->getActiveStatesList()->map(function($value, $key){  
-            
+        $data['states'] = $this->stateRepository->getActiveStatesList()->map(function($value, $key){  
+
           return (object)[
             'id' => $value->id,
             'value' => $value->name,
@@ -54,6 +64,7 @@ class ActivityController extends Controller
     });
         $data['attractions'] = $this->attractionRepository->getActiveActivityAttractionsList();
         $data['languages'] = $this->languageRepository->getActiveLanguagesList();
+        $data['locations'] = $this->locationRepository->getActiveLocationsList();
         return $data;
 
     }
@@ -92,85 +103,183 @@ class ActivityController extends Controller
     public function store(StoreActivityRequest $request)
     {
 
-        dd($request->all());
-        $hotelDetails = [
-            'name' => $request->name,
-            'description' => $request->description,
-            'slug' => SlugService::createSlug(Hotel::class, 'slug', $request->name),
-            'external_link' => $request->external_link,
-            'food_dining' => $request->food_dining,
-            'is_featured' => $request->is_featured,
-            // TODO: logo and featured_image ----> S3 Integration
-            'hotel_video' => $request->hotel_video,
-            'rating' => $request->rating,
-            'coupon_code' => $request->coupon_code,
-            'hotel_attributes' => $request->hotel_attributes,
-            'contact' => $request->contact,
-            'avg_price' => (float)$request->avg_price,
-            'is_allowed_full_day' => $request->is_allowed_full_day,
-            // TODO: check_in, check_out jquery plugin for time setup
-            // 'check_in' => $request->check_in,
-            // 'check_out' => $request->check_out,
-            'book_before_day' => $request->book_before_day,
-            'book_before_arrival' => $request->book_before_arrival,
-            'policies' => $request->policy,
-            'notices' => $request->noticies,
-            'status' => $request->status,
+
+        $activityDetails = [
+
+          'name' =>$request->name,
+          'slug' =>$request->slug,
+          'description' =>$request->description,
+          'excerpt' =>$request->excerpt,
+          'external_link' =>$request->external_link,
+          'address' =>$request->address,
+          'price' =>$request->price,
+          // 'sale_price' =>$request->sale_price,
+          // 'child_price' =>$request->child_price,
+          // 'disable_children_name' =>$request->disable_children_name,
+          // 'hide_children_in_booking_form' =>$request->hide_children_in_booking_form,
+          // 'discount_by_child' =>$request->discount_by_child,
+          // 'adult_price' =>$request->adult_price,
+          // 'hide_adult_in_booking_form' =>$request->hide_adult_in_booking_form,
+          // 'discount_by_adult' =>$request->discount_by_adult,
+          // 'discount_by_people_type' =>$request->discount_by_people_type,
+          // 'calculator_discount_by_people_type' =>$request->calculator_discount_by_people_type,
+          // 'infant_price' =>$request->infant_price,
+          // 'disable_infant_name' =>$request->disable_infant_name,
+          // 'hide_infant_in_booking_form' =>$request->hide_infant_in_booking_form,
+          // 'min_price' =>$request->min_price,
+          // 'extra_price' =>$request->extra_price,
+          'st_activity_external_booking' =>(!empty($request->st_activity_external_booking))?$request->st_activity_external_booking:0,
+          'st_activity_external_booking_link' =>$request->st_activity_external_booking_link,
+          'deposit_payment_status' =>$request->deposit_payment_status,
+          'deposit_payment_amount' =>$request->deposit_payment_amount,
+          'type_activity' =>$request->type_activity,
+          'rating' =>(!empty($request->rating))?$request->rating:0,
+          'activity_booking_period' =>$request->activity_booking_period,
+          'min_people' =>$request->min_people,
+          'max_people' =>$request->max_people,
+          'duration' =>$request->duration,
+          'is_sale_schedule' =>(!empty($request->is_sale_schedule))?$request->is_sale_schedule:0,
+          'discount' =>(!empty($request->discount))?$request->discount:0,
+          'sale_price_from' =>$request->sale_price_from,
+          'sale_price_to' =>$request->sale_price_to,
+          'discount_type' =>$request->discount_type,
+          'is_featured' =>$request->is_featured,
+          'status' =>$request->status,
+          /*
+          'logo' =>$request->logo,
+          'featured_image' =>$request->featured_image,*/
+
+
+
             // TODO: created_by pending as Authentication is not Yet Completed
-        ];
+      ];
+      if (isset($request->activity_program_style)) {
+       if ($request->activity_program_style == 'style1' || $request->activity_program_style == 'style3') {
+           $request->merge([
+            'activity_program_bgr' => [],
+        ]);
+       }elseif ($request->activity_program_style == 'style2') {
+           $request->merge([
+            'activity_program' => [],
+        ]);
+       }
+   
+       if (isset($request->activity_zones)) {
+            
+            $request->merge([
+            'activity_zones' => unsetValueActivityTourismZone($request->activity_zones)
+        ]);
+       }
 
-        $hotel = $this->hotelRepository->createHotel($hotelDetails);
+        if (empty($request->activity_zone_id)) {
+            
+            $request->merge([
+            'activity_zone_id' => null
+        ]);
+       }
+   }
 
-        if ($hotel) {
+
+
+
+   $activity = $this->activityRepository->createActivity($activityDetails);
+
+   if ($activity) {
             // TODO: Move this to Repository
-            $hotel->detail()->create($request->only([
-                'map_address',
-                'latitude',
-                'longitude',
-                'zoom_level',
-                'highlights',
-                'facilityAmenities',
-                'foods',
-                'drinks',
-                'complimentary',
-                'helpfulfacts',
-                'save_pocket',
-                'pocketPDF',
-                'save_environment',
-                'landmark',
-                'todo',
-                'offers',
-                'todovideo',
-                'eventmeeting',
-                'tourism_zone',
-                'tourism_zone_heading',
-                'tourismzonepdf',
-                'activities',
-                'room_amenities',
-                'transport',
-                'payment_mode',
-                'id_proofs',
-                'emergencyLinks',
-            ]));
 
+    $acitityMetaData = [
+      'map_address',
+      'latitude',
+      'longitude',
+      'zoom_level',
+      'enable_street_views_google_map',
+      'gallery',
+      'video',
+      'contact',
+      'venue_facilities',
+      'activity_include',
+      'activity_exclude',
+      'activity_highlight',
+      'activity_program_style',
+      'activity_program',
+      'activity_program_bgr',
+      'activity_faq',
+          // 'calendar_check_in',
+          // 'calendar_check_out',
+          // 'calendar_adult_price',
+          // 'calendar_child_price',
+          // 'calendar_infant_price',
+          // 'calendar_starttime_hour',
+          // 'calendar_starttime_minute',
+          // 'calendar_starttime_format',
+          // 'calendar_status',
+          // 'calendar_groupday',
+          // 'st_allow_cancel',
+          // 'st_cancel_number_days',
+          // 'st_cancel_percent',
+          // 'ical_url',
+          // 'is_meta_payment_gateway_st_submit_form',
+      'child_policy',
+      'booking_policy',
+      'refund_and_cancellation_policy',
+      'country',
+      'st_activity_external_booking_link',
+      'activity_zones',
+      'st_activity_corporate_address',
+      'st_activity_short_address',
+      'social_links',
+      'properties_near_by',
+      'check_editing',
 
-            $hotel->facilities()->attach($request->get('facilities'));
-            $hotel->amenities()->attach($request->get('amenities'));
-            $hotel->medicare_assistances()->attach($request->get('medicares'));
-            $hotel->top_services()->attach($request->get('topServices'));
-            $hotel->places()->attach($request->get('places'));
-            $hotel->propertyTypes()->attach($request->get('propertyTypes'));
-            $hotel->accessibles()->attach($request->get('accessibles'));
-            $hotel->meetingEvents()->attach($request->get('meetingAndEvents'));
-            $hotel->states()->attach($request->get('state_id'));
-            $hotel->occupancies()->attach($request->get('occupancies'));
-            $hotel->deals()->attach($request->get('deals'));
-            $hotel->activities()->attach($request->get('activities'));
+  ];
+
+  $activity->detail()->create($request->only($acitityMetaData));
+  
+ 
+
+ 
+  $activity->activity_zone()->attach($request->get('activity_zone_id'));
+  $activity->attractions()->attach($request->get('attraction'));
+  $activity->locations()->attach($request->get('location_id'));
+  $activity->languages()->attach($request->get('language'));
+  $activity->term_activity_lists()->attach($request->get('term_activity_list'));
+  $activity->states()->attach($request->get('state_id'));
             // activitiescard
+}
+        // return $activity;
+Session::flash('success','Activity Created Successfully');
+return redirect()->Route('admin.activities.index');
+}
+
+public function ActivityZoneByCountry(Request $request): JsonResponse
+{
+
+        $existed_value = "";
+        $country = $request->country;
+        if (isset($request->id)) {
+        $activityId = $request->id;
+        $activity = Activity::findOrFail($activityId);
+        if (!empty($activity)) {
+
+            if (!empty($activity->activity_zone)) {
+               $existed_value = $activity->activity_zone[0]->id;
+            }
         }
-        // return $hotel;
-        Session::flash('success','Hotel Created Successfully');
-        return redirect()->Route('admin.hotels.index');
+        }
+        $activityZone = $this->activityZoneRepository->getActivityZoneByCountry($country)->toArray();
+
+        return response()->json(['data' => $activityZone,'existed_value'=>$existed_value]);
+}
+
+ public function changeStatus(Request $request): JsonResponse
+    {
+        $activityId = $request->id;
+        $activityDetails = [
+            'status' => $request->status,
+        ];
+        $this->activityRepository->updateActivity($activityId, $activityDetails);
+
+        return response()->json(['success' => 'Status change successfully.']);
     }
 
     /**
@@ -190,9 +299,19 @@ class ActivityController extends Controller
      * @param  \App\Models\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function edit(Activity $activity)
+    public function edit($id)
     {
-        //
+        $activity = Activity::with([
+            'term_activity_lists', 'states', 'attractions', 'languages', 'locations',])->find($id);
+
+        if (empty($activity)) {
+            return back();
+        }
+
+        $data['title'] = 'Activity Edit';
+        $data['activity'] = $activity;
+        $data = array_merge_recursive($data, $this->_prepareBasicData());
+        return view('admin.activities.edit', $data);
     }
 
     /**
@@ -213,8 +332,24 @@ class ActivityController extends Controller
      * @param  \App\Models\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Activity $activity)
+    public function destroy(Request $request,$id)
     {
-        //
+       
+        $activityId = $id;
+        $this->activityRepository->deleteActivity($activityId);
+        Session::flash('success','Activity Deleted Successfully');
+        return back();
+    }
+
+
+    public function bulk_delete(Request $request)
+    {
+        if (!empty($request->ids)) {
+
+            $activityIds = get_array_mapping(json_decode($request->ids));
+            $this->activityRepository->deleteBulkActivity($activityIds);
+            Session::flash('success', 'Activity Bulk Deleted Successfully');
+        }
+        return back();
     }
 }

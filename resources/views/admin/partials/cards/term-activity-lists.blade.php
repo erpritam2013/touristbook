@@ -7,4 +7,7 @@
             @include('admin.partials.utils.nested_checkbox_list', ['items' => $term_activity_lists, 'name'=> 'term_activity_list', 'selected' => $selected])
         </div>
     </div>
+    <div class="card-footer term-footer">
+@include('admin.partials.utils.add_term', ['terms' => $term_activity_lists, 'field_name'=> 'term_activity_list', 'term_id'=> 'term_activity_lists', 'term_type'=> '', 'term' => 'TermActivityList','post_type'=>$activity ?? ""])
+        </div>
 </div>

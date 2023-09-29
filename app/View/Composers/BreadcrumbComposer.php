@@ -40,8 +40,8 @@ class BreadcrumbComposer
         $view->with('stays', config('global.stay'));
         $view->with('important_note', config('global.important_note'));
         $view->with('booking_options', get_array_mapping(config('global.booking_options'),true));
-        $view->with('type_activity', get_array_mapping(config('global.show_agent_contact_info'),true));
-        $view->with('show_agent_contact_info', get_array_mapping(config('global.type_activity'),true));
+        $view->with('type_activity', get_array_mapping(config('global.type_activity'),true));
+        $view->with('show_agent_contact_info', get_array_mapping(config('global.show_agent_contact_info'),true));
         $view->with('discount_by_people_type', get_array_mapping(config('global.discount_by_people_type'),true));
         $view->with('calculator_discount_by_people_type', get_array_mapping(config('global.calculator_discount_by_people_type'),true));
         $view->with('activity_program_style', get_array_mapping(config('global.activity_program_style'),true));

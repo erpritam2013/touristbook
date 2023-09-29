@@ -48,7 +48,40 @@ if (!function_exists('getCountries')) {
         return $getCountries;
     }
 }
+if (!function_exists('unsetValueActivityTourismZone')) {
+    function unsetValueActivityTourismZone($data)
+    {
+       if (!empty($data)) {
+          foreach ($data as $key => $value) {
+             if ($data[$key]['activity_zones-url_link_status'] == 'slug') {
+                 unset($data[$key]['activity_zones-file']);
+                  unset($data[$key]['activity_zones-web_link']);
+             }elseif ($data[$key]['activity_zones-url_link_status'] == 'file') {
+                 unset($data[$key]['activity_zones-slug']);
+                  unset($data[$key]['activity_zones-web_link']);
+             }elseif ($data[$key]['activity_zones-url_link_status'] == 'web_link') {
+                  unset($data[$key]['activity_zones-file']);
+                    unset($data[$key]['activity_zones-slug']);
+             }
+          }
+       }
 
+      
+       return $data;
+    }
+}
+if (!function_exists('setTermSpace')) {
+  function setTermSpace($space)
+  {
+    $result = "";
+      if ($space != 0) {
+      for ($i=0; $i < $space; $i++) { 
+          $result .= "&nbsp;&nbsp;&nbsp;";
+      }
+      }
+      return $result;
+  }
+}
 if (!function_exists('getTermsForSelectBox')) {    
     function getTermsForSelectBox($model=null,$term_type=null,$type='object'){
 
@@ -126,6 +159,23 @@ if (!function_exists('exploreJsonData')) {
 
            return $result;
        }
+   }
+}
+
+if (!function_exists('exploreArrayData')) {    
+    function exploreArrayData($data="",$key=null){
+
+        $result = "";
+        if (!empty($json_data)) {
+            if (!empty($key)) {
+               $collection = collect($data);
+               $result = $collection->get($key);
+            }else{
+               $collection = collect($data);
+               $result = $collection->get();
+           }
+       }
+           return $result;
    }
 }
 if (!function_exists('matchRouteName')) {    

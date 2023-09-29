@@ -46,6 +46,7 @@ class PlaceController extends Controller
     {
          $data['title'] = 'Add Place';
         //$data['places'] = $this->placeRepository->getPlacesByType();
+         $data['places'] = $this->placeRepository->getPlacesByType();
         return view('admin.terms.places.create',$data);
     }
 
@@ -87,7 +88,7 @@ class PlaceController extends Controller
             'slug' => SlugService::createSlug(Place::class, 'slug', $request->name),
             'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
-            'place_type' => $request->place_type,
+            // 'place_type' => $request->place_type,
             'description' => $request->description,
         ];
         $this->placeRepository->createPlace($placeDetails);
@@ -130,7 +131,7 @@ class PlaceController extends Controller
         if (empty($data['place'])) {
             return back();
         }
-        $data['places'] = $this->placeRepository->getPlacesByType($data['place']->place_type,$placeId);
+        $data['places'] = $this->placeRepository->getPlacesByType(null,$placeId);
         return view('admin.terms.places.edit', $data);
     }
 
@@ -150,7 +151,7 @@ class PlaceController extends Controller
              'slug' => (!empty($request->slug) && $place->slug != $request->slug)?SlugService::createSlug(Place::class, 'slug', $request->slug):$place->slug,
             'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
-            'place_type' => $request->place_type,
+            // 'place_type' => $request->place_type,
             'description' => $request->description,
             'status' => $request->status,
         ];

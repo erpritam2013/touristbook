@@ -51,7 +51,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
+                                {{--<div class="form-group row">
                                     <label class="col-lg-2 col-form-label" for="term-type">Place Type
                                         <span class="text-danger">*</span>
                                     </label>
@@ -67,7 +67,7 @@
                                         {!! get_form_error_msg($errors, 'place_type') !!}
 
                                     </div>
-                                </div>
+                                </div>--}}
                             
                                 <div class="form-group row">
                                     <label class="col-lg-2 col-form-label" for="parent-id">Place Parent

@@ -1,3 +1,21 @@
+@if(count($locations))
+<div class="card {{(count($locations) > 10)?'location-card':'location-card-padding'}}">
+    <div class="card-header border-bottom">
+        <h4 class="card-title">Locations</h4>
+    </div>
+    <div class="card-body">
+
+        <div class="form-group row">
+            <input type="text" class="form-control" id="search_location" placeholder="Search Location......">
+            <div class="col-lg-12 location-list">   
+
+            @include('admin.partials.utils.nested_checkbox_list', ['items' => $locations, 'name'=> 'location_id[]', 'selected' => $hotel->locations->pluck('id')->toArray() ?? []])
+            </div>
+           
+        </div>
+    </div>
+</div>
+ @endif
 <div class="form-group row">
     <label class="col-lg-5 col-form-label" for="map_address">Hotel address</label>
     <div class="col-lg-7">

@@ -2,6 +2,7 @@ $(document).ready(function () {
     var base_admin_url = $("#base-admin-url").val();
 
     // Map Variable
+    const addressTextboxSingle = document.getElementById("address");
     const addressTextbox = document.getElementById("map_address");
     const latitudeTextbox = document.getElementById("latitude");
     const longitudeTextbox = document.getElementById("longitude");
@@ -168,6 +169,7 @@ $(document).ready(function () {
     }
 
     // Initialize Map
+    let iconBase = '/admin-part/images/map/';
     function initMap() {
         map = new google.maps.Map(mapElem, {
             zoom: 1, // Default
@@ -177,6 +179,8 @@ $(document).ready(function () {
 
         console.log(google.maps.places);
     }
+
+
 
     // Call InitMap if Exists
     if (mapElem) {
@@ -202,6 +206,7 @@ $(document).ready(function () {
                             latLng.longitude
                         ),
                         map: map,
+                       // icon: iconBase + 'map_marker.png'
                     })
                 );
             });
@@ -237,6 +242,10 @@ $(document).ready(function () {
 
     // Autocompletion Addres Bar
     const autocomplete = new google.maps.places.Autocomplete(addressTextbox, {
+        types: ["geocode"],
+    });
+    // Autocompletion Addres Bar
+     new google.maps.places.Autocomplete(addressTextboxSingle, {
         types: ["geocode"],
     });
 
