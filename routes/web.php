@@ -44,6 +44,8 @@ Route::get('/', function () {
 });
 Route::name('admin.')->prefix('admin')->group(function () {
 
+    Route::post('ajax-term-store',[UtilityController::class,'ajax_term_store'])->name('ajax-term-store');
+
     Route::get('template/{type}', [UtilityController::class, 'get_template_by_type'])->name('template');
 
     Route::name('files.')->prefix('files')->group(function() {
@@ -201,5 +203,8 @@ Route::name('admin.')->prefix('admin')->group(function () {
     });
     
     Route::delete('activity/bulk-delete', [ActivityController::class,'bulk_delete'])->name('activities.bulk-delete');
+    
+    Route::get('activity/country/activity-zones', [ActivityController::class,'ActivityZoneByCountry'])->name('ActivityZoneByCountry');
+
     Route::get('activity/changeStatus', [ActivityController::class,'changeStatus'])->name('changeStatusActivity');
 });

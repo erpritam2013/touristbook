@@ -49,7 +49,7 @@ class AttractionRepository implements AttractionRepositoryInterface
         if($type)
             $AttractionBuilder->where('attraction_type',$type);
 
-        return $AttractionBuilder->get(['id','name','parent_id']);
+        return $AttractionBuilder->latest()->get(['id','name','parent_id']);
     }
 
     // Get Active Hotel Type Attractions

@@ -10,4 +10,5 @@ interface ActivityZoneRepositoryInterface
     public function deleteBulkActivityZone($activityZoneId);
     public function createActivityZone(array $activityZoneDetails);
     public function updateActivityZone($activityZoneId, array $newDetails);
+    public function getActivityZoneByCountry($country);
 }

@@ -2,7 +2,7 @@
 <div class="form-group row">
 @php  
 if(empty($id)){
-   $id = (isset($name))? str_replace('[]', '',str_replace('_', '-', $name)):$name;
+   $id = $name;
 } 
 @endphp
 @if(!isset($col))
@@ -28,12 +28,12 @@ if(empty($id)){
    <div class="col-lg-10">
     @endif
     <div class="row">
-        <div class="col-sm-8">
-            <input type="range" min="{{$min ?? 0}}" max="{{$max ?? 5}}" step="{{$step ?? 0.1}}" class="form-control {{$class ?? ''}}" id="{{$id}}" name="{{$name}}" value="{{$value ?? ''}}" onchange="rangeValue(this)">
+        <div class="col-sm-9">
+            <input type="range" min="{{$min ?? 0}}" max="{{$max ?? 5}}" step="{{$step ?? 0.1}}" class="form-control {{$class ?? ''}}" id="{{$id}}" name="{{$name}}" value="{{$value ?? ''}}" onchange="rangeValue(this)" oninput="{{$id}}_range_input_show.value=value">
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
 
-      <input type="number" class="form-control " value="0" readonly="" id="show_range_input">
+      <input type="number" class="form-control " value="0" readonly="" id="{{$id}}_range_input_show" oninput="{{$id}}.value=value">
         </div>
         
     </div>

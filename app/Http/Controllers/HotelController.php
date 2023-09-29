@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Interfaces\LocationRepositoryInterface;
 use App\Interfaces\AccessibleRepositoryInterface;
 use App\Interfaces\HotelRepositoryInterface;
 use App\Interfaces\FacilityRepositoryInterface;
@@ -26,6 +26,10 @@ use Session;
 class HotelController extends Controller
 {
 
+
+   
+
+    private LocationRepositoryInterface $locationRepository;
     private HotelRepositoryInterface $hotelRepository;
     private FacilityRepositoryInterface $facilityRepository;
     private AmenityRepositoryInterface $amenityRepository;
@@ -43,6 +47,7 @@ class HotelController extends Controller
 
     public function __construct(
         HotelRepositoryInterface $hotelRepository,
+        LocationRepositoryInterface $locationRepository,
         FacilityRepositoryInterface $facilityRepository,
         AmenityRepositoryInterface $amenityRepository,
         MedicareAssistanceRepositoryInterface $medicareAssistanceRepository,
@@ -56,6 +61,7 @@ class HotelController extends Controller
         DealsDiscountRepositoryInterface $dealDiscountRepository,
         TermActivityRepositoryInterface $activityRepository
     ) {
+        $this->locationRepository = $locationRepository;
         $this->hotelRepository = $hotelRepository;
         $this->facilityRepository = $facilityRepository;
         $this->amenityRepository = $amenityRepository;
@@ -82,6 +88,7 @@ class HotelController extends Controller
         $data['propertyTypes'] = $this->propertyTypeRepository->getActiveHotelPropertyTypesList();
         $data['accessibles'] = $this->accessibleRepository->getActiveHotelAccessiblesList();
         $data['meetingAndEvents'] = $this->meetingAndEventRepository->getActiveHotelMeetingAndEventsList();
+        $data['locations'] = $this->locationRepository->getActiveLocationsList();
 
         $data['states'] = $this->stateRepository->getActiveStatesList()->map(function($value, $key){  
             
@@ -137,6 +144,7 @@ class HotelController extends Controller
 
     public function store(Request $request)
     {
+        
         $hotelDetails = [
             'name' => $request->name,
             'description' => $request->description,

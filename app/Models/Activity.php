@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\location;
+use App\Models\ActivityZone;
 use App\Models\Terms\Attraction;
 use App\Models\Terms\Language;
 use App\Models\Terms\State;
@@ -20,7 +21,23 @@ class Activity extends Model
     protected $casts = [
         'discount_by_child' => 'array',
         'discount_by_adult' => 'array',
-        'extra_price' => 'array'
+        'extra_price' => 'array',
+        'disable_children_name'=>'boolean',
+        'hide_children_in_booking_form'=>'boolean',
+        'hide_adult_in_booking_form'=>'boolean',
+        'disable_infant_name'=>'boolean',
+        'hide_infant_in_booking_form'=>'boolean',
+        'st_activity_external_booking'=>'boolean',
+        'is_sale_schedule'=>'boolean',
+        'is_featured'=>'boolean',
+        'price'=>'float',
+        'sale_price'=>'float',
+        'child_price'=>'float',
+        'adult_price'=>'float',
+        'infant_price'=>'float',
+        'min_price'=>'float',
+        'deposit_payment_amount'=>'float',
+        'rating'=>'float',
     ];
 
     public function sluggable(): Array
@@ -32,9 +49,9 @@ class Activity extends Model
         ];
     }
 
-
-
-
+     public function activity_zone() {
+        return $this->belongsToMany(ActivityZone::class, 'activity_activity_zones', 'activity_id', 'activity_zone_id');
+    }
 
     public function attractions() {
         return $this->belongsToMany(Attraction::class, 'activity_attractions', 'activity_id', 'attraction_id');
@@ -46,7 +63,7 @@ class Activity extends Model
     }
 
     public function languages() {
-        return $this->belongsToMany(Language::class, 'activity_language', 'activity_id', 'language_id');
+        return $this->belongsToMany(Language::class, 'activity_languages', 'activity_id', 'language_id');
     }
 
     public function term_activity_lists() {

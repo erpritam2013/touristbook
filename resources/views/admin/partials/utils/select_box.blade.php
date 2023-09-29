@@ -1,4 +1,4 @@
-<div class="form-group row">
+<div class="form-group row {{$parent_class ?? ''}}">
     @php 
     if(isset($multiple) && !empty($multiple)){
       $multiple = 'multiple="multiple"';
@@ -27,10 +27,12 @@ if(empty($id)){
  <div class="col-lg-10">
     @endif
     <select class="form-control single-select-placeholder-touristbook {{$class ?? ''}}" id="{{$id}}" name="{{$name}}" {{$multiple}} {!!$attr ?? ""!!}>
+        @if(!isset($first_empty_option))
         @if(isset($label) && !empty($label))
         <option value="">Select {{ucwords($label)}}</option>
         @else
         <option value="">--Select--</option>
+        @endif
         @endif
         @if(!empty($items))
         @foreach($items as $item)

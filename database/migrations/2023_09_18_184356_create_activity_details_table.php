@@ -31,6 +31,7 @@ return new class extends Migration
           $table->longText('activity_highlight')->nullable();
           $table->string('activity_program_style')->nullable();
           $table->json('activity_program')->nullable();
+          $table->json('activity_program_bgr')->nullable();
           $table->json('activity_faq')->nullable();
              // TODO: Calender For Availablity
           $table->dateTime('calendar_check_in')->nullable();

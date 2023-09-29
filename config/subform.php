@@ -337,6 +337,119 @@ return [
             ]
 
         ],
+    'activity_program' => [
+            "fields" => [
+                "activity_program-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "activity_program-image" => [
+                    'label' => "Image",
+                    'control' => 'media'
+                ],
+                "activity_program-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea'
+                ],
+            ]
+
+        ],
+    'activity_program_bgr' => [
+            "fields" => [
+                "activity_program_bgr-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                    
+                "activity_program_bgr-time" => [
+                    'label' => "Sub Title",
+                    'control' => 'text'
+                ],
+                "activity_program_bgr-image" => [
+                    'label' => "Image",
+                    'control' => 'media'
+                ],
+                "activity_program_bgr-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea'
+                ],
+            ]
+
+        ],
+    'activity_faq' => [
+            "fields" => [
+                "activity_faq-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "activity_faq-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea'
+                ],
+            ]
+
+        ],
+    'activity_zones' => [
+            "fields" => [
+                "activity_zones-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "activity_zones-url_link_status" => [
+                    'label' => "Select Url Options",
+                    'control' => 'select',
+                    'class'=> 'activity_zones-url_link_status',
+                    'options' => [
+                                [
+                                    'id'=>'slug',
+                                    'value'=>'Slug',
+                                ],
+                                [
+                                    'id'=>'web-link',
+                                    'value'=>'Website Link',
+                                ],
+                                [
+                                    'id'=>'file',
+                                    'value'=>'File',
+                                ],
+
+                                ]
+                ],
+                "activity_zones-slug" => [
+                    'label' => "Slug Name",
+                    'desc' => "if you have custom slug name like this(abs-bsd) to add here",
+                    'control' => 'select',
+                    'hide'=> 'd-none',
+                    'class'=> 'activity_zones-slug',
+                    'options' => [
+                                [
+                                    'id'=>'tourism-zone',
+                                    'value'=>'Tourism Zone',
+                                ],
+                                [
+                                    'id'=>'activity-zone',
+                                    'value'=>'Activity Zone',
+                                ],
+
+                                ]
+                ],
+                "activity_zones-file" => [
+                    'label' => "File",
+                    'control' => 'media',
+                    'hide'=> 'd-none',
+                    'class'=> 'activity_zones-file',
+
+                ],
+                "activity_zones-web_link" => [
+                    'label' => "Website LINK",
+                    'desc' => "if you have website url to add here",
+                    'control' => 'url',
+                    'hide'=> 'd-none',
+                    'class'=> 'activity_zones-web_link',
+                ],
+            ]
+
+        ],
     'best_time_to_visit' => [
             "fields" => [
                 "best_time_to_visit-title" => [

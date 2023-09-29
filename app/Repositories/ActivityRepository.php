@@ -7,7 +7,7 @@ use App\Models\Activity;
 
 class ActivityRepository implements ActivityRepositoryInterface
 {
-    public function getAllActivitys()
+    public function getAllActivities()
     {
         return Activity::orderBy('id','desc')->get();
     }

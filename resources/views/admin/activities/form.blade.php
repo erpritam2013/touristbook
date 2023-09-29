@@ -11,6 +11,12 @@
 
             @include('admin.activities.partials.extra-fields-section', ['activity'=>$activity ?? null])
 
+            @include('admin.activities.partials.social-link-section', ['activity'=>$activity ?? null])
+
+            @include('admin.activities.partials.excerpt', ['activity'=>$activity ?? null])
+
+            {{--@include('admin.activities.partials.user', ['activity'=>$activity ?? null])--}}
+
         </div>
         <div class="col-xl-4">
             @include('admin.activities.partials.publish-card', ['activity'=>$activity ?? null])
