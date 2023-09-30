@@ -1,44 +1,12 @@
+<!-- Country Zone Title -->
 @include('admin.partials.utils.input', ['name'=> 'sub_title','label'=>'Country Zone Title','value'=>$country_zone->sub_title ?? '','id' => ""])
-
+<!-- country -->
 @include('admin.partials.utils.select_box', ['items' => $countries, 'name'=> 'country','selected'=>$country_zone->country ?? "",'label'=>'Country'])
+<!-- Country Zone Icon -->
+@include('admin.partials.utils.media', ['name'=> 'icon','label'=>'Country Zone Icon','desc'=>"Upload Icon Image For Country Zone",'value'=>$country_zone->icon ?? '','id' => ""])
+<!-- Country Zone Banner Image -->
+@include('admin.partials.utils.media', ['name'=> 'image','label'=>'Country Zone Banner Image','desc'=>"Upload Banner Image For Country Zone",'value'=>$country_zone->image ?? '','id' => ""])
 
- <div class="form-group row">
-
-    <div class="col-lg-12">
-        <label class="subform-card-label" for="get_image">Country Zone Icon
-        </label><p>Upload Icon Image For Country Zone</p>
-
-        <div class="input-group mb-3">
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="get_image" name="icon" value="{{$country_zone->icon ?? ''}}" accept="image/jpeg" data-existed_value="{{$country_zone->icon ?? ''}}">
-                <label class="custom-file-label">Choose Icon</label>
-            </div>
-            <div class="input-group-append">
-                <span class="input-group-text">Upload</span>
-            </div>
-        </div>
-        <img id="show_image" src="{{asset('admin-part\images\t-b-logo.png')}}" alt="your image" width="50" />
-    </div>
-</div>
-
- <div class="form-group row">
-
-    <div class="col-lg-12">
-        <label class="subform-card-label" for="get_image">Country Zone Banner Image
-        </label><p>Upload Banner Image For Country Zone</p>
-
-        <div class="input-group mb-3">
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="get_image" name="image" value="{{$country_zone->image ?? ''}}" accept="image/jpeg" data-existed_value="{{$country_zone->image ?? ''}}">
-                <label class="custom-file-label">Choose Image</label>
-            </div>
-            <div class="input-group-append">
-                <span class="input-group-text">Upload</span>
-            </div>
-        </div>
-        <img id="show_image" src="{{asset('admin-part\images\t-b-logo.png')}}" alt="your image" width="120" />
-    </div>
-</div>
  <div class="form-group row">
 
     <div class="col-lg-12">

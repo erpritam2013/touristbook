@@ -22,13 +22,13 @@ use App\Http\Controllers\CountryZoneController;
 use App\Http\Controllers\ActivityZoneController;
 use App\Http\Controllers\ActivityListsController;
 use App\Http\Controllers\ActivityPackageController;
-
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\TermActivityListController;
 use App\Http\Controllers\AttractionController;
 use App\Http\Controllers\LanguageController;
-
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\TourismZoneController;
+use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -161,10 +161,19 @@ Route::name('admin.')->prefix('admin')->group(function () {
      // Hotel Resource
     Route::resource('hotels', HotelController::class);
     Route::prefix('hotels')->name('hotels.')->group(function() {
+
     });
 
     Route::delete('hotel/bulk-delete', [HotelController::class,'bulk_delete'])->name('hotel.bulk-delete');
      Route::get('hotel/changeStatus', [HotelController::class,'changeStatus'])->name('changeStatusHotel');
+
+     // Hotel Resource
+    Route::resource('rooms', RoomController::class);
+    Route::prefix('rooms')->name('rooms.')->group(function() {
+    });
+
+    Route::delete('room/bulk-delete', [RoomController::class,'bulk_delete'])->name('room.bulk-delete');
+     Route::get('room/changeStatus', [RoomController::class,'changeStatus'])->name('changeStatusRoom');
 
      // Location Resource
     Route::prefix('locations')->name('locations.')->group(function() {
@@ -185,7 +194,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::prefix('activity-zones')->name('activity-zones.')->group(function() {
     Route::resource('/', ActivityZoneController::class)->parameters(['' => 'activity_zone']);
     });
-
+    // Activity Zone Resource
     Route::delete('activity-zone/bulk-delete', [ActivityZoneController::class,'bulk_delete'])->name('activity-zones.bulk-delete');
     Route::get('activity-zone/changeStatus', [ActivityZoneController::class,'changeStatus'])->name('changeStatusActivityZone');
     // Activity l̥īst Resource
@@ -193,6 +202,15 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::resource('/', ActivityListsController::class)->parameters(['' => 'activity_list']);
     });
 
+     // Tourism Zone Resource
+    Route::prefix('tourism-zones')->name('tourism-zones.')->group(function() {
+    Route::resource('/', TourismZoneController::class)->parameters(['' => 'tourism_zone']);
+    });
+  
+    Route::delete('tourism-zone/bulk-delete', [TourismZoneController::class,'bulk_delete'])->name('tourism-zones.bulk-delete');
+    Route::get('tourism-zone/changeStatus', [TourismZoneController::class,'changeStatus'])->name('changeStatusTourismZone');
+
+// Activity list Resource
     Route::delete('activity-list/bulk-delete', [ActivityListsController::class,'bulk_delete'])->name('activity-lists.bulk-delete');
     Route::get('activity-list/changeStatus', [ActivityListsController::class,'changeStatus'])->name('changeStatusActivityLists');
     // Activity package Resource

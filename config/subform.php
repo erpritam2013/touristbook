@@ -231,6 +231,10 @@ return [
                     'label' => "Title",
                     'control' => 'text'
                 ],
+                "activity_zone_section-parent" => [
+                    'label' => "Parent Tab",
+                    'control' => 'text'
+                ],
                 "activity_zone_section-description" => [
                     'label' => "Description",
                     'control' => 'textarea',
@@ -239,6 +243,29 @@ return [
                 "activity_zone_section-url" => [
                     'label' => "Video Link",
                     'control' => 'text'
+                ]
+            ]
+
+        ],
+    'tourism_zone' => [
+            "fields" => [
+                "tourism_zone-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+
+                "tourism_zone-parent" => [
+                    'label' => "Parent Tab",
+                    'control' => 'text'
+                ],
+                "tourism_zone-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea',
+                    'class' => 'tourist-editor'
+                ],
+                "tourism_zone-url" => [
+                    'label' => "Video Link",
+                    'control' => 'url'
                 ]
             ]
 

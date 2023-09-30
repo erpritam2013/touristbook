@@ -13,17 +13,17 @@ if (!function_exists('customStringReplaceWithStrCase')) {
     function customStringReplaceWithStrCase($search,$replace_value,$subject,$str_case){
         $result = "";
         if ($str_case == "ucwords") {
-        $result = ucwords(str_replace($search, $replace_value, $subject));
+            $result = ucwords(str_replace($search, $replace_value, $subject));
         }elseif($str_case == "strtolower"){
-         $result = strtolower(str_replace($search, $replace_value, $subject));
-        }elseif($str_case == "strtoupper"){
+           $result = strtolower(str_replace($search, $replace_value, $subject));
+       }elseif($str_case == "strtoupper"){
           $result = strtoupper(str_replace($search, $replace_value, $subject));
-        }else{
-           $result = str_replace($search, $replace_value, $subject);
-        }
+      }else{
+         $result = str_replace($search, $replace_value, $subject);
+     }
 
-        return $result;
-    }
+     return $result;
+ }
 }
 
 if (!function_exists('getCountries')) {    
@@ -51,36 +51,36 @@ if (!function_exists('getCountries')) {
 if (!function_exists('unsetValueActivityTourismZone')) {
     function unsetValueActivityTourismZone($data)
     {
-       if (!empty($data)) {
-          foreach ($data as $key => $value) {
-             if ($data[$key]['activity_zones-url_link_status'] == 'slug') {
-                 unset($data[$key]['activity_zones-file']);
-                  unset($data[$key]['activity_zones-web_link']);
-             }elseif ($data[$key]['activity_zones-url_link_status'] == 'file') {
-                 unset($data[$key]['activity_zones-slug']);
-                  unset($data[$key]['activity_zones-web_link']);
-             }elseif ($data[$key]['activity_zones-url_link_status'] == 'web_link') {
-                  unset($data[$key]['activity_zones-file']);
-                    unset($data[$key]['activity_zones-slug']);
-             }
-          }
-       }
+     if (!empty($data)) {
+      foreach ($data as $key => $value) {
+       if ($data[$key]['activity_zones-url_link_status'] == 'slug') {
+           unset($data[$key]['activity_zones-file']);
+           unset($data[$key]['activity_zones-web_link']);
+       }elseif ($data[$key]['activity_zones-url_link_status'] == 'file') {
+           unset($data[$key]['activity_zones-slug']);
+           unset($data[$key]['activity_zones-web_link']);
+       }elseif ($data[$key]['activity_zones-url_link_status'] == 'web_link') {
+          unset($data[$key]['activity_zones-file']);
+          unset($data[$key]['activity_zones-slug']);
+      }
+  }
+}
 
-      
-       return $data;
-    }
+
+return $data;
+}
 }
 if (!function_exists('setTermSpace')) {
   function setTermSpace($space)
   {
     $result = "";
-      if ($space != 0) {
+    if ($space != 0) {
       for ($i=0; $i < $space; $i++) { 
           $result .= "&nbsp;&nbsp;&nbsp;";
       }
-      }
-      return $result;
   }
+  return $result;
+}
 }
 if (!function_exists('getTermsForSelectBox')) {    
     function getTermsForSelectBox($model=null,$term_type=null,$type='object'){
@@ -88,7 +88,7 @@ if (!function_exists('getTermsForSelectBox')) {
         $getTerms = [];
         if (!empty($model)) {
             $NamespacedModel = 'App\\Models\\Terms\\' . $model;
-             $getTerms_type = $NamespacedModel::get(['id','name','parent_id']);
+            $getTerms_type = $NamespacedModel::get(['id','name','parent_id']);
             if (!empty($term_type)) {
                 $getTerms_type = $NamespacedModel::where(['type'=>$term_type])->get(['id','name','parent_id']);
             }
@@ -98,16 +98,16 @@ if (!function_exists('getTermsForSelectBox')) {
                         'id' => $term->id,
                         'value' => $term->name,
                         'parent_id'=>$term->parent_id
-                ];
-            }else{
-                return [
-                    'id' => $term->id,
-                    'value' => $term->name,
-                    'parent_id'=>$term->parent_id
-                ];
-            }                                
+                    ];
+                }else{
+                    return [
+                        'id' => $term->id,
+                        'value' => $term->name,
+                        'parent_id'=>$term->parent_id
+                    ];
+                }                                
 
-        });
+            });
         }
 
         return $getTerms;
@@ -120,8 +120,8 @@ if (!function_exists('getPostData')) {
         if (!empty($model) && !empty($parameters)) {
             $NamespacedModel = 'App\\Models\\' . $model;
             $getPostData = $NamespacedModel::get($parameters)->map(function($post, $key) use($type){
-             if ($type == 'object') {
-                 return (object)[
+               if ($type == 'object') {
+                   return (object)[
                     'id' => $post->id,
                     'value' => (isset($post->name))?$post->name:$post->title,
                 ];
@@ -152,14 +152,14 @@ if (!function_exists('exploreJsonData')) {
             if (empty($key)) {
                 $result = $json_decode;
             }else{
-               $collection = collect($json_decode);
+             $collection = collect($json_decode);
 
-               $result = $collection->get($key);
-           }
+             $result = $collection->get($key);
+         }
 
-           return $result;
-       }
-   }
+         return $result;
+     }
+ }
 }
 
 if (!function_exists('exploreArrayData')) {    
@@ -168,20 +168,20 @@ if (!function_exists('exploreArrayData')) {
         $result = "";
         if (!empty($json_data)) {
             if (!empty($key)) {
-               $collection = collect($data);
-               $result = $collection->get($key);
-            }else{
-               $collection = collect($data);
-               $result = $collection->get();
-           }
-       }
-           return $result;
-   }
+             $collection = collect($data);
+             $result = $collection->get($key);
+         }else{
+             $collection = collect($data);
+             $result = $collection->get();
+         }
+     }
+     return $result;
+ }
 }
 if (!function_exists('matchRouteName')) {    
     function matchRouteName($current_route=null){
-     $active_class = "";
-     if (!empty($current_route)) {
+       $active_class = "";
+       if (!empty($current_route)) {
         $routeName = getRouteName();
         if ($routeName == $current_route) {
             $active_class = 'mm-active';
@@ -193,8 +193,8 @@ if (!function_exists('matchRouteName')) {
 }
 if (!function_exists('matchRouteNameMatch')) {    
     function matchRouteNameMatch($current_route=null){
-     $active_class = false;
-     if (!empty($current_route)) {
+       $active_class = false;
+       if (!empty($current_route)) {
         $routeName = getRouteName();
         $arr = explode('.', $routeName);
         if (in_array($current_route, $arr)) {
@@ -209,11 +209,11 @@ if (!function_exists('matchRouteNameMatch')) {
 if (!function_exists('getIconColorClass')) {    
     function getIconColorClass(){
 
-     $i_color_dashboard = config('global.i_color_dashboard');
-     $get_color = array_rand($i_color_dashboard);
-     return "text-".$i_color_dashboard[$get_color]." border-".$i_color_dashboard[$get_color];
+       $i_color_dashboard = config('global.i_color_dashboard');
+       $get_color = array_rand($i_color_dashboard);
+       return "text-".$i_color_dashboard[$get_color]." border-".$i_color_dashboard[$get_color];
 
- }
+   }
 }
 if (!function_exists('matchRouteGroupName')) {    
     function matchRouteGroupName($group_type, $route_group_name=null){
@@ -250,24 +250,61 @@ if(!function_exists('get_form_success_msg')){
     }
 }
 
-    if(!function_exists('get_edit_select_check_pvr_old_value')){
-        function get_edit_select_check_pvr_old_value($input,$compair_obj,$compair_prop, $current_ele, $type){
-         if((!empty($compair_obj->{$compair_prop}))&&(empty(old($input)))){ 
-            $select= $compair_obj->{$compair_prop};
-         }else{
-            $select= old($input);
-         }
-         if($select==$current_ele){
-            if($type=='select'){
-                return 'selected="true"';
-            }else{
-                return 'checked="true"';
-            }
-         }else{
-            return '';
-         }
-        }
+if(!function_exists('get_edit_select_check_pvr_old_value')){
+    function get_edit_select_check_pvr_old_value($input,$compair_obj,$compair_prop, $current_ele, $type){
+       if((!empty($compair_obj->{$compair_prop}))&&(empty(old($input)))){ 
+        $select= $compair_obj->{$compair_prop};
+    }else{
+        $select= old($input);
     }
+    if($select==$current_ele){
+        if($type=='select'){
+            return 'selected="true"';
+        }else{
+            return 'checked="true"';
+        }
+    }else{
+        return '';
+    }
+}
+}
+
+if(!function_exists('setCheckboxActiveInactiveStyle')){
+    function setCheckboxActiveInactiveStyle($input,$compair_obj,$compair_prop, $current_ele, $type,$class){
+
+     if ($class == 'active-inactive') {
+        if ($type != 'select') {
+         return $class.'-switch';
+        }else{
+            return "";
+        }
+     }else{
+
+       if((!empty($compair_obj->{$compair_prop}))&&(empty(old($input)))){ 
+        $select= $compair_obj->{$compair_prop};
+    }else{
+        $select= old($input);
+    }
+
+
+    if($select==$current_ele){
+        if($type=='select'){
+            return '';
+        }else{
+            return $class.'-switch-checked';
+        }
+    }else{
+        
+        if ($type != 'select') {
+         return $class.'-switch';
+        }else{
+            return "";
+        }
+   
+    }
+}
+}
+}
 
 
 
@@ -279,7 +316,7 @@ if(!function_exists('get_edit_select_post_types_old_value')){
         if (!empty($current_ele)) {
 
             if ($type == 'select') {
-             if ($compair_prop == $current_ele) {
+               if ($compair_prop == $current_ele) {
                 return 'selected="selected"';
             }else{
                 return '';
@@ -321,36 +358,36 @@ if (!function_exists('get_time_format')) {
     function get_time_format($value,$with_t=false) {
         $cenvertedTime = date('d-m-Y H:i:s');
         if ($with_t) {
-         $cenvertedTime = date('d-m-Y H:i:s',strtotime($value));
-     }else{
-         $cenvertedTime = date('d-m-Y',strtotime($value));
-     }
-     return $cenvertedTime;
- }
+           $cenvertedTime = date('d-m-Y H:i:s',strtotime($value));
+       }else{
+           $cenvertedTime = date('d-m-Y',strtotime($value));
+       }
+       return $cenvertedTime;
+   }
 }
 if (!function_exists('get_array_mapping')) {
     function get_array_mapping($data,$field=false) {
         $result = [];
         if (!empty($data)) {
-         $collection = collect($data);
-         if ($field) {
+           $collection = collect($data);
+           if ($field) {
             $result = $collection->map(function ($value,$key) {
-             return (object)[
+               return (object)[
                 'id'=> $key,
                 'value'=>$value
             ];
         });
-         }else{
+        }else{
 
-         $result = $collection->map(function (int $item, int $key) {
+           $result = $collection->map(function (int $item, int $key) {
             return (int)$item;
         });
-         }
-     }
-     return $result->all();
+       }
+   }
+   return $result->all();
 
 
- }
+}
 }
 
 
