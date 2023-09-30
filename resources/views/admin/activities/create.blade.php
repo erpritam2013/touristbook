@@ -19,6 +19,7 @@
                     {!!get_form_success_msg(Session::get('success'))!!}
                     @endif
                     <div class="form-validation">
+                     
                         @include('admin.activities.form', [
                             'activity' => $activity,
                             'term_activity_lists' => $term_activity_lists,

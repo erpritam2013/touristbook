@@ -22,10 +22,13 @@ use App\Http\Controllers\CountryZoneController;
 use App\Http\Controllers\ActivityZoneController;
 use App\Http\Controllers\ActivityListsController;
 use App\Http\Controllers\ActivityPackageController;
+
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\TermActivityListController;
 use App\Http\Controllers\AttractionController;
 use App\Http\Controllers\LanguageController;
+
+use App\Http\Controllers\PagesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,9 +42,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [PagesController::class, 'index'])->name('home');
+
+
+
+
 Route::name('admin.')->prefix('admin')->group(function () {
 
     Route::post('ajax-term-store',[UtilityController::class,'ajax_term_store'])->name('ajax-term-store');
@@ -165,7 +170,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::prefix('locations')->name('locations.')->group(function() {
     Route::resource('/', locationController::class)->parameters(['' => 'location']);
 
-    }); 
+    });
     Route::delete('location/bulk-delete', [locationController::class,'bulk_delete'])->name('location.bulk-delete');
     Route::get('location/changeStatus', [locationController::class,'changeStatus'])->name('changeStatusLocation');
 
@@ -180,21 +185,21 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::prefix('activity-zones')->name('activity-zones.')->group(function() {
     Route::resource('/', ActivityZoneController::class)->parameters(['' => 'activity_zone']);
     });
-    
+
     Route::delete('activity-zone/bulk-delete', [ActivityZoneController::class,'bulk_delete'])->name('activity-zones.bulk-delete');
     Route::get('activity-zone/changeStatus', [ActivityZoneController::class,'changeStatus'])->name('changeStatusActivityZone');
     // Activity l̥īst Resource
     Route::prefix('activity-lists')->name('activity-lists.')->group(function() {
     Route::resource('/', ActivityListsController::class)->parameters(['' => 'activity_list']);
     });
-    
+
     Route::delete('activity-list/bulk-delete', [ActivityListsController::class,'bulk_delete'])->name('activity-lists.bulk-delete');
     Route::get('activity-list/changeStatus', [ActivityListsController::class,'changeStatus'])->name('changeStatusActivityLists');
     // Activity package Resource
     Route::prefix('activity-packages')->name('activity-packages.')->group(function() {
     Route::resource('/', ActivityPackageController::class)->parameters(['' => 'activity_list']);
     });
-    
+
     Route::delete('activity-package/bulk-delete', [ActivityPackageController::class,'bulk_delete'])->name('activity-packages.bulk-delete');
     Route::get('activity-package/changeStatus', [ActivityPackageController::class,'changeStatus'])->name('changeStatusActivityPackage');
     // Activity package Resource
