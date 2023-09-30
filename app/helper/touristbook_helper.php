@@ -250,38 +250,24 @@ if(!function_exists('get_form_success_msg')){
     }
 }
 
-if(!function_exists('get_edit_select_check_pvr_old_value')){
-    function get_edit_select_check_pvr_old_value($input,$compair_obj,$compair_prop, $current_ele, $type){
-        if (isset($compair_obj) && !empty($compair_obj)) {
-            if((!empty($compair_obj->{$compair_prop}))&&(empty(old($input)))){ 
-                $select= $compair_obj->{$compair_prop};
+    if(!function_exists('get_edit_select_check_pvr_old_value')){
+        function get_edit_select_check_pvr_old_value($input,$compair_obj,$compair_prop, $current_ele, $type){
+         if((!empty($compair_obj->{$compair_prop}))&&(empty(old($input)))){ 
+            $select= $compair_obj->{$compair_prop};
+         }else{
+            $select= old($input);
+         }
+         if($select==$current_ele){
+            if($type=='select'){
+                return 'selected="true"';
             }else{
-                $select= old($input);
+                return 'checked="true"';
             }
-            if($select==$current_ele){
-                if($type=='select'){
-                    return 'selected="true"';
-                }else{
-                    return 'checked="true"';
-                }
-            }else{
-                return '';
-            }
-        }else{
-            if ($current_ele == 0) {
-                 if($type =='checked'){
-                    return 'checked="true"';
-                }else{
-                    return '';
-                }
-                
-            }else{
-                return '';
-            }
+         }else{
+            return '';
+         }
         }
-
     }
-}
 
 
 

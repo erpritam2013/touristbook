@@ -18,7 +18,7 @@
         <div class="border p-2 mb-2">
             <h4>Zones Highlight</h4>
             <p>Enter Activity Zones</p>
-            @include('admin.partials.utils.subform-wrapper', ["subformData" => $activity_zone->detail->activity_zones ?? null, 'type' => 'activity_zones', 'btnTitle' => 'Add New'])
+            @include('admin.partials.utils.subform-wrapper', ["subformData" => $activity->detail->activity_zones ?? null, 'type' => 'activity_zones', 'btnTitle' => 'Add New'])
         </div>
          <!-- Corporate Address -->
          @include('admin.partials.utils.input', ['name'=> 'st_activity_corporate_address','label'=>'Corporate Address','value'=>$activity->detail->st_activity_corporate_address ?? '','id' => "",'desc' => "Add Corporate Address"])

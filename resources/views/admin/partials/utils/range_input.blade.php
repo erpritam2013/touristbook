@@ -33,7 +33,7 @@ if(empty($id)){
         </div>
         <div class="col-lg-3">
 
-      <input type="number" class="form-control " value="0" readonly="" id="{{$id}}_range_input_show" oninput="{{$id}}.value=value">
+      <input type="number" class="form-control " readonly="" id="{{$id}}_range_input_show" oninput="{{$id}}.value=value" value="{{$value ?? 0}}">
         </div>
         
     </div>
