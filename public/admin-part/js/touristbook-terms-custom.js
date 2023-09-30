@@ -232,6 +232,7 @@ $('body .list-activity_zones').on('change','.activity_zones-url_link_status',fun
 $('input[type="radio"]').on('input',function(){
 
     let closest_parent = $(this).closest('.on-off-switch');
+    let closest_a_i_parent = $(this).closest('.active-inactive-switch');
     let value = $(this).val();
     if (closest_parent.length == 1) {
 
@@ -245,6 +246,21 @@ $('input[type="radio"]').on('input',function(){
          $(this).parent('label').addClass('off-switch-checked');
          $(closest_parent).find('.on-switch-checked').addClass('on-switch');
         $(closest_parent).find('label').removeClass('on-switch-checked');
+      }
+    }
+
+    if (closest_a_i_parent.length == 1) {
+
+        if (value == 1) {
+         $(this).parent('label').removeClass('active-switch');
+         $(this).parent('label').addClass('active-switch-checked');
+         $(closest_a_i_parent).find('.inactive-switch-checked').addClass('inactive-switch');
+         $(closest_a_i_parent).find('label').removeClass('inactive-switch-checked');
+      }else if(value == 0){
+         $(this).parent('label').removeClass('inactive-switch');
+         $(this).parent('label').addClass('inactive-switch-checked');
+         $(closest_a_i_parent).find('.active-switch-checked').addClass('active-switch');
+        $(closest_a_i_parent).find('label').removeClass('active-switch-checked');
       }
     }
 

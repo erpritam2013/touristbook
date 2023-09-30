@@ -38,13 +38,18 @@
 
 
             @foreach($input as $input_key => $input_value)
-
           
             @if(isset($item->{$name}))
             @if($item->{$name} == $input_value)
             @php $set_label_class = $label_class[$input_value].'-checked'; @endphp
             @else
             @php $set_label_class = $label_class[$input_value]; @endphp
+            @endif
+            @else
+            @if($input_value == 0)
+               @php $set_label_class = $label_class[$input_value].'-checked'; @endphp
+               @else
+                @php $set_label_class = $label_class[$input_value]; @endphp
             @endif
             @endif
             <label class="col-form-label {{$set_label_class ?? ''}}">
