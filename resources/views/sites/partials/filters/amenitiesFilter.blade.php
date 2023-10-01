@@ -1,5 +1,8 @@
 <div class="mb-left">
+     <div class="mb-left-title">
     <label for="form_amenities_types" class="form-label">Amenities</label>
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
+    </div>
     <div class="form-group">
         @if(!empty($filterAmenities))
         <ul class="list-unstyled mb-0">

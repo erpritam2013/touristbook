@@ -8,7 +8,8 @@
         </div>
     </div>
     <div class="card-footer term-footer">
-   @include('admin.partials.utils.add_term', ['terms' => $activities, 'field_name'=> 'activitiescard', 'term_id'=> 'activity', 'term_type'=> 'term_activity_type', 'term' => 'TermActivity','post_type'=>$hotel])
+
+@include('admin.partials.utils.add_term', ['terms' => $activities, 'field_name'=> 'activitiescard', 'term_id'=> 'activity', 'term_type'=> 'term_activity_type', 'term' => 'TermActivity','post_type'=>$hotel])
     
         </div>
 </div>
