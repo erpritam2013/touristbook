@@ -14,5 +14,6 @@ interface AttractionRepositoryInterface
 
     public function getActiveAttractionsList($type);
     public function getActiveHotelAttractionsList();
+    public function getActiveActivityAttractionsList();
     
 }

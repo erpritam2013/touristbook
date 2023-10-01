@@ -104,4 +104,21 @@
     })
 
 
+
+    $('.Filter-left').on('click','.mb-left-title',function(){
+        
+      $(this).closest('.mb-left').find('.form-group').first().toggle('1000');
+
+     let mb_left_title_i =  $(this).find('i');
+     if (mb_left_title_i.hasClass('fa-angle-up')) {
+        mb_left_title_i.removeClass('fa-angle-up');
+        mb_left_title_i.addClass('fa-angle-down');
+     }else if(mb_left_title_i.hasClass('fa-angle-down')){
+        mb_left_title_i.removeClass('fa-angle-down');
+         mb_left_title_i.addClass('fa-angle-up');
+     }
+
+    });
+
+
 })()
