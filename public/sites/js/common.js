@@ -25,20 +25,21 @@
         complete: hideLoader
     });
 
-    const getSelectedPrice = () => {
-        const selectedPriceElem = $('input[name=price]:checked')
-        return selectedPriceElem.val()
-    }
-
-    const getSelectedPropertyTypes = () => {
+    const compiledCheckboxes = (selector) => {
         let checkedValues = [];
         // Loop through each checkbox
-        $(".filter-property-types:checked").each(function() {
+        $(selector+":checked").each(function() {
             checkedValues.push($(this).val());
         });
 
         // Join the checked values into a comma-separated string
         return checkedValues.join(",");
+
+    }
+
+    const getSelectedPrice = () => {
+        const selectedPriceElem = $('input[name=price]:checked')
+        return selectedPriceElem.val()
     }
 
     // Fetch Parameter for search
@@ -50,9 +51,39 @@
             params.range = selectedPriceRange
         }
         // Fetch Property Types If any
-        let selectedPropertyTypes = getSelectedPropertyTypes()
+        let selectedPropertyTypes = compiledCheckboxes(".filter-property-types")
         if(selectedPropertyTypes) {
             params.propertyTypes = selectedPropertyTypes
+        }
+
+        // Fetch Amenities If any
+        let selectedAmenities = compiledCheckboxes(".filter-amenities")
+        if(selectedAmenities) {
+            params.amenities = selectedAmenities
+        }
+
+        // Fetch Medicares If any
+        let selectedMedicares = compiledCheckboxes(".filter-medicare")
+        if(selectedMedicares) {
+            params.medicares = selectedMedicares
+        }
+
+        // Fetch Meetings If any
+        let selectedMeeting = compiledCheckboxes(".filter-meeting")
+        if(selectedMeeting) {
+            params.meeting = selectedMeeting
+        }
+
+        // Fetch Deals If any
+        let selectedDeals = compiledCheckboxes(".filter-deal")
+        if(selectedDeals) {
+            params.deals = selectedDeals
+        }
+
+        // Fetch Activities If any
+        let selectedActivities = compiledCheckboxes(".filter-activities")
+        if(selectedActivities) {
+            params.activities = selectedActivities
         }
 
 
@@ -101,6 +132,15 @@
     $('.filter-option').on('change', function() {
         let view = $(".view-changer").attr('view-id')
         fetchHotels(view, fetchParameters())
+    })
+
+    resultInfo.on("click", ".page-link", function() {
+
+        let view = $(".view-changer").attr('view-id')
+        let pageId = $(this).attr("pageid")
+        let params = fetchParameters()
+        params.pageNo = pageId
+        fetchHotels(view, params)
     })
 
 
