@@ -95,32 +95,11 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav ml-auto">
                     <!-- Menu item 1 Demos-->
-                    <li class="nav-item dropdown active"> <a class="nav-link dropdown-toggle" href="#"
-                            id="demosMenu" data-toggle="dropdown" aria-haspopup="true"
+                    <li class="nav-item active"> <a class="nav-link " href="{{route('home')}}"
+                            id="demosMenu" aria-haspopup="true"
                             aria-expanded="false">Home</a>
-                        <ul class="dropdown-menu" aria-labelledby="homeMenu">
-                            <li><a class="dropdown-item" href="index-2.html">Home Layout 1</a></li>
-                            <li><a class="dropdown-item" href="homepage2.html">Home Layout 2</a></li>
-                            <li><a class="dropdown-item" href="homepage3.html">Home Layout 3</a></li>
-                            <li><a class="dropdown-item" href="homepage4.html">Home Layout 4</a></li>
-                            <li><a class="dropdown-item" href="homepage5.html">Home Layout 5</a></li>
-                            <li><a class="dropdown-item" href="homepage6.html">Home Layout 6</a></li>
-                            <li class="dropdown-header">Header Style</li>
-                            <li><a class="dropdown-item" href="header-1.html">Header Style 1</a></li>
-                            <li><a class="dropdown-item" href="header-2.html">Header Style 2</a></li>
-                            <li><a class="dropdown-item" href="header-3.html">Header Style 3</a></li>
-                        </ul>
                     </li>
-                    <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="docMenu"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hotels</a>
-                        <ul class="dropdown-menu" aria-labelledby="docMenu">
-                            <li><a class="dropdown-item" href="hotel-index.html">Home Hotels</a></li>
-                            <li><a class="dropdown-item" href="hotel-list-view.html">List View</a></li>
-                            <li><a class="dropdown-item" href="hotel-grid-view.html">Grid View</a></li>
-                            <li><a class="dropdown-item" href="hotel-detailed.html">Detailed</a></li>
-                            <li><a class="dropdown-item" href="hotel-booking.html">Booking</a></li>
-                            <li><a class="dropdown-item" href="hotel-thankyou.html">Thank You</a></li>
-                        </ul>
+                    <li class="nav-item"> <a class="nav-link" href="{{route('hotels')}}" id="docMenu" aria-haspopup="true" aria-expanded="false">Hotels</a>
                     </li>
                     <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="docMenu"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Flights</a>
