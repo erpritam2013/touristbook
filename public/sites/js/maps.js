@@ -1,8 +1,11 @@
+
 (function ($) {
     "use strict";
+
+
     var markerIcon = {
         anchor: new google.maps.Point(22, 16),
-        url: 'images/marker.png',
+        url: '/sites/images/marker.png',
     }
 
     function mainMap() {
@@ -172,7 +175,7 @@
           } else {
              map.setOptions({'scrollwheel': false});
           }
-      });		
+      });
         var zoomControlDiv = document.createElement('div');
         var zoomControl = new ZoomControl(zoomControlDiv, map);
 
@@ -199,6 +202,7 @@
 
     }
     var map = document.getElementById('map-main');
+    console.log("Map")
     if (typeof (map) != 'undefined' && map != null) {
         google.maps.event.addDomListener(window, 'load', mainMap);
     }
@@ -228,7 +232,7 @@
         });
         var markerIcon2 = {
             url: 'images/marker.png',
-        }		
+        }
         var marker = new google.maps.Marker({
             position: myLatLng,
             map: single_map,
@@ -262,4 +266,4 @@
     if (typeof (single_map) != 'undefined' && single_map != null) {
         google.maps.event.addDomListener(window, 'load', singleMap);
     }
-})(this.jQuery);
+})($);
