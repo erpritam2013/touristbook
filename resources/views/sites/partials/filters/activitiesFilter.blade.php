@@ -8,7 +8,7 @@
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" id="activity_{{$key}}" name="activites[]"
                         class="custom-control-input filter-option filter-activities" value="{{$activity['id']}}">
-                    <label for="activtiy_{{$key}}" class="custom-control-label">{{$activity['name']}}</label>
+                    <label for="activity_{{$key}}" class="custom-control-label">{{$activity['name']}}</label>
                 </div>
             </li>
             @endforeach
