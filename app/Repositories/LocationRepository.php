@@ -43,5 +43,18 @@ class LocationRepository implements LocationRepositoryInterface
     {
         return LocationMeta::where('location_id',$locationId)->update($newLocationMetaDetails);
     }
+
+    public function getActiveLocationsList()
+    {
+
+        $locationBuilder = Location::where('status', Location::ACTIVE);
+        $locations = $locationBuilder->get(['id','name']);
+
+        // dd($locations);
+        // $nestedResult = $locations->toNested();
+
+
+        return  $locations;
+    }
     
 }

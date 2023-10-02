@@ -14,21 +14,21 @@ use Session;
 use App\DataTables\CountryZoneDataTable;
 class CountryZoneController extends Controller
 {
-      private CountryZoneRepositoryInterface $countryZoneRepository;
+  private CountryZoneRepositoryInterface $countryZoneRepository;
 
-       public function __construct(
-        CountryZoneRepositoryInterface $countryZoneRepository,
-    ) {
-        $this->countryZoneRepository = $countryZoneRepository;
-    }
+  public function __construct(
+    CountryZoneRepositoryInterface $countryZoneRepository,
+) {
+    $this->countryZoneRepository = $countryZoneRepository;
+}
 
-     private function _prepareBasicData() {
+private function _prepareBasicData() {
 
         // TODO: Need to Improve here (Fetch from Cache)
-        $data['countries'] = Country::get(['id','countryname','code']);
-        return $data;
+    $data['countries'] = getCountries();
+    return $data;
 
-    }
+}
     /**
      * Display a listing of the resource.
      *
@@ -36,22 +36,22 @@ class CountryZoneController extends Controller
      */
     public function index(CountryZoneDataTable $dataTable)
     {
-       $data['country_zones'] = CountryZone::count();
-       $data['title'] = 'Country Zone List';
+     $data['country_zones'] = CountryZone::count();
+     $data['title'] = 'Country Zone List';
 
-        return $dataTable->render('admin.country-zones.index', $data);
-    }
+     return $dataTable->render('admin.country-zones.index', $data);
+ }
 
-     public function changeStatus(Request $request): JsonResponse
-    {
-        $countryZoneId = $request->id;
-        $countryZoneDetails = [
-            'status' => $request->status,
-        ];
-        $this->countryZoneRepository->updateCountryZone($countryZoneId, $countryZoneDetails);
+ public function changeStatus(Request $request): JsonResponse
+ {
+    $countryZoneId = $request->id;
+    $countryZoneDetails = [
+        'status' => $request->status,
+    ];
+    $this->countryZoneRepository->updateCountryZone($countryZoneId, $countryZoneDetails);
 
-        return response()->json(['success' => 'Status change successfully.']);
-    }
+    return response()->json(['success' => 'Status change successfully.']);
+}
 
     /**
      * Show the form for creating a new resource.
@@ -74,26 +74,26 @@ class CountryZoneController extends Controller
      */
     public function store(StoreCountryZoneRequest $request)
     {
-        
-         $countryZoneDetails = [
-            'title' => $request->title,
-            'sub_title' => $request->sub_title,
-            'slug' => SlugService::createSlug(CountryZone::class, 'slug', $request->title),
-           
-            'country' => $request->country,
+    
+       $countryZoneDetails = [
+        'title' => $request->title,
+        'sub_title' => $request->sub_title,
+        'slug' => SlugService::createSlug(CountryZone::class, 'slug', $request->title),
+
+        'country' => $request->country,
             // 'icon' => $request->icon, //s3 integration pending
             // 'image' => $request->image, //s3 integration pending
-            'country_zone_description' => $request->country_zone_description,
-            'country_zone_section' => $request->country_zone_section,
-            'country_zone_catering' => $request->country_zone_catering,
-            'status' => $request->status,
+        'country_zone_description' => $request->country_zone_description,
+        'country_zone_section' => $request->country_zone_section,
+        'country_zone_catering' => $request->country_zone_catering,
+        'status' => $request->status,
             // TODO: created_by pending as Authentication is not Yet Completed
-        ];
+    ];
 
-        $country_zone = $this->countryZoneRepository->createCountryZone($countryZoneDetails);
-          Session::flash('success','Country Zone Created Successfully');
-          return redirect()->Route('admin.country-zones.index');
-    }
+    $country_zone = $this->countryZoneRepository->createCountryZone($countryZoneDetails);
+    Session::flash('success','Country Zone Created Successfully');
+    return redirect()->Route('admin.country-zones.index');
+}
 
     /**
      * Display the specified resource.
@@ -103,14 +103,14 @@ class CountryZoneController extends Controller
      */
     public function show(CountryZone $countryZone)
     {
-         $countryZoneId = $countryZone->id;
+       $countryZoneId = $countryZone->id;
 
-        $country_zone = $this->countryZoneRepository->getCountryZoneById($countryZoneId);
+       $country_zone = $this->countryZoneRepository->getCountryZoneById($countryZoneId);
 
-        if (empty($country_zone)) {
-            return back();
-        }
+       if (empty($country_zone)) {
+        return back();
     }
+}
 
     /**
      * Show the form for editing the specified resource.
@@ -142,24 +142,24 @@ class CountryZoneController extends Controller
     public function update(UpdateCountryZoneRequest $request, CountryZone $countryZone)
     {
       $countryZoneDetails = [
-            'title' => $request->title,
-            'sub_title' => $request->sub_title,
-            'slug' => SlugService::createSlug(CountryZone::class, 'slug', $request->title),
-           
-            'country' => $request->country,
+        'title' => $request->title,
+        'sub_title' => $request->sub_title,
+        'slug' => (!empty($request->slug) && $countryZone->slug != $request->slug)?SlugService::createSlug(CountryZone::class, 'slug', $request->slug):$countryZone->slug,
+
+        'country' => $request->country,
             // 'icon' => $request->icon, //s3 integration pending
             // 'image' => $request->image, //s3 integration pending
-            'country_zone_description' => $request->country_zone_description,
-            'country_zone_section' => $request->country_zone_section,
-            'country_zone_catering' => $request->country_zone_catering,
-            'status' => $request->status,
+        'country_zone_description' => $request->country_zone_description,
+        'country_zone_section' => $request->country_zone_section,
+        'country_zone_catering' => $request->country_zone_catering,
+        'status' => $request->status,
             // TODO: created_by pending as Authentication is not Yet Completed
-        ];
+    ];
 
-        $country_zone = $this->countryZoneRepository->updateCountryZone($countryZone->id,$countryZoneDetails);
-          Session::flash('success','Country Zone Updated Successfully');
-          return redirect()->Route('admin.country-zones.edit',$countryZone->id);
-    }
+    $country_zone = $this->countryZoneRepository->updateCountryZone($countryZone->id,$countryZoneDetails);
+    Session::flash('success','Country Zone Updated Successfully');
+    return redirect()->Route('admin.country-zones.edit',$countryZone->id);
+}
 
     /**
      * Remove the specified resource from storage.
@@ -167,7 +167,7 @@ class CountryZoneController extends Controller
      * @param  \App\Models\CountryZone  $countryZone
      * @return \Illuminate\Http\Response
      */
-   public function destroy(CountryZone $countryZone)
+    public function destroy(CountryZone $countryZone)
     {
         $countryZoneId = $countryZone->id;
 

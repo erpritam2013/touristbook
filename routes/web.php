@@ -22,7 +22,13 @@ use App\Http\Controllers\CountryZoneController;
 use App\Http\Controllers\ActivityZoneController;
 use App\Http\Controllers\ActivityListsController;
 use App\Http\Controllers\ActivityPackageController;
+use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\TermActivityListController;
+use App\Http\Controllers\AttractionController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\TourismZoneController;
+use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,6 +52,8 @@ Route::get('/get-hotels/{view}', [PagesController::class, 'getHotels'])->name('g
 
 Route::name('admin.')->prefix('admin')->group(function () {
 
+    Route::post('ajax-term-store',[UtilityController::class,'ajax_term_store'])->name('ajax-term-store');
+
     Route::get('template/{type}', [UtilityController::class, 'get_template_by_type'])->name('template');
 
     Route::name('files.')->prefix('files')->group(function() {
@@ -65,6 +73,12 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::delete('facility/bulk-delete', [FacilityController::class,'bulk_delete'])->name('facilities.bulk-delete');
     Route::get('facility/ajax-get', [FacilityController::class,'getFacilitiesAjax'])->name('ajaxGet');
     Route::get('facility/changeStatus', [FacilityController::class,'changeStatus'])->name('changeStatus');
+
+    /*Attraction Routes*/
+    Route::resource('attractions', AttractionController::class);
+    Route::delete('attraction/bulk-delete', [AttractionController::class,'bulk_delete'])->name('attractions.bulk-delete');
+    Route::get('attraction/ajax-get', [AttractionController::class,'getAttractionsAjax'])->name('ajaxGetAttraction');
+    Route::get('attraction/changeStatus', [AttractionController::class,'changeStatus'])->name('changeStatusAttraction');
 
     /*Amenities Routes*/
     Route::resource('amenities', AmenityController::class);
@@ -92,6 +106,11 @@ Route::name('admin.')->prefix('admin')->group(function () {
      Route::delete('accessible/bulk-delete', [AccessibleController::class,'bulk_delete'])->name('accessibles.bulk-delete');
     Route::get('accessible/ajax-get', [AccessibleController::class,'getAccessiblesAjax'])->name('ajaxGetAccessible');
     Route::get('accessible/changeStatus', [AccessibleController::class,'changeStatus'])->name('changeStatusAccessible');
+    /*languages Routes*/
+    Route::resource('languages', LanguageController::class);
+     Route::delete('language/bulk-delete', [LanguageController::class,'bulk_delete'])->name('languages.bulk-delete');
+    Route::get('language/ajax-get', [LanguageController::class,'getlanguagesAjax'])->name('ajaxGetlanguage');
+    Route::get('language/changeStatus', [LanguageController::class,'changeStatus'])->name('changeStatusLanguage');
 
     /*Property Type Routes*/
     Route::resource('property-types', PropertyTypeController::class);
@@ -118,6 +137,11 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::delete('term-activity/bulk-delete', [TermActivityController::class,'bulk_delete'])->name('term-activities.bulk-delete');
     Route::get('term-activity/ajax-get', [TermActivityController::class,'getTermActivitiesAjax'])->name('ajaxGetTermActivity');
     Route::get('term-activity/changeStatus', [TermActivityController::class,'changeStatus'])->name('changeStatusTermActivity');
+  /*Term Activity List Routes*/
+    Route::resource('term-activity-lists', TermActivityListController::class);
+    Route::delete('term-activity-list/bulk-delete', [TermActivityListController::class,'bulk_delete'])->name('term-activity-lists.bulk-delete');
+    Route::get('term-activity-list/ajax-get', [TermActivityListController::class,'getTermActivitiesAjax'])->name('ajaxGetTermActivityList');
+    Route::get('term-activity-list/changeStatus', [TermActivityListController::class,'changeStatus'])->name('changeStatusTermActivityList');
     /*Type Routes*/
     Route::resource('types', TypeController::class);
     Route::delete('type/bulk-delete', [TypeController::class,'bulk_delete'])->name('types.bulk-delete');
@@ -140,10 +164,19 @@ Route::name('admin.')->prefix('admin')->group(function () {
      // Hotel Resource
     Route::resource('hotels', HotelController::class);
     Route::prefix('hotels')->name('hotels.')->group(function() {
+
     });
 
     Route::delete('hotel/bulk-delete', [HotelController::class,'bulk_delete'])->name('hotel.bulk-delete');
      Route::get('hotel/changeStatus', [HotelController::class,'changeStatus'])->name('changeStatusHotel');
+
+     // Hotel Resource
+    Route::resource('rooms', RoomController::class);
+    Route::prefix('rooms')->name('rooms.')->group(function() {
+    });
+
+    Route::delete('room/bulk-delete', [RoomController::class,'bulk_delete'])->name('room.bulk-delete');
+     Route::get('room/changeStatus', [RoomController::class,'changeStatus'])->name('changeStatusRoom');
 
      // Location Resource
     Route::prefix('locations')->name('locations.')->group(function() {
@@ -164,7 +197,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::prefix('activity-zones')->name('activity-zones.')->group(function() {
     Route::resource('/', ActivityZoneController::class)->parameters(['' => 'activity_zone']);
     });
-
+    // Activity Zone Resource
     Route::delete('activity-zone/bulk-delete', [ActivityZoneController::class,'bulk_delete'])->name('activity-zones.bulk-delete');
     Route::get('activity-zone/changeStatus', [ActivityZoneController::class,'changeStatus'])->name('changeStatusActivityZone');
     // Activity l̥īst Resource
@@ -172,6 +205,15 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::resource('/', ActivityListsController::class)->parameters(['' => 'activity_list']);
     });
 
+     // Tourism Zone Resource
+    Route::prefix('tourism-zones')->name('tourism-zones.')->group(function() {
+    Route::resource('/', TourismZoneController::class)->parameters(['' => 'tourism_zone']);
+    });
+  
+    Route::delete('tourism-zone/bulk-delete', [TourismZoneController::class,'bulk_delete'])->name('tourism-zones.bulk-delete');
+    Route::get('tourism-zone/changeStatus', [TourismZoneController::class,'changeStatus'])->name('changeStatusTourismZone');
+
+// Activity list Resource
     Route::delete('activity-list/bulk-delete', [ActivityListsController::class,'bulk_delete'])->name('activity-lists.bulk-delete');
     Route::get('activity-list/changeStatus', [ActivityListsController::class,'changeStatus'])->name('changeStatusActivityLists');
     // Activity package Resource
@@ -181,4 +223,14 @@ Route::name('admin.')->prefix('admin')->group(function () {
 
     Route::delete('activity-package/bulk-delete', [ActivityPackageController::class,'bulk_delete'])->name('activity-packages.bulk-delete');
     Route::get('activity-package/changeStatus', [ActivityPackageController::class,'changeStatus'])->name('changeStatusActivityPackage');
+    // Activity package Resource
+    Route::prefix('activities')->name('activities.')->group(function() {
+    Route::resource('/', ActivityController::class)->parameters([''=>'activity']);
+    });
+    
+    Route::delete('activity/bulk-delete', [ActivityController::class,'bulk_delete'])->name('activities.bulk-delete');
+    
+    Route::get('activity/country/activity-zones', [ActivityController::class,'ActivityZoneByCountry'])->name('ActivityZoneByCountry');
+
+    Route::get('activity/changeStatus', [ActivityController::class,'changeStatus'])->name('changeStatusActivity');
 });

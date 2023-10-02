@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\ActivityListsRepositoryInterface;
+use App\Interfaces\ActivityRepositoryInterface;
 use App\Models\ActivityLists;
 use App\Http\Requests\StoreActivityListsRequest;
 use App\Http\Requests\UpdateActivityListsRequest;
@@ -20,16 +21,19 @@ class ActivityListsController extends Controller
 
    public function __construct(
     ActivityListsRepositoryInterface $activityListsRepository,
+    ActivityRepositoryInterface $activityRepository,
 ) {
     $this->activityListsRepository = $activityListsRepository;
+    $this->activityRepository = $activityRepository;
 }
 
 private function _prepareBasicData() {
 
         // TODO: Need to Improve here (Fetch from Cache)
    $data['custom_icons'] = getPostData('CustomIcon',['id','title']);
-   // $data['activities'] = getPostData('Activity',['id','name']);
-   $data['activities'] = [];
+   $data['activities'] = getPostData('Activity',['id','name']);
+  
+ 
     return $data;
 
 }
@@ -145,7 +149,7 @@ private function _prepareBasicData() {
        $activityLists = ActivityLists::find($id);
        $activityListsDetails = [
         'title' => $request->title,
-        //'slug' => SlugService::createSlug(ActivityLists::class, 'slug', $request->title),
+        'slug' => (!empty($request->slug) && $activityLists->slug != $request->slug)?SlugService::createSlug(ActivityLists::class, 'slug', $request->slug):$activityLists->slug,
         'description' => $request->description,
         'custom_icon' => $request->custom_icon,
         'status' => $request->status,

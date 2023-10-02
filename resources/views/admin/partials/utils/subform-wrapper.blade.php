@@ -1,4 +1,6 @@
 <ul class="list-{{$type}} list-types"  index="{{(!empty($subformData) && !is_null($subformData) && is_array($subformData)) ? count($subformData) - 1 : -1}}">
+
+    
     @if(is_array($subformData) && !empty($subformData))
         @foreach($subformData as $key => $typeData)
             @include('admin.partials.utils.subform', ['typeData'=> $typeData, 'type'=> $type, 'typeFields' => Config::get('subform.'.$type.'.fields'), 'key'=> $key ])

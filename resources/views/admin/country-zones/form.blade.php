@@ -1,4 +1,4 @@
-     <form class="form-valide" id="country_zone-form" action="@yield('country_zone_action')" method="post">
+     <form class="form-valide" id="country_zone-form" action="@yield('country_zone_action')" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
         @section('method_field')
         @show

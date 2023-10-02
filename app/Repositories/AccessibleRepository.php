@@ -49,7 +49,10 @@ class AccessibleRepository implements AccessibleRepositoryInterface
         if($type)
             $accessibleBuilder->where('accessible_type',$type);
 
-        return $accessibleBuilder->get(['id','name','parent_id']);
+        $accessibles = $accessibleBuilder->get(['id','name','parent_id']);
+
+        $nestedResult = $accessibles->toNested();
+        return $nestedResult;
     }
 
     // Get Active Hotel Type Accessibles

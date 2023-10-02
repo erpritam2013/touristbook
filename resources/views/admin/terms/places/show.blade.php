@@ -31,7 +31,7 @@
 									<div>
 										<span class="badge">Last updated {{get_time_format($place->updated_at,true)}}</span>
 										<div class="pull-right">
-											<span class="label label-default">{{$place->place_type}} place</span>
+											{{--<span class="label label-default">{{$place->place_type}} place</span>--}}
                                             @php $parent_id = get_parent_term($place,$place->parent_id,true); @endphp
 											<span class="label label-primary">{{(!empty($parent_id))?$parent_id:"No Parent"}}</span>
                                             @if($place->status == 1)

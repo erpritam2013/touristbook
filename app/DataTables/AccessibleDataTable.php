@@ -69,7 +69,7 @@ class AccessibleDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(9)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -78,7 +78,7 @@ class AccessibleDataTable extends DataTable
                         Button::make('print'),
                         Button::make('reset'),
                         Button::make('reload')
-                    ])->parameters($this->getParameters());;
+                    ])->parameters($this->getParameters());
     }
 
     /**

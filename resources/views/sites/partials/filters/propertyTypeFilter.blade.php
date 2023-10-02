@@ -1,5 +1,8 @@
 <div class="mb-left">
-    <label for="form_property_types" class="form-label">Property Type</label>
+     <div class="mb-left-title">
+   <label for="form_property_types" class="form-label">Property Type</label>
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
+    </div>
     <div class="form-group">
         @if(!empty($filterPropertyTypes))
         <ul class="list-unstyled mb-0">

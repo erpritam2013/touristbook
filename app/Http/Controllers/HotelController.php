@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Interfaces\LocationRepositoryInterface;
 use App\Interfaces\AccessibleRepositoryInterface;
 use App\Interfaces\HotelRepositoryInterface;
 use App\Interfaces\FacilityRepositoryInterface;
@@ -26,16 +26,20 @@ use Session;
 class HotelController extends Controller
 {
 
+
+   
+
+    private LocationRepositoryInterface $locationRepository;
     private HotelRepositoryInterface $hotelRepository;
     private FacilityRepositoryInterface $facilityRepository;
     private AmenityRepositoryInterface $amenityRepository;
     private MedicareAssistanceRepositoryInterface $medicareAssistanceRepository;
     private TopServiceRepositoryInterface $topServiceRepository;
     private PlaceRepositoryInterface $placeRepository;
+    private StateRepositoryInterface $stateRepository;
     private PropertyTypeRepositoryInterface $propertyTypeRepository;
     private AccessibleRepositoryInterface $accessibleRepository;
     private MeetingAndEventRepositoryInterface $meetingAndEventRepository;
-    private StateRepositoryInterface $stateRepository;
     private OccupancyRepositoryInterface $occupancyRepository;
     private DealsDiscountRepositoryInterface $dealDiscountRepository;
     private TermActivityRepositoryInterface $activityRepository;
@@ -43,29 +47,31 @@ class HotelController extends Controller
 
     public function __construct(
         HotelRepositoryInterface $hotelRepository,
+        LocationRepositoryInterface $locationRepository,
         FacilityRepositoryInterface $facilityRepository,
         AmenityRepositoryInterface $amenityRepository,
         MedicareAssistanceRepositoryInterface $medicareAssistanceRepository,
         TopServiceRepositoryInterface $topServiceRepository,
         PlaceRepositoryInterface $placeRepository,
+        StateRepositoryInterface $stateRepository,
         PropertyTypeRepositoryInterface $propertyTypeRepository,
         AccessibleRepositoryInterface $accessibleRepository,
         MeetingAndEventRepositoryInterface $meetingAndEventRepository,
-        StateRepositoryInterface $stateRepository,
         OccupancyRepositoryInterface $occupancyRepository,
         DealsDiscountRepositoryInterface $dealDiscountRepository,
         TermActivityRepositoryInterface $activityRepository
     ) {
+        $this->locationRepository = $locationRepository;
         $this->hotelRepository = $hotelRepository;
         $this->facilityRepository = $facilityRepository;
         $this->amenityRepository = $amenityRepository;
         $this->medicareAssistanceRepository = $medicareAssistanceRepository;
         $this->topServiceRepository = $topServiceRepository;
         $this->placeRepository = $placeRepository;
+        $this->stateRepository = $stateRepository;
         $this->propertyTypeRepository = $propertyTypeRepository;
         $this->accessibleRepository = $accessibleRepository;
         $this->meetingAndEventRepository = $meetingAndEventRepository;
-        $this->stateRepository = $stateRepository;
         $this->occupancyRepository = $occupancyRepository;
         $this->dealDiscountRepository = $dealDiscountRepository;
         $this->activityRepository = $activityRepository;
@@ -82,7 +88,17 @@ class HotelController extends Controller
         $data['propertyTypes'] = $this->propertyTypeRepository->getActiveHotelPropertyTypesList();
         $data['accessibles'] = $this->accessibleRepository->getActiveHotelAccessiblesList();
         $data['meetingAndEvents'] = $this->meetingAndEventRepository->getActiveHotelMeetingAndEventsList();
-        $data['states'] = $this->stateRepository->getActiveStatesList();
+        $data['locations'] = $this->locationRepository->getActiveLocationsList();
+
+        $data['states'] = $this->stateRepository->getActiveStatesList()->map(function($value, $key){  
+            
+          return (object)[
+            'id' => $value->id,
+            'value' => $value->name,
+            'parent_id' => $value->name,
+        ];                                
+
+    });
         $data['occupancies'] = $this->occupancyRepository->getActiveHotelOccupanciesList();
         $data['deals'] = $this->dealDiscountRepository->getActiveHotelDealsDiscountsList();
         $data['activities'] = $this->activityRepository->getActiveHotelTermActivitiesList();
@@ -128,6 +144,7 @@ class HotelController extends Controller
 
     public function store(Request $request)
     {
+        
         $hotelDetails = [
             'name' => $request->name,
             'description' => $request->description,
@@ -204,7 +221,7 @@ class HotelController extends Controller
             // activitiescard
         }
         // return $hotel;
-         Session::flash('success','Hotel Created Successfully');
+        Session::flash('success','Hotel Created Successfully');
         return redirect()->Route('admin.hotels.index');
     }
 
@@ -236,7 +253,7 @@ class HotelController extends Controller
         $hotelDetails = [
             'name' => $request->name,
             'description' => $request->description,
-            'slug' => SlugService::createSlug(Hotel::class, 'slug', $request->name),
+            'slug' => (!empty($request->slug) && $hotel->slug != $request->slug)?SlugService::createSlug(Hotel::class, 'slug', $request->slug):$hotel->slug,
             'external_link' => $request->external_link,
             'food_dining' => $request->food_dining,
             'is_featured' => $request->is_featured,
@@ -309,7 +326,7 @@ class HotelController extends Controller
             // activitiescard
         }
         // return $hotel;
-         Session::flash('success','Hotel Created Successfully');
+        Session::flash('success','Hotel Created Successfully');
         return redirect()->Route('admin.hotels.index');
     }
 

@@ -1,10 +1,10 @@
    .nav-header .logo-abbr {
-     max-width: 60px;
+     max-width: 60px!important;
  }
  .nav-header .brand-title {
-    margin-left: -21px;
-    margin-top: 4px;
-    max-width: 180px;
+    margin-left: -21px!important;
+    margin-top: 4px!important;
+    max-width: 180px!important;
 }
 
 @media (min-width: 768px)
@@ -49,6 +49,9 @@ label.subform-card-label {
     font-size: 1.125rem;
 }
 
+input#slug {
+    background: #eaeaea7a;
+}
 
 .file-thumb img.img-holder {
     visibility: hidden;
@@ -72,3 +75,230 @@ label.subform-card-label {
 .file-list .file-thumb {
     display: block;
 }
+
+body .media-preview img{
+    margin: 5px;
+    margin-left: 0px;
+    border: 1px solid #3439574d;
+}
+body .tab-content .col-lg-12 {
+    border: 1px solid #DDD;
+    padding: 10px;
+}
+body #hotel-form .tab-content .form-group {
+    margin: 0px;
+    margin-bottom: 10px;
+}
+
+body .term-footer{
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+body .term-footer .accordion__header {
+    border: none!important;
+    padding-left: 0px;
+}
+
+body .term-footer .accordion-bordered .accordion__body {
+    border: none;
+}
+
+body .location-card .card-body .location-list{
+overflow: auto;
+height: 300px;
+}
+
+body .location-card .card-body .location-list{
+margin-top: 10px;
+}
+body .location-card-padding .card-body .location-list{
+margin-top: 10px;
+}
+body .location-card-padding {
+    border: 1px solid #ddd;
+}
+
+.select2-drop, .select2-dropdown, .select2-container {
+z-index : 0!important;
+}
+
+.select2-container {
+width: 100% !important; }
+
+.select2-container--default .select2-selection--single {
+border-radius: 0!important;
+border: 1px solid #eaeaea!important;
+height: calc(1.95rem + 2px)!important;
+background: #fff!important; }
+.select2-container--default .select2-selection--single:hover, .select2-container--default .select2-selection--single:focus, .select2-container--default .select2-selection--single.active {
+box-shadow: none!important; }
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+line-height: 32px!important; }
+
+.select2-container--default .select2-selection--multiple {
+border-color: #eaeaea!important;
+border-radius: 0!important; }
+
+.select2-dropdown {
+border-radius: 0!important; }
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+background-color: #fba009!important; }
+
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+border-color: #eaeaea!important;
+background: #fff!important; }
+
+/* on and off button start css */
+.on-off-switch .off-switch-checked{
+    background: #343957;
+    color: #fff;
+/*    width: 32%;*/
+   padding: 5px 24px 5px 24px;
+    border: 1px solid #343957;
+    border-left: none;
+    text-transform: uppercase;
+    margin: -4px;
+}
+.on-off-switch .on-switch-checked{
+    background: #fba009;
+    color: #000;
+/*    width: 30%;*/
+   padding: 5px 30px 5px 25px;
+    border: 1px solid #fba009;
+    border-right: none;
+    text-transform: uppercase;
+    margin: -4px;
+    margin-top: 10px;
+}
+
+.on-off-switch label input{
+    position: absolute;
+    opacity: 0;
+}
+
+.on-off-switch .on-switch{
+    background: #fff;
+    color: #000;
+/*    width: 30%;*/
+    padding: 5px 30px 5px 25px;
+    border: 1px solid #ddd;
+    border-right: none;
+    text-transform: uppercase;
+    margin: -4px;
+    margin-top: 10px;
+}
+.on-off-switch .off-switch{
+    background: #fff;
+    color: #000;
+/*    width: 30%;*/
+   padding: 5px 24px 5px 24px;
+    border: 1px solid #ddd;
+   border-left: none;
+    text-transform: uppercase;
+    margin: -4px;
+    margin-top: 10px;
+}
+
+/* on and off button end css */
+
+/* active and inactive button start css */
+.active-inactive-switch{
+   padding-left: 20px;
+}
+.col-xl-4 .active-inactive-switch{
+    margin-top: 5px;
+    padding-left: inherit;
+}
+.col-xl-4 .active-inactive-switch .inactive-switch-checked{
+   
+ padding: 5px 4px 5px 4px;
+   
+}
+.col-xl-4 .active-inactive-switch .active-switch-checked{
+   
+   padding: 5px 15px 5px 12px;
+   
+}
+.active-inactive-switch .inactive-switch-checked{
+    background: #e20000;
+    color: #fff;
+/*    width: 32%;*/
+ padding: 5px 10px 5px 10px;
+    border: 1px solid #e20000;
+    border-left: none;
+    text-transform: uppercase;
+    margin: -4px;
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
+.active-inactive-switch .active-switch-checked{
+    background: #6ab21c;
+    color: #fff;
+/*    width: 30%;*/
+    padding: 5px 20px 5px 15px;
+    border: 1px solid #6ab21c;
+    border-right: none;
+    text-transform: uppercase;
+    margin: -4px;
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+}
+
+.active-inactive-switch label input{
+    position: absolute;
+    opacity: 0;
+}
+
+.col-xl-4 .active-inactive-switch .active-switch{
+ 
+   padding: 5px 15px 5px 12px;
+   
+}
+.col-xl-4 .active-inactive-switch .inactive-switch{
+  padding: 5px 4px 5px 4px;
+  
+}
+.active-inactive-switch .active-switch{
+    background: #fff;
+    color: #000;
+/*    width: 30%;*/
+    padding: 5px 20px 5px 15px;
+    border: 1px solid #ddd;
+    border-right: none;
+    text-transform: uppercase;
+    margin: -4px;
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+}
+.active-inactive-switch .inactive-switch{
+    background: #fff;
+    color: #000;
+/*    width: 30%;*/
+  padding: 5px 10px 5px 10px;
+    border: 1px solid #ddd;
+   border-left: none;
+    text-transform: uppercase;
+    margin: -4px;
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
+.alert {
+    padding: 5px;
+}
+.alert i.mdi-close {
+        position: absolute;
+    top: 5px;
+    bottom: 0px;
+    right: 5px;
+}
+/* active and inactive button end css */
+
+
+
+
+
+
+

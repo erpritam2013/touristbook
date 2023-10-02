@@ -24,7 +24,7 @@ class UpdateStateRequest extends FormRequest
     public function rules()
     {
         return [
-             'name' => 'required|max:255|unique:states',
+             'name' => 'required|max:255|unique_custom:states,name,id,'.request()->id,
              'country' => 'required',
         ];
     }

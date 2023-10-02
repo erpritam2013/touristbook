@@ -1,5 +1,8 @@
 <div class="mb-left">
-    <label for="form_medicares" class="form-label">Medicare Assistance</label>
+     <div class="mb-left-title">
+   <label for="form_medicares" class="form-label">Medicare Assistance</label>
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
+    </div>
     <div class="form-group">
         @if(!empty($filterMedicare))
         <ul class="list-unstyled mb-0">

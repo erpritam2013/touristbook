@@ -1,0 +1,2 @@
+
+@include('admin.partials.utils.media', ['name'=> 'gallery[]','label'=>'Gallery','desc'=>"Upload gallery for this location",'value'=>$location->locationMeta->gallery ?? '','id' => "",'smode'=>'multiple'])

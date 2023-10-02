@@ -12,9 +12,7 @@
 @stack('style-css')
 @stack('font-awesome-css')
 @else
-
-
-@stack('select2_css')
+@stack('select2_css') 
 @stack('asColorPicker-min-css')
 @stack('jquery-ui.css')
 @stack('jqvmap-min-css')

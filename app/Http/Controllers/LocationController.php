@@ -27,32 +27,41 @@ class LocationController extends Controller
   public function __construct(
     LocationRepositoryInterface $locationRepository,
     PlaceRepositoryInterface $placeRepository,
-    StateRepositoryInterface $stateRepository,
     TypeRepositoryInterface $typeRepository,
+    StateRepositoryInterface $stateRepository,
     CountryRepositoryInterface $countryRepository,
 
 )
   {
     $this->locationRepository = $locationRepository;
     $this->placeRepository = $placeRepository;
-    $this->stateRepository = $stateRepository;
     $this->typeRepository = $typeRepository;
+    $this->stateRepository = $stateRepository;
     $this->countryRepository = $countryRepository;
 
 }
 
 
-     private function _prepareBasicData() {
+private function _prepareBasicData() {
 
         // TODO: Need to Improve here (Fetch from Cache)
-        $data['places'] = $this->placeRepository->getActiveLocationPlacesList();
-        $data['states'] = $this->stateRepository->getActiveStatesList();
-        $data['types'] = $this->typeRepository->getActiveLocationTypesList();
-        $data['countries'] = $this->countryRepository->getCountiesList();
+    $data['places'] = $this->placeRepository->getActiveLocationPlacesList();
+    $data['states'] = $this->stateRepository->getActiveStatesList()->map(function($value, $key){  
+        
+      return (object)[
+        'id' => $value->id,
+        'value' => $value->name,
+        'parent_id' => $value->name,
+    ];                                
 
-        return $data;
+});
+        //$data['states'] = getTermsForSelectBox('State');
+    $data['types'] = $this->typeRepository->getActiveLocationTypesList();
+    $data['countries'] = $this->countryRepository->getCountiesList();
 
-    }
+    return $data;
+
+}
     /**
      * Display a listing of the resource.
      *
@@ -64,8 +73,8 @@ class LocationController extends Controller
      // $data['locations'] = $this->locationRepository->getAllLocations();
       $data['locations'] = Location::count();
       $data['title'] = 'Location List';
-     return $dataTable->render('admin.locations.index', $data);
- }
+      return $dataTable->render('admin.locations.index', $data);
+  }
 
     /**
      * Show the form for creating a new resource.
@@ -82,7 +91,7 @@ class LocationController extends Controller
         $data = array_merge_recursive($data, $this->_prepareBasicData());
 
         // TODO: Need to Improve here (Fetch from Cache)
-      
+        
         return view('admin.locations.create', $data);
     }
 
@@ -118,7 +127,7 @@ class LocationController extends Controller
     if($location) {
 
 
-       $location->locationMeta()->create($request->only([
+     $location->locationMeta()->create($request->only([
         "location_for_filter",
         "location_content",
         "child_tabs",
@@ -158,25 +167,25 @@ class LocationController extends Controller
 
     ]));
 
-       $location->types()->attach($request->get('location_type'));
-       $location->places()->attach($request->get('places'));
-       $location->states()->attach($request->get('state_id'));
+     $location->types()->attach($request->get('location_type'));
+     $location->places()->attach($request->get('places'));
+     $location->states()->attach($request->get('state_id'));
 
-   }
+ }
    //return $location;
-     return redirect()->Route('admin.locations.index');
+ return redirect()->Route('admin.locations.index');
 }
 
-   public function changeStatus(Request $request): JsonResponse
-    {
-        $locationId = $request->id;
-          $locationDetails = [
-            'status' => $request->status,
-        ];
-        $this->locationRepository->updateLocation($locationId, $locationDetails);
-  
-        return response()->json(['success'=>'Status change successfully.']);
-    }
+public function changeStatus(Request $request): JsonResponse
+{
+    $locationId = $request->id;
+    $locationDetails = [
+        'status' => $request->status,
+    ];
+    $this->locationRepository->updateLocation($locationId, $locationDetails);
+    
+    return response()->json(['success'=>'Status change successfully.']);
+}
 
     /**
      * Display the specified resource.
@@ -199,18 +208,18 @@ class LocationController extends Controller
     {
 
 
-     $location = Location::with(['places', 'states', 'types'])->find($id);
+       $location = Location::with(['places', 'states', 'types'])->find($id);
 
-        if (empty($location)) {
-            return back();
-        }
-        $data['title'] = 'Location Edit';
-        $data['location'] = $location;
-        $data = array_merge_recursive($data, $this->_prepareBasicData());
-        // TODO: Need to Improve here (Fetch from Cache)
-       
-        return view('admin.locations.edit', $data);
+       if (empty($location)) {
+        return back();
     }
+    $data['title'] = 'Location Edit';
+    $data['location'] = $location;
+    $data = array_merge_recursive($data, $this->_prepareBasicData());
+        // TODO: Need to Improve here (Fetch from Cache)
+    
+    return view('admin.locations.edit', $data);
+}
 
     /**
      * Update the specified resource in storage.
@@ -221,9 +230,10 @@ class LocationController extends Controller
      */
     public function update(UpdateLocationRequest $request, Location $location)
     {
-         $locationDetails = [
+       $locationDetails = [
         "name" => $request->name,
         "description" => $request->description,
+        'slug' => (!empty($request->slug) && $location->slug != $request->slug)?SlugService::createSlug(Location::class, 'slug', $request->slug):$location->slug,
         //logo s3 integration pending
         "color" => $request->color,
         "is_featured" => $request->is_featured,
@@ -239,10 +249,10 @@ class LocationController extends Controller
 
     $location = $this->locationRepository->updateLocation($location->id,$locationDetails);
 
-     
+    
     if($location) {
 
-       $location->locationMeta()->update($request->only([
+     $location->locationMeta()->update($request->only([
         "location_for_filter",
         "location_content",
         "child_tabs",
@@ -282,13 +292,13 @@ class LocationController extends Controller
 
     ]));
 
-       $location->types()->sync($request->get('location_type'));
-       $location->places()->sync($request->get('places'));
-       $location->states()->sync($request->get('state_id'));
-   }
-    Session::flash('success','Location Updated Successfully');
-        return redirect()->Route('admin.locations.edit',$location->id);
-    }
+     $location->types()->sync($request->get('location_type'));
+     $location->places()->sync($request->get('places'));
+     $location->states()->sync($request->get('state_id'));
+ }
+ Session::flash('success','Location Updated Successfully');
+ return redirect()->Route('admin.locations.edit',$location->id);
+}
 
     /**
      * Remove the specified resource from storage.
@@ -299,25 +309,25 @@ class LocationController extends Controller
     public function destroy(Location $location)
     {
         if ($locotion) {
-        $locationId = $location->id;
+            $locationId = $location->id;
 
-        $this->locationRepository->deleteLocation($locationId);
-        Session::flash('success','Location Deleted Successfully');
+            $this->locationRepository->deleteLocation($locationId);
+            Session::flash('success','Location Deleted Successfully');
         }else{
-        Session::flash('error','Location Not Found!');
+            Session::flash('error','Location Not Found!');
         }
         return back();
     }
 
-     public function bulk_delete(Request $request)
+    public function bulk_delete(Request $request)
     {
-         if (!empty($request->ids)) {
+       if (!empty($request->ids)) {
         
         $locationIds = get_array_mapping(json_decode($request->ids));
         $this->locationRepository->deleteBulkLocation($locationIds);
-         Session::flash('success','Location Bulk Deleted Successfully');
-        }
-        return back();
+        Session::flash('success','Location Bulk Deleted Successfully');
     }
+    return back();
+}
 
 }

@@ -1,13 +1,7 @@
 @extends('admin.layouts.main')
 @section('country_action', route('admin.terms.countries.store'))
 @section('title',$title)
-@section('admin_head_css')
-<link rel="stylesheet" href="{!! asset('admin-part/vendor/select2/css/select2.min.css') !!}">
-@parent
-@endsection
 @section('content')
-
-
 <div class="container-fluid">
   @include('admin.layout-parts.breadcrumbs')
   <div class="row">
@@ -76,14 +70,4 @@
         </div>
 
     </div>
-    @endsection
-    @section('admin_jscript')
-    @parent
-    <!-- Jquery Validation -->
-    <script src="{!! asset('admin-part/vendor/jquery-validation/jquery.validate.min.js') !!}"></script>
-    <!-- Form validate init -->
-    <script src="{!! asset('admin-part/js/plugins-init/jquery.validate-init.js') !!}"></script>
-    <script src="{!! asset('admin-part/vendor/select2/js/select2.full.min.js') !!}"></script>
-    <script src="{!! asset('admin-part/js/plugins-init/select2-init.js') !!}"></script>
-
     @endsection

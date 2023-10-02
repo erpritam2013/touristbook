@@ -9,7 +9,7 @@
         @endpush
         @push('map_js')
         <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCF8MnYK1Ft-lPa3_B6rirg2IJzptB4m1Y&v=weekly&libraries=places"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCF8MnYK1Ft-lPa3_B6rirg2IJzptB4m1Y&v=weekly&libraries=places&callback=Function.prototype"
         defer
         ></script>
         @endpush
@@ -43,6 +43,9 @@
         @endpush
         @push('tourist-lib-js')
         <script src="{!! asset('admin-part/js/tourist-lib.js') !!}"></script>
+        @endpush
+        @push('inline-custom-function')
+        <script src="{!! asset('admin-part/js/inline-custom-function.js') !!}"></script>
         @endpush
         @push('all-min-js')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
