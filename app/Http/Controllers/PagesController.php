@@ -109,7 +109,7 @@ class PagesController extends Controller
             //search in address
             $searchTerm = $request->get('searchTerm');
             // TODO: JSON Treatment is Pending
-            $hotelQuery->where('hotels.hotel_attributes', 'LIKE', '%'.$searchTerm.'%');
+            $hotelQuery->where('hotels.address', 'LIKE', '%'.$searchTerm.'%');
         }
 
 
