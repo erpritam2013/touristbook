@@ -145,7 +145,7 @@ class MeetingAndEventController extends Controller
          
          $MeetingAndEventDetails = [
             'name' => $request->name,
-            //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
+             'slug' => (!empty($request->slug) && $meetingAndEvent->slug != $request->slug)?SlugService::createSlug(MeetingAndEvent::class, 'slug', $request->slug):$meetingAndEvent->slug,
             'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'meeting_and_event_type' => $request->meeting_and_event_type,

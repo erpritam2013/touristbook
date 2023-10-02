@@ -1,5 +1,8 @@
 <div class="mb-left">
-    <label for="form_dealdiscount" class="form-label">Deals &amp; Discount</label>
+     <div class="mb-left-title">
+  <label for="form_dealdiscount" class="form-label">Deals &amp; Discount</label>
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
+    </div>
     <div class="form-group">
         @if(!empty($filterDealDiscount))
         <ul class="list-unstyled mb-0">

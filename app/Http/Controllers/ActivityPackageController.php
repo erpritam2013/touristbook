@@ -145,7 +145,7 @@ private function _prepareBasicData() {
         $activityPackage = ActivityPackage::find($id);
        $activityPackageDetails = [
         'title' => $request->title,
-        //'slug' => SlugService::createSlug(ActivityPackage::class, 'slug', $request->title),
+        'slug' => (!empty($request->slug) && $activityPackage->slug != $request->slug)?SlugService::createSlug(ActivityPackage::class, 'slug', $request->slug):$activityPackage->slug,
         'description' => $request->description,
         'duration' => $request->duration,
         'price' => $request->price ?? 0,

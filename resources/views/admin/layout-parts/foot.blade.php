@@ -13,6 +13,7 @@
 @stack('asColorPicker-js')
 @stack('touristbook-terms-custom-js')
 @stack('tourist-lib-js')
+@stack('inline-custom-function')
 @stack('all-min-js')
 @stack('dataTable_js')
 @stack('jquery_validation-js')

@@ -150,7 +150,7 @@ class FacilityController extends Controller
          
          $facilityDetails = [
             'name' => $request->name,
-            //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
+           'slug' => (!empty($request->slug) && $facility->slug != $request->slug)?SlugService::createSlug(Facility::class, 'slug', $request->slug):$facility->slug,
             'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'facility_type' => $request->facility_type,

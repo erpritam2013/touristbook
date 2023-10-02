@@ -69,7 +69,7 @@ class PlacesDataTable extends DataTable
         ->columns($this->getColumns())
         ->minifiedAjax()
                     //->dom('Bfrtip')
-        ->orderBy(1)
+        ->orderBy(8)
         ->selectStyleSingle()
         ->buttons([
             Button::make('excel'),
@@ -112,7 +112,7 @@ class PlacesDataTable extends DataTable
             ->orderable(true)
             ->exportable(false)
             ->printable(false),
-            Column::make('place_type')->title('Type'),
+            // Column::make('place_type')->title('Type'),
             Column::make('status'),
             Column::make('created_at')->title('Created'),
             Column::make('updated_at')->title('Updated'),

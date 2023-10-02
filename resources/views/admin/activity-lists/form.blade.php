@@ -3,17 +3,22 @@
         @section('method_field')
         @show
         <div class="row">
-            <div class="col-xl-12">
+            <div class="col-xl-8">
                 @include('admin.activity-lists.partials.basic-card', ['activity_list'=>$activity_list ?? null])
+               
+            </div>
 
-                @include('admin.activity-lists.partials.custom-icons', ['activity_list'=>$activity_list ?? null])
+             <div class="col-xl-4">
+                @include('admin.activity-lists.partials.publish-card', ['activity_list'=>$activity_list ?? null])
+
+                 @include('admin.activity-lists.partials.custom-icons', ['activity_list'=>$activity_list ?? null])
 
                 @include('admin.activity-lists.partials.activity-options', ['activity_list'=>$activity_list ?? null])
 
                 {{--@include('admin.partials.cards.users_section', ['users'=> $users , 'selected'=>$activity_list->users->pluck('id')->toArray() ?? []])--}}
                 
-                @include('admin.activity-lists.partials.publish-card', ['activity_list'=>$activity_list ?? null])
-            </div>
+
+             </div>
         </div>
 
 

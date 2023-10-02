@@ -15,11 +15,10 @@
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="col-lg-3 col-md-3 col-sm-12">
                     @include('sites.partials.filters.hotel')
                 </div>
-                <div class="col-lg-8 col-md-8 col-sm-12" id="result-info">
-
+                <div class="col-lg-9 col-md-9 col-sm-12" id="result-info">9
                 </div>
             </div>
         </div>

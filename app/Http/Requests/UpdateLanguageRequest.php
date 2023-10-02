@@ -13,7 +13,7 @@ class UpdateLanguageRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,10 @@ class UpdateLanguageRequest extends FormRequest
      */
     public function rules()
     {
+        
         return [
-            //
+            'name' => 'required|max:255|unique_custom:languages,name,id,'.request()->id,
+            //'language_type' => 'required',
         ];
     }
 }

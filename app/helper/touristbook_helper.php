@@ -9,52 +9,131 @@ if (!function_exists('getRouteName')) {
     }
 }
 
+if (!function_exists('customStringReplaceWithStrCase')) {    
+    function customStringReplaceWithStrCase($search,$replace_value,$subject,$str_case){
+        $result = "";
+        if ($str_case == "ucwords") {
+            $result = ucwords(str_replace($search, $replace_value, $subject));
+        }elseif($str_case == "strtolower"){
+           $result = strtolower(str_replace($search, $replace_value, $subject));
+       }elseif($str_case == "strtoupper"){
+          $result = strtoupper(str_replace($search, $replace_value, $subject));
+      }else{
+         $result = str_replace($search, $replace_value, $subject);
+     }
+
+     return $result;
+ }
+}
+
 if (!function_exists('getCountries')) {    
-    function getCountries(){
-      
+    function getCountries($type='object'){
+
         $NamespacedModel = 'App\\Models\\Terms\\Country' ;
-        $getCountries = $NamespacedModel::get(['id','countryname','code'])->map(function($country, $key) {                                  
-    return [
-            'id' => $country->code,
-            'value' => $country->countryname
-        ];
+        $getCountries = $NamespacedModel::get(['id','countryname','code'])->map(function($country, $key) use($type){  
+            if ($type == 'object') {
+              return (object)[
+                'id' => $country->code,
+                'value' => $country->countryname
+            ];                 
+        }else{
+            return [
+                'id' => $country->code,
+                'value' => $type
+            ];
+        }                                
+
     });
 
         return $getCountries;
     }
 }
+if (!function_exists('unsetValueActivityTourismZone')) {
+    function unsetValueActivityTourismZone($data)
+    {
+     if (!empty($data)) {
+      foreach ($data as $key => $value) {
+       if ($data[$key]['activity_zones-url_link_status'] == 'slug') {
+           unset($data[$key]['activity_zones-file']);
+           unset($data[$key]['activity_zones-web_link']);
+       }elseif ($data[$key]['activity_zones-url_link_status'] == 'file') {
+           unset($data[$key]['activity_zones-slug']);
+           unset($data[$key]['activity_zones-web_link']);
+       }elseif ($data[$key]['activity_zones-url_link_status'] == 'web_link') {
+          unset($data[$key]['activity_zones-file']);
+          unset($data[$key]['activity_zones-slug']);
+      }
+  }
+}
 
-if (!function_exists('getTerms')) {    
-    function getTerms($model=null){
+
+return $data;
+}
+}
+if (!function_exists('setTermSpace')) {
+  function setTermSpace($space)
+  {
+    $result = "";
+    if ($space != 0) {
+      for ($i=0; $i < $space; $i++) { 
+          $result .= "&nbsp;&nbsp;&nbsp;";
+      }
+  }
+  return $result;
+}
+}
+if (!function_exists('getTermsForSelectBox')) {    
+    function getTermsForSelectBox($model=null,$term_type=null,$type='object'){
 
         $getTerms = [];
-       if (!empty($model)) {
-        $NamespacedModel = 'App\\Models\\Terms\\' . $model;
-        $getTerms = $NamespacedModel::get(['id','name','parent_id'])->map(function($term, $key) {                                  
-    return [
-            'id' => $term->id,
-            'value' => $term->name,
-            'parent_id'=>$term->parent_id
-        ];
-    });
-       }
+        if (!empty($model)) {
+            $NamespacedModel = 'App\\Models\\Terms\\' . $model;
+            $getTerms_type = $NamespacedModel::get(['id','name','parent_id']);
+            if (!empty($term_type)) {
+                $getTerms_type = $NamespacedModel::where(['type'=>$term_type])->get(['id','name','parent_id']);
+            }
+            $getTerms = $getTerms_type->map(function($term, $key) use($type){ 
+                if ($type == 'object') {
+                    return (object)[
+                        'id' => $term->id,
+                        'value' => $term->name,
+                        'parent_id'=>$term->parent_id
+                    ];
+                }else{
+                    return [
+                        'id' => $term->id,
+                        'value' => $term->name,
+                        'parent_id'=>$term->parent_id
+                    ];
+                }                                
+
+            });
+        }
 
         return $getTerms;
     }
 }
 if (!function_exists('getPostData')) {    
-    function getPostData($model=null,$parameters=[]){
+    function getPostData($model=null,$parameters=[],$type='object'){
 
         $getPostData = [];
-       if (!empty($model) && !empty($parameters)) {
-        $NamespacedModel = 'App\\Models\\' . $model;
-        $getPostData = $NamespacedModel::get($parameters)->map(function($post, $key) {                                  
-    return [
-            'id' => $post->id,
-            'value' => (isset($post->name))?$post->name:$post->title,
-        ];
+        if (!empty($model) && !empty($parameters)) {
+            $NamespacedModel = 'App\\Models\\' . $model;
+            $getPostData = $NamespacedModel::get($parameters)->map(function($post, $key) use($type){
+               if ($type == 'object') {
+                   return (object)[
+                    'id' => $post->id,
+                    'value' => (isset($post->name))?$post->name:$post->title,
+                ];
+            }else{
+              return [
+                'id' => $post->id,
+                'value' => (isset($post->name))?$post->name:$post->title,
+            ];    
+        }                                 
+
     });
-       }
+        }
 
         return $getPostData;
     }
@@ -66,21 +145,38 @@ if (!function_exists('exploreJsonData')) {
         $result = "";
         if (!empty($json_data)) {
             if (!is_array($json_data)) {
-            $json_decode = json_decode($json_data);
+                $json_decode = json_decode($json_data);
             }else{
-            $json_decode = $json_data;
+                $json_decode = $json_data;
             }   
             if (empty($key)) {
                 $result = $json_decode;
             }else{
              $collection = collect($json_decode);
- 
-             $result = $collection->get($key);
-            }
 
-            return $result;
-        }
-    }
+             $result = $collection->get($key);
+         }
+
+         return $result;
+     }
+ }
+}
+
+if (!function_exists('exploreArrayData')) {    
+    function exploreArrayData($data="",$key=null){
+
+        $result = "";
+        if (!empty($json_data)) {
+            if (!empty($key)) {
+             $collection = collect($data);
+             $result = $collection->get($key);
+         }else{
+             $collection = collect($data);
+             $result = $collection->get();
+         }
+     }
+     return $result;
+ }
 }
 if (!function_exists('matchRouteName')) {    
     function matchRouteName($current_route=null){
@@ -156,30 +252,58 @@ if(!function_exists('get_form_success_msg')){
 
 if(!function_exists('get_edit_select_check_pvr_old_value')){
     function get_edit_select_check_pvr_old_value($input,$compair_obj,$compair_prop, $current_ele, $type){
-        if (isset($compair_obj) && !empty($compair_obj)) {
-            if((!empty($compair_obj->{$compair_prop}))&&(empty(old($input)))){ 
-                $select= $compair_obj->{$compair_prop};
-            }else{
-                $select= old($input);
-            }
-            if($select==$current_ele){
-                if($type=='select'){
-                    return 'selected="true"';
-                }else{
-                    return 'checked="true"';
-                }
-            }else{
-                return '';
-            }
-        }else{
-            if ($current_ele == 1) {
-                return 'checked="true"';
-            }else{
-                return '';
-            }
-        }
-
+       if((!empty($compair_obj->{$compair_prop}))&&(empty(old($input)))){ 
+        $select= $compair_obj->{$compair_prop};
+    }else{
+        $select= old($input);
     }
+    if($select==$current_ele){
+        if($type=='select'){
+            return 'selected="true"';
+        }else{
+            return 'checked="true"';
+        }
+    }else{
+        return '';
+    }
+}
+}
+
+if(!function_exists('setCheckboxActiveInactiveStyle')){
+    function setCheckboxActiveInactiveStyle($input,$compair_obj,$compair_prop, $current_ele, $type,$class){
+
+     if ($class == 'active-inactive') {
+        if ($type != 'select') {
+         return $class.'-switch';
+        }else{
+            return "";
+        }
+     }else{
+
+       if((!empty($compair_obj->{$compair_prop}))&&(empty(old($input)))){ 
+        $select= $compair_obj->{$compair_prop};
+    }else{
+        $select= old($input);
+    }
+
+
+    if($select==$current_ele){
+        if($type=='select'){
+            return '';
+        }else{
+            return $class.'-switch-checked';
+        }
+    }else{
+        
+        if ($type != 'select') {
+         return $class.'-switch';
+        }else{
+            return "";
+        }
+   
+    }
+}
+}
 }
 
 
@@ -242,19 +366,28 @@ if (!function_exists('get_time_format')) {
    }
 }
 if (!function_exists('get_array_mapping')) {
-    function get_array_mapping($data) {
+    function get_array_mapping($data,$field=false) {
         $result = [];
         if (!empty($data)) {
            $collection = collect($data);
+           if ($field) {
+            $result = $collection->map(function ($value,$key) {
+               return (object)[
+                'id'=> $key,
+                'value'=>$value
+            ];
+        });
+        }else{
 
            $result = $collection->map(function (int $item, int $key) {
             return (int)$item;
         });
        }
-       return $result->all();
-
-
    }
+   return $result->all();
+
+
+}
 }
 
 

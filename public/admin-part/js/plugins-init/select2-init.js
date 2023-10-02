@@ -185,6 +185,16 @@
   });
 
 
+  // single-select-placeholder-touristbook
+
+  $(".single-select-placeholder-touristbook").select2({
+      placeholder: {
+          id: '-1', // the value of the option
+        },
+      allowClear: true
+  });
+
+
   // multi select placeholder
   $(".multi-select-placeholder").select2({
       placeholder: "Select a state"

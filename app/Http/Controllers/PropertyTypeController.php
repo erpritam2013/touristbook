@@ -146,7 +146,7 @@ class PropertyTypeController extends Controller
          
          $propertyTypeDetails = [
             'name' => $request->name,
-            //'slug' => SlugService::createSlug(PropertyType::class, 'slug', $request->name),
+             'slug' => (!empty($request->slug) && $propertyType->slug != $request->slug)?SlugService::createSlug(PropertyType::class, 'slug', $request->slug):$propertyType->slug,
             'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'property_type_type' => $request->property_type_type,

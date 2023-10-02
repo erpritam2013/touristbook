@@ -89,6 +89,10 @@ class Hotel extends Model
         return $this->belongsToMany(TermActivity::class, 'hotel_activities', 'hotel_id', 'activity_id');
     }
 
+    public function locations() {
+        return $this->belongsToMany(location::class, 'hotel_locations', 'hotel_id', 'location_id');
+    }
+
     public function detail() {
         return $this->hasOne(HotelDetail::class);
     }

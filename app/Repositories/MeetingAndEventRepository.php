@@ -9,7 +9,7 @@ class MeetingAndEventRepository implements MeetingAndEventRepositoryInterface
 {
     public function getAllMeetingAndEvents()
     {
-        return MeetingAndEvent::orderBy('id','desc')->get();
+        return MeetingAndEvent::get();
     }
     public function getMeetingAndEventsByType($type=null,$mae_id=null) 
     {

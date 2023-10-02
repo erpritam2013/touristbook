@@ -1,39 +1,14 @@
-<div class="form-group row">
-    <label class="col-lg-5 col-form-label" for="hotel-as-feature">Set hotel as feature<br /><small>ON: Set this hotel to be featured</small></label>
+<!-- Set hotel as feature -->
+@include('admin.partials.utils.radio_input', ['name'=> 'is_featured','label'=>'Set hotel as feature','desc'=>'ON: Set this hotel to be featured','item'=>$hotel ?? '','id' => "",'input' => ["On" => 1,"Off" => 0],'on_off_switch'=>true,'label_class'=>['off-switch','on-switch']])
 
-    <div class="col-lg-7">
-        <label class="col-form-label">
-            <input type="radio" name="is_featured" value="1" {!!get_edit_select_check_pvr_old_value('is_featured', $hotel ?? "" ,'is_featured',1, 'checked' )!!}>&nbsp;On
-        </label>
-        <label class="col-form-label">
-            <input type="radio" name="is_featured" {!!get_edit_select_check_pvr_old_value('status', $hotel ?? "" ,'is_featured',0, 'checked' )!!} value="0">&nbsp;Off
-        </label>
-    </div>
-</div>
+<!--hotel video -->
+@include('admin.partials.utils.input', ['name'=> 'hotel_video','label'=>'Hotel video','desc'=>'Enter YouTube/Vimeo URL here','value'=>$hotel->hotel_video ?? '','id' => "",'control' => "url"])
+<!-- Hotel rating standard -->
+@include('admin.partials.utils.range_input', ['name'=> 'rating','label'=>'Hotel rating standard','value'=>$hotel->rating ?? '','id' => "",'min' => 0,'max' => 5,'step' => 0.1,'value' => $hotel->rating ?? 0])
 
-<div class="form-group row">
-    <label class="col-lg-5 col-form-label" for="hotel_video">Hotel video
-        <br /><small>Enter YouTube/Vimeo URL here</small>
-    </label>
-    <div class="col-lg-7">
-        <input type="text" class="form-control" id="hotel_video" name="hotel_video" value="{{$hotel->hotel_video ?? ''}}">
-    </div>
-</div>
+<!--Coupon Code -->
+@include('admin.partials.utils.input', ['name'=> 'coupon_code','label'=>'Coupon Code','value'=>$hotel->coupon_code ?? '','id' => ""])
 
-<div class="form-group row">
-    <label class="col-lg-5 col-form-label" for="rating">Hotel rating standard </label>
-    <div class="col-lg-7">
-        <input type="range" min="0" max="5" step="0.1" class="form-control" id="rating" name="rating" value="{{$hotel->rating ?? ''}}">
-    </div>
-</div>
-
-<div class="form-group row">
-    <label class="col-lg-5 col-form-label" for="coupon_code">Coupon Code
-    </label>
-    <div class="col-lg-7">
-        <input type="text" class="form-control" id="coupon_code" name="coupon_code" value="{{$hotel->coupon_code ?? ''}}">
-    </div>
-</div>
 
 @php
 $hotelDetail = $hotel->detail;
@@ -70,28 +45,15 @@ $hotelDetail = $hotel->detail;
     @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotelDetail->helpfulfacts ?? null, 'type' => 'helpfulfacts', 'btnTitle' => 'Add New'])
 </div>
 
-
-<div class="form-group row">
-    <label class="col-lg-5 col-form-label" for="save_pocket">Save Your Pocket
-    </label>
-    <div class="col-lg-7">
-        <textarea class="form-control" id="save_pocket" name="save_pocket" >{{$hotelDetail->save_pocket ?? ''}}</textarea>
-    </div>
-</div>
-
+<!-- Save Your Pocket -->
+@include('admin.partials.utils.textarea', ['name'=> 'save_pocket','label'=>'Save Your Pocket','value'=>$hotelDetail->save_pocket ?? ''])
 
 <div class="border p-2 mb-2">
     <h4>Save Your Pocket PDF Data</h4>
     @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotelDetail->pocketPDF ?? null, 'type' => 'pocketPDF', 'btnTitle' => 'Add New'])
 </div>
-
-<div class="form-group row">
-    <label class="col-lg-5 col-form-label" for="save_environment">Save The Environment
-    </label>
-    <div class="col-lg-7">
-        <textarea class="form-control" id="save_environment" name="save_environment" >{{$hotelDetail->save_environment ?? ''}}</textarea>
-    </div>
-</div>
+<!-- Save The Environment -->
+@include('admin.partials.utils.textarea', ['name'=> 'save_environment','label'=>'Save The Environment','value'=>$hotelDetail->save_environment ?? ''])
 
 <div class="border p-2 mb-2">
     <h4>Land Mark</h4>
@@ -118,7 +80,7 @@ $hotelDetail = $hotel->detail;
     @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotelDetail->eventmeeting ?? null, 'type' => 'eventmeeting', 'btnTitle' => 'Add New'])
 </div>
 
-<div class="form-group row">
+{{--<div class="form-group row">
     <label class="col-lg-5 col-form-label" for="tourism_zone">Tourism Zone
     </label>
     <div class="col-lg-7">
@@ -136,41 +98,24 @@ $hotelDetail = $hotel->detail;
 <div class="border p-2 mb-2">
     <h4>Tourism Zone PDF Data</h4>
     @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotelDetail->tourismzonepdf ?? null, 'type' => 'tourismzonepdf', 'btnTitle' => 'Add New'])
-</div>
+</div>--}}
 
 <div class="border p-2 mb-2">
     <h4>Activities</h4>
     @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotelDetail->activities ?? null, 'type' => 'activities', 'btnTitle' => 'Add New'])
 </div>
-
-<div class="form-group row">
-    <label class="col-lg-5 col-form-label" for="room_amenities">Rooms Amenities</label>
-    <div class="col-lg-7">
-        <textarea class="form-control" id="room_amenities" name="room_amenities" >{{$hotelDetail->room_amenities ?? ''}}</textarea>
-    </div>
-</div>
+<!-- Rooms Amenities -->
+@include('admin.partials.utils.textarea', ['name'=> 'room_amenities','label'=>'Rooms Amenities','value'=>$hotelDetail->room_amenities ?? '','rows'=>8])
 
 <div class="border p-2 mb-2">
     <h4>Transport</h4>
     @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotelDetail->transport ?? null, 'type' => 'transport', 'btnTitle' => 'Add New'])
 </div>
 
-
-<div class="form-group row">
-    <label class="col-lg-5 col-form-label" for="payment_mode">Payment mode</label>
-    <div class="col-lg-7">
-        <textarea class="form-control" id="payment_mode" name="payment_mode" >{{$hotelDetail->payment_mode ?? ''}}</textarea>
-    </div>
-</div>
-
-
-<div class="form-group row">
-    <label class="col-lg-5 col-form-label" for="id_proofs">ID Proofs</label>
-    <div class="col-lg-7">
-        <textarea class="form-control" id="id_proofs" name="id_proofs" >{{$hotelDetail->id_proofs ?? ''}}</textarea>
-    </div>
-</div>
-
+<!-- Payment mode -->
+@include('admin.partials.utils.textarea', ['name'=> 'payment_mode','label'=>'Payment mode','value'=>$hotelDetail->payment_mode ?? '','rows'=>5])
+<!-- ID Proofs -->
+@include('admin.partials.utils.textarea', ['name'=> 'id_proofs','label'=>'ID Proofs','value'=>$hotelDetail->id_proofs ?? '','rows'=>5])
 
 <div class="border p-2 mb-2">
     <h4>Emergency Links</h4>

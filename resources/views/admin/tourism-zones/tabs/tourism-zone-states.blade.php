@@ -1,0 +1,1 @@
+@include('admin.partials.utils.select_box', ['items' => $states, 'name'=> 'state_id','selected'=>$tourism_zone->state_id ?? "",'label'=>'States'])

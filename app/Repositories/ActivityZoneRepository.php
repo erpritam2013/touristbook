@@ -15,6 +15,10 @@ class ActivityZoneRepository implements ActivityZoneRepositoryInterface
     {
         return ActivityZone::findOrFail($ActivityZoneId);
     }
+    public function getActivityZoneByCountry($country)
+    {
+        return ActivityZone::where('country',$country)->get(['id','title']);
+    }
     public function deleteActivityZone($ActivityZoneId)
     {
         ActivityZone::destroy($ActivityZoneId);

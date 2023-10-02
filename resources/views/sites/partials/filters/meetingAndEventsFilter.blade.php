@@ -1,5 +1,8 @@
 <div class="mb-left">
-    <label for="form_meeting" class="form-label">Meetings and Events</label>
+     <div class="mb-left-title">
+     <label for="form_meeting" class="form-label">Meetings and Events</label>
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
+    </div>
     <div class="form-group">
         @if(!empty($filterMeetingEvents))
         <ul class="list-unstyled mb-0">

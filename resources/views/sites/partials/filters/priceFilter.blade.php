@@ -1,8 +1,11 @@
 <div class="mb-left">
+    <div class="mb-left-title">
     <label for="form_prices" class="form-label">Filter Price</label>
+     <i class="fa fa-angle-up" aria-hidden="true"></i>
+    </div>
     <div class="form-group">
         @if(!empty($filterPriceRanges))
-        <ul class="list-unstyled mb-0">
+        <ul class="list-unstyled mb-0 price-filter">
             @foreach($filterPriceRanges as $key=>$priceRange)
             <li>
                 <div class="custom-control custom-checkbox">
@@ -15,7 +18,7 @@
         </ul>
         @endif
 
-        <a href="javascript:void(0)" class="btn btn-outline-dark button btn-filter-price">Apply</a>
+        <a href="javascript:void(0)" class="btn btn-sm btn-grad text-white mb-0 btn-filter-price">Apply</a>
 
     </div>
 
