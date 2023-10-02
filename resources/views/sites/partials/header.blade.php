@@ -13,7 +13,7 @@
                             <button type="button" class="btn btn-grad border-radius-left-0 mb-0">Search</button>
                         </div>
                     </form>
-                    <p class="small mt-2 mb-0"><strong>e.g.</strong>Template, TravelGo, WordPress </p>
+                    <p class="small mt-2 mb-0"><strong>e.g.</strong>Template, Tourist Book, WordPress </p>
                 </div>
                 <a class="position-absolute top-0 right-0 mt-3 mr-3" data-toggle="collapse" href="#search-open"><i
                         class="fas fa-window-close"></i></a>
@@ -47,7 +47,7 @@
                         <li class="nav-item mr-3"> <a class="navbar-link" href="#"><strong>Phone:</strong> (024)
                                 123-1457</a> </li>
                         <li class="nav-item mr-3"> <a class="navbar-link" href="#"><strong>Email:</strong>
-                                help@TravelGo.com</a> </li>
+                                help@Tourist Book.com</a> </li>
                     </ul>
                 </div>
 
@@ -86,7 +86,7 @@
     <nav class="navbar navbar-expand-lg">
         <div class="container">
             <!-- Logo -->
-            <a class="navbar-brand" href="index-2.html"> <img src="{{asset('sites/images/tourist-book-logo-color.webp')}}" alt="travelgo"> </a>
+            <a class="navbar-brand" href="/"> <img src="{{asset('sites/images/tourist-book-logo-color.webp')}}" alt="Tourist Book"> </a>
             <!-- Menu opener button -->
             <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
                 data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
