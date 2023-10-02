@@ -569,7 +569,7 @@
     <!-- =======================
               service -->
 
-    <section class="Categories pt80 pb60 Categories-home">
+    {{--<section class="Categories pt80 pb60 Categories-home">
         <div class="container">
             <div class="row mb-5">
                 <div class="col-md-8">
@@ -891,12 +891,12 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>--}}
 
 
 
 
-    <section class="bg-light pt80 pb60 solutions">
+    <section class="bg-light pt80 pb60 solutions" style="background-color: #fff!important;">
         <div class="container">
             <div class="row">
                 <div class="col-md-8 mx-auto text-center mb-5">
@@ -937,7 +937,7 @@
 
 
 
-    <section class="pricing pricing-center whiteBG pb60">
+    {{--<section class="pricing pricing-center whiteBG pb60">
         <div class="container">
             <div class="row">
                 <div class="col-12 col-lg-8 mx-auto mb-5">
@@ -988,5 +988,5 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>--}}
 @endsection
