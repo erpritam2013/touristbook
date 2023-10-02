@@ -14,20 +14,8 @@
 @include('admin.partials.utils.media', ['name'=> 'image','label'=>'Feature image','desc'=>"Upload feature image for this location",'value'=>$location->logo ?? '','id' => ""])
 
 <hr>
-<div class="form-group row">
-   
-
-    <div class="col-lg-12">
-         <label class="subform-card-label" for="location-as-feature">Set location as feature</label>
-         <p>ON: Set this location to be featured</p>
-        <label class="col-form-label">
-            <input type="radio" name="is_featured" value="1" {!!get_edit_select_check_pvr_old_value('is_featured', $location ?? "" ,'is_featured',1, 'checked' )!!} id="location-as-feature">&nbsp;On
-        </label>
-        <label class="col-form-label">
-            <input type="radio" name="is_featured" {!!get_edit_select_check_pvr_old_value('status', $location ?? "" ,'is_featured',0, 'checked' )!!} value="0" id="location-as-feature">&nbsp;Off
-        </label>
-    </div>
-</div>
+<!-- Set location as feature -->
+@include('admin.partials.utils.radio_input', ['name'=> 'is_featured','label'=>'Set location as feature','desc'=>'ON: Set this location to be featured','item'=>$location ?? '','id' => "",'input' => ["On" => 1,"Off" => 0],'on_off_switch'=>true,'label_class'=>['off-switch','on-switch']])
 <hr>
 <div class="form-group row">
     

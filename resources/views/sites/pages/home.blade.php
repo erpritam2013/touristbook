@@ -7,7 +7,7 @@
         style="background:url({{asset('sites/images/hero-img.jpg')}}) no-repeat 65% 0%; background-size:110% 125%;">
         <div class="container h-100">
             <div class="row justify-content-between align-items-center h-100">
-                <div class="col-md-12 mb-7">
+                <div class="col-md-8 mb-7">
                     <h3 class="white-text display-4 font-weight-bold">Hi There! </h3>
                     <p class="white-text">Where would you like to go?</p>
 
@@ -20,22 +20,22 @@
                                             <input id="tab1" type="radio" name="tabs" checked>
                                             <label for="tab1"><i class="fas fa-utensils"></i><span>Hotels</span></label>
                                             <input id="tab2" type="radio" name="tabs">
-                                            <label for="tab2"><i class="fas fa-helicopter"></i><span>Flights</span></label>
+                                            <label for="tab2"><i class="fas fa-map-marker"></i><span>Destination</span></label>
                                             <input id="tab3" type="radio" name="tabs">
-                                            <label for="tab3"><i class="fas fa-car-side"></i><span>Cars</span></label>
-                                            <input id="tab4" type="radio" name="tabs">
-                                            <label for="tab4"><i class="fas fa-ship"></i><span>Cruises</span></label>
+                                           <label for="tab3"><i class="fas fa-hiking"></i><span>Activity</span></label>
+                                             {{--<input id="tab4" type="radio" name="tabs">
+                                            <label for="tab4"><i class="fas fa-ship"></i><span>Cruises</span></label>--}}
                                             <input id="tab5" type="radio" name="tabs">
-                                            <label for="tab5"><i class="fas fa-route"></i><span>Tours</span></label>
+                                            <label for="tab5"><i class="fas fa-route"></i><span>Tour Packages</span></label>
                                             <section id="content1" class="tab-content">
                                                 <div class="row">
-                                                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 padding8">
+                                                    <div class="col-lg-10 col-md-6 col-sm-6 col-xs-12 padding8">
                                                         <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
                                                             <input class="form-control" type="text"
-                                                                placeholder="City, Point of Interest or U.S. Zip Code">
+                                                                placeholder="Search Hotel By Location....">
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
+                                                    {{--<div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
                                                         <div class="form-group"> <span class="far fa-calendar-alt"></span>
                                                             <input class="form-control" type="text" id="datepicker" autocomplete="off"
                                                                 placeholder="Check-in">
@@ -70,7 +70,7 @@
                                                                 <option value="location5">05</option>
                                                             </select>
                                                         </div>
-                                                    </div>
+                                                    </div>--}}
                                                     <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
                                                         <div class="form-group">
                                                             <button class="btn btn-primary btn-lg btn-grad" type="submit">Search</button>
@@ -78,15 +78,15 @@
                                                     </div>
                                                 </div>
                                             </section>
-                                            <section id="content2" class="tab-content">
+                                           <section id="content2" class="tab-content">
                                                 <div class="row">
-                                                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 padding8">
+                                                    <div class="col-lg-10 col-md-6 col-sm-6 col-xs-12 padding8">
                                                         <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
                                                             <input class="form-control" type="text"
-                                                                placeholder="From : City, Airport, U.S. Zip">
+                                                                placeholder="Search Destination By Location....">
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 padding8">
+                                                     {{--<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 padding8">
                                                         <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
                                                             <input class="form-control" type="text"
                                                                 placeholder="To : City, Airport, U.S. Zip">
@@ -103,7 +103,7 @@
                                                             <input class="form-control" type="text" id="datepicker-2"
                                                                 autocomplete="off" placeholder="Returning">
                                                         </div>
-                                                    </div>
+                                                    </div>--}}
                                                     <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
                                                         <div class="form-group">
                                                             <button class="btn btn-primary btn-lg btn-grad" type="submit">Search</button>
@@ -113,12 +113,12 @@
                                             </section>
                                             <section id="content3" class="tab-content">
                                                 <div class="row">
-                                                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 padding8">
+                                                    <div class="col-lg-10 col-md-6 col-sm-6 col-xs-12 padding8">
                                                         <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
-                                                            <input class="form-control" type="text" placeholder="Pick-up Location">
+                                                            <input class="form-control" type="text" placeholder="Search Activity By Location....">
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 padding8">
+                                                     {{--<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 padding8">
                                                         <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
                                                             <input class="form-control" type="text" placeholder="Drop-off Location">
                                                         </div>
@@ -134,7 +134,7 @@
                                                             <input class="form-control" type="text" id="datepicker-4"
                                                                 autocomplete="off" placeholder="Drop-ff Date">
                                                         </div>
-                                                    </div>
+                                                    </div>--}}
                                                     <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
                                                         <div class="form-group">
                                                             <button class="btn btn-primary btn-lg btn-grad" type="submit">Search</button>
@@ -142,7 +142,7 @@
                                                     </div>
                                                 </div>
                                             </section>
-                                            <section id="content4" class="tab-content">
+                                             {{--<section id="content4" class="tab-content">
                                                 <div class="row">
                                                     <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 padding8">
                                                         <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
@@ -184,16 +184,16 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </section>
+                                            </section>--}}
                                             <section id="content5" class="tab-content">
                                                 <div class="row">
-                                                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 padding8">
+                                                    <div class="col-lg-10 col-md-6 col-sm-6 col-xs-12 padding8">
                                                         <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
                                                             <input class="form-control" type="text"
-                                                                placeholder="From : City, Airport, U.S. Zip">
+                                                                placeholder="Search Package By Location....">
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 padding8">
+                                                    {{--<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 padding8">
                                                         <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
                                                             <input class="form-control" type="text"
                                                                 placeholder="To : City, Airport, U.S. Zip">
@@ -210,7 +210,7 @@
                                                             <input class="form-control" type="text" id="datepicker-7"
                                                                 autocomplete="off" placeholder="Returning">
                                                         </div>
-                                                    </div>
+                                                    </div>--}}
                                                     <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
                                                         <div class="form-group">
                                                             <button class="btn btn-primary btn-lg btn-grad" type="submit">Search</button>

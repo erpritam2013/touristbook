@@ -1,7 +1,7 @@
 <!-- =======================
  Banner innerpage -->
 <div class="innerpage-banner left bg-overlay-dark-7 py-7"
-    style="background:url({{$bannerUrl}}) repeat; background-size:cover;height:420px">
+    style="background:url({{$bannerUrl}}) repeat; background-size:cover;">
     <div class="container">
         <div class="row all-text-white">
             <div class="col-md-12 align-self-center">
