@@ -119,7 +119,7 @@ class PagesController extends Controller
         }
 
 
-        $hotels = $hotelQuery->groupBy('hotels.id')->paginate(8, ['*'], 'page', $pageNumber);
+        $hotels = $hotelQuery->groupBy('hotels.id')->paginate(12, ['*'], 'page', $pageNumber);
         // TODO: Include Status Check
         // $hotelQuery->where('status', Hotel::)
         return View::make('sites.partials.results.hotel', ['hotels' => $hotels, 'view' => $view]);
