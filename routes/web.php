@@ -46,6 +46,7 @@ Route::get('/', [PagesController::class, 'index'])->name('home');
 Route::get('/hotels', [PagesController::class, 'hotels'])->name('hotels');
 
 Route::get('/get-hotels/{view}', [PagesController::class, 'getHotels'])->name('get-hotels');
+Route::get('/get-location-states', [PagesController::class, 'getLocationState'])->name('get-location-state');
 
 
 
@@ -209,7 +210,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::prefix('tourism-zones')->name('tourism-zones.')->group(function() {
     Route::resource('/', TourismZoneController::class)->parameters(['' => 'tourism_zone']);
     });
-  
+
     Route::delete('tourism-zone/bulk-delete', [TourismZoneController::class,'bulk_delete'])->name('tourism-zones.bulk-delete');
     Route::get('tourism-zone/changeStatus', [TourismZoneController::class,'changeStatus'])->name('changeStatusTourismZone');
 
@@ -227,9 +228,9 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::prefix('activities')->name('activities.')->group(function() {
     Route::resource('/', ActivityController::class)->parameters([''=>'activity']);
     });
-    
+
     Route::delete('activity/bulk-delete', [ActivityController::class,'bulk_delete'])->name('activities.bulk-delete');
-    
+
     Route::get('activity/country/activity-zones', [ActivityController::class,'ActivityZoneByCountry'])->name('ActivityZoneByCountry');
 
     Route::get('activity/changeStatus', [ActivityController::class,'changeStatus'])->name('changeStatusActivity');
