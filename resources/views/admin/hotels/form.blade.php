@@ -14,7 +14,9 @@
         </div>
         <div class="col-xl-4">
             @include('admin.hotels.partials.publish-card', ['hotel'=>$hotel ?? null])
+             @include('admin.partials.cards.featured-image', ['item'=> $hotel])
             @include('admin.partials.cards.facilities', ['facilities'=> $facilities , 'selected'=> $hotel->facilities->pluck('id')->toArray() ?? []])
+
 
             @include('admin.partials.cards.amenities', ['amenities'=> $amenities , 'selected'=>$hotel->amenities->pluck('id')->toArray() ?? []])
 

@@ -28,26 +28,22 @@
             <div class="d-flex justify-content-between align-items-center">
                 <!-- navbar top Left-->
                 <div class="d-flex align-items-center">
-                    <!-- Language -->
-                    <div class="dropdown"> <a class="dropdown-toggle" href="#" role="button"
-                            id="dropdownLanguage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="dropdown-item-icon" src="{{asset('sites/images/flag/uk.svg')}}" alt=""> English </a>
-                        <div class="dropdown-menu mt-2 shadow" aria-labelledby="dropdownLanguage"> <span
-                                class="dropdown-item-text">Select language</span>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"><img class="dropdown-item-icon"
-                                    src="{{asset('sites/images/flag/sp.svg')}}" alt=""> Español</a> <a class="dropdown-item"
-                                href="#"><img class="dropdown-item-icon" src="{{asset('sites/images/flag/fr.svg')}}" alt="">
-                                Français</a> <a class="dropdown-item" href="#"><img class="dropdown-item-icon"
-                                    src="{{asset('sites/images/flag/gr.svg')}}" alt=""> Deutsch</a>
-                        </div>
-                    </div>
+
+                      <!-- top social -->
+                    <ul class="social-icons">
+                        <li class="social-icons-item social-facebook m-0"> <a class="social-icons-link w-auto px-2"
+                                href="#"><i class="fab fa-facebook-f"></i></a> </li>
+                        <li class="social-icons-item social-instagram m-0"> <a class="social-icons-link w-auto px-2"
+                                href="#"><i class="fab fa-twitter"></i></a> </li>
+                        <li class="social-icons-item social-twitter m-0"> <a class="social-icons-link w-auto pl-2"
+                                href="#"><i class="fab fa-instagram"></i></a> </li>
+                    </ul>
+                   
                     <!-- Top info -->
                     <ul class="nav list-unstyled ml-3">
-                        <li class="nav-item mr-3"> <a class="navbar-link" href="#"><strong>Phone:</strong> (024)
-                                123-1457</a> </li>
-                        <li class="nav-item mr-3"> <a class="navbar-link" href="#"><strong>Email:</strong>
-                                help@Tourist Book.com</a> </li>
+                        <li class="nav-item mr-3"> <a class="navbar-link" href="javascript:void(0)"><i class="fas fa-phone"></i>&nbsp;+91 98177-02160, 61, 62, 63</a> </li>
+                        <li class="nav-item mr-3"> <a class="navbar-link" href="mail:to"><i class="fas fa-envelope"></i>&nbsp;
+                                touristbook77@gmail.com</a> </li>
                     </ul>
                 </div>
 
@@ -66,15 +62,22 @@
                     <ul class="nav">
                         <li class="nav-item"> <a class="nav-link" href="#">Contact</a> </li>
                     </ul>
-                    <!-- top social -->
-                    <ul class="social-icons">
-                        <li class="social-icons-item social-facebook m-0"> <a class="social-icons-link w-auto px-2"
-                                href="#"><i class="fab fa-facebook-f"></i></a> </li>
-                        <li class="social-icons-item social-instagram m-0"> <a class="social-icons-link w-auto px-2"
-                                href="#"><i class="fab fa-twitter"></i></a> </li>
-                        <li class="social-icons-item social-twitter m-0"> <a class="social-icons-link w-auto pl-2"
-                                href="#"><i class="fab fa-instagram"></i></a> </li>
-                    </ul>
+                  
+
+                     <!-- Language -->
+                    <div class="dropdown"> <a class="dropdown-toggle" href="#" role="button"
+                            id="dropdownLanguage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img class="dropdown-item-icon" src="{{asset('sites/images/flag/uk.svg')}}" alt=""> English </a>
+                        <div class="dropdown-menu mt-2 shadow" aria-labelledby="dropdownLanguage"> <span
+                                class="dropdown-item-text">Select language</span>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#"><img class="dropdown-item-icon"
+                                    src="{{asset('sites/images/flag/sp.svg')}}" alt=""> Español</a> <a class="dropdown-item"
+                                href="#"><img class="dropdown-item-icon" src="{{asset('sites/images/flag/fr.svg')}}" alt="">
+                                Français</a> <a class="dropdown-item" href="#"><img class="dropdown-item-icon"
+                                    src="{{asset('sites/images/flag/gr.svg')}}" alt=""> Deutsch</a>
+                        </div>
+                    </div>
 
                 </div>
             </div>

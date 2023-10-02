@@ -20,6 +20,7 @@
         </div>
         <div class="col-xl-4">
             @include('admin.activities.partials.publish-card', ['activity'=>$activity ?? null])
+             @include('admin.partials.cards.featured-image', ['item'=> $activity])
             @include('admin.partials.cards.term-activity-lists', ['term_activity_lists'=> $term_activity_lists , 'selected'=> $activity->term_activity_lists->pluck('id')->toArray() ?? []])
 
 

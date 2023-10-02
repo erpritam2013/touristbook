@@ -19594,4 +19594,24 @@ input[type="checkbox"]:checked:after {
  
     background: #fba009!important;
 }
+body .sidebar-icon-touristbook{
+    font-size: 1.125rem;
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0 0.4375rem;
+    font-weight: 700;
+    position: relative;
+    top: -2px;
+}
+
+.f-custom-css {
+	font-size: 30px;
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 100px;
+    padding: 15px;
+    font-weight: 900;
+    display: inline-block;
+    cursor: pointer;
+}
 /*# sourceMappingURL=style.css.map */
