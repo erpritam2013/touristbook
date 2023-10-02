@@ -10650,6 +10650,58 @@ background: #fba009;
     border-left-style: solid !important;
 }
 
+.container.search-box {
+    position: absolute;
+    top: 70%;
+    z-index: 99999;
+    left: 25%;
+    padding: 10px;
+    width: 50%;
+    background-color: #fff;
+    border: 1px solid #fff;
+    border-radius: 5px;
+}
+
+input.main-search-box {
+    height: 50px;
+    width: 100%;
+    font-size: 20px;
+    padding: 15px;
+    border: none;
+    color: #fba009;
+}
+
+input.main-search-box::placeholder {
+    color: #fba009;
+}
+label.lbl-search-box {
+    padding-left: 15px;
+    padding-top: 10px;
+    font-size: 13px;
+    color: #07509e;
+}
+.btn-wrapper {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.ui-autocomplete.ui-menu {
+    z-index: 999999 !important;
+    list-style: none;
+    width: 50% !important;
+    margin-top: 20px;
+    margin-left: -10px;
+}
+
+.ui-autocomplete.ui-menu li {
+    color: #07509e;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #fff;
+    border-radius: 5px;
+}
 
 
 
