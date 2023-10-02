@@ -7,6 +7,24 @@
         'bannerSubTitle' => '',
     ])
 
+    <div class="container search-box">
+        <form method="get">
+        <div class="row">
+            <div class="col-md-8">
+                <label for="input-search-box" class="lbl-search-box">Destination</label>
+                <input type="text" class="main-search-box" placeholder="Where are your going?" id="input-search-box" name="search" value="{{$searchTerm}}" />
+                <input type="hidden" name="source_type" value="{{$sourceType}}" />
+                <input type="hidden" name="source_id" value="{{$sourceId}}" />
+            </div>
+            <div class="col-md-4">
+                <div class="btn-wrapper">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+
     <div id="map-main" style="height:430px;"></div>
 
     <section class="pt80 pb80 cruise-grid-view">

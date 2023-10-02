@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hotel;
+use App\Models\Location;
+use App\Models\Terms\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 
@@ -13,9 +15,12 @@ class PagesController extends Controller
         return view('sites.pages.home');
     }
 
-    public function hotels() {
+    public function hotels(Request $request) {
+        $searchTerm = $request->get('search');
+        $sourceType = $request->get('source_type');
+        $sourceId = $request->get('source_id');
 
-        return view('sites.pages.hotels');
+        return view('sites.pages.hotels', compact('searchTerm', 'sourceType', 'sourceId'));
     }
 
     public function getHotels(Request $request, $view = "list") {
@@ -86,6 +91,28 @@ class PagesController extends Controller
             $hotelQuery->leftJoin('hotel_activities', 'hotel_activities.hotel_id', '=', 'hotels.id');
             $hotelQuery->whereIn('hotel_activities.activity_id', $activities);
         }
+
+        // Search Params
+        if($request->has('sourceType') && !empty($request->get('sourceType')) && $request->has('sourceId') && !empty($request->get('sourceId'))) {
+            $sourceType = $request->get('sourceType');
+            $sourceId = $request->get('sourceId');
+            if ($sourceType == "state") {
+                $hotelQuery->leftJoin('hotel_states', 'hotel_states.hotel_id', '=', 'hotels.id');
+                $hotelQuery->where('hotel_states.state_id', $sourceId);
+            }else {
+                $hotelQuery->leftJoin('hotel_locations', 'hotel_locations.hotel_id', '=', 'hotels.id');
+                $hotelQuery->where('hotel_locations.location_id', $sourceId);
+            }
+
+
+        }else if($request->has('searchTerm') && !empty($request->get('searchTerm'))) {
+            //search in address
+            $searchTerm = $request->get('searchTerm');
+            // TODO: JSON Treatment is Pending
+            $hotelQuery->where('hotels.hotel_attributes', 'LIKE', '%'.$searchTerm.'%');
+        }
+
+
         $pageNumber = 1;
         if($request->has('pageNo') && !empty($request->get('pageNo'))) {
             $pageNumber = $request->get('pageNo');
@@ -96,6 +123,33 @@ class PagesController extends Controller
         // TODO: Include Status Check
         // $hotelQuery->where('status', Hotel::)
         return View::make('sites.partials.results.hotel', ['hotels' => $hotels, 'view' => $view]);
+
+    }
+
+    public function getLocationState(Request $request) {
+        $term = $request->get('term');
+        $locationQ = Location::selectRaw('id, name, "location" as source_type ')
+                            ->where('status', 1)
+                            ->where('name', "like", $term.'%');
+        $stateQ = State::selectRaw('id, name, "state" as source_type ')
+                        ->where('status', 1)
+                        ->where('name', "like", $term.'%')
+                        ->union($locationQ)
+                        ->get();
+
+        $results = [];
+        if($stateQ->isNotEmpty()) {
+            foreach($stateQ as $stateLocation) {
+                array_push($results, [
+                    "id" => $stateLocation->id,
+                    "label" => $stateLocation->name,
+                    "value" => $stateLocation->name,
+                    "sourceType" => $stateLocation->source_type
+                ]);
+            }
+        }
+
+        return response()->json($results, 200);
 
     }
 }
