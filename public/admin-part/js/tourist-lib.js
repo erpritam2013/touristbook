@@ -275,10 +275,10 @@ $(document).ready(function () {
         onPlaceChanged();
     });
 
-    latitudeTextbox.onchange = onPlaceChanged;
-    longitudeTextbox.onchange = onPlaceChanged;
-    zoomTextbox.onchange = onPlaceChanged;
-    zoomTextbox.onkeyup = onPlaceChanged;
+    if(latitudeTextbox) latitudeTextbox.onchange = onPlaceChanged;
+    if(longitudeTextbox) longitudeTextbox.onchange = onPlaceChanged;
+    if(zoomTextbox) zoomTextbox.onchange = onPlaceChanged;
+    if(zoomTextbox) zoomTextbox.onkeyup = onPlaceChanged;
 
     // Media JS
 
