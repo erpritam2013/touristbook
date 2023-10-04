@@ -88,9 +88,9 @@
             });
             allMarkers.push(marker);
             var ib = new InfoBox();
-            google.maps.event.addListener(ib, "domready", function () {
-                cardRaining()
-            });
+            // google.maps.event.addListener(ib, "domready", function () {
+            //     cardRaining(ib)
+            // });
             google.maps.event.addListener(marker, 'click', (function (marker, i) {
                 return function () {
                     ib.setOptions(boxOptions);

@@ -2,7 +2,7 @@
     @if ($hotels->isNotEmpty())
         @foreach ($hotels as $key => $hotel)
             <div class="col-md-6 col-sm-6 col-xs-12">
-                <div class="listroBox">
+                <div class="listroBox" latitude="{{$hotel->latitude}}" longitude="{{$hotel->longitude}}">
                     <figure> <a href="hotel-detailed.html" class="wishlist_bt"></a> <a href="hotel-detailed.html"><img
                                 src="/sites/images/hotels/room6.jpg" class="img-fluid" alt="">
                             <div class="read_more"><span>Read more</span></div>
