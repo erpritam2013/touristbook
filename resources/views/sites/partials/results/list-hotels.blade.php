@@ -6,7 +6,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="row listroBox">
+                        <div class="row listroBox" latitude="{{$hotel->latitude}}" longitude="{{$hotel->longitude}}">
                             <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 Nopadding">
                                 <figure> <a href="hotel-detailed.html" class="wishlist_bt"></a> <a
                                         href="hotel-detailed.html"><img src="/sites/images/hotels/room6.jpg"
