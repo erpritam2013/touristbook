@@ -53,17 +53,17 @@
     <script src="{{asset('sites/js/bootstrap-datepicker.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('sites/js/jquery-ui.min.js')}}" type="text/javascript"></script>
 
-    <script src="{{asset('sites/js/common.js')}}" type="text/javascript"></script>
 
 
     <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCF8MnYK1Ft-lPa3_B6rirg2IJzptB4m1Y&v=weekly&libraries=places"
     defer
     ></script>
+    <script src="{{asset('sites/js/common.js')}}" type="text/javascript" defer></script>
 
-    <script src="{{asset('sites/js/map_infobox.js')}}" type="text/javascript" defer></script>
+    {{-- <script src="{{asset('sites/js/map_infobox.js')}}" type="text/javascript" defer></script>
     <script src="{{asset('sites/js/markerclusterer.js')}}" type="text/javascript" defer></script>
-    <script src="{{asset('sites/js/maps.js')}}" type="text/javascript" defer></script>
+    <script src="{{asset('sites/js/maps.js')}}" type="text/javascript" defer></script> --}}
 </body>
 
 
