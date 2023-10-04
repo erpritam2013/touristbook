@@ -21,6 +21,7 @@
                
                     @php
                         $elemClass = isset($typeFields[$controlId]['class']) ? $typeFields[$controlId]['class'] : '';
+                        $desc = isset($typeFields[$controlId]['desc']) ? $typeFields[$controlId]['desc'] : '';
                     @endphp
                     @php
                         $hideClass = isset($typeFields[$controlId]['hide']) ? $typeFields[$controlId]['hide'] : '';
@@ -31,6 +32,9 @@
                 <div class="form-group row {{$hideClass}}">
                     <div class="col-lg-12">
                         <label class="subform-card-label">{{ $typeFields[$controlId]['label'] }}</label>
+                        @if(!empty($desc))
+                        <p>{{$desc}}</p>
+                        @endif
                         @if($typeFields[$controlId]['control'] == "text")
                             <input type="text" class="form-control {{$elemClass}} " name="{{$type}}[{{$key}}][{{$controlId}}]" value="{{$value ?? ''}}" id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}" placeholder="Enter {{$typeFields[$controlId]['label']}}...">
                         @elseif($typeFields[$controlId]['control'] == "url")

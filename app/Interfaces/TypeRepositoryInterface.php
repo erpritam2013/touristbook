@@ -14,4 +14,5 @@ interface TypeRepositoryInterface
 
     public function getActiveTypesList($type);
     public function getActiveLocationTypesList();
+    public function getActiveRoomTypesList();
 }

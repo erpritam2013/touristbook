@@ -53,7 +53,7 @@
             @endif
             @endif
             <label class="col-form-label {{$set_label_class ?? ''}}">
-                <input type="radio" name="{{$name}}" value="{{$input_value}}" {!!get_edit_select_check_pvr_old_value($name, $item ?? "" ,$name,$input_value, 'checked' )!!} id="{{$name}}-{{$input_value}}">&nbsp;{{$input_key}}
+                <input type="radio" name="{{$name}}" value="{{$input_value}}" {!!get_edit_select_check_pvr_old_value($name, $item ?? "" ,$name,$input_value, 'checked' )!!} id="{{$name}}-{{$input_value}}" class="{{$class ?? ''}}">&nbsp;{{$input_key}}
             </label>
             @endforeach
 

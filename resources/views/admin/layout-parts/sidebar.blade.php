@@ -33,6 +33,8 @@
                                 <li class="{{matchRouteName('admin.terms.attractions.index')}}"><a href="{{route('admin.terms.attractions.index')}}">Attractions</a></li>
                                 <li class="{{matchRouteName('admin.terms.term-activity-lists.index')}}"><a href="{{route('admin.terms.term-activity-lists.index')}}">Term Activity Lists</a></li>
                                 <li class="{{matchRouteName('admin.terms.types.index')}}"><a href="{{route('admin.terms.types.index')}}">Types</a></li>
+                                <li class="{{matchRouteName('admin.terms.categories.index')}}"><a href="{{route('admin.terms.categories.index')}}">Categories</a></li>
+                                <li class="{{matchRouteName('admin.terms.tags.index')}}"><a href="{{route('admin.terms.tags.index')}}">Tags</a></li>
 
                             </ul>
                             {{--<li><a href="./app-profile.html">Profile</a></li>--}}

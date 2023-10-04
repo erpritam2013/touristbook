@@ -229,8 +229,26 @@ $('body .list-activity_zones').on('change','.activity_zones-url_link_status',fun
 
 /*on off button start js*/
 
+const show_st_room_external_booking_link = (v) =>{
+     if (v == 1) {
+          $('.st_room_external_booking_link').removeClass('d-none');
+        }else if(v == 0){
+          $('.st_room_external_booking_link').addClass('d-none');
+        }
+}
+
+if($('input[type="radio"]').hasClass('st_room_external_booking')){
+    if ($('.st_room_external_booking').is(':checked')) {
+
+    if ($('.st_room_external_booking:checked').val() == 1) {
+      show_st_room_external_booking_link(1);
+    }
+    }
+}
+
 $('input[type="radio"]').on('input',function(){
 
+    let current_input = $(this);
     let closest_parent = $(this).closest('.on-off-switch');
     let closest_a_i_parent = $(this).closest('.active-inactive-switch');
     let value = $(this).val();
@@ -263,6 +281,11 @@ $('input[type="radio"]').on('input',function(){
         $(closest_a_i_parent).find('label').removeClass('active-switch-checked');
       }
     }
+
+    if (current_input.hasClass('st_room_external_booking')) {
+        
+       show_st_room_external_booking_link(value);
+    } 
 
 });
 /*on off button end js*/

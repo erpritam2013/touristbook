@@ -2,7 +2,7 @@
 
 return [
 
-    'post_types' => ['Hotel', 'Tour', 'Car', 'Activity','Room', 'Flight', 'Rental','Location'],
+    'post_types' => ['Hotel', 'Tour', 'Car', 'Activity','Room', 'Flight', 'Rental','Location','Post'],
     'booking_options' => [
       'instant' => 'Instant Booking', 
       'enquire' => 'Enquire Booking', 

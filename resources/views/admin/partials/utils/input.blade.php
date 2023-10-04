@@ -1,4 +1,4 @@
-<div class="form-group row">
+<div class="form-group row {{$hidden_class ?? ''}}">
 @php  
 if(empty($id)){
    $id = (isset($name))? str_replace('[]', '',str_replace('_', '-', $name)):$name;

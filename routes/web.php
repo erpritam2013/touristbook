@@ -29,6 +29,8 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\TourismZoneController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,6 +46,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PagesController::class, 'index'])->name('home');
 Route::get('/hotels', [PagesController::class, 'hotels'])->name('hotels');
+Route::get('/about', [PagesController::class, 'about'])->name('about');
+Route::get('/blogs', [PagesController::class, 'blogs'])->name('blogs');
+Route::get('/destinations', [PagesController::class, 'destinations'])->name('destinations');
+Route::get('/activities', [PagesController::class, 'activities'])->name('activities');
+Route::get('/our-packages', [PagesController::class, 'our_packages'])->name('our-packages');
+Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
+Route::get('/connecting-partners', [PagesController::class, 'connecting_partners'])->name('connecting-partners');
 
 Route::get('/get-hotels/{view}', [PagesController::class, 'getHotels'])->name('get-hotels');
 Route::get('/get-location-states', [PagesController::class, 'getLocationState'])->name('get-location-state');
@@ -86,6 +95,15 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::delete('amenity/bulk-delete', [AmenityController::class,'bulk_delete'])->name('amenities.bulk-delete');
     Route::get('amenity/ajax-get', [AmenityController::class,'getAmenitiesAjax'])->name('ajaxGetAmenity');
     Route::get('amenity/changeStatus', [AmenityController::class,'changeStatus'])->name('changeStatusAmenity');
+    /*Categories Routes*/
+    Route::resource('categories', CategoryController::class);
+        Route::delete('category/bulk-delete', [CategoryController::class,'bulk_delete'])->name('categories.bulk-delete');
+    Route::get('category/ajax-get', [CategoryController::class,'getCategoriesAjax'])->name('ajaxGetCategory');
+    Route::get('category/changeStatus', [CategoryController::class,'changeStatus'])->name('changeStatusCategory');
+    /*Tags Routes*/
+    Route::resource('tags', TagController::class);
+        Route::delete('tag/bulk-delete', [TagController::class,'bulk_delete'])->name('tags.bulk-delete');
+    Route::get('tag/changeStatus', [TagController::class,'changeStatus'])->name('changeStatusTag');
 
     /*Medicare Assistance Routes*/
     Route::resource('medicare-assistances', MedicareAssistanceController::class);
@@ -171,12 +189,12 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::delete('hotel/bulk-delete', [HotelController::class,'bulk_delete'])->name('hotel.bulk-delete');
      Route::get('hotel/changeStatus', [HotelController::class,'changeStatus'])->name('changeStatusHotel');
 
-     // Hotel Resource
+     // Room Resource
     Route::resource('rooms', RoomController::class);
     Route::prefix('rooms')->name('rooms.')->group(function() {
     });
 
-    Route::delete('room/bulk-delete', [RoomController::class,'bulk_delete'])->name('room.bulk-delete');
+    Route::delete('room/bulk-delete', [RoomController::class,'bulk_delete'])->name('rooms.bulk-delete');
      Route::get('room/changeStatus', [RoomController::class,'changeStatus'])->name('changeStatusRoom');
 
      // Location Resource

@@ -70,4 +70,10 @@ class FacilityRepository implements FacilityRepositoryInterface
         $type = Facility::HOTEL_TYPE;
         return $this->getActiveFacilitiesList($type);
     }
+ // Get Active Room Type Facilities
+    public function getActiveRoomFacilitiesList()
+    {
+        $type = Facility::ROOM_TYPE;
+        return $this->getActiveFacilitiesList($type);
+    }
 }

@@ -29,7 +29,7 @@ if(empty($id)){
     <select class="form-control single-select-placeholder-touristbook {{$class ?? ''}}" id="{{$id}}" name="{{$name}}" {{$multiple}} {!!$attr ?? ""!!}>
         @if(!isset($first_empty_option))
         @if(isset($label) && !empty($label))
-        <option value="">Select {{ucwords($label)}}</option>
+        <option value="">Select {{$first_option_text ?? ucwords($label)}}</option>
         @else
         <option value="">--Select--</option>
         @endif

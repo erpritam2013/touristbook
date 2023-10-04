@@ -143,6 +143,24 @@ return [
             ]
 
         ],
+    'add_new_facility' => [
+            "fields" => [
+                "add_new_facility-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "add_new_facility-value" => [
+                    'label' => "Value",
+                    'control' => 'text'
+                ],
+                "add_new_facility-icon" => [
+                    'label' => "Icon",
+                    'control' => 'text',
+                    'desc' => 'Support: fonticon (eg: fa-facebook)'
+                ]
+            ]
+
+        ],
     'todo' => [
             "fields" => [
                 "todo-title" => [
