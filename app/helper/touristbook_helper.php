@@ -191,6 +191,19 @@ if (!function_exists('matchRouteName')) {
     return $active_class;
 }
 }
+if (!function_exists('matchSiteRouteName')) {    
+    function matchSiteRouteName($current_route=null){
+       $active_class = "";
+       if (!empty($current_route)) {
+        $routeName = getRouteName();
+        if ($routeName == $current_route) {
+            $active_class = 'active';
+        }
+    }
+    
+    return $active_class;
+}
+}
 if (!function_exists('matchRouteNameMatch')) {    
     function matchRouteNameMatch($current_route=null){
        $active_class = false;

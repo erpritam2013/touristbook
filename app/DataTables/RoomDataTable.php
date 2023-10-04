@@ -29,6 +29,8 @@ class RoomDataTable extends DataTable
                     return $html;
                 })->editColumn('created_at', function($row) {
                     return date('d-m-Y',strtotime($row->created_at));
+                })->editColumn('hotel_id', function($row) {
+                    return $row->hotels->name;
                 })->editColumn('updated_at', function($row) {
                     return date('d-m-Y',strtotime($row->updated_at));
                 })->addColumn('status', function($row) {
@@ -104,6 +106,7 @@ class RoomDataTable extends DataTable
             ->exportable(false)
             ->printable(false),
             Column::make('address'),
+            Column::make('hotel_id')->title('Hotel'),
             Column::make('status'),
             Column::make('created_at')->title('Created'),
             Column::make('updated_at')->title('Updated'),

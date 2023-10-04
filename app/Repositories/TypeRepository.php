@@ -67,4 +67,9 @@ class TypeRepository implements TypeRepositoryInterface
         $type = Type::LOCATION_TYPE;
         return $this->getActiveTypesList($type);
     }
+    // Get Active Location Type Types
+    public function getActiveRoomTypesList() {
+        $type = Type::ROOM_TYPE;
+        return $this->getActiveTypesList($type);
+    }
 }

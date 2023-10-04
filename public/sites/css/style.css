@@ -461,6 +461,9 @@ Header 1 Area CSS
  display: none;
 }
 }
+.ml-auto {
+    margin-left: unset!important;
+}
  @media (max-width: 991.98px) {
  .navbar-expand-lg > .container, .navbar-expand-lg > .container-fluid {
  padding-right: 0;
@@ -479,9 +482,15 @@ Header 1 Area CSS
  position: absolute;
 }
  .navbar-expand-lg .navbar-nav .nav-link {
-padding-left: 25px;
-font-size: 14px;
-font-weight: 600;
+    /* padding-left: 40px; */
+    /* font-size: 14px; */
+    /* font-weight: 600; */
+    /* text-transform: uppercase; */
+    display: block;
+    padding: 0px 25px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
 }
  .navbar-expand-lg > .container, .navbar-expand-lg > .container-fluid {
  flex-wrap: nowrap;
@@ -10703,12 +10712,16 @@ label.lbl-search-box {
 }
 
 .ui-autocomplete.ui-menu {
-    z-index: 999999 !important;
+    z-index: 1 !important;
     list-style: none;
     width: 50% !important;
     margin-top: 20px;
     margin-left: -10px;
+     left: 349px!important;
+    border-top: 1px solid #ddd;
 }
+
+
 
 .ui-autocomplete.ui-menu li {
     color: #07509e;

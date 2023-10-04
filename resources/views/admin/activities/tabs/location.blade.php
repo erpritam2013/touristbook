@@ -1,5 +1,5 @@
-@if(count($locations))
-<div class="card {{(count($locations) > 10)?'location-card':'location-card-padding'}}">
+@if($locations->count())
+<div class="card {{($locations->count() > 10)?'location-card':'location-card-padding'}}">
     <div class="card-header border-bottom">
         <h4 class="card-title">Locations</h4>
     </div>

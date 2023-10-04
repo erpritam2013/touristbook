@@ -22,6 +22,9 @@ class Hotel extends Model
 {
     use HasFactory, Sluggable;
 
+    const ACTIVE = 1;
+    const INACTIVE = 0;
+
     protected $guarded = [];
 
     protected $casts = [

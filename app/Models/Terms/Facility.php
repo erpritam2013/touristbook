@@ -15,6 +15,7 @@ class Facility extends Model
     const INACTIVE = 0;
 
     const HOTEL_TYPE = "Hotel";
+    const ROOM_TYPE = "Room";
     
     
     protected $fillable = [

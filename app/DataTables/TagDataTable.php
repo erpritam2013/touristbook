@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Terms\Type;
+use App\Models\Terms\Tag;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class TypeDataTable extends DataTable
+class TagDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -22,18 +22,10 @@ class TypeDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-         return (new EloquentDataTable($query))->addIndexColumn()->addColumn('icon',function($row){
-               if ($row->icon) {
-                return get_fontawesome_icon_html($row->icon,'fa-lg');
-               }elseif($row->lebal_type){
-               return $row->lebal_type;
-               }elseif($row->attachment){
-                return '<img src="'.$row->attachment.'" width="50">';
-               }
-            })->addColumn('action', function ($row) {
-                    $html = ' <a href="'.route("admin.terms.types.edit",$row->id).'" class="btn btn-primary" title="Edit"><i class="fa fa-edit"></i></a>';
-                    $html .= '<a href="'.route("admin.terms.types.show",$row->id).'" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>';
-                    $html .= '<a href="javascript:void(0);" class="btn btn-danger del_entity_form" title="Delete" item_id="'.$row->id.'" data-text="accessible"><i class="fa fa-trash"></i></a>';
+        return (new EloquentDataTable($query))->addIndexColumn()->addColumn('action', function ($row) {
+                    $html = ' <a href="'.route("admin.terms.tags.edit",$row->id).'" class="btn btn-primary" title="Edit"><i class="fa fa-edit"></i></a>';
+                    $html .= '<a href="'.route("admin.terms.tags.show",$row->id).'" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>';
+                    $html .= '<a href="javascript:void(0);" class="btn btn-danger del_entity_form" title="Delete" item_id="'.$row->id.'" data-text="tag"><i class="fa fa-trash"></i></a>';
                     return $html;
                 })->editColumn('parent_id', function($row) {
                     return get_parent_term($row,$row->parent_id);
@@ -46,19 +38,19 @@ class TypeDataTable extends DataTable
                     if ($row->status == 1) {
                        $checked = 'checked';
                     }
-                    return '<input data-id="'.$row->id.'" class="toggle-class" type="checkbox" data-size="sm" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url="'.route("admin.terms.changeStatusAccessible").'" data-on="Active" data-off="InActive" '.$checked.'>';
+                    return '<input data-id="'.$row->id.'" class="toggle-class" type="checkbox" data-size="sm" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url="'.route("admin.terms.changeStatusTag").'" data-on="Active" data-off="InActive" '.$checked.'>';
                 })->addColumn('del',function($row){
                  return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'">';
-            })->rawColumns(['status','action','icon','del']);
+            })->rawColumns(['status','action','del']);
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Terms\Type $model
+     * @param \App\Models\Tag $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Type $model): QueryBuilder
+    public function query(Tag $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -70,7 +62,7 @@ class TypeDataTable extends DataTable
      */
     public function html(): HtmlBuilder
     {
-       return $this->builder()
+        return $this->builder()
                     ->setTableId('touristbook-datatable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
@@ -94,8 +86,8 @@ class TypeDataTable extends DataTable
      */
     public function getColumns(): array
     {
-       return [
-            Column::make('del')->title('<input type="checkbox" class="css-control-input mr-2 select-all text-center" onchange="CustomSelectCheckboxAll(this);" '.$this->disabledInput().'>')->searchable(false)
+        return [
+            Column::make('del')->title('<input type="checkbox" class="css-control-input mr-2 select-all text-center" onchange="CustomSelectCheckboxAll(this);">')->searchable(false)
             ->orderable(false)
             ->exportable(false)
             ->printable(false)->width(5)
@@ -110,12 +102,11 @@ class TypeDataTable extends DataTable
             ->orderable(false)
             ->exportable(false)
             ->printable(false),
-            Column::make('icon')->title('Icon | Attachment |Type Lebal')->width(10)->addClass('text-center'),
             Column::make('parent_id')->title('Parent')->searchable(false)
             ->orderable(true)
             ->exportable(false)
             ->printable(false),
-            Column::make('type'),
+            Column::make('tag_type')->title('Type'),
             Column::make('status'),
             Column::make('created_at')->title('Created'),
             Column::make('updated_at')->title('Updated'),
@@ -127,8 +118,7 @@ class TypeDataTable extends DataTable
         ];
     }
 
-
-     /**
+      /**
      * Get Parameters.
      *
      * @return array
@@ -144,14 +134,14 @@ class TypeDataTable extends DataTable
         ];
     }
 
-      /**
+     /**
      * Get Status.
      *
      * @return bool
      */
     public function getCustomStatus(): bool
     {
-        return Type::count();
+        return Tag::count();
     }
 
     /**
@@ -177,6 +167,6 @@ class TypeDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Type_' . date('YmdHis');
+        return 'Tag_' . date('YmdHis');
     }
 }

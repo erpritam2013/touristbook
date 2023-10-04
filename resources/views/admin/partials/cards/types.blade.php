@@ -4,11 +4,26 @@
     </div>
     <div class="card-body">
         <div class="form-group row">
-            @include('admin.partials.utils.nested_checkbox_list', ['items' => $types, 'name'=> 'location_type', 'selected' => $selected])
+            @include('admin.partials.utils.nested_checkbox_list', ['items' => $types, 'name'=> 'type', 'selected' => $selected])
         </div>
     </div>
     <div class="card-footer term-footer">
-       
-       @include('admin.partials.utils.add_term', ['terms' => $types, 'field_name'=> 'location_types', 'term_id'=> 'location-type', 'term_type'=> 'type', 'term' => 'Type','post_type'=>$location])
+          @php $post = "";@endphp
+      @isset($hotel)
+       @php $post = $hotel;@endphp
+      @endisset
+      @isset($location)
+       @php $post = $location;@endphp
+      @endisset
+      @isset($tour)
+       @php $post = $tour;@endphp
+      @endisset
+      @isset($activity)
+       @php $post = $activity;@endphp
+      @endisset
+      @isset($room)
+       @php $post = $room;@endphp
+      @endisset
+       @include('admin.partials.utils.add_term', ['terms' => $types, 'field_name'=> 'types', 'term_id'=> 'type', 'term_type'=> 'type', 'term' => 'Type','post_type'=>$post ?? ""])
         </div>
 </div>
