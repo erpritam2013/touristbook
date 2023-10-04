@@ -2,6 +2,12 @@
     var base_url = $("#base-url").val();
     const moreLi = $(".more-li");
     const resultInfo = $("#result-info");
+    var map;
+    var markerIcon = {
+        anchor: new google.maps.Point(22, 16),
+        url: '/sites/images/marker.png',
+    }
+    var markers = [];
 
     moreLi.on("click", function () {
         $(this).parent().find(".li-hide").removeClass("li-hide");
@@ -20,8 +26,7 @@
 
     // Set up AJAX loader
     $.ajaxSetup({
-        beforeSend: showLoader,
-        complete: hideLoader,
+
     });
 
     const compiledCheckboxes = (selector) => {
@@ -104,9 +109,48 @@
         return params;
     };
 
+    function calculateZoomLevel() {
+        // Get the bounds of all of the markers.
+        var bounds = new google.maps.LatLngBounds();
+        for (var i = 0; i < markers.length; i++) {
+          bounds.extend(markers[i].getPosition());
+        }
+
+        // Calculate the zoom level required to fit all of the markers on the map.
+        var zoomLevel = map.getBoundsZoomLevel(bounds);
+
+        return zoomLevel;
+      }
+
     // Process the Result
     const processedResultInfo = (html) => {
         resultInfo.html(html);
+        if(markers.length > 0) {
+            for(let i=0; i<markers.length; i++) {
+                markers[i].setMap(null);
+            }
+        }
+        markers = []
+        setTimeout(()=>{
+            $('.listroBox').each(function() {
+                let longitude = $(this).attr("longitude");
+                let latitude = $(this).attr("latitude");
+                if(longitude && latitude){
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(latitude, longitude),
+                        map: map
+                    });
+
+                    markers.push(marker);
+                }
+            });
+            if(markers.length > 0) {
+                let firstMarker = markers[0];
+                map.setCenter(firstMarker.getPosition())
+                map.setZoom(calculateZoomLevel())
+            }
+
+        },0)
     };
 
     // Common Function to Hit and get data
@@ -119,6 +163,8 @@
             dataType: "html",
             url: endpoint,
             data: options,
+            beforeSend: showLoader,
+            complete: hideLoader,
             success: function (data) {
                 processedResultInfo(data);
             },
@@ -127,6 +173,34 @@
 
     // Initially Load Hotels
     fetchHotels("list", fetchParameters());
+
+    // Load Map
+    function loadMap() {
+        let mapElm = document.getElementById('map-main')
+        if(mapElm){
+            map = new google.maps.Map(mapElm, {
+                center: {
+                    lat: 28.7041,
+                    lng: 77.1025
+                },
+                zoom: 9,
+                panControl: false,
+                fullscreenControl: true,
+                navigationControl: false,
+                streetViewControl: false,
+                animation: google.maps.Animation.BOUNCE,
+                gestureHandling: 'cooperative',
+                // scrollwheel: false
+            });
+        }
+
+    }
+
+    loadMap();
+
+
+
+
 
     // View Changer Grid -> List -> Grid ---
     resultInfo.on("click", ".view-changer", function () {
