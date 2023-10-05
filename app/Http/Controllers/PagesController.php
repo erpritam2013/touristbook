@@ -68,7 +68,9 @@ class PagesController extends Controller
     public function getHotels(Request $request, $view = "list") {
 
         $hotelQuery = Hotel::query();
-        $hotelQuery->selectRaw(' hotels.*, GROUP_CONCAT(amenities.name) as facilities');
+        $hotelQuery->selectRaw(' hotels.*, hotel_details.latitude, hotel_details.longitude, GROUP_CONCAT(amenities.name) as facilities');
+
+        $hotelQuery->leftJoin('hotel_details', 'hotel_details.hotel_id', '=', 'hotels.id');
 
         $hotelQuery->leftJoin('hotel_amenities', 'hotel_amenities.hotel_id', '=', 'hotels.id');
         $hotelQuery->leftJoin('amenities', 'amenities.id', '=', 'hotel_amenities.amenity_id');
@@ -151,7 +153,7 @@ class PagesController extends Controller
             //search in address
             $searchTerm = $request->get('searchTerm');
             // TODO: JSON Treatment is Pending
-            $hotelQuery->where('hotels.hotel_attributes', 'LIKE', '%'.$searchTerm.'%');
+            $hotelQuery->where('hotels.address', 'LIKE', '%'.$searchTerm.'%');
         }
 
 
