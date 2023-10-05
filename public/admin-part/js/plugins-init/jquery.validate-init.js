@@ -68,6 +68,9 @@ jQuery(".form-valide").validate({
         "medicare_assistance_type": {
             required: !0
         },
+        "categories[]": {
+            required: !0
+        },
         "facility_type": {
             required: !0
         },
@@ -124,6 +127,10 @@ jQuery(".form-valide").validate({
             minlength: "Your name must consist of maximum 255 characters"
         },
 
+        "categories[]": {
+            required: "Please enter a valid categories",
+        },
+
         "title": {
             required: "Please enter a title",
             minlength: "Your title must consist of maximum 255 characters"
@@ -158,7 +165,13 @@ jQuery(".form-valide").validate({
     errorClass: "invalid-feedback animated fadeInUp",
     errorElement: "div",
     errorPlacement: function(e, a) {
+        if (a.attr('name') == 'categories[]') {
+        jQuery(a).parents(".form-group > ul").append(e)
+
+        }else{
         jQuery(a).parents(".form-group > div").append(e)
+
+        }
     },
     highlight: function(e) {
         jQuery(e).closest(".form-group").removeClass("is-invalid").addClass("is-invalid")

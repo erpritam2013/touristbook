@@ -19,16 +19,25 @@ $('body .dataTables_paginate .paginate_button').on('click',function(){
  $('.toggle-class').bootstrapToggle()
 });
 const hideInput = (input_class,input_id,e_status) =>{
+
+    if ($(`#${input_id}`).length != 0) {
+
     $(`.${input_class}`).addClass('d-none');
     $(`#${input_id}`).removeAttr('name');
     let existed_value = $(`#${input_id}`).data('existed_value');
+
     if (existed_value == "") {
+       
+
         $(`#${input_id}`).val('');
+
     }else{
 
        $(`#${input_id}`).val(existed_value);
 
    }
+   
+    }
 }
 
 const callAjax = (ajaxurl,data) => {
@@ -45,14 +54,17 @@ const callAjax = (ajaxurl,data) => {
 
 const showInput = (input_class,input_id) =>{
     $(`.${input_class}`).removeClass('d-none');
-    $(`#${input_id}`).attr('name','lebal_type');
+    $(`#${input_id}`).attr('name',input_id.replace('-','_'));
     let existed_value = $(`#${input_id}`).data('existed_value');
     if (existed_value == "") {
         $(`#${input_id}`).val('');
     }else{
 
         let existed_value = $(`#${input_id}`).data('existed_value');
+        if (typeof existed_value != 'undefined') {
+
         $(`#${input_id}`).val(existed_value);
+        }
         
     }
 }

@@ -8,7 +8,7 @@
    
         <!-- Excerpt -->
       
- @include('admin.partials.utils.textarea', ['name'=> 'excerpt','label'=>'Excerpt','rows'=>5,'value'=>$room->excerpt ?? '','id' => ""])
+ @include('admin.partials.utils.textarea', ['name'=> 'excerpt','label'=>'Excerpt','rows'=>5,'value'=>$post->excerpt ?? '','id' => ""])
        
 
     </div>

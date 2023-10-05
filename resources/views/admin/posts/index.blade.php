@@ -9,28 +9,31 @@
             <div class="card-header">
                 <h4 class="card-title">{{$title}}</h4>
                 <div align="right" class="all-a">
-                    @if($rooms)<a href="javascript:void(0);" class="btn btn-outline-danger bulk-delete btn-xs" style="display: none;">Bulk Delete</a>
-                    <form id='bulk_delete_entity_form' method="POST" action="{{route('admin.rooms.bulk-delete')}}" style="display: none" data-text="room">
+                    @if($posts)<a href="javascript:void(0);" class="btn btn-outline-danger bulk-delete btn-xs" style="display: none;">Bulk Delete</a>
+                    <form id='bulk_delete_entity_form' method="POST" action="{{route('admin.posts.bulk-delete')}}" style="display: none" data-text="post">
                       {{ csrf_field() }}
                       <input type="hidden" name="ids" id="ids" >
 
                       {{method_field('DELETE')}}
 
                   </form>@endif
-                  <a href="{{route('admin.rooms.create')}}" class="btn btn-outline-primary btn-xs">Add New Room</a>
+                  <a href="{{route('admin.posts.create')}}" class="btn btn-outline-primary btn-xs">Add New post</a>
               </div>
           </div>
 
-          <div class="card-body room_list entity-list">
+          <div class="card-body post_list entity-list">
             @if(Session::has('success'))
             {!!get_form_success_msg(Session::get('success'))!!}
+            @endif
+            @if(Session::has('error'))
+            {!!get_form_error_msg(Session::get('error'))!!}
             @endif
             
             <div class="table-responsive">
              {{ $dataTable->table() }}
          </div>
      </div>
-     <form id='delete_entity_form' method="POST" action="{{route('admin.rooms.index')}}" style="display: none">
+     <form id='delete_entity_form' method="POST" action="{{route('admin.posts.index')}}" style="display: none">
       {{ csrf_field() }}
 
       {{method_field('DELETE')}}

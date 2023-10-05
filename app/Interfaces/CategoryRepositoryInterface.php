@@ -13,6 +13,5 @@ interface CategoryRepositoryInterface
     public function getCategoriesByType(string $type);
 
     public function getActiveCategoriesList($type);
-    public function getActivePostCategoriesList();
     
 }

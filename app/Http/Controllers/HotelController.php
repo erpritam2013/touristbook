@@ -15,6 +15,8 @@ use App\Interfaces\PropertyTypeRepositoryInterface;
 use App\Interfaces\StateRepositoryInterface;
 use App\Interfaces\TermActivityRepositoryInterface;
 use App\Interfaces\TopServiceRepositoryInterface;
+use App\Http\Requests\StoreHotelRequest;
+use App\Http\Requests\UpdateHotelRequest;
 use App\Models\Hotel;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\JsonResponse;
@@ -142,7 +144,7 @@ class HotelController extends Controller
         return view('admin.hotels.edit', $data);
     }
 
-    public function store(Request $request)
+    public function store(StoreHotelRequest $request)
     {
         
         $hotelDetails = [
@@ -248,7 +250,7 @@ class HotelController extends Controller
 
         // return view('tasks.show', ['task' => $task]);
     }
-    public function update(Request $request, Hotel $hotel)
+    public function update(UpdateHotelRequest $request, Hotel $hotel)
     {
         $hotelDetails = [
             'name' => $request->name,
