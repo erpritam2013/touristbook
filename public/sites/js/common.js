@@ -109,17 +109,20 @@
         return params;
     };
 
-    function calculateZoomLevel() {
+    function getBoundsZoomLevel(bounds) {
+        // Calculate the zoom level required to fit all of the markers on the map.
+        map.fitBounds(bounds);
+    }
+
+    function calculateAndSetZoomLevel() {
         // Get the bounds of all of the markers.
-        var bounds = new google.maps.LatLngBounds();
-        for (var i = 0; i < markers.length; i++) {
+        let bounds = new google.maps.LatLngBounds();
+        for (let i = 0; i < markers.length; i++) {
           bounds.extend(markers[i].getPosition());
         }
-
         // Calculate the zoom level required to fit all of the markers on the map.
-        var zoomLevel = map.getBoundsZoomLevel(bounds);
+        getBoundsZoomLevel(bounds);
 
-        return zoomLevel;
       }
 
     // Process the Result
@@ -147,7 +150,12 @@
             if(markers.length > 0) {
                 let firstMarker = markers[0];
                 map.setCenter(firstMarker.getPosition())
-                map.setZoom(calculateZoomLevel())
+                calculateAndSetZoomLevel();
+
+                map.panTo(firstMarker.getPosition());
+
+                // Refresh Map
+                google.maps.event.trigger(map, 'resize');
             }
 
         },0)
@@ -155,7 +163,8 @@
 
     // Common Function to Hit and get data
     const fetchHotels = (view, options = {}) => {
-        console.log(options);
+        // TODO: Place check; so that it only works for hotel list page
+        // possibly add page in body class
         let endpoint = base_url + "/get-hotels/" + view;
 
         $.ajax({
@@ -184,13 +193,10 @@
                     lng: 77.1025
                 },
                 zoom: 9,
-                panControl: false,
+                panControl: true,
                 fullscreenControl: true,
-                navigationControl: false,
-                streetViewControl: false,
                 animation: google.maps.Animation.BOUNCE,
                 gestureHandling: 'cooperative',
-                // scrollwheel: false
             });
         }
 
