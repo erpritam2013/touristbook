@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
-@section('room_action', route('admin.rooms.store'))
-@section('room_form_method', method_field('POST'))
+@section('post_action', route('admin.posts.store'))
+@section('post_form_method', method_field('POST'))
 @section('title',$title)
 @section('content')
 <div class="container-fluid">
@@ -11,20 +11,22 @@
                 <div class="card-header">
                     <h4 class="card-title">{{$title}}</h4>
                     <div align="right">
-                        <a href="{{route('admin.rooms.index')}}" class="btn btn-dark"><i class="fa fa-arrow-right"></i> Back</a>
+                        <a href="{{route('admin.posts.index')}}" class="btn btn-dark"><i class="fa fa-arrow-right"></i> Back</a>
                     </div>
                 </div>
                 <div class="card-body">
                     @if(Session::has('success'))
                     {!!get_form_success_msg(Session::get('success'))!!}
                     @endif
+                    @if($errors->any())
+                    {!!get_body_error_msg($errors)!!}
+                    @endif
+        
                     <div class="form-validation">
-                     
-                        @include('admin.rooms.form', [
-                            'room' => $room,
-                            'facilities' => $facilities,
-                            'types' => $types,
-                            'hotels' => $hotels,
+                        @include('admin.posts.form', [
+                            'post' => $post,
+                            'categories' => $categories,
+                            'tags' => $tags,
                         ])
 
                     </div> <!-- Form Validation Tag End -->

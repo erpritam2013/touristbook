@@ -59,6 +59,8 @@ use App\Repositories\TagRepository;
 use Illuminate\Support\ServiceProvider;
 use App\Interfaces\TourismZoneRepositoryInterface;
 use App\Repositories\TourismZoneRepository;
+use App\Interfaces\PostRepositoryInterface;
+use App\Repositories\PostRepository;
 
 
 
@@ -100,6 +102,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(RoomRepositoryInterface::class, RoomRepository::class);
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
         $this->app->bind(TagRepositoryInterface::class, TagRepository::class);
+        $this->app->bind(PostRepositoryInterface::class, PostRepository::class);
 
 
     }

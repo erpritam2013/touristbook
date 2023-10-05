@@ -229,11 +229,13 @@ if (!function_exists('getIconColorClass')) {
    }
 }
 if (!function_exists('matchRouteGroupName')) {    
-    function matchRouteGroupName($group_type, $route_group_name=null){
+    function matchRouteGroupName($route_group_name, $group_type=null){
         $mm_show = "";
         if (!empty($route_group_name)) {
             $routeName = getRouteName();
-            if (strpos($routeName, $route_group_name) !== false) {
+
+           
+            if (str_contains($routeName, $route_group_name)) {
                 if ($group_type == 'parent') {
                     $mm_show = 'mm-active';
                 }else{
@@ -252,6 +254,51 @@ if(!function_exists('get_form_error_msg')){
             return  $form_error;
         }                        
     }
+}
+if(!function_exists('get_body_error_msg')){
+    function get_body_error_msg($errors){
+        $form_error = "";
+     
+            foreach ($errors->all() as $error){
+
+        
+             $form_error .='<div class="alert alert-danger alert-dismissible alert-alt solid fade show"><button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
+        </button><strong>Error!</strong>&nbsp;'.$error.'</div>';
+            }
+        
+        
+                              
+        return  $form_error;
+    }
+}
+if (!function_exists('fatchIconByErrorCodeMetch')) {
+    
+function fatchIconByErrorCodeMetch($code)
+{
+    $i_html = "";
+    if ($code == '400') {
+        $i_html = '<i class="fa fa-thumbs-down text-danger"></i>';
+    }elseif ($code == '401') {
+        $i_html = '<i class="fa fa-times-circle text-danger"></i>';
+    }elseif ($code == '402') {
+        $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
+    }elseif ($code == '403') {
+       $i_html = '<i class="fa fa-times-circle text-danger"></i>';
+    }elseif ($code == '404') {
+        $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
+    }elseif ($code == '419') {
+       $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
+    }elseif ($code == '429') {
+        $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
+    }elseif ($code == '500') {
+        $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
+    }elseif ($code == '503') {
+        $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
+    }else{
+       $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
+    }
+    return $i_html;
+}
 }
 if(!function_exists('get_form_success_msg')){
     function get_form_success_msg($success){

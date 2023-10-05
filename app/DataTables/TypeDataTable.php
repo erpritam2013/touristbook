@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Terms\Accessible;
+use App\Models\Terms\Type;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class AccessibleDataTable extends DataTable
+class TypeDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -22,11 +22,17 @@ class AccessibleDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        return (new EloquentDataTable($query))->addIndexColumn()->addColumn('icon',function($row){
-                return get_fontawesome_icon_html($row->icon,'fa-lg touristbook-table-icon');
+         return (new EloquentDataTable($query))->addIndexColumn()->addColumn('icon',function($row){
+               if ($row->icon) {
+                return get_fontawesome_icon_html($row->icon,'fa-lg');
+               }elseif($row->lebal_type){
+               return $row->lebal_type;
+               }elseif($row->attachment){
+                return '<img src="'.$row->attachment.'" width="50">';
+               }
             })->addColumn('action', function ($row) {
-                    $html = ' <a href="'.route("admin.terms.accessibles.edit",$row->id).'" class="btn btn-primary" title="Edit"><i class="fa fa-edit"></i></a>';
-                    $html .= '<a href="'.route("admin.terms.accessibles.show",$row->id).'" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>';
+                    $html = ' <a href="'.route("admin.terms.types.edit",$row->id).'" class="btn btn-primary" title="Edit"><i class="fa fa-edit"></i></a>';
+                    $html .= '<a href="'.route("admin.terms.types.show",$row->id).'" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>';
                     $html .= '<a href="javascript:void(0);" class="btn btn-danger del_entity_form" title="Delete" item_id="'.$row->id.'" data-text="accessible"><i class="fa fa-trash"></i></a>';
                     return $html;
                 })->editColumn('parent_id', function($row) {
@@ -49,10 +55,10 @@ class AccessibleDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Terms\Accessible $model
+     * @param \App\Models\Terms\Type $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Accessible $model): QueryBuilder
+    public function query(Type $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -64,12 +70,12 @@ class AccessibleDataTable extends DataTable
      */
     public function html(): HtmlBuilder
     {
-        return $this->builder()
+       return $this->builder()
                     ->setTableId('touristbook-datatable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(9)
+                    ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -104,13 +110,12 @@ class AccessibleDataTable extends DataTable
             ->orderable(false)
             ->exportable(false)
             ->printable(false),
-            Column::make('icon')->width(10)
-            ->addClass('text-center'),
+            Column::make('icon')->title('Icon | Attachment |Type Lebal')->width(10)->addClass('text-center'),
             Column::make('parent_id')->title('Parent')->searchable(false)
             ->orderable(true)
             ->exportable(false)
             ->printable(false),
-            Column::make('accessible_type')->title('Type'),
+            Column::make('type'),
             Column::make('status'),
             Column::make('created_at')->title('Created'),
             Column::make('updated_at')->title('Updated'),
@@ -123,7 +128,6 @@ class AccessibleDataTable extends DataTable
     }
 
 
-    
      /**
      * Get Parameters.
      *
@@ -147,7 +151,7 @@ class AccessibleDataTable extends DataTable
      */
     public function getCustomStatus(): bool
     {
-        return Accessible::count();
+        return Type::count();
     }
 
     /**
@@ -173,6 +177,6 @@ class AccessibleDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Accessible_' . date('YmdHis');
+        return 'Type_' . date('YmdHis');
     }
 }

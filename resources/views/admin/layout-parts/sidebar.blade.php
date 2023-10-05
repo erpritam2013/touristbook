@@ -13,6 +13,16 @@
                                 {{--<li><a href="./index2.html">Dashboard 2</a></li>--}}
                             </ul>
                         </li>
+
+                           <li class="{{matchRouteGroupName('posts','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                            class="fas fa-laptop sidebar-icon-touristbook"></i><span class="nav-text">Posts</span></a>
+                            <ul aria-expanded="false" class="{{matchRouteGroupName('posts','child')}}">
+                                <li class="{{matchRouteName('admin.posts.index')}}"><a href="{{route('admin.posts.index')}}">List</a></li>
+                                <li class="{{matchRouteName('admin.posts.create')}}"><a href="{{route('admin.posts.create')}}">Add New</a></li>
+                                  <li class="{{matchRouteName('admin.terms.categories.index')}}"><a href="{{route('admin.terms.categories.index')}}">Categories</a></li>
+                                <li class="{{matchRouteName('admin.terms.types.index')}}"><a href="{{route('admin.terms.types.index')}}">Types</a></li>
+                            </ul>
+                        </li>
                         <li class="{{matchRouteGroupName('terms','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                             class="icon icon-layout-25"></i><span class="nav-text">Terms</span></a>
                             <ul aria-expanded="false" class="{{matchRouteGroupName('terms','child')}}">
@@ -32,8 +42,8 @@
                                 <li class="{{matchRouteName('admin.terms.languages.index')}}"><a href="{{route('admin.terms.languages.index')}}">Languages</a></li>
                                 <li class="{{matchRouteName('admin.terms.attractions.index')}}"><a href="{{route('admin.terms.attractions.index')}}">Attractions</a></li>
                                 <li class="{{matchRouteName('admin.terms.term-activity-lists.index')}}"><a href="{{route('admin.terms.term-activity-lists.index')}}">Term Activity Lists</a></li>
-                                <li class="{{matchRouteName('admin.terms.types.index')}}"><a href="{{route('admin.terms.types.index')}}">Types</a></li>
                                 <li class="{{matchRouteName('admin.terms.categories.index')}}"><a href="{{route('admin.terms.categories.index')}}">Categories</a></li>
+                                <li class="{{matchRouteName('admin.terms.types.index')}}"><a href="{{route('admin.terms.types.index')}}">Types</a></li>
                                 <li class="{{matchRouteName('admin.terms.tags.index')}}"><a href="{{route('admin.terms.tags.index')}}">Tags</a></li>
 
                             </ul>
@@ -73,7 +83,12 @@
                                 <li class="{{matchRouteName('admin.locations.create')}}"><a href="{{route('admin.locations.create')}}">Add New</a></li>
                             </ul>
                         </li>
-                        <li class="{{matchRouteGroupName('country-zones','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+
+                          <li class="{{matchRouteGroupName('zone','parent') ?? matchRouteGroupName('activity-lists','parent') ?? matchRouteGroupName('activity-packages','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                            class="icon icon-marker-3 sidebar-icon-touristbook"></i><span class="nav-text">Zones</span></a>
+                            <ul aria-expanded="false" class="{{matchRouteGroupName('zone','child') ?? matchRouteGroupName('activity-lists','child') ?? matchRouteGroupName('activity-packages','child')}}">
+
+                                  <li class="{{matchRouteGroupName('country-zones','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                             class="icon icon-marker-3"></i><span class="nav-text">Country Zones</span></a>
                             <ul aria-expanded="false" class="{{matchRouteGroupName('country-zones','child')}}">
                                 <li class="{{matchRouteName('admin.country-zones.index')}}"><a href="{{route('admin.country-zones.index')}}">List</a></li>
@@ -109,6 +124,10 @@
                                 <li class="{{matchRouteName('admin.tourism-zones.create')}}"><a href="{{route('admin.tourism-zones.create')}}">Add New</a></li>
                             </ul>
                         </li>
+                              
+                            </ul>
+                        </li>
+                      
 
                         {{--<li class="nav-label">Apps</li>
                         <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i

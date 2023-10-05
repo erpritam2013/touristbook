@@ -31,6 +31,7 @@ use App\Http\Controllers\TourismZoneController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -188,6 +189,15 @@ Route::name('admin.')->prefix('admin')->group(function () {
 
     Route::delete('hotel/bulk-delete', [HotelController::class,'bulk_delete'])->name('hotel.bulk-delete');
      Route::get('hotel/changeStatus', [HotelController::class,'changeStatus'])->name('changeStatusHotel');
+
+     // Post Resource
+    Route::resource('posts', PostController::class);
+    Route::prefix('posts')->name('posts.')->group(function() {
+
+    });
+
+    Route::delete('post/bulk-delete', [PostController::class,'bulk_delete'])->name('posts.bulk-delete');
+     Route::get('post/changeStatus', [PostController::class,'changeStatus'])->name('changeStatusPost');
 
      // Room Resource
     Route::resource('rooms', RoomController::class);

@@ -23,6 +23,11 @@
 @endpush
 @push('font-awesome-css')
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+
+@endpush
+@push('font-awesome-picker-css')
+
+<link href="{!! asset('admin-part/vendor/fontawesome-iconpicker/css/fontawesome-iconpicker.css') !!}" rel="stylesheet">
 @endpush
 @push('custom_style')
 <!-- custom style css -->
