@@ -6,6 +6,7 @@ use App\Models\Hotel;
 use App\Models\Location;
 use App\Models\Terms\State;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 
 class PagesController extends Controller
@@ -21,6 +22,17 @@ class PagesController extends Controller
         $sourceId = $request->get('source_id');
 
         return view('sites.pages.hotels', compact('searchTerm', 'sourceType', 'sourceId'));
+    }
+
+
+    public function hotelDetail(Request $request, $slug) {
+        $hotel = Hotel::with(['detail', 'amenities', 'medicare_assistances', 'propertyTypes'])->where('slug', $slug)->first();
+        if(!$hotel) {
+            abort(404);
+        }
+        // dd($hotel);
+
+        return view('sites.pages.hotel-detail', compact('hotel'));
     }
 
     public function getHotels(Request $request, $view = "list") {

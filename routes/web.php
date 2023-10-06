@@ -45,6 +45,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PagesController::class, 'index'])->name('home');
 Route::get('/hotels', [PagesController::class, 'hotels'])->name('hotels');
 
+Route::get('/hotels/{slug}', [PagesController::class, 'hotelDetail'])->name('hotel');
+
+
 Route::get('/get-hotels/{view}', [PagesController::class, 'getHotels'])->name('get-hotels');
 Route::get('/get-location-states', [PagesController::class, 'getLocationState'])->name('get-location-state');
 
