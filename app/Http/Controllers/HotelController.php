@@ -27,7 +27,7 @@ class HotelController extends Controller
 {
 
 
-   
+
 
     private LocationRepositoryInterface $locationRepository;
     private HotelRepositoryInterface $hotelRepository;
@@ -90,13 +90,13 @@ class HotelController extends Controller
         $data['meetingAndEvents'] = $this->meetingAndEventRepository->getActiveHotelMeetingAndEventsList();
         $data['locations'] = $this->locationRepository->getActiveLocationsList();
 
-        $data['states'] = $this->stateRepository->getActiveStatesList()->map(function($value, $key){  
-            
+        $data['states'] = $this->stateRepository->getActiveStatesList()->map(function($value, $key){
+
           return (object)[
             'id' => $value->id,
             'value' => $value->name,
             'parent_id' => $value->name,
-        ];                                
+        ];
 
     });
         $data['occupancies'] = $this->occupancyRepository->getActiveHotelOccupanciesList();
@@ -144,7 +144,7 @@ class HotelController extends Controller
 
     public function store(Request $request)
     {
-        
+
         $hotelDetails = [
             'name' => $request->name,
             'description' => $request->description,
