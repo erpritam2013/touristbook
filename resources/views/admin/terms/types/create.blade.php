@@ -53,6 +53,15 @@
                                 </div>
                             </div>
 
+                            <div class="form-group row icon d-none">
+                                <label class="col-lg-2 col-form-label" for="icon">Icon
+
+                                </label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control icp icp-auto" id="icon"value="{{$type->icon ?? ''}}" placeholder="Enter a icon.." data-existed_value="{{$type->icon ?? ''}}">
+                                </div>
+                            </div>
+
                             <div class="form-group row">
                                 <label class="col-lg-2 col-form-label" for="term-type">Type
                                     <span class="text-danger">*</span>
@@ -119,15 +128,6 @@
                                         @endif
                                     </select>
 
-                                </div>
-                            </div>
-
-                            <div class="form-group row icon d-none">
-                                <label class="col-lg-2 col-form-label" for="icon">Icon
-
-                                </label>
-                                <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="icon"value="{{$type->icon ?? ''}}" placeholder="Enter a icon.." data-existed_value="{{$type->icon ?? ''}}">
                                 </div>
                             </div>
 

@@ -144,7 +144,7 @@ class FacilityDataTable extends DataTable
      *
      * @return bool
      */
-    public function getFacilityStatus(): bool
+    public function getCustomStatus(): bool
     {
         return Facility::count();
     }
@@ -159,7 +159,7 @@ class FacilityDataTable extends DataTable
 
  
         $disabledInput = "";
-        if (!$this->getFacilityStatus()) {
+        if (!$this->getCustomStatus()) {
             $disabledInput = "disabled";
         }
         return $disabledInput;

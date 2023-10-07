@@ -61,6 +61,12 @@ use App\Interfaces\TourismZoneRepositoryInterface;
 use App\Repositories\TourismZoneRepository;
 use App\Interfaces\PostRepositoryInterface;
 use App\Repositories\PostRepository;
+use App\Interfaces\PackageTypeRepositoryInterface;
+use App\Repositories\PackageTypeRepository;
+use App\Interfaces\OtherPackageRepositoryInterface;
+use App\Repositories\OtherPackageRepository;
+use App\Interfaces\TourRepositoryInterface;
+use App\Repositories\TourRepository;
 
 
 
@@ -103,6 +109,9 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
         $this->app->bind(TagRepositoryInterface::class, TagRepository::class);
         $this->app->bind(PostRepositoryInterface::class, PostRepository::class);
+        $this->app->bind(PackageTypeRepositoryInterface::class, PackageTypeRepository::class);
+        $this->app->bind(OtherPackageRepositoryInterface::class, OtherPackageRepository::class);
+        $this->app->bind(TourRepositoryInterface::class, TourRepository::class);
 
 
     }

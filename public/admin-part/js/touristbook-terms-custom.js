@@ -22,22 +22,22 @@ const hideInput = (input_class,input_id,e_status) =>{
 
     if ($(`#${input_id}`).length != 0) {
 
-    $(`.${input_class}`).addClass('d-none');
-    $(`#${input_id}`).removeAttr('name');
-    let existed_value = $(`#${input_id}`).data('existed_value');
+        $(`.${input_class}`).addClass('d-none');
+        $(`#${input_id}`).removeAttr('name');
+        let existed_value = $(`#${input_id}`).data('existed_value');
 
-    if (existed_value == "") {
-       
+        if (existed_value == "") {
 
-        $(`#${input_id}`).val('');
 
-    }else{
+            $(`#${input_id}`).val('');
 
-       $(`#${input_id}`).val(existed_value);
+        }else{
+
+           $(`#${input_id}`).val(existed_value);
+
+       }
 
    }
-   
-    }
 }
 
 const callAjax = (ajaxurl,data) => {
@@ -63,7 +63,7 @@ const showInput = (input_class,input_id) =>{
         let existed_value = $(`#${input_id}`).data('existed_value');
         if (typeof existed_value != 'undefined') {
 
-        $(`#${input_id}`).val(existed_value);
+            $(`#${input_id}`).val(existed_value);
         }
         
     }
@@ -93,15 +93,21 @@ const checkbox_true = () =>{
     $('body .select-all').prop('checked',true);
 }
 
-let term_type_input = $('#term-type');
-if (term_type_input.length != 0) {{
-    let type_value = $(term_type_input).children('option:selected').val();
-    if (type_value != "") {
-        showInputByType(type_value);
+let type_form = $('#type-form');
+
+if (type_form.length != 0) {
+
+    let term_type_input = $('#term-type');
+    if (term_type_input.length != 0) {
+        let type_value = $(term_type_input).children('option:selected').val();
+        if (type_value != "") {
+            showInputByType(type_value);
+        }
     }
-}}
+}
 /*term type js start*/
 $('body').on('change', '#term-type', function () {
+
   let first_option_text = {'text':$(this).children('option:first-child').text()}
   let userURL = $(this).data('url');
   let term_title = $(this).data('term_title');
@@ -110,7 +116,10 @@ $('body').on('change', '#term-type', function () {
 
   let term_type = $(this).children('option:selected').val();
   /*input show and hide by type change*/
-  showInputByType(term_type);
+  let type_form = $('#type-form');
+  if (type_form.length != 0) {
+      showInputByType(term_type);
+  }
   let existed_parent_id = $('#parent-id').data('existed_parent_id');
   let term_id = $("#term-id").data('id');
   let data = {term_type};
@@ -167,39 +176,93 @@ $('body').on('change', '#term-type', function () {
 
 /*list-activity_zones start js*/
 
-const runActivityProgramStyle = (options) => {
+// const runProgramStyle = (options) => {
+//     options.each(function(key,ele){
+//       if ($(ele).is(':selected')) {
+//         showActivityProgramStyle(ele.value);
+//     }
+
+// });
+// }
+const runProgramStyle = (options) => {
     options.each(function(key,ele){
-  if ($(ele).is(':selected')) {
-    showActivityProgramStyle(ele.value);
+        if (typeof $(ele).data('target') != 'undefined') {
+           let target = $(ele).data('target');
+           if ($(ele).is(':selected')) {
+             let value = $(ele).val();
+             showProgramStyle(value,target);
+         }
+     }
+
+ });
+}
+const showProgramStyle = (value,target) => {
+  if (value != "") {
+    if (value == 'style1') {
+     $(`.${target}-style1`).removeClass('d-none');
+     $(`.${target}-style2`).addClass('d-none');
+     $(`.${target}-style4`).addClass('d-none');
+ }else if(value == 'style2'){
+  $(`.${target}-style2`).removeClass('d-none');
+  $(`.${target}-style1`).addClass('d-none');
+  $(`.${target}-style4`).addClass('d-none');
+}else if (value == 'style3') {
+ $(`.${target}-style1`).removeClass('d-none');
+ $(`.${target}-style2`).addClass('d-none');
+ $(`.${target}-style4`).addClass('d-none');
+}else if (value == 'style4') {
+ $(`.${target}-style4`).removeClass('d-none');
+ $(`.${target}-style2`).addClass('d-none');
+ $(`.${target}-style1`).addClass('d-none');
+}
+}else{
+    $(`.${target}-style1`).addClass('d-none');
+    $(`.${target}-style2`).addClass('d-none');
+    $(`.${target}-style4`).addClass('d-none');
+}
+}
+
+// let activity_program_style = $('body #activity-program-style');
+// let activity_program_style_options = $(activity_program_style).children('option');
+if ($('select').hasClass('program-style-select')) {
+    let program_style_select_options = $('select.program-style-select').children('option');
+
+// console.log($(program_style_select_options[0]).is(':checked'))
+
+    runProgramStyle(program_style_select_options);
+}
+$('select').on('change',function(){
+    if ($(this).hasClass('program-style-select')) {
+      let program_style_select_options = $('select.program-style-select').children('option');
+      runProgramStyle(program_style_select_options);
   }
-
 });
-}
-const showActivityProgramStyle = (value) => {
-      if (value != "") {
-        if (value == 'style1') {
-         $(`.activity-program-style1`).removeClass('d-none');
-         $(`.activity-program-style2`).addClass('d-none');
-        }else if(value == 'style2'){
-          $(`.activity-program-style2`).removeClass('d-none');
-          $(`.activity-program-style1`).addClass('d-none');
-        }else if (value == 'style3') {
-         $(`.activity-program-style1`).removeClass('d-none');
-         $(`.activity-program-style2`).addClass('d-none');
-        }
-      }else{
-        $(`.activity-program-style1`).addClass('d-none');
-        $(`.activity-program-style2`).addClass('d-none');
-      }
-}
 
-let activity_program_style = $('body #activity-program-style');
-let activity_program_style_options = $(activity_program_style).children('option');
+// const showTourProgramStyle = (value) => {
+//   if (value != "") {
+//     if (value == 'style1') {
+//      $(`.tour-program-style1`).removeClass('d-none');
+//      $(`.tour-program-style2`).addClass('d-none');
+//  }else if(value == 'style2'){
+//   $(`.tour-program-style2`).removeClass('d-none');
+//   $(`.tour-program-style1`).addClass('d-none');
+// }else if (value == 'style3') {
+//  $(`.tour-program-style1`).removeClass('d-none');
+//  $(`.tour-program-style2`).addClass('d-none');
+// }
+// }else{
+//     $(`.tour-program-style1`).addClass('d-none');
+//     $(`.tour-program-style2`).addClass('d-none');
+// }
+// }
 
-runActivityProgramStyle(activity_program_style_options);
-$(activity_program_style).on('change',function(){
-   runActivityProgramStyle(activity_program_style_options);
-});
+// let tour_program_style = $('body #tour-program-style');
+// let tour_program_style_options = $(tour_program_style).children('option');
+
+// runTourProgramStyle(tour_program_style_options);
+// $(tour_program_style).on('change',function(){
+//    runTourProgramStyle(tour_program_style_options);
+// });
 
 
 let activity_post_activity_zone_list = $('body .list-activity_zones').children('li.subform-card');
@@ -241,22 +304,22 @@ $('body .list-activity_zones').on('change','.activity_zones-url_link_status',fun
 
 /*on off button start js*/
 
-const show_st_room_external_booking_link = (v) =>{
-     if (v == 1) {
-          $('.st_room_external_booking_link').removeClass('d-none');
-        }else if(v == 0){
-          $('.st_room_external_booking_link').addClass('d-none');
-        }
+const show_st_external_booking_link = (v,ele) =>{
+ if (v == 1) {
+  $(`${ele}`).removeClass('d-none');
+}else if(v == 0){
+  $(`${ele}`).addClass('d-none');
+  $(`${ele}`).find('input').val('').trigger('change');
+  $(`${ele}`).find('select').val('').trigger('change');
+}
 }
 
-if($('input[type="radio"]').hasClass('st_room_external_booking')){
-    if ($('.st_room_external_booking').is(':checked')) {
-
-    if ($('.st_room_external_booking:checked').val() == 1) {
-      show_st_room_external_booking_link(1);
-    }
-    }
+if ($('input[type="radio"]').is(':checked') && typeof $('input[type="radio"]').data('target') != 'undefined') {
+    if ($('input[type="radio"]:checked').val() == 1) {
+      show_st_external_booking_link(1,$('input[type="radio"]:checked').data('target'));
+  }
 }
+
 
 $('input[type="radio"]').on('input',function(){
 
@@ -271,33 +334,34 @@ $('input[type="radio"]').on('input',function(){
          $(this).parent('label').addClass('on-switch-checked');
          $(closest_parent).find('.off-switch-checked').addClass('off-switch');
          $(closest_parent).find('label').removeClass('off-switch-checked');
-      }else if(value == 0){
+     }else if(value == 0){
          $(this).parent('label').removeClass('off-switch');
          $(this).parent('label').addClass('off-switch-checked');
          $(closest_parent).find('.on-switch-checked').addClass('on-switch');
-        $(closest_parent).find('label').removeClass('on-switch-checked');
-      }
-    }
+         $(closest_parent).find('label').removeClass('on-switch-checked');
+     }
+ }
 
-    if (closest_a_i_parent.length == 1) {
+ if (closest_a_i_parent.length == 1) {
 
-        if (value == 1) {
-         $(this).parent('label').removeClass('active-switch');
-         $(this).parent('label').addClass('active-switch-checked');
-         $(closest_a_i_parent).find('.inactive-switch-checked').addClass('inactive-switch');
-         $(closest_a_i_parent).find('label').removeClass('inactive-switch-checked');
-      }else if(value == 0){
-         $(this).parent('label').removeClass('inactive-switch');
-         $(this).parent('label').addClass('inactive-switch-checked');
-         $(closest_a_i_parent).find('.active-switch-checked').addClass('active-switch');
-        $(closest_a_i_parent).find('label').removeClass('active-switch-checked');
-      }
-    }
+    if (value == 1) {
+     $(this).parent('label').removeClass('active-switch');
+     $(this).parent('label').addClass('active-switch-checked');
+     $(closest_a_i_parent).find('.inactive-switch-checked').addClass('inactive-switch');
+     $(closest_a_i_parent).find('label').removeClass('inactive-switch-checked');
+ }else if(value == 0){
+     $(this).parent('label').removeClass('inactive-switch');
+     $(this).parent('label').addClass('inactive-switch-checked');
+     $(closest_a_i_parent).find('.active-switch-checked').addClass('active-switch');
+     $(closest_a_i_parent).find('label').removeClass('active-switch-checked');
+ }
+}
 
-    if (current_input.hasClass('st_room_external_booking')) {
-        
-       show_st_room_external_booking_link(value);
-    } 
+if ($(current_input).is(':checked') && typeof $(current_input).data('target') != 'undefined') {
+
+  show_st_external_booking_link(value,$(current_input).data('target'));
+
+}
 
 });
 /*on off button end js*/
@@ -464,8 +528,8 @@ window.CustomSelectCheckboxSingle = function(ele){
                 checkbox_false();
             }else{
 
-            $('.all-a .bulk-delete').hide();
-            checkbox_false();
+                $('.all-a .bulk-delete').hide();
+                checkbox_false();
             }
 
         }

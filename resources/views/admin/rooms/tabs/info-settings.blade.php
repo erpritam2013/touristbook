@@ -19,21 +19,21 @@
 <!-- room Highlight -->
 @include('admin.partials.utils.textarea', ['name'=> 'room_highlight','label'=>'room Included','value'=>$room->detail->room_highlight ?? ''])
 <!-- room program style -->
-@include('admin.partials.utils.select_box', ['items' => $room_program_style, 'name'=> 'room_program_style','selected'=>$room->detail->room_program_style ?? "",'label'=>'room program style','first_empty_option'=>true])
+@include('admin.partials.utils.select_box', ['items' => $room_program_style, 'name'=> 'room_program_style','selected'=>$room->detail->room_program_style ?? "",'label'=>'room program style','first_empty_option'=>true,'option_attr'=>'data-target="room-program"','class'=>'program-style-select'])
 
 
-<div class="border p-2 mb-2 room-program-style1 d-none" data-layout="style1">
-    <h4>room program</h4>
+<div class="border p-2 mb-2 room-program-style1 d-none">
+    <h4>Room Program</h4>
     @include('admin.partials.utils.subform-wrapper', ["subformData" => $room->detail->room_program ?? null, 'type' => 'room_program', 'btnTitle' => 'Add New'])
 </div>
 
-<div class="border p-2 mb-2 room-program-style2 d-none" data-layout="style2">
-    <h4>room program</h4>
+<div class="border p-2 mb-2 room-program-style2 d-none">
+    <h4>Room Program</h4>
     @include('admin.partials.utils.subform-wrapper', ["subformData" => $room->detail->room_program_bgr ?? null, 'type' => 'room_program_bgr', 'btnTitle' => 'Add New'])
 </div>
 
 <div class="border p-2 mb-2 ">
-    <h4>room FAQ</h4>
+    <h4>Room FAQ</h4>
     @include('admin.partials.utils.subform-wrapper', ["subformData" => $room->detail->room_faq ?? null, 'type' => 'room_faq', 'btnTitle' => 'Add New'])
 </div>--}}
 

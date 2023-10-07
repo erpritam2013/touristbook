@@ -16,11 +16,14 @@
 
 
 <!-- Room external booking -->
-@include('admin.partials.utils.radio_input', ['name'=> 'st_room_external_booking','label'=>'Room external booking','desc'=>'It allows ON/OFF in booking by an external link','item'=>$room->detail ?? '','input' => ["On" => 1,"Off" => 0],'on_off_switch'=>true,'label_class'=>['off-switch','on-switch'],'class'=>'st_room_external_booking'])
+@include('admin.partials.utils.radio_input', ['name'=> 'st_room_external_booking','label'=>'Room external booking','desc'=>'It allows ON/OFF in booking by an external link','item'=>$room->detail ?? '','input' => ["On" => 1,"Off" => 0],'on_off_switch'=>true,'label_class'=>['off-switch','on-switch'],'class'=>'st_room_external_booking','attr'=>'data-target=".room-external-booking-link"'])
 
 <!-- Number of beds -->
+
+	
 @include('admin.partials.utils.input', ['name'=> 'st_room_external_booking_link','label'=>'Room external booking','desc'=>'Notice: Must be http://...
-','value'=>$room->detail->st_room_external_booking_link ?? "",'hidden_class'=>'d-none st_room_external_booking_link','control'=>'url'])
+','value'=>$room->detail->st_room_external_booking_link ?? "",'hidden_class'=>'d-none room-external-booking-link','control'=>'url'])
+
 
 
 

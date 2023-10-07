@@ -332,9 +332,9 @@ class HotelController extends Controller
         return redirect()->Route('admin.hotels.index');
     }
 
-    public function destroy(Request $request)
+    public function destroy(Hotel $hotel)
     {
-        $hotelId = $request->route('hotelId');
+        $hotelId = $hotel->id;
 
         $this->hotelRepository->deleteHotel($hotelId);
         Session::flash('success','Hotel Deleted Successfully');

@@ -13,7 +13,7 @@ class UpdatePackageTypeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,9 @@ class UpdatePackageTypeRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
+         return [
+            'name' => 'required|max:255|unique_custom:package_types,name,package_type_type,'.request()->package_type_type.',id,'.request()->id,
+            'package_type_type' => 'required',
         ];
     }
 }

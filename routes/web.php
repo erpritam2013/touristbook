@@ -7,6 +7,7 @@ use App\Http\Controllers\TopServiceController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\AccessibleController;
 use App\Http\Controllers\PropertyTypeController;
+use App\Http\Controllers\PackageTypeController;
 use App\Http\Controllers\MeetingAndEventController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\locationController;
@@ -32,6 +33,8 @@ use App\Http\Controllers\RoomController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\OtherPackageController;
+use App\Http\Controllers\TourController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -137,6 +140,17 @@ Route::name('admin.')->prefix('admin')->group(function () {
      Route::delete('property-type/bulk-delete', [PropertyTypeController::class,'bulk_delete'])->name('property-types.bulk-delete');
     Route::get('property-type/ajax-get', [PropertyTypeController::class,'getPropertyTypesAjax'])->name('ajaxGetPropertyType');
     Route::get('property-type/changeStatus', [PropertyTypeController::class,'changeStatus'])->name('changeStatusPropertyType');
+
+    /*package Type Routes*/
+    Route::resource('package-types', PackageTypeController::class);
+     Route::delete('package-type/bulk-delete', [PackageTypeController::class,'bulk_delete'])->name('package-types.bulk-delete');
+    Route::get('package-type/ajax-get', [PackageTypeController::class,'getPackageTypesAjax'])->name('ajaxGetPackageType');
+    Route::get('package-type/changeStatus', [PackageTypeController::class,'changeStatus'])->name('changeStatusPackageType');
+    /*Other Package Routes*/
+    Route::resource('other-packages', OtherPackageController::class);
+     Route::delete('other-packages/bulk-delete', [OtherPackageController::class,'bulk_delete'])->name('other-packages.bulk-delete');
+    Route::get('other-package/ajax-get', [OtherPackageController::class,'getOtherPackagesAjax'])->name('ajaxGetPackage');
+    Route::get('other-package/changeStatus', [OtherPackageController::class,'changeStatus'])->name('changeStatusOtherPackage');
     /*meeting and events Routes*/
     Route::resource('meeting-and-events', MeetingAndEventController::class);
     Route::delete('meeting-and-event/bulk-delete', [MeetingAndEventController::class,'bulk_delete'])->name('meeting-and-events.bulk-delete');
@@ -189,6 +203,15 @@ Route::name('admin.')->prefix('admin')->group(function () {
 
     Route::delete('hotel/bulk-delete', [HotelController::class,'bulk_delete'])->name('hotel.bulk-delete');
      Route::get('hotel/changeStatus', [HotelController::class,'changeStatus'])->name('changeStatusHotel');
+
+     // Hotel Resource
+    Route::resource('tours', TourController::class);
+    Route::prefix('tours')->name('tours.')->group(function() {
+
+    });
+
+    Route::delete('tour/bulk-delete', [TourController::class,'bulk_delete'])->name('tours.bulk-delete');
+     Route::get('tour/changeStatus', [TourController::class,'changeStatus'])->name('changeStatusHotel');
 
      // Post Resource
     Route::resource('posts', PostController::class);
