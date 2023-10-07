@@ -50,6 +50,15 @@
                                 <textarea class="form-control" id="description" name="description" rows="5" placeholder="Enter Description..">{{$term_activity_list->description ?? ''}}</textarea>
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <label class="col-lg-2 col-form-label" for="icon">Icon
+
+                            </label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control icp icp-auto" id="icon" name="icon" value="{{$term_activity_list->icon ?? ''}}" placeholder="Enter a icon..">
+                            </div>
+                        </div>
                         
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label" for="parent">Term Activity List Parent
@@ -64,15 +73,6 @@
                                     @endisset
                                 </select>
 
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-lg-2 col-form-label" for="icon">Icon
-
-                            </label>
-                            <div class="col-lg-10">
-                                <input type="text" class="form-control" id="icon" name="icon" value="{{$term_activity_list->icon ?? ''}}" placeholder="Enter a icon..">
                             </div>
                         </div>
 

@@ -1,6 +1,25 @@
 <div class="card {{(count($types) > 5)?'term-card':'term-card-padding'}}">
     <div class="card-header border-bottom">
-        <h4 class="card-title">Location Type</h4>
+          @isset($post)
+       @php $label_d = 'Post';@endphp
+      @endisset
+      @php $label = "";@endphp
+      @isset($hotel)
+       @php $label = 'Hotel';@endphp
+      @endisset
+      @isset($location)
+       @php $label = 'Location';@endphp
+      @endisset
+      @isset($tour)
+       @php $label = 'Tour';@endphp
+      @endisset
+      @isset($activity)
+       @php $label = 'Activity';@endphp
+      @endisset
+      @isset($label_d)
+       @php $label = $label_d;@endphp
+      @endisset
+        <h4 class="card-title">{{$label}} Type</h4>
     </div>
     <div class="card-body">
         <div class="form-group row">

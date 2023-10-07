@@ -104,6 +104,9 @@ jQuery(".form-valide").validate({
         "type": {
             required: !0
         },
+        "st_tours_country": {
+            required: !0
+        },
 
     },
     messages: {
@@ -159,6 +162,7 @@ jQuery(".form-valide").validate({
         "term_activity_type":"Please enter a valid term activity type",
         "top_service_type":"Please enter a valid top service type",
         "type":"Please enter a valid type",
+        "st_tours_country":"Please enter a valid country",
     },
 
     ignore: [],

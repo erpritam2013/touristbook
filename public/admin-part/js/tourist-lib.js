@@ -155,7 +155,7 @@ $(document).ready(function () {
                         // TODO: Dynamic par is missing
                     $(this)
                     .find(".card-title-text")
-                    .text($(this).find("input[type=text]").val());
+                    .text(($(this).find("input[type=text]").val().length > 30)?$(this).find("input[type=text]").val().substring(0,30) + '.....':$(this).find("input[type=text]").val());
                 });
             }
             );

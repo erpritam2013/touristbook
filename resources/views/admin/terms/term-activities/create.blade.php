@@ -52,6 +52,16 @@
                         </div>
 
                         <div class="form-group row">
+                            <label class="col-lg-2 col-form-label" for="icon">Icon
+
+                            </label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control icp icp-auto" id="icon" name="icon" value="{{$term_activity->icon ?? ''}}" placeholder="Enter a icon..">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
                             <label class="col-lg-2 col-form-label" for="term-type">Term Activity Type
                                 <span class="text-danger">*</span>
                             </label>
@@ -84,16 +94,6 @@
 
                             </div>
                         </div>
-
-                        <div class="form-group row">
-                            <label class="col-lg-2 col-form-label" for="icon">Icon
-
-                            </label>
-                            <div class="col-lg-10">
-                                <input type="text" class="form-control" id="icon" name="icon" value="{{$term_activity->icon ?? ''}}" placeholder="Enter a icon..">
-                            </div>
-                        </div>
-
 
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label" for="status">Status

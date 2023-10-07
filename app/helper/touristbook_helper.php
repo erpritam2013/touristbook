@@ -431,6 +431,7 @@ if (!function_exists('get_array_mapping')) {
         if (!empty($data)) {
            $collection = collect($data);
            if ($field) {
+            
             $result = $collection->map(function ($value,$key) {
                return (object)[
                 'id'=> $key,

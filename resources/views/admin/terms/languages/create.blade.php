@@ -51,6 +51,15 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label class="col-lg-2 col-form-label" for="icon">Icon
+
+                            </label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control icp icp-auto" id="icon" name="icon" value="{{$language->icon ?? ''}}" placeholder="Enter a icon..">
+                            </div>
+                        </div>
+
                         {{--<div class="form-group row">
                             <label class="col-lg-2 col-form-label" for="term-type">language Type
                                 <span class="text-danger">*</span>
@@ -82,15 +91,6 @@
                                     @endisset
                                 </select>
 
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-lg-2 col-form-label" for="icon">Icon
-
-                            </label>
-                            <div class="col-lg-10">
-                                <input type="text" class="form-control" id="icon" name="icon" value="{{$language->icon ?? ''}}" placeholder="Enter a icon..">
                             </div>
                         </div>
 

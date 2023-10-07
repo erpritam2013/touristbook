@@ -117,7 +117,8 @@
         }
 
         // Calculate the zoom level required to fit all of the markers on the map.
-        var zoomLevel = map.getBoundsZoomLevel(bounds);
+        // var zoomLevel = map.getBoundsZoomLevel(bounds);
+        var zoomLevel = 9;
 
         return zoomLevel;
       }
