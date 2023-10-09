@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('tour_types', function (Blueprint $table) {
              $table->id();
             $table->unsignedBigInteger('tour_id');
-            $table->unsignedBigInteger('tour_type_id');
+            $table->unsignedBigInteger('type_id');
 
             $table->foreign('tour_id')->references('id')->on('tours')->onDelete('cascade');
-            $table->foreign('tour_type_id')->references('id')->on('types')->onDelete('cascade');
+            $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
         });
     }
 

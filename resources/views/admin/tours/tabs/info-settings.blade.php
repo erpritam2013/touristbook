@@ -47,7 +47,7 @@
 @php 
 $activity_program_style['style4'] = (object)["id"=>'style4',"value"=>'Background image with text'];
 @endphp
-@include('admin.partials.utils.select_box', ['items' => $activity_program_style, 'name'=> 'tour_program_style','selected'=>$tour->detail->tour_program_style ?? "",'label'=>'tour program style','first_empty_option'=>true,'option_attr'=>'data-target="tour-program"','class'=>'program-style-select'])
+@include('admin.partials.utils.select_box', ['items' => $activity_program_style, 'name'=> 'tours_program_style','selected'=>$tour->detail->tours_program_style ?? "",'label'=>'tour program style','first_empty_option'=>true,'option_attr'=>'data-target="tour-program"','class'=>'program-style-select'])
 
 
 <div class="border p-2 mb-2 tour-program-style1 tour-program-style3 d-none">

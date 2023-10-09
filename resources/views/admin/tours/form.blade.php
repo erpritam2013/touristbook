@@ -10,6 +10,7 @@
 
             @include('admin.tours.partials.extra-fields-section', ['tour'=>$tour ?? null])
             @include('admin.tours.partials.helpful-fects-section', ['tour'=>$tour ?? null])
+            @include('admin.tours.partials.sponsored-section', ['tour'=>$tour ?? null])
 
             @include('admin.tours.partials.social-link-section', ['tour'=>$tour ?? null])
 
