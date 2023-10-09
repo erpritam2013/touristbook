@@ -207,14 +207,14 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::delete('hotel/bulk-delete', [HotelController::class,'bulk_delete'])->name('hotel.bulk-delete');
      Route::get('hotel/changeStatus', [HotelController::class,'changeStatus'])->name('changeStatusHotel');
 
-     // Hotel Resource
+     // Tour Resource
     Route::resource('tours', TourController::class);
     Route::prefix('tours')->name('tours.')->group(function() {
 
     });
 
     Route::delete('tour/bulk-delete', [TourController::class,'bulk_delete'])->name('tours.bulk-delete');
-     Route::get('tour/changeStatus', [TourController::class,'changeStatus'])->name('changeStatusHotel');
+     Route::get('tour/changeStatus', [TourController::class,'changeStatus'])->name('changeStatusTour');
 
      // Post Resource
     Route::resource('posts', PostController::class);

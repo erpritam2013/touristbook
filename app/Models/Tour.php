@@ -57,7 +57,7 @@ class Tour extends Model
         return $this->belongsToMany(OtherPackage::class, 'tour_other_packages', 'tour_id', 'other_package_id');
     }
     public function package_types() {
-        return $this->belongsToMany(PackageType::class, 'tour_package_types ', 'tour_id', 'package_type_id');
+        return $this->belongsToMany(PackageType::class, 'tour_package_types', 'tour_id', 'package_type_id');
     }
 
 
@@ -74,6 +74,7 @@ class Tour extends Model
     }
 
     public function detail() {
+
         return $this->hasOne(TourDetail::class);
     }
 }
