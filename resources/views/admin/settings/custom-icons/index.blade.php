@@ -17,7 +17,7 @@
       <div class="upload__img-wrap"></div>
   </div>
 </div>
-<div class="col-12" style="padding: 5px 85px;">';
+<div class="col-12" style="padding: 5px 5px;">';
     <button type="button" class="btn btn-primary on_submit">Save</button>
  <!-- Progress bar --><div class="progress" style="
  margin: 15px 0px;

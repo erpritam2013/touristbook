@@ -105,6 +105,11 @@ if (type_form.length != 0) {
         }
     }
 }
+
+$('body').on('change','select[name="touristbook-datatable_length"]',function(){
+    checkbox_false();
+    $('.all-a .bulk-delete').hide();
+})
 /*term type js start*/
 $('body').on('change', '#term-type', function () {
 

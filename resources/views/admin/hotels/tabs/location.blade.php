@@ -16,8 +16,11 @@
     </div>
 </div>
  @endif
+<!-- hotel address -->
+@include('admin.partials.utils.input', ['name'=> 'address','label'=>'Hotel Address','desc'=>'Enter your hotel address detail','value'=>$hotel->address ?? '','id' => "address",'class'=>'pac-target-input'])
+
 <div class="form-group row">
-    <label class="col-lg-5 col-form-label" for="map_address">Hotel address</label>
+    <label class="col-lg-5 col-form-label" for="map_address">Map Address</label>
     <div class="col-lg-7">
         <input type="text" class="form-control" id="map_address" name="map_address" value="{{$hotel->map_address ?? ''}}">
     </div>

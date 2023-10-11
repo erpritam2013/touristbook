@@ -6,6 +6,8 @@
 <!-- Hotel rating standard -->
 @include('admin.partials.utils.range_input', ['name'=> 'rating','label'=>'Hotel rating standard','value'=>$hotel->rating ?? '','id' => "",'min' => 0,'max' => 5,'step' => 0.1,'value' => $hotel->rating ?? 0])
 
+<!--hotel report -->
+@include('admin.partials.utils.textarea', ['name'=> 'hotel_report','label'=>'Report','value'=>$hotel->detail->hotel_report ?? '','id' => "",'rows'=>10])
 <!--Coupon Code -->
 @include('admin.partials.utils.input', ['name'=> 'coupon_code','label'=>'Coupon Code','value'=>$hotel->coupon_code ?? '','id' => ""])
 
