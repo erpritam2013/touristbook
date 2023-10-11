@@ -15,15 +15,69 @@ if (!function_exists('customStringReplaceWithStrCase')) {
         if ($str_case == "ucwords") {
             $result = ucwords(str_replace($search, $replace_value, $subject));
         }elseif($str_case == "strtolower"){
-           $result = strtolower(str_replace($search, $replace_value, $subject));
-       }elseif($str_case == "strtoupper"){
-          $result = strtoupper(str_replace($search, $replace_value, $subject));
-      }else{
-         $result = str_replace($search, $replace_value, $subject);
-     }
+         $result = strtolower(str_replace($search, $replace_value, $subject));
+     }elseif($str_case == "strtoupper"){
+      $result = strtoupper(str_replace($search, $replace_value, $subject));
+  }else{
+   $result = str_replace($search, $replace_value, $subject);
+}
 
-     return $result;
- }
+return $result;
+}
+}
+if (!function_exists('touristbook_sanitize_title')) {
+    function touristbook_sanitize_title($value="")
+    {
+     $value = str_replace(' ', '-', $value); // Replaces all spaces with hyphens.
+
+   return preg_replace('/[^A-Za-z0-9\-]/', '', $value); // Removes special chars.
+}
+}
+if (!function_exists('isMobileDevice')) {
+function isMobileDevice() { 
+    return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo 
+|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i" 
+, $_SERVER["HTTP_USER_AGENT"]); 
+} 
+}
+
+if (!function_exists('getNewIcon')) {
+    function getNewIcon($name = '', $color = '', $width = '', $height = '', $stroke = false)
+    {
+       $fonts = config('fonts');
+         // if ($fonts) {
+         //        if (isset($fonts)) {
+         //            self::$fonts = $fonts;
+         //        }
+         //    }
+       if (empty($fonts)) {
+        return '';
+    }
+    if (!isset($fonts[$name])) {
+        return '';
+    }
+    $icon = $fonts[$name];
+    if (!empty($color)) {
+        if ($stroke) {
+            $icon = preg_replace('/stroke="(.{7})"/', 'stroke="' . $color . '"', $icon);
+        } else {
+            $icon = preg_replace('/fill="(.{7})"/', 'fill="' . $color . '"', $icon);
+        }
+    }
+
+    if (!empty($width)) {
+        $icon = preg_replace('/width="(\d{2}[a-z]{2})"/', 'width="' . $width . '"', $icon);
+    }
+
+    if (!empty($width)) {
+        $icon = preg_replace('/height="(\d{2}[a-z]{2})"/', 'height="' . $height . '"', $icon);
+    }
+
+    $icon = str_replace(' height=""', '', $icon);
+    $icon = str_replace(' width=""', '', $icon);
+
+    return '<i class="input-icon field-icon fa">' . $icon . '</i>';
+}
 }
 
 if (!function_exists('getCountries')) {    
@@ -51,23 +105,23 @@ if (!function_exists('getCountries')) {
 if (!function_exists('unsetValueActivityTourismZone')) {
     function unsetValueActivityTourismZone($data)
     {
-     if (!empty($data)) {
-      foreach ($data as $key => $value) {
-       if ($data[$key]['activity_zones-url_link_status'] == 'slug') {
-           unset($data[$key]['activity_zones-file']);
-           unset($data[$key]['activity_zones-web_link']);
-       }elseif ($data[$key]['activity_zones-url_link_status'] == 'file') {
-           unset($data[$key]['activity_zones-slug']);
-           unset($data[$key]['activity_zones-web_link']);
-       }elseif ($data[$key]['activity_zones-url_link_status'] == 'web_link') {
-          unset($data[$key]['activity_zones-file']);
-          unset($data[$key]['activity_zones-slug']);
+       if (!empty($data)) {
+          foreach ($data as $key => $value) {
+             if ($data[$key]['activity_zones-url_link_status'] == 'slug') {
+                 unset($data[$key]['activity_zones-file']);
+                 unset($data[$key]['activity_zones-web_link']);
+             }elseif ($data[$key]['activity_zones-url_link_status'] == 'file') {
+                 unset($data[$key]['activity_zones-slug']);
+                 unset($data[$key]['activity_zones-web_link']);
+             }elseif ($data[$key]['activity_zones-url_link_status'] == 'web_link') {
+              unset($data[$key]['activity_zones-file']);
+              unset($data[$key]['activity_zones-slug']);
+          }
       }
   }
-}
 
 
-return $data;
+  return $data;
 }
 }
 if (!function_exists('setTermSpace')) {
@@ -120,8 +174,8 @@ if (!function_exists('getPostData')) {
         if (!empty($model) && !empty($parameters)) {
             $NamespacedModel = 'App\\Models\\' . $model;
             $getPostData = $NamespacedModel::get($parameters)->map(function($post, $key) use($type){
-               if ($type == 'object') {
-                   return (object)[
+             if ($type == 'object') {
+                 return (object)[
                     'id' => $post->id,
                     'value' => (isset($post->name))?$post->name:$post->title,
                 ];
@@ -152,14 +206,14 @@ if (!function_exists('exploreJsonData')) {
             if (empty($key)) {
                 $result = $json_decode;
             }else{
-             $collection = collect($json_decode);
+               $collection = collect($json_decode);
 
-             $result = $collection->get($key);
-         }
+               $result = $collection->get($key);
+           }
 
-         return $result;
-     }
- }
+           return $result;
+       }
+   }
 }
 
 if (!function_exists('exploreArrayData')) {    
@@ -168,20 +222,20 @@ if (!function_exists('exploreArrayData')) {
         $result = "";
         if (!empty($json_data)) {
             if (!empty($key)) {
-             $collection = collect($data);
-             $result = $collection->get($key);
-         }else{
-             $collection = collect($data);
-             $result = $collection->get();
-         }
-     }
-     return $result;
- }
+               $collection = collect($data);
+               $result = $collection->get($key);
+           }else{
+               $collection = collect($data);
+               $result = $collection->get();
+           }
+       }
+       return $result;
+   }
 }
 if (!function_exists('matchRouteName')) {    
     function matchRouteName($current_route=null){
-       $active_class = "";
-       if (!empty($current_route)) {
+     $active_class = "";
+     if (!empty($current_route)) {
         $routeName = getRouteName();
         if ($routeName == $current_route) {
             $active_class = 'mm-active';
@@ -193,8 +247,8 @@ if (!function_exists('matchRouteName')) {
 }
 if (!function_exists('matchSiteRouteName')) {    
     function matchSiteRouteName($current_route=null){
-       $active_class = "";
-       if (!empty($current_route)) {
+     $active_class = "";
+     if (!empty($current_route)) {
         $routeName = getRouteName();
         if ($routeName == $current_route) {
             $active_class = 'active';
@@ -206,8 +260,8 @@ if (!function_exists('matchSiteRouteName')) {
 }
 if (!function_exists('matchRouteNameMatch')) {    
     function matchRouteNameMatch($current_route=null){
-       $active_class = false;
-       if (!empty($current_route)) {
+     $active_class = false;
+     if (!empty($current_route)) {
         $routeName = getRouteName();
         $arr = explode('.', $routeName);
         if (in_array($current_route, $arr)) {
@@ -222,11 +276,11 @@ if (!function_exists('matchRouteNameMatch')) {
 if (!function_exists('getIconColorClass')) {    
     function getIconColorClass(){
 
-       $i_color_dashboard = config('global.i_color_dashboard');
-       $get_color = array_rand($i_color_dashboard);
-       return "text-".$i_color_dashboard[$get_color]." border-".$i_color_dashboard[$get_color];
+     $i_color_dashboard = config('global.i_color_dashboard');
+     $get_color = array_rand($i_color_dashboard);
+     return "text-".$i_color_dashboard[$get_color]." border-".$i_color_dashboard[$get_color];
 
-   }
+ }
 }
 if (!function_exists('matchRouteGroupName')) {    
     function matchRouteGroupName($route_group_name, $group_type=null){
@@ -234,7 +288,7 @@ if (!function_exists('matchRouteGroupName')) {
         if (!empty($route_group_name)) {
             $routeName = getRouteName();
 
-           
+
             if (str_contains($routeName, $route_group_name)) {
                 if ($group_type == 'parent') {
                     $mm_show = 'mm-active';
@@ -258,46 +312,46 @@ if(!function_exists('get_form_error_msg')){
 if(!function_exists('get_body_error_msg')){
     function get_body_error_msg($errors){
         $form_error = "";
-     
-            foreach ($errors->all() as $error){
 
-        
-             $form_error .='<div class="alert alert-danger alert-dismissible alert-alt solid fade show"><button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
-        </button><strong>Error!</strong>&nbsp;'.$error.'</div>';
-            }
-        
-        
-                              
-        return  $form_error;
-    }
+        foreach ($errors->all() as $error){
+
+
+           $form_error .='<div class="alert alert-danger alert-dismissible alert-alt solid fade show"><button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
+           </button><strong>Error!</strong>&nbsp;'.$error.'</div>';
+       }
+
+
+
+       return  $form_error;
+   }
 }
 if (!function_exists('fatchIconByErrorCodeMetch')) {
-    
-function fatchIconByErrorCodeMetch($code)
-{
-    $i_html = "";
-    if ($code == '400') {
-        $i_html = '<i class="fa fa-thumbs-down text-danger"></i>';
-    }elseif ($code == '401') {
-        $i_html = '<i class="fa fa-times-circle text-danger"></i>';
-    }elseif ($code == '402') {
-        $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
-    }elseif ($code == '403') {
-       $i_html = '<i class="fa fa-times-circle text-danger"></i>';
-    }elseif ($code == '404') {
+
+    function fatchIconByErrorCodeMetch($code)
+    {
+        $i_html = "";
+        if ($code == '400') {
+            $i_html = '<i class="fa fa-thumbs-down text-danger"></i>';
+        }elseif ($code == '401') {
+            $i_html = '<i class="fa fa-times-circle text-danger"></i>';
+        }elseif ($code == '402') {
+            $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
+        }elseif ($code == '403') {
+         $i_html = '<i class="fa fa-times-circle text-danger"></i>';
+     }elseif ($code == '404') {
         $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
     }elseif ($code == '419') {
-       $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
-    }elseif ($code == '429') {
-        $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
-    }elseif ($code == '500') {
-        $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
-    }elseif ($code == '503') {
-        $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
-    }else{
-       $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
-    }
-    return $i_html;
+     $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
+ }elseif ($code == '429') {
+    $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
+}elseif ($code == '500') {
+    $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
+}elseif ($code == '503') {
+    $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
+}else{
+ $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
+}
+return $i_html;
 }
 }
 if(!function_exists('get_form_success_msg')){
@@ -312,7 +366,7 @@ if(!function_exists('get_form_success_msg')){
 
 if(!function_exists('get_edit_select_check_pvr_old_value')){
     function get_edit_select_check_pvr_old_value($input,$compair_obj,$compair_prop, $current_ele, $type){
-       if((!empty($compair_obj->{$compair_prop}))&&(empty(old($input)))){ 
+     if((!empty($compair_obj->{$compair_prop}))&&(empty(old($input)))){ 
         $select= $compair_obj->{$compair_prop};
     }else{
         $select= old($input);
@@ -332,36 +386,36 @@ if(!function_exists('get_edit_select_check_pvr_old_value')){
 if(!function_exists('setCheckboxActiveInactiveStyle')){
     function setCheckboxActiveInactiveStyle($input,$compair_obj,$compair_prop, $current_ele, $type,$class){
 
-     if ($class == 'active-inactive') {
+       if ($class == 'active-inactive') {
         if ($type != 'select') {
-         return $class.'-switch';
-        }else{
-            return "";
-        }
-     }else{
-
-       if((!empty($compair_obj->{$compair_prop}))&&(empty(old($input)))){ 
-        $select= $compair_obj->{$compair_prop};
-    }else{
-        $select= old($input);
+           return $class.'-switch';
+       }else{
+        return "";
     }
+}else{
+
+ if((!empty($compair_obj->{$compair_prop}))&&(empty(old($input)))){ 
+    $select= $compair_obj->{$compair_prop};
+}else{
+    $select= old($input);
+}
 
 
-    if($select==$current_ele){
-        if($type=='select'){
-            return '';
-        }else{
-            return $class.'-switch-checked';
-        }
+if($select==$current_ele){
+    if($type=='select'){
+        return '';
     }else{
-        
-        if ($type != 'select') {
-         return $class.'-switch';
-        }else{
-            return "";
-        }
-   
+        return $class.'-switch-checked';
     }
+}else{
+
+    if ($type != 'select') {
+       return $class.'-switch';
+   }else{
+    return "";
+}
+
+}
 }
 }
 }
@@ -376,7 +430,7 @@ if(!function_exists('get_edit_select_post_types_old_value')){
         if (!empty($current_ele)) {
 
             if ($type == 'select') {
-               if ($compair_prop == $current_ele) {
+             if ($compair_prop == $current_ele) {
                 return 'selected="selected"';
             }else{
                 return '';
@@ -418,34 +472,34 @@ if (!function_exists('get_time_format')) {
     function get_time_format($value,$with_t=false) {
         $cenvertedTime = date('d-m-Y H:i:s');
         if ($with_t) {
-           $cenvertedTime = date('d-m-Y H:i:s',strtotime($value));
-       }else{
-           $cenvertedTime = date('d-m-Y',strtotime($value));
-       }
-       return $cenvertedTime;
-   }
+         $cenvertedTime = date('d-m-Y H:i:s',strtotime($value));
+     }else{
+         $cenvertedTime = date('d-m-Y',strtotime($value));
+     }
+     return $cenvertedTime;
+ }
 }
 if (!function_exists('get_array_mapping')) {
     function get_array_mapping($data,$field=false) {
         $result = [];
         if (!empty($data)) {
-           $collection = collect($data);
-           if ($field) {
-            
+         $collection = collect($data);
+         if ($field) {
+
             $result = $collection->map(function ($value,$key) {
-               return (object)[
+             return (object)[
                 'id'=> $key,
                 'value'=>$value
             ];
         });
         }else{
 
-           $result = $collection->map(function (int $item, int $key) {
+         $result = $collection->map(function (int $item, int $key) {
             return (int)$item;
         });
-       }
-   }
-   return $result->all();
+     }
+ }
+ return $result->all();
 
 
 }

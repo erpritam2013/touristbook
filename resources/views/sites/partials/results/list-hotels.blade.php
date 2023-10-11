@@ -2,40 +2,170 @@
 
     @if ($hotels->isNotEmpty())
 
-        @foreach ($hotels as $key => $hotel)
-            <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="row listroBox" latitude="{{$hotel->latitude}}" longitude="{{$hotel->longitude}}">
-                            <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 Nopadding">
-                                <figure> <a href="hotel-detailed.html" class="wishlist_bt"></a> <a
-                                        href="hotel-detailed.html"><img src="/sites/images/hotels/room6.jpg"
-                                            class="img-fluid" alt="">
-                                        <div class="read_more"><span>Read more</span></div>
-                                    </a> </figure>
-                            </div>
-                            <div class="col-lg-7 col-md-7 col-sm-6 col-xs-12 Nopadding">
-                                <div class="listroBoxmain">
-                                    <h3><a href="hotel-detailed.html">{{ $hotel->name }}</a></h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do</p>
-                                    <a class="address" href="#">Get directions</a>
+    @foreach ($hotels as $key => $hotel)
+    <div class="col-lg-12 col-md-12 col-sm-12 hotel-list-page">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="row listroBox" latitude="{{$hotel->latitude}}" longitude="{{$hotel->longitude}}">
+                    <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 Nopadding">
+                        <figure> 
+                            {{--<a href="hotel-detailed.html" class="wishlist_bt"></a>--}} <a
+                            href="{{route('hotel',$hotel->slug)}}"><img src="/sites/images/hotels/room6.jpg"
+                            class="img-fluid" alt="">
+                            <div class="read_more"><span>Read more</span></div>
+                        </a> </figure>
+                    </div>
+                    <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 Nopadding hotel-content">
+                        <div class="listroBoxmain">
+                            <h4 class="service-title"><a href="{{route('hotel',$hotel->slug)}}">{{ $hotel->name }}</a></h4>
+
+                            <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{$hotel->address ?? $hotel->hotel_attributes['corporateAddress']}}</p>
+                            <div class="row">
+                             <div class="col-sm-12">
+                                @if($hotel->amenities->count())
+                                <div class="st-report-info">
+                                    <ul>
+                                        @foreach($hotel->amenities as $key => $amenity)
+                                        @if($key <=4)
+                                        <li>{{$amenity->name}}</li>
+                                        @endif
+                                        @endforeach
+                                    </ul>
+
                                 </div>
-                                <ul>
-                                    <li><span class="Ropen">Now Open</span></li>
-                                    <li>
-                                        <div class="R_retings"><span>Blue Hill<em>122
-                                                    Reviews</em></span><strong>8.2</strong></div>
-                                    </li>
-                                </ul>
+                                @endif
+
+
+
                             </div>
+                            <div class="col-sm-12">
+                                @if(!empty($hotel->detail->highlights))
+
+                                <div class="st-highlight-info">
+                                 <ul> 
+                                    @foreach($hotel->detail->highlights as $key => $highlights)
+                                    @php   $url_add = $highlights['highlights-url']; @endphp
+
+                                    @if(!empty($highlights['highlights-file']))
+                                    @php 
+
+                                    $url_add = $highlights['highlights-file'];
+
+                                    @endphp
+                                    @endif
+
+                                    @if(empty($url_add) || $url_add == "")
+                                    @php 
+
+                                    $url_add = "#";
+
+                                    @endphp
+                                    @endif
+
+                                    @if(touristbook_sanitize_title($highlights['highlights-title']) == touristbook_sanitize_title('Tourism Zone') || touristbook_sanitize_title($highlights['highlights-title']) == touristbook_sanitize_title('Govt. Official Site (District)'))
+                                    @if(touristbook_sanitize_title($highlights['highlights-title']) == touristbook_sanitize_title('Govt. Official Site (District)'))
+                                    <li><a href="{{$url_add}}" target="_blank">{{$highlights['highlights-title']}}</a></li>
+                                    @else
+                                    <li><a href="{{$url_add}}" target="_blank">{{$highlights['highlights-title']}}</a></li>
+                                    @endif
+
+
+                                    @endif
+
+                                    @endforeach
+                                </ul>
+
+                            </div>
+                            @endif
+
                         </div>
                     </div>
-                </div>
-            </div>
-        @endforeach
-    @else
-        <h2>No Result Found</h2>
 
-    @endif
+                    {{--<a class="address" href="#">Get directions</a>--}}
+                </div>
+                <div class="TravelGo-category-footer fl-wrap">
+
+                    <div class="TravelGo-category-price btn-grad">
+                        <a data-toggle="collapse" href="#st-hotel-content-{{ $hotel->id }}" role="button" aria-expanded="false" aria-controls="st-hotel-content-{{ $hotel->id }}" style="text-decoration: none;" >More Info...
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                    </div>
+
+                    <div class="TravelGo-opt-list"> 
+                        {{--<a href="#" class="single-map-item"><i class="fas fa-map-marker-alt"></i><span class="TravelGo-opt-tooltip">On the map</span></a> --}}
+                        <a href="#" class="TravelGo-js-favorite"><i class="fas fa-heart"></i><span class="TravelGo-opt-tooltip">Save</span></a> 
+                        <a data-toggle="collapse" href="#hotel-social-links-{{ $hotel->id }}" role="button" aria-expanded="false" aria-controls="hotel-social-links-{{ $hotel->id }}"  class="TravelGo-js-booking"><i class="fa fa-share"></i><span class="TravelGo-opt-tooltip">Find Directions</span></a> 
+                    </div>
+
+                </div>
+                <div class="hotel-social-links collapse fl-wrap" id="hotel-social-links-{{$hotel->id}}">
+
+                    <a href="#" class="TravelGo-js-favorite"><i class="fas fa-heart"></i><span class="TravelGo-opt-tooltip">Save</span></a> 
+                    <a href="#" class="TravelGo-js-favorite"><i class="fas fa-heart"></i><span class="TravelGo-opt-tooltip">Save</span></a> 
+                    <a href="#" class="TravelGo-js-favorite"><i class="fas fa-heart"></i><span class="TravelGo-opt-tooltip">Save</span></a> 
+                    <a href="#" class="TravelGo-js-favorite"><i class="fas fa-heart"></i><span class="TravelGo-opt-tooltip">Save</span></a> 
+
+
+
+                </div>
+
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 Nopadding section-footer">
+             <div class="view-hotel-btn"><a href="#" class="btn btn-sm btn-grad text-white mb-0 ">VIEW HOTEL</a></div>
+             <div class="hotel-service-price" title="Price usually vary or subject to change please visit website to view the best deal.">
+
+                <span class="hotel-avg">
+                    {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
+
+                    <?php //if(STHotel::is_show_min_price()): ?>
+
+                    <?php// _e("From", ST_TEXTDOMAIN) ?>
+
+                    <?php //else:?>
+
+                    <?php //_e("Avg", ST_TEXTDOMAIN) ?>
+
+                    <?php //endif;?>
+                    Avg
+                </span>
+
+                <span class="price">
+
+                    <?php
+
+                    //$price = STHotel::get_price();
+
+                    //echo TravelHelper::format_money($price);
+
+                    ?>
+                    4700
+                </span>
+
+                <span class="unit"><?php// echo __('per night', ST_TEXTDOMAIN); ?>  per night<span class="price-ex"><i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;position: absolute;top: -3px;"></i></span></span>
+
+
+            </div>
+
+
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 Nopadding st-more-information collapse" id="st-hotel-content-{{ $hotel->id }}">
+
+
+
+
+            <span>hello</span>
+
+
+
+        </div>
+    </div>
+</div>
+</div>
+</div>
+@endforeach
+@else
+<h2>No Result Found</h2>
+
+@endif
 
 </div>

@@ -7763,7 +7763,8 @@ contact-pg-section
 }
 .TravelGo-category-footer {
 	margin: 4px 0 0 0;
-	padding: 18px 130px 0 0;
+/*	padding: 18px 130px 0 0;*/
+	padding: 18px 130px 10px 0;
 	border-top: 1px dotted #ccc;
 }
 .TravelGo-category-content-title-item {
@@ -8172,7 +8173,7 @@ h5, .h5 {
 	color: #868e96;
  font-size: .8rem;
 	text-transform: uppercase;
-	letter-spacing: 0.1em;
+/*	letter-spacing: 0.1em;*/
 }
 .res-top-overlay h1 {
 	font-size: 30px;
@@ -10736,3 +10737,185 @@ label.lbl-search-box {
     border: 1px solid #fff;
     border-radius: 5px;
 }
+
+/*extra css hotel start*/
+.hotel-list-page .hotel-service-price {
+    position: relative;
+    top: 70px;
+    color: #07509e;
+    font-weight: 600;
+    left: 25px;
+}
+
+.hotel-list-page .view-hotel-btn{
+    position: relative;
+    top: 45px;
+}
+.hotel-list-page .hotel-service-price span.hotel-avg{
+    color: #5e6d77;
+    font-weight: 500;
+    position: relative;
+    left: -28px;
+}
+.hotel-list-page .hotel-service-price span.price{
+    font-size: 35px;
+    display: block;
+    line-height: 42px;
+    color: black;
+}
+.hotel-list-page .hotel-service-price span.unit{
+       color: #5e6d77;
+    left: 11px;
+    font-size: 12px;
+    position: relative;
+}
+.hotel-list-page .hotel-service-price span.unit span.price-ex {
+    font-weight: bold;
+    padding-left: 3px;
+    color: #000!important;
+}
+
+.hotel-list-page div.hotel-social-links {
+    margin: 4px 0 0 0;
+    padding: 10px 0px 10px 0;
+    border-top: 1px dotted #ccc;
+}
+.hotel-list-page div.hotel-social-links a {
+    float: right;
+    width: 36px;
+    height: 36px;
+    margin-left: 5px;
+    background: #ECF6F8;
+    line-height: 40px;
+    position: relative;
+    color: #999;
+    border-radius: 4px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.hotel-list-page .st-report-info ul li {
+    display: inline-block;
+    padding: 1px 3px;
+    color: black;
+}
+
+.hotel-list-page .st-report-info ul li:before {
+    content: '\f00c';
+    font-family: "Font Awesome 5 Free";
+    font-size: 14px;
+    margin-left: 0.35rem;
+    color: #119b0f;
+    font-weight: 900;
+    vertical-align: middle;
+    border: none;
+    padding-right: 3px;
+}
+
+.hotel-list-page .st-report-info ul {
+    padding: 5px 0px
+}
+.hotel-list-page .st-report-info ul li:first-child {
+     font-size: 14px;
+    margin-top: 0px;
+}
+
+.hotel-list-page .st-report-info ul li {
+    display: inline-block;
+    padding: 1px 0px;
+    color: #000000c7;
+    font-weight: 600;
+    float: left;
+    margin-left: 0px!important;
+    font-size: 14px;
+    margin-right: 0px;
+}
+.hotel-list-page .listroBox ul li:last-child {
+     margin: 0px 0 0 0; 
+     float: left; 
+}
+.hotel-list-page p.service-location,.hotel-grid-view p.service-location {
+    color: #07509e!important;
+}
+
+.hotel-list-page .st-highlight-info ul {
+    margin: 0;
+  padding: 10px 0px 0px 0;
+}
+
+.hotel-list-page .st-highlight-info ul li {
+    display: inline-block;
+    padding: 1px 5px 1px 2px;
+}
+.hotel-list-page .st-highlight-info ul li:before {
+    content: '\f111';
+    font-family: "Font Awesome 5 Free";
+    font-size: 5px;
+    color: #07509e;
+    padding-right: 0px;
+}
+.hotel-list-page .listroBox .listroBoxmain p {
+    margin-bottom: 5px;
+}
+.hotel-list-page .listroBox .listroBoxmain {
+    padding: 20px 0px 5px;
+}
+.hotel-list-page .listroBox ul {
+/*    padding: 20px 15px 17px 20px;*/
+    border-top: none;
+}
+.hotel-list-page h4.service-title, .hotel-grid-view h4.service-title {
+    font-size: 23px;
+}
+.hotel-list-page h4.service-title a, .hotel-grid-view h4.service-title a{
+    color: #fba009;
+}
+.hotel-list-page h4.service-title a:hover, .hotel-grid-view h4.service-title a:hover{
+    color: #07509e;
+}
+.hotel-list-page .listroBox figure{
+    margin: 40px 0;
+}
+
+.hotel-grid-view .text-muted{
+    color: #07509e!important;
+}
+.hotel-grid-view span.price{
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.hotel-grid-view .social-link-list {
+    position: relative;
+    top: 10px;
+    left: 30px;
+}
+.hotel-grid-view .social-link-list a {
+    float: right;
+    width: 36px;
+    height: 36px;
+    margin-left: 5px;
+    background: #ECF6F8;
+    line-height: 40px;
+    position: relative;
+    color: #999;
+    border-radius: 4px;
+    font-size: 15px;
+    text-align: center;
+}
+
+@media (min-width:320px) and (max-width:768px){
+.hotel-list-page .listroBox figure{
+    margin: 8px 0;
+}
+
+.hotel-list-page .hotel-service-price {
+    position: relative;
+    top: -22px;
+    color: #07509e;
+    font-weight: 600;
+    left: 185px;
+}
+
+	}
+/*extra css end*/

@@ -78,7 +78,10 @@ class PagesController extends Controller
     }
 
     public function getHotels(Request $request, $view = "list") {
-
+        
+        if (isMobileDevice()) {
+            $view = "grid";
+        }
         $hotelQuery = Hotel::query();
         $hotelQuery->selectRaw(' hotels.*, hotel_details.latitude, hotel_details.longitude, GROUP_CONCAT(amenities.name) as facilities');
 
@@ -178,6 +181,7 @@ class PagesController extends Controller
         $hotels = $hotelQuery->groupBy('hotels.id')->paginate(12, ['*'], 'page', $pageNumber);
         // TODO: Include Status Check
         // $hotelQuery->where('status', Hotel::)
+
         return View::make('sites.partials.results.hotel', ['hotels' => $hotels, 'view' => $view]);
 
     }
