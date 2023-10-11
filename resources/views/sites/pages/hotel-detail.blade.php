@@ -3,6 +3,26 @@
 @section('content')
 
 
+<section>
+    <!-- Slider main container-->
+    <div class="swiper-container detail-slider slider-gallery">
+      <!-- Additional required wrapper-->
+      <div class="swiper-wrapper">
+        <!-- Slides-->
+        <div class="swiper-slide"><a data-toggle="gallery-top" title="Our street"><img src="{{ asset('sites/images/hotels/room-details1.jpg') }}" alt="Our street" class="img-fluid"></a></div>
+        <div class="swiper-slide"><a data-toggle="gallery-top" title="Outside"><img src="{{ asset('sites/images/hotels/room-details2.jpg') }}" alt="Outside" class="img-fluid"></a></div>
+        <div class="swiper-slide"><a data-toggle="gallery-top" title="Rear entrance"><img src="{{ asset('sites/images/hotels/room-details3.jpg') }}" alt="Rear entrance" class="img-fluid"></a></div>
+        <div class="swiper-slide"><a data-toggle="gallery-top" title="Kitchen"><img src="{{ asset('sites/images/hotels/room-details4.jpg') }}" alt="Kitchen" class="img-fluid"></a></div>
+        <div class="swiper-slide"><a data-toggle="gallery-top" title="Bedroom"><img src="{{ asset('sites/images/hotels/room-details.jpg') }}" alt="Bedroom" class="img-fluid"></a></div>
+        <div class="swiper-slide"><a data-toggle="gallery-top" title="Bedroom"><img src="{{ asset('sites/images/hotels/room-details2.jpg') }}" alt="Bedroom" class="img-fluid"></a></div>
+      </div>
+      <div class="swiper-pagination swiper-pagination-white"></div>
+      <div class="swiper-button-prev swiper-button-white"></div>
+      <div class="swiper-button-next swiper-button-white"></div>
+    </div>
+  </section>
+
+
     <section class="pt80 pb80 listingDetails Campaigns">
         <div class="container">
             <div class="row">
@@ -12,12 +32,12 @@
 
                     <h1>{{ $hotel->name }}</h1>
                     <p class="mb-5"><i
-                            class="fa fa-map-marker text-secondary w-1rem mr-3 text-center"></i>{{ $hotel->detail->map_address }}
+                            class="fa fa-map-marker text-secondary w-1rem mr-3 text-center"></i>{{ $hotel->detail->map_address }} <a href="javascript:void(0)" class="ml-2 text-secondary text-sm view-street-map" data-toggle="modal" data-target="#streetModal">view map</a>
                     </p>
 
                     <div class="mt-10">
                         <!-- Additional required wrapper-->
-                        <div class="owl-carousel owl-theme" data-items-xl="1" data-items-lg="1" data-items-md="1"
+                        {{-- <div class="owl-carousel owl-theme" data-items-xl="1" data-items-lg="1" data-items-md="1"
                             data-items-sm="1" data-items-xs="1">
                             <!-- Slides-->
                             <div class="item"><a data-toggle="gallery-top" title="Our street"><img
@@ -38,7 +58,7 @@
                             <div class="item"><a data-toggle="gallery-top" title="Bedroom"><img
                                         src="{{ asset('sites/images/hotels/room-details2.jpg') }}" alt="Bedroom"
                                         class="img-fluid"></a></div>
-                        </div>
+                        </div> --}}
                         {{-- <div class="swiper-pagination swiper-pagination-white"></div>
                 <div class="swiper-button-prev swiper-button-white"></div>
                 <div class="swiper-button-next swiper-button-white"></div> --}}
@@ -196,7 +216,37 @@
                         </div>
                     </div>
 
+                    <!-- Accomodation -->
 
+                    <div class="accomodation">
+                        <h2 class="mb-2">Accomodation</h2>
+
+                        <div class="row border mt-2">
+                            <div class="col-md-4">
+                                <img src="https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2022/08/Tent-Room-4-800x600.webp" class="img-responsive img-full" />
+                            </div>
+                            <div class="col-md-8">
+                                <h3>Tent</h3>
+                                <div class="description row">
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-4">Average price per night $2</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row border mt-2">
+                            <div class="col-md-4">
+                                <img src="https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2022/08/Tent-Room-4-800x600.webp" class="img-responsive img-full" />
+                            </div>
+                            <div class="col-md-8">
+                                <h3>Tent</h3>
+                                <div class="description row">
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-4">Average price per night $2</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
                 </div>
@@ -244,5 +294,30 @@
             </div>
         </div>
     </section>
+
+
+
+    {{-- Modal for Street Map --}}
+
+
+<div class="modal fade" id="streetModal" tabindex="-1" role="dialog" aria-labelledby="streetLabel" aria-hidden="true" style="z-index: 999999;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="streetLabel">{{$hotel->name}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="map-street" style="height: 400px; width:400px;" lat="{{$hotel->detail->latitude}}" lng="{{$hotel->detail->longitude}}" ></div>
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>
+
 
 @endsection
