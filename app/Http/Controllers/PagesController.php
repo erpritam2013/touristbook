@@ -68,7 +68,7 @@ class PagesController extends Controller
 
 
     public function hotelDetail(Request $request, $slug) {
-        $hotel = Hotel::with(['detail', 'amenities', 'medicare_assistances', 'propertyTypes', 'top_services', 'places'])->where('slug', $slug)->first();
+        $hotel = Hotel::with(['detail', 'amenities', 'medicare_assistances', 'propertyTypes', 'top_services', 'places', 'rooms'])->where('slug', $slug)->first();
         if(!$hotel) {
             abort(404);
         }
