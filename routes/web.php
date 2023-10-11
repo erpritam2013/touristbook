@@ -35,6 +35,7 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\OtherPackageController;
 use App\Http\Controllers\TourController;
+use App\Http\Controllers\CustomIconController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -197,6 +198,25 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::delete('state/bulk-delete', [StateController::class,'bulk_delete'])->name('states.bulk-delete');
 
      }); // end terms route grouping
+
+
+
+     // Custom Icon Resource
+    
+    // Route::resource('custom-icons', CustomIconController::class);
+    Route::prefix('settings')->name('settings.')->group(function() {
+    Route::prefix('custom-icons')->name('custom-icons.')->group(function() {
+    Route::get('/', [CustomIconController::class,'index'])->name('index');
+    Route::post('/', [CustomIconController::class,'store'])->name('store');
+    Route::delete('/{custom_icon}', [CustomIconController::class,'destroy'])->name('destroy');
+    });
+    Route::prefix('custom-icon')->name('custom-icon.')->group(function() {
+
+    Route::delete('bulk-delete', [CustomIconController::class,'bulk_delete'])->name('bulk-delete');
+
+    });
+});
+
 
      // Hotel Resource
     Route::resource('hotels', HotelController::class);

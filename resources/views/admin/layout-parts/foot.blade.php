@@ -14,6 +14,7 @@
 @stack('touristbook-terms-custom-js')
 @stack('tourist-lib-js')
 @stack('inline-custom-function')
+@stack('custom-icon-upload')
 @stack('all-min-js')
 @stack('font-awesome-picker-js')
 @stack('dataTable_js')
