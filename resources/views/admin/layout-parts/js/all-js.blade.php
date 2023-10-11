@@ -47,6 +47,7 @@
         @push('inline-custom-function')
         <script src="{!! asset('admin-part/js/inline-custom-function.js') !!}"></script>
         @endpush
+      
         @push('all-min-js')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
         @endpush
@@ -63,6 +64,11 @@
         <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
         {!! $dataTable->scripts() !!}
         @endpush
+        @if(matchRouteNameMatch('custom-icons'))
+        @push('custom-icon-upload')
+        <script src="{!! asset('admin-part/js/custom-icon-upload.js') !!}"></script>
+        @endpush
+        @endif
         @endif
         <!-- For create and edit page js -->
         @if(Route::getRoutes()->match(request())->methods[0] == 'GET' && (matchRouteNameMatch('create') || matchRouteNameMatch('edit')))

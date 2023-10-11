@@ -8445,10 +8445,12 @@ box-shadow: 0px 0px 0px 9px rgba(0, 0, 0, 0.1);
 }
 
 .Filter-left .mb-left-title i {
-       font-size: 20px;
+        font-size: 20px;
     color: #07509e;
-    float: right;
+    /* float: right; */
     padding: 12px 0 12px 0;
+    position: absolute;
+    right: 24px;
 }
 .FilterBtn {
 	display: block;
@@ -10564,25 +10566,29 @@ h2.title {
 
 @media (min-width: 576px) {
     .container {
-        max-width:576px
+/*        max-width:576px*/
+max-width: 666px;
     }
 }
 
 @media (min-width: 768px) {
     .container {
-        max-width:768px
+/*        max-width:768px*/
+max-width: 946px;
     }
 }
 
 @media (min-width: 992px) {
     .container {
-        max-width:992px
+/*        max-width:992px*/
+   max-width: 1082px;
     }
 }
 
 @media (min-width: 1200px) {
     .container {
-        max-width:1200px
+/*        max-width:1200px*/
+       max-width: 1290px;
     }
 }
 .Filter-left .Filter-left-title{
