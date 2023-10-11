@@ -68,6 +68,8 @@ window.showActivityZone = () => {
 	 let id = $("#activity-id").data('id');
      let country = $('.activity-extra-fields #country').children('option:selected').val();
     let activity_zone_section = $('.activity-extra-fields #activity-zone-id');
+     if (activity_zone_section.length != 0) {
+        
     if (country != "" && typeof country != 'undefined') {
 
     $('.activity-zone-id-section').removeClass('d-none');
@@ -107,6 +109,7 @@ window.showActivityZone = () => {
 	activity_zone_section.closest('.activity-zone-id-section').addClass('d-none');
 	activity_zone_section.find('option').remove();
 }
+     }
 
 };
 showActivityZone();

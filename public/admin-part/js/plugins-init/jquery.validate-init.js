@@ -68,6 +68,9 @@ jQuery(".form-valide").validate({
         "medicare_assistance_type": {
             required: !0
         },
+        "categories[]": {
+            required: !0
+        },
         "facility_type": {
             required: !0
         },
@@ -101,6 +104,9 @@ jQuery(".form-valide").validate({
         "type": {
             required: !0
         },
+        "st_tours_country": {
+            required: !0
+        },
 
     },
     messages: {
@@ -122,6 +128,10 @@ jQuery(".form-valide").validate({
         "name": {
             required: "Please enter a name",
             minlength: "Your name must consist of maximum 255 characters"
+        },
+
+        "categories[]": {
+            required: "Please enter a valid categories",
         },
 
         "title": {
@@ -152,13 +162,20 @@ jQuery(".form-valide").validate({
         "term_activity_type":"Please enter a valid term activity type",
         "top_service_type":"Please enter a valid top service type",
         "type":"Please enter a valid type",
+        "st_tours_country":"Please enter a valid country",
     },
 
     ignore: [],
     errorClass: "invalid-feedback animated fadeInUp",
     errorElement: "div",
     errorPlacement: function(e, a) {
+        if (a.attr('name') == 'categories[]') {
+        jQuery(a).parents(".form-group > ul").append(e)
+
+        }else{
         jQuery(a).parents(".form-group > div").append(e)
+
+        }
     },
     highlight: function(e) {
         jQuery(e).closest(".form-group").removeClass("is-invalid").addClass("is-invalid")

@@ -17,7 +17,7 @@
                       {{method_field('DELETE')}}
 
                   </form>@endif
-                  <a href="{{route('admin.activities.create')}}" class="btn btn-outline-primary btn-xs">Add New activity</a>
+                  <a href="{{route('admin.activities.create')}}" class="btn btn-outline-primary btn-xs">Add New Activity</a>
               </div>
           </div>
 

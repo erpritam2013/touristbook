@@ -33,4 +33,11 @@ class HotelRepository implements HotelRepositoryInterface
         return Hotel::whereId($hotelId)->update($newDetails);
     }
 
+    public function getActiveHotelList()
+    {
+        $typeBuilder = Hotel::where('status', Hotel::ACTIVE)->get(['id','name']);
+
+        return  $typeBuilder;
+    }
+
 }

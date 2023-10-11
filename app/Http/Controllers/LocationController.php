@@ -167,7 +167,7 @@ private function _prepareBasicData() {
 
     ]));
 
-     $location->types()->attach($request->get('location_type'));
+     $location->types()->attach($request->get('type'));
      $location->places()->attach($request->get('places'));
      $location->states()->attach($request->get('state_id'));
 

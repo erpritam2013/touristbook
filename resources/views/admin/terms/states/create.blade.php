@@ -51,6 +51,15 @@
                                 </div>
                             </div>
 
+                            <div class="form-group row">
+                                <label class="col-lg-2 col-form-label" for="icon">Icon
+
+                                </label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control icp icp-auto" id="icon" name="icon" value="{{$state->icon ?? ''}}" placeholder="Enter a icon..">
+                                </div>
+                            </div>
+
                             {{--<div class="form-group row">
                                 <label class="col-lg-2 col-form-label" for="parent-id">state Parent
                                 </label>
@@ -68,15 +77,6 @@
                             </div>--}}
 
                             <div class="form-group row">
-                                <label class="col-lg-2 col-form-label" for="icon">Icon
-
-                                </label>
-                                <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="icon" name="icon" value="{{$state->icon ?? ''}}" placeholder="Enter a icon..">
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
                                 <label class="col-lg-2 col-form-label" for="country">Country
                                     <span class="text-danger">*</span>
                                 </label>
@@ -85,7 +85,7 @@
                                         @isset($countries)
                                         <option value="">Select Country</option>
                                         @foreach($countries as $country)
-                                        <option value="{{$country->id}}" {!!get_edit_select_post_types_old_value($country->id, $state->country ?? "",'select')!!} >{{$country->countryname}}</option>
+                                        <option value="{{$country->code}}" {!!get_edit_select_post_types_old_value($country->code, $state->country ?? "",'select')!!} >{{$country->countryname}}</option>
                                         @endforeach
                                         @endisset
                                     </select>

@@ -18,17 +18,17 @@
 @include('admin.partials.utils.textarea', ['name'=> 'activity_exclude','label'=>'Activity Included','value'=>$activity->detail->activity_exclude ?? ''])
 <!-- Activity Highlight -->
 @include('admin.partials.utils.textarea', ['name'=> 'activity_highlight','label'=>'Activity Included','value'=>$activity->detail->activity_highlight ?? ''])
-<!-- Activity program style -->
-@include('admin.partials.utils.select_box', ['items' => $activity_program_style, 'name'=> 'activity_program_style','selected'=>$activity->detail->activity_program_style ?? "",'label'=>'Activity program style','first_empty_option'=>true])
+<!-- activity program style -->
+@include('admin.partials.utils.select_box', ['items' => $activity_program_style, 'name'=> 'activity_program_style','selected'=>$activity->detail->activity_program_style ?? "",'label'=>'activity program style','first_empty_option'=>true,'option_attr'=>'data-target="activity-program"','class'=>'program-style-select'])
 
 
-<div class="border p-2 mb-2 activity-program-style1 d-none" data-layout="style1">
-    <h4>Activity program</h4>
+<div class="border p-2 mb-2 activity-program-style1 d-none">
+    <h4>Activity Program</h4>
     @include('admin.partials.utils.subform-wrapper', ["subformData" => $activity->detail->activity_program ?? null, 'type' => 'activity_program', 'btnTitle' => 'Add New'])
 </div>
 
-<div class="border p-2 mb-2 activity-program-style2 d-none" data-layout="style2">
-    <h4>Activity program</h4>
+<div class="border p-2 mb-2 activity-program-style2 d-none">
+    <h4>Activity Program</h4>
     @include('admin.partials.utils.subform-wrapper', ["subformData" => $activity->detail->activity_program_bgr ?? null, 'type' => 'activity_program_bgr', 'btnTitle' => 'Add New'])
 </div>
 

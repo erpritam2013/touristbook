@@ -13,7 +13,7 @@
                             <button type="button" class="btn btn-grad border-radius-left-0 mb-0">Search</button>
                         </div>
                     </form>
-                    <p class="small mt-2 mb-0"><strong>e.g.</strong>Template, TravelGo, WordPress </p>
+                    <p class="small mt-2 mb-0"><strong>e.g.</strong>Template, Tourist Book, WordPress </p>
                 </div>
                 <a class="position-absolute top-0 right-0 mt-3 mr-3" data-toggle="collapse" href="#search-open"><i
                         class="fas fa-window-close"></i></a>
@@ -28,26 +28,22 @@
             <div class="d-flex justify-content-between align-items-center">
                 <!-- navbar top Left-->
                 <div class="d-flex align-items-center">
-                    <!-- Language -->
-                    <div class="dropdown"> <a class="dropdown-toggle" href="#" role="button"
-                            id="dropdownLanguage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="dropdown-item-icon" src="{{asset('sites/images/flag/uk.svg')}}" alt=""> English </a>
-                        <div class="dropdown-menu mt-2 shadow" aria-labelledby="dropdownLanguage"> <span
-                                class="dropdown-item-text">Select language</span>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"><img class="dropdown-item-icon"
-                                    src="{{asset('sites/images/flag/sp.svg')}}" alt=""> Español</a> <a class="dropdown-item"
-                                href="#"><img class="dropdown-item-icon" src="{{asset('sites/images/flag/fr.svg')}}" alt="">
-                                Français</a> <a class="dropdown-item" href="#"><img class="dropdown-item-icon"
-                                    src="{{asset('sites/images/flag/gr.svg')}}" alt=""> Deutsch</a>
-                        </div>
-                    </div>
+
+                      <!-- top social -->
+                    <ul class="social-icons">
+                        <li class="social-icons-item social-facebook m-0"> <a class="social-icons-link w-auto px-2"
+                                href="#"><i class="fab fa-facebook-f"></i></a> </li>
+                        <li class="social-icons-item social-instagram m-0"> <a class="social-icons-link w-auto px-2"
+                                href="#"><i class="fab fa-twitter"></i></a> </li>
+                        <li class="social-icons-item social-twitter m-0"> <a class="social-icons-link w-auto pl-2"
+                                href="#"><i class="fab fa-instagram"></i></a> </li>
+                    </ul>
+                   
                     <!-- Top info -->
                     <ul class="nav list-unstyled ml-3">
-                        <li class="nav-item mr-3"> <a class="navbar-link" href="#"><strong>Phone:</strong> (024)
-                                123-1457</a> </li>
-                        <li class="nav-item mr-3"> <a class="navbar-link" href="#"><strong>Email:</strong>
-                                help@TravelGo.com</a> </li>
+                        <li class="nav-item mr-3"> <a class="navbar-link" href="javascript:void(0)"><i class="fas fa-phone"></i>&nbsp;+91 98177-02160, 61, 62, 63</a> </li>
+                        <li class="nav-item mr-3"> <a class="navbar-link" href="mail:to"><i class="fas fa-envelope"></i>&nbsp;
+                                touristbook77@gmail.com</a> </li>
                     </ul>
                 </div>
 
@@ -66,15 +62,22 @@
                     <ul class="nav">
                         <li class="nav-item"> <a class="nav-link" href="#">Contact</a> </li>
                     </ul>
-                    <!-- top social -->
-                    <ul class="social-icons">
-                        <li class="social-icons-item social-facebook m-0"> <a class="social-icons-link w-auto px-2"
-                                href="#"><i class="fab fa-facebook-f"></i></a> </li>
-                        <li class="social-icons-item social-instagram m-0"> <a class="social-icons-link w-auto px-2"
-                                href="#"><i class="fab fa-twitter"></i></a> </li>
-                        <li class="social-icons-item social-twitter m-0"> <a class="social-icons-link w-auto pl-2"
-                                href="#"><i class="fab fa-instagram"></i></a> </li>
-                    </ul>
+                  
+
+                     <!-- Language -->
+                    <div class="dropdown"> <a class="dropdown-toggle" href="#" role="button"
+                            id="dropdownLanguage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img class="dropdown-item-icon" src="{{asset('sites/images/flag/uk.svg')}}" alt=""> English </a>
+                        <div class="dropdown-menu mt-2 shadow" aria-labelledby="dropdownLanguage"> <span
+                                class="dropdown-item-text">Select language</span>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#"><img class="dropdown-item-icon"
+                                    src="{{asset('sites/images/flag/sp.svg')}}" alt=""> Español</a> <a class="dropdown-item"
+                                href="#"><img class="dropdown-item-icon" src="{{asset('sites/images/flag/fr.svg')}}" alt="">
+                                Français</a> <a class="dropdown-item" href="#"><img class="dropdown-item-icon"
+                                    src="{{asset('sites/images/flag/gr.svg')}}" alt=""> Deutsch</a>
+                        </div>
+                    </div>
 
                 </div>
             </div>
@@ -86,7 +89,7 @@
     <nav class="navbar navbar-expand-lg">
         <div class="container">
             <!-- Logo -->
-            <a class="navbar-brand" href="index-2.html"> <img src="{{asset('sites/images/tourist-book-logo-color.webp')}}" alt="travelgo"> </a>
+            <a class="navbar-brand" href="/"> <img src="{{asset('sites/images/tourist-book-logo-color.webp')}}" alt="Tourist Book"> </a>
             <!-- Menu opener button -->
             <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
                 data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
@@ -101,189 +104,32 @@
                     </li>
                     <li class="nav-item"> <a class="nav-link" href="{{route('hotels')}}" id="docMenu" aria-haspopup="true" aria-expanded="false">Hotels</a>
                     </li>
+                  
                     <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="docMenu"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Flights</a>
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About</a>
                         <ul class="dropdown-menu" aria-labelledby="docMenu">
-                            <li><a class="dropdown-item" href="flight-index.html">Home Flights</a></li>
-                            <li><a class="dropdown-item" href="flight-list-view.html">List View</a></li>
-                            <li><a class="dropdown-item" href="flight-grid-view.html">Grid View</a></li>
-                            <li><a class="dropdown-item" href="flight-detailed.html">Detailed</a></li>
-                            <li><a class="dropdown-item" href="flight-booking.html">Booking</a></li>
-                            <li><a class="dropdown-item" href="flight-thankyou.html">Thank You</a></li>
+                            <li><a class="dropdown-item" href="{{route('about')}}">About Us</a></li>
+                            <li><a class="dropdown-item" href="{{route('connecting-partners')}}">Connecting Partners</a></li>
+                           
                         </ul>
                     </li>
-                    <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="docMenu"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cars</a>
-                        <ul class="dropdown-menu" aria-labelledby="docMenu">
-                            <li><a class="dropdown-item" href="car-index.html">Home Cars</a></li>
-                            <li><a class="dropdown-item" href="car-list-view.html">List View</a></li>
-                            <li><a class="dropdown-item" href="car-grid-view.html">Grid View</a></li>
-                            <li><a class="dropdown-item" href="car-detailed.html">Detailed</a></li>
-                            <li><a class="dropdown-item" href="car-booking.html">Booking</a></li>
-                            <li><a class="dropdown-item" href="car-thankyou.html">Thank You</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="docMenu"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cruises</a>
-                        <ul class="dropdown-menu" aria-labelledby="docMenu">
-                            <li><a class="dropdown-item" href="cruise-index.html">Home Cruises</a></li>
-                            <li><a class="dropdown-item" href="cruise-list-view.html">List View</a></li>
-                            <li><a class="dropdown-item" href="cruise-grid-view.html">Grid View</a></li>
-                            <li><a class="dropdown-item" href="cruise-detailed.html">Detailed</a></li>
-                            <li><a class="dropdown-item" href="cruise-booking.html">Booking</a></li>
-                            <li><a class="dropdown-item" href="cruise-thankyou.html">Thank You</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="docMenu"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tour</a>
-                        <ul class="dropdown-menu" aria-labelledby="docMenu">
-                            <li><a class="dropdown-item" href="tour-index.html">Home Tour</a></li>
-                            <li><a class="dropdown-item" href="all_tours_list.html">All tours list</a></li>
-                            <li><a class="dropdown-item" href="all_tours_grid.html">All tours grid</a></li>
-                            <li><a class="dropdown-item" href="single_tour.html">Single tour page</a></li>
-                            <li><a class="dropdown-item" href="single_tour_with_gallery.html">Single tour with
-                                    gallery</a></li>
-                            <li><a class="dropdown-item" href="payment.html">Single tour booking</a></li>
-                        </ul>
+                   <li class="nav-item"> <a class="nav-link" href="{{route('our-packages')}}" id="docMenu" aria-haspopup="true" aria-expanded="false">Our Packages</a>
                     </li>
 
-                    <!-- Menu item 5 Elements-->
-                    <li class="nav-item dropdown megamenu"> <a class="nav-link dropdown-toggle" href="#"
-                            id="elementsMenu" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">Pages</a>
-                        <div class="dropdown-menu" aria-labelledby="elementsMenu">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-sm-6 col-lg-3">
-                                        <ul class="list-unstyled">
-                                            <li><a class="dropdown-item" href="pages-aboutus1.html">About Us</a></li>
-                                            <li><a class="dropdown-item" href="pages-services1.html">Services</a></li>
-                                            <li><a class="dropdown-item"
-                                                    href="pages-photogallery-4column.html">Gallery 4 Column</a></li>
-                                            <li><a class="dropdown-item"
-                                                    href="pages-photogallery-3column.html">Gallery 3 Column</a></li>
-                                            <li><a class="dropdown-item"
-                                                    href="pages-photogallery-2column.html">Gallery 2 Column</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-sm-6 col-lg-3">
-                                        <ul class="list-unstyled">
-                                            <li><a class="dropdown-item" href="pages-faq1.html">Faq 1</a></li>
-                                            <li><a class="dropdown-item" href="pages-404-1.html">404 Page</a></li>
-                                            <li><a class="dropdown-item" href="pages-coming-soon1.html">Coming
-                                                    Soon</a></li>
-                                            <li><a class="dropdown-item" href="pages-login1.html">Login </a></li>
-                                            <li><a class="dropdown-item" href="pages-register.html">Registration </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-sm-6 col-lg-3">
-                                        <ul class="list-unstyled">
-                                            <li><a class="dropdown-item" href="pages-layouts-twosidebar.html">Layouts
-                                                    Two Sidebar</a></li>
-                                            <li><a class="dropdown-item" href="pages-layouts-fullwidth.html">Layouts
-                                                    Full Width</a></li>
-                                            <li><a class="dropdown-item" href="#">Contact Us</a></li>
-                                            <li><a class="dropdown-item"
-                                                    href="pages-travelo-policies.html">Policies</a></li>
-                                            <li><a class="dropdown-item" href="pages-sitemap.html">Site Map</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-sm-6 col-lg-3">
-                                        <ul class="list-unstyled">
-                                            <li><a class="dropdown-item" href="pages-blog-rightsidebar.html">Blog
-                                                    Right Sidebar</a></li>
-                                            <li><a class="dropdown-item" href="pages-blog-leftsidebar.html">Blog Left
-                                                    Sidebar</a></li>
-                                            <li><a class="dropdown-item" href="pages-blog-fullwidth.html">Blog Full
-                                                    Width</a></li>
-                                            <li><a class="dropdown-item" href="pages-blog-read.html">Blog Details</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <li class="nav-item"> <a class="nav-link" href="{{route('destinations')}}" id="docMenu" aria-haspopup="true" aria-expanded="false">Destinations</a>
                     </li>
-                    <!-- Menu item 6 Docs-->
 
-                    <!-- Menu item 5 Elements-->
-                    <li class="nav-item dropdown megamenu"> <a class="nav-link dropdown-toggle" href="#"
-                            id="elementsMenu" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">Elements</a>
-                        <div class="dropdown-menu" aria-labelledby="elementsMenu">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-sm-6 col-lg-3">
-                                        <ul class="list-unstyled">
-                                            <li> <a class="dropdown-item" href="elements-accordion.html">Accordion</a>
-                                            </li>
-                                            <li> <a class="dropdown-item" href="elements-action-box.html">Action
-                                                    box</a> </li>
-                                            <li> <a class="dropdown-item" href="elements-alerts.html">Alerts</a> </li>
-                                            <li> <a class="dropdown-item"
-                                                    href="elements-animated-headlines.html">Animated Headlines</a>
-                                            </li>
-                                            <li> <a class="dropdown-item"
-                                                    href="elements-blockquote.html">Blockquote</a> </li>
-                                            <li> <a class="dropdown-item" href="elements-buttons.html">Buttons</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-sm-6 col-lg-3">
-                                        <ul class="list-unstyled">
-                                            <li> <a class="dropdown-item" href="elements-clients.html">Clients</a>
-                                            </li>
-                                            <li> <a class="dropdown-item" href="elements-counter.html">Counter</a>
-                                            </li>
-                                            <li> <a class="dropdown-item" href="elements-divider.html">Divider</a>
-                                            </li>
-                                            <li> <a class="dropdown-item" href="elements-feature-box.html">Feature
-                                                    box</a> </li>
-                                            <li> <a class="dropdown-item" href="elements-forms.html">Forms</a> </li>
-                                            <li> <a class="dropdown-item" href="elements-grid.html">Grid</a> </li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-sm-6 col-lg-3">
-                                        <ul class="list-unstyled">
-                                            <li> <a class="dropdown-item" href="elements-list-styles.html">list
-                                                    styles</a> </li>
-                                            <li> <a class="dropdown-item" href="elements-map.html">Map</a> </li>
-                                            <li> <a class="dropdown-item" href="elements-modal.html">Modal</a> </li>
-                                            <li> <a class="dropdown-item" href="elements-skill.html">skill</a> </li>
-                                            <li> <a class="dropdown-item" href="elements-social-icon.html">social
-                                                    icon</a> </li>
-                                            <li> <a class="dropdown-item" href="elements-tab.html">Tab</a> </li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-sm-6 col-lg-3">
-                                        <ul class="list-unstyled">
-                                            <li> <a class="dropdown-item" href="elements-table.html">Table</a> </li>
-                                            <li> <a class="dropdown-item" href="elements-team.html">Team</a> </li>
-                                            <li> <a class="dropdown-item"
-                                                    href="elements-typography.html">Typography</a> </li>
-                                            <li> <a class="dropdown-item" href="elements-video.html">Video</a> </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <li class="nav-item"> <a class="nav-link" href="https://job.thetouristbook.com/" id="docMenu" aria-haspopup="true" aria-expanded="false">Jobs</a>
                     </li>
-                    <!-- Menu item 6 Docs-->
+
+                    <li class="nav-item"> <a class="nav-link" href="{{route('activities')}}" id="docMenu" aria-haspopup="true" aria-expanded="false">Activities</a>
+                    </li>
+
+
 
                 </ul>
             </div>
             <!-- Main Menu End -->
-            <!-- Header Extras Start-->
-            <div class="navbar-nav">
-                <!-- extra item Search-->
-                <div class="nav-item search border-0 pl-3 pr-0 px-lg-2" id="search"> <a class="nav-link"
-                        data-toggle="collapse" href="#search-open"><i class="fas fa-search"></i></a> </div>
-                <!-- extra item Btn-->
-                <div class="nav-item border-0 d-none d-lg-inline-block align-self-center"> <a href="#"
-                        class=" btn btn-sm btn-grad text-white mb-0">Online Booking</a> </div>
-            </div>
-            <!-- Header Extras End-->
         </div>
     </nav>
     <!-- Logo Nav End -->

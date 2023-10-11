@@ -14,6 +14,8 @@
                                 <div class="col-xl-4">
                                     @include('admin.locations.partials.publish-card', ['location'=>$location ?? null])
 
+                                     @include('admin.partials.cards.featured-image', ['item'=> $location])
+
                                     @include('admin.partials.cards.types', ['types'=> $types , 'selected'=>$location->types->pluck('id')->toArray() ?? []])
 
                                     @include('admin.partials.cards.places', ['places'=> $places , 'selected'=>$location->places->pluck('id')->toArray() ?? []])

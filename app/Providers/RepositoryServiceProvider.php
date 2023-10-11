@@ -50,9 +50,23 @@ use App\Interfaces\LanguageRepositoryInterface;
 use App\Repositories\LanguageRepository;
 use App\Interfaces\ActivityRepositoryInterface;
 use App\Repositories\ActivityRepository;
+use App\Interfaces\RoomRepositoryInterface;
+use App\Repositories\RoomRepository;
+use App\Interfaces\CategoryRepositoryInterface;
+use App\Repositories\CategoryRepository;
+use App\Interfaces\TagRepositoryInterface;
+use App\Repositories\TagRepository;
 use Illuminate\Support\ServiceProvider;
 use App\Interfaces\TourismZoneRepositoryInterface;
 use App\Repositories\TourismZoneRepository;
+use App\Interfaces\PostRepositoryInterface;
+use App\Repositories\PostRepository;
+use App\Interfaces\PackageTypeRepositoryInterface;
+use App\Repositories\PackageTypeRepository;
+use App\Interfaces\OtherPackageRepositoryInterface;
+use App\Repositories\OtherPackageRepository;
+use App\Interfaces\TourRepositoryInterface;
+use App\Repositories\TourRepository;
 
 
 
@@ -91,6 +105,13 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ActivityRepositoryInterface::class, ActivityRepository::class);
         $this->app->bind(AttractionRepositoryInterface::class, AttractionRepository::class);
         $this->app->bind(TourismZoneRepositoryInterface::class, TourismZoneRepository::class);
+        $this->app->bind(RoomRepositoryInterface::class, RoomRepository::class);
+        $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
+        $this->app->bind(TagRepositoryInterface::class, TagRepository::class);
+        $this->app->bind(PostRepositoryInterface::class, PostRepository::class);
+        $this->app->bind(PackageTypeRepositoryInterface::class, PackageTypeRepository::class);
+        $this->app->bind(OtherPackageRepositoryInterface::class, OtherPackageRepository::class);
+        $this->app->bind(TourRepositoryInterface::class, TourRepository::class);
 
 
     }

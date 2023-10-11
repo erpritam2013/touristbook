@@ -10,4 +10,5 @@ interface HotelRepositoryInterface
     public function deleteBulkHotel($hotelId);
     public function createHotel(array $hotelDetails);
     public function updateHotel($hotelId, array $newDetails);
+    public function getActiveHotelList();
 }

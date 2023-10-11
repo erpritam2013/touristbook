@@ -79,6 +79,7 @@ class AccessibleController extends Controller
      */
     public function store(StoreAccessibleRequest $request)
     {
+
         $accessibleDetails = [
             'name' => $request->name,
             'slug' => SlugService::createSlug(Accessible::class, 'slug', $request->name),
@@ -87,6 +88,8 @@ class AccessibleController extends Controller
             'accessible_type' => $request->accessible_type,
             'description' => $request->description,
         ];
+      
+
         $this->accessibleRepository->createAccessible($accessibleDetails);
         Session::flash('success','Accessible Created Successfully');
         return redirect()->Route('admin.terms.accessibles.index');
@@ -151,7 +154,7 @@ class AccessibleController extends Controller
             'description' => $request->description,
             'status' => $request->status,
         ];
-
+   
         $this->accessibleRepository->updateAccessible($accessibleId, $accessibleDetails);
          Session::flash('success','Accessible Updated Successfully');
         return redirect()->Route('admin.terms.accessibles.edit',$accessibleId);

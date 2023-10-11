@@ -19,7 +19,7 @@
   <div class="col-lg-10">
      @endif
      <div class="media-controls">
-       <input type="text" class="form-control media-input {{$class ?? ''}}" name="{{$name}}" value="{{$value ?? ''}}" id="{{$id}}" placeholder="Enter {{$label}}..."/>
+       <input type="text" class="form-control media-input {{$class ?? ''}}" name="{{$name ?? ''}}" value="{{$value ?? ''}}" id="{{$id ?? ''}}" placeholder="Enter {{$label ?? ''}}..."/>
 
        <button type="button" class="btn btn-primary mt-2 add-media-btn" smode="{{$smode ?? 'single'}}" selectedImages="{{$value ?? ''}}"  >+</button>
        <button type="button" class="btn btn-danger mt-2 remove-media-btn">-</button>

@@ -18,6 +18,7 @@
 @stack('jqvmap-min-css')
 @stack('style-css')
 @stack('font-awesome-css')
+@stack('font-awesome-picker-css')
 @stack('dataTable_css')
 @stack('custom_style')
 @endif

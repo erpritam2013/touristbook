@@ -29,22 +29,26 @@ if(empty($id)){
     <select class="form-control single-select-placeholder-touristbook {{$class ?? ''}}" id="{{$id}}" name="{{$name}}" {{$multiple}} {!!$attr ?? ""!!}>
         @if(!isset($first_empty_option))
         @if(isset($label) && !empty($label))
-        <option value="">Select {{ucwords($label)}}</option>
+        <option value="" {!!$option_attr ?? ''!!}>Select {{$first_option_text ?? ucwords($label)}}</option>
         @else
-        <option value="">--Select--</option>
+        <option value="" {!!$option_attr ?? ''!!}>--Select--</option>
         @endif
         @endif
         @if(!empty($items))
         @foreach($items as $item)
         @if(is_array($selected))
-        <option value="{{$item->id}}" {{ in_array($item->id, $selected) ? 'selected' : ''  }} >{{$item->value}}</option>
+        <option value="{{$item->id}}" {{ in_array($item->id, $selected) ? 'selected' : ''  }} {!!$option_attr ?? ''!!}>{{$item->value}}</option>
         @else
-        <option value="{{$item->id}}" {{ ($item->id == $selected) ? 'selected' : ''  }} >{{$item->value}}</option>
+        <option value="{{$item->id}}" {{ ($item->id == $selected) ? 'selected' : ''  }} {!!$option_attr ?? ''!!}>{{$item->value}}</option>
         @endif
         @endforeach
         @endif
 
     </select>
+
+    @isset($required)
+        {!! get_form_error_msg($errors, $name) !!}
+    @endisset
 </div>
 </div>
 
