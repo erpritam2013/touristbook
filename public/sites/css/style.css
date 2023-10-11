@@ -461,6 +461,9 @@ Header 1 Area CSS
  display: none;
 }
 }
+.ml-auto {
+    margin-left: unset!important;
+}
  @media (max-width: 991.98px) {
  .navbar-expand-lg > .container, .navbar-expand-lg > .container-fluid {
  padding-right: 0;
@@ -479,9 +482,15 @@ Header 1 Area CSS
  position: absolute;
 }
  .navbar-expand-lg .navbar-nav .nav-link {
-padding-left: 25px;
-font-size: 14px;
-font-weight: 600;
+    /* padding-left: 40px; */
+    /* font-size: 14px; */
+    /* font-weight: 600; */
+    /* text-transform: uppercase; */
+    display: block;
+    padding: 0px 25px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
 }
  .navbar-expand-lg > .container, .navbar-expand-lg > .container-fluid {
  flex-wrap: nowrap;
@@ -1724,6 +1733,14 @@ h6.card-title {
 }
 .innerpage-banner.left {
 	text-align: left;
+	height: 390px;
+}
+
+@media (min-width:320px) and (max-width:768px){
+   .innerpage-banner.left {
+
+	height:auto;
+}
 }
 .innerpage-banner.left .breadcrumb {
 	right: 15px;
@@ -8140,7 +8157,7 @@ h3, .h3 {
 	padding: 0 0 8px 0;
 }
 .text-primary {
-	color: #007bff !important;
+	color: #07509e !important;
 }
 .mb-4, .my-4 {
 	margin-bottom: 1.5rem !important;
@@ -10649,6 +10666,13 @@ background: #fba009;
     border-left-color: #07509e !important;
     border-left-style: solid !important;
 }
+.main-text-newslatter{
+	color:#07509e !important;
+}
+.text-newslatter-small{
+	font-size:14px!important;
+	color:#fba009!important;
+}
 
 .container.search-box {
     position: absolute;
@@ -10688,12 +10712,16 @@ label.lbl-search-box {
 }
 
 .ui-autocomplete.ui-menu {
-    z-index: 999999 !important;
+    z-index: 1 !important;
     list-style: none;
     width: 50% !important;
     margin-top: 20px;
     margin-left: -10px;
+     left: 349px!important;
+    border-top: 1px solid #ddd;
 }
+
+
 
 .ui-autocomplete.ui-menu li {
     color: #07509e;

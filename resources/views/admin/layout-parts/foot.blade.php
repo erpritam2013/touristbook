@@ -15,6 +15,7 @@
 @stack('tourist-lib-js')
 @stack('inline-custom-function')
 @stack('all-min-js')
+@stack('font-awesome-picker-js')
 @stack('dataTable_js')
 @stack('jquery_validation-js')
 @stack('select2_js')

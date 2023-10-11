@@ -289,10 +289,11 @@ background: #fff!important; }
     padding: 5px;
 }
 .alert i.mdi-close {
-        position: absolute;
-    top: 5px;
+    position: absolute;
+    top: 7px;
     bottom: 0px;
     right: 5px;
+    font-size: 16px;
 }
 /* active and inactive button end css */
 

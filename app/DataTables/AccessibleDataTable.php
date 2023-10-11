@@ -23,7 +23,7 @@ class AccessibleDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))->addIndexColumn()->addColumn('icon',function($row){
-                return get_fontawesome_icon_html($row->icon,'fa-lg');
+                return get_fontawesome_icon_html($row->icon,'fa-lg touristbook-table-icon');
             })->addColumn('action', function ($row) {
                     $html = ' <a href="'.route("admin.terms.accessibles.edit",$row->id).'" class="btn btn-primary" title="Edit"><i class="fa fa-edit"></i></a>';
                     $html .= '<a href="'.route("admin.terms.accessibles.show",$row->id).'" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>';

@@ -50,6 +50,11 @@
         @push('all-min-js')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
         @endpush
+        @push('font-awesome-picker-js')
+        <script src="{!! asset('admin-part/vendor/fontawesome-iconpicker/js/fontawesome-iconpicker.js') !!}"></script>
+        <script src="{!! asset('admin-part/vendor/fontawesome-iconpicker/js/fontawesome-iconpicker-init.js') !!}"></script>
+       
+        @endpush
         <!-- For list or index page js -->
         @if(Route::getRoutes()->match(request())->methods[0] == 'GET' && matchRouteNameMatch('index'))
         @push('dataTable_js')

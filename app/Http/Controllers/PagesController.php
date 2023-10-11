@@ -17,11 +17,53 @@ class PagesController extends Controller
     }
 
     public function hotels(Request $request) {
+        $post_type = 'Hotel';
         $searchTerm = $request->get('search');
         $sourceType = $request->get('source_type');
         $sourceId = $request->get('source_id');
 
-        return view('sites.pages.hotels', compact('searchTerm', 'sourceType', 'sourceId'));
+        return view('sites.pages.hotels', compact('searchTerm', 'sourceType', 'sourceId','post_type'));
+    }
+    public function about() {
+        $data['post_type'] = 'About';
+        $data['title'] = 'About';
+        return view('sites.pages.about',$data);
+    }
+    public function connecting_partners() {
+        $data['post_type'] = 'connecting_partners';
+        $data['title'] = 'Connecting Partners';
+        return view('sites.pages.connecting-partners',$data);
+    }
+
+    public function blogs() {
+
+        $data['post_type'] = 'Blog';
+        $data['title'] = 'Blogs';
+        return view('sites.pages.blogs',$data);
+    }
+    public function destinations() {
+
+        $data['post_type'] = 'destinations';
+        $data['title'] = 'Destinations';
+        return view('sites.pages.destinations',$data);
+    }
+    public function activities() {
+
+        $data['post_type'] = 'activities';
+        $data['title'] = 'Activities';
+        return view('sites.pages.activities',$data);
+    }
+    public function our_packages() {
+
+        $data['post_type'] = 'our_packages';
+        $data['title'] = 'Our Packages';
+        return view('sites.pages.our-packages',$data);
+    }
+    public function contact() {
+
+        $data['post_type'] = 'contact';
+        $data['title'] = 'Contact Us';
+        return view('sites.pages.contact',$data);
     }
 
 
@@ -133,7 +175,7 @@ class PagesController extends Controller
         }
 
 
-        $hotels = $hotelQuery->groupBy('hotels.id')->paginate(8, ['*'], 'page', $pageNumber);
+        $hotels = $hotelQuery->groupBy('hotels.id')->paginate(12, ['*'], 'page', $pageNumber);
         // TODO: Include Status Check
         // $hotelQuery->where('status', Hotel::)
         return View::make('sites.partials.results.hotel', ['hotels' => $hotels, 'view' => $view]);

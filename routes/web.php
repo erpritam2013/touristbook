@@ -7,6 +7,7 @@ use App\Http\Controllers\TopServiceController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\AccessibleController;
 use App\Http\Controllers\PropertyTypeController;
+use App\Http\Controllers\PackageTypeController;
 use App\Http\Controllers\MeetingAndEventController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\locationController;
@@ -29,6 +30,11 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\TourismZoneController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\OtherPackageController;
+use App\Http\Controllers\TourController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,6 +50,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PagesController::class, 'index'])->name('home');
 Route::get('/hotels', [PagesController::class, 'hotels'])->name('hotels');
+Route::get('/about', [PagesController::class, 'about'])->name('about');
+Route::get('/blogs', [PagesController::class, 'blogs'])->name('blogs');
+Route::get('/destinations', [PagesController::class, 'destinations'])->name('destinations');
+Route::get('/activities', [PagesController::class, 'activities'])->name('activities');
+Route::get('/our-packages', [PagesController::class, 'our_packages'])->name('our-packages');
+Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
+Route::get('/connecting-partners', [PagesController::class, 'connecting_partners'])->name('connecting-partners');
 
 Route::get('/hotels/{slug}', [PagesController::class, 'hotelDetail'])->name('hotel');
 
@@ -89,6 +102,15 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::delete('amenity/bulk-delete', [AmenityController::class,'bulk_delete'])->name('amenities.bulk-delete');
     Route::get('amenity/ajax-get', [AmenityController::class,'getAmenitiesAjax'])->name('ajaxGetAmenity');
     Route::get('amenity/changeStatus', [AmenityController::class,'changeStatus'])->name('changeStatusAmenity');
+    /*Categories Routes*/
+    Route::resource('categories', CategoryController::class);
+        Route::delete('category/bulk-delete', [CategoryController::class,'bulk_delete'])->name('categories.bulk-delete');
+    Route::get('category/ajax-get', [CategoryController::class,'getCategoriesAjax'])->name('ajaxGetCategory');
+    Route::get('category/changeStatus', [CategoryController::class,'changeStatus'])->name('changeStatusCategory');
+    /*Tags Routes*/
+    Route::resource('tags', TagController::class);
+        Route::delete('tag/bulk-delete', [TagController::class,'bulk_delete'])->name('tags.bulk-delete');
+    Route::get('tag/changeStatus', [TagController::class,'changeStatus'])->name('changeStatusTag');
 
     /*Medicare Assistance Routes*/
     Route::resource('medicare-assistances', MedicareAssistanceController::class);
@@ -121,6 +143,17 @@ Route::name('admin.')->prefix('admin')->group(function () {
      Route::delete('property-type/bulk-delete', [PropertyTypeController::class,'bulk_delete'])->name('property-types.bulk-delete');
     Route::get('property-type/ajax-get', [PropertyTypeController::class,'getPropertyTypesAjax'])->name('ajaxGetPropertyType');
     Route::get('property-type/changeStatus', [PropertyTypeController::class,'changeStatus'])->name('changeStatusPropertyType');
+
+    /*package Type Routes*/
+    Route::resource('package-types', PackageTypeController::class);
+     Route::delete('package-type/bulk-delete', [PackageTypeController::class,'bulk_delete'])->name('package-types.bulk-delete');
+    Route::get('package-type/ajax-get', [PackageTypeController::class,'getPackageTypesAjax'])->name('ajaxGetPackageType');
+    Route::get('package-type/changeStatus', [PackageTypeController::class,'changeStatus'])->name('changeStatusPackageType');
+    /*Other Package Routes*/
+    Route::resource('other-packages', OtherPackageController::class);
+     Route::delete('other-packages/bulk-delete', [OtherPackageController::class,'bulk_delete'])->name('other-packages.bulk-delete');
+    Route::get('other-package/ajax-get', [OtherPackageController::class,'getOtherPackagesAjax'])->name('ajaxGetPackage');
+    Route::get('other-package/changeStatus', [OtherPackageController::class,'changeStatus'])->name('changeStatusOtherPackage');
     /*meeting and events Routes*/
     Route::resource('meeting-and-events', MeetingAndEventController::class);
     Route::delete('meeting-and-event/bulk-delete', [MeetingAndEventController::class,'bulk_delete'])->name('meeting-and-events.bulk-delete');
@@ -175,11 +208,29 @@ Route::name('admin.')->prefix('admin')->group(function () {
      Route::get('hotel/changeStatus', [HotelController::class,'changeStatus'])->name('changeStatusHotel');
 
      // Hotel Resource
+    Route::resource('tours', TourController::class);
+    Route::prefix('tours')->name('tours.')->group(function() {
+
+    });
+
+    Route::delete('tour/bulk-delete', [TourController::class,'bulk_delete'])->name('tours.bulk-delete');
+     Route::get('tour/changeStatus', [TourController::class,'changeStatus'])->name('changeStatusHotel');
+
+     // Post Resource
+    Route::resource('posts', PostController::class);
+    Route::prefix('posts')->name('posts.')->group(function() {
+
+    });
+
+    Route::delete('post/bulk-delete', [PostController::class,'bulk_delete'])->name('posts.bulk-delete');
+     Route::get('post/changeStatus', [PostController::class,'changeStatus'])->name('changeStatusPost');
+
+     // Room Resource
     Route::resource('rooms', RoomController::class);
     Route::prefix('rooms')->name('rooms.')->group(function() {
     });
 
-    Route::delete('room/bulk-delete', [RoomController::class,'bulk_delete'])->name('room.bulk-delete');
+    Route::delete('room/bulk-delete', [RoomController::class,'bulk_delete'])->name('rooms.bulk-delete');
      Route::get('room/changeStatus', [RoomController::class,'changeStatus'])->name('changeStatusRoom');
 
      // Location Resource

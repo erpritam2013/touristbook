@@ -36,9 +36,11 @@
                 <div class="col-lg-3 col-md-3 col-sm-12">
                     @include('sites.partials.filters.hotel')
                 </div>
-                <div class="col-lg-9 col-md-9 col-sm-12" id="result-info">9
+                <div class="col-lg-9 col-md-9 col-sm-12" id="result-info">
+
+                    
                 </div>
             </div>
         </div>
     </section>
-@endsection
+@endsection 

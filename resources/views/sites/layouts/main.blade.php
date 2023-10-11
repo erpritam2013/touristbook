@@ -13,7 +13,7 @@
     <link href="{{ asset('sites/css/bootstrap-datepicker.css')}}" type="text/css" rel="stylesheet" />
     <!-- Favicon -->
     <!-- Favicon and Touch Icons -->
-    <link href="{{ asset('sites/images/favicon.png') }}" rel="shortcut icon" type="image/png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{!! asset('admin-part/images/favicon-16x16.png') !!}">
     <title>Tourist Book</title>
 
     <style>

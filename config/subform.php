@@ -113,6 +113,23 @@ return [
             ]
 
         ],
+    'tour_helpful_facts' => [
+            "fields" => [
+                "tour_helpful_facts-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "tour_helpful_facts-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea'
+                ],
+                "tour_helpful_facts-description" => [
+                    'label' => "Short Description",
+                    'control' => 'textarea'
+                ]
+            ]
+
+        ],
     'pocketPDF' => [
             "fields" => [
                 "pocketPDF-title" => [
@@ -139,6 +156,24 @@ return [
                 "landmark-short-description" => [
                     'label' => "Short Description",
                     'control' => 'textarea'
+                ]
+            ]
+
+        ],
+    'add_new_facility' => [
+            "fields" => [
+                "add_new_facility-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "add_new_facility-value" => [
+                    'label' => "Value",
+                    'control' => 'text'
+                ],
+                "add_new_facility-icon" => [
+                    'label' => "Icon",
+                    'control' => 'text',
+                    'desc' => 'Support: fonticon (eg: fa-facebook)'
                 ]
             ]
 
@@ -403,6 +438,76 @@ return [
             ]
 
         ],
+    'tours_program' => [
+            "fields" => [
+                "tours_program-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "tours_program-image" => [
+                    'label' => "Image",
+                    'control' => 'media'
+                ],
+                "tours_program-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea'
+                ],
+            ]
+
+        ],
+    'tours_program_bgr' => [
+            "fields" => [
+                "tours_program_bgr-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                    
+                "tours_program_bgr-time" => [
+                    'label' => "Sub Title",
+                    'control' => 'text'
+                ],
+                "tours_program_bgr-image" => [
+                    'label' => "Image",
+                    'control' => 'media'
+                ],
+                "tours_program_bgr-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea'
+                ],
+            ]
+
+        ],
+    'tours_program_style4' => [
+            "fields" => [
+                "tours_program_style4-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                    
+                "tours_program_style4-time" => [
+                    'label' => "Sub Title",
+                    'control' => 'text'
+                ],
+                "tours_program_style4-image" => [
+                    'label' => "Image",
+                    'control' => 'media'
+                ],
+                "tours_program_style4-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea'
+                ],
+            ]
+
+        ],
+    'package_route' => [
+            "fields" => [
+                "package_route-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+            ]
+
+        ],
     'activity_faq' => [
             "fields" => [
                 "activity_faq-title" => [
@@ -410,6 +515,19 @@ return [
                     'control' => 'text'
                 ],
                 "activity_faq-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea'
+                ],
+            ]
+
+        ],
+    'tours_faq' => [
+            "fields" => [
+                "tours_faq-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "tours_faq-description" => [
                     'label' => "Description",
                     'control' => 'textarea'
                 ],
@@ -540,6 +658,47 @@ return [
                     'label' => "Set this only description",
                     'control' => 'radio',
                     'desc'=>'Set this only description'
+                ],
+            ]
+
+        ],
+        'tours_destinations' => [
+            "fields" => [
+                "tours_destinations-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "tours_destinations-titel_link" => [
+                    'label' => "Title Link",
+                    'control' => 'text',
+                    // 'class'   => 'tourist-editor'
+                ],
+                "tours_destinations-video_thumbnail" => [
+                    'label' => "Video Thumbnail Image",
+                    'control' => 'media'
+                ],
+
+                "tours_destinations-youtube_link" => [
+                    'label' => "You Tube Video Link",
+                    'control' => 'url'
+                ],
+            ]
+
+        ],
+        'tour_sponsored_by' => [
+            "fields" => [
+                "tour_sponsored_by-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "tour_sponsored_by-sponsor_heading" => [
+                    'label' => "Sponsored Heading",
+                    'control' => 'text'
+                ],
+                "tour_sponsored_by-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea',
+                    // 'class'   => 'tourist-editor'
                 ],
             ]
 

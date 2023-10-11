@@ -11,26 +11,26 @@ class ActivityRepository implements ActivityRepositoryInterface
     {
         return Activity::orderBy('id','desc')->get();
     }
-    public function getActivityById($ActivityId)
+    public function getActivityById($activityId)
     {
-        return Activity::findOrFail($ActivityId);
+        return Activity::findOrFail($activityId);
     }
-    public function deleteActivity($ActivityId)
+    public function deleteActivity($activityId)
     {
-        Activity::destroy($ActivityId);
+        Activity::destroy($activityId);
     }
 
-    public function deleteBulkActivity($ActivityId)
+    public function deleteBulkActivity($activityId)
     {
-         Activity::whereIn('id', $ActivityId)->delete();
+         Activity::whereIn('id', $activityId)->delete();
     }
-    public function createActivity(array $ActivityDetails)
+    public function createActivity(array $activityDetails)
     {
-        return Activity::create($ActivityDetails);
+        return Activity::create($activityDetails);
     }
-    public function updateActivity($ActivityId, array $newDetails)
+    public function updateActivity($activityId, array $newDetails)
     {
-        return Activity::whereId($ActivityId)->update($newDetails);
+        return Activity::whereId($activityId)->update($newDetails);
     }
 
 }

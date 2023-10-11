@@ -17,6 +17,7 @@ class Type extends Model
     const HOTEL_TYPE = "Hotel";
     const LOCATION_TYPE = "Location";
     const TOUR_TYPE = "Tour";
+    const ROOM_TYPE = "Room";
 
       protected $fillable = [
        'name',
