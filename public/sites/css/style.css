@@ -8420,7 +8420,7 @@ box-shadow: 0px 0px 0px 9px rgba(0, 0, 0, 0.1);
 .Filter-left {
 	background: #fff;
 		color:#000;
-/*	padding: 15px 12px;*/
+	padding: 20px;
 }
 .Filter-left .form-label {
     padding: 12px 0 12px 0;
@@ -8436,7 +8436,7 @@ box-shadow: 0px 0px 0px 9px rgba(0, 0, 0, 0.1);
 }
 
 .Filter-left .mb-left {
-    border: 1px solid #ddd;
+    border: 1px solid #dfdfdf;
     padding: 10px;
     margin-top: 10px;
 }
@@ -8451,7 +8451,7 @@ box-shadow: 0px 0px 0px 9px rgba(0, 0, 0, 0.1);
     /* float: right; */
     padding: 12px 0 12px 0;
     position: absolute;
-    right: 24px;
+   right: 45px;
 }
 .FilterBtn {
 	display: block;
@@ -10739,12 +10739,23 @@ label.lbl-search-box {
 }
 
 /*extra css hotel start*/
+.hotel-list-page .row.listroBox {
+    border: 1px solid #dfdfdf;
+}
+.hotel-list-page .section-footer {
+    text-align: center;
+    padding-right: 27px;
+    border-left: 1px solid #dfdfdf;
+}
+.hotel-list-page .hotel-content {
+
+    border-left: 1px solid #dfdfdf;
+}
 .hotel-list-page .hotel-service-price {
     position: relative;
-    top: 70px;
+    top: 85px;
     color: #07509e;
     font-weight: 600;
-    left: 25px;
 }
 
 .hotel-list-page .view-hotel-btn{
@@ -10874,7 +10885,8 @@ label.lbl-search-box {
     color: #07509e;
 }
 .hotel-list-page .listroBox figure{
-    margin: 40px 0;
+    margin: 8px 0;
+    height: 250px;
 }
 
 .hotel-grid-view .text-muted{
@@ -10903,6 +10915,15 @@ label.lbl-search-box {
     font-size: 15px;
     text-align: center;
 }
+.hotel-grid-view .TravelGo-category-price.btn-grad{
+    color: #07509e!important;
+    border: 1px solid #07509e!important;
+    background: transparent;
+}
+.hotel-grid-view .TravelGo-category-price.btn-grad a{
+    color: #07509e!important;
+}
+
 
 @media (min-width:320px) and (max-width:768px){
 .hotel-list-page .listroBox figure{
@@ -10915,6 +10936,10 @@ label.lbl-search-box {
     color: #07509e;
     font-weight: 600;
     left: 185px;
+}
+.hotel-list-page .listroBox figure{
+    margin: 8px 0;
+    height: 200px;
 }
 
 	}
