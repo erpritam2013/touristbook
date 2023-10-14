@@ -131,7 +131,8 @@ class HotelController extends Controller
         $hotel = Hotel::with([
             'facilities', 'amenities', 'medicare_assistances', 'top_services', 'places',
             'propertyTypes',
-            'accessibles', 'meetingEvents', 'states', 'occupancies', 'deals', 'activities'
+            'accessibles', 'meetingEvents', 'states', 'occupancies', 'deals', 'activities',
+            'detail'
         ])->find($id);
 
         if (empty($hotel)) {
@@ -168,7 +169,7 @@ class HotelController extends Controller
             'book_before_day' => $request->book_before_day,
             'book_before_arrival' => $request->book_before_arrival,
             'policies' => $request->policy,
-            'notices' => $request->noticies,
+            'notices' => $request->notices,
             'status' => $request->status,
             // TODO: created_by pending as Authentication is not Yet Completed
         ];
@@ -273,7 +274,7 @@ class HotelController extends Controller
             'book_before_day' => $request->book_before_day,
             'book_before_arrival' => $request->book_before_arrival,
             'policies' => $request->policy,
-            'notices' => $request->noticies,
+            'notices' => $request->notices,
             'status' => $request->status,
             // TODO: created_by pending as Authentication is not Yet Completed
         ];

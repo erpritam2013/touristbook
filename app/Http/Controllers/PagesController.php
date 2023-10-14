@@ -72,9 +72,14 @@ class PagesController extends Controller
         if(!$hotel) {
             abort(404);
         }
-        // dd($hotel);
 
-        return view('sites.pages.hotel-detail', compact('hotel'));
+        $state = $hotel->states()->first();
+        $tourismZone = null;
+        if($state) {
+            $tourismZone =  $state->tourism_zones()->first();
+        }
+
+        return view('sites.pages.hotel-detail', compact('hotel', 'tourismZone'));
     }
 
     public function getHotels(Request $request, $view = "list") {
