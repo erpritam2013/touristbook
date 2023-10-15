@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hotel;
+use App\Models\Tour;
 use App\Models\Location;
 use App\Models\Terms\State;
 use Illuminate\Http\Request;
@@ -12,17 +13,19 @@ use Illuminate\Support\Facades\View;
 class PagesController extends Controller
 {
     public function index() {
-
-        return view('sites.pages.home');
+         $data['post_type'] = 'Home';
+        $data['title'] = 'Home';
+        return view('sites.pages.home',$data);
     }
 
     public function hotels(Request $request) {
-        $post_type = 'Hotel';
-        $searchTerm = $request->get('search');
-        $sourceType = $request->get('source_type');
-        $sourceId = $request->get('source_id');
-
-        return view('sites.pages.hotels', compact('searchTerm', 'sourceType', 'sourceId','post_type'));
+      
+        $data['post_type'] = 'Hotel';
+        $data['title'] = 'Hotels';
+        $data['searchTerm'] = $request->get('search');
+        $data['sourceType'] = $request->get('source_type');
+        $data['sourceId'] = $request->get('source_id');
+        return view('sites.pages.hotels',$data);
     }
     public function about() {
         $data['post_type'] = 'About';
@@ -41,27 +44,38 @@ class PagesController extends Controller
         $data['title'] = 'Blogs';
         return view('sites.pages.blogs',$data);
     }
-    public function destinations() {
+    public function destinations(Request $request) {
 
-        $data['post_type'] = 'destinations';
+        $data['post_type'] = 'Location';
         $data['title'] = 'Destinations';
+        $data['searchTerm'] = $request->get('search');
+        $data['sourceType'] = $request->get('source_type');
+        $data['sourceId'] = $request->get('source_id');
         return view('sites.pages.destinations',$data);
     }
-    public function activities() {
+    public function activities(Request $request) {
 
-        $data['post_type'] = 'activities';
+        $data['post_type'] = 'Activity';
         $data['title'] = 'Activities';
-        return view('sites.pages.activities',$data);
-    }
-    public function our_packages() {
+        $data['searchTerm'] = $request->get('search');
+        $data['sourceType'] = $request->get('source_type');
+        $data['sourceId'] = $request->get('source_id');
 
-        $data['post_type'] = 'our_packages';
-        $data['title'] = 'Our Packages';
-        return view('sites.pages.our-packages',$data);
+        return view('sites.pages.activities', $data);
+    }
+    public function our_packages(Request $request) {
+
+        $data['post_type'] = 'Tour';
+        $data['title'] = 'Our Packages'; 
+        $data['searchTerm'] = $request->get('search');
+        $data['sourceType'] = $request->get('source_type');
+        $data['sourceId'] = $request->get('source_id');
+
+        return view('sites.pages.our-packages', $data);
     }
     public function contact() {
 
-        $data['post_type'] = 'contact';
+        $data['post_type'] = 'Contact';
         $data['title'] = 'Contact Us';
         return view('sites.pages.contact',$data);
     }
@@ -72,9 +86,15 @@ class PagesController extends Controller
         if(!$hotel) {
             abort(404);
         }
+        $data['hotel'] = $hotel;
+        $data['title'] = 'Hotel :: '.ucwords($hotel->name);
         // dd($hotel);
 
-        return view('sites.pages.hotel-detail', compact('hotel'));
+        return view('sites.pages.hotel-detail', $data);
+    }
+
+    public function tourDetail(Request $request, $slug) {
+       dd('here');
     }
 
     public function getHotels(Request $request, $view = "list") {
@@ -98,7 +118,7 @@ class PagesController extends Controller
 
             $hotelQuery->whereBetween("avg_price", [$minimum, $maximum]);
         }
-
+        
         // Property Types
         if($request->has('propertyTypes') && !empty($request->get('propertyTypes'))) {
             $propertyTypesValue = $request->get('propertyTypes');
@@ -183,6 +203,107 @@ class PagesController extends Controller
         // $hotelQuery->where('status', Hotel::)
 
         return View::make('sites.partials.results.hotel', ['hotels' => $hotels, 'view' => $view]);
+
+    }
+
+  public function getTours(Request $request, $view = "list") {
+        
+        if (isMobileDevice()) {
+            $view = "grid";
+        }
+        $tourQuery = Tour::query();
+        $tourQuery->selectRaw(' tours.*, tour_details.latitude, tour_details.longitude');
+
+        $tourQuery->leftJoin('tour_details', 'tour_details.tour_id', '=', 'tours.id');
+
+        // $tourQuery->leftJoin('tour_package_types', 'tour_package_types.tour_id', '=', 'tours.id');
+        // $tourQuery->leftJoin('package_types', 'package_types.id', '=', 'tour_package_types.package_type_id');
+
+        if($request->has('range') && !empty($request->get('range'))) {
+            $range = explode(";", $request->get('range'));
+            // TODO: Need Proper Validation
+            $minimum = $range[0];
+            $maximum = $range[1];
+
+            $tourQuery->whereBetween("avg_price", [$minimum, $maximum]);
+        }
+
+        if($request->has('duration_day') && !empty($request->get('duration_day'))) {
+            $duration_day = explode(";", $request->get('duration_day'));
+            // TODO: Need Proper Validation
+            // $minimum = $duration_day[0];
+            // $maximum = $duration_day[1];
+
+            $hotelQuery->whereIn("duration_day",$duration_day);
+        }
+
+
+        // Package Types
+        if($request->has('package_types') && !empty($request->get('package_types'))) {
+            $package_typesValue = $request->get('package_types');
+            $package_types = explode(",", $package_typesValue);
+            // No Need Data from package Type
+            $tourQuery->leftJoin('tour_package_types', 'tour_package_types.tour_id', '=', 'tours.id');
+            $tourQuery->whereIn('tour_package_types.package_type_id', $package_types);
+        }
+
+        // orther_packages
+        if($request->has('orther_packages') && !empty($request->get('orther_packages'))) {
+            $orther_packagesValue = $request->get('orther_packages');
+            $orther_packages = explode(",", $orther_packagesValue);
+            $tourQuery->whereIn('tour_orther_packages.orther_package_id', $orther_packages);
+        }
+
+        // types
+        if($request->has('types') && !empty($request->get('types'))) {
+            $typesValue = $request->get('types');
+            $types = explode(",", $typesValue);
+            // No Need Data from Type
+            $tourQuery->leftJoin('tour_types', 'tour_types.tour_id', '=', 'tours.id');
+            $tourQuery->whereIn('tour_types.type_id', $types);
+        }
+
+        // languages
+        if($request->has('language') && !empty($request->get('language'))) {
+            $languagesValue = $request->get('language');
+            $languages = explode(",", $languagesValue);
+            // No Need Data from Language
+            $tourQuery->leftJoin('tour_languages', 'tour_languages.tour_id', '=', 'tours.id');
+            $tourQuery->whereIn('tour_languages.language_id', $languages);
+        }
+
+        // Search Params
+        if($request->has('sourceType') && !empty($request->get('sourceType')) && $request->has('sourceId') && !empty($request->get('sourceId'))) {
+            $sourceType = $request->get('sourceType');
+            $sourceId = $request->get('sourceId');
+            if ($sourceType == "state") {
+                $tourQuery->leftJoin('tour_states', 'tour_states.tour_id', '=', 'tours.id');
+                $tourQuery->where('tour_states.state_id', $sourceId);
+            }else {
+                $tourQuery->leftJoin('tour_locations', 'tour_locations.tour_id', '=', 'tours.id');
+                $tourQuery->where('tour_locations.location_id', $sourceId);
+            }
+
+
+        }else if($request->has('searchTerm') && !empty($request->get('searchTerm'))) {
+            //search in address
+            $searchTerm = $request->get('searchTerm');
+            // TODO: JSON Treatment is Pending
+            $tourQuery->where('tours.address', 'LIKE', '%'.$searchTerm.'%');
+        }
+
+
+        $pageNumber = 1;
+        if($request->has('pageNo') && !empty($request->get('pageNo'))) {
+            $pageNumber = $request->get('pageNo');
+        }
+
+
+        $tours = $tourQuery->groupBy('tours.id')->paginate(12, ['*'], 'page', $pageNumber);
+        // TODO: Include Status Check
+        // $tourQuery->where('status', tour::)
+
+        return View::make('sites.partials.results.tour', ['tours' => $tours, 'view' => $view]);
 
     }
 

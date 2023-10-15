@@ -98,14 +98,14 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav ml-auto">
                     <!-- Menu item 1 Demos-->
-                    <li class="nav-item active"> <a class="nav-link " href="{{route('home')}}"
+                    <li class="nav-item {{matchSiteRouteName('home')}}"> <a class="nav-link " href="{{route('home')}}"
                             id="demosMenu" aria-haspopup="true"
                             aria-expanded="false">Home</a>
                     </li>
-                    <li class="nav-item"> <a class="nav-link" href="{{route('hotels')}}" id="docMenu" aria-haspopup="true" aria-expanded="false">Hotels</a>
+                    <li class="nav-item {{matchSiteRouteName('hotels')}}"> <a class="nav-link" href="{{route('hotels')}}" id="docMenu" aria-haspopup="true" aria-expanded="false">Hotels</a>
                     </li>
                   
-                    <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="docMenu"
+                    <li class="nav-item dropdown {{matchSiteRouteName('about')}}"> <a class="nav-link dropdown-toggle" href="#" id="docMenu"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About</a>
                         <ul class="dropdown-menu" aria-labelledby="docMenu">
                             <li><a class="dropdown-item" href="{{route('about')}}">About Us</a></li>
@@ -113,16 +113,16 @@
                            
                         </ul>
                     </li>
-                   <li class="nav-item"> <a class="nav-link" href="{{route('our-packages')}}" id="docMenu" aria-haspopup="true" aria-expanded="false">Our Packages</a>
+                   <li class="nav-item {{matchSiteRouteName('our-packages')}}"> <a class="nav-link" href="{{route('our-packages')}}" id="docMenu" aria-haspopup="true" aria-expanded="false">Our Packages</a>
                     </li>
 
-                    <li class="nav-item"> <a class="nav-link" href="{{route('destinations')}}" id="docMenu" aria-haspopup="true" aria-expanded="false">Destinations</a>
+                    <li class="nav-item  {{matchSiteRouteName('destinations')}}"> <a class="nav-link" href="{{route('destinations')}}" id="docMenu" aria-haspopup="true" aria-expanded="false">Destinations</a>
                     </li>
 
-                    <li class="nav-item"> <a class="nav-link" href="https://job.thetouristbook.com/" id="docMenu" aria-haspopup="true" aria-expanded="false">Jobs</a>
+                    <li class="nav-item {{matchSiteRouteName('home')}}"> <a class="nav-link" href="https://job.thetouristbook.com/" id="docMenu" aria-haspopup="true" aria-expanded="false">Jobs</a>
                     </li>
 
-                    <li class="nav-item"> <a class="nav-link" href="{{route('activities')}}" id="docMenu" aria-haspopup="true" aria-expanded="false">Activities</a>
+                    <li class="nav-item {{matchSiteRouteName('activities')}}"> <a class="nav-link" href="{{route('activities')}}" id="docMenu" aria-haspopup="true" aria-expanded="false">Activities</a>
                     </li>
 
 

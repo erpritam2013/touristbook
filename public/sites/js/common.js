@@ -61,10 +61,26 @@
             params.propertyTypes = selectedPropertyTypes;
         }
 
+        // Fetch Duration If any
+        let selectedDuration = compiledCheckboxes(".filter-duration");
+        if (selectedDuration) {
+            params.duration_day = selectedDuration;
+        }
         // Fetch Amenities If any
         let selectedAmenities = compiledCheckboxes(".filter-amenities");
         if (selectedAmenities) {
             params.amenities = selectedAmenities;
+        }
+ // Fetch package type If any
+        let selectedPackageTypes = compiledCheckboxes(".filter-package-types");
+        if (selectedPackageTypes) {
+            params.package_types = selectedPackageTypes;
+        }
+
+        // Fetch  type If any
+        let selectedTypes = compiledCheckboxes(".filter-types");
+        if (selectedTypes) {
+            params.types = selectedTypes;
         }
 
         // Fetch Medicares If any
@@ -164,11 +180,14 @@
         },0)
     };
 
+
+
     // Common Function to Hit and get data
     const fetchHotels = (view, options = {}) => {
         // TODO: Place check; so that it only works for hotel list page
         // possibly add page in body class
-        let endpoint = base_url + "/get-hotels/" + view;
+        let get_hotel = $('#result-info').data('type');
+        let endpoint = base_url + "/"+get_hotel+"/" + view;
 
         $.ajax({
             type: "GET",

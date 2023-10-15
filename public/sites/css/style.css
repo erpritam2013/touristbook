@@ -1704,6 +1704,13 @@ h6.card-title {
 	font-weight: 600;
 	padding: 0 0 12px 0;
 }
+body.our-packages-page .innerpage-banner h1 {
+    font-size: 2.1875rem;
+    font-weight: 600;
+    padding: 0 0 12px 0;
+    position: relative;
+    bottom: 30px;
+}
 .innerpage-banner h6 {
 	margin-bottom: 0;
 }
@@ -1734,6 +1741,10 @@ h6.card-title {
 .innerpage-banner.left {
 	text-align: left;
 	height: 390px;
+}
+body.our-packages-page .innerpage-banner.left {
+    text-align: left;
+    height: 230px;
 }
 
 @media (min-width:320px) and (max-width:768px){
@@ -8442,7 +8453,11 @@ box-shadow: 0px 0px 0px 9px rgba(0, 0, 0, 0.1);
 }
 
 .Filter-left .mb-left label.custom-control-label{
-    font-weight: 500;
+    font-weight: 600;
+}
+.Filter-left .mb-left .price-filter label{
+	  color: #07509e;
+    font-weight: 600;
 }
 
 .Filter-left .mb-left-title i {
@@ -8848,16 +8863,16 @@ img {
 	border-bottom: 1px solid #e5e5e5;
 }
 .resultBar h2 {
-	color: #848484;
-	font-weight: 400;
-	text-transform: capitalize;
-	font-size: 15px;
-	margin-bottom: 0;
-	display: inline-block;
+    color: #07509e;
+    font-weight: 500;
+    text-transform: capitalize;
+    font-size: 24px;
+    margin-bottom: 0;
+    display: inline-block;
 }
 .resultBar h2 span {
-	font-weight: 500;
-	color: #222;
+    font-weight: 500;
+    color: #fba009;
 }
 .resultBar .list-inline {
 	float: right;
@@ -10692,14 +10707,16 @@ background: #fba009;
     border: 1px solid #fff;
     border-radius: 5px;
 }
-
 input.main-search-box {
-    height: 50px;
+    height: 30px;
     width: 100%;
     font-size: 20px;
-    padding: 15px;
+    padding: 0px 15px;
     border: none;
     color: #fba009;
+}
+body.our-packages-page input.main-search-box {
+    font-size: 16px;
 }
 
 input.main-search-box::placeholder {
@@ -10708,7 +10725,7 @@ input.main-search-box::placeholder {
 label.lbl-search-box {
     padding-left: 15px;
     padding-top: 10px;
-    font-size: 13px;
+    font-size: 16px;
     color: #07509e;
 }
 .btn-wrapper {
@@ -10719,13 +10736,18 @@ label.lbl-search-box {
 }
 
 .ui-autocomplete.ui-menu {
-    z-index: 1 !important;
+    z-index: 99 !important;
     list-style: none;
-    width: 50% !important;
-    margin-top: 20px;
-    margin-left: -10px;
-     left: 349px!important;
+    width: 32% !important;
+    margin-top: 45px;
+    margin-left: 5px;
+    left: 349px!important;
     border-top: 1px solid #ddd;
+}
+body.our-packages-page .ui-autocomplete.ui-menu {
+    width: 36.5% !important;
+    margin-top: 111px;
+    top: -2090.42px!important;
 }
 
 
@@ -10739,6 +10761,21 @@ label.lbl-search-box {
 }
 
 /*extra css hotel start*/
+
+
+.hotel-list-page .TravelGo-opt-list a {
+    float: right;
+    width: 36px;
+    height: 36px;
+    margin-left: 5px;
+    background: #768091;
+    line-height: 40px;
+    position: relative;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 15px;
+    text-align: center;
+}
 .hotel-list-page .row.listroBox {
     border: 1px solid #dfdfdf;
 }
@@ -10796,11 +10833,11 @@ label.lbl-search-box {
     width: 36px;
     height: 36px;
     margin-left: 5px;
-    background: #ECF6F8;
+    background: #768091;
     line-height: 40px;
     position: relative;
-    color: #999;
-    border-radius: 4px;
+    color: #fff;
+    border-radius: 20px;
     font-size: 15px;
     text-align: center;
 }
@@ -10853,6 +10890,9 @@ label.lbl-search-box {
     margin: 0;
   padding: 10px 0px 0px 0;
 }
+.hotel-list-page .st-highlight-info a {
+   color: #07509e;
+}
 
 .hotel-list-page .st-highlight-info ul li {
     display: inline-block;
@@ -10861,9 +10901,14 @@ label.lbl-search-box {
 .hotel-list-page .st-highlight-info ul li:before {
     content: '\f111';
     font-family: "Font Awesome 5 Free";
-    font-size: 5px;
+    font-size: 7px;
     color: #07509e;
     padding-right: 0px;
+    background: #07509e;
+    border-radius: 5px;
+    margin-right: 5px;
+    position: relative;
+    bottom: 1px;
 }
 .hotel-list-page .listroBox .listroBoxmain p {
     margin-bottom: 5px;
@@ -10902,7 +10947,7 @@ label.lbl-search-box {
     top: 10px;
     left: 30px;
 }
-.hotel-grid-view .social-link-list a {
+/*.hotel-grid-view .social-link-list a {
     float: right;
     width: 36px;
     height: 36px;
@@ -10914,6 +10959,19 @@ label.lbl-search-box {
     border-radius: 4px;
     font-size: 15px;
     text-align: center;
+}*/
+.hotel-list-page div.hotel-social-links a {
+    float: right;
+    width: 36px;
+    height: 36px;
+    margin-left: 5px;
+    background: #768091;
+    line-height: 40px;
+    position: relative;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 15px;
+    text-align: center;
 }
 .hotel-grid-view .TravelGo-category-price.btn-grad{
     color: #07509e!important;
@@ -10923,7 +10981,51 @@ label.lbl-search-box {
 .hotel-grid-view .TravelGo-category-price.btn-grad a{
     color: #07509e!important;
 }
+.hotel-grid-view .listroBox .listroBoxmain {
+    padding: 5px 20px 5px;
+}
+.hotel-grid-view .listroBox ul {
+    padding: 5px 15px 5px 15px;
+    border-top: 1px solid #ededed;
+}
+.service-tag.bestseller {
+    background: #07509e;
+    border-radius: 0 4px 4px 0;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    font-size: 13px;
+    color: #fff;
+    font-weight: 500;
+    z-index: 8;
+    -webkit-border-radius: 0 3px 3px 0;
+    -moz-border-radius: 0 3px 3px 0;
+    border-radius: 0 3px 3px 0;
+}
 
+.feature_class.st_featured.featured {
+    -webkit-border-radius: 0 3px 3px 0;
+    -moz-border-radius: 0 3px 3px 0;
+    border-radius: 0 3px 3px 0;
+    padding: 6px 10px;
+    background: #07509e!important;
+}
+
+.fa-circle:before {
+    content: "\f111";
+    /* margin-bottom: 17px; */
+    border: 1px solid #fba009;
+    border-radius: 5px;
+    bottom: 2px;
+    position: relative;
+    margin-right: 5px;
+}
+.st-section-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #07509e;
+    margin: 10px 0px;
+}
 
 @media (min-width:320px) and (max-width:768px){
 .hotel-list-page .listroBox figure{
@@ -10943,4 +11045,404 @@ label.lbl-search-box {
 }
 
 	}
+
+/*extra hotel css end*/
+
+/*extra css tour start*/
+
+
+.tour-list-page .TravelGo-opt-list a {
+    float: right;
+    width: 36px;
+    height: 36px;
+    margin-left: 5px;
+    background: #768091;
+    line-height: 40px;
+    position: relative;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 15px;
+    text-align: center;
+}
+.tour-list-page .row.listroBox {
+    border: 1px solid #dfdfdf;
+}
+.tour-list-page .section-footer {
+    text-align: center;
+    padding-right: 27px;
+    border-left: 1px solid #dfdfdf;
+}
+.tour-list-page .tour-content {
+
+    border-left: 1px solid #dfdfdf;
+}
+.tour-list-page .tour-service-price {
+    position: relative;
+    top: 40px;
+    color: #07509e;
+    font-weight: 600;
+}
+.tour-list-page .view-tour-btn{
+    position: relative;
+    top: 75px;
+}
+.tour-list-page .tour-service-price span.tour-avg{
+    color: #5e6d77;
+    font-weight: 500;
+    position: relative;
+    left: -28px;
+}
+.tour-list-page .tour-service-price span.price{
+    font-size: 35px;
+    display: block;
+    line-height: 42px;
+    color: black;
+}
+.tour-list-page .tour-service-price span.unit{
+       color: #5e6d77;
+    left: 11px;
+    font-size: 12px;
+    position: relative;
+}
+.tour-list-page .tour-service-price span.unit span.price-ex {
+    font-weight: bold;
+    padding-left: 3px;
+    color: #000!important;
+}
+
+.tour-list-page div.tour-social-links {
+    margin: 4px 0 0 0;
+    padding: 10px 0px 10px 0;
+    border-top: 1px dotted #ccc;
+}
+.tour-list-page div.tour-social-links a {
+    float: right;
+    width: 36px;
+    height: 36px;
+    margin-left: 5px;
+    background: #768091;
+    line-height: 40px;
+    position: relative;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.tour-list-page .st-report-info ul li {
+    display: inline-block;
+    padding: 1px 3px;
+    color: black;
+}
+
+.tour-list-page .st-report-info ul li:before {
+    content: '\f00c';
+    font-family: "Font Awesome 5 Free";
+    font-size: 14px;
+    margin-left: 0.35rem;
+    color: #119b0f;
+    font-weight: 900;
+    vertical-align: middle;
+    border: none;
+    padding-right: 3px;
+}
+
+.tour-list-page .st-report-info ul {
+    padding: 5px 0px
+}
+.tour-list-page .st-report-info ul li:first-child {
+     font-size: 14px;
+    margin-top: 0px;
+}
+
+.tour-list-page .st-report-info ul li {
+    display: inline-block;
+    padding: 1px 0px;
+    color: #000000c7;
+    font-weight: 600;
+    float: left;
+    margin-left: 0px!important;
+    font-size: 14px;
+    margin-right: 0px;
+}
+.tour-list-page .listroBox ul li:last-child {
+     margin: 0px 0 0 0; 
+     float: left; 
+}
+.tour-list-page p.service-location,.tour-grid-view p.service-location {
+    color: #07509e!important;
+}
+
+.tour-list-page .st-highlight-info ul {
+    margin: 0;
+  padding: 10px 0px 0px 0;
+}
+.tour-list-page .st-highlight-info a {
+   color: #07509e;
+}
+
+.tour-list-page .st-highlight-info ul li {
+    display: inline-block;
+    padding: 1px 5px 1px 2px;
+}
+.tour-list-page .st-highlight-info ul li:before {
+    content: '\f111';
+    font-family: "Font Awesome 5 Free";
+    font-size: 7px;
+    color: #07509e;
+    padding-right: 0px;
+    background: #07509e;
+    border-radius: 5px;
+    margin-right: 5px;
+    position: relative;
+    bottom: 1px;
+}
+.tour-list-page .listroBox .listroBoxmain p {
+    margin-bottom: 5px;
+}
+.tour-list-page .listroBox .listroBoxmain {
+    padding: 20px 0px 5px;
+}
+.tour-list-page .listroBox ul {
+/*    padding: 20px 15px 17px 20px;*/
+    border-top: none;
+}
+.tour-list-page h4.service-title, .tour-grid-view h4.service-title {
+    font-size: 23px;
+}
+.tour-list-page h4.service-title a, .tour-grid-view h4.service-title a{
+    color: #fba009;
+}
+.tour-list-page h4.service-title a:hover, .tour-grid-view h4.service-title a:hover{
+    color: #07509e;
+}
+.tour-list-page .listroBox figure{
+    margin: 8px 0;
+    height: 250px;
+}
+
+.tour-grid-view .text-muted{
+    color: #07509e!important;
+}
+.tour-grid-view span.price{
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.tour-grid-view .social-link-list {
+    position: relative;
+    top: 10px;
+    left: 30px;
+}
+/*.tour-grid-view .social-link-list a {
+    float: right;
+    width: 36px;
+    height: 36px;
+    margin-left: 5px;
+    background: #ECF6F8;
+    line-height: 40px;
+    position: relative;
+    color: #999;
+    border-radius: 4px;
+    font-size: 15px;
+    text-align: center;
+}*/
+
+.tour-list-page div.tour-routes {
+    display: block;
+    width: 100%;
+    padding-left: 5px;
+    background: transparent;
+    border-left: 5px solid #fba009;
+    height: 45px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.tour-list-page div.tour-routes ul {
+    list-style: none;
+    display: block;
+    width: 100%;
+   padding: 0px;
+}
+
+.tour-list-page div.tour-routes ul li {
+    position: relative;
+    display: inline-block;
+    /* padding-left: 20px; */
+    /* padding-right: 20px; */
+    z-index: 0;
+}
+
+.service-duration {
+    font-size: 14px;
+    font-weight: bold;
+    color: #fba009;
+}
+.st-sponsored-by {
+    font-size: 14px;
+    color: #fba009;
+}
+.st-sponsored-by > span > a {
+    color: #fba009;
+}
+
+.tour-list-page div.tour-routes ul li span.tour-route-span {
+    font-size: 14px;
+    color: #07509e!important;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-weight: 600;
+    text-transform: capitalize!important;
+}
+.tour-list-page div.tour-social-links a {
+    float: right;
+    width: 36px;
+    height: 36px;
+    margin-left: 5px;
+    background: #768091;
+    line-height: 40px;
+    position: relative;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 15px;
+    text-align: center;
+}
+.tour-grid-view .TravelGo-category-price.btn-grad{
+    color: #07509e!important;
+    border: 1px solid #07509e!important;
+    background: transparent;
+}
+.tour-grid-view .TravelGo-category-price.btn-grad a{
+    color: #07509e!important;
+}
+.tour-grid-view .listroBox .listroBoxmain {
+    padding: 5px 20px 5px;
+}
+.tour-grid-view .listroBox ul {
+    padding: 5px 15px 5px 15px;
+    border-top: 1px solid #ededed;
+}
+.service-tag.bestseller {
+    background: #07509e;
+    border-radius: 0 4px 4px 0;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    font-size: 13px;
+    color: #fff;
+    font-weight: 500;
+    z-index: 8;
+    -webkit-border-radius: 0 3px 3px 0;
+    -moz-border-radius: 0 3px 3px 0;
+    border-radius: 0 3px 3px 0;
+}
+
+.feature_class.st_featured.featured {
+    -webkit-border-radius: 0 3px 3px 0;
+    -moz-border-radius: 0 3px 3px 0;
+    border-radius: 0 3px 3px 0;
+    padding: 6px 10px;
+    background: #07509e!important;
+}
+
+.fa-circle:before {
+    content: "\f111";
+    /* margin-bottom: 17px; */
+    border: 1px solid #fba009;
+    border-radius: 5px;
+    bottom: 2px;
+    position: relative;
+    margin-right: 5px;
+}
+.st-section-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #07509e;
+    margin: 10px 0px;
+}
+.padding {
+    padding: 9px 20px;
+    text-transform: uppercase;
+}
+
+
+
+@media (min-width:320px) and (max-width:768px){
+.tour-list-page .listroBox figure{
+    margin: 8px 0;
+}
+
+
+
+.tour-list-page .listroBox figure{
+    margin: 8px 0;
+    height: 200px;
+}
+
+	}
+
 /*extra css end*/
+
+/*search form css start*/
+body .search-form-wrapper{
+    position: relative;
+    width: 100%;
+    left: 0;
+   top: -50px;
+    z-index: 99;
+}
+body.our-packages-page .search-form-wrapper {
+   
+    top: -152px;
+}
+body .search-form-wrapper .container{
+    width: 50%!important;
+}
+body .search-form-wrapper .search-form{
+    background: #FFFFFF;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    min-height: 85px;
+}
+.search-form-wrapper .search-form .border-right{
+    border-right: 1px solid #D7DCE3;
+}
+.search-form-wrapper .search-form .border-right i.input-icon.field-icon.fa {
+    position: relative;
+    top: 20px;
+    left: -16px;
+    width: 0%;
+}
+body.our-packages-page .search-form-wrapper .search-form .border-right i.input-icon.field-icon.fa {
+    top: 25px;
+}
+
+.search-form-wrapper .search-form .form-extra-field {
+    position: relative;
+  padding: 15px 0px 15px 30px;
+}
+body.our-packages-page .search-form-wrapper .search-form .form-extra-field {
+      position: relative;
+    padding: 23px 0px 23px 30px;
+    bottom: 10px;
+}
+body .search-form-wrapper .search-form .border-right{
+    border-right: 1px solid #D7DCE3;
+}
+body .search-form-wrapper .search-form .botton-right-div{
+    padding: 0px;
+    background: #fba009;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+}
+body .search-form-wrapper .form-button{
+    padding: 0 20px 0 0;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.search-form-btn{
+	padding: 10px 45px;
+}
+/*search form css end*/

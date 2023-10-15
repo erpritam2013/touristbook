@@ -26,19 +26,53 @@ return $result;
 }
 }
 if (!function_exists('touristbook_sanitize_title')) {
-    function touristbook_sanitize_title($value="")
+    function touristbook_sanitize_title($value="",$extra_txt='')
     {
-     $value = str_replace(' ', '-', $value); // Replaces all spaces with hyphens.
+        if (!empty($value)) {
+            if (!empty($extra_txt)) {
+               $value .= ' '.$extra_txt;
+            }
+     $value = str_replace(' ', '-', strtolower($value)); // Replaces all spaces with hyphens.
+ }else{
+    return "";
+}
 
    return preg_replace('/[^A-Za-z0-9\-]/', '', $value); // Removes special chars.
 }
 }
 if (!function_exists('isMobileDevice')) {
-function isMobileDevice() { 
-    return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo 
-|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i" 
-, $_SERVER["HTTP_USER_AGENT"]); 
+    function isMobileDevice() { 
+        return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo 
+            |fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i" 
+            , $_SERVER["HTTP_USER_AGENT"]); 
+    } 
+}
+if (!function_exists('is_featured')) {
+    function is_featured($value,$title='featured') { 
+
+        if (isset($value)) {
+           if ($value == 1) {
+
+            return ' <div class="service-tag bestseller">
+            <div class="feature_class st_featured featured">'.ucwords($title).'</div>
+            </div>';
+        }
+    }
+
+    return "";
 } 
+}
+
+if (!function_exists('get_price')) {
+    function get_price($obj,$currency_symbal)
+    {
+        $price_html = "";
+        $price_html .= '<span class="price">';
+        $price_html .=   $currency_symbal.(!empty($obj->avg_price))?round($obj->avg_price):0;
+        $price_html .= '</span>';
+
+        return $price_html;
+    }
 }
 
 if (!function_exists('getNewIcon')) {
