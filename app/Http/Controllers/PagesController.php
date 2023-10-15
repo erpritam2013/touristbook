@@ -86,6 +86,7 @@ class PagesController extends Controller
         if(!$hotel) {
             abort(404);
         }
+
         $data['hotel'] = $hotel;
         $data['title'] = 'Hotel :: '.ucwords($hotel->name);
         // dd($hotel);
@@ -95,6 +96,16 @@ class PagesController extends Controller
 
     public function tourDetail(Request $request, $slug) {
        dd('here');
+
+
+        $state = $hotel->states()->first();
+        $tourismZone = null;
+        if($state) {
+            $tourismZone =  $state->tourism_zones()->first();
+        }
+
+        return view('sites.pages.tour-detail', compact('hotel', 'tourismZone'));
+
     }
 
     public function getHotels(Request $request, $view = "list") {

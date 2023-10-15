@@ -10760,6 +10760,7 @@ body.our-packages-page .ui-autocomplete.ui-menu {
     border-radius: 5px;
 }
 
+<<<<<<< HEAD
 /*extra css hotel start*/
 
 
@@ -11446,3 +11447,43 @@ body .search-form-wrapper .form-button{
 	padding: 10px 45px;
 }
 /*search form css end*/
+
+
+.navbar.custom-tabs {
+    list-style-type: none;
+}
+.custom-tabs li {
+    border: 1px solid #000;
+    border-radius: 5px;
+    margin: 0;
+    text-align: center;
+    display: block;
+}
+
+.navbar.custom-tabs.fixed {
+    position: fixed;
+}
+
+.div-desc.col-md-12 {
+    border: 1px solid #ccc;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.div-desc strong{
+    font-size: 15px;
+}
+
+h1.st-heading-section {
+    font-size: 30px;
+}
+
+.navbar.custom-tabs {
+    list-style-type: none;
+    background-color: #ccc;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 999;
+}
+
