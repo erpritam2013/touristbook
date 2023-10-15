@@ -14,7 +14,7 @@
     <!-- Favicon -->
     <!-- Favicon and Touch Icons -->
     <link rel="icon" type="image/png" sizes="16x16" href="{!! asset('admin-part/images/favicon-16x16.png') !!}">
-    <title>Tourist Book</title>
+    <title>Tourist Book :: @yield('title')</title>
 
     <style>
         a.btn-action {
@@ -26,7 +26,7 @@
     </style>
 </head>
 
-<body>
+<body class="{{touristbook_sanitize_title($title,'page') ?? ''}}">
 
     <input type="hidden" id="base-url" value="{{route('home')}}" />
 

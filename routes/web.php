@@ -60,9 +60,11 @@ Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
 Route::get('/connecting-partners', [PagesController::class, 'connecting_partners'])->name('connecting-partners');
 
 Route::get('/hotels/{slug}', [PagesController::class, 'hotelDetail'])->name('hotel');
+Route::get('/tours/{slug}', [PagesController::class, 'tourDetail'])->name('tour');
 
 
 Route::get('/get-hotels/{view}', [PagesController::class, 'getHotels'])->name('get-hotels');
+Route::get('/get-tours/{view}', [PagesController::class, 'getTours'])->name('get-tours');
 Route::get('/get-location-states', [PagesController::class, 'getLocationState'])->name('get-location-state');
 
 

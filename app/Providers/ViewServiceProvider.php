@@ -9,7 +9,11 @@ use App\View\Composers\DealDiscountComposer;
 use App\View\Composers\MedicareAssistanceComposer;
 use App\View\Composers\MeetingAndEventsComposer;
 use App\View\Composers\PriceComposer;
+use App\View\Composers\DurationComposer;
+use App\View\Composers\TourPriceComposer;
 use App\View\Composers\PropertyTypeComposer;
+use App\View\Composers\PackageTypeComposer;
+use App\View\Composers\TypesComposer;
 use Illuminate\Support\Facades;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -37,10 +41,22 @@ class ViewServiceProvider extends ServiceProvider
             ['sites.partials.filters.priceFilter'],
             PriceComposer::class
         );
+        View::composer(
+            ['sites.partials.filters.durationFilter'],
+            DurationComposer::class
+        );
+        View::composer(
+            ['sites.partials.filters.tourPriceFilter'],
+            TourPriceComposer::class
+        );
 
         View::composer(
             ['sites.partials.filters.propertyTypeFilter'],
             PropertyTypeComposer::class
+        );
+        View::composer(
+            ['sites.partials.filters.packageTypeFilter'],
+            PackageTypeComposer::class
         );
 
         View::composer(
@@ -66,6 +82,10 @@ class ViewServiceProvider extends ServiceProvider
         View::composer(
             ['sites.partials.filters.activitiesFilter'],
             ActivitiesComposer::class
+        );
+        View::composer(
+            ['sites.partials.filters.typsFilter'],
+            TypesComposer::class
         );
 
 
