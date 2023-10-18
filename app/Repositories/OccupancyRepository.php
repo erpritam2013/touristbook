@@ -50,7 +50,7 @@ class OccupancyRepository implements OccupancyRepositoryInterface
 
     // Get all Active Occupancies or by Type
     public function getActiveOccupanciesList($type = null) {
-        $occupancyBuilder = Occupancy::where('status', Occupancy::ACTIVE);
+        $occupancyBuilder = Occupancy::orderBy('name','asc')->where('status', Occupancy::ACTIVE);
 
         if($type)
             $occupancyBuilder->where('occupancy_type',$type);

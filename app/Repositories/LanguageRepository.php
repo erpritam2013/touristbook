@@ -45,7 +45,7 @@ class LanguageRepository implements LanguageRepositoryInterface
 
     // Get all Active Languages or by Type
     public function getActiveLanguagesList($type = null) {
-        $languageBuilder = Language::where('status', Language::ACTIVE);
+        $languageBuilder = Language::orderBy('name','asc')->where('status', Language::ACTIVE);
 
         // if($type)
         //     $languageBuilder->where('language_type',$type);

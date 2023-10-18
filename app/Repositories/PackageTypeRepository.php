@@ -52,7 +52,7 @@ class PackageTypeRepository implements PackageTypeRepositoryInterface
 
     // Get all Active PackageTypes or by Type
     public function getActivePackageTypesList($type = null) {
-        $packageTypeBuilder = PackageType::where('status', PackageType::ACTIVE);
+        $packageTypeBuilder = PackageType::orderBy('name','asc')->where('status', PackageType::ACTIVE);
 
         if($type)
             $packageTypeBuilder->where('package_type_type',$type);

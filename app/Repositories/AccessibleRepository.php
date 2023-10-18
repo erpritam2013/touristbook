@@ -44,7 +44,7 @@ class AccessibleRepository implements AccessibleRepositoryInterface
 
     // Get all Active Accessibles or by Type
     public function getActiveAccessiblesList($type = null) {
-        $accessibleBuilder = Accessible::where('status', Accessible::ACTIVE);
+        $accessibleBuilder = Accessible::orderBy('name','asc')->where('status', Accessible::ACTIVE);
 
         if($type)
             $accessibleBuilder->where('accessible_type',$type);

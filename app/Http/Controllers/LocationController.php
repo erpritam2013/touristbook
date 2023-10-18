@@ -126,7 +126,11 @@ private function _prepareBasicData() {
 
     if($location) {
 
-
+      if($request->gallery == '' || empty($request->gallery)) {
+           $request->merge([
+            'gallery' => Null,
+        ]);
+       }
      $location->locationMeta()->create($request->only([
         "location_for_filter",
         "location_content",
@@ -251,7 +255,12 @@ public function changeStatus(Request $request): JsonResponse
 
     
     if($location) {
-
+     
+     if(count($request->gallery) != 0) {
+           $request->merge([
+            'gallery' => Null,
+        ]);
+       }
      $location->locationMeta()->update($request->only([
         "location_for_filter",
         "location_content",

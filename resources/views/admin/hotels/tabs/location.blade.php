@@ -9,7 +9,7 @@
             <input type="text" class="form-control" id="search_location" placeholder="Search Location......">
             <div class="col-lg-12 location-list">
 
-            @include('admin.partials.utils.nested_checkbox_list', ['items' => $locations, 'name'=> 'location_id[]', 'selected' => $hotel->locations->pluck('id')->toArray() ?? []])
+            @include('admin.partials.utils.nested_checkbox_list', ['items' => $locations, 'name'=> 'location_id', 'selected' => $hotel->locations->pluck('id')->toArray() ?? []])
             </div>
 
         </div>

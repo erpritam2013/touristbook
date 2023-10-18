@@ -5,7 +5,7 @@
     var map;
     var markerIcon = {
         anchor: new google.maps.Point(22, 16),
-        url: '/sites/images/marker.png',
+        url: 'https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2019/05/ico_mapker-2.webp',
     }
     var markers = [];
 
@@ -139,7 +139,7 @@
         // Calculate the zoom level required to fit all of the markers on the map.
 
         // var zoomLevel = map.getBoundsZoomLevel(bounds);
-        var zoomLevel = 9;
+        var zoomLevel = 20;
         getBoundsZoomLevel(bounds);
 
       }
@@ -160,7 +160,8 @@
                 if(longitude && latitude){
                     var marker = new google.maps.Marker({
                         position: new google.maps.LatLng(latitude, longitude),
-                        map: map
+                        map: map,
+                        icon:markerIcon
                     });
 
                     markers.push(marker);
@@ -214,7 +215,7 @@
                     lat: 28.7041,
                     lng: 77.1025
                 },
-                zoom: 9,
+                zoom: 20,
                 panControl: true,
                 fullscreenControl: true,
                 animation: google.maps.Animation.BOUNCE,

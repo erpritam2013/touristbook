@@ -161,11 +161,12 @@ class HotelController extends Controller
             'coupon_code' => $request->coupon_code,
             'hotel_attributes' => $request->hotel_attributes,
             'contact' => $request->contact,
+            'address' => $request->address,
             'avg_price' => (float)$request->avg_price,
             'is_allowed_full_day' => $request->is_allowed_full_day,
             // TODO: check_in, check_out jquery plugin for time setup
-            // 'check_in' => $request->check_in,
-            // 'check_out' => $request->check_out,
+            'check_in' => $request->check_in,
+            'check_out' => $request->check_out,
             'book_before_day' => $request->book_before_day,
             'book_before_arrival' => $request->book_before_arrival,
             'policies' => $request->policy,
@@ -198,6 +199,7 @@ class HotelController extends Controller
                 'todovideo',
                 'eventmeeting',
                 'tourism_zone',
+                'social_links',
                 'tourism_zone_heading',
                 'tourismzonepdf',
                 'activities',
@@ -220,7 +222,8 @@ class HotelController extends Controller
             $hotel->states()->attach($request->get('state_id'));
             $hotel->occupancies()->attach($request->get('occupancies'));
             $hotel->deals()->attach($request->get('deals'));
-            $hotel->activities()->attach($request->get('activities'));
+            $hotel->activities()->attach($request->get('activitiescard'));
+            $hotel->locations()->attach($request->get('location_id'));
             // activitiescard
         }
         // return $hotel;
@@ -261,16 +264,18 @@ class HotelController extends Controller
             'food_dining' => $request->food_dining,
             'is_featured' => $request->is_featured,
             // TODO: logo and featured_image ----> S3 Integration
+            'featured_image' => $request->featured_image,
             'hotel_video' => $request->hotel_video,
             'rating' => $request->rating,
             'coupon_code' => $request->coupon_code,
             'hotel_attributes' => $request->hotel_attributes,
             'contact' => $request->contact,
+            'address' => $request->address,
             'avg_price' => (float)$request->avg_price,
             'is_allowed_full_day' => $request->is_allowed_full_day,
             // TODO: check_in, check_out jquery plugin for time setup
-            // 'check_in' => $request->check_in,
-            // 'check_out' => $request->check_out,
+            'check_in' => $request->check_in,
+            'check_out' => $request->check_out,
             'book_before_day' => $request->book_before_day,
             'book_before_arrival' => $request->book_before_arrival,
             'policies' => $request->policy,
@@ -305,6 +310,7 @@ class HotelController extends Controller
                 'tourism_zone',
                 'tourism_zone_heading',
                 'tourismzonepdf',
+                'social_links',
                 'activities',
                 'room_amenities',
                 'transport',
@@ -325,12 +331,13 @@ class HotelController extends Controller
             $hotel->states()->sync($request->get('state_id'));
             $hotel->occupancies()->sync($request->get('occupancies'));
             $hotel->deals()->sync($request->get('deals'));
-            $hotel->activities()->sync($request->get('activities'));
+            $hotel->activities()->sync($request->get('activitiescard'));
+            $hotel->locations()->sync($request->get('location_id'));
             // activitiescard
         }
         // return $hotel;
         Session::flash('success','Hotel Created Successfully');
-        return redirect()->Route('admin.hotels.index');
+        return redirect()->Route('admin.hotels.edit',$hotel->id);
     }
 
     public function destroy(Hotel $hotel)

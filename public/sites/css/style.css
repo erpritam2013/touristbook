@@ -1704,7 +1704,7 @@ h6.card-title {
 	font-weight: 600;
 	padding: 0 0 12px 0;
 }
-body.our-packages-page .innerpage-banner h1 {
+body.tour-list-page .innerpage-banner h1 {
     font-size: 2.1875rem;
     font-weight: 600;
     padding: 0 0 12px 0;
@@ -1742,7 +1742,7 @@ body.our-packages-page .innerpage-banner h1 {
 	text-align: left;
 	height: 390px;
 }
-body.our-packages-page .innerpage-banner.left {
+body.tour-list-page .innerpage-banner.left {
     text-align: left;
     height: 230px;
 }
@@ -7778,6 +7778,10 @@ contact-pg-section
 	padding: 18px 130px 10px 0;
 	border-top: 1px dotted #ccc;
 }
+
+.TravelGo-category-footer .TravelGo-category-price a{
+	color: #fff!important;
+}
 .TravelGo-category-content-title-item {
 	float: left;
 	width: 100%;
@@ -8439,7 +8443,8 @@ box-shadow: 0px 0px 0px 9px rgba(0, 0, 0, 0.1);
     font-size: 14px;
     font-weight: bold;
     /* font-weight: 500; */
-    font-family: "Poppins", sans-serif !important;
+     font-family: Arial, Helvetica, sans-serif!important;
+
 }
 .Filter-left .custom-control {
 	padding-top: 4px;
@@ -8864,7 +8869,7 @@ img {
 }
 .resultBar h2 {
     color: #07509e;
-    font-weight: 500;
+    font-weight: 600;
     text-transform: capitalize;
     font-size: 24px;
     margin-bottom: 0;
@@ -10604,7 +10609,7 @@ max-width: 946px;
 @media (min-width: 1200px) {
     .container {
 /*        max-width:1200px*/
-       max-width: 1290px;
+      max-width: 1284px;
     }
 }
 .Filter-left .Filter-left-title{
@@ -10715,7 +10720,7 @@ input.main-search-box {
     border: none;
     color: #fba009;
 }
-body.our-packages-page input.main-search-box {
+body.tour-list-page input.main-search-box {
     font-size: 16px;
 }
 
@@ -10744,7 +10749,7 @@ label.lbl-search-box {
     left: 349px!important;
     border-top: 1px solid #ddd;
 }
-body.our-packages-page .ui-autocomplete.ui-menu {
+body.tour-list-page .ui-autocomplete.ui-menu {
     width: 36.5% !important;
     margin-top: 111px;
     top: -2090.42px!important;
@@ -10760,7 +10765,6 @@ body.our-packages-page .ui-autocomplete.ui-menu {
     border-radius: 5px;
 }
 
-<<<<<<< HEAD
 /*extra css hotel start*/
 
 
@@ -11027,7 +11031,10 @@ body.our-packages-page .ui-autocomplete.ui-menu {
     color: #07509e;
     margin: 10px 0px;
 }
+body.hotel-list-page .Filter-left label.form-label {
+    text-transform: capitalize!important;
 
+}
 @media (min-width:320px) and (max-width:768px){
 .hotel-list-page .listroBox figure{
     margin: 8px 0;
@@ -11250,14 +11257,16 @@ body.our-packages-page .ui-autocomplete.ui-menu {
 }*/
 
 .tour-list-page div.tour-routes {
-    display: block;
+      display: block;
     width: 100%;
     padding-left: 5px;
     background: transparent;
     border-left: 5px solid #fba009;
-    height: 45px;
+     height: auto; 
     margin-top: 5px;
     margin-bottom: 5px;
+    margin-left: 15px;
+    padding-left: 0px;
 }
 .tour-list-page div.tour-routes ul {
     list-style: none;
@@ -11287,8 +11296,23 @@ body.our-packages-page .ui-autocomplete.ui-menu {
     color: #fba009;
 }
 
-.tour-list-page div.tour-routes ul li span.tour-route-span {
+.tour-list-page .sponsored-description ul {
+     padding: 0px;
+}
+.tour-list-page .sponsored-description ul li{
+       color: #07509e!important;
     font-size: 14px;
+    text-transform: capitalize;
+    font-weight: 600;
+    padding: 0px 5px!important;
+    margin: 0px!important;
+}
+.pt5{
+	padding-top: 5px;
+}
+
+.tour-list-page div.tour-routes ul li span.tour-route-span {
+    font-size: 15px;
     color: #07509e!important;
     padding-left: 10px;
     padding-right: 10px;
@@ -11392,7 +11416,7 @@ body .search-form-wrapper{
    top: -50px;
     z-index: 99;
 }
-body.our-packages-page .search-form-wrapper {
+body.tour-list-page .search-form-wrapper {
    
     top: -152px;
 }
@@ -11414,7 +11438,7 @@ body .search-form-wrapper .search-form{
     left: -16px;
     width: 0%;
 }
-body.our-packages-page .search-form-wrapper .search-form .border-right i.input-icon.field-icon.fa {
+body.tour-list-page .search-form-wrapper .search-form .border-right i.input-icon.field-icon.fa {
     top: 25px;
 }
 
@@ -11422,7 +11446,7 @@ body.our-packages-page .search-form-wrapper .search-form .border-right i.input-i
     position: relative;
   padding: 15px 0px 15px 30px;
 }
-body.our-packages-page .search-form-wrapper .search-form .form-extra-field {
+body.tour-list-page .search-form-wrapper .search-form .form-extra-field {
       position: relative;
     padding: 23px 0px 23px 30px;
     bottom: 10px;

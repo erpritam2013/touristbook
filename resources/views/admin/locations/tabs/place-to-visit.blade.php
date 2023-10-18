@@ -54,25 +54,9 @@
 
     </div>
 </div>
+<!-- Fair and Festivals Banner Image -->
+@include('admin.partials.utils.media', ['name'=> 'fair_and_festivals_image','label'=>'Fair and Festivals Banner Image','desc'=>"Fair and Festivals Banner Image",'value'=>$location->locationMeta->fair_and_festivals_image ?? '','id' => ""])
 
-<div class="form-group row">
-    
-    <div class="col-lg-12">
-        <label class="subform-card-label" for="get_image">Fair and Festivals Banner Image
-        </label><br/><p>Fair and Festivals Banner Image</p>
-
-        <div class="input-group mb-3">
-            <div class="custom-file">
-                <input type="file" name="fair_and_festivals_image" class="custom-file-input" id="get_image"  value="{{$location->locationMeta->fair_and_festivals_image ?? ''}}" accept="image/jpeg" data-existed_value="{{$location->locationMeta->fair_and_festivals_image ?? ''}}">
-                <label class="custom-file-label">Choose Image</label>
-            </div>
-            <div class="input-group-append">
-                <span class="input-group-text">Upload</span>
-            </div>
-        </div>
-        <img id="show_image" src="{{asset('admin-part\images\t-b-logo.png')}}" alt="your image" />
-    </div>
-</div>
 <div class="border p-2 mb-2">
     <h4>Fair and Festivals</h4>
     <p>Fair and Festivals</p>

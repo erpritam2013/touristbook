@@ -52,7 +52,7 @@ class PlaceRepository implements PlaceRepositoryInterface
 
     // Get all Active Places or by Type
     public function getActivePlacesList($type = null) {
-        $placeBuilder = Place::where('status', Place::ACTIVE);
+        $placeBuilder = Place::orderBy('name','asc')->where('status', Place::ACTIVE);
 
         if($type)
             $placeBuilder->where('place_type',$type);

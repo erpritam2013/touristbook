@@ -52,7 +52,7 @@ class CategoryRepository implements CategoryRepositoryInterface
 
     // Get all Active Categories or by Type
     public function getActiveCategoriesList($type = null) {
-        $categoryBuilder = Category::where('status', Category::ACTIVE);
+        $categoryBuilder = Category::orderBy('name','asc')->where('status', Category::ACTIVE);
 
         if($type)
             $categoryBuilder->where('category_type',$type);

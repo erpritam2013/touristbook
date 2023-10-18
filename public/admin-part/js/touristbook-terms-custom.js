@@ -394,6 +394,15 @@ $('body').on('click','.ajax-new-term-store',function(){
     console.log($(this).closest('.accordion__item').find('.accordion__header').data('target'));
 
     let current_div =  $(this);
+    let parent_main_card_div = $(current_div).closest('.card-footer').parent('.card');
+    if (parent_main_card_div.hasClass('term-card-padding')) {
+      let li_count = parent_main_card_div.find('.card-body').find('.checkbox-list li').length;
+  
+      if (li_count > 10) {
+         $(parent_main_card_div).addClass('term-card');
+         $(parent_main_card_div).removeClass('term-card-padding');
+      }
+    }
 
     let parent_div = $(this).closest('.card-footer').prev('.card-body');
     console.log(parent_div);

@@ -37,9 +37,9 @@ if(empty($id)){
         @if(!empty($items))
         @foreach($items as $item)
         @if(is_array($selected))
-        <option value="{{$item->id}}" {{ in_array($item->id, $selected) ? 'selected' : ''  }} {!!$option_attr ?? ''!!}>{{$item->value}}</option>
+        <option value="{{$item->id}}" {{ in_array($item->id, $selected) ? 'selected' : ''  }} {!!$option_attr ?? ''!!}>{!!$item->value!!}</option>
         @else
-        <option value="{{$item->id}}" {{ ($item->id == $selected) ? 'selected' : ''  }} {!!$option_attr ?? ''!!}>{{$item->value}}</option>
+        <option value="{{$item->id}}" {{ ($item->id == $selected) ? 'selected' : ''  }} {!!$option_attr ?? ''!!}>{!!$item->value!!}</option>
         @endif
         @endforeach
         @endif

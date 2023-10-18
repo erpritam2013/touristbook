@@ -44,7 +44,7 @@ class AttractionRepository implements AttractionRepositoryInterface
 
     // Get all Active Attractions or by Type
     public function getActiveAttractionsList($type = null) {
-        $AttractionBuilder = Attraction::where('status', Attraction::ACTIVE);
+        $AttractionBuilder = Attraction::orderBy('name','asc')->where('status', Attraction::ACTIVE);
 
         if($type)
             $AttractionBuilder->where('attraction_type',$type);

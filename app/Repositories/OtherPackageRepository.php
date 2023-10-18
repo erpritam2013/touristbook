@@ -52,7 +52,7 @@ class OtherPackageRepository implements OtherPackageRepositoryInterface
 
     // Get all Active OtherPackages or by Type
     public function getActiveOtherPackagesList($type = null) {
-        $otherPackageBuilder = OtherPackage::where('status', OtherPackage::ACTIVE);
+        $otherPackageBuilder = OtherPackage::orderBy('name','asc')->where('status', OtherPackage::ACTIVE);
 
         if($type)
             $otherPackageBuilder->where('other_package_type',$type);

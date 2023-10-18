@@ -15,6 +15,7 @@ class PagesController extends Controller
     public function index() {
          $data['post_type'] = 'Home';
         $data['title'] = 'Home';
+        $data['body_class'] = 'home-page';
         return view('sites.pages.home',$data);
     }
 
@@ -22,6 +23,7 @@ class PagesController extends Controller
       
         $data['post_type'] = 'Hotel';
         $data['title'] = 'Hotels';
+        $data['body_class'] = 'hotel-list-page';
         $data['searchTerm'] = $request->get('search');
         $data['sourceType'] = $request->get('source_type');
         $data['sourceId'] = $request->get('source_id');
@@ -30,11 +32,13 @@ class PagesController extends Controller
     public function about() {
         $data['post_type'] = 'About';
         $data['title'] = 'About';
+        $data['body_class'] = 'about-page';
         return view('sites.pages.about',$data);
     }
     public function connecting_partners() {
         $data['post_type'] = 'connecting_partners';
         $data['title'] = 'Connecting Partners';
+        $data['body_class'] = 'connecting-partners-page';
         return view('sites.pages.connecting-partners',$data);
     }
 
@@ -42,12 +46,14 @@ class PagesController extends Controller
 
         $data['post_type'] = 'Blog';
         $data['title'] = 'Blogs';
+        $data['body_class'] = 'blog-page';
         return view('sites.pages.blogs',$data);
     }
     public function destinations(Request $request) {
 
         $data['post_type'] = 'Location';
         $data['title'] = 'Destinations';
+        $data['body_class'] = 'destinations-page';
         $data['searchTerm'] = $request->get('search');
         $data['sourceType'] = $request->get('source_type');
         $data['sourceId'] = $request->get('source_id');
@@ -57,6 +63,7 @@ class PagesController extends Controller
 
         $data['post_type'] = 'Activity';
         $data['title'] = 'Activities';
+        $data['body_class'] = 'activity-page';
         $data['searchTerm'] = $request->get('search');
         $data['sourceType'] = $request->get('source_type');
         $data['sourceId'] = $request->get('source_id');
@@ -66,7 +73,8 @@ class PagesController extends Controller
     public function our_packages(Request $request) {
 
         $data['post_type'] = 'Tour';
-        $data['title'] = 'Our Packages'; 
+        $data['title'] = 'Our Packages';
+        $data['body_class'] = 'tour-list-page'; 
         $data['searchTerm'] = $request->get('search');
         $data['sourceType'] = $request->get('source_type');
         $data['sourceId'] = $request->get('source_id');
@@ -77,6 +85,7 @@ class PagesController extends Controller
 
         $data['post_type'] = 'Contact';
         $data['title'] = 'Contact Us';
+        $data['body_class'] = 'contact-us-page';
         return view('sites.pages.contact',$data);
     }
 
@@ -89,6 +98,12 @@ class PagesController extends Controller
 
         $data['hotel'] = $hotel;
         $data['title'] = 'Hotel :: '.ucwords($hotel->name);
+        $data['body_class'] = 'hotel-detail-page';
+        $state = $hotel->states()->first();
+         $data['tourismZone'] = null;
+        if($state) {
+            $data['tourismZone'] =  $state->tourism_zones()->first();
+        }
         // dd($hotel);
 
         return view('sites.pages.hotel-detail', $data);

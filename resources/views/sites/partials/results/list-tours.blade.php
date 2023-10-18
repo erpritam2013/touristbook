@@ -21,8 +21,12 @@
 
                             <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{$tour->address ?? ''}}</p>
                             <h4 class="service-title"><a href="{{route('tour',$tour->slug)}}">{{ $tour->name }}</a></h4>
-                            @if(!empty($tour->detail->package_route))
-                            <div class="tour-routes">
+                          
+                          <div class="row">
+
+                                  @if(!empty($tour->detail->package_route))
+                             <div class="col-md-12 col-xs-12 tour-routes">
+                          
                                 <ul>
                                   <li>
                                       @php 
@@ -34,10 +38,10 @@
                                   </li>
 
                               </ul>
-                          </div>
+                          
+                             </div>
                           @endif
-                          <div class="row">
-                             <div class="col-md-6 col-xs-6">
+                             <div class="col-md-6 col-xs-6 duration-day pt5">
                                 <div class="service-duration">
 
                                     {!!getNewIcon('time-clock-circle-1', '#5E6D77', '17px', '17px')!!}
@@ -47,7 +51,7 @@
 
                             </div>
                            
-                            <div class="col-md-6 col-xs-6">
+                            <div class="col-md-6 col-xs-6 sponsored-by pt5">
                                 @if(!empty($tour->detail->sponsored))
                                 @php 
                                 $sponsored_by = $tour->detail->sponsored['sponsored_by'];
@@ -68,23 +72,25 @@
                                 </div>
                             @endif
                             </div>
-                            <div class="col-md-12 col-xs-12">
+                            <div class="col-md-12 col-xs-12 sponsored-description pt5">
                                 @if(!empty($sponsored_description))
                                 @php 
                                  $sponsored_desc_arr =  explode("\n", trim($sponsored_description));
                                 @endphp
                                 <ul>
                                     @foreach($sponsored_desc_arr as $k => $v)
+                                    @if($k <=3)
                                     <li>{{$v}}</li>
+                                    @endif
                                     @endforeach
                                 </ul>
 
                                 @endif
                             </div>
-                            <div class="col-md-6 col-xs-6"></div>
-                            <div class="col-md-6 col-xs-6"><strong>
+                            <div class="col-md-6 col-xs-6 pt5"></div>
+                            <div class="col-md-6 col-xs-6 pt5"><strong>
                             </strong></div>
-                            <div class="col-md-12 col-xs-12">
+                            <div class="col-md-12 col-xs-12 highlights-info pt5">
 
                                 @if(!empty($tour->detail->highlights))
 

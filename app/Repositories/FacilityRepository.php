@@ -51,7 +51,7 @@ class FacilityRepository implements FacilityRepositoryInterface
 
     // Get all Active Facilities or by Type
     public function getActiveFacilitiesList($type = null) {
-        $facilityBuilder = Facility::where('status', Facility::ACTIVE);
+        $facilityBuilder = Facility::orderBy('name','asc')->where('status', Facility::ACTIVE);
 
         if($type)
             $facilityBuilder->where('facility_type',$type);
