@@ -4,6 +4,6 @@
     </div>
     <div class="card-body">
             @include('admin.partials.utils.select_box', ['items' => $states, 'name'=> 'state_id[]','selected'=>$selected,'lebal'=>'State'])
-  
+
     </div>
 </div>
