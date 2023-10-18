@@ -93,14 +93,12 @@ class HotelController extends Controller
         $data['locations'] = $this->locationRepository->getActiveLocationsList();
 
         $data['states'] = $this->stateRepository->getActiveStatesList()->map(function($value, $key){
-
-          return (object)[
-            'id' => $value->id,
-            'value' => $value->name,
-            'parent_id' => $value->name,
-        ];
-
-    });
+            return (object)[
+                'id' => $value->id,
+                'value' => $value->name,
+                'parent_id' => $value->name,
+            ];
+        });
         $data['occupancies'] = $this->occupancyRepository->getActiveHotelOccupanciesList();
         $data['deals'] = $this->dealDiscountRepository->getActiveHotelDealsDiscountsList();
         $data['activities'] = $this->activityRepository->getActiveHotelTermActivitiesList();
