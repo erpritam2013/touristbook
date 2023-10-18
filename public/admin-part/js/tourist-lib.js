@@ -181,13 +181,15 @@ $(document).ready(function () {
     // Initialize Map
     let iconBase = '/admin-part/images/map/';
     function initMap() {
-        map = new google.maps.Map(mapElem, {
-            zoom: 1, // Default
-            center: new google.maps.LatLng(30.704649, 76.717873),
-            mapTypeId: "terrain",
-        });
+        if(mapElem) {
+            map = new google.maps.Map(mapElem, {
+                zoom: 1, // Default
+                center: new google.maps.LatLng(30.704649, 76.717873),
+                mapTypeId: "terrain",
+            });
 
-        console.log(google.maps.places);
+            console.log(google.maps.places);
+        }
     }
 
 
@@ -250,30 +252,35 @@ $(document).ready(function () {
         setZoomLevel(zoomLevel);
     };
 
-    // Autocompletion Addres Bar
-    const autocomplete = new google.maps.places.Autocomplete(addressTextbox, {
-        types: ["geocode"],
-    });
-    // Autocompletion Addres Bar
-    new google.maps.places.Autocomplete(addressTextboxSingle, {
-        types: ["geocode"],
-    });
+    if(addressTextbox){
 
-    // Event listener for the autocomplete object.
-    autocomplete.addListener("place_changed", function () {
-        // Get the selected place.
-        const place = autocomplete.getPlace();
-        // Set the address textbox to the selected place's address.
-        addressTextbox.value = place.formatted_address;
+        // Autocompletion Addres Bar
+        const autocomplete = new google.maps.places.Autocomplete(addressTextbox, {
+            types: ["geocode"],
+        });
+        // Autocompletion Addres Bar
+        new google.maps.places.Autocomplete(addressTextboxSingle, {
+            types: ["geocode"],
+        });
 
-        let latitude = place.geometry.location.lat();
-        let longitude = place.geometry.location.lng();
+        // Event listener for the autocomplete object.
+        autocomplete.addListener("place_changed", function () {
+            // Get the selected place.
+            const place = autocomplete.getPlace();
+            // Set the address textbox to the selected place's address.
+            addressTextbox.value = place.formatted_address;
 
-        latitudeTextbox.value = latitude;
-        longitudeTextbox.value = longitude;
+            let latitude = place.geometry.location.lat();
+            let longitude = place.geometry.location.lng();
 
-        onPlaceChanged();
-    });
+            latitudeTextbox.value = latitude;
+            longitudeTextbox.value = longitude;
+
+            onPlaceChanged();
+        });
+    }
+
+
 
     if(latitudeTextbox) latitudeTextbox.onchange = onPlaceChanged;
     if(longitudeTextbox) longitudeTextbox.onchange = onPlaceChanged;
@@ -361,15 +368,15 @@ $('.file-list').on("click", ".file", function() {
 })
 
 const loadImages = () => {
-    let image_url = base_admin_url + "/files/load-images";
-    $.ajax({
-        type: "GET",
-        dataType: "json",
-        url: image_url,
-        success: function (data) {
-            fillImagesToList(data)
-        },
-    });
+    // let image_url = base_admin_url + "/files/load-images";
+    // $.ajax({
+    //     type: "GET",
+    //     dataType: "json",
+    //     url: image_url,
+    //     success: function (data) {
+    //         fillImagesToList(data)
+    //     },
+    // });
 };
 
 $("#fileElem").on("change", function(e) {
