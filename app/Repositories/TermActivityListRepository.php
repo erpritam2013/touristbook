@@ -45,7 +45,7 @@ class TermActivityListRepository implements TermActivityListRepositoryInterface
 
     // Get all Active TermActivityLists or by Type
     public function getActiveTermActivityList($type = null) {
-        $termActivityListBuilder = TermActivityList::where('status', TermActivityList::ACTIVE);
+        $termActivityListBuilder = TermActivityList::orderBy('name','asc')->where('status', TermActivityList::ACTIVE);
 
         if($type)
            $termActivityListBuilder->where('term_activity_list_type',$type);

@@ -26,7 +26,7 @@
     </style>
 </head>
 
-<body class="{{touristbook_sanitize_title($title,'page') ?? ''}}">
+<body class="{{touristbook_sanitize_title($body_class) ?? ''}}">
 
     <input type="hidden" id="base-url" value="{{route('home')}}" />
 

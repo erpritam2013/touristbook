@@ -5,7 +5,7 @@
 
     <div class="card-body">
        <!--corporateAddress -->
-@include('admin.partials.utils.input', ['name'=> 'hotel_attributes[corporateAddress]','label'=>'Add Corporate Address','value'=>$hotel->hotel_attributes->corporateAddress ?? '','id' => "corporateAddress"])
+@include('admin.partials.utils.input', ['name'=> 'hotel_attributes[corporateAddress]','label'=>'Add Corporate Address','value'=>$hotel->hotel_attributes['corporateAddress'] ?? '','id' => "corporateAddress"])
 
     </div>
 </div>

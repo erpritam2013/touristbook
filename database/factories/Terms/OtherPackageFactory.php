@@ -16,8 +16,6 @@ class OtherPackageFactory extends Factory
      */
     public function definition()
     {
-        return [
-            //
-        ];
+        return true;
     }
 }

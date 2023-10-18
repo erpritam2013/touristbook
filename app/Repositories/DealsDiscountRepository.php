@@ -51,7 +51,7 @@ class DealsDiscountRepository implements DealsDiscountRepositoryInterface
 
     // Get all Active Top Services or by Type
     public function getActiveDealsDiscountsList($type = null) {
-        $dealsDiscountBuilder = DealsDiscount::where('status', DealsDiscount::ACTIVE);
+        $dealsDiscountBuilder = DealsDiscount::orderBy('name','asc')->where('status', DealsDiscount::ACTIVE);
 
         if($type)
             $dealsDiscountBuilder->where('deals_discount_type',$type);

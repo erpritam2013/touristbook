@@ -52,7 +52,7 @@ class AmenityRepository implements AmenityRepositoryInterface
 
     // Get all Active Amenities or by Type
     public function getActiveAmenitiesList($type = null) {
-        $amenityBuilder = Amenity::where('status', Amenity::ACTIVE);
+        $amenityBuilder = Amenity::orderBy('name','asc')->where('status', Amenity::ACTIVE);
 
         if($type)
             $amenityBuilder->where('amenity_type',$type);

@@ -3,6 +3,6 @@
         <br /><small>Enter default average price</small>
     </label>
     <div class="col-lg-7">
-        <input type="number" class="form-control" id="avg_price" name="avg_price" />
+        <input type="number" class="form-control" id="avg_price" name="avg_price" value="{{$hotel->avg_price ?? ''}}"/>
     </div>
 </div>

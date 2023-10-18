@@ -8,6 +8,7 @@
             @include('admin.hotels.partials.hotel-info-card', ['hotel'=>$hotel ?? null])
 
             @include('admin.hotels.partials.corporate', ['hotel'=>$hotel ?? null])
+            @include('admin.hotels.partials.social-link-section', ['hotel'=>$hotel ?? null])
 
             @include('admin.hotels.partials.food-dining', ['hotel'=>$hotel ?? null])
 

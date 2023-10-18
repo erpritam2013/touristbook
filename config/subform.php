@@ -22,7 +22,8 @@ return [
                 ],
                 "notice-description" => [
                     'label' => "Description",
-                    'control' => 'textarea'
+                    'control' => 'textarea',
+                    'class' => 'tourist-editor'
                 ]
             ]
 
@@ -138,7 +139,8 @@ return [
                 ],
                 "pocketPDF-description" => [
                     'label' => "Description",
-                    'control' => 'textarea'
+                    'control' => 'textarea',
+                    'class' => 'tourist-editor'
                 ]
             ]
 

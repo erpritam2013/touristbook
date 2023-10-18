@@ -28,6 +28,7 @@ class HotelDetail extends Model
         'activities' => 'array',
         'transport' => 'array',
         'emergencyLinks' => 'array',
+        'social_links' => 'array',
     ];
 
 }
