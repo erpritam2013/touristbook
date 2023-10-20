@@ -31,7 +31,8 @@ class Hotel extends Model
         'hotel_attributes' => 'array',
         'contact' => 'array',
         'policies' => 'array',
-        'notices' => 'array'
+        'notices' => 'array',
+        'images' => 'array'
     ];
 
     public function sluggable(): Array

@@ -322,7 +322,7 @@
                                 <div class="row mt-3">
                                     <div class="col-md-12 paragraph-info">
                                         @if (!empty($hotel->detail->emergencyLinks))
-                                            <div>{!! $hotel->detail->emergencyLinks !!}</div>
+                                            {{-- <div>{!! $hotel->detail->emergencyLinks !!}</div> --}}
                                         @else
                                             <div class="alert alert-warning mt15">Not Available.</div>
                                         @endif
