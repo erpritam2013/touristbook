@@ -145,7 +145,7 @@ class HotelController extends Controller
 
     public function store(StoreHotelRequest $request)
     {
-
+        $images = json_decode($request->images);
         $hotelDetails = [
             'name' => $request->name,
             'description' => $request->description,
@@ -169,6 +169,7 @@ class HotelController extends Controller
             'policies' => $request->policy,
             'notices' => $request->notices,
             'status' => $request->status,
+            'images' => $images
             // TODO: created_by pending as Authentication is not Yet Completed
         ];
 
@@ -251,6 +252,7 @@ class HotelController extends Controller
     }
     public function update(UpdateHotelRequest $request, Hotel $hotel)
     {
+        $images = json_decode($request->images);
         $hotelDetails = [
             'name' => $request->name,
             'description' => $request->description,
@@ -274,6 +276,7 @@ class HotelController extends Controller
             'policies' => $request->policy,
             'notices' => $request->notices,
             'status' => $request->status,
+            'images' => $images
             // TODO: created_by pending as Authentication is not Yet Completed
         ];
 

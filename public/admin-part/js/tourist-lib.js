@@ -368,15 +368,15 @@ $('.file-list').on("click", ".file", function() {
 })
 
 const loadImages = () => {
-    // let image_url = base_admin_url + "/files/load-images";
-    // $.ajax({
-    //     type: "GET",
-    //     dataType: "json",
-    //     url: image_url,
-    //     success: function (data) {
-    //         fillImagesToList(data)
-    //     },
-    // });
+    let image_url = base_admin_url + "/files/load-images";
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: image_url,
+        success: function (data) {
+            fillImagesToList(data)
+        },
+    });
 };
 
 $("#fileElem").on("change", function(e) {
@@ -456,7 +456,10 @@ function previewFile(file) {
     reader.onloadend = function() {
       let img = document.createElement('img')
       img.src = reader.result
-      document.getElementById('gallery').appendChild(img)
+      let galleryElem = document.getElementById('gallery')
+      if(galleryElem){
+          galleryElem.appendChild(img)
+      }
   }
 }
 
@@ -512,6 +515,7 @@ function uploadFile(file, i) {
 $(".submit-media").on("click", function() {
     let targetElem = $(this)[0].targetElem
     targetElem.attr("selectedImages", JSON.stringify(selectedImages))
+    targetElem.parent().find('.gallery-input').first().val(JSON.stringify(selectedImages))
 
     let imageHtml = '';
     imageHtml +='<div class="row">';
@@ -528,7 +532,7 @@ $(".submit-media").on("click", function() {
 })
 
     // Specifically for Subform
-$("body").on("click", ".add-media-btn", function(){
+$("body").on("click", ".add-media-btn, .add-gallery-btn", function(){
         // Grab Selected File (If Any)
         // Change in Model DOM
         // Model Open
