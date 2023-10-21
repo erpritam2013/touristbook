@@ -24,7 +24,7 @@ class HotelDataTable extends DataTable
     {
         return (new EloquentDataTable($query))->addIndexColumn()->addColumn('action', function ($row) {
                     $html = ' <a href="'.route("admin.hotels.edit",$row->id).'" class="btn btn-primary" title="Edit"><i class="fa fa-edit"></i></a>';
-                    $html .= '<a href="'.route("admin.hotels.show",$row->id).'" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>';
+                    $html .= '<a href="'.route("hotel",$row->slug).'" class="btn btn-info" title="View" target="_blank"><i class="fa fa-file"></i></a>';
                     $html .= '<a href="javascript:void(0);" class="btn btn-danger del_entity_form" title="Delete" item_id="'.$row->id.'" data-text="hotel"><i class="fa fa-trash"></i></a>';
                     return $html;
                 })->editColumn('created_at', function($row) {

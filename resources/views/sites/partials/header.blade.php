@@ -65,7 +65,7 @@
                   
 
                      <!-- Language -->
-                    <div class="dropdown"> <a class="dropdown-toggle" href="#" role="button"
+                    <div class="dropdown top-language"> <a class="dropdown-toggle" href="#" role="button"
                             id="dropdownLanguage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img class="dropdown-item-icon" src="{{asset('sites/images/flag/uk.svg')}}" alt=""> English </a>
                         <div class="dropdown-menu mt-2 shadow" aria-labelledby="dropdownLanguage"> <span
