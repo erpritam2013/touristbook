@@ -53,6 +53,7 @@ Route::get('/', [PagesController::class, 'index'])->name('home');
 Route::get('/hotels', [PagesController::class, 'hotels'])->name('hotels');
 Route::get('/about', [PagesController::class, 'about'])->name('about');
 Route::get('/blogs', [PagesController::class, 'blogs'])->name('blogs');
+Route::post('/inquiry', [PagesController::class, 'inquiry'])->name('inquiry');
 Route::get('/destinations', [PagesController::class, 'destinations'])->name('destinations');
 Route::get('/activities', [PagesController::class, 'activities'])->name('activities');
 Route::get('/our-packages', [PagesController::class, 'our_packages'])->name('our-packages');
@@ -60,7 +61,9 @@ Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
 Route::get('/connecting-partners', [PagesController::class, 'connecting_partners'])->name('connecting-partners');
 
 Route::get('/st_hotel/{slug}', [PagesController::class, 'hotelDetail'])->name('hotel');
-Route::get('/tours/{slug}', [PagesController::class, 'tourDetail'])->name('tour');
+Route::get('/st_tour/{slug}', [PagesController::class, 'tourDetail'])->name('tour');
+Route::get('/st_activity/{slug}', [PagesController::class, 'tourDetail'])->name('activity');
+Route::get('/st_location/{slug}', [PagesController::class, 'tourDetail'])->name('location');
 
 
 Route::get('/get-hotels/{view}', [PagesController::class, 'getHotels'])->name('get-hotels');

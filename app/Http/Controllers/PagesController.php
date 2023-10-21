@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Hotel;
 use App\Models\Tour;
 use App\Models\Location;
+use App\Models\Activity;
 use App\Models\Terms\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -100,6 +101,11 @@ class PagesController extends Controller
         $data['title'] = 'Hotel :: '.ucwords($hotel->name);
         $data['body_class'] = 'hotel-detail-page';
         $state = $hotel->states()->first();
+        $data['nearByHotel'] = null;
+        if (!empty($state->id)) {
+          $data = $this->nearByRecords($data,$state->id,$hotel->id,'Hotel');
+        }
+        
          $data['tourismZone'] = null;
         if($state) {
             $data['tourismZone'] =  $state->tourism_zones()->first();
@@ -107,6 +113,59 @@ class PagesController extends Controller
         // dd($hotel);
 
         return view('sites.pages.hotel-detail', $data);
+    }
+
+    public function nearByRecords($data,$state_id,$p_id,$p_type)
+    {
+          /*near by hotel*/
+            $hotelQuery = [];
+            $hotelQuery = Hotel::query();
+            if ($p_type == 'Hotel') {
+            $hotelQuery->where('hotels.id', '!=',$p_id);
+            }
+            $hotelQuery->leftJoin('hotel_states', 'hotel_states.hotel_id', '=', 'hotels.id');
+            $hotelQuery->where('hotel_states.state_id', $state_id);
+            $hotelQuery->inRandomOrder();
+            $hotelQuery->limit(4);
+              $nearhotels=  $hotelQuery->get();
+             $data['nearByHotel'] = $nearhotels;
+            /*near by tour*/
+            $tourQuery = [];
+            $tourQuery = Tour::query();
+            if ($p_type == 'Tour') {
+            $tourQuery->where('tours.id', '!=',$p_id);
+            }
+            $tourQuery->leftJoin('tour_states', 'tour_states.tour_id', '=', 'tours.id');
+            $tourQuery->where('tour_states.state_id', $state_id);
+            $tourQuery->inRandomOrder();
+            $tourQuery->limit(4);
+              $neartours=  $tourQuery->get();
+             $data['nearBytour'] = $neartours;
+            /*near by activity*/
+            $activityQuery = [];
+            $activityQuery = Activity::query();
+            if ($p_type == 'Activity') {
+            $activityQuery->where('activities.id', '!=',$activity->id);
+            }
+            $activityQuery->leftJoin('activity_states', 'activity_states.activity_id', '=', 'activities.id');
+            $activityQuery->where('activity_states.state_id', $state_id);
+            $activityQuery->inRandomOrder();
+            $activityQuery->limit(4);
+              $nearactivity=  $activityQuery->get();
+             $data['nearByActivity'] = $nearactivity;
+            /*near by location*/
+            $locationQuery = [];
+            $locationQuery = Location::query();
+            if ($p_type == 'Location') {
+            $locationQuery->where('locations.id', '!=',$location->id);
+            }
+            $locationQuery->leftJoin('location_states', 'location_states.location_id', '=', 'locations.id');
+            $locationQuery->where('location_states.state_id', $state_id);
+            $locationQuery->inRandomOrder();
+            $locationQuery->limit(4);
+              $nearlocations=  $locationQuery->get();
+             $data['nearByLocation'] = $nearlocations;
+             return $data;
     }
 
     public function tourDetail(Request $request, $slug) {
@@ -331,6 +390,13 @@ class PagesController extends Controller
 
         return View::make('sites.partials.results.tour', ['tours' => $tours, 'view' => $view]);
 
+    }
+
+    public function inquiry(Request $request)
+    {
+        // $data['data'] = [];
+        $data['msg'] = 'Inquiry Form Submited Successfully';
+        return response()->json($data, 200);
     }
 
     public function getLocationState(Request $request) {

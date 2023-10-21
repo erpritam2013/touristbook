@@ -2,7 +2,7 @@
     index="{{ !empty($subformData) && !is_null($subformData) && is_array($subformData) ? count($subformData) - 1 : -1 }}">
 
     @php
-        $typeField = Config::get('subform.' . $type . '.fields');
+        $typeFields = Config::get('subform.' . $type . '.fields');
     @endphp
 
     @if (is_array($subformData) && !empty($subformData))

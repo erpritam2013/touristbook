@@ -13,7 +13,7 @@
 
                     <section class=" mt-lg-5 pb-0 z-index-9 booking-search">
                         <div class="container ">
-                            <div class="row shadow border-radius-3">
+                            <div class="row border-radius-3">
                                 <div class="col-md-12 np">
                                     <div class="feature-box h-100">
                                         <div class="tab_container">
@@ -32,7 +32,7 @@
                                                     <div class="col-lg-10 col-md-6 col-sm-6 col-xs-12 padding8">
                                                         <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
                                                             <input class="form-control" type="text"
-                                                                placeholder="Search Hotel By Location....">
+                                                                placeholder="Where are you going?">
                                                         </div>
                                                     </div>
                                                     {{--<div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
