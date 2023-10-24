@@ -66,9 +66,9 @@ use App\Repositories\PackageTypeRepository;
 use App\Interfaces\OtherPackageRepositoryInterface;
 use App\Repositories\OtherPackageRepository;
 use App\Interfaces\TourRepositoryInterface;
+use App\Interfaces\UserRepositoryInterface;
 use App\Repositories\TourRepository;
-
-
+use App\Repositories\UserRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -112,6 +112,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(PackageTypeRepositoryInterface::class, PackageTypeRepository::class);
         $this->app->bind(OtherPackageRepositoryInterface::class, OtherPackageRepository::class);
         $this->app->bind(TourRepositoryInterface::class, TourRepository::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
 
 
     }

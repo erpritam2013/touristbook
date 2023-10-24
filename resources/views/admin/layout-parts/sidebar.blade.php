@@ -68,7 +68,7 @@
                         </li>
                             </ul>
                         </li>
-                       
+
 
                         <li class="{{matchRouteGroupName('activities','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                             class="fas fa-hiking sidebar-icon-touristbook"></i><span class="nav-text">Activities</span></a>
@@ -77,6 +77,16 @@
                                 <li class="{{matchRouteName('admin.activities.create')}}"><a href="{{route('admin.activities.create')}}">Add New</a></li>
                             </ul>
                         </li>
+
+                        @if( auth()->user()->isAdmin() )
+                        <li class="{{matchRouteGroupName('users','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                            class="fas fa-hotel sidebar-icon-users"></i><span class="nav-text">User</span></a>
+                            <ul aria-expanded="false" class="{{matchRouteGroupName('users','child')}}">
+                                <li class="{{matchRouteName('admin.users.index')}}"><a href="{{route('admin.users.index')}}">List</a></li>
+                                <li class="{{matchRouteName('admin.users.create')}}"><a href="{{route('admin.users.create')}}">Add New</a></li>
+                            </ul>
+                        </li>
+                        @endif
 
                         <li class="{{matchRouteGroupName('tours','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                             class="fas fa-route sidebar-icon-touristbook"></i><span class="nav-text">Tours</span></a>
@@ -134,10 +144,10 @@
                                 <li class="{{matchRouteName('admin.tourism-zones.create')}}"><a href="{{route('admin.tourism-zones.create')}}">Add New</a></li>
                             </ul>
                         </li>
-                              
+
                             </ul>
                         </li>
-                      
+
 
                         {{--<li class="nav-label">Apps</li>
                         <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
