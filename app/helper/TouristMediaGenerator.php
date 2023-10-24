@@ -10,6 +10,7 @@ class TouristMediaGenerator implements PathGenerator
     /*
      * Get the path for the given media, relative to the root storage path.
      */
+
     public function getPath(Media $media): string
     {
         return $this->getBasePath($media).'/';
@@ -34,16 +35,17 @@ class TouristMediaGenerator implements PathGenerator
     /*
      * Get a unique base path for the given media.
      */
-    protected function getBasePath(Media $media): string
+   protected function getBasePath(Media $media): string
     {
+
         $prefix = config('media-library.prefix', '');
 
-        $customPrefix = "wp-content/uploads/".date('Y')."/".date('m');
+        $customPrefix = "wp-content/uploads/". $media->created_at->year."/". $media->created_at->month;
 
         if ($prefix !== '') {
             return $prefix . '/'.$customPrefix;
         }
 
         return $customPrefix;
-    }
+     }
 }

@@ -26,7 +26,7 @@ if(empty($id)){
  @endif
  <div class="col-lg-10">
     @endif
-    <select class="form-control single-select-placeholder-touristbook {{$class ?? ''}}" id="{{$id}}" name="{{$name}}" {{$multiple}} {!!$attr ?? ""!!}>
+    <select class="form-control single-select-placeholder-touristbook {{$class ?? ''}}" id="{{$id}}" name="{{$name}}" {{$multiple}} {!!$attr ?? ""!!} selected_value="{{(empty($items) && !is_array($selected))?$selected:''}}">
         @if(!isset($first_empty_option))
         @if(isset($label) && !empty($label))
         <option value="" {!!$option_attr ?? ''!!}>Select {{$first_option_text ?? ucwords($label)}}</option>

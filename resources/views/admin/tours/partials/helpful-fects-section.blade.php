@@ -5,7 +5,7 @@
 
     <div class="card-body">
 
-        <!-- Select Country -->
+      
         @include('admin.partials.utils.textarea', ['value' => $tour->detail->helpful_facts ?? trim($helpful_facts), 'name'=> 'helpful_facts','label'=>'Helpful Facts'])
 
 

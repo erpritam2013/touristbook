@@ -140,7 +140,7 @@ class PagesController extends Controller
             $tourQuery->inRandomOrder();
             $tourQuery->limit(4);
               $neartours=  $tourQuery->get();
-             $data['nearBytour'] = $neartours;
+             $data['nearByTour'] = $neartours;
             /*near by activity*/
             $activityQuery = [];
             $activityQuery = Activity::query();
@@ -169,16 +169,32 @@ class PagesController extends Controller
     }
 
     public function tourDetail(Request $request, $slug) {
-       dd('here');
+     
 
 
-        $state = $hotel->states()->first();
-        $tourismZone = null;
-        if($state) {
-            $tourismZone =  $state->tourism_zones()->first();
+        $tour = Tour::with(['detail', 'types', 'other_packages', 'package_types', 'locations', 'languages', 'states'])->where('slug', $slug)->first();
+        if(!$tour) {
+            abort(404);
         }
 
-        return view('sites.pages.tour-detail', compact('hotel', 'tourismZone'));
+        $data['tour'] = $tour;
+        $data['title'] = 'Our Package :: '.ucwords($tour->name);
+        $data['body_class'] = 'tour-detail-page';
+        $state = $tour->states()->first();
+        
+        if (!empty($state->id)) {
+          $data = $this->nearByRecords($data,$state->id,$tour->id,'Tour');
+        }
+        
+         $data['countryZone'] = null;
+        if($state) {
+            $data['countryZone'] =  $tour->country_zone;
+        }
+        
+    
+        return view('sites.pages.tour-detail', $data);
+
+        //return view('sites.pages.tour-detail', compact('hotel', 'tourismZone'));
 
     }
 

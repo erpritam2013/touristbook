@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\CountryZoneRepositoryInterface;
 use App\Interfaces\TypeRepositoryInterface;
 use App\Interfaces\LocationRepositoryInterface;
 use App\Interfaces\PackageTypeRepositoryInterface;
@@ -10,6 +11,8 @@ use App\Interfaces\TourRepositoryInterface;
 use App\Interfaces\StateRepositoryInterface;
 use App\Interfaces\LanguageRepositoryInterface;
 use App\Models\Tour;
+use App\Models\TourDetail;
+use App\Models\Location;
 use App\Http\Requests\StoreTourRequest;
 use App\Http\Requests\UpdateTourRequest;
 
@@ -24,6 +27,7 @@ class TourController extends Controller
 {
 
 
+    private CountryZoneRepositoryInterface $countryZoneRepository;
     private TypeRepositoryInterface $typeRepository;
     private PackageTypeRepositoryInterface $packageTypeRepository;
 
@@ -36,6 +40,7 @@ class TourController extends Controller
 
     public function __construct(
 
+        CountryZoneRepositoryInterface $countryZoneRepository,
         TourRepositoryInterface $tourRepository,
         TypeRepositoryInterface $typeRepository,
         PackageTypeRepositoryInterface $packageTypeRepository,
@@ -45,6 +50,7 @@ class TourController extends Controller
         LanguageRepositoryInterface $languageRepository
 
     ) {
+        $this->countryZoneRepository = $countryZoneRepository;
         $this->typeRepository = $typeRepository;
         $this->packageTypeRepository = $packageTypeRepository;
         $this->otherPackageRepository = $otherPackageRepository;
@@ -75,6 +81,25 @@ class TourController extends Controller
         return $data;
 
     }
+
+    public function CountryZoneByCountry(Request $request): JsonResponse
+{
+
+        $existed_value = "";
+        $country = $request->country;
+        if (isset($request->id)) {
+        $tourId = $request->id;
+        $tour = tour::findOrFail($tourId);
+        if (!empty($tour)) {
+            if (!empty($tour->country_zone)) {
+               $existed_value = $tour->country_zone->id;
+            }
+        }
+        }
+        $countryZone = $this->countryZoneRepository->getCountryZoneByCountry($country)->toArray();
+
+        return response()->json(['data' => $countryZone,'existed_value'=>$existed_value]);
+}
     /**
      * Display a listing of the resource.
      *
@@ -116,8 +141,9 @@ class TourController extends Controller
             'slug' => SlugService::createSlug(Tour::class, 'slug', $request->name),
             'description' => $request->description,
             'excerpt' => $request->excerpt,
-            // 'external_link' =>$request->external_link,
+            'external_link' =>$request->external_link,
             'address' => $request->address,
+            'country_zone_id' => $request->country_zone_id,
             // 'tour_price_by' =>$request->tour_price_by,
             'price' => (!empty($request->price))?$request->price:0,
             // 'sale_price' =>$request->sale_price,
@@ -201,7 +227,7 @@ class TourController extends Controller
          "st_booking_option_type" , 
          "gallery" , 
          "video" , 
-         // "contact" ,
+         "contact" ,
          "st_tour_external_booking" , 
          "st_tour_external_booking_link" ,
          "tours_coupan" , 
@@ -317,15 +343,18 @@ class TourController extends Controller
      */
     public function update(UpdateTourRequest $request, Tour $tour)
     {
+        
+    
 
         $tourDetails = [
 
             'name' => $request->name,
-            'slug' => SlugService::createSlug(Tour::class, 'slug', $request->name),
+            //'slug' => SlugService::createSlug(Tour::class, 'slug', $request->name),
             'description' => $request->description,
             'excerpt' => $request->excerpt,
-            // 'external_link' =>$request->external_link,
+            'external_link' =>$request->external_link,
             'address' => $request->address,
+            'country_zone_id' => $request->country_zone_id,
             // 'tour_price_by' =>$request->tour_price_by,
             'price' => (!empty($request->price))?$request->price:0,
             // 'sale_price' =>$request->sale_price,
@@ -393,11 +422,11 @@ class TourController extends Controller
         ]);
       }
 
-       $this->tourRepository->createTour($tourDetails);
+       $this->tourRepository->updateTour($tour->id,$tourDetails);
     
       if ($tour) {
             // TODO: Move this to Repository
-
+          
         $tourMetaData = [
 
          "map_address" , 
@@ -409,7 +438,7 @@ class TourController extends Controller
          "st_booking_option_type" , 
          "gallery" , 
          "video" , 
-         // "contact" ,
+         "contact" ,
          "st_tour_external_booking" , 
          "st_tour_external_booking_link" ,
          "tours_coupan" , 
@@ -448,8 +477,12 @@ class TourController extends Controller
          "check_editing",
 
      ];
-  
-     $tour->detail()->update($request->only($tourMetaData));
+
+         $tour->detail()->update($request->only($tourMetaData));
+     // if (!empty($tour->detail())) {
+     // }else{
+     //     $tour->detail()->create($request->only($tourMetaData));
+     // }
  
      $tour->package_types()->sync($request->get('package_types'));
      $tour->other_packages()->sync($request->get('other_packages'));

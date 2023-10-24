@@ -25,6 +25,18 @@ if (!function_exists('customStringReplaceWithStrCase')) {
      return $result;
  }
 }
+if (!function_exists('shortDescription')) {
+   function shortDescription($text,$length=150)
+   { 
+      $result = "";
+      $result = mb_strimwidth($text, 0, $length, "......");
+      return $result;
+   }
+}
+function FunctionName($value='')
+{
+    // code...
+}
 if (!function_exists('touristbook_sanitize_title')) {
     function touristbook_sanitize_title($value="",$extra_txt='')
     {

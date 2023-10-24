@@ -11,9 +11,9 @@
 ])
 
 <!--hotel video -->
-<<<<<<< HEAD
+
 {!!inputTemplate(['name'=> 'hotel_video','label'=>'Hotel video','desc'=>'Enter YouTube/Vimeo URL here','value'=>$hotel->hotel_video ?? '','id' => "",'control' => "url"])!!}
-=======
+
 @include('admin.partials.utils.input', [
     'name' => 'hotel_video',
     'label' => 'Hotel video',
@@ -22,7 +22,7 @@
     'id' => '',
     'control' => 'url',
 ])
->>>>>>> ff76da8ddf559651d71cd25ea389810489169dc6
+
 <!-- Hotel rating standard -->
 @include('admin.partials.utils.range_input', [
     'name' => 'rating',
@@ -38,8 +38,7 @@
 <!--hotel report -->
 @include('admin.partials.utils.textarea', ['name'=> 'hotel_report','label'=>'Report','value'=>$hotel->detail->hotel_report ?? '','id' => "",'rows'=>10])
 <!--Coupon Code -->
-<<<<<<< HEAD
-=======
+
 @include('admin.partials.utils.input', [
     'name' => 'coupon_code',
     'label' => 'Coupon Code',
@@ -67,7 +66,6 @@
     </div>
 </div>
 
->>>>>>> ff76da8ddf559651d71cd25ea389810489169dc6
 
 {!!inputTemplate(['name'=> 'coupon_code','label'=>'Coupon Code','value'=>$hotel->coupon_code ?? '','id' => ""])!!}
 

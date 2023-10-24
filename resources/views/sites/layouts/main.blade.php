@@ -65,6 +65,26 @@
     {{-- <script src="{{asset('sites/js/map_infobox.js')}}" type="text/javascript" defer></script>
     <script src="{{asset('sites/js/markerclusterer.js')}}" type="text/javascript" defer></script>
     <script src="{{asset('sites/js/maps.js')}}" type="text/javascript" defer></script> --}}
+
+    <button onclick="topScrollSite()" id="topScrollSite" title="Go to top"><i class="fa fa-arrow-up"></i></button>
+
+<div class="modal fade" id="showMoreData" tabindex="-1" role="dialog" aria-labelledby="streetLabel"
+aria-hidden="true" style="z-index: 999999;top: 100px;">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title service-title" id="showMoreDataLabel"></h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" id="showMoreDataBody">
+      
+      </div>
+      
+    </div>
+  </div>
+</div>
 </body>
 
 

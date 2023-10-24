@@ -100,9 +100,10 @@
           </li>
         </ul>
         <div class="custom-content" id="custom-content">
+            <h2 class="st-heading-section">Overview</h2>
           <div class="tab-pane show active" id="tab-about">
            @if(!empty($hotel->description))
-
+           
            <div class="text-block NopaddingDetails">
             <p class="text-muted font-weight-light">
               {!! $hotel->description !!}
@@ -188,10 +189,10 @@
 
         </div>
         <div class="tab-pane" id="tab-food">
+          @if (!empty($hotel->detail->foods))
           <div class="section mt-4 terms-section">
             <h2 class="st-heading-section">Food</h2>
             <div class="row mt-3">
-              @if (!empty($hotel->detail->foods))
               @foreach ($hotel->detail->foods as $food)
               <div class="col-md-4 f-15">
                 <div class="item-term">
@@ -200,18 +201,19 @@
                 </div>
               </div>
               @endforeach
-              @else
-              <div class="alert alert-warning mt15">No Food information found.</div>
-              @endif
 
             </div>
           </div>
+          @else
+          <div class="alert alert-warning mt15">No Food information found.</div>
+          @endif
+
         </div>
         <div class="tab-pane" id="tab-complimentary">
+          @if (!empty($hotel->detail->complimentary))
           <div class="section mt-4 terms-section">
             <h2 class="st-heading-section">Complimentary</h2>
             <div class="row mt-3">
-              @if (!empty($hotel->detail->complimentary))
               @foreach ($hotel->detail->complimentary as $complimentary)
               <div class="col-md-4 f-15">
                 <div class="item-term">
@@ -220,12 +222,13 @@
                 </div>
               </div>
               @endforeach
-              @else
-              <div class="alert alert-warning mt15">No Complimentary information found.</div>
-              @endif
 
             </div>
           </div>
+          @else
+          <div class="alert alert-warning mt15">No Complimentary information found.</div>
+          @endif
+          
         </div>
         <div class="tab-pane" id="id-proofs-tab">
 
@@ -243,760 +246,195 @@
 
               </div>
               @endforeach
-              <ul class="navbar custom-tabs" id="custom-tabs">
-                <li class="nav-item"> <a class="nav-link btn active" data-toggle="tab" href="#tab-about"> About </a>
-                </li>
-                <li class="nav-item"> <a class="nav-link btn" data-toggle="tab" href="#tab-facilities"> Facilities
-                </a>
-              </li>
-              <li class="nav-item"> <a class="nav-link  btn" data-toggle="tab" href="#tab-offers"> Offer &
-                Packages
-              </a> </li>
-              <li class="nav-item"> <a class="nav-link  btn" data-toggle="tab" href="#tab-food"> Food </a> </li>
-              <li class="nav-item"> <a class="nav-link  btn" data-toggle="tab" href="#tab-complimentary">
-                Complimentary
-              </a> </li>
-              <li class="nav-item dropdown">
-                <a href="javascript: void(0);" class="nav-link  btn" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="true">More</a>
-                <ul class="dropdown-menu">
-                  <li role="presentation" class="active "><a href="#id-proofs-tab"
-                    aria-controls="id-proofs-tab" role="tab" data-toggle="tab"
-                    aria-expanded="true">Id Proofs</a>
-                  </li>
-                  <li role="presentation" class=""><a href="#rules-tab" aria-controls="rules-tab"
-                    role="tab" data-toggle="tab" aria-expanded="false">Policies &amp; Rules</a>
-                  </li>
-                  <li role="presentation" class=""><a href="#payment-mode-tab"
-                    aria-controls="payment-mode-tab" role="tab" data-toggle="tab"
-                    aria-expanded="false">Payment Mode</a>
-                  </li>
-                  <li role="presentation" class=""><a href="#save-the-environment-tab"
-                    aria-controls="save-the-environment-tab" role="tab" data-toggle="tab"
-                    aria-expanded="false">Save the environment</a>
-                  </li>
-                  <li role="presentation"><a href="#save-your-pocket-tab"
-                    aria-controls="save-your-pocket-tab" role="tab" data-toggle="tab"
-                    aria-expanded="false">Save your pocket</a>
-                  </li>
-                  <li role="presentation"><a href="#emergency-links-tab"
-                    aria-controls="emergency-links-tab" role="tab" data-toggle="tab"
-                    aria-expanded="false">Emergency Links</a>
-                  </li>
-                  <li role="presentation"><a href="#reviews-tab" aria-controls="reviews-tab"
-                    role="tab" data-toggle="tab" aria-expanded="false">Reviews</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-            <div class="custom-content" id="custom-content">
-              <div class="tab-pane show active" id="tab-about">
-                <div class="text-block NopaddingDetails">
-                  <p class="text-muted font-weight-light">
-                    {!! $hotel->description !!}
-                  </p>
-                </div>
-
-              </div>
-              <div class="tab-pane " id="tab-facilities">
-                <div class="section">
-                  <h2>Amenities</h2>
-                  <div class="row mt-3">
-                    @if ($hotel->amenities->isNotEmpty())
-                    @foreach ($hotel->amenities as $amenity)
-                    <div class="col-md-4 f-15">
-                      <i class="fa fa-cogs mr-3"></i>
-                      <span>{{ $amenity->name }}</span>
-                    </div>
-                    @endforeach
-                    @endif
-                  </div>
-                </div>
-
-                <div class="section mt-5">
-                  <h2>Medicare Assistance</h2>
-                  <div class="row mt-3">
-                    @if ($hotel->medicare_assistances->isNotEmpty())
-                    @foreach ($hotel->medicare_assistances as $medicare)
-                    <div class="col-md-4 f-15">
-                      <i class="fa fa-cogs mr-3"></i>
-                      <span>{{ $medicare->name }}</span>
-                    </div>
-                    @endforeach
-                    @endif
-                  </div>
-                </div>
-
-                <div class="section mt-5">
-                  <h2>Property Type</h2>
-                  <div class="row mt-3">
-                    @if ($hotel->propertyTypes->isNotEmpty())
-                    @foreach ($hotel->propertyTypes as $propertyType)
-                    <div class="col-md-4 f-15">
-                      <i class="fa fa-cogs mr-3"></i>
-                      <span>{{ $propertyType->name }}</span>
-                    </div>
-                    @endforeach
-                    @endif
-                  </div>
-                </div>
-
-              </div>
-              <div class="tab-pane" id="tab-offers">
-
-                <div class="section mt-5">
-                  <h2>Offer & Packages</h2>
-                  <div class="row mt-3">
-                    @if (!empty($hotel->detail->offers))
-                    @foreach ($hotel->detail->offers as $offer)
-                    <div class="col-md-4 f-15">
-                      <i class="fa fa-cogs mr-3"></i>
-                      <span>{{ $offer['offers-title'] }}</span>
-                    </div>
-                    @endforeach
-                    @else
-                    <div class="alert alert-warning mt15">No offer and packages found.</div>
-                    @endif
-                  </div>
-                </div>
-
-
-
-              </div>
-              <div class="tab-pane" id="tab-food">
-                <div class="section mt-5">
-                  <h2>Food</h2>
-                  <div class="row mt-3">
-                    @if (!empty($hotel->detail->foods))
-                    @foreach ($hotel->detail->foods as $food)
-                    <div class="col-md-4 f-15">
-                      <i class="fa {{ $food['foods-icon'] }} mr-3"></i>
-                      <span>{{ $food['foods-title'] }}</span>
-                    </div>
-                    @endforeach
-                    @else
-                    <div class="alert alert-warning mt15">No Food information found.</div>
-                    @endif
-
-                  </div>
-                </div>
-              </div>
-              <div class="tab-pane" id="tab-complimentary">
-                <div class="section mt-5">
-                  <h2>Complimentary</h2>
-                  <div class="row mt-3">
-                    @if (!empty($hotel->detail->complimentary))
-                    @foreach ($hotel->detail->complimentary as $complimentary)
-                    <div class="col-md-4 f-15">
-                      <i class="fa {{ $complimentary['complimentary-icon'] }} mr-3"></i>
-                      <span>{{ $complimentary['complimentary-title'] }}</span>
-                    </div>
-                    @endforeach
-                    @else
-                    <div class="alert alert-warning mt15">No Complimentary information found.</div>
-                    @endif
-
-                  </div>
-                </div>
-              </div>
-              <div class="tab-pane" id="id-proofs-tab">
-
-                <div class="section mt-5">
-                  <h2>ID Proofs</h2>
-                  <div class="row">
-                    <div class="col-md-12 paragraph-info">
-                      @if (!empty($hotel->detail->id_proofs))
-                      {!! $hotel->detail->id_proofs !!}
-                      @else
-                      <div class="alert alert-warning mt15">No ID proofs required.</div>
-                      @endif
-                    </div>
-                  </div>
-
-                </div>
-
-              </div>
-
-              <div class="tab-pane" id="tab-policies">
-
-                <div class="section mt-5">
-                  <h2>Policies & Rules</h2>
-                  <div class="row mt-3">
-                    <div class="col-md-12">
-                      <table class="table">
-                        <tr>
-                          <th>Check In</th>
-                          <td>{{ $hotel->check_in }}</td>
-                        </tr>
-                        <tr>
-                          <th>Check Out</th>
-                          <td>{{ $hotel->check_out }}</td>
-                        </tr>
-                        <tr>
-                          <th>Hotel Policies</th>
-                          <td>
-                            @if (!empty($hotel->policies))
-                            @foreach ($hotel->policies as $policy)
-                            <strong>{{ $policy['policy-title'] }}</strong>
-                            <div>{!! $policy['policy-description'] !!}</div>
-                            @endforeach
-                            @else
-                            <div class="alert alert-warning mt15">No Policy/Rule found.</div>
-                            @endif
-
-
-                          </td>
-                        </tr>
-                      </table>
-
-                    </div>
-
-
-                  </div>
-                </div>
-
-
-
-              </div>
-
-              <div class="tab-pane" id="tab-payment">
-                <div class="section mt-5">
-                  <h2>Payment Mode</h2>
-                  <div class="row mt-3">
-                    <div class="col-md-12 paragraph-info">
-                      @if (!empty($hotel->detail->payment_mode))
-                      {!! $hotel->detail->payment_mode !!}
-                      @else
-                      <div class="alert alert-warning mt15">No payment details found.</div>
-                      @endif
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-
-              <div class="tab-pane" id="tab-environment">
-                <div class="section mt-5">
-                  <h2>Save the Environment</h2>
-                  <div class="row mt-3">
-                    <div class="col-md-12 paragraph-info">
-                      @if (!empty($hotel->detail->save_environment))
-                      <div>{!! $hotel->detail->save_environment !!}</div>
-                      @else
-                      <div class="alert alert-warning mt15">No Environment Information provided.
-                      </div>
-                      @endif
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-
-              <div class="tab-pane" id="tab-pocket">
-                <div class="section mt-5">
-                  <h2>Save your pocket</h2>
-                  <div class="row mt-3">
-                    <div class="col-md-12 paragraph-info">
-                      @if (!empty($hotel->detail->save_pocket))
-                      <div>{!! $hotel->detail->save_pocket !!}</div>
-                      @else
-                      <div class="alert alert-warning mt15">Not Available.</div>
-                      @endif
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-
-              <div class="tab-pane" id="tab-emergency">
-                <div class="section mt-5">
-                  <h2>Emergency Links</h2>
-                  <div class="row mt-3">
-                    <div class="col-md-12 paragraph-info">
-                      @if (!empty($hotel->detail->emergencyLinks))
-                      {{-- <div>{!! $hotel->detail->emergencyLinks !!}</div> --}}
-                      @else
-                      <div class="alert alert-warning mt15">Not Available.</div>
-                      @endif
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-
-              <div class="tab-pane" id="tab-reviews">
-                <div class="section mt-5">
-                  <h2>Reviews</h2>
-                  <div class="row mt-3">
-                    <div class="col-md-12 paragraph-info">
-                      @if (!empty($hotel->rating))
-                      <h1>{!! $hotel->rating !!}/5</h1>
-                      @else
-                      <div class="alert alert-warning mt15">Not Available.</div>
-                      @endif
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-
 
             </div>
 
-            <!-- Accomodation -->
+          </div>
+          @else
+          <div class="alert alert-warning mt15">No ID proofs required.</div>
 
-            <div class="accomodation listingDetails booking-search mt-4 ">
-              <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <h5 class="mb-4">Accomodation</h5>
-                </div>
+          @endif
+        </div>
 
-                @if ($hotel->rooms->isNotEmpty())
-                @foreach ($hotel->rooms as $room)
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div class="listing-item ">
+        <div class="tab-pane" id="policies-rules-tab">
 
-                    <article class="TravelGo-category-listing fl-wrap">
+          <div class="section mt-5 bbpb">
+            <h2 class="st-heading-section">Policies & Rules</h2>
+            <div class="row mt-3">
+              <div class="col-md-12">
+                <table class="table policies-rules-table">
+                  <tr>
+                    <th>Check In</th>
+                    <td>{{ $hotel->check_in }}</td>
+                  </tr>
+                  <tr>
+                    <th>Check Out</th>
+                    <td>{{ $hotel->check_out }}</td>
+                  </tr>
+                  <tr>
+                    <th>Hotel Policies</th>
+                    <td>
+                      @if (!empty($hotel->policies))
+                      @foreach ($hotel->policies as $policy)
+                      <strong>{{ $policy['policy-title'] }}</strong>
 
                       <div class="row">
 
-                        <div class="col-lg-5 col-md-6 col-sm-12">
-                          <div class="TravelGo-category-img TravelGo-category-list-img"> <a
-                            href="hotel-detailed.html"><img
-                            src="{{ asset('sites/images/hotels/room8.jpg') }}"
-                            alt=""></a>
-                            <div class="TravelGo-category-opt">
-                              <div class="listing-rating card-popup-rainingvis"
-                              data-starrating2="5"><i class="fa fa-star"></i><i
-                              class="fa fa-star"></i><i
-                              class="fa fa-star"></i><i
-                              class="fa fa-star"></i><i class="fa fa-star"></i>
-                            </div>
-                            <div class="rate-class-name">
-                              <div class="score"><strong>Very Good</strong>27
-                              Reviews </div>
-                              <span>5.0</span>
-                            </div>
-                          </div>
+                        @php 
+                        $policy_description_arr = explode("\n",trim($policy['policy-description']));
+                        @endphp
+                        @foreach($policy_description_arr as $k_ipd => $v_ipd)
+                        <div class="col-xs-12 col-sm-12" style="color:#000000"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="    font-size: 7px;color: transparent;"></i> 
+                          <span>{!!$v_ipd!!}</span>
+
                         </div>
+                        @endforeach
+
                       </div>
-                      <div class="col-lg-7 col-md-6 col-sm-12">
-                        <div class="TravelGo-category-content fl-wrap title-sin_item">
-                          <div class="TravelGo-category-content-title fl-wrap">
-                            <div class="TravelGo-category-content-title-item">
-                              <h3 class="title-sin_map"><a
-                                href="hotel-detailed.html">{{ $room->name }}</a>
-                              </h3>
-                              <div class="TravelGo-category-location fl-wrap"><a
-                                href="#" class="map-item"><i
-                                class="fas fa-map-marker-alt"></i>
-                                {{ $room->address }} </a>
-                                <span>{{ $room->price }}</span> </div>
-                              </div>
-                            </div>
-                            {!! $room->excerpt !!}
-                            <ul class="facilities-list fl-wrap">
-                              <li><i class="fas fa-wifi"></i><span>Free WiFi</span></li>
-                              <li><i class="fas fa-parking"></i><span>Parking</span></li>
-                              <li><i class="fas fa-smoking-ban"></i><span>Non-smoking
-                              Rooms</span></li>
-                              <li><i class="fas fa-utensils"></i><span> Restaurant</span>
-                              </li>
-                            </ul>
-                            <div class="TravelGo-category-footer fl-wrap">
-                              <div class="TravelGo-category-price btn-grad"><span>2 days
-                                3
-                              nights</span></div>
-                              <div class="TravelGo-opt-list"> <a href="#"
-                                class="single-map-item"><i
-                                class="fas fa-map-marker-alt"></i><span
-                                class="TravelGo-opt-tooltip">On the
-                              map</span></a> <a href="#"
-                              class="TravelGo-js-favorite"><i
-                              class="fas fa-heart"></i><span
-                              class="TravelGo-opt-tooltip">Save</span></a> <a
-                              href="#" class="TravelGo-js-booking"><i
-                              class="fas fa-retweet"></i><span
-                              class="TravelGo-opt-tooltip">Find
-                            Directions</span></a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                      @endforeach
+                      @else
+                      <div class="alert alert-warning mt15">No Policy/Rule found.</div>
+                      @endif
 
 
-
-                  </div>
-
-                </article>
+                    </td>
+                  </tr>
+                </table>
 
               </div>
 
-            </div>
-            @endforeach
-            @endif
 
-          </div>
-
-        </div>
-
-        {{-- Important Notes --}}
-
-        <div class="notices listingDetails booking-search mt-4 ">
-          <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-              <h5 class="mb-4">Important Notice</h5>
-            </div>
-
-            @if ($hotel->notices)
-            @foreach ($hotel->notices as $notice)
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-              <div class="listing-item">
-                <article class="TravelGo-category-listing fl-wrap">
-
-                  <div class="row fetch important-note-rooms mt-4 pl-lg-5 pr-lg-5 pb-5">
-                    <h1 class="st-heading-section col-md-12">{{ $notice['notice-title'] }}
-                    </h1>
-
-                    <div class="div-desc col-md-12">
-                      {!! $notice['notice-description'] !!}
-                    </div>
-                  </div>
-
-
-                </article>
-              </div>
-
-
-            </div>
-            @endforeach
-            @endif
-
-
-          </div>
-
-        </div>
-
-
-        {{-- Book and Inquiry --}}
-
-        <div class="book-inquiry listingDetails booking-search mt-4 ">
-          <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-              <ul class="nav nav-tabs tab-line">
-                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#book">
-                Book </a> </li>
-                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#inquiry"> Inquiry
-                </a> </li>
-              </ul>
-
-
-              <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="book" role="tabpanel"
-                aria-labelledby="book-tab">
-
-                <div class="row">
-                  <div class="col-md-4">
-                    <a href="#" class="btn btn-primary">Booking on Call</a>
-                  </div>
-                  <div class="col-md-4">
-                    <a href="#" class="btn btn-primary">Compare Prices</a>
-                  </div>
-                  <div class="col-md-4">
-                    <a href="javascript:void(0);" class="btn btn-primary" id="tourism-zone-link">Tourism Zone</a>
-                  </div>
-                </div>
-
-              </div>
-              <div class="tab-pane fade" id="inquiry" role="tabpanel"
-              aria-labelledby="inquiry-tab">
-              <p>Form not found</p>
             </div>
           </div>
 
 
+
         </div>
-      </div>
 
-    </div>
+        <div class="tab-pane" id="payment-mode-tab">
+          @if (!empty($hotel->detail->payment_mode))
+          <div class="section mt-4 bbpb">
+            <h2 class="st-heading-section">Payment Mode</h2>
+            <div class="row mt-3">
 
-    {{-- Tourism zone --}}
-
-    <div class="row mt-5" id="tourism-zone-area" style="display: none;">
-
-      <div class="col-md-12">
-        <h2>Tourism Zone</h2>
-        @if($tourismZone)
-        <div class="border p-5 mt-3">
-          {!! $tourismZone->tourism_zone_description !!}
-        </div>
-        @endif
-      </div>
-
-      @if($tourismZone && !empty($tourismZone->tourism_zone))
-
-      <div class="col-md-12 mt-3">
-
-        @foreach($tourismZone->tourism_zone as $key => $tzone)
-        <a href="javascript:void(0);" class="btn btn-primary tzone-link" targetdiv="#zone-{{$key}}" >{{$tzone['tourism_zone-title']}}</a>
-        @endforeach
-      </div>
-
-      <div class="col-md-12 mt-3">
-
-        @foreach($tourismZone->tourism_zone as $key => $tzone)
-        <div class="zone-data" id="zone-{{$key}}" style="display: none;">
-          {!! $tzone['tourism_zone-description']  !!}
-        </div>
-        @endforeach
-
-      </div>
-
-
-      @endif
-
-
-
-
-    </div>
-
-
-
-
-
-
-
-  </div>
-  <div class="col-lg-4 col-md-12 col-sm-12 right_Details">
-    <div class="p-4 shadow ml-lg-4 rounded sticky-top" style="top: 100px;">
-      <p class="text-muted"><span class="text-primary h2">$80</span> per night</p>
-      <hr class="my-4">
-      <form id="booking-form" method="get" action="#" autocomplete="off" class="form">
-        <div class="form-group">
-          <label for="bookingDate" class="form-label">Your stay *</label>
-          <div class="datepicker-container datepicker-container-right">
-            <input type="text" name="bookingDate" id="bookingDate"
-            placeholder="Choose your dates" required class="form-control">
-          </div>
-        </div>
-        <div class="form-group mb-4">
-          <label for="guests" class="form-label">Guests *</label>
-          <select name="guests" id="guests" class="form-control">
-            <option value="1">1 Guest</option>
-            <option value="2">2 Guests</option>
-            <option value="3">3 Guests</option>
-            <option value="4">4 Guests</option>
-            <option value="5">5 Guests</option>
-          </select>
-        </div>
-        <div class="form-group mb-4">
-          <label for="guests" class="form-label">Child *</label>
-          <select name="guests" id="guests" class="form-control">
-            <option value="1">1 Child</option>
-            <option value="2">2 Child</option>
-            <option value="3">3 Child</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-primary btn-block">Confirm Booking</button>
-        </div>
-      </form>
-      <hr class="my-4">
-      <div class="text-center">
-        <p> <a href="#" class="text-secondary text-sm"> <i class="fa fa-heart"></i> Bookmark
-        This Hotels</a></p>
-      </div>
-    </div>
-  </div>
-</div>
-
-</div>
-@else
-<div class="alert alert-warning mt15">No ID proofs required.</div>
-
-@endif
-</div>
-
-<div class="tab-pane" id="policies-rules-tab">
-
-  <div class="section mt-5 bbpb">
-    <h2 class="st-heading-section">Policies & Rules</h2>
-    <div class="row mt-3">
-      <div class="col-md-12">
-        <table class="table policies-rules-table">
-          <tr>
-            <th>Check In</th>
-            <td>{{ $hotel->check_in }}</td>
-          </tr>
-          <tr>
-            <th>Check Out</th>
-            <td>{{ $hotel->check_out }}</td>
-          </tr>
-          <tr>
-            <th>Hotel Policies</th>
-            <td>
-              @if (!empty($hotel->policies))
-              @foreach ($hotel->policies as $policy)
-              <strong>{{ $policy['policy-title'] }}</strong>
-
-              <div class="row">
-
-                @php 
-                $policy_description_arr = explode("\n",trim($policy['policy-description']));
-                @endphp
-                @foreach($policy_description_arr as $k_ipd => $v_ipd)
-                <div class="col-xs-12 col-sm-12" style="color:#000000"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="    font-size: 7px;color: transparent;"></i> 
-                  <span>{!!$v_ipd!!}</span>
-
-                </div>
-                @endforeach
+              @php 
+              $payment_mode_arr = explode("\n",trim($hotel->detail->payment_mode));
+              @endphp
+              @foreach($payment_mode_arr as $k_ipm => $v_ipm)
+              <div class="col-xs-6 col-sm-6" style="color:#000000"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="    font-size: 7px;color: transparent;"></i> 
+                <span>{!!$v_ipm!!}</span>
 
               </div>
               @endforeach
-              @else
-              <div class="alert alert-warning mt15">No Policy/Rule found.</div>
-              @endif
 
+            </div>
+          </div>
+          @else
+          <div class="alert alert-warning mt15">No payment details found.</div>
+          @endif
+        </div>
 
-            </td>
-          </tr>
-        </table>
+        <div class="tab-pane" id="save-the-environment-tab">
+          @if (!empty($hotel->detail->save_environment))
+          <div class="section mt-5 bbpb">
+            <h2 class="st-heading-section">Save the Environment</h2>
+            <div class="row mt-3">
 
+              @php 
+              $save_environment_arr = explode("\n",trim($hotel->detail->save_environment));
+              @endphp
+              @foreach($save_environment_arr as $k_ise => $v_ise)
+              <div class="col-xs-6 col-sm-6" style="color:#000000"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="    font-size: 7px;color: transparent;"></i> 
+                <span>{!!$v_ise!!}</span>
+
+              </div>
+              @endforeach
+
+            </div>
+          </div>
+          @else
+          <div class="alert alert-warning mt15">No Environment Information provided.
+          </div>
+          @endif
+        </div>
+
+        <div class="tab-pane" id="save-your-pocket-tab">
+          @if (!empty($hotel->detail->save_pocket))
+          <div class="section mt-4 bbpb">
+            <h2 class="st-heading-section">Save your pocket</h2>
+            <div class="row mt-3">
+             @php 
+             $save_pocket_arr = explode("\n",trim($hotel->detail->save_pocket));
+             @endphp
+             @foreach($save_pocket_arr as $k_isp => $v_isp)
+             <div class="col-xs-6 col-sm-6" style="color:#000000"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="    font-size: 7px;color: transparent;"></i> 
+              <span>{!!$v_isp!!}</span>
+
+            </div>
+            @endforeach
+
+          </div>
+        </div>
+        @else
+        <div class="alert alert-warning mt15">Not Available.</div>
+        @endif
+        @if (!empty($hotel->detail->pocketPDF))
+
+        <div class="section mt-5 bbpb text-justify">
+          <div align="center"><a data-toggle="collapse" href="#pocketPDFtab" role="button" aria-expanded="true" aria-controls="pocketPDFtab" style="text-decoration: none;" class="btn btn-grad">View Details...
+          </a></div>
+          <div class="row mt-3">
+            <div class="col-md-12 paragraph-info collapse" id="pocketPDFtab">
+
+              <ul class="nav nav-tabs custom-tabs-detail">
+                @foreach($hotel->detail->pocketPDF as $key => $pocketPDF)
+                <li class="nav-item"> <a class="nav-link {{($key == 0)?'active':''}}" data-toggle="tab" href="#{{touristbook_sanitize_title($pocketPDF['pocketPDF-title'])}}"> {!!$pocketPDF['pocketPDF-title']!!} </a> </li>
+                @endforeach
+
+              </ul>
+
+              <div class="tab-content">
+               @foreach($hotel->detail->pocketPDF as $key_2 => $pocketPDF_2)
+               <div class="tab-pane {{($key_2 == 0)?'active':''}}" id="{{touristbook_sanitize_title($pocketPDF_2['pocketPDF-title'])}}">
+
+                {!!$pocketPDF_2['pocketPDF-description']!!}
+
+              </div>
+              @endforeach
+
+            </div>
+          </div>
+
+        </div>
       </div>
 
+      @else
+      <div class="alert alert-warning mt15">Not Available.</div>
+      @endif
+
 
     </div>
-  </div>
 
+    <div class="tab-pane text-justify" id="emergency-links-tab">
 
-
-</div>
-
-<div class="tab-pane" id="payment-mode-tab">
-  @if (!empty($hotel->detail->payment_mode))
-  <div class="section mt-4 bbpb">
-    <h2 class="st-heading-section">Payment Mode</h2>
-    <div class="row mt-3">
-
-      @php 
-      $payment_mode_arr = explode("\n",trim($hotel->detail->payment_mode));
-      @endphp
-      @foreach($payment_mode_arr as $k_ipm => $v_ipm)
-      <div class="col-xs-6 col-sm-6" style="color:#000000"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="    font-size: 7px;color: transparent;"></i> 
-        <span>{!!$v_ipm!!}</span>
-
-      </div>
-      @endforeach
-
-    </div>
-  </div>
-  @else
-  <div class="alert alert-warning mt15">No payment details found.</div>
-  @endif
-</div>
-
-<div class="tab-pane" id="save-the-environment-tab">
-  @if (!empty($hotel->detail->save_environment))
-  <div class="section mt-5 bbpb">
-    <h2 class="st-heading-section">Save the Environment</h2>
-    <div class="row mt-3">
-
-      @php 
-      $save_environment_arr = explode("\n",trim($hotel->detail->save_environment));
-      @endphp
-      @foreach($save_environment_arr as $k_ise => $v_ise)
-      <div class="col-xs-6 col-sm-6" style="color:#000000"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="    font-size: 7px;color: transparent;"></i> 
-        <span>{!!$v_ise!!}</span>
-
-      </div>
-      @endforeach
-
-    </div>
-  </div>
-  @else
-  <div class="alert alert-warning mt15">No Environment Information provided.
-  </div>
-  @endif
-</div>
-
-<div class="tab-pane" id="save-your-pocket-tab">
-  @if (!empty($hotel->detail->save_pocket))
-  <div class="section mt-4 bbpb">
-    <h2 class="st-heading-section">Save your pocket</h2>
-    <div class="row mt-3">
-     @php 
-     $save_pocket_arr = explode("\n",trim($hotel->detail->save_pocket));
-     @endphp
-     @foreach($save_pocket_arr as $k_isp => $v_isp)
-     <div class="col-xs-6 col-sm-6" style="color:#000000"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="    font-size: 7px;color: transparent;"></i> 
-      <span>{!!$v_isp!!}</span>
-
-    </div>
-    @endforeach
-
-  </div>
-</div>
-@else
-<div class="alert alert-warning mt15">Not Available.</div>
-@endif
-@if (!empty($hotel->detail->pocketPDF))
-
-<div class="section mt-5 bbpb text-justify">
-  <div align="center"><a data-toggle="collapse" href="#pocketPDFtab" role="button" aria-expanded="true" aria-controls="pocketPDFtab" style="text-decoration: none;" class="btn btn-grad">View Details...
-  </a></div>
-  <div class="row mt-3">
-    <div class="col-md-12 paragraph-info collapse" id="pocketPDFtab">
-
-      <ul class="nav nav-tabs custom-tabs-detail">
-        @foreach($hotel->detail->pocketPDF as $key => $pocketPDF)
-        <li class="nav-item"> <a class="nav-link {{($key == 0)?'active':''}}" data-toggle="tab" href="#{{touristbook_sanitize_title($pocketPDF['pocketPDF-title'])}}"> {!!$pocketPDF['pocketPDF-title']!!} </a> </li>
+     @if (!empty($hotel->detail->emergencyLinks))
+     <div class="section mt-4 detail-section">
+      <h2 class="st-heading-section">Emergency Links</h2>
+      <div class="row mt-3">
+        @foreach ($hotel->detail->emergencyLinks as $emergencyLinks)
+        <div class="col-md-12 f-15">
+          <h2 class="st-heading-section-short">{{ $emergencyLinks['emergencyLinks-title'] }}</h2>
+          <div class="st-description-section">
+            {!! $emergencyLinks['emergencyLinks-description'] !!}
+          </div>
+        </div>
         @endforeach
-
-      </ul>
-
-      <div class="tab-content">
-       @foreach($hotel->detail->pocketPDF as $key_2 => $pocketPDF_2)
-       <div class="tab-pane {{($key_2 == 0)?'active':''}}" id="{{touristbook_sanitize_title($pocketPDF_2['pocketPDF-title'])}}">
-
-        {!!$pocketPDF_2['pocketPDF-description']!!}
-
-      </div>
-      @endforeach
-
-    </div>
-  </div>
-
-</div>
-</div>
-
-@else
-<div class="alert alert-warning mt15">Not Available.</div>
-@endif
-
-
-</div>
-
-<div class="tab-pane text-justify" id="emergency-links-tab">
-
- @if (!empty($hotel->detail->emergencyLinks))
- <div class="section mt-4 detail-section">
-  <h2 class="st-heading-section">Emergency Links</h2>
-  <div class="row mt-3">
-    @foreach ($hotel->detail->emergencyLinks as $emergencyLinks)
-    <div class="col-md-12 f-15">
-      <h2 class="st-heading-section-short">{{ $emergencyLinks['emergencyLinks-title'] }}</h2>
-      <div class="st-description-section">
-        {!! $emergencyLinks['emergencyLinks-description'] !!}
       </div>
     </div>
-    @endforeach
+    @else
+    <div class="alert alert-warning mt15">No offer and packages found.</div>
+    @endif
   </div>
-</div>
-@else
-<div class="alert alert-warning mt15">No offer and packages found.</div>
-@endif
-</div>
 
 </div>
 
@@ -1364,7 +802,7 @@
         </h4>
         @endif
         @if(!empty($fax))
-        <h3>
+        <h5>
           {!!getNewIcon('fax-phone', '#5E6D77', '16px', '16px')!!}&nbsp;
           @if(is_array($fax))
           @foreach($fax as $faxs)
@@ -1373,7 +811,7 @@
           @else
           <a href="tel:{{$fax}}" target="_blank" style="text-decoration: none;">{{$fax}}</a>
           @endif
-        </h3>
+        </h5>
         @endif
         @endif
 
@@ -1452,7 +890,7 @@
     <div class="media d-block d-sm-flex review">
       <div class="text-md-center mr-4 mr-xl-5"><img src="{{asset('sites/images/dummy-user.jpeg')}}" alt="Padmé Amidala" class="avatar avatar-xl p-2 mb-2"></div>
       <div class="media-body">
-        <h6 class="mt-2 mb-1">Deho Smith</h6>
+        <h6 class="mt-2 mb-1">Monu yadav</h6>
         <div class="mb-2"><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i> </div>
         <p class="text-muted text-sm">Awesome experience...genuinely visit it..ur visit will be worth full....n u will enjoy the view,the food everything is perfect </p>
       </div>
@@ -1460,7 +898,7 @@
     <div class="media d-block d-sm-flex review">
       <div class="text-md-center mr-4 mr-xl-5"><img src="{{asset('sites/images/dummy-user.jpeg')}}" alt="Jabba Hut" class="avatar avatar-xl p-2 mb-2"></div>
       <div class="media-body">
-        <h6 class="mt-2 mb-1">S. M Smithrs</h6>
+        <h6 class="mt-2 mb-1">Kumar Sivaramakrishna</h6>
         <div class="mb-2"><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i> </div>
         <p class="text-muted text-sm">Delighted with the service we got at the venue.. The workers were very responsive and we got a good service and good food too...cumulatively it was a good quality resort that too in budget price.</p>
       </div>

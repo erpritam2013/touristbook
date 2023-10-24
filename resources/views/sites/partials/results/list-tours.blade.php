@@ -11,15 +11,17 @@
                             {{--<a href="tour-detailed.html" class="wishlist_bt"></a>--}}
                             {!!is_featured($tour->is_featured,'Featured Tour')!!}
                             <a
-                            href="{{route('tour',$tour->slug)}}"><img src="{{asset('sites/images/hotels/room6.jpg')}}"
+                            href="{{route('tour',$tour->slug)}}"><img src="https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2023/04/collage-2022-09-04T081031.435-1.jpg"
                             class="img-fluid" alt="">
-                            <div class="read_more"><span>Read more</span></div>
+                            {{--<div class="read_more"><span>Read more</span></div>--}}
                         </a> </figure>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 Nopadding tour-content">
                         <div class="listroBoxmain">
 
-                            <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{$tour->address ?? ''}}</p>
+                            <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{shortDescription($tour->address,50) ?? ''}}@if(strlen($tour->address) > 50)
+                                &nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$tour->address}}" data-more_data_label="Address" style="color:#fba009;"></i>
+                            @endif</p>
                             <h4 class="service-title"><a href="{{route('tour',$tour->slug)}}">{{ $tour->name }}</a></h4>
                           
                           <div class="row">
@@ -33,7 +35,8 @@
 
                                            $package_route = (!empty($tour->detail->package_route))?implode('-',array_column($tour->detail->package_route,'package_route-title')):'';
                                       @endphp
-                                      <span class="tour-route-span">{{touristbook_sanitize_title($package_route) ?? ''}}</span>
+                                      <span class="tour-route-span">{{shortDescription(touristbook_sanitize_title($package_route.$package_route.$package_route),40) ?? ''}}</span>
+                                       &nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{touristbook_sanitize_title($package_route)}}" data-more_data_label="Package Route" style="color:#fba009;"></i>
 
                                   </li>
 
@@ -74,17 +77,9 @@
                             </div>
                             <div class="col-md-12 col-xs-12 sponsored-description pt5">
                                 @if(!empty($sponsored_description))
-                                @php 
-                                 $sponsored_desc_arr =  explode("\n", trim($sponsored_description));
-                                @endphp
-                                <ul>
-                                    @foreach($sponsored_desc_arr as $k => $v)
-                                    @if($k <=3)
-                                    <li>{{$v}}</li>
-                                    @endif
-                                    @endforeach
-                                </ul>
-
+                                <p>{{shortDescription($sponsored_description,50) ?? ''}}@if(strlen($sponsored_description) > 50)
+                                &nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$sponsored_description}}" data-more_data_label="Sponsored Description" style="color:#fba009;"></i>
+                            @endif</p>
                                 @endif
                             </div>
                             <div class="col-md-6 col-xs-6 pt5"></div>
@@ -232,7 +227,7 @@
 
             </div>
 
-            <div class="view-tour-btn"><a href="#" class="btn btn-sm btn-grad text-white mb-0 padding">VIEW tour</a></div>
+            <div class="view-tour-btn"><a href="{{route('tour',$tour->slug)}}" class="btn btn-sm btn-grad text-white mb-0 padding">VIEW tour</a></div>
 
 
         </div>

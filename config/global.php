@@ -12,6 +12,10 @@ return [
       'specific_date' => 'Specific Date', 
       'daily_activity' => 'Daily Activity'
   ],
+  'type_tour' => [
+      'specific_date' => 'Specific Date', 
+      'daily_tour' => 'Daily Tour'
+  ],
     'show_agent_contact_info' => [
       'user_agent_info' => 'Use agent contact info', 
       'user_item_info' => 'Use item info' 
