@@ -10,7 +10,7 @@
         <br /><small>Enter time for check in at hotel</small>
     </label>
     <div class="col-lg-7">
-        <input type="text" class="form-control" id="check_in" name="check_in" />
+        <input type="text" class="form-control" id="check_in" name="check_in" value="{{$hotel->check_in ?? ''}}"/>
     </div>
 </div>
 
@@ -19,7 +19,7 @@
         <br /><small>Enter time for checkout at hotel</small>
     </label>
     <div class="col-lg-7">
-        <input type="text" class="form-control" id="check_out" name="check_out" />
+        <input type="text" class="form-control" id="check_out" name="check_out" value="{{$hotel->check_out ?? ''}}"/>
     </div>
 </div>
 

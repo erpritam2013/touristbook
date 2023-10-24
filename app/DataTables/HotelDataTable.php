@@ -24,7 +24,7 @@ class HotelDataTable extends DataTable
     {
         return (new EloquentDataTable($query))->addIndexColumn()->addColumn('action', function ($row) {
                     $html = ' <a href="'.route("admin.hotels.edit",$row->id).'" class="btn btn-primary" title="Edit"><i class="fa fa-edit"></i></a>';
-                    $html .= '<a href="'.route("admin.hotels.show",$row->id).'" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>';
+                    $html .= '<a href="'.route("hotel",$row->slug).'" class="btn btn-info" title="View" target="_blank"><i class="fa fa-file"></i></a>';
                     $html .= '<a href="javascript:void(0);" class="btn btn-danger del_entity_form" title="Delete" item_id="'.$row->id.'" data-text="hotel"><i class="fa fa-trash"></i></a>';
                     return $html;
                 })->editColumn('created_at', function($row) {
@@ -38,8 +38,8 @@ class HotelDataTable extends DataTable
                     }
                     return '<input data-id="'.$row->id.'" class="toggle-class" type="checkbox" data-size="sm" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url="'.route("admin.changeStatusHotel").'" data-on="Active" data-off="InActive" '.$checked.'>';
                 })->addColumn('address',function($row){
-                    $hotelDetail = $row->detail;
-                    return ($hotelDetail) ? $hotelDetail->map_address : '';
+                    
+                    return $row->address;
                 })->addColumn('del',function($row){
                  return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'">';
             })->rawColumns(['status','action','del','address']);

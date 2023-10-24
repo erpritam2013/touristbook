@@ -52,7 +52,7 @@ class PropertyTypeRepository implements PropertyTypeRepositoryInterface
 
     // Get all Active PropertyTypes or by Type
     public function getActivePropertyTypesList($type = null) {
-        $propertyTypeBuilder = PropertyType::where('status', PropertyType::ACTIVE);
+        $propertyTypeBuilder = PropertyType::orderBy('name','asc')->where('status', PropertyType::ACTIVE);
 
         if($type)
             $propertyTypeBuilder->where('property_type_type',$type);

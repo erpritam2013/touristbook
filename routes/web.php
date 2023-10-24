@@ -36,6 +36,9 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\OtherPackageController;
 use App\Http\Controllers\TourController;
+
+use App\Http\Controllers\CustomIconController;
+
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -54,16 +57,21 @@ Route::get('/', [PagesController::class, 'index'])->name('home');
 Route::get('/hotels', [PagesController::class, 'hotels'])->name('hotels');
 Route::get('/about', [PagesController::class, 'about'])->name('about');
 Route::get('/blogs', [PagesController::class, 'blogs'])->name('blogs');
+Route::post('/inquiry', [PagesController::class, 'inquiry'])->name('inquiry');
 Route::get('/destinations', [PagesController::class, 'destinations'])->name('destinations');
 Route::get('/activities', [PagesController::class, 'activities'])->name('activities');
 Route::get('/our-packages', [PagesController::class, 'our_packages'])->name('our-packages');
 Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
 Route::get('/connecting-partners', [PagesController::class, 'connecting_partners'])->name('connecting-partners');
 
-Route::get('/hotels/{slug}', [PagesController::class, 'hotelDetail'])->name('hotel');
+Route::get('/st_hotel/{slug}', [PagesController::class, 'hotelDetail'])->name('hotel');
+Route::get('/st_tour/{slug}', [PagesController::class, 'tourDetail'])->name('tour');
+Route::get('/st_activity/{slug}', [PagesController::class, 'tourDetail'])->name('activity');
+Route::get('/st_location/{slug}', [PagesController::class, 'tourDetail'])->name('location');
 
 
 Route::get('/get-hotels/{view}', [PagesController::class, 'getHotels'])->name('get-hotels');
+Route::get('/get-tours/{view}', [PagesController::class, 'getTours'])->name('get-tours');
 Route::get('/get-location-states', [PagesController::class, 'getLocationState'])->name('get-location-state');
 
 
@@ -205,6 +213,25 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
 
      }); // end terms route grouping
 
+
+
+     // Custom Icon Resource
+    
+    // Route::resource('custom-icons', CustomIconController::class);
+    Route::prefix('settings')->name('settings.')->group(function() {
+    Route::prefix('custom-icons')->name('custom-icons.')->group(function() {
+    Route::get('/', [CustomIconController::class,'index'])->name('index');
+    Route::post('/', [CustomIconController::class,'store'])->name('store');
+    Route::delete('/{custom_icon}', [CustomIconController::class,'destroy'])->name('destroy');
+    });
+    Route::prefix('custom-icon')->name('custom-icon.')->group(function() {
+
+    Route::delete('bulk-delete', [CustomIconController::class,'bulk_delete'])->name('bulk-delete');
+
+    });
+});
+
+
      // Hotel Resource
     Route::resource('hotels', HotelController::class);
     Route::prefix('hotels')->name('hotels.')->group(function() {
@@ -214,14 +241,14 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
     Route::delete('hotel/bulk-delete', [HotelController::class,'bulk_delete'])->name('hotel.bulk-delete');
      Route::get('hotel/changeStatus', [HotelController::class,'changeStatus'])->name('changeStatusHotel');
 
-     // Hotel Resource
+     // Tour Resource
     Route::resource('tours', TourController::class);
     Route::prefix('tours')->name('tours.')->group(function() {
 
     });
 
     Route::delete('tour/bulk-delete', [TourController::class,'bulk_delete'])->name('tours.bulk-delete');
-     Route::get('tour/changeStatus', [TourController::class,'changeStatus'])->name('changeStatusHotel');
+     Route::get('tour/changeStatus', [TourController::class,'changeStatus'])->name('changeStatusTour');
 
      // Post Resource
     Route::resource('posts', PostController::class);
@@ -293,6 +320,8 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
     Route::delete('activity/bulk-delete', [ActivityController::class,'bulk_delete'])->name('activities.bulk-delete');
 
     Route::get('activity/country/activity-zones', [ActivityController::class,'ActivityZoneByCountry'])->name('ActivityZoneByCountry');
+    
+    Route::get('tour/country/country-zones', [TourController::class,'CountryZoneByCountry'])->name('CountryZoneByCountry');
 
     Route::get('activity/changeStatus', [ActivityController::class,'changeStatus'])->name('changeStatusActivity');
 

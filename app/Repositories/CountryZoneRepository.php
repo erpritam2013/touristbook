@@ -24,6 +24,11 @@ class CountryZoneRepository implements CountryZoneRepositoryInterface
     {
          CountryZone::whereIn('id', $countryZoneId)->delete();
     }
+
+     public function getCountryZoneByCountry($country)
+    {
+        return CountryZone::where('country',$country)->get(['id','title']);
+    }
     public function createCountryZone(array $countryZoneDetails)
     {
         return CountryZone::create($countryZoneDetails);

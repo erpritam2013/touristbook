@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('tour_details', function (Blueprint $table) {
            $table->id();
-           $table->unsignedBigInteger('tour_id');
+           $table->unsignedBigInteger('tour_id')->nullable();
            $table->foreign('tour_id')->references('id')->on('tours')->onDelete('cascade');
            $table->string('map_address')->nullable();
            $table->decimal('latitude', 12, 9)->nullable();
@@ -59,22 +59,10 @@ return new class extends Migration
            $table->string('ical_url')->nullable();
            $table->boolean('is_meta_payment_gateway_st_submit_form')->default(0);
            $table->longText('helpful_facts')->nullable();
-           $table->longText('sponsored')->nullable();
+           $table->json('sponsored')->nullable();
 
 
 
-          // $table->text('venue_facilities')->nullable();
-             // TODO: Calender For Availablity
-            //Cancelation 
-          // $table->longText('child_policy')->nullable();
-          // $table->longText('booking_policy')->nullable();
-          // $table->longText('refund_and_cancellation_policy')->nullable();
-          // $table->unsignedBigInteger('tour_zone_id');
-          // $table->foreign('tour_zone_id')->references('id')->on('tour_zones')->onDelete('cascade');
-           
-          // $table->json('tour_zones')->nullable();
-          // $table->string('st_tour_corporate_address')->nullable();
-          // $table->string('st_tour_short_address')->nullable();
            $table->json('social_links')->nullable();
            $table->json('properties_near_by')->nullable();
            $table->boolean('check_editing')->default(false);

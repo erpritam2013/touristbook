@@ -21,6 +21,7 @@
                
                     @php
                         $elemClass = isset($typeFields[$controlId]['class']) ? $typeFields[$controlId]['class'] : '';
+                        $rows = isset($typeFields[$controlId]['rows']) ? $typeFields[$controlId]['rows'] : 8;
                         $desc = isset($typeFields[$controlId]['desc']) ? $typeFields[$controlId]['desc'] : '';
                     @endphp
                     @php
@@ -40,7 +41,7 @@
                         @elseif($typeFields[$controlId]['control'] == "url")
                             <input type="url" class="form-control {{$elemClass}} " name="{{$type}}[{{$key}}][{{$controlId}}]" value="{{$value ?? ''}}" id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}" placeholder="Enter {{$typeFields[$controlId]['label']}}...">
                         @elseif($typeFields[$controlId]['control'] == "textarea")
-                            <textarea class="form-control {{$elemClass}} " name="{{$type}}[{{$key}}][{{$controlId}}]"  id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}" placeholder="Enter {{$typeFields[$controlId]['label']}}...">{{$value ?? ''}}</textarea>
+                            <textarea class="form-control {{$elemClass}} " name="{{$type}}[{{$key}}][{{$controlId}}]"  id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}" placeholder="Enter {{$typeFields[$controlId]['label']}}..." rows="{{$rows ?? 8}}">{{$value ?? ''}}</textarea>
                         @elseif($typeFields[$controlId]['control'] == "media")
                           <div class="media-controls ">
                                 <input type="text" class="form-control media-input {{$elemClass}}" name="{{$type}}[{{$key}}][{{$controlId}}]" value="{{$value ?? ''}}" id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}" placeholder="Enter {{$typeFields[$controlId]['label']}}..."/>
