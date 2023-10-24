@@ -434,8 +434,15 @@ const fetchHotels = (view, options = {}) => {
     }
 };
 
+
     // Initially Load Hotels
 fetchHotels("list", fetchParameters());
+
+    if(resultInfo.length > 0) {
+        // Initially Load Hotels
+        fetchHotels("list", fetchParameters());
+    }
+
 
     // Load Map
 function loadMap() {
@@ -496,41 +503,6 @@ function loadStreetMap() {
 
     loadStreetMap()
 
-
-    // Scrolling Feature
-    // window.addEventListener('scroll', function() {
-    //     const element = document.getElementById('custom-tabs');
-    //     const content = document.getElementById('custom-content');
-    //     const spacer = document.getElementById('custom-spacer');
-
-    //     if (element && content && spacer) {
-    //         const elementRect = spacer.getBoundingClientRect();
-    //         const contentRect = content.getBoundingClientRect();
-
-    //         const navHeight = $(".navbar.navbar-expand-lg").outerHeight(true)
-    //         const selfHeight = $('.navbar.custom-tabs').outerHeight(true)
-
-    //         console.log("ElementReact Top", elementRect.top)
-
-    //         if (elementRect.top <= (navHeight-selfHeight) && elementRect.bottom <= contentRect.bottom) {
-    //             // Element has scrolled past the top of the window but is still within the content
-    //             element.classList.add('fixed');
-    //             element.style.top = navHeight+'px'
-    //             console.log("Added")
-    //         } else {
-    //             // Element is not past the top of the window or is beyond the content
-    //             element.classList.remove('fixed');
-    //             element.removeAttribute("style");
-    //             console.log("Remove")
-    //             console.log("Else")
-    //         }
-    //     }
-    // });
-
-
-
-
-
     // View Changer Grid -> List -> Grid ---
     resultInfo.on("click", ".view-changer", function () {
         $(this).parents("ui").first().find("li").removeClass("active");
@@ -570,16 +542,12 @@ function loadStreetMap() {
                     term: request.term,
                 },
                 success: function (data) {
-                    console.log(data)
                     response(data);
                 },
             });
         },
         minLength: 2,
         select: function (event, ui) {
-            console.log(ui)
-            console.log("Selected: " + ui.item.value + " aka " + ui.item.id);
-            // $("#input-search-box").val(ui.item)
             $("input[name=source_type]").val(ui.item.sourceType);
             $("input[name=source_id]").val(ui.item.id);
         },
@@ -600,9 +568,10 @@ function loadStreetMap() {
 
 
     let tourism_link_elm = document.getElementById('tourism-zone-link')
-
-    tourism_link_elm.onclick = function() {
-        $('#tourism-zone-area').toggle()
+    if(tourism_link_elm) {
+        tourism_link_elm.onclick = function() {
+            $('#tourism-zone-area').toggle()
+        }
     }
 
     $('.tzone-link').on("click", function() {
