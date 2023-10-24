@@ -531,8 +531,10 @@ $(".submit-media").on("click", function() {
 
 })
 
+let mediaSelector = ".add-media-btn, .add-gallery-btn"
+
     // Specifically for Subform
-$("body").on("click", ".add-media-btn, .add-gallery-btn", function(){
+$("body").on("click", mediaSelector, function(){
         // Grab Selected File (If Any)
         // Change in Model DOM
         // Model Open
@@ -555,7 +557,9 @@ $("body").on("click", ".add-media-btn, .add-gallery-btn", function(){
     loadImages();
 });
 
+if($(mediaSelector).length > 0) {
     // Load Image on load
-loadImages();
+    loadImages();
+}
 
 });
