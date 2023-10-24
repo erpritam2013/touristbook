@@ -31,11 +31,15 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\TourismZoneController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\OtherPackageController;
 use App\Http\Controllers\TourController;
+
 use App\Http\Controllers\CustomIconController;
+
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -72,8 +76,13 @@ Route::get('/get-location-states', [PagesController::class, 'getLocationState'])
 
 
 
+Route::get('/login', [LoginController::class, 'login'])->name('login');
+Route::post('/login-post', [LoginController::class, 'authenticate'])->name('login-post');
 
-Route::name('admin.')->prefix('admin')->group(function () {
+
+
+
+Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () {
 
     Route::post('ajax-term-store',[UtilityController::class,'ajax_term_store'])->name('ajax-term-store');
 
@@ -315,4 +324,18 @@ Route::name('admin.')->prefix('admin')->group(function () {
     Route::get('tour/country/country-zones', [TourController::class,'CountryZoneByCountry'])->name('CountryZoneByCountry');
 
     Route::get('activity/changeStatus', [ActivityController::class,'changeStatus'])->name('changeStatusActivity');
+
+    Route::middleware(['isAdmin'])->group(function() {
+
+        Route::resource('users', UserController::class);
+        Route::delete('users/bulk-delete', [UserController::class,'bulk_delete'])->name('users.bulk-delete');
+        Route::get('users/changeStatus', [UserController::class,'changeStatus'])->name('users.changeStatus');
+
+
+
+    });
+
+
 });
+
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
