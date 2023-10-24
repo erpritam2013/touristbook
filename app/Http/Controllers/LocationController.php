@@ -126,7 +126,7 @@ private function _prepareBasicData() {
 
     if($location) {
 
-      if($request->gallery == '' || empty($request->gallery)) {
+      if($request->gallery == '' || empty($request->gallery) || count($request->gallery) == 0) {
            $request->merge([
             'gallery' => Null,
         ]);
@@ -256,7 +256,7 @@ public function changeStatus(Request $request): JsonResponse
     
     if($location) {
      
-     if(count($request->gallery) != 0) {
+     if($request->gallery == '' || empty($request->gallery) || count($request->gallery) == 0) {
            $request->merge([
             'gallery' => Null,
         ]);

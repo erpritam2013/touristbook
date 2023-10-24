@@ -1,6 +1,6 @@
 <!-- type tour -->
 
-@include('admin.partials.utils.select_box', ['items' => $type_activity, 'name'=> 'type_tour','selected'=>$tour->type_tour ?? "",'label'=>'Tour Type','desc'=>'tour Type'])
+@include('admin.partials.utils.select_box', ['items' => $type_tour, 'name'=> 'type_tour','selected'=>$tour->type_tour ?? "",'label'=>'Tour Type','desc'=>'tour Type'])
 <!-- duration_day -->
 @include('admin.partials.utils.input', ['name'=> 'duration_day','label'=>'Duration Day','desc'=>'The total time to take each tour package','value'=>$tour->duration_day ?? '','id' => ""])
 

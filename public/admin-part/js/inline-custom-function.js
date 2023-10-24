@@ -112,10 +112,60 @@ window.showActivityZone = () => {
      }
 
 };
+
 showActivityZone();
 /*country select show activity zone end js*/
 
+/*country select show country zone start js*/
+window.showCountryZone = () => {
+     let id = $("#tour-id").data('id');
+     let country = $('.tour-extra-fields #st-tours-country').children('option:selected').val();
+    let country_zone_section = $('.tour-extra-fields #country-zone-id');
+     console.log(country_zone_section);
+     if (country_zone_section.length != 0) {
+        
+    if (country != "" && typeof country != 'undefined') {
 
+    $('.country-zone-id-section').removeClass('d-none');
+    let userURL = '/admin/tour/country/country-zones';
+    let fields_data = {};
+    if (typeof id != 'undefined') {
 
+       fields_data.id = id;
+    }
+    fields_data.country = country;
+    console.log(fields_data);
+    $.get(userURL,fields_data,function (data) {
+    // let options = "";
+    if (data.length != 0) {
+        let existed_country_zone_id = data.existed_value;
+        preloader.css({'z-index': 0});
+        preloader.hide();
+        country_zone_section.find('option').remove();
+        country_zone_section.append(new Option('Select country Zone', ""));
+        $.each(data.data,function(index,value){
+            let optionText = value.title;
+            let optionValue = value.id;
+
+            if (typeof existed_country_zone_id != "undefined" && optionValue === parseInt(existed_country_zone_id)) {
+                country_zone_section.append(new Option(optionText, optionValue,true, true));
+            }else{
+
+                country_zone_section.append(new Option(optionText, optionValue));
+            }
+        });
+    }else{
+        alert('something went wrong!');
+    }
+
+});
+}else{
+    country_zone_section.closest('.country-zone-id-section').addClass('d-none');
+    country_zone_section.find('option').remove();
+}
+     }
+
+};
+showCountryZone();
 
 }(jQuery))

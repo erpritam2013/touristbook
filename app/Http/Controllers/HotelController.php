@@ -259,7 +259,7 @@ class HotelController extends Controller
         $hotelDetails = [
             'name' => $request->name,
             'description' => $request->description,
-            'slug' => (!empty($request->slug) && $hotel->slug != $request->slug)?SlugService::createSlug(Hotel::class, 'slug', $request->slug):$hotel->slug,
+           // 'slug' => (!empty($request->slug) && $hotel->slug != $request->slug)?SlugService::createSlug(Hotel::class, 'slug', $request->slug):$hotel->slug,
             'external_link' => $request->external_link,
             'food_dining' => $request->food_dining,
             'is_featured' => $request->is_featured,

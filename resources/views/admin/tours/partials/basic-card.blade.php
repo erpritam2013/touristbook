@@ -24,14 +24,14 @@
             </div>
         </div>
 
-        {{--<div class="form-group row">
+        <div class="form-group row">
             <label class="col-lg-2 col-form-label" for="external_link">
                 Tour Link
             </label>
             <div class="col-lg-10">
                 <input type="text" class="form-control" id="external_link" name="external_link" value="{{$tour->external_link ?? ''}}" >
             </div>
-        </div>--}}
+        </div>
 
     </div>
 </div>

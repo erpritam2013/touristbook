@@ -15,6 +15,87 @@
    }
    return false;
 }
+
+ // Get the button:
+let mybutton = document.getElementById("topScrollSite");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollWindow()};
+
+function scrollWindow() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+} else {
+    mybutton.style.display = "none";
+}
+}
+
+function isJSON(something) {
+    if (typeof something != 'string')
+       something = JSON.stringify(something);
+
+   try {
+    JSON.parse(something);
+    return true;
+} catch (e) {
+    return false;
+}
+}
+
+const showAmenities = (amenities) => {
+
+    let html = "";
+    html += '<div class="st-report-info">';
+    html += '<ul>';
+    for (var i = amenities.length - 1; i >= 0; i--) {
+        html += `<li style="text-transform:capitalize;">${amenities[i].name}</li>`;
+    }
+    html += '</ul>';
+    html += '</div>';
+    return html;
+}
+
+window.showMoreData = function(data){
+
+    let label = $(data).data('more_data_label');
+    let showMoreData = $(data).data('more_data');
+    $('body #showMoreDataLabel').text(label);
+    if (isJSON(showMoreData)) {
+        showMoreData = JSON.stringify(showMoreData);
+        let result = JSON.parse(showMoreData);
+        /*show amenities*/
+        if (label == 'Amenities') {
+            let get_html = showAmenities(result);
+            $('body #showMoreDataBody').html(get_html);
+        }else if (label == 'Amenities') {
+           let get_html = showAmenities(result);
+           $('body #showMoreDataBody').html(get_html);
+       }
+       console.log(result);
+   }else{
+    let html = '';
+    if (label == 'Address') {
+
+      html = `<p class="service-location"><i class="fa fa-map-marker" aria-hidden="true" style="color:#fba009;"></i>&nbsp;${showMoreData}</p>`;
+  }else if(label == 'Package Route'){
+     html += '<div class="tour-routes">';
+     html += '<ul>';
+     html += '<li>';
+     html += `<span class="tour-route-span">${showMoreData}</span>`;
+     html += '</li>';
+     html += '</ul>';
+     html += '</div>';
+ }else{
+    html = `<p class="service-location">${showMoreData}</p>`;
+ }
+ $('body #showMoreDataBody').html(html);
+}
+}
+
+// When the user clicks on the button, scroll to the top of the document
+window.topScrollSite = function() {
+  $('html, body').animate({scrollTop:0}, 'slow');
+}
 $('#custom-tabs').on('click','a.nav-link',function(e){
     e.preventDefault();
     let id = $(this).attr('href');
@@ -64,8 +145,8 @@ $('#pocketPDFtab').on('click','a.nav-link',function(e){
                 $(value).hide();
             }
         })
-         t.show();
-         $(this).addClass('active');
+        t.show();
+        $(this).addClass('active');
         // t.hide();
         // $(window).scrollTop(top);
         $('html, body').animate({scrollTop:top}, 'slow');
@@ -91,7 +172,7 @@ $('#tourism-zone-area-pdf').on('click','a.nav-link',function(e){
         let parent_childs = parent.children('.tab-pane');
         let parent_nav_childs = parent_nav_tab.children('.nav-item');
         console.log(parent_nav_childs);
-         
+
         let tab_content_index = t.index();
         
         parent_nav_childs.each(function(k,v){
@@ -104,8 +185,8 @@ $('#tourism-zone-area-pdf').on('click','a.nav-link',function(e){
                 $(value).hide();
             }
         })
-         t.show();
-         $(this).addClass('active');
+        t.show();
+        $(this).addClass('active');
         // t.hide();
         // $(window).scrollTop(top);
         $('html, body').animate({scrollTop:top}, 'slow');
@@ -534,6 +615,15 @@ function loadStreetMap() {
         }
 
     })
+
+
+    $('body.tour-detail-page #st-program-section .panel-collapse').on('show.bs.collapse', function () {
+        $(this).siblings('body.tour-detail-page #st-program-section .panel-heading').addClass('active');
+    });
+
+    $('body.tour-detail-page #st-program-section .panel-collapse').on('hide.bs.collapse', function () {
+        $(this).siblings('body.tour-detail-page #st-program-section .panel-heading').removeClass('active');
+    });
 
 
 })();
