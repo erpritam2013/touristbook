@@ -9,15 +9,19 @@
             <input type="text" class="form-control" id="search_location" placeholder="Search Location......">
             <div class="col-lg-12 location-list">
 
-            @include('admin.partials.utils.nested_checkbox_list', ['items' => $locations, 'name'=> 'location_id[]', 'selected' => $hotel->locations->pluck('id')->toArray() ?? []])
+            @include('admin.partials.utils.nested_checkbox_list', ['items' => $locations, 'name'=> 'location_id', 'selected' => $hotel->locations->pluck('id')->toArray() ?? []])
             </div>
 
         </div>
     </div>
 </div>
  @endif
+<!-- hotel address -->
+{!!inputTemplate(['name'=> 'address','label'=>'Hotel Address','desc'=>'Enter your hotel address detail','value'=>$hotel->address ?? '','id' => "address",'class'=>'pac-target-input'])!!}
+
+
 <div class="form-group row">
-    <label class="col-lg-5 col-form-label" for="map_address">Hotel address</label>
+    <label class="col-lg-5 col-form-label" for="map_address">Map Address</label>
     <div class="col-lg-7">
         <input type="text" class="form-control" id="map_address" name="map_address" value="{{$hotel->detail->map_address ?? ''}}">
     </div>

@@ -51,7 +51,7 @@ class TopServiceRepository implements TopServiceRepositoryInterface
 
     // Get all Active Top Services or by Type
     public function getActiveTopServicesList($type = null) {
-        $topServiceBuilder = TopService::where('status', TopService::ACTIVE);
+        $topServiceBuilder = TopService::orderBy('name','asc')->where('status', TopService::ACTIVE);
 
         if($type)
             $topServiceBuilder->where('top_service_type',$type);

@@ -22,15 +22,15 @@ class TourDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
+        
          return (new EloquentDataTable($query))->addIndexColumn()->addColumn('action', function ($row) {
+
                     $html = ' <a href="'.route("admin.tours.edit",$row->id).'" class="btn btn-primary" title="Edit"><i class="fa fa-edit"></i></a>';
                     $html .= '<a href="'.route("admin.tours.show",$row->id).'" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>';
                     $html .= '<a href="javascript:void(0);" class="btn btn-danger del_entity_form" title="Delete" item_id="'.$row->id.'" data-text="Tour"><i class="fa fa-trash"></i></a>';
                     return $html;
                 })->editColumn('created_at', function($row) {
                     return date('d-m-Y',strtotime($row->created_at));
-                })->editColumn('hotel_id', function($row) {
-                    return $row->hotels->name;
                 })->editColumn('updated_at', function($row) {
                     return date('d-m-Y',strtotime($row->updated_at));
                 })->addColumn('status', function($row) {
@@ -40,8 +40,8 @@ class TourDataTable extends DataTable
                     }
                     return '<input data-id="'.$row->id.'" class="toggle-class" type="checkbox" data-size="sm" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url="'.route("admin.changeStatusTour").'" data-on="Active" data-off="InActive" '.$checked.'>';
                 })->addColumn('address',function($row){
-                    $hotelDetail = $row->detail;
-                    return ($hotelDetail) ? $hotelDetail->map_address : '';
+                    $tourDetail = $row->detail;
+                    return ($tourDetail) ? $tourDetail->map_address : '';
                 })->addColumn('del',function($row){
                  return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'">';
             })->rawColumns(['status','action','del','address']);
@@ -106,7 +106,6 @@ class TourDataTable extends DataTable
             ->exportable(false)
             ->printable(false),
             Column::make('address'),
-            Column::make('hotel_id')->title('Hotel'),
             Column::make('status'),
             Column::make('created_at')->title('Created'),
             Column::make('updated_at')->title('Updated'),

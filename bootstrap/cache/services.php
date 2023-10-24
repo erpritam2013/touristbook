@@ -48,6 +48,7 @@
     44 => 'App\\Providers\\ViewServiceProvider',
     45 => 'App\\Providers\\RepositoryServiceProvider',
     46 => 'yajra\\Datatables\\DatatablesServiceProvider',
+    47 => 'Intervention\\Image\\ImageServiceProvider',
   ),
   'eager' => 
   array (
@@ -83,6 +84,7 @@
     29 => 'App\\Providers\\ViewServiceProvider',
     30 => 'App\\Providers\\RepositoryServiceProvider',
     31 => 'yajra\\Datatables\\DatatablesServiceProvider',
+    32 => 'Intervention\\Image\\ImageServiceProvider',
   ),
   'deferred' => 
   array (

@@ -2,7 +2,7 @@
     @foreach ($items as $item)
         <li>
             <label class="{{ $item['children'] ? 'parent' : 'child' }}">
-                <input type="checkbox" name="{{$name}}[]" value="{{ $item['id'] }}" {{ in_array($item['id'], $selected) ? 'checked' : ''  }}  > {{ $item['name'] }}
+                <input type="checkbox" name="{{$name}}[]" value="{{ $item['id'] }}" {{ in_array($item['id'], $selected) ? 'checked' : ''  }}  > {!! $item['name'] !!}
             </label>
             @if (!empty($item['children']))
                 <div class="indent">

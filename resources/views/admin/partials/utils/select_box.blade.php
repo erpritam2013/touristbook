@@ -26,7 +26,7 @@ if(empty($id)){
  @endif
  <div class="col-lg-10">
     @endif
-    <select class="form-control single-select-placeholder-touristbook {{$class ?? ''}}" id="{{$id}}" name="{{$name}}" {{$multiple}} {!!$attr ?? ""!!}>
+    <select class="form-control single-select-placeholder-touristbook {{$class ?? ''}}" id="{{$id}}" name="{{$name}}" {{$multiple}} {!!$attr ?? ""!!} selected_value="{{(empty($items) && !is_array($selected))?$selected:''}}">
         @if(!isset($first_empty_option))
         @if(isset($label) && !empty($label))
         <option value="" {!!$option_attr ?? ''!!}>Select {{$first_option_text ?? ucwords($label)}}</option>
@@ -37,9 +37,9 @@ if(empty($id)){
         @if(!empty($items))
         @foreach($items as $item)
         @if(is_array($selected))
-        <option value="{{$item->id}}" {{ in_array($item->id, $selected) ? 'selected' : ''  }} {!!$option_attr ?? ''!!}>{{$item->value}}</option>
+        <option value="{{$item->id}}" {{ in_array($item->id, $selected) ? 'selected' : ''  }} {!!$option_attr ?? ''!!}>{!!$item->value!!}</option>
         @else
-        <option value="{{$item->id}}" {{ ($item->id == $selected) ? 'selected' : ''  }} {!!$option_attr ?? ''!!}>{{$item->value}}</option>
+        <option value="{{$item->id}}" {{ ($item->id == $selected) ? 'selected' : ''  }} {!!$option_attr ?? ''!!}>{!!$item->value!!}</option>
         @endif
         @endforeach
         @endif

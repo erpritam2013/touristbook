@@ -50,7 +50,7 @@ class UtilityController extends Controller
             return response()->json(['data'=>[],'status'=>409,'msg'=>'This {'.$request->name.'} Name is existed!']);
         }
         $termDetails = [
-                   'name'=>$request->name,
+                   'name'=>ucwords($request->name),
                    'parent_id'=>(!empty($request->parent_id))?$request->parent_id:0,
         ];
         if (!empty($term_type)) {

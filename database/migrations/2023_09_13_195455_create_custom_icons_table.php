@@ -16,8 +16,11 @@ return new class extends Migration
         Schema::create('custom_icons', function (Blueprint $table) {
             $table->id();
              $table->string('title')->nullable();
-             $table->string('slug')->nullable();
-             $table->text('image')->nullable();
+             $table->string('slug',100)->nullable();
+             $table->string('type',50)->nullable();
+             $table->string('path')->nullable();
+             $table->text('uri')->nullable();
+             $table->string('mime',100)->nullable();
             $table->timestamps();
         });
     }

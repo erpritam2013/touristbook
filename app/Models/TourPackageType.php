@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class TourPackageType extends Model
 {
     use HasFactory;
+    protected $table = "tour_package_types";
 }

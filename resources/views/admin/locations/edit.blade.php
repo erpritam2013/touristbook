@@ -1,3 +1,4 @@
+
 @extends('admin.locations.create')
 @section('location_action', route('admin.locations.update',$location->id))
 @section('method_field')

@@ -51,7 +51,7 @@ class TermActivityRepository implements TermActivityRepositoryInterface
 
     // Get all Active Top Services or by Type
     public function getActiveTermActivitiesList($type = null) {
-        $termActivityBuilder = TermActivity::where('status', TermActivity::ACTIVE);
+        $termActivityBuilder = TermActivity::orderBy('name','asc')->where('status', TermActivity::ACTIVE);
 
         if($type)
             $termActivityBuilder->where('term_activity_type',$type);

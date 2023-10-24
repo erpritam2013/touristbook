@@ -52,7 +52,7 @@ class MeetingAndEventRepository implements MeetingAndEventRepositoryInterface
 
     // Get all Active Meeting And Events or by Type
     public function getActiveMeetingAndEventsList($type = null) {
-        $meetingAndEventBuilder = MeetingAndEvent::where('status', MeetingAndEvent::ACTIVE);
+        $meetingAndEventBuilder = MeetingAndEvent::orderBy('name','asc')->where('status', MeetingAndEvent::ACTIVE);
 
         if($type)
             $meetingAndEventBuilder->where('meeting_and_event_type',$type);

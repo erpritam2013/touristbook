@@ -149,20 +149,20 @@
                         </li>
 
 
-                        {{--<li class="nav-label">Apps</li>
-                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                            class="icon icon-app-store"></i><span class="nav-text">Apps</span></a>
-                            <ul aria-expanded="false">
+                       <li class="nav-label">Settings</li>
+                        <li><a class="has-arrow {{matchRouteGroupName('settings','parent')}}" href="javascript:void()" aria-expanded="false"><i
+                            class="fas fa-cog sidebar-icon-touristbook"></i><span class="nav-text">Settings</span></a>
+                            <ul aria-expanded="false" class="{{matchRouteGroupName('settings','child')}}">
+                                <li><a href="{{route('admin.settings.custom-icons.index')}}" class="{{matchRouteName('admin.settings.custom-icons.index')}}">Custom Icon Upload</a></li>
+                                {{--<li><a href="./app-profile.html">Profile</a></li>
                                 <li><a href="./app-profile.html">Profile</a></li>
                                 <li><a href="./app-profile.html">Profile</a></li>
                                 <li><a href="./app-profile.html">Profile</a></li>
                                 <li><a href="./app-profile.html">Profile</a></li>
-                                <li><a href="./app-profile.html">Profile</a></li>
-                                <li><a href="./app-profile.html">Profile</a></li>
-                                <li><a href="./app-profile.html">Profile</a></li>
+                                <li><a href="./app-profile.html">Profile</a></li>--}}
 
                             </ul>
-                        </li>--}}
+                        </li>
                         {{--<li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                             class="icon icon-chart-bar-33"></i><span class="nav-text">Charts</span></a>
                             <ul aria-expanded="false">

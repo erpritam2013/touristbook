@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\location;
 use App\Models\TourDetail;
+use App\Models\CountryZone;
 use App\Models\Terms\Type;
 use App\Models\Terms\OtherPackage;
 use App\Models\Terms\PackageType;
@@ -57,7 +58,7 @@ class Tour extends Model
         return $this->belongsToMany(OtherPackage::class, 'tour_other_packages', 'tour_id', 'other_package_id');
     }
     public function package_types() {
-        return $this->belongsToMany(PackageType::class, 'tour_package_types ', 'tour_id', 'package_type_id');
+        return $this->belongsToMany(PackageType::class, 'tour_package_types', 'tour_id', 'package_type_id');
     }
 
 
@@ -73,7 +74,12 @@ class Tour extends Model
         return $this->belongsToMany(State::class, 'tour_states', 'tour_id', 'state_id');
     }
 
+    public function country_zone() {
+
+        return $this->belongsTo(CountryZone::class,'country_zone_id','id');
+    }
     public function detail() {
+
         return $this->hasOne(TourDetail::class);
     }
 }

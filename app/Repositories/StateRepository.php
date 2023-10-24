@@ -50,7 +50,7 @@ class StateRepository implements StateRepositoryInterface
     }
     // Get all Active States or by Type
     public function getActiveStatesList() {
-        $stateBuilder = State::where('status', State::ACTIVE);
+        $stateBuilder = State::orderBy('name','asc')->where('status', State::ACTIVE);
 
         $states = $stateBuilder->get(['id','name', 'parent_id']);
 

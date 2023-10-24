@@ -4,8 +4,8 @@
     </label>
     <div class="col-lg-7">
         <select class="form-control form-select" id="contact_info" name="contact[info]">
-            <option value="agent">Use Agent Contact Info</option>
-            <option value="item">Use Item Info</option>
+            <option value="agent" {{$hotel->contact['info'] == 'agent'?'selected':''}}>Use Agent Contact Info</option>
+            <option value="item" {{$hotel->contact['info'] == 'item'?'selected':''}}>Use Item Info</option>
         </select>
     </div>
 </div>
@@ -15,7 +15,7 @@
         <br /><small>This email will received notification when have booking order</small>
     </label>
     <div class="col-lg-7">
-        <input type="text" class="form-control" id="contact_email" name="contact[email]" />
+        <input type="text" class="form-control" id="contact_email" name="contact[email]" value="{{$hotel->contact['email'] ?? ''}}" />
     </div>
 </div>
 
@@ -24,7 +24,7 @@
         <br /><small>Enter hotel website</small>
     </label>
     <div class="col-lg-7">
-        <input type="text" class="form-control" id="contact_website" name="contact[website]" />
+        <input type="text" class="form-control" id="contact_website" name="contact[website]" value="{{$hotel->contact['website'] ?? ''}}" />
     </div>
 </div>
 
@@ -33,7 +33,7 @@
         <br /><small>Enter hotel phone number</small>
     </label>
     <div class="col-lg-7">
-        <input type="text" class="form-control" id="contact_phone" name="contact[phone]" />
+        <input type="text" class="form-control" id="contact_phone" name="contact[phone]" value="{{$hotel->contact['phone'] ?? ''}}"/>
     </div>
 </div>
 
@@ -42,7 +42,7 @@
         <br /><small>Enter hotel fax number</small>
     </label>
     <div class="col-lg-7">
-        <input type="text" class="form-control" id="contact_fax" name="contact[fax]" />
+        <input type="text" class="form-control" id="contact_fax" name="contact[fax]" value="{{$hotel->contact['fax'] ?? ''}}"/>
     </div>
 </div>
 

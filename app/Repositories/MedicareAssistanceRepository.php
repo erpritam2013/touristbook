@@ -51,7 +51,7 @@ class MedicareAssistanceRepository implements MedicareAssistanceRepositoryInterf
 
     // Get all Active Medicare Assistances or by Type
     public function getActiveMedicareAssistancesList($type = null) {
-        $medicareBuilder = MedicareAssistance::where('status', MedicareAssistance::ACTIVE);
+        $medicareBuilder = MedicareAssistance::orderBy('name','asc')->where('status', MedicareAssistance::ACTIVE);
 
         if($type)
             $medicareBuilder->where('medicare_assistance_type',$type);

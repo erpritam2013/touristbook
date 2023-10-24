@@ -50,7 +50,7 @@ class TypeRepository implements TypeRepositoryInterface
 
     // Get all Active Types or by Type
     public function getActiveTypesList($type = null) {
-        $typeBuilder = Type::where('status', Type::ACTIVE);
+        $typeBuilder = Type::orderBy('name','asc')->where('status', Type::ACTIVE);
 
         if($type)
             $typeBuilder->where('type',$type);
