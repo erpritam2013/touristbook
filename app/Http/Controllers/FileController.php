@@ -8,8 +8,12 @@ use Illuminate\Http\Request;
 
 class FileController extends Controller
 {
-    public function loadImages() {
-        $media_list = Media::orderBy("created_at", "desc")->paginate();
+    public function loadImages(Request $request) {
+        $pageNumber = 1;
+        if($request->has('page')) {
+            $pageNumber = $request->get('page');
+        }
+        $media_list = Media::orderBy("created_at", "desc")->paginate(20, ['*'], 'page', $pageNumber);
         return response()->json($media_list);
     }
 

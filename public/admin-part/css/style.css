@@ -29334,3 +29334,15 @@ body .iconpicker .iconpicker-items .iconpicker-item.active {
     margin-left: 20px;
     /* Adjust as needed for indentation */
 }
+
+
+.file-list.row {
+    height: 400px;
+    overflow-y: scroll;
+}
+div#paginationList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 15px;
+}
