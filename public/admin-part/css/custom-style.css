@@ -55,14 +55,14 @@ input#slug {
 
 .file-thumb img.img-holder {
     visibility: hidden;
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
 }
 
 .file-list .file {
     display: block;
-    min-width: 100px;
-    min-height: 100px;
+    width: 200px;
+    height: 200px;
     background-size: cover;
     margin: 10px;
     border: 1px solid #000;
@@ -213,14 +213,14 @@ background: #fff!important; }
     padding-left: inherit;
 }
 .col-xl-4 .active-inactive-switch .inactive-switch-checked{
-   
+
  padding: 5px 4px 5px 4px;
-   
+
 }
 .col-xl-4 .active-inactive-switch .active-switch-checked{
-   
+
    padding: 5px 15px 5px 12px;
-   
+
 }
 .active-inactive-switch .inactive-switch-checked{
     background: #e20000;
@@ -253,13 +253,13 @@ background: #fff!important; }
 }
 
 .col-xl-4 .active-inactive-switch .active-switch{
- 
+
    padding: 5px 15px 5px 12px;
-   
+
 }
 .col-xl-4 .active-inactive-switch .inactive-switch{
   padding: 5px 4px 5px 4px;
-  
+
 }
 .active-inactive-switch .active-switch{
     background: #fff;
