@@ -4,8 +4,8 @@
     </label>
     <div class="col-lg-7">
         <select class="form-control form-select" id="contact_info" name="contact[info]">
-            <option value="agent" {{$hotel->contact['info'] == 'agent'?'selected':''}}>Use Agent Contact Info</option>
-            <option value="item" {{$hotel->contact['info'] == 'item'?'selected':''}}>Use Item Info</option>
+            <option value="agent" {{(isset($hotel->contact['info']) && $hotel->contact['info'] == 'agent') ?'selected':''}}>Use Agent Contact Info</option>
+            <option value="item" {{(isset($hotel->contact['info']) && $hotel->contact['info']) == 'item'?'selected':''}}>Use Item Info</option>
         </select>
     </div>
 </div>

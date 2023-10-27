@@ -299,7 +299,35 @@ $(document).ready(function () {
     return false;
 }
 
+// Function to create pagination links
+function createPaginationFromLinks(links) {
+    const paginationList = document.getElementById('paginationList');
+    paginationList.innerHTML = '';
+
+    links.forEach((item) => {
+      const listItem = document.createElement('li');
+      listItem.classList.add('page-item');
+
+      if (item.url) {
+        const link = document.createElement('a');
+        link.classList.add('page-link');
+        link.href = item.url;
+        link.textContent = item.label.replace("&raquo;", "\u00bb").replace("&laquo;", "\u00ab");
+        if (item.active) {
+          listItem.classList.add('active');
+        }
+        listItem.appendChild(link);
+      } else {
+        listItem.classList.add('disabled');
+        listItem.innerHTML = `<span class="page-link">${item.label}</span>`;
+      }
+
+      paginationList.appendChild(listItem);
+    });
+  }
+
 const fillImagesToList = (filesWrapper) => {
+    console.log("filesWrapper", filesWrapper)
     let files = filesWrapper.data
     let mediaListHtml = ''
     if(files.length > 0) {
@@ -309,7 +337,7 @@ const fillImagesToList = (filesWrapper) => {
             let active_class = hasValueForKey(selectedImages, 'id', file.id) ? 'active' : ''
 
             mediaListHtml += `
-            <div class="col-md-3 file  ${active_class} " style="background-image: url(${file.original_url})">
+            <div class="col-md-2 file  ${active_class} " style="background-image: url(${file.original_url})">
             <a href="javascript:void(0);" data-id="${file.id}" data-url="${file.original_url}" class="file-thumb">
             <img src="${file.original_url}" class="img-responsive img-holder" />
             </a>
@@ -319,8 +347,15 @@ const fillImagesToList = (filesWrapper) => {
     }
     $('.file-list').html(mediaListHtml)
         // TODO: Refresh Pagination
-
+    createPaginationFromLinks(filesWrapper.links)
 }
+
+
+$('.file-pagination').on("click", ".page-link", function() {
+    let href = $(this).attr('href');
+    loadImages(href);
+    return false
+})
 
 
 
@@ -367,8 +402,8 @@ $('.file-list').on("click", ".file", function() {
 
 })
 
-const loadImages = () => {
-    let image_url = base_admin_url + "/files/load-images";
+const loadImages = (url = null) => {
+    let image_url = (url != null) ? url : base_admin_url + "/files/load-images";
     $.ajax({
         type: "GET",
         dataType: "json",
@@ -514,8 +549,13 @@ function uploadFile(file, i) {
 
 $(".submit-media").on("click", function() {
     let targetElem = $(this)[0].targetElem
-    targetElem.attr("selectedImages", JSON.stringify(selectedImages))
-    targetElem.parent().find('.gallery-input').first().val(JSON.stringify(selectedImages))
+    let jsonStringify = JSON.stringify(selectedImages)
+    if(targetElem.attr('smode') == "single") {
+        jsonStringify = selectedImages[0].url;
+    }
+
+    targetElem.attr("selectedImages", jsonStringify)
+    targetElem.parent().find('.gallery-input').first().val(jsonStringify)
 
     let imageHtml = '';
     imageHtml +='<div class="row">';
