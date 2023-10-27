@@ -169,7 +169,7 @@
         </div>
         <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 Nopadding section-footer">
            <div class="view-hotel-btn"><a href="#" class="btn btn-sm btn-grad text-white mb-0 padding">VIEW HOTEL</a></div>
-           <div class="hotel-service-price" title="Price usually vary or subject to change please visit website to view the best deal.">
+           <div class="hotel-service-price">
 
             <span class="hotel-avg">
                 {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
@@ -188,7 +188,7 @@
 
             {!!get_price($hotel,'₹')!!}
 
-            <span class="unit"><?php// echo __('per night', ST_TEXTDOMAIN); ?>  per night<span class="price-ex"><i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;position: absolute;top: -3px;"></i></span></span>
+            <span class="unit"><?php// echo __('per night', ST_TEXTDOMAIN); ?>  per night<span class="price-ex"><i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;position: absolute;top: -3px;"><span class="TravelGo-opt-tooltip min-w-500px-fs-14fpx">Price usually vary or subject to change please visit website to view the best deal.</span></i></span></span>
 
 
         </div>
