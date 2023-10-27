@@ -1746,6 +1746,9 @@ body.tour-list-page .innerpage-banner.left {
 	text-align: left;
 	height: 230px;
 }
+body.tour-list-page .Filter-left label.form-label {
+    text-transform: capitalize!important;
+}
 
 @media (min-width:320px) and (max-width:768px){
 	.innerpage-banner.left {
@@ -6173,10 +6176,10 @@ blog-single-section
 	height: 48px;
 	font-weight: 600;
 	border: none;
-	-webkit-border-radius: 30px;
+/*	-webkit-border-radius: 30px;
 	-moz-border-radius: 30px;
-	-ms-border-radius: 30px;
-	border-radius: 30px;
+	-ms-border-radius: 30px;*/
+	border-radius: 5px;
 	margin-top: 30px;
 	margin-bottom: 38px;
 	position: relative;
@@ -7875,6 +7878,7 @@ border-top: 1px dotted #ccc;
 	font-size: 11px;
 	visibility: hidden;
 	border-radius: 4px;
+	z-index: 99;
 }
 .TravelGo-opt-list a:hover i, .show-search-button:hover i {
 	transition: all .2s ease-in-out;
@@ -7942,12 +7946,22 @@ border-top: 1px dotted #ccc;
 	border-radius: 4px;
 	background: #fba009;
 	text-align: center;
+	z-index: 99;
 }
 .TravelGo-opt-tooltip strong {
 	color:#fff;
 	padding-left:6px;
 }
 .TravelGo-opt-list a:hover .TravelGo-opt-tooltip {
+	opacity:1;
+	visibility:visible;
+}
+i.important-note-icon-tax:hover .TravelGo-opt-tooltip {
+	opacity:1;
+	visibility:visible;
+}
+
+.tour-social-links a:hover .TravelGo-opt-tooltip,.hotel-social-links a:hover .TravelGo-opt-tooltip,.activity-social-links a:hover .TravelGo-opt-tooltip {
 	opacity:1;
 	visibility:visible;
 }
@@ -11137,7 +11151,7 @@ body.hotel-list-page .search-form-mobile {
 
 	.search-form-mobile{
 		position: relative;
-		top: -201px;
+		top: -155px;
 		bottom: 0px;
 		z-index: 99;
 		/* background: #fff; */
@@ -11340,10 +11354,22 @@ border-top: none;
 .tour-list-page h4.service-title a:hover, .tour-grid-view h4.service-title a:hover{
 	color: #07509e;
 }
+body.tour-list-page #st-include-exclude .st-include ul.include li {
+    display: block;
+    list-style-type: none;
+    vertical-align: middle;
+}
+body.tour-list-page #st-include-exclude .st-exclude ul.exclude li {
+    display: block;
+    list-style-type: none;
+    vertical-align: middle;
+}
 .tour-list-page .listroBox figure{
-    margin: 20px 0;
+    margin: 15px 0;
     height: 220px;
 }
+
+
 
 .tour-grid-view .text-muted{
 	color: #07509e!important;
@@ -11522,6 +11548,16 @@ border-top: none;
 		height: 200px;
 	}
 
+	.tour-list-page h1.innerpage-title {
+    position: relative!important;
+    left: 0px;
+    right: 0px;
+    height: 30px;
+    margin: 0px 100px;
+    top: -70px;
+    font-size: 26px!important;
+}
+
 }
 
 /*extra css end*/
@@ -11566,8 +11602,14 @@ body.tour-list-page .search-form-wrapper .search-form .border-right i.input-icon
 }
 body.tour-list-page .search-form-wrapper .search-form .form-extra-field {
 	position: relative;
-	padding: 23px 0px 23px 30px;
+	padding: 20px 0px 20px 30px;
 	bottom: 10px;
+}
+label.search-form-label {
+    position: relative;
+    top: 5px;
+    left: 10px;
+    color: #07509e;
 }
 body .search-form-wrapper .search-form .border-right{
 	border-right: 1px solid #D7DCE3;
@@ -12687,8 +12729,369 @@ body.tour-detail-page ul.tour-routes li span.tour-route-span {
 
 
 /*comman css start*/
+
+.page-item.active .page-link{
+	border-color: #07509e;
+}
 .tour-samilar .listroBox figure,.hotel-samilar .listroBox figure,.activity-samilar .listroBox figure,.destination-samilar .listroBox figure{
     height: 200px;
 }
 /*comman css end*/
+
+/*activity list css start*/
+/*body.activity-list-page .Filter-left .mb-left ul.review-score-filter li label span {
+    margin-right: 5px;
+}*/
+
+.activity-list-page div.activity-social-links {
+	margin: 4px 0 0 0;
+	padding: 10px 0px 10px 0;
+	border-top: 1px dotted #ccc;
+}
+.activity-list-page div.activity-social-links a {
+	float: right;
+	width: 36px;
+	height: 36px;
+	margin-left: 5px;
+	background: #768091;
+	line-height: 40px;
+	position: relative;
+	color: #fff;
+	border-radius: 20px;
+	font-size: 15px;
+	text-align: center;
+}
+body.activity-list-page .Filter-left .mb-left ul.review-score-filter li label span .fa {
+    font-size: 14px;
+    color: #FFDC00;
+}
+body.activity-list-page .Filter-left .mb-left ul.review-score-filter li label span.fake-star .fa {
+    color: #D7DBE3;
+}
+
+body.activity-list-page .innerpage-banner h1 {
+	font-size: 2.1875rem;
+	font-weight: 600;
+	padding: 0 0 12px 0;
+	position: relative;
+	bottom: 30px;
+}
+body.activity-list-page .innerpage-banner.left {
+	text-align: left;
+	height: 230px;
+}
+body.activity-list-page input.main-search-box {
+	font-size: 16px;
+}
+body.activity-list-page .ui-autocomplete.ui-menu {
+    width: 36.5% !important;
+    margin-top: 111px;
+    top: -4864.31px!important;
+}
+
+
+.activity-list-page .TravelGo-opt-list a {
+	float: right;
+	width: 36px;
+	height: 36px;
+	margin-left: 5px;
+	background: #768091;
+	line-height: 40px;
+	position: relative;
+	color: #fff;
+	border-radius: 20px;
+	font-size: 15px;
+	text-align: center;
+}
+.activity-list-page .row.listroBox {
+	border: 1px solid #dfdfdf;
+}
+.activity-list-page .section-footer {
+	text-align: center;
+	padding-right: 27px;
+	border-left: 1px solid #dfdfdf;
+}
+.activity-list-page .tour-content {
+
+	border-left: 1px solid #dfdfdf;
+}
+.activity-list-page .tour-service-price {
+	position: relative;
+	top: 40px;
+	color: #07509e;
+	font-weight: 600;
+}
+.activity-list-page .view-tour-btn{
+	position: relative;
+	top: 75px;
+}
+.activity-list-page .tour-service-price span.tour-avg{
+	color: #5e6d77;
+	font-weight: 500;
+	position: relative;
+	left: -28px;
+}
+.activity-list-page .tour-service-price span.price{
+	font-size: 35px;
+	display: block;
+	line-height: 42px;
+	color: black;
+}
+.activity-list-page .tour-service-price span.unit{
+	color: #5e6d77;
+	left: 11px;
+	font-size: 12px;
+	position: relative;
+}
+.activity-list-page .tour-service-price span.unit span.price-ex {
+	font-weight: bold;
+	padding-left: 3px;
+	color: #000!important;
+}
+
+.activity-list-page div.tour-social-links {
+	margin: 4px 0 0 0;
+	padding: 10px 0px 10px 0;
+	border-top: 1px dotted #ccc;
+}
+.activity-list-page div.tour-social-links a {
+	float: right;
+	width: 36px;
+	height: 36px;
+	margin-left: 5px;
+	background: #768091;
+	line-height: 40px;
+	position: relative;
+	color: #fff;
+	border-radius: 20px;
+	font-size: 15px;
+	text-align: center;
+}
+
+.activity-list-page .st-report-info ul li {
+	display: inline-block;
+	padding: 1px 3px;
+	color: black;
+}
+
+.activity-list-page .st-report-info ul li:before {
+	content: '\f00c';
+	font-family: "Font Awesome 5 Free";
+	font-size: 14px;
+	margin-left: 0.35rem;
+	color: #119b0f;
+	font-weight: 900;
+	vertical-align: middle;
+	border: none;
+	padding-right: 3px;
+}
+
+.activity-list-page .st-report-info ul {
+	padding: 5px 0px
+}
+.activity-list-page .st-report-info ul li:first-child {
+	font-size: 14px;
+	margin-top: 0px;
+}
+
+.activity-list-page .st-report-info ul li {
+	display: inline-block;
+	padding: 1px 0px;
+	color: #000000c7;
+	font-weight: 600;
+	float: left;
+	margin-left: 0px!important;
+	font-size: 14px;
+	margin-right: 0px;
+}
+.activity-list-page .listroBox ul li:last-child {
+	margin: 0px 0 0 0; 
+	float: left; 
+}
+.activity-list-page p.service-location,.tour-grid-view p.service-location {
+	color: #07509e!important;
+}
+
+.activity-list-page .st-highlight-info ul {
+	margin: 0;
+	padding: 10px 0px 0px 0;
+}
+.activity-list-page .st-highlight-info a {
+	color: #07509e;
+}
+
+.activity-list-page .st-highlight-info ul li {
+	display: inline-block;
+	padding: 1px 5px 1px 2px;
+}
+.activity-list-page .st-highlight-info ul li:before {
+	content: '\f111';
+	font-family: "Font Awesome 5 Free";
+	font-size: 7px;
+	color: #07509e;
+	padding-right: 0px;
+	background: #07509e;
+	border-radius: 5px;
+	margin-right: 5px;
+	position: relative;
+	bottom: 1px;
+}
+.activity-list-page .listroBox .listroBoxmain p {
+	margin-bottom: 5px;
+}
+.activity-list-page .listroBox .listroBoxmain {
+	padding: 20px 0px 5px;
+}
+.activity-list-page .listroBox ul {
+/*    padding: 20px 15px 17px 20px;*/
+border-top: none;
+}
+.activity-list-page h4.service-title, .tour-grid-view h4.service-title {
+	font-size: 23px;
+}
+.activity-list-page h4.service-title a, .tour-grid-view h4.service-title a{
+	color: #fba009;
+}
+.activity-list-page h4.service-title a:hover, .tour-grid-view h4.service-title a:hover{
+	color: #07509e;
+}
+.activity-list-page .listroBox figure {
+    margin: 15px 0;
+    height: 240px;
+}
+
+.activity-list-page div.tour-routes {
+	display: block;
+	width: 100%;
+	padding-left: 5px;
+	background: transparent;
+	border-left: 5px solid #fba009;
+	height: auto; 
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 15px;
+	padding-left: 0px;
+}
+.activity-list-page div.tour-routes ul {
+	list-style: none;
+	display: block;
+	width: 100%;
+	padding: 0px;
+}
+
+.activity-list-page div.tour-routes ul li {
+	position: relative;
+	display: inline-block;
+	/* padding-left: 20px; */
+	/* padding-right: 20px; */
+	z-index: 0;
+}
+.activity-list-page div.tour-routes ul li span.tour-route-span {
+	font-size: 15px;
+	color: #07509e!important;
+	padding-left: 10px;
+	padding-right: 10px;
+	font-weight: 600;
+	text-transform: capitalize!important;
+}
+.activity-list-page div.tour-social-links a {
+	float: right;
+	width: 36px;
+	height: 36px;
+	margin-left: 5px;
+	background: #768091;
+	line-height: 40px;
+	position: relative;
+	color: #fff;
+	border-radius: 20px;
+	font-size: 15px;
+	text-align: center;
+}
+
+body.activity-list-page .search-form-wrapper {
+
+	top: -152px;
+}
+
+body.activity-list-page .search-form-wrapper .search-form .border-right i.input-icon.field-icon.fa {
+	top: 25px;
+}
+body.activity-list-page .search-form-wrapper .search-form .form-extra-field {
+	position: relative;
+	padding: 20px 0px 20px 30px;
+	bottom: 10px;
+}
+body.activity-list-page .Filter-left label.form-label {
+    text-transform: capitalize!important;
+}
+body.activity-list-page .Filter-left .mb-left .main-title-tal{
+   
+   text-align: center;
+}
+
+body.activity-list-page #accordionTermActivityList .card .card-header:not(.collapsed) .card-title {
+	background-color: #07509e;
+}
+body.activity-list-page #accordionTermActivityList .card .card-header .card-title {
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: unset;
+}
+body.activity-list-page #st-include-exclude .st-include ul.include li {
+    display: block;
+    list-style-type: none;
+    vertical-align: middle;
+}
+body.activity-list-page #st-include-exclude .st-exclude ul.exclude li {
+    display: block;
+    list-style-type: none;
+    vertical-align: middle;
+}
+
+@media (min-width:320px) and (max-width:768px){
+	.activity-list-page .listroBox figure{
+		margin: 8px 0;
+	}
+
+.activity-list-page .listroBox figure{
+		margin: 8px 0;
+		height: 200px;
+	}
+
+	.activity-list-page h1.innerpage-title {
+    position: relative!important;
+    left: 0px;
+    right: 0px;
+    height: 30px;
+    margin: 0px 125px;
+    top: -70px;
+    font-size: 26px!important;
+}
+body.activity-list-page .Filter-left .mb-left ul.review-score-filter label span {
+     display: unset; 
+}
+
+
+
+}
+
+
+
+/*activity list css end*/
+
+/*filter label border color css start*/
+
+.Filter-left .mb-left label.custom-control-label:before {
+    border-color: #fba009!important;
+}
+
+.btn{
+	letter-spacing: unset!important;
+}
+
+.min-w-500px-fs-14fpx {
+    min-width: 536px!important;
+    font-size: 15px;
+}
+/*filter label border color css end*/
 
