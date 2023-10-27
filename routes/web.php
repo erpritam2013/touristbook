@@ -80,6 +80,8 @@ Route::get('/get-location-states', [PagesController::class, 'getLocationState'])
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/login-post', [LoginController::class, 'authenticate'])->name('login-post');
 
+Route::get('/register', [LoginController::class, 'register'])->name('register');
+
 
 
 
@@ -217,7 +219,7 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
 
 
      // Custom Icon Resource
-    
+
     // Route::resource('custom-icons', CustomIconController::class);
     Route::prefix('settings')->name('settings.')->group(function() {
     Route::prefix('custom-icons')->name('custom-icons.')->group(function() {
@@ -321,7 +323,7 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
     Route::delete('activity/bulk-delete', [ActivityController::class,'bulk_delete'])->name('activities.bulk-delete');
 
     Route::get('activity/country/activity-zones', [ActivityController::class,'ActivityZoneByCountry'])->name('ActivityZoneByCountry');
-    
+
     Route::get('tour/country/country-zones', [TourController::class,'CountryZoneByCountry'])->name('CountryZoneByCountry');
 
     Route::get('activity/changeStatus', [ActivityController::class,'changeStatus'])->name('changeStatusActivity');

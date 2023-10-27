@@ -19,27 +19,19 @@
         <div class="col-lg-10">
             @endif
             <div class="media-controls">
-               
-                <input type="{{(!isset($smode))?'text':'hidden'}}" class="form-control media-input {{ $class ?? '' }}" name="{{ $name ?? '' }}"
+                <input type="{{(!isset($smode))?'text':'hidden'}}" class="form-control media-input {{ $class ?? '' }} gallery-input " name="{{ $name ?? '' }}"
                 value="{{ $value ?? '' }}" id="{{ $id ?? '' }}" placeholder="Enter {{ $label ?? '' }}..." />
-            
 
                 <button type="button" class="btn btn-primary mt-2 add-media-btn" smode="{{ $smode ?? 'single' }}"
                 selectedImages="{{ $value ?? '' }}">+</button>
                 <button type="button" class="btn btn-danger mt-2 remove-media-btn">-</button>
                 <div class="media-preview">
-
-                   @php
-                   $imgSrc = $value ?? ''
-                   @endphp
-                   <img src="{{$imgSrc}}" class="img" height="150" width="auto" />
-
-               </div>
-           </div>
-
-
-
-       </div>
-   </div>
+                    @if($value)
+                    <img src="{{$value}}"  class="img" height="100" width="100" />
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
 
 

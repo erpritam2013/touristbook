@@ -145,6 +145,7 @@ class HotelController extends Controller
 
     public function store(StoreHotelRequest $request)
     {
+        // dd($request->all());
         $images = json_decode($request->images);
         $hotelDetails = [
             'name' => $request->name,
@@ -154,6 +155,7 @@ class HotelController extends Controller
             'food_dining' => $request->food_dining,
             'is_featured' => $request->is_featured,
             // TODO: logo and featured_image ----> S3 Integration
+            'featured_image' => $request->featured_image,
             'hotel_video' => $request->hotel_video,
             'rating' => $request->rating,
             'coupon_code' => $request->coupon_code,

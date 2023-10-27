@@ -21,7 +21,7 @@ class PagesController extends Controller
     }
 
     public function hotels(Request $request) {
-      
+
         $data['post_type'] = 'Hotel';
         $data['title'] = 'Hotels';
         $data['body_class'] = 'hotel-list-page';
@@ -75,7 +75,7 @@ class PagesController extends Controller
 
         $data['post_type'] = 'Tour';
         $data['title'] = 'Our Packages';
-        $data['body_class'] = 'tour-list-page'; 
+        $data['body_class'] = 'tour-list-page';
         $data['searchTerm'] = $request->get('search');
         $data['sourceType'] = $request->get('source_type');
         $data['sourceId'] = $request->get('source_id');
@@ -105,7 +105,7 @@ class PagesController extends Controller
         if (!empty($state->id)) {
           $data = $this->nearByRecords($data,$state->id,$hotel->id,'Hotel');
         }
-        
+
          $data['tourismZone'] = null;
         if($state) {
             $data['tourismZone'] =  $state->tourism_zones()->first();
@@ -169,7 +169,7 @@ class PagesController extends Controller
     }
 
     public function tourDetail(Request $request, $slug) {
-     
+
 
 
         $tour = Tour::with(['detail', 'types', 'other_packages', 'package_types', 'locations', 'languages', 'states'])->where('slug', $slug)->first();
@@ -181,17 +181,17 @@ class PagesController extends Controller
         $data['title'] = 'Our Package :: '.ucwords($tour->name);
         $data['body_class'] = 'tour-detail-page';
         $state = $tour->states()->first();
-        
+
         if (!empty($state->id)) {
           $data = $this->nearByRecords($data,$state->id,$tour->id,'Tour');
         }
-        
+
          $data['countryZone'] = null;
         if($state) {
             $data['countryZone'] =  $tour->country_zone;
         }
-        
-    
+
+
         return view('sites.pages.tour-detail', $data);
 
         //return view('sites.pages.tour-detail', compact('hotel', 'tourismZone'));
@@ -199,7 +199,7 @@ class PagesController extends Controller
     }
 
     public function getHotels(Request $request, $view = "list") {
-        
+
         if (isMobileDevice()) {
             $view = "grid";
         }
@@ -219,7 +219,7 @@ class PagesController extends Controller
 
             $hotelQuery->whereBetween("avg_price", [$minimum, $maximum]);
         }
-        
+
         // Property Types
         if($request->has('propertyTypes') && !empty($request->get('propertyTypes'))) {
             $propertyTypesValue = $request->get('propertyTypes');
@@ -289,6 +289,7 @@ class PagesController extends Controller
             //search in address
             $searchTerm = $request->get('searchTerm');
             // TODO: JSON Treatment is Pending
+            // TODO: title
             $hotelQuery->where('hotels.address', 'LIKE', '%'.$searchTerm.'%');
         }
 
@@ -308,7 +309,7 @@ class PagesController extends Controller
     }
 
   public function getTours(Request $request, $view = "list") {
-        
+
         if (isMobileDevice()) {
             $view = "grid";
         }

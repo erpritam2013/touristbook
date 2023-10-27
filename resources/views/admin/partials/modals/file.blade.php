@@ -1,5 +1,5 @@
-<div class="modal fade bd-example-modal-xl" id="file-modal">
-    <div class="modal-dialog modal-xl" role="document">
+<div class="modal fade bd-example-modal-lg" id="file-modal">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">File</h5>
@@ -33,7 +33,7 @@
                         <div class="tab-pane fade" id="list-media">
                             <div class="pt-4">
                                 <div class="file-list row"></div>
-                                <div class="file-pagination"></div>
+                                <div class="file-pagination" id="paginationList"></div>
                             </div>
                         </div>
 
