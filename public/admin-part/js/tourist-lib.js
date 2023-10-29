@@ -547,11 +547,22 @@ function uploadFile(file, i) {
 }
 
 
+$('.remove-media-btn').on("click", function() {
+    // only for single mode now
+    let parentElem = $(this).parent();
+    parentElem.find('.media-txt-only').val('');
+    parentElem.find('.gallery-input').val('');
+    parentElem.find('.add-media-btn').attr('selectedimages', '[]');
+    parentElem.find('.media-preview').html('');
+    return false;
+})
+
 $(".submit-media").on("click", function() {
     let targetElem = $(this)[0].targetElem
     let jsonStringify = JSON.stringify(selectedImages)
     if(targetElem.attr('smode') == "single") {
-        jsonStringify = selectedImages[0].url;
+        // jsonStringify = selectedImages[0].url;
+        targetElem.parent().find('.media-txt-only').first().val(selectedImages[0].url)
     }
 
     targetElem.attr("selectedImages", jsonStringify)
