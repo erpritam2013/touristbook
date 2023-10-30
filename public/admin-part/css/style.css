@@ -29337,7 +29337,7 @@ body .iconpicker .iconpicker-items .iconpicker-item.active {
 
 
 .file-list.row {
-    height: 400px;
+    height: 100%;
     overflow-y: scroll;
 }
 div#paginationList {

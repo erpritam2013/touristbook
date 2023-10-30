@@ -18,8 +18,7 @@
         @endif
         <div class="col-lg-10">
             @endif
-            <div class="col-lg-10">
-    @endif
+
     <div class="media-controls">
         <input type="hidden" class="form-control media-input {{ $class ?? '' }} gallery-input " name="{{ $name ?? '' }}"
             value="{{ $value ? json_encode($value) : '' }}" />
@@ -32,6 +31,7 @@
             @if($value && isset($value[0]))
             <img src="{{$value[0]['url']}}"  class="img" height="100" width="100" />
             @endif
+
         </div>
     </div>
        </div>

@@ -29,7 +29,7 @@ private function _prepareBasicData() {
         // TODO: Need to Improve here (Fetch from Cache)
    $data['custom_icons'] = getPostData('CustomIcon',['id','title']);
    // $data['activities'] = getPostData('Activity',['id','name']);
-   $data['activities'] = [];
+   $data['activities'] = getPostData('Activity',['id','name']);;
     return $data;
 
 }
