@@ -55,14 +55,14 @@ input#slug {
 
 .file-thumb img.img-holder {
     visibility: hidden;
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
 }
 
 .file-list .file {
     display: block;
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
     background-size: cover;
     margin: 10px;
     border: 1px solid #000;
