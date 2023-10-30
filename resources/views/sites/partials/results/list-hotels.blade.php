@@ -11,7 +11,7 @@
                             {{--<a href="hotel-detailed.html" class="wishlist_bt"></a>--}}
                             {!!is_featured($hotel->is_featured)!!}
                             <a
-                            href="{{route('hotel',$hotel->slug)}}"><img src="https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2022/08/Tents-10.webp"
+                            href="{{route('hotel',$hotel->slug)}}"><img src="{{$hotel->featured_image ?? asset('sites/images/dummy/350x250.jpg')}}"
                             class="img-fluid" alt="">
                             {{--<div class="read_more"><span>Read more</span></div>--}}
                         </a> </figure>

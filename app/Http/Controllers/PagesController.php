@@ -145,7 +145,7 @@ class PagesController extends Controller
             $activityQuery = [];
             $activityQuery = Activity::query();
             if ($p_type == 'Activity') {
-            $activityQuery->where('activities.id', '!=',$activity->id);
+            $activityQuery->where('activities.id', '!=',$p_id);
             }
             $activityQuery->leftJoin('activity_states', 'activity_states.activity_id', '=', 'activities.id');
             $activityQuery->where('activity_states.state_id', $state_id);
@@ -157,7 +157,7 @@ class PagesController extends Controller
             $locationQuery = [];
             $locationQuery = Location::query();
             if ($p_type == 'Location') {
-            $locationQuery->where('locations.id', '!=',$location->id);
+            $locationQuery->where('locations.id', '!=',$p_id);
             }
             $locationQuery->leftJoin('location_states', 'location_states.location_id', '=', 'locations.id');
             $locationQuery->where('location_states.state_id', $state_id);
@@ -193,6 +193,39 @@ class PagesController extends Controller
 
 
         return view('sites.pages.tour-detail', $data);
+
+        //return view('sites.pages.tour-detail', compact('hotel', 'tourismZone'));
+
+    }
+
+    public function activityDetail(Request $request, $slug) {
+
+
+
+        $activity = Activity::with(['activity_packages', 'attractions', 'locations', 'languages', 'term_activity_lists', 'states','detail','activity_lists'])->where('slug', $slug)->first();
+        if(!$activity) {
+            abort(404);
+        }
+
+        $data['activity'] = $activity;
+        $data['title'] = 'Activity :: '.ucwords($activity->name);
+        $data['body_class'] = 'activity-detail-page';
+        $state = $activity->states()->first();
+
+        if (!empty($state->id)) {
+          $data = $this->nearByRecords($data,$state->id,$activity->id,'Activity');
+        }
+
+         $data['activity_zone'] = null;
+         if (!empty($activity->detail->activity_zones)) {
+             $data['activity_zone'] = $activity->activity_zone->first();
+         }
+         $data['tourismZone'] = null;
+         
+        if($state) {
+            $data['tourismZone'] =  $state->tourism_zones->first();
+        }
+        return view('sites.pages.activity-detail', $data);
 
         //return view('sites.pages.tour-detail', compact('hotel', 'tourismZone'));
 

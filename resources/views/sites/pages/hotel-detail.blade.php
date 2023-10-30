@@ -5,28 +5,29 @@
 
 <section>
   <!-- Slider main container-->
-  <div class="swiper-container detail-slider slider-gallery">
+  <div class="swiper-container detail-slider slider-gallery" style="height: 283px;">
     <!-- Additional required wrapper-->
     <div class="swiper-wrapper">
       <!-- Slides-->
-      <div class="swiper-slide"><a data-toggle="gallery-top" title="Our street"><img
-        src="{{ asset('sites/images/hotels/room-details1.jpg') }}" alt="Our street" class="img-fluid"></a>
+  
+      @if(!empty($hotel->images))
+      @foreach($hotel->images as $gallery)
+      <div class="swiper-slide"><a data-toggle="gallery-top" title="hotel gallery" style="width: 452px;height: 301px;" ><img
+        src="{{ $gallery['url'] }}" alt="Our street" class="img-fluid" width="452" height="301"></a>
       </div>
-      <div class="swiper-slide"><a data-toggle="gallery-top" title="Outside"><img
-        src="{{ asset('sites/images/hotels/room-details2.jpg') }}" alt="Outside" class="img-fluid"></a>
+      @endforeach
+      @else
+      <div class="swiper-slide"><a data-toggle="gallery-top" title="hotel gallery"><img
+        src="{{ asset('sites/images/dummy/450x300.jpg') }}" alt="hotel gallery" class="img-fluid"></a>
       </div>
-      <div class="swiper-slide"><a data-toggle="gallery-top" title="Rear entrance"><img
-        src="{{ asset('sites/images/hotels/room-details3.jpg') }}" alt="Rear entrance"
-        class="img-fluid"></a></div>
-        <div class="swiper-slide"><a data-toggle="gallery-top" title="Kitchen"><img
-          src="{{ asset('sites/images/hotels/room-details4.jpg') }}" alt="Kitchen" class="img-fluid"></a>
-        </div>
-        <div class="swiper-slide"><a data-toggle="gallery-top" title="Bedroom"><img
-          src="{{ asset('sites/images/hotels/room-details.jpg') }}" alt="Bedroom" class="img-fluid"></a>
-        </div>
-        <div class="swiper-slide"><a data-toggle="gallery-top" title="Bedroom"><img
-          src="{{ asset('sites/images/hotels/room-details2.jpg') }}" alt="Bedroom" class="img-fluid"></a>
-        </div>
+      <div class="swiper-slide"><a data-toggle="gallery-top" title="hotel gallery"><img
+        src="{{ asset('sites/images/dummy/450x300.jpg') }}" alt="hotel gallery" class="img-fluid"></a>
+      </div>
+      <div class="swiper-slide"><a data-toggle="gallery-top" title="hotel gallery"><img
+        src="{{ asset('sites/images/dummy/450x300.jpg') }}" alt="hotel gallery" class="img-fluid"></a>
+      </div>
+      @endif
+     
       </div>
       <div class="swiper-pagination swiper-pagination-white"></div>
       <div class="swiper-button-prev swiper-button-white"></div>
@@ -1040,7 +1041,7 @@
           <div class="col-md-8">
             <p class="mt-0 mb-0 nopadding st-heading-section">Packages You May Like</p>
           </div>
-          <div class="col-md-4 d-lg-flex align-items-center justify-content-end"><a href="{{route('our_packages')}}" class="blist text-sm ml-2"> See all our packages<i class="fas fa-angle-double-right ml-2"></i></a></div>
+          <div class="col-md-4 d-lg-flex align-items-center justify-content-end"><a href="{{route('our-packages')}}" class="blist text-sm ml-2"> See all our packages<i class="fas fa-angle-double-right ml-2"></i></a></div>
         </div>
         <div class="row">
           @foreach($nearByTour as $near_tour)

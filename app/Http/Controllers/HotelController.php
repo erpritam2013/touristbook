@@ -257,6 +257,8 @@ class HotelController extends Controller
     }
     public function update(UpdateHotelRequest $request, Hotel $hotel)
     {
+
+       
         $images = json_decode($request->images);
         $hotelDetails = [
             'name' => $request->name,
