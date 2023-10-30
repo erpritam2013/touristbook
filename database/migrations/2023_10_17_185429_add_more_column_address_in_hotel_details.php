@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::table('hotels', function (Blueprint $table) {
 
-             $table->text('address')->nullable()->after('description');
-      
+            //  $table->text('address')->nullable()->after('description');
+
         });
     }
 
@@ -28,7 +28,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('hotels', function (Blueprint $table) {
-             $table->dropColumn('address');
+            //  $table->dropColumn('address');
         });
     }
 };

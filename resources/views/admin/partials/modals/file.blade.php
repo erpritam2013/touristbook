@@ -33,7 +33,7 @@
                         <div class="tab-pane fade" id="list-media">
                             <div class="pt-4">
                                 <div class="file-list row"></div>
-                                <div class="file-pagination"></div>
+                                <div class="file-pagination" id="paginationList"></div>
                             </div>
                         </div>
 
