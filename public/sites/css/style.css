@@ -13074,6 +13074,7 @@ body.activity-list-page .Filter-left .mb-left ul.review-score-filter label span 
 
 
 }
+
 /*activity list css end*/
 
 /*activity detail page start css*/
@@ -13533,6 +13534,7 @@ body.activity-detail-page #st-program-section .card-header:not(.collapsed) .rota
 
 /*activity detail page end css*/
 
+
 /*filter label border color css start*/
 
 .Filter-left .mb-left label.custom-control-label:before {
@@ -13548,7 +13550,4 @@ body.activity-detail-page #st-program-section .card-header:not(.collapsed) .rota
     font-size: 15px;
 }
 /*filter label border color css end*/
-
-
-
 
