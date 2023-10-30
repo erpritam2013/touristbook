@@ -56,7 +56,16 @@ class TermActivityListRepository implements TermActivityListRepositoryInterface
     // Get Active Hotel Type TermActivityLists
     public function getActiveActivityTermActivityList() {
         $type = TermActivityList::ACTIVITY_TYPE;
-        return $this->getActiveTermActivityList($type);
+        return $this->getActiveTermActivityList();
+    }
+
+    public function getActiveTermActivityListWithParentSeprated($type=null)
+    {
+         $termActivityListBuilder = TermActivityList::orderBy('name','asc')->where('status', TermActivityList::ACTIVE);
+         $termActivityLists = $termActivityListBuilder->get(['id','name','parent']);
+         $result = $termActivityLists->groupBy('parent');
+        
+         return $result;
     }
 
 }

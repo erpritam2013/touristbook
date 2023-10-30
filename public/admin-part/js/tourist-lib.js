@@ -337,8 +337,8 @@ const fillImagesToList = (filesWrapper) => {
             let active_class = hasValueForKey(selectedImages, 'id', file.id) ? 'active' : ''
 
             mediaListHtml += `
-            <div class="col-md-2 file  ${active_class} " style="background-image: url(${file.original_url})">
-            <a href="javascript:void(0);" data-id="${file.id}" data-url="${file.original_url}" class="file-thumb">
+            <div class="col-md-1 file  ${active_class} " style="background-image: url(${file.original_url})">
+            <a href="javascript:void(0);" data-id="${file.id}" data-url="${file.original_url}" class="file-thumb" data-name="${file.name}"
             <img src="${file.original_url}" class="img-responsive img-holder" />
             </a>
             </div>
