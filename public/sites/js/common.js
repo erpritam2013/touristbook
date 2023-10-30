@@ -608,6 +608,9 @@ function loadStreetMap() {
     $('body.tour-detail-page #st-program-section .panel-collapse').on('hide.bs.collapse', function () {
         $(this).siblings('body.tour-detail-page #st-program-section .panel-heading').removeClass('active');
     });
+ // var firstTabEl = document.querySelector('#policies-activity li:last-child a')
+ //  var firstTab = new bootstrap.Tab(firstTabEl)
 
+ //  firstTab.show()
 
 })();

@@ -356,7 +356,7 @@ public function ActivityZoneByCountry(Request $request): JsonResponse
           'type_activity' =>$request->type_activity,
           'rating' =>(!empty($request->rating))?$request->rating:0,
           'activity_booking_period' =>$request->activity_booking_period,
-        'min_people' =>(!empty($request->min_people))?$request->min_people:0,
+          'min_people' =>(!empty($request->min_people))?$request->min_people:0,
           'max_people' =>(!empty($request->max_people))?$request->max_people:0,
           'duration' =>(!empty($request->duration))?$request->duration:'',
           'is_sale_schedule' =>(!empty($request->is_sale_schedule))?$request->is_sale_schedule:0,
@@ -366,9 +366,9 @@ public function ActivityZoneByCountry(Request $request): JsonResponse
           'discount_type' =>$request->discount_type,
           'is_featured' =>$request->is_featured,
           'status' =>$request->status,
-          /*
-          'logo' =>$request->logo,
-          'featured_image' =>$request->featured_image,*/
+          
+          //'logo' =>$request->logo,
+          'featured_image' =>$request->featured_image,
 
 
 
