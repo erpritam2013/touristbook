@@ -135,9 +135,9 @@ class ActivityController extends Controller
           'type_activity' =>$request->type_activity,
           'rating' =>(!empty($request->rating))?$request->rating:0,
           'activity_booking_period' =>$request->activity_booking_period,
-          'min_people' =>$request->min_people,
-          'max_people' =>$request->max_people,
-          'duration' =>$request->duration,
+          'min_people' =>(!empty($request->min_people))?$request->min_people:0,
+          'max_people' =>(!empty($request->max_people))?$request->max_people:0,
+          'duration' =>(!empty($request->duration))?$request->duration:'',
           'is_sale_schedule' =>(!empty($request->is_sale_schedule))?$request->is_sale_schedule:0,
           'discount' =>(!empty($request->discount))?$request->discount:0,
           'sale_price_from' =>$request->sale_price_from,
@@ -323,6 +323,8 @@ public function ActivityZoneByCountry(Request $request): JsonResponse
      */
     public function update(UpdateActivityRequest $request, Activity $activity)
     {
+
+
         $activityDetails = [
 
           'name' =>$request->name,
@@ -354,9 +356,9 @@ public function ActivityZoneByCountry(Request $request): JsonResponse
           'type_activity' =>$request->type_activity,
           'rating' =>(!empty($request->rating))?$request->rating:0,
           'activity_booking_period' =>$request->activity_booking_period,
-          'min_people' =>$request->min_people,
-          'max_people' =>$request->max_people,
-          'duration' =>$request->duration,
+        'min_people' =>(!empty($request->min_people))?$request->min_people:0,
+          'max_people' =>(!empty($request->max_people))?$request->max_people:0,
+          'duration' =>(!empty($request->duration))?$request->duration:'',
           'is_sale_schedule' =>(!empty($request->is_sale_schedule))?$request->is_sale_schedule:0,
           'discount' =>(!empty($request->discount))?$request->discount:0,
           'sale_price_from' =>$request->sale_price_from,

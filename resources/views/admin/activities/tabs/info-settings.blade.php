@@ -13,11 +13,11 @@
 <!-- Venue facilities -->
 @include('admin.partials.utils.input', ['name'=> 'venue_facilities','label'=>'Venue facilities','desc'=>'The facilities that customer may experience during activities','value'=>$activity->venue_facilities ?? '','id' => ""])
 <!-- Activity Included -->
-@include('admin.partials.utils.textarea', ['name'=> 'activity_include','label'=>'Activity Excluded','value'=>$activity->detail->activity_include ?? ''])
+@include('admin.partials.utils.textarea', ['name'=> 'activity_include','label'=>'Activity Included','value'=>$activity->detail->activity_include ?? ''])
 <!-- Activity Excluded -->
-@include('admin.partials.utils.textarea', ['name'=> 'activity_exclude','label'=>'Activity Included','value'=>$activity->detail->activity_exclude ?? ''])
+@include('admin.partials.utils.textarea', ['name'=> 'activity_exclude','label'=>'Activity Excluded','value'=>$activity->detail->activity_exclude ?? ''])
 <!-- Activity Highlight -->
-@include('admin.partials.utils.textarea', ['name'=> 'activity_highlight','label'=>'Activity Included','value'=>$activity->detail->activity_highlight ?? ''])
+@include('admin.partials.utils.textarea', ['name'=> 'activity_highlight','label'=>'Activity Highlight','value'=>$activity->detail->activity_highlight ?? ''])
 <!-- activity program style -->
 @include('admin.partials.utils.select_box', ['items' => $activity_program_style, 'name'=> 'activity_program_style','selected'=>$activity->detail->activity_program_style ?? "",'label'=>'activity program style','first_empty_option'=>true,'option_attr'=>'data-target="activity-program"','class'=>'program-style-select'])
 

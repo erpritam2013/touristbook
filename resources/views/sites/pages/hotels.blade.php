@@ -17,7 +17,7 @@
              <div class="row">
                 <div class="col-md-8 border-right">
                     <div class="form-group form-extra-field  clearfix field-detination has-icon open">
-                      {!!getNewIcon('ico_maps_search_box', '#000000', '24px', '24px', true)!!}
+                      {!!getNewIcon('ico_maps_search_box', '#666666', '24px', '24px', true)!!}
 
                       <label for="input-search-box" class="lbl-search-box">Destination</label>
 
@@ -40,10 +40,11 @@
 @else
 <div class="container"> 
 <div class="search-form-mobile">
+<form action="" class="form" method="get">
     <div class="form-group">
         <div class="dropdown">
             <div class="icon-field">
-             {!!getNewIcon('ico_maps_search_box', 'gray', '20px', '20px', true)!!}
+             {!!getNewIcon('ico_maps_search_box', '#666666', '20px', '20px', true)!!}
          </div>
 
          <input type="hidden" name="source_type" value="{{$sourceType}}" />
@@ -53,6 +54,7 @@
      </div>
      <button type="submit" class="btn btn-primary">{!!getNewIcon('ico_search_header', '#ffffff', '25px', '25px', true)!!}</button>
  </div>
+ </form>
 </div>
 </div>
 @endif
