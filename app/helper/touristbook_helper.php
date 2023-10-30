@@ -163,17 +163,19 @@ if (!function_exists('mediaTemplate')) {
           $html .='<div class="col-lg-10">';
       }
       $html .='<div class="media-controls">';
+      $html .='<input type="hidden" class="form-control media-input '.$class.' gallery-input " name="'.$name.'"
+            value="'.$value ? json_encode($value) : "".'" />';
       if($smode == 'single'){
-         $html .='<input type="'.(!isset($smode))?"text":"hidden".'" class="form-control media-input '.$class.' gallery-input " name="'.$name.'" value="'.$value.'" id="'.$id.'" placeholder="Enter '.$label.'..."/>';
+         $html .='<input type="text" class="form-control media-input '.$class.' gallery-input " name="'.$name.'" value="'.if($value && isset($value[0])){$value[0]['url']}.'" id="'.$id.'" placeholder="Enter '.$label.'..."/>';
      }
-
-     $html .='<button type="button" class="btn btn-primary mt-2 add-media-btn" smode="'.$smode.'" selectedImages="'.$value.'"  >+</button>';
+     $html .='<button type="button" class="btn btn-primary mt-2 add-media-btn" smode="'.$smode.'" selectedImages="'.$value ? json_encode($value) : "".'"  >+</button>';
      $html .='<button type="button" class="btn btn-danger mt-2 remove-media-btn">-</button>';
      $html .='<div class="media-preview"></div>';
+      if($value && isset($value[0])){
+
+            $html .='<img src="'.$value[0]['url'].'"  class="img" height="100" width="100" />';
+        }
      $html .='</div>';
-
-
-
      $html .='</div>';
      $html .='</div>';
  }
