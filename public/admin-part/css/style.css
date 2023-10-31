@@ -29346,3 +29346,7 @@ div#paginationList {
     justify-content: center;
     margin-top: 15px;
 }
+
+.file-thumb, .file-thumb:hover {
+    color: #000;
+}
