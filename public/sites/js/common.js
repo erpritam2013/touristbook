@@ -115,13 +115,41 @@ $('#custom-tabs').on('click','a.nav-link',function(e){
         return false;
     }
 });
+window.showActivityZoneTab = function(ele){
+     let zone_tabs_div_section = $('#zone-tabs-div-section');
+        if (zone_tabs_div_section.hasClass('d-none')) {
+            zone_tabs_div_section.removeClass('d-none');
+        }else{
+            zone_tabs_div_section.addClass('d-none');
+        }
+}
 
+
+$('.activity-zone-li').on('click','a.nav-link',function(e){
+    let id = $(this).attr('href');
+    if (typeof id != 'undefined') {
+        let t = $(id);
+        let parent = t.closest('#activity-zone-area-pdf');
+        let top = parent.offset().top;
+        
+        if (isMobile()) {
+            top = top + 1100;
+
+        }else{
+            top = top + 350;
+        }
+        console.log(top);
+        $('html, body').animate({scrollTop:top}, 'slow');
+         
+    }
+});
 $('#pocketPDFtab').on('click','a.nav-link',function(e){
 
     let id = $(this).attr('href');
     if (typeof id != 'undefined') {
 
         let t = $(id);
+      
         let parent = t.parent('div.tab-content');
         let parent_nav_tab = $(this).parent('.nav-item').parent('ul.custom-tabs-detail');
         let top = parent.offset().top;
@@ -608,9 +636,6 @@ function loadStreetMap() {
     $('body.tour-detail-page #st-program-section .panel-collapse').on('hide.bs.collapse', function () {
         $(this).siblings('body.tour-detail-page #st-program-section .panel-heading').removeClass('active');
     });
- // var firstTabEl = document.querySelector('#policies-activity li:last-child a')
- //  var firstTab = new bootstrap.Tab(firstTabEl)
 
- //  firstTab.show()
 
 })();

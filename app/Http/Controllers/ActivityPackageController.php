@@ -92,6 +92,9 @@ private function _prepareBasicData() {
     ];
 
     $activity_packages = $this->activityPackageRepository->createActivityPackage($activityPackageDetails);
+    if ($activity_packages) {
+        $activity_packages->activity_list()->attach($request->get('activity_id'));
+    }
     Session::flash('success','Activity Package Created Successfully');
     return redirect()->Route('admin.activity-packages.index');
     }
@@ -155,7 +158,10 @@ private function _prepareBasicData() {
             // TODO: created_by pending as Authentication is not Yet Completed
     ];
 
-    $activity_packages = $this->activityPackageRepository->updateActivityPackage($activityPackage->id,$activityPackageDetails);
+    $this->activityPackageRepository->updateActivityPackage($activityPackage->id,$activityPackageDetails);
+    if ($activityPackage) {
+        $activityPackage->activity_list()->sync($request->get('activity_id'));
+    }
     Session::flash('success','Activity Package Updated Successfully');
     return redirect()->Route('admin.activity-packages.edit',$activityPackage->id);
     }

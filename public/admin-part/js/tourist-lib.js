@@ -600,8 +600,6 @@ $("body").on("click", mediaSelector, function(){
     if(isJSON(sImages)) {
         selectedImages = JSON.parse(sImages)
     }
-
-
         // TODO: Set Mode (Single/Multi)
     mediaMode = $(this).attr("smode")
     console.log("mediaMode", mediaMode)
