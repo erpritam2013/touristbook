@@ -1,5 +1,5 @@
 <!-- Set hotel as feature -->
-@include('admin.partials.utils.radio_input', [
+{!!radioInputTemplate([
     'name' => 'is_featured',
     'label' => 'Set hotel as feature',
     'desc' => 'ON: Set this hotel to be featured',
@@ -8,23 +8,15 @@
     'input' => ['On' => 1, 'Off' => 0],
     'on_off_switch' => true,
     'label_class' => ['off-switch', 'on-switch'],
-])
+])!!}
 
 <!--hotel video -->
 
 {!!inputTemplate(['name'=> 'hotel_video','label'=>'Hotel video','desc'=>'Enter YouTube/Vimeo URL here','value'=>$hotel->hotel_video ?? '','id' => "",'control' => "url"])!!}
 
-@include('admin.partials.utils.input', [
-    'name' => 'hotel_video',
-    'label' => 'Hotel video',
-    'desc' => 'Enter YouTube/Vimeo URL here',
-    'value' => $hotel->hotel_video ?? '',
-    'id' => '',
-    'control' => 'url',
-])
 
 <!-- Hotel rating standard -->
-@include('admin.partials.utils.range_input', [
+{!!rangeInputTemplate([
     'name' => 'rating',
     'label' => 'Hotel rating standard',
     'value' => $hotel->rating ?? '',
@@ -33,18 +25,18 @@
     'max' => 5,
     'step' => 0.1,
     'value' => $hotel->rating ?? 0,
-])
+])!!}
 
 <!--hotel report -->
-@include('admin.partials.utils.textarea', ['name'=> 'hotel_report','label'=>'Report','value'=>$hotel->detail->hotel_report ?? '','id' => "",'rows'=>10])
+{!!textareaTemplate(['name'=> 'hotel_report','label'=>'Report','value'=>$hotel->detail->hotel_report ?? '','id' => "",'rows'=>10])!!}
 <!--Coupon Code -->
 
-@include('admin.partials.utils.input', [
+{!!inputTemplate([
     'name' => 'coupon_code',
     'label' => 'Coupon Code',
     'value' => $hotel->coupon_code ?? '',
     'id' => '',
-])
+])!!}
 
 {{-- Gallery --}}
 
@@ -129,11 +121,11 @@
 </div>
 
 <!-- Save Your Pocket -->
-@include('admin.partials.utils.textarea', [
+{!!textareaTemplate([
     'name' => 'save_pocket',
     'label' => 'Save Your Pocket',
     'value' => $hotelDetail->save_pocket ?? '',
-])
+])!!}
 
 <div class="border p-1 mb-2">
     <h4>Save Your Pocket PDF Data</h4>
@@ -144,11 +136,11 @@
     ])
 </div>
 <!-- Save The Environment -->
-@include('admin.partials.utils.textarea', [
+{!!textareaTemplate([
     'name' => 'save_environment',
     'label' => 'Save The Environment',
     'value' => $hotelDetail->save_environment ?? '',
-])
+])!!}
 
 <div class="border p-1 mb-2">
     <h4>Land Mark</h4>
@@ -224,12 +216,12 @@
     ])
 </div>
 <!-- Rooms Amenities -->
-@include('admin.partials.utils.textarea', [
+{!!textareaTemplate([
     'name' => 'room_amenities',
     'label' => 'Rooms Amenities',
     'value' => $hotelDetail->room_amenities ?? '',
     'rows' => 8,
-])
+])!!}
 
 <div class="border p-1 mb-2">
     <h4>Transport</h4>
@@ -241,19 +233,19 @@
 </div>
 
 <!-- Payment mode -->
-@include('admin.partials.utils.textarea', [
+{!!textareaTemplate([
     'name' => 'payment_mode',
     'label' => 'Payment mode',
     'value' => $hotelDetail->payment_mode ?? '',
     'rows' => 5,
-])
+])!!}
 <!-- ID Proofs -->
-@include('admin.partials.utils.textarea', [
+{!!textareaTemplate([
     'name' => 'id_proofs',
     'label' => 'ID Proofs',
     'value' => $hotelDetail->id_proofs ?? '',
     'rows' => 5,
-])
+])!!}
 
 <div class="border p-1 mb-2">
     <h4>Emergency Links</h4>

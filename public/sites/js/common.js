@@ -67,11 +67,11 @@ window.showMoreData = function(data){
         if (label == 'Amenities') {
             let get_html = showAmenities(result);
             $('body #showMoreDataBody').html(get_html);
-        }else if (label == 'Amenities') {
+        }else if (label == 'Activity List') {
            let get_html = showAmenities(result);
            $('body #showMoreDataBody').html(get_html);
        }
-       console.log(result);
+       // console.log(result);
    }else{
     let html = '';
     if (label == 'Address') {
@@ -332,6 +332,21 @@ const fetchParameters = () => {
     let selectedActivities = compiledCheckboxes(".filter-activities");
     if (selectedActivities) {
         params.activities = selectedActivities;
+    }   
+     // Fetch term activity list If any
+    let selectedTermActivityLists = compiledCheckboxes(".filter-term-activity-lists");
+    if (selectedTermActivityLists) {
+        params.term_activity_lists = selectedTermActivityLists;
+    }  
+    // Fetch rating If any
+    let selectedRating = compiledCheckboxes(".filter-rating");
+    if (selectedRating) {
+        params.rating = selectedRating;
+    } 
+    // Fetch activity-package-lists If any
+    let selectedActivityPackageList = compiledCheckboxes(".filter-activity-package-lists");
+    if (selectedActivityPackageList) {
+        params.activity_package_lists = selectedActivityPackageList;
     }
 
         // Location or State Search
@@ -411,7 +426,7 @@ const processedResultInfo = (html) => {
 
 
     // Common Function to Hit and get data
-const fetchHotels = (view, options = {}) => {
+const fetchRecords = (view, options = {}) => {
         // TODO: Place check; so that it only works for hotel list page
         // possibly add page in body class
     let get_hotel = $('#result-info').data('type');
@@ -436,11 +451,11 @@ const fetchHotels = (view, options = {}) => {
 
 
     // Initially Load Hotels
-fetchHotels("list", fetchParameters());
+fetchRecords("list", fetchParameters());
 
     if(resultInfo.length > 0) {
         // Initially Load Hotels
-        fetchHotels("list", fetchParameters());
+        fetchRecords("list", fetchParameters());
     }
 
 
@@ -508,19 +523,19 @@ function loadStreetMap() {
         $(this).parents("ui").first().find("li").removeClass("active");
         $(this).parents("li").first().addClass("active");
         let view = $(this).attr("view-id");
-        fetchHotels(view, fetchParameters());
+        fetchRecords(view, fetchParameters());
     });
 
     // Filter Price Apply Button
     $(".btn-filter-price").on("click", function () {
         let view = $(".view-changer").attr("view-id");
-        fetchHotels(view, fetchParameters());
+        fetchRecords(view, fetchParameters());
     });
 
     // Filter Checkbox Change
     $(".filter-option").on("change", function () {
         let view = $(".view-changer").attr("view-id");
-        fetchHotels(view, fetchParameters());
+        fetchRecords(view, fetchParameters());
     });
 
     resultInfo.on("click", ".page-link", function () {
@@ -528,7 +543,7 @@ function loadStreetMap() {
         let pageId = $(this).attr("pageid");
         let params = fetchParameters();
         params.pageNo = pageId;
-        fetchHotels(view, params);
+        fetchRecords(view, params);
     });
 
     $("#input-search-box").autocomplete({
@@ -593,6 +608,9 @@ function loadStreetMap() {
     $('body.tour-detail-page #st-program-section .panel-collapse').on('hide.bs.collapse', function () {
         $(this).siblings('body.tour-detail-page #st-program-section .panel-heading').removeClass('active');
     });
+ // var firstTabEl = document.querySelector('#policies-activity li:last-child a')
+ //  var firstTab = new bootstrap.Tab(firstTabEl)
 
+ //  firstTab.show()
 
 })();

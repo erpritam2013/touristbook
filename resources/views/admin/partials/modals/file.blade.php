@@ -1,4 +1,4 @@
-<div class="modal fade bd-example-modal-lg" id="file-modal">
+<div class="modal fade bd-example-modal-xl" id="file-modal">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -26,7 +26,7 @@
                                         <input type="file" id="fileElem" multiple >
                                         <label class="button" for="fileElem">Select some files</label>
                                     </form>
-                                    <progress id="media-progress-bar" max=100 value=0></progress>
+                                    <progress id="media-progress-bar" class="w-100" max=100 value=0 style="height:40px;"></progress>
                                 </div>
                             </div>
                         </div>
@@ -59,7 +59,7 @@
 #drop-area {
   border: 2px dashed #ccc;
   border-radius: 20px;
-  width: 480px;
+  width: auto;
   font-family: sans-serif;
   margin: 100px auto;
   padding: 20px;

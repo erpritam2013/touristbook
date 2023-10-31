@@ -38,7 +38,8 @@ class FileController extends Controller
 
         return [
             'url' => $media->getUrl(),
-            'id' => $media->id
+            'id' => $media->id,
+            'name' => $media->name
         ];
     }
 }

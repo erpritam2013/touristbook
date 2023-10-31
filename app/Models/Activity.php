@@ -3,7 +3,8 @@
 namespace App\Models;
 
 use App\Models\location;
-use App\Models\ActivityZone;
+use App\Models\ActivityList;
+use App\Models\ActivityLists;
 use App\Models\Terms\Attraction;
 use App\Models\Terms\Language;
 use App\Models\Terms\State;
@@ -52,6 +53,9 @@ class Activity extends Model
      public function activity_zone() {
         return $this->belongsToMany(ActivityZone::class, 'activity_activity_zones', 'activity_id', 'activity_zone_id');
     }
+     public function activity_packages() {
+        return $this->belongsToMany(ActivityPackage::class, 'activity_package_activities', 'activity_id', 'activity_package_id');
+    }
 
     public function attractions() {
         return $this->belongsToMany(Attraction::class, 'activity_attractions', 'activity_id', 'attraction_id');
@@ -68,6 +72,9 @@ class Activity extends Model
 
     public function term_activity_lists() {
         return $this->belongsToMany(TermActivityList::class, 'activity_term_activity_lists', 'activity_id', 'term_activity_lists_id');
+    }
+    public function activity_lists() {
+        return $this->belongsToMany(ActivityLists::class, 'activity_lists_activities', 'activity_id', 'activity_list_id');
     }
     public function states() {
         return $this->belongsToMany(State::class, 'activity_states', 'activity_id', 'state_id');

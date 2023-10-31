@@ -4,7 +4,7 @@
  <!-- Booking Options -->
 @include('admin.partials.utils.select_box', ['items' => $booking_options, 'name'=> 'st_booking_option_type','selected'=>$activity->st_booking_option_type ?? "",'label'=>'Booking Options'])
 <!-- Activity Gallery -->
-@include('admin.partials.utils.media', ['name'=> 'gallery','label'=>'Activity Gallery','desc'=>"Upload activity images to show to customers",'value'=>$activity->detail->gallery ?? '','id' => ""])
+@include('admin.partials.utils.media', ['name'=> 'gallery','label'=>'Activity Gallery','desc'=>"Upload activity images to show to customers",'value'=>$activity->detail->gallery ?? '','smode' => "multiple"])
 <!-- Activity Zone Video -->
 @include('admin.partials.utils.input', ['name'=> 'video','label'=>'Activity Zone Video','desc'=>"Input youtube/vimeo url here",'value'=>$activity->detail->video ?? '','id' => "",'control'=>'url'])
  

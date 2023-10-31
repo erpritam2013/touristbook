@@ -30,145 +30,157 @@ $(document).ready(function () {
         return updatedText;
     };
 
+const isJSON = (something) => {
+        if (typeof something != 'string')
+         something = JSON.stringify(something);
+
+     try {
+        JSON.parse(something);
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
     // Change Subform Ordering
-    const changeSubformOrder = (parentElem) => {
-        let liElements = parentElem.find("li");
-        liElements.each((idx, liElem) => {
-            $(liElem)
-            .find("input, textarea")
-            .each((controlIdx, control) => {
-                let controlElem = $(control);
-                let updatedName = subformIndexChanges(
-                    controlElem.attr("name"),
-                    idx
-                    );
-                let updatedId = subformIndexChanges(
-                    controlElem.attr("id"),
-                    idx
-                    );
-                controlElem.attr("name", updatedName);
-                controlElem.attr("id", updatedId);
-            });
+const changeSubformOrder = (parentElem) => {
+    let liElements = parentElem.find("li");
+    liElements.each((idx, liElem) => {
+        $(liElem)
+        .find("input, textarea")
+        .each((controlIdx, control) => {
+            let controlElem = $(control);
+            let updatedName = subformIndexChanges(
+                controlElem.attr("name"),
+                idx
+                );
+            let updatedId = subformIndexChanges(
+                controlElem.attr("id"),
+                idx
+                );
+            controlElem.attr("name", updatedName);
+            controlElem.attr("id", updatedId);
         });
-        parentElem.attr("index", liElements.length);
+    });
+    parentElem.attr("index", liElements.length);
+};
+
+let btnAddSubForm = $(".btn-add-subform");
+if (btnAddSubForm.length > 0) {
+        // Fetch HTML from Server
+    const fetchSubForm = (type, targetElem) => {
+        let template_url = base_admin_url + "/template/" + type;
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: template_url,
+            success: function (data) {
+                if (data.html) {
+                    processedSubForm(data.html, targetElem);
+                }
+            },
+        });
     };
 
-    let btnAddSubForm = $(".btn-add-subform");
-    if (btnAddSubForm.length > 0) {
-        // Fetch HTML from Server
-        const fetchSubForm = (type, targetElem) => {
-            let template_url = base_admin_url + "/template/" + type;
-            $.ajax({
-                type: "GET",
-                dataType: "json",
-                url: template_url,
-                success: function (data) {
-                    if (data.html) {
-                        processedSubForm(data.html, targetElem);
-                    }
-                },
-            });
-        };
-
         // Processed and Append HTML
-        const processedSubForm = (html, targetElem) => {
-            let recentUsedIndex = parseInt(targetElem.attr("index"));
-            let newIndex = recentUsedIndex + 1;
-            let cardTitlePattern = '<span class="card-title-text">(.*?)</span>';
+    const processedSubForm = (html, targetElem) => {
+        let recentUsedIndex = parseInt(targetElem.attr("index"));
+        let newIndex = recentUsedIndex + 1;
+        let cardTitlePattern = '<span class="card-title-text">(.*?)</span>';
 
             // Change Based on Pattern
-            let newHtmlContent = subformIndexChanges(html, newIndex);
-            const match = new RegExp(cardTitlePattern).exec(newHtmlContent);
-            if (match) {
-                const newSubHtml = '<span class="card-title-text"></span>';
-                newHtmlContent = newHtmlContent.replace(match[0], newSubHtml);
-            }
+        let newHtmlContent = subformIndexChanges(html, newIndex);
+        const match = new RegExp(cardTitlePattern).exec(newHtmlContent);
+        if (match) {
+            const newSubHtml = '<span class="card-title-text"></span>';
+            newHtmlContent = newHtmlContent.replace(match[0], newSubHtml);
+        }
 
-            targetElem.append(newHtmlContent);
-            targetElem.attr("index", newIndex);
+        targetElem.append(newHtmlContent);
+        targetElem.attr("index", newIndex);
 
             // Ck Editor Added
-            targetElem.find(".tourist-editor").each((idx, te) => {
-                if (!$(te).next().hasClass("cke")) CKEDITOR.replace(te);
-            });
+        targetElem.find(".tourist-editor").each((idx, te) => {
+            if (!$(te).next().hasClass("cke")) CKEDITOR.replace(te);
+        });
 
             // Sortable
-            if (targetElem.hasClass("ui-sortable")) {
+        if (targetElem.hasClass("ui-sortable")) {
                 // Refresh
-                targetElem.sortable("refresh");
-            } else {
+            targetElem.sortable("refresh");
+        } else {
                 // Create
-                targetElem.sortable({
-                    update: function (event, ui) {
-                        changeSubformOrder(targetElem);
-                    },
-                });
-            }
-        };
-
-        // Button Clicked Event
-        btnAddSubForm.on("click", function () {
-            elemRef = $(this);
-            let subformType = elemRef.attr("subform-type");
-            let targetSelector = elemRef.attr("target-selector");
-            let targetElem = $(targetSelector);
-
-            // Call Ajax Call
-            fetchSubForm(subformType, targetElem);
-        }); // On Click Event Block Ends
-
-        // Delete the Card
-        $("body").on("click", ".delete-card", function () {
-            if (confirm('Are you sure you want to remove this?')) {
-
-                $(this).parents(".subform-card").first().remove();
-            }else{
-                return false;
-            }
-        });
-
-        // Edit the Card
-        $("body").on("click", ".edit-card", function () {
-            let super_parent = $(this).closest('.list-types').children('li.subform-card');
-            let parent = $(this).parents('.subform-card');
-            $.each(super_parent,function(key,ele){
-                if (parent.index() != key) {
-                    $(ele).find('.card-body').hide();
-                }
-            });
-            $(this)
-            .parents(".subform-card")
-            .first()
-            .find(".card-body")
-            .first()
-            .toggle();
-        });
-
-        // Title Added
-        $("body").on(
-            "keyup",
-            ".subform-card .card-body input[type=text]",
-            function () {
-                $(this)
-                .parents(".subform-card")
-                .each(function () {
-                        // TODO: Dynamic par is missing
-                    $(this)
-                    .find(".card-title-text")
-                    .text(($(this).find("input[type=text]").val().length > 30)?$(this).find("input[type=text]").val().substring(0,30) + '.....':$(this).find("input[type=text]").val());
-                });
-            }
-            );
-
-        // Sortable Initialized
-        let cardListElm = $(".list-types");
-        if (cardListElm.length > 0) {
-            cardListElm.sortable({
+            targetElem.sortable({
                 update: function (event, ui) {
-                    changeSubformOrder($(this));
+                    changeSubformOrder(targetElem);
                 },
             });
         }
+    };
+
+        // Button Clicked Event
+    btnAddSubForm.on("click", function () {
+        elemRef = $(this);
+        let subformType = elemRef.attr("subform-type");
+        let targetSelector = elemRef.attr("target-selector");
+        let targetElem = $(targetSelector);
+
+            // Call Ajax Call
+        fetchSubForm(subformType, targetElem);
+        }); // On Click Event Block Ends
+
+        // Delete the Card
+    $("body").on("click", ".delete-card", function () {
+        if (confirm('Are you sure you want to remove this?')) {
+
+            $(this).parents(".subform-card").first().remove();
+        }else{
+            return false;
+        }
+    });
+
+        // Edit the Card
+    $("body").on("click", ".edit-card", function () {
+        let super_parent = $(this).closest('.list-types').children('li.subform-card');
+        let parent = $(this).parents('.subform-card');
+        $.each(super_parent,function(key,ele){
+            if (parent.index() != key) {
+                $(ele).find('.card-body').hide();
+            }
+        });
+        $(this)
+        .parents(".subform-card")
+        .first()
+        .find(".card-body")
+        .first()
+        .toggle();
+    });
+
+        // Title Added
+    $("body").on(
+        "keyup",
+        ".subform-card .card-body input[type=text]",
+        function () {
+            $(this)
+            .parents(".subform-card")
+            .each(function () {
+                        // TODO: Dynamic par is missing
+                $(this)
+                .find(".card-title-text")
+                .text(($(this).find("input[type=text]").val().length > 30)?$(this).find("input[type=text]").val().substring(0,30) + '.....':$(this).find("input[type=text]").val());
+            });
+        }
+        );
+
+        // Sortable Initialized
+    let cardListElm = $(".list-types");
+    if (cardListElm.length > 0) {
+        cardListElm.sortable({
+            update: function (event, ui) {
+                changeSubformOrder($(this));
+            },
+        });
+    }
     } // If Block Ends
 
     // ------------------- CK Editor Setup -----------------------
@@ -315,16 +327,16 @@ function createPaginationFromLinks(links) {
         link.textContent = item.label.replace("&raquo;", "\u00bb").replace("&laquo;", "\u00ab");
         if (item.active) {
           listItem.classList.add('active');
-        }
-        listItem.appendChild(link);
-      } else {
-        listItem.classList.add('disabled');
-        listItem.innerHTML = `<span class="page-link">${item.label}</span>`;
       }
+      listItem.appendChild(link);
+  } else {
+    listItem.classList.add('disabled');
+    listItem.innerHTML = `<span class="page-link">${item.label}</span>`;
+}
 
-      paginationList.appendChild(listItem);
-    });
-  }
+paginationList.appendChild(listItem);
+});
+}
 
 const fillImagesToList = (filesWrapper) => {
     console.log("filesWrapper", filesWrapper)
@@ -333,17 +345,17 @@ const fillImagesToList = (filesWrapper) => {
     if(files.length > 0) {
         console.log("Entering")
         files.forEach((file, idx) => {
+            console.log(selectedImages);
             console.log(hasValueForKey(selectedImages, 'id', file.id))
             let active_class = hasValueForKey(selectedImages, 'id', file.id) ? 'active' : ''
 
             mediaListHtml += `
-            <div class="col-md-2 mt-4 file  ${active_class} " style="background-image: url(${file.original_url})">
+            <div class="col-md-1 mt-4 file  ${active_class} " style="background-image: url(${file.original_url})">
             <a href="javascript:void(0);" data-id="${file.id}" data-url="${file.original_url}" class="file-thumb">
             <img src="${file.original_url}" class="img-responsive img-holder" />
             <p class="text-center mb-2 text-break">${file.file_name}</p>
             </a>
-            </div>
-            `
+            </div>`;
         });
     }
     $('.file-list').html(mediaListHtml)
@@ -607,8 +619,11 @@ $("body").on("click", mediaSelector, function(){
         // TODO: Set Selected Items
     let sImages = $(this).attr("selectedImages")
     selectedImages = []
-    if(sImages) {
+    console.log(sImages)
+    if(isJSON(sImages)) {
         selectedImages = JSON.parse(sImages)
+    }else{
+        selectedImages = sImages;
     }
 
 

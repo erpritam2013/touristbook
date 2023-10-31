@@ -14,6 +14,8 @@ use App\View\Composers\TourPriceComposer;
 use App\View\Composers\PropertyTypeComposer;
 use App\View\Composers\PackageTypeComposer;
 use App\View\Composers\TypesComposer;
+use App\View\Composers\ReviewScoreComposer;
+use App\View\Composers\TermActivityListComposer;
 use Illuminate\Support\Facades;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -42,6 +44,14 @@ class ViewServiceProvider extends ServiceProvider
             PriceComposer::class
         );
         View::composer(
+            ['sites.partials.filters.reviewScoreFilter'],
+            ReviewScoreComposer::class
+        );
+        View::composer(
+            ['sites.partials.filters.activityListFilter'],
+            TermActivityListComposer::class
+        );
+         View::composer(
             ['sites.partials.filters.durationFilter'],
             DurationComposer::class
         );

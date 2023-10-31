@@ -13,5 +13,6 @@ interface TermActivityListRepositoryInterface
     public function getTermActivityListsByType(string $type);
 
     public function getActiveTermActivityList($type);
+    public function getActiveTermActivityListWithParentSeprated($type);
     public function getActiveActivityTermActivityList();
 }
