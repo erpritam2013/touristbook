@@ -13,7 +13,15 @@ class FileController extends Controller
         if($request->has('page')) {
             $pageNumber = $request->get('page');
         }
-        $media_list = Media::orderBy("created_at", "desc")->paginate(20, ['*'], 'page', $pageNumber);
+
+        $mediaQuery = Media::orderBy("created_at", "desc");
+
+        if($request->has('searchTxt') && !empty($request->get('searchTxt'))) {
+            $searchTxt = $request->get('searchTxt');
+            $mediaQuery->where('file_name', 'LIKE', '%'.$searchTxt.'%');
+        }
+
+        $media_list = $mediaQuery->paginate(20, ['*'], 'page', $pageNumber);
         return response()->json($media_list);
     }
 
