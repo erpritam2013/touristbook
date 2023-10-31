@@ -2,7 +2,7 @@
 @section('title',$title)
 @section('content')
 @include('sites.partials.banner', [
-'bannerUrl' => asset('sites/images/banner/hotel.jpg'),
+'bannerUrl' =>'https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2023/04/Screenshot-2023-04-02-202920.jpg',
 'bannerTitle' => 'Activities',
 'bannerSubTitle' => '',
 ])
