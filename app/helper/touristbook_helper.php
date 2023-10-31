@@ -163,6 +163,7 @@ if (!function_exists('mediaTemplate')) {
           $html .='<div class="col-lg-10">';
       }
       $html .='<div class="media-controls">';
+
       $html .='<input type="hidden" class="form-control media-input '.$class.' gallery-input " name="'.$name.'"
             value="'.$value ? json_encode($value) : "".'" />';
       if($smode == 'single'){
@@ -173,11 +174,12 @@ if (!function_exists('mediaTemplate')) {
      }
      $html .='<button type="button" class="btn btn-primary mt-2 add-media-btn" smode="'.$smode.'" selectedImages="'.$value ? json_encode($value) : "".'"  >+</button>';
      $html .='<button type="button" class="btn btn-danger mt-2 remove-media-btn">-</button>';
-     $html .='<div class="media-preview"></div>';
+     $html .='<div class="media-preview">
       if($value && isset($value[0])){
 
             $html .='<img src="'.$value[0]['url'].'"  class="img" height="100" width="100" />';
         }
+     $html .='</div>';
      $html .='</div>';
      $html .='</div>';
      $html .='</div>';
@@ -547,6 +549,7 @@ if (!function_exists('unsetValueActivityTourismZone')) {
               unset($data[$key]['activity_zones-file']);
               unset($data[$key]['activity_zones-slug']);
           }
+
       }
   }
 
@@ -613,9 +616,6 @@ if (!function_exists('castImageValue')) {
             }
       }
   }
-
-         
-
   return $data;
 }
 }
