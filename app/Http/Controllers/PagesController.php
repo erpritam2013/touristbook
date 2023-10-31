@@ -247,6 +247,7 @@ class PagesController extends Controller
          if (!empty($activity->detail->activity_zones)) {
              $data['activity_zone'] = $activity->activity_zone->first();
          }
+
          $data['custom_icons'] = null;
          $custom_icons = CustomIcon::get(['id','slug','path','uri']);
          if (!empty($custom_icons)) {
