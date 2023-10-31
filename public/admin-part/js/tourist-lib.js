@@ -349,9 +349,13 @@ const fillImagesToList = (filesWrapper) => {
             console.log(hasValueForKey(selectedImages, 'id', file.id))
             let active_class = hasValueForKey(selectedImages, 'id', file.id) ? 'active' : ''
 
-            mediaListHtml += `<div class="col-md-1 file  ${active_class} " style="background-image: url(${file.original_url})">
-            <a href="javascript:void(0);" data-id="${file.id}" data-url="${file.original_url}" class="file-thumb" data-name="${file.name}">
-            <img src="${file.original_url}" class="img-responsive img-holder"/>
+
+            mediaListHtml += `
+            <div class="col-md-1 mt-4 file  ${active_class} " style="background-image: url(${file.original_url})">
+            <a href="javascript:void(0);" data-id="${file.id}" data-url="${file.original_url}" class="file-thumb">
+            <img src="${file.original_url}" class="img-responsive img-holder" />
+            <p class="text-center mb-2 text-break">${file.file_name}</p>
+
             </a>
             </div>`;
         });
@@ -367,6 +371,14 @@ $('.file-pagination').on("click", ".page-link", function() {
     loadImages(href);
     return false
 })
+
+$('#file-search-box').on("keyup", function() {
+
+    let searchTxt = $(this).val()
+
+    loadImages(null, searchTxt)
+
+});
 
 
 
@@ -413,11 +425,14 @@ $('.file-list').on("click", ".file", function() {
 
 })
 
-const loadImages = (url = null) => {
+const loadImages = (url = null, searchTxt = '') => {
     let image_url = (url != null) ? url : base_admin_url + "/files/load-images";
     $.ajax({
         type: "GET",
         dataType: "json",
+        data: {
+            searchTxt: searchTxt
+        },
         url: image_url,
         success: function (data) {
             fillImagesToList(data)
@@ -596,9 +611,11 @@ $("body").on("click", mediaSelector, function(){
         // TODO: Set Selected Items
     let sImages = $(this).attr("selectedImages")
     selectedImages = []
-    
+
     if(isJSON(sImages)) {
         selectedImages = JSON.parse(sImages)
+    }else{
+        selectedImages = sImages;
     }
         // TODO: Set Mode (Single/Multi)
     mediaMode = $(this).attr("smode")
