@@ -140,6 +140,14 @@ class HotelController extends Controller
         $data['title'] = 'Hotel';
         $data['hotel'] = $hotel;
         $data = array_merge_recursive($data, $this->_prepareBasicData());
+        if (!empty($hotel->detail->todovideo)) {
+           $hotel->detail->todovideo = castImageValue($hotel->detail->todovideo,'todovideo','file');
+        }
+        if (!empty($hotel->detail->eventmeeting)) {
+           $hotel->detail->eventmeeting = castImageValue($hotel->detail->eventmeeting,'eventmeeting','file');
+        }
+        
+        
         return view('admin.hotels.edit', $data);
     }
 
@@ -292,6 +300,13 @@ class HotelController extends Controller
         $this->hotelRepository->updateHotel($hotel->id, $hotelDetails);
 
         if ($hotel) {
+      //     dd( $request->todovideo);
+      //       if ($request->has('todovideo') && $request->todovideo == 0) {
+      //     $request->merge([
+      //       castImageValue($data,$field_name,$type)
+      //   ]);
+      // }
+
             // TODO: Move this to Repository
             $hotel->detail()->update($request->only([
                 'map_address',

@@ -163,17 +163,24 @@ if (!function_exists('mediaTemplate')) {
           $html .='<div class="col-lg-10">';
       }
       $html .='<div class="media-controls">';
+
+      $html .='<input type="hidden" class="form-control media-input '.$class.' gallery-input " name="'.$name.'"
+            value="'.$value ? json_encode($value) : "".'" />';
       if($smode == 'single'){
-         $html .='<input type="'.(!isset($smode))?"text":"hidden".'" class="form-control media-input '.$class.' gallery-input " name="'.$name.'" value="'.$value.'" id="'.$id.'" placeholder="Enter '.$label.'..."/>';
+        if($value && isset($value[0])){
+            $value_url= $value[0]['url'];
+        }
+         $html .='<input type="text" class="form-control media-input '.$class.' gallery-input " name="'.$name.'" value="'.$value_url.'" id="'.$id.'" placeholder="Enter '.$label.'..."/>';
      }
-
-     $html .='<button type="button" class="btn btn-primary mt-2 add-media-btn" smode="'.$smode.'" selectedImages="'.$value.'"  >+</button>';
+     $html .='<button type="button" class="btn btn-primary mt-2 add-media-btn" smode="'.$smode.'" selectedImages="'.$value ? json_encode($value) : "".'"  >+</button>';
      $html .='<button type="button" class="btn btn-danger mt-2 remove-media-btn">-</button>';
-     $html .='<div class="media-preview"></div>';
+     $html .='<div class="media-preview">
+      if($value && isset($value[0])){
+
+            $html .='<img src="'.$value[0]['url'].'"  class="img" height="100" width="100" />';
+        }
      $html .='</div>';
-
-
-
+     $html .='</div>';
      $html .='</div>';
      $html .='</div>';
  }
@@ -542,10 +549,73 @@ if (!function_exists('unsetValueActivityTourismZone')) {
               unset($data[$key]['activity_zones-file']);
               unset($data[$key]['activity_zones-slug']);
           }
+
       }
   }
 
 
+  return $data;
+}
+}
+
+if (!function_exists('getCustomIcons')) {
+    function getCustomIcons($custom_icons)
+   {
+
+       $css = "<style>";
+       if (isset($custom_icons) && !empty($custom_icons)) {
+           foreach ($custom_icons as $key => $custom_icon) {
+                $css .= ".".$custom_icon->slug."{background:url(".$custom_icon->uri.") no-repeat center!important;}";
+           }
+       }
+      $css .="</style>";
+      return $css;
+   }
+}
+
+if (!function_exists('touristbook_custom_grouping_val')) {
+  function touristbook_custom_grouping_val($data,$field_name)
+  {
+
+    $result = array();
+    $no_parent = 'activity-zone-more';
+
+    if (is_array($data) && !empty($data)) {
+      foreach ($data as $item) {
+          // if (!isset($result[$parent])) {
+        if (!empty($item[$field_name.'-'.'parent'])) {
+
+          $parent = touristbook_sanitize_title(strtolower($item[$field_name.'-'.'parent']));
+          $temp[$field_name.'-'.'title'] = $item[$field_name.'-'.'title'];
+            // $temp['description'] = $item['description'];
+            // $temp['youtube_link'] = $item['youtube_link'];
+          $result[$parent][] = $temp;
+        }else{
+          $temp[$field_name.'-'.'title'] = $item[$field_name.'-'.'title'];
+            // $temp['description'] = $item['description'];
+            // $temp['youtube_link'] = $item['youtube_link'];
+          $result[$no_parent][] = $temp;
+        }
+        // }
+      }
+      return $result;
+    }else{
+      return;
+    }
+  }
+}
+if (!function_exists('castImageValue')) {
+    function castImageValue($data,$field_name,$type)
+    {
+       if (!empty($data)) {
+         $file_key = $field_name.'-'.$type;
+          foreach ($data as $key => $value) {
+            $file = json_decode($value[$file_key],true);
+            if (!empty($file) && is_array($file)) {
+               $data[$key][$file_key] = $file;
+            }
+      }
+  }
   return $data;
 }
 }
@@ -590,6 +660,21 @@ if (!function_exists('getTermsForSelectBox')) {
         }
 
         return $getTerms;
+    }
+}
+
+if (!function_exists('getSingleCustomIcon')) {
+    function getSingleCustomIcon($id)
+    {
+        $icon = '';
+        if (!empty($id)) {
+        $NamespacedModel = 'App\\Models\\CustomIcon';
+          $result = $NamespacedModel::findOrFail($id);
+          if ($result) {
+              $icon = $result->slug;
+          }
+        }
+        return $icon;
     }
 }
 if (!function_exists('getPostData')) {    

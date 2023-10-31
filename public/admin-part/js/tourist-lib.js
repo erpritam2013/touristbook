@@ -349,11 +349,13 @@ const fillImagesToList = (filesWrapper) => {
             console.log(hasValueForKey(selectedImages, 'id', file.id))
             let active_class = hasValueForKey(selectedImages, 'id', file.id) ? 'active' : ''
 
+
             mediaListHtml += `
             <div class="col-md-1 mt-4 file  ${active_class} " style="background-image: url(${file.original_url})">
             <a href="javascript:void(0);" data-id="${file.id}" data-url="${file.original_url}" class="file-thumb">
             <img src="${file.original_url}" class="img-responsive img-holder" />
             <p class="text-center mb-2 text-break">${file.file_name}</p>
+
             </a>
             </div>`;
         });
@@ -571,22 +573,12 @@ function uploadFile(file, i) {
 }
 
 
-$('.remove-media-btn').on("click", function() {
-    // only for single mode now
-    let parentElem = $(this).parent();
-    parentElem.find('.media-txt-only').val('');
-    parentElem.find('.gallery-input').val('');
-    parentElem.find('.add-media-btn').attr('selectedimages', '[]');
-    parentElem.find('.media-preview').html('');
-    return false;
-})
-
 $(".submit-media").on("click", function() {
     let targetElem = $(this)[0].targetElem
     let jsonStringify = JSON.stringify(selectedImages)
     if(targetElem.attr('smode') == "single") {
         // jsonStringify = selectedImages[0].url;
-        targetElem.parent().find('.media-txt-only').first().val(selectedImages[0].url)
+        targetElem.parent().find('.media-txt-only').first().val(selectedImages[0].url);
     }
 
     targetElem.attr("selectedImages", jsonStringify)
@@ -619,14 +611,12 @@ $("body").on("click", mediaSelector, function(){
         // TODO: Set Selected Items
     let sImages = $(this).attr("selectedImages")
     selectedImages = []
-    console.log(sImages)
+
     if(isJSON(sImages)) {
         selectedImages = JSON.parse(sImages)
     }else{
         selectedImages = sImages;
     }
-
-
         // TODO: Set Mode (Single/Multi)
     mediaMode = $(this).attr("smode")
     console.log("mediaMode", mediaMode)

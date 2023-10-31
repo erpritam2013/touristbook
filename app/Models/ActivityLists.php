@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use App\Models\Activity;
+use App\Models\ActivityLists;
 use App\Models\CustomIcon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,9 +27,11 @@ class ActivityLists extends Model
         ];
     }
 
-
-    public function activity() {
-        return $this->hasOne(Activity::class);
+    public function activity_list() {
+        return $this->belongsToMany(Activity::class, 'activity_lists_activities','activity_list_id','activity_id');
     }
+    // public function activity() {
+    //     return $this->hasOne(Activity::class);
+    // }
 
 }
