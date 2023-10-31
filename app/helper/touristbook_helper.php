@@ -174,7 +174,7 @@ if (!function_exists('mediaTemplate')) {
      }
      $html .='<button type="button" class="btn btn-primary mt-2 add-media-btn" smode="'.$smode.'" selectedImages="'.$value ? json_encode($value) : "".'"  >+</button>';
      $html .='<button type="button" class="btn btn-danger mt-2 remove-media-btn">-</button>';
-     $html .='<div class="media-preview">
+     $html .='<div class="media-preview">';
       if($value && isset($value[0])){
 
             $html .='<img src="'.$value[0]['url'].'"  class="img" height="100" width="100" />';
