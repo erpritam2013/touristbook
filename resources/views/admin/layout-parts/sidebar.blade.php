@@ -23,6 +23,14 @@
                                 <li class="{{matchRouteName('admin.terms.tags.index')}}"><a href="{{route('admin.terms.tags.index')}}">Tags</a></li>
                             </ul>
                         </li>
+                           <li class="{{matchRouteGroupName('pages','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                            class="fas fa-file sidebar-icon-touristbook"></i><span class="nav-text">Pages</span></a>
+                            <ul aria-expanded="false" class="{{matchRouteGroupName('pages','child')}}">
+                                <li class="{{matchRouteName('admin.pages.index')}}"><a href="{{route('admin.pages.pageIndex')}}">List</a></li>
+                                <li class="{{matchRouteName('admin.pages.create')}}"><a href="{{route('admin.pages.create')}}">Add New</a></li>
+                                  
+                            </ul>
+                        </li>
                         <li class="{{matchRouteGroupName('terms','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                             class="icon icon-layout-25"></i><span class="nav-text">Terms</span></a>
                             <ul aria-expanded="false" class="{{matchRouteGroupName('terms','child')}}">

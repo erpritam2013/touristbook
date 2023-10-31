@@ -1,23 +1,50 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Interfaces\PageRepositoryInterface;
 use App\Models\Hotel;
+use App\Models\Page;
 use App\Models\Tour;
 use App\Models\Location;
+use App\Models\CustomIcon;
 use App\Models\Activity;
 use App\Models\Terms\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
-
+use App\DataTables\PageDataTable;
 class PagesController extends Controller
 {
+
+     private PageRepositoryInterface $pageRepository;
+
+    public function __construct(PageRepositoryInterface $pageRepository)
+    {
+        $this->pageRepository = $pageRepository;
+    }
     public function index() {
          $data['post_type'] = 'Home';
         $data['title'] = 'Home';
         $data['body_class'] = 'home-page';
         return view('sites.pages.home',$data);
+    }
+
+    public function pages(PageDataTable $dataTable)
+    {
+        $pages = $this->pageRepository->getAllPages();
+        $data = [
+            'title'     => 'Pages',
+            'pages'     => $pages->count()
+        ];
+        return $dataTable->render('admin.pages.index',$data);
+    }
+
+    public function create()
+    {
+        $data['page'] = new Page;
+        $data['title'] = 'Add Page';
+
+        return view('admin.pages.create',$data);
     }
 
     public function hotels(Request $request) {
@@ -219,6 +246,11 @@ class PagesController extends Controller
          $data['activity_zone'] = null;
          if (!empty($activity->detail->activity_zones)) {
              $data['activity_zone'] = $activity->activity_zone->first();
+         }
+         $data['custom_icons'] = null;
+         $custom_icons = CustomIcon::get(['id','slug','path','uri']);
+         if (!empty($custom_icons)) {
+             $data['custom_icons'] = $custom_icons;
          }
          $data['tourismZone'] = null;
          

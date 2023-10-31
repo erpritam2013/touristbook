@@ -57,7 +57,7 @@
        
         @endpush
         <!-- For list or index page js -->
-        @if(Route::getRoutes()->match(request())->methods[0] == 'GET' && matchRouteNameMatch('index'))
+        @if(Route::getRoutes()->match(request())->methods[0] == 'GET' && (matchRouteNameMatch('index') || matchRouteNameMatch('pageIndex')))
         @push('dataTable_js')
         <!-- Datatable -->
         <script src="{!! asset('admin-part/vendor/datatables/js/jquery.dataTables.min.js') !!}"></script>

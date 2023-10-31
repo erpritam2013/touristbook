@@ -12214,7 +12214,7 @@ body.hotel-detail-page .listingDetails .booking-search > .row {
     		width: 100%;
     	}
 
-    	body.hotel-detail-page #tourism-zone-area .tab-content .nav-tabs>li.tourism-zone-li,body.single.single-st_tours #tourism-zone-pdf-data .nav-tabs>li.tourism-zone-li {
+    	body.hotel-detail-page #tourism-zone-area .tab-content .nav-tabs>li.tourism-zone-li,body.tour-detail-page #tourism-zone-pdf-data .nav-tabs>li.tourism-zone-li {
     		float: none!important;
     		margin-bottom: 10px!important;
     	}
@@ -13077,7 +13077,131 @@ body.activity-list-page .Filter-left .mb-left ul.review-score-filter label span 
 /*activity list css end*/
 
 /*activity detail page start css*/
-    
+
+/* body.activity-detail-page #activity-zone-area-pdf .nav-tabs li.activity-zone-li a {
+    background-color: #07509e;
+    color: #fff;
+    border-color: #07509e;
+    padding: 7px 30px;
+    border-radius: 3px 3px 0 0;
+    font-size: 14px;
+    margin-right: 1px;
+}*/
+/*body.activity-detail-page #activity-zone-area-pdf .nav-tabs li.activity-zone-li{
+  
+    margin: 1px;
+}*/
+/*body.activity-detail-page #activity-zone-area-pdf .nav-tabs li.activity-zone-li.active a {
+    background-color: #fba009;
+    color: #fff;
+    border-color: #fba009;
+}*/
+
+body.activity-detail-page #activity-zone-area-pdf td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+body.activity-detail-page #activity-zone-area-pdf tr:nth-child(even) {
+    background-color: #dddddd;
+    padding: 5px;
+}
+body.activity-detail-page #activity-zone-area-pdf .btgrid .row .col .content {
+    padding: 20px;
+    border: 1px solid #dddddd;
+    margin-bottom: 15px;
+    box-shadow: 5px 10px #888888;
+}
+
+div#activity-zone-area-pdf img {
+    box-shadow: 0px 0px 10px 5px #00000061!important;
+    margin: 5px 0px;
+}
+body.activity-detail-page img.activity-right-img {
+    float: right;
+    margin: 0px 0px 10px 10px!important;
+}
+body.activity-detail-page img.activity-left-img {
+    float: left;
+    margin: 5px 10px 10px 0px!important;
+}
+@media (min-width:320px) and (max-width:768px){ 
+     
+body.activity-detail-page #activity-zone-area-pdf .title {
+    padding: 10px;
+    /* margin-top: 4px; */
+    border: 1px solid #ddd;
+    border-bottom: none;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin: 0px 2px;
+}
+body.activity-detail-page #activity-zone-area-pdf .nav-tabs>li.activity-zone-li,body.activity-detail-page #activity-zone-area-pdf .nav-tabs>li.activity-zone-li {
+    float: none!important;
+    margin-bottom: 10px!important;
+}
+
+body.activity-detail-page .activity-zone-desc {
+    border: 1px solid #dddddd;
+    padding: 20px;
+}
+div#activity-zone-area-pdf img {
+   width:100%!important;
+   height:100%!important;
+}
+    }
+
+.activity-zone-heading h4 {
+    background-color: #dddddd;
+    padding: 20px 15px;
+    margin-bottom: 2px!important;
+    font-size: 16px;
+    color: #000;
+    font-weight: 600;
+}
+
+body.activity-detail-page #accordion .nav-tabs .nav-item .nav-link {
+	  background-color: #07509e;
+    color: #ffffff;
+}
+
+body.activity-detail-page #accordion .nav-tabs .nav-item .nav-link.active {
+	  background-color: #fba009;
+    color: #ffffff;
+}
+
+body.activity-detail-page #accordion .accordion-content{
+	height: 200px;
+	overflow: auto;
+}
+body.activity-detail-page #accordion .accordion-title{
+	background-color: #ffffff;
+}
+body.activity-detail-page #accordion .accordion-title h5 {
+    font-size: 14px;
+    color: #07509e;
+}
+body.activity-detail-page .st-zone-tabs .zone-tabs-div{
+        border-top: 1px solid #D7DCE3;
+    padding: 30px 20px 0;
+     /*height: 450px;
+    overflow: auto;*/
+}
+body.activity-detail-page .st-zone-tabs .zone-tabs-div .title {
+    padding: 10px;
+}
+.activity-zone-parent-section .sidebar-item {
+    padding: 10px 10px;
+    border-left: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+.activity-zone-parent-section .sidebar-item:last-child {
+    border-bottom: 1px solid #ddd;
+}
+.activity-zone-parent-section .item-title i {
+    float: right;
+}
 body.activity-detail-page div#section-contact {
     margin-left: -15px;
     margin-right: -15px;
@@ -13530,6 +13654,67 @@ body.activity-detail-page #st-program-section .card-header:not(.collapsed) .rota
   transform: rotate(180deg);
 }
 
+/*activity tourism zone css start*/
+
+body.activity-detail-page #tourism-zone-area-pdf p{
+      color:#000!important;
+}
+body.activity-detail-page #tourism-zone-area-pdf table {
+  /*font-family: arial, sans-serif;*/
+  border-collapse: collapse;
+  width: 100%;
+}
+body.activity-detail-page #tourism-zone-area-pdf .btgrid .row .col .content{
+    padding: 20px;
+    border: 1px solid #dddddd;
+    margin-bottom: 15px;
+    box-shadow: 5px 10px #888888;
+}
+body.activity-detail-page #tourism-zone-area-pdf td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+body.activity-detail-page #tourism-zone-area-pdf tr:nth-child(even) {
+      background-color: #dddddd;
+    padding: 5px;
+}
+body.activity-detail-page #tourism-zone-area-pdf .st-description .btgrid ul li {
+ 
+     float: none;
+    width: 100%;
+}
+body.activity-detail-page #tourism-zone-area-pdf .nav-tabs li.tourism-zone-li a {
+    background-color: var(--main-color, #1A2B48);
+    color: #fff;
+    border-color: var(--main-color, #1A2B48);
+    padding: 7px 30px;
+    border-radius: 3px 3px 0 0;
+    font-size: 14px;
+    margin-right: 1px;
+}
+body.activity-detail-page #tourism-zone-area-pdf .nav-tabs li.tourism-zone-li{
+  
+    margin: 1px;
+}
+body.activity-detail-page #tourism-zone-area-pdf .nav-tabs li.tourism-zone-li.active a {
+    background-color: var(--link-color, #5191FA);
+    color: #fff;
+    border-color: var(--link-color, #5191FA);
+}
+@media (min-width:320px) and (max-width:768px){ 
+body.activity-detail-page #tourism-zone-area-pdf .nav-tabs>li.tourism-zone-li,body.single.single-st_tours #tourism-zone-area-pdf .nav-tabs>li.tourism-zone-li {
+    float: none!important;
+    margin-bottom: 10px!important;
+}
+}
+
+body.activity-detail-page .st-tourism-zone-link-a {
+    font-size:16px!important;
+    color: #fff!important;
+}
+
+/*activity tourism zone css end*/
 
 /*activity detail page end css*/
 

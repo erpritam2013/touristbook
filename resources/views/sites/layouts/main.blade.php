@@ -25,6 +25,12 @@
             margin: 0 0 0 15px;
         }
     </style>
+    @isset($custom_icons)
+      {!!getCustomIcons($custom_icons)!!}
+    @endisset
+    @if($body_class == 'activity-detail-page')
+    <link rel="stylesheet" type="text/css" href="{{ asset('sites/css/activity-list.css')}}">
+    @endif
 </head>
 
 <body class="{{touristbook_sanitize_title($body_class ?? '') ?? ''}}">
@@ -68,22 +74,22 @@
 
     <button onclick="topScrollSite()" id="topScrollSite" title="Go to top"><i class="fa fa-arrow-up"></i></button>
 
-<div class="modal fade" id="showMoreData" tabindex="-1" role="dialog" aria-labelledby="streetLabel"
-aria-hidden="true" style="z-index: 999999;top: 100px;">
-<div class="modal-dialog" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="modal-title service-title" id="showMoreDataLabel"></h4>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
+    <div class="modal fade" id="showMoreData" tabindex="-1" role="dialog" aria-labelledby="streetLabel"
+    aria-hidden="true" style="z-index: 999999;top: 100px;">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title service-title" id="showMoreDataLabel"></h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
     <div class="modal-body" id="showMoreDataBody">
-      
-      </div>
-      
+
     </div>
-  </div>
+
+</div>
+</div>
 </div>
 </body>
 
