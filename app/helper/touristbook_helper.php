@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-if (!function_exists('getRouteName')) {    
+if (!function_exists('getRouteName')) {
     function getRouteName(){
 
         $routeName = request()->route()->getName();
@@ -9,7 +9,7 @@ if (!function_exists('getRouteName')) {
     }
 }
 
-if (!function_exists('customStringReplaceWithStrCase')) {    
+if (!function_exists('customStringReplaceWithStrCase')) {
     function customStringReplaceWithStrCase($search,$replace_value,$subject,$str_case){
         $result = "";
         if ($str_case == "ucwords") {
@@ -27,7 +27,7 @@ return $result;
 }
 if (!function_exists('shortDescription')) {
  function shortDescription($text,$length=150)
- { 
+ {
   $result = "";
   $result = mb_strimwidth($text, 0, $length, "......");
   return $result;
@@ -53,14 +53,14 @@ if (!function_exists('touristbook_sanitize_title')) {
 }
 }
 if (!function_exists('isMobileDevice')) {
-    function isMobileDevice() { 
-        return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo 
-            |fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i" 
-            , $_SERVER["HTTP_USER_AGENT"]); 
-    } 
+    function isMobileDevice() {
+        return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo
+            |fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i"
+            , $_SERVER["HTTP_USER_AGENT"]);
+    }
 }
 if (!function_exists('is_featured')) {
-    function is_featured($value,$title='featured') { 
+    function is_featured($value,$title='featured') {
 
         if (isset($value)) {
            if ($value == 1) {
@@ -72,7 +72,7 @@ if (!function_exists('is_featured')) {
     }
 
     return "";
-} 
+}
 }
 if (!function_exists('inputTemplate')) {
     function inputTemplate($fields_data)
@@ -91,7 +91,7 @@ if (!function_exists('inputTemplate')) {
 
            if(empty($id)){
              $id = (isset($name))? str_replace('[]', '',str_replace('_', '-', $name)):$name;
-         } 
+         }
 
          if(!isset($col)){
              $html .='<div class="col-lg-12">';
@@ -142,7 +142,7 @@ if (!function_exists('mediaTemplate')) {
 
         if(empty($id)){
            $id = (isset($name))? str_replace('[]', '',str_replace('_', '-', $name)):$name;
-       } 
+       }
        $class = (!empty($class))?$class:'';
        $value = (!empty($value))?$value:'';
        $label = (!empty($label))?$label:'';
@@ -176,7 +176,6 @@ if (!function_exists('mediaTemplate')) {
      $html .='<button type="button" class="btn btn-danger mt-2 remove-media-btn">-</button>';
      $html .='<div class="media-preview">';
       if($value && isset($value[0])){
-
             $html .='<img src="'.$value[0]['url'].'"  class="img" height="100" width="100" />';
         }
      $html .='</div>';
@@ -205,7 +204,7 @@ if (!function_exists('radioInputTemplate')) {
 
         if(empty($id)){
            $id = (isset($name))? str_replace('[]', '',str_replace('_', '-', $name)):$name;
-       } 
+       }
        $set_label_class = "";
        if(!isset($col)){
            $html .='<div class="col-lg-12">';
@@ -213,24 +212,24 @@ if (!function_exists('radioInputTemplate')) {
                $html .='<label class="subform-card-label" for="'.$id.'">'.$label;
                if(isset($required) && $required){
                    $html .='<span class="text-danger">*</span>';
-               } 
+               }
                $html .='</label>';
                if(isset($desc) && !empty($desc)){
                    $html .='<p>'.$desc.'</p>';
                }else{
                    $html .='<br>';
-               } 
-           } 
+               }
+           }
        }else{
            if(isset($label) && !empty($label)){
                $html .='<label class="col-lg-2 col-form-label" for="'.$id.'">'.$label;
                if(isset($required) && $required){
                    $html .='<span class="text-danger">*</span>';
-               } 
+               }
                $html .='</label>';
-           } 
+           }
            $html .='<div class="col-lg-10">';
-       } 
+       }
 
        if(!empty($input) && is_array($input)){
         if(isset($on_off_switch)){
@@ -245,14 +244,14 @@ if (!function_exists('radioInputTemplate')) {
                     $set_label_class = $label_class[$input_value].'-checked';
                 }else{
                  $set_label_class = $label_class[$input_value];
-             } 
+             }
          }else{
             if($input_value == 0){
               $set_label_class = $label_class[$input_value].'-checked';
           }else{
             $set_label_class = $label_class[$input_value];
-        } 
-    } 
+        }
+    }
     $html .='<label class="col-form-label '.$set_label_class.'">
     <input type="radio" name="'.$name.'" value="'.$input_value.'" '.get_edit_select_check_pvr_old_value($name, $item ,$name,$input_value, 'checked' ).' id="'.$name.'-'.$input_value.'" class="'.$class.'" '.$attr.'>&nbsp;'.$input_key.'
     </label>';
@@ -261,7 +260,7 @@ if (!function_exists('radioInputTemplate')) {
 if(isset($on_off_switch)){
     $html .='</div>';
 }
-} 
+}
 
 
 $html .='</div>';
@@ -296,7 +295,7 @@ if (!function_exists('rangeInputTemplate')) {
 
             if(empty($id)){
                $id = $name;
-           } 
+           }
 
            if(!isset($col)){
                $html .='<div class="col-lg-12">';
@@ -373,7 +372,7 @@ if (!function_exists('textareaTemplate')) {
 
         if(empty($id)){
            $id = (isset($name))? str_replace('[]', '',str_replace('_', '-', $name)):$name;
-       } 
+       }
 
        if(!isset($col)){
         $html .='<div class="col-lg-12">';
@@ -419,7 +418,7 @@ if (!function_exists('getStar')) {
             $html_star .='<i class="fa fa-star blue"></i>';
             $html_star .='<i class="fa fa-star blue"></i>';
             $html_star .='<i class="fa fa-star blue"></i>';
-                
+
             }elseif ($rating == 4) {
             $html_star .='<i class="fa fa-star blue"></i>';
             $html_star .='<i class="fa fa-star blue"></i>';
@@ -512,22 +511,22 @@ if (!function_exists('getNewIcon')) {
 }
 }
 
-if (!function_exists('getCountries')) {    
+if (!function_exists('getCountries')) {
     function getCountries($type='object'){
 
         $NamespacedModel = 'App\\Models\\Terms\\Country' ;
-        $getCountries = $NamespacedModel::get(['id','countryname','code'])->map(function($country, $key) use($type){  
+        $getCountries = $NamespacedModel::get(['id','countryname','code'])->map(function($country, $key) use($type){
             if ($type == 'object') {
               return (object)[
                 'id' => $country->code,
                 'value' => $country->countryname
-            ];                 
+            ];
         }else{
             return [
                 'id' => $country->code,
                 'value' => $type
             ];
-        }                                
+        }
 
     });
 
@@ -624,14 +623,14 @@ if (!function_exists('setTermSpace')) {
   {
     $result = "";
     if ($space != 0) {
-      for ($i=0; $i < $space; $i++) { 
+      for ($i=0; $i < $space; $i++) {
           $result .= "&nbsp;&nbsp;&nbsp;";
       }
   }
   return $result;
 }
 }
-if (!function_exists('getTermsForSelectBox')) {    
+if (!function_exists('getTermsForSelectBox')) {
     function getTermsForSelectBox($model=null,$term_type=null,$type='object'){
 
         $getTerms = [];
@@ -641,7 +640,7 @@ if (!function_exists('getTermsForSelectBox')) {
             if (!empty($term_type)) {
                 $getTerms_type = $NamespacedModel::where(['type'=>$term_type])->get(['id','name','parent_id']);
             }
-            $getTerms = $getTerms_type->map(function($term, $key) use($type){ 
+            $getTerms = $getTerms_type->map(function($term, $key) use($type){
                 if ($type == 'object') {
                     return (object)[
                         'id' => $term->id,
@@ -654,7 +653,7 @@ if (!function_exists('getTermsForSelectBox')) {
                         'value' => $term->name,
                         'parent_id'=>$term->parent_id
                     ];
-                }                                
+                }
 
             });
         }
@@ -677,7 +676,7 @@ if (!function_exists('getSingleCustomIcon')) {
         return $icon;
     }
 }
-if (!function_exists('getPostData')) {    
+if (!function_exists('getPostData')) {
     function getPostData($model=null,$parameters=[],$type='object'){
 
         $getPostData = [];
@@ -693,8 +692,8 @@ if (!function_exists('getPostData')) {
               return [
                 'id' => $post->id,
                 'value' => (isset($post->name))?$post->name:$post->title,
-            ];    
-        }                                 
+            ];
+        }
 
     });
         }
@@ -703,7 +702,7 @@ if (!function_exists('getPostData')) {
     }
 }
 
-if (!function_exists('exploreJsonData')) {    
+if (!function_exists('exploreJsonData')) {
     function exploreJsonData($json_data="",$key=null){
 
         $result = "";
@@ -712,7 +711,7 @@ if (!function_exists('exploreJsonData')) {
                 $json_decode = json_decode($json_data);
             }else{
                 $json_decode = $json_data;
-            }   
+            }
             if (empty($key)) {
                 $result = $json_decode;
             }else{
@@ -726,7 +725,7 @@ if (!function_exists('exploreJsonData')) {
    }
 }
 
-if (!function_exists('exploreArrayData')) {    
+if (!function_exists('exploreArrayData')) {
     function exploreArrayData($data="",$key=null){
 
         $result = "";
@@ -742,7 +741,7 @@ if (!function_exists('exploreArrayData')) {
        return $result;
    }
 }
-if (!function_exists('matchRouteName')) {    
+if (!function_exists('matchRouteName')) {
     function matchRouteName($current_route=null){
      $active_class = "";
      if (!empty($current_route)) {
@@ -751,11 +750,11 @@ if (!function_exists('matchRouteName')) {
             $active_class = 'mm-active';
         }
     }
-    
+
     return $active_class;
 }
 }
-if (!function_exists('matchSiteRouteName')) {    
+if (!function_exists('matchSiteRouteName')) {
     function matchSiteRouteName($current_route=null){
      $active_class = "";
      if (!empty($current_route)) {
@@ -764,11 +763,11 @@ if (!function_exists('matchSiteRouteName')) {
             $active_class = 'active';
         }
     }
-    
+
     return $active_class;
 }
 }
-if (!function_exists('matchRouteNameMatch')) {    
+if (!function_exists('matchRouteNameMatch')) {
     function matchRouteNameMatch($current_route=null){
      $active_class = false;
      if (!empty($current_route)) {
@@ -778,12 +777,12 @@ if (!function_exists('matchRouteNameMatch')) {
             $active_class = true;
         }
     }
-    
+
     return $active_class;
 }
 }
 
-if (!function_exists('getIconColorClass')) {    
+if (!function_exists('getIconColorClass')) {
     function getIconColorClass(){
 
      $i_color_dashboard = config('global.i_color_dashboard');
@@ -792,7 +791,7 @@ if (!function_exists('getIconColorClass')) {
 
  }
 }
-if (!function_exists('matchRouteGroupName')) {    
+if (!function_exists('matchRouteGroupName')) {
     function matchRouteGroupName($route_group_name, $group_type=null){
         $mm_show = "";
         if (!empty($route_group_name)) {
@@ -816,7 +815,7 @@ if(!function_exists('get_form_error_msg')){
         if($errors->has($field_name)){
             $form_error='<div id="'.$field_name.'-error" class="invalid-feedback animated fadeInUp" style="display: block;">'.$errors->first($field_name).'</div>';
             return  $form_error;
-        }                        
+        }
     }
 }
 if(!function_exists('get_body_error_msg')){
@@ -869,14 +868,14 @@ if(!function_exists('get_form_success_msg')){
 
         $form_success='<div class="alert alert-success alert-dismissible alert-alt solid fade show"><button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
         </button><strong>Success!</strong>&nbsp;'.$success.'</div>';
-        
+
         return  $form_success;
     }
 }
 
 if(!function_exists('get_edit_select_check_pvr_old_value')){
     function get_edit_select_check_pvr_old_value($input,$compair_obj,$compair_prop, $current_ele, $type){
-     if((!empty($compair_obj->{$compair_prop}))&&(empty(old($input)))){ 
+     if((!empty($compair_obj->{$compair_prop}))&&(empty(old($input)))){
         $select= $compair_obj->{$compair_prop};
     }else{
         $select= old($input);
@@ -904,7 +903,7 @@ if(!function_exists('setCheckboxActiveInactiveStyle')){
     }
 }else{
 
- if((!empty($compair_obj->{$compair_prop}))&&(empty(old($input)))){ 
+ if((!empty($compair_obj->{$compair_prop}))&&(empty(old($input)))){
     $select= $compair_obj->{$compair_prop};
 }else{
     $select= old($input);
