@@ -32,6 +32,9 @@
                         </div>
                         <div class="tab-pane fade" id="list-media">
                             <div class="pt-4">
+                                <div class="file-search">
+                                    <input type="text" class="form-control" placeholder="Search" id="file-search-box" />
+                                </div>
                                 <div class="file-list row"></div>
                                 <div class="file-pagination" id="paginationList"></div>
                             </div>

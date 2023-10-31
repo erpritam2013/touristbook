@@ -21,6 +21,7 @@
                                 <li class="{{matchRouteName('admin.posts.create')}}"><a href="{{route('admin.posts.create')}}">Add New</a></li>
                                   <li class="{{matchRouteName('admin.terms.categories.index')}}"><a href="{{route('admin.terms.categories.index')}}">Categories</a></li>
                                 <li class="{{matchRouteName('admin.terms.tags.index')}}"><a href="{{route('admin.terms.tags.index')}}">Tags</a></li>
+
                             </ul>
                         </li>
                            <li class="{{matchRouteGroupName('pages','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
@@ -28,7 +29,7 @@
                             <ul aria-expanded="false" class="{{matchRouteGroupName('pages','child')}}">
                                 <li class="{{matchRouteName('admin.pages.index')}}"><a href="{{route('admin.pages.pageIndex')}}">List</a></li>
                                 <li class="{{matchRouteName('admin.pages.create')}}"><a href="{{route('admin.pages.create')}}">Add New</a></li>
-                                  
+                                 
                             </ul>
                         </li>
                         <li class="{{matchRouteGroupName('terms','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i

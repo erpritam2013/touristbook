@@ -13097,6 +13097,7 @@ body.activity-list-page .Filter-left .mb-left ul.review-score-filter label span 
     border-color: #fba009;
 }*/
 
+
 body.activity-detail-page #activity-zone-area-pdf td, th {
     border: 1px solid #dddddd;
     text-align: left;
@@ -13717,6 +13718,466 @@ body.activity-detail-page .st-tourism-zone-link-a {
 /*activity tourism zone css end*/
 
 /*activity detail page end css*/
+=======
+/*activity list css end*/
+
+/*activity detail page start css*/
+    
+body.activity-detail-page div#section-contact {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+body.activity-detail-page .Campaigns {
+    background: #fff;
+}
+body.activity-detail-page .st-hotel-header {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+}
+body.activity-detail-page .right {
+    text-align: right;
+    color: #07509e;
+}
+body.activity-detail-page .review-score .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    font-size: 24px;
+    color: #07509e;
+    font-weight: 400;
+    line-height: 25px;
+    margin-bottom: 5px;
+}
+body.activity-detail-page .review-score .head .score:after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    bottom: 0;
+    left: -8px;
+    border: 15px solid transparent;
+    border-bottom: 25px solid #fba009;
+}
+body.activity-detail-page .review-score .head .clearfix:before {
+    display: table;
+    content: " ";
+}
+
+body.activity-detail-page .review-score .head .left {
+    text-align: right;
+/*    margin-left: 107px;*/
+}
+body.activity-detail-page .review-score .head span.head-rating {
+    display: block;
+    line-height: 13px;
+    margin-top: 11px;
+    color: #07509e;;
+}
+
+
+body.activity-detail-page .review-score .head span.text-rating {
+    color: #fba009;
+    font-size: 14px;
+}
+body.activity-detail-page .review-score .head .score {
+    position: relative;
+    float: right;
+    margin-left: 20px;
+    padding: 15px 12px 0;
+    background: #fba009;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 36px;
+    font-weight: 400;
+    min-height: 52px;
+}
+body.activity-detail-page .review-score .head .score span{
+    font-size: 14px;
+    color: #fff;
+}
+body.activity-detail-page .sub-heading {
+    color: #07509e;
+}
+body.activity-detail-page .text-secondary{
+    color: #fba009!important;
+    font-weight: 600;
+}
+body.activity-detail-page .listingDetails .nav-tabs.custom-tabs .nav-item .nav-link.active{
+    background-color: #fba009;
+    color: #fff;
+    border-color: #fba009;
+}
+body.activity-detail-page .listingDetails .nav-tabs.custom-tabs-detail .nav-item .nav-link.active{
+    background-color: #fba009;
+    color: #fff;
+    border-color: #fba009;
+}
+
+body.activity-detail-page .nav-tabs.custom-tabs li.active ul li.active a {
+    background-color: #fba009;
+    color: #fff;
+    border-color: #fba009;
+}
+
+body.activity-detail-page .nav-tabs.custom-tabs li.active ul li a {
+    background-color: #07509e;
+    color: #fff;
+    border-color: #07509e;
+    padding: 7px 18px;
+    border-radius: 3px 3px 0 0;
+    font-size: 14px;
+    margin-right: 1px;
+    margin-bottom: 5px;
+}
+body.activity-detail-page .listingDetails .nav-tabs.custom-tabs .nav-item .nav-link{
+    background-color: #07509e;
+    color: #fff;
+    border-color: #07509e;
+    padding: 7px 30px;
+    border-radius: 3px 3px 0 0;
+    font-size: 14px;
+    margin-right: 1px;
+    margin-bottom: 0px;
+}
+body.activity-detail-page .listingDetails .nav-tabs.custom-tabs-detail .nav-item .nav-link{
+    background-color: #07509e;
+    color: #fff;
+    border-color: #07509e;
+    padding: 7px 10px;
+    border-radius: 3px 3px 0 0;
+    font-size: 14px;
+    margin-right: 1px;
+    margin-bottom: 5px;
+}
+body.activity-detail-page .listingDetails .nav-tabs.custom-tabs-detail .nav-item .nav-tabs .nav-link{
+    margin-bottom: 5px;
+}
+body.activity-detail-page .listingDetails .nav-tabs.custom-tabs .nav-item .nav-tabs .nav-link{
+    margin-bottom: 5px;
+}
+
+body.activity-detail-page .text-muted {
+    padding: 10px 0;
+    color: #000!important;
+}
+body.activity-detail-page .avatar.avatar-xl {
+    width: 4rem;
+    height: auto;
+}
+body.activity-detail-page .nav.nav-tabs.custom-tabs{
+    border-bottom: 1px solid #D7DCE3;
+}
+
+
+body.activity-detail-page .book-inquiry .nav-tabs .nav-link.active {
+    background: #fba009;
+    color: #ffffff!important;
+}
+body.activity-detail-page .listingDetails .booking-search > .row {
+    border: 5px solid #eee;
+    padding: 20px 0 0 0;
+}
+.bbpb{
+    border-bottom: 1px solid #efeded;
+    padding-bottom: 10px;
+}
+.border-solid-d7dce3{
+    border: 1px solid #D7DCE3;
+}
+
+
+body.activity-detail-page #policies-rules-tab .policies-rules-table tr th{
+    width: 20%;
+    font-weight: 600;
+    padding: 15px;
+}
+body.activity-detail-page #policies-rules-tab .policies-rules-table{
+    border: 1px solid #D7DCE3;
+}
+body..activity-detail-page a:focus{
+    background: #07509e;
+    border-color: #07509e;
+    color:#fff;
+}
+
+
+@media (min-width:320px) and (max-width:768px){
+
+    body.activity-detail-page .listingDetails .nav-tabs.custom-tabs,body.activity-detail-page .nav-tabs.custom-tabs-detail{
+        background: #fff;
+    }
+
+    .hotel-price-avg {
+        top: -22px;
+        left: 15px;
+    }
+
+    .room-view-btn {
+        position: relative;
+        top: 0px;
+        left: 15px;
+    }
+    .important-note-wraps{
+        padding: 10px;
+    }
+    .important-note-rooms h1.st-heading-section {
+        font-size: 16px;
+        padding-left: 25px;
+    }
+    .view-on-map {
+        height: auto;
+        margin: 20px 0px;
+    }
+
+
+    body.activity-detail-page .listingDetails .nav-tabs.custom-tabs .nav-item{
+
+        margin-bottom: 5px;
+        width: 49%;
+        text-align: center;
+    }
+
+    body.activity-detail-page .listingDetails .nav-tabs.custom-tabs .nav-item:nth-child(odd) {
+        margin-right: 5px;
+    }
+
+
+    body.activity-detail-page .nav-tabs.custom-tabs-detail .nav-item{
+
+        margin-bottom: 5px;
+        width: 49%;
+        text-align: center;
+    }
+
+    body.activity-detail-page .listingDetails .nav-tabs.custom-tabs-detail .nav-item:nth-child(odd) {
+        margin-right: 5px;
+    }
+}
+
+body.activity-detail-page .service-title a{
+   color: #fba009;
+}
+body.activity-detail-page p.service-location {
+   color: #07509e!important;
+}
+body.activity-detail-page p.service-location span{
+   text-align: justify;
+   margin-left: -15px;
+   position: relative;
+   left: 16px;
+}
+.hotelsamilar .listroBox .listroBoxmain {
+   padding: 0px 25px 3px;
+}
+.hotelsamilar .listroBox ul {
+   padding: 5px 15px 5px 20px;
+}
+body.activity-detail-page #emergency-links-tab .detail-section {
+   padding: 20px;
+}
+body.activity-detail-page #emergency-links-tab table {
+   width: 100%;
+   margin-top: 15px;
+   margin-bottom: 15px;
+}
+body.activity-detail-page #emergency-links-tab tr:nth-child(even) {
+   background-color: #dddddd;
+   padding: 5px;
+}
+body.activity-detail-page #emergency-links-tab td, body.activity-detail-page #emergency-links-tab th {
+   border: 1px solid #D7DCE3;
+   text-align: left;
+   padding: 8px;
+}
+body.activity-detail-page #pocketPDFtab .tab-content{
+   background: #fff;
+   padding: 0px;
+   margin: 0px;
+}
+body.activity-detail-page #pocketPDFtab .detail-section {
+   padding: 20px;
+}
+body.activity-detail-page #pocketPDFtab table {
+   border-collapse: collapse;
+   width: 100%;
+   margin-top: 15px;
+   margin-bottom: 15px;
+   border: 1px solid #D7DCE3;
+}
+body.activity-detail-page #pocketPDFtab table thead tr th {
+   padding: 8px;
+   background: #ddd;
+}
+body.activity-detail-page #pocketPDFtab tr:nth-child(even) {
+   background-color: #D7DCE3;
+   padding: 5px;
+}
+
+body.activity-detail-page #pocketPDFtab ol li:nth-child(odd) {
+   padding:15px;
+}
+body.activity-detail-page #pocketPDFtab td, body.activity-detail-page #emergency-links-tab th {
+   border: 1px solid #D7DCE3;
+   text-align: left;
+   padding: 8px;
+}
+
+body.activity-detail-page #pocketPDFtab .btgrid .row {
+   border: 5px solid #eee;
+   padding: 10px;
+   margin-right: 0px;
+   margin-left: 0px;
+}
+body.activity-detail-page #pocketPDFtab .btgrid .row div:nth-child(odd){
+   border-left: 1px solid #d7dce324;
+   border-right: 1px solid #d7dce324;
+   background-color: #d7dce324;
+   padding-top: 5px;
+   padding-left: 15px;
+}
+body.activity-detail-page #pocketPDFtab .btgrid .row div:nth-child(even){
+   border-left: 1px solid #D7DCE3;
+   border-right: 1px solid #D7DCE3;
+   background-color: #D7DCE3;
+   padding-top: 5px;
+   padding-left: 15px;
+}
+body.activity-detail-page #pocketPDFtab .st-description .btgrid ul li {
+
+   float: none;
+   width: 100%;
+}
+
+body.activity-detail-page #st-include-exclude {
+    border: 5px solid #d7dce3;
+    margin-top: 35px;
+    padding: 15px;
+}
+
+body.activity-detail-page #st-include-exclude .st-include {
+    padding: 0;
+    margin: 0;
+}
+
+body.activity-detail-page #st-include-exclude .st-exclude {
+    padding: 0;
+    margin: 0;
+}
+body.activity-detail-page #st-include-exclude .st-exclude li {
+    list-style: none;
+    font-size: 14px;
+    color: #000000;
+    margin-bottom: 20px;
+}
+body.activity-detail-page #st-include-exclude .st-exclude .exclude li {
+    list-style: none;
+    font-size: 14px;
+    color: #768090;
+    margin-bottom: 16px;
+}
+body.activity-detail-page #st-include-exclude .st-include li, body.activity-detail-page #st-include-exclude .st-exclude li {
+    color: #000000!important;
+}
+
+body.activity-detail-page #st-include-exclude .st-include .include li {
+    list-style: none;
+    font-size: 14px;
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+body.activity-detail-page #st-include-exclude .st-include li i {
+    margin-right: 15px;
+    position: relative;
+    top: 2px;
+}
+body.activity-detail-page #st-include-exclude .st-exclude li i {
+    margin-right: 15px;
+    position: relative;
+    top: 2px;
+}
+
+body.activity-detail-page .important-note-wraps h1.st-heading-section {
+    font-size: 25px;
+}
+
+
+body.activity-detail-page #st-program-section .card-header .title {
+    font-size: 17px;
+    color: #000;
+    text-transform: capitalize;
+}
+body.activity-detail-page #st-program-section .card-header .accicon {
+  float: right;
+  font-size: 20px;  
+  width: 1.2em;
+}
+body.activity-detail-page #st-program-section .card-header{
+  cursor: pointer;
+  border-bottom: none;
+   background: #FCFCFC;
+}
+body.activity-detail-page #st-program-section .card:first-child{
+	border-left-color: #2ECC71;
+}
+body.activity-detail-page #st-program-section .card{
+    border: 1px solid #D7DCE3;
+    border-left: 6px solid #fba009;
+    background: #FCFCFC;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+body.activity-detail-page #st-program-section .card-body {
+    border-top: 1px solid #FCFCFC;
+    height: auto;
+    padding: 15px 30px 30px 20px;
+    border-left: 1px solid #af18ff;
+    margin-left: 35px;
+    margin-bottom: 20px;
+}
+body.activity-detail-page .listingDetails .right .review-score.style-2 .st-link {
+    font-size: 14px;
+    color: #fba009;
+}
+body.activity-detail-page #activity-feature .section .st-activity-feature{
+    border-top: 1px solid #efeded;
+}
+body.activity-detail-page #activity-feature .section .st-activity-feature .item{
+    align-items: flex-start;
+}
+body.activity-detail-page #activity-feature .section .st-activity-feature .item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+body.activity-detail-page #activity-feature .section .st-activity-feature .item .icon{
+    margin-right: 15px;
+}
+
+body.activity-detail-page #activity-feature .section .st-activity-feature .item .icon i{
+    font-size: 30px;
+    color: #fba009;
+}
+body.activity-detail-page #activity-feature .section .st-activity-feature .item .info .name{
+    font-size: 14px;
+    color: #07509e;
+    margin: 0;
+    margin-bottom: 3px;
+}
+body.activity-detail-page .listingDetails .left{
+	float: left;
+}
+body.activity-detail-page #st-program-section .card-header:not(.collapsed) .rotate-icon {
+  transform: rotate(180deg);
+}
+
+
+/*activity detail page end css*/
+
 
 /*filter label border color css start*/
 
