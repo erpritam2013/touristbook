@@ -64,7 +64,7 @@ class PagesController extends Controller
 
         $data['post_type'] = 'Activity';
         $data['title'] = 'Activities';
-        $data['body_class'] = 'activity-page';
+        $data['body_class'] = 'activity-list-page';
         $data['searchTerm'] = $request->get('search');
         $data['sourceType'] = $request->get('source_type');
         $data['sourceId'] = $request->get('source_id');
@@ -145,7 +145,7 @@ class PagesController extends Controller
             $activityQuery = [];
             $activityQuery = Activity::query();
             if ($p_type == 'Activity') {
-            $activityQuery->where('activities.id', '!=',$activity->id);
+            $activityQuery->where('activities.id', '!=',$p_id);
             }
             $activityQuery->leftJoin('activity_states', 'activity_states.activity_id', '=', 'activities.id');
             $activityQuery->where('activity_states.state_id', $state_id);
@@ -157,7 +157,7 @@ class PagesController extends Controller
             $locationQuery = [];
             $locationQuery = Location::query();
             if ($p_type == 'Location') {
-            $locationQuery->where('locations.id', '!=',$location->id);
+            $locationQuery->where('locations.id', '!=',$p_id);
             }
             $locationQuery->leftJoin('location_states', 'location_states.location_id', '=', 'locations.id');
             $locationQuery->where('location_states.state_id', $state_id);
@@ -193,6 +193,39 @@ class PagesController extends Controller
 
 
         return view('sites.pages.tour-detail', $data);
+
+        //return view('sites.pages.tour-detail', compact('hotel', 'tourismZone'));
+
+    }
+
+    public function activityDetail(Request $request, $slug) {
+
+
+
+        $activity = Activity::with(['activity_packages', 'attractions', 'locations', 'languages', 'term_activity_lists', 'states','detail','activity_lists'])->where('slug', $slug)->first();
+        if(!$activity) {
+            abort(404);
+        }
+
+        $data['activity'] = $activity;
+        $data['title'] = 'Activity :: '.ucwords($activity->name);
+        $data['body_class'] = 'activity-detail-page';
+        $state = $activity->states()->first();
+
+        if (!empty($state->id)) {
+          $data = $this->nearByRecords($data,$state->id,$activity->id,'Activity');
+        }
+
+         $data['activity_zone'] = null;
+         if (!empty($activity->detail->activity_zones)) {
+             $data['activity_zone'] = $activity->activity_zone->first();
+         }
+         $data['tourismZone'] = null;
+         
+        if($state) {
+            $data['tourismZone'] =  $state->tourism_zones->first();
+        }
+        return view('sites.pages.activity-detail', $data);
 
         //return view('sites.pages.tour-detail', compact('hotel', 'tourismZone'));
 
@@ -406,6 +439,101 @@ class PagesController extends Controller
         // $tourQuery->where('status', tour::)
 
         return View::make('sites.partials.results.tour', ['tours' => $tours, 'view' => $view]);
+
+    }
+  public function getActivities(Request $request, $view = "list") {
+        
+        if (isMobileDevice()) {
+            $view = "grid";
+        }
+            //dd($request->all());
+        $activityQuery = Activity::query();
+        $activityQuery->selectRaw(' activities.*, activity_details.latitude, activity_details.longitude');
+
+        $activityQuery->leftJoin('activity_details', 'activity_details.activity_id', '=', 'activities.id');
+
+        // $activityQuery->leftJoin('activity_package_types', 'activity_package_types.activity_id', '=', 'activities.id');
+        // $activityQuery->leftJoin('package_types', 'package_types.id', '=', 'activity_package_types.package_type_id');
+
+
+       
+
+        // ratting
+        if($request->has('rating') && !empty($request->get('rating'))) {
+            $ratingValue = $request->get('rating');
+            $rating = explode(",", $ratingValue);
+          
+            $activityQuery->whereIn('activities.rating', $rating);
+        }
+
+        // Term Activity List
+        if($request->has('term_activity_lists') && !empty($request->get('term_activity_lists'))) {
+            $term_activity_listsValue = $request->get('term_activity_lists');
+            $term_activity_lists = explode(",", $term_activity_listsValue);
+            // No Need Data from package Type
+            $activityQuery->leftJoin('activity_term_activity_lists', 'activity_term_activity_lists.activity_id', '=', 'activities.id');
+            $activityQuery->whereIn('activity_term_activity_lists.term_activity_lists_id', $term_activity_lists);
+        }
+
+
+
+        // activity_package_list
+        if($request->has('activity_package_list') && !empty($request->get('activity_package_list'))) {
+            //$activity_package_listValue = $request->get('activity_package_list');
+            //$activity_package_lists = explode(",", $activity_package_listValue);
+            $activityQuery->leftJoin('activity_lists_activities', 'activity_lists_activities.activity_id', '=', 'activities.id');
+        }
+
+        // types
+        // if($request->has('types') && !empty($request->get('types'))) {
+        //     $typesValue = $request->get('types');
+        //     $types = explode(",", $typesValue);
+        //     // No Need Data from Type
+        //     $activityQuery->leftJoin('activity_types', 'activity_types.activity_id', '=', 'activities.id');
+        //     $activityQuery->whereIn('activity_types.type_id', $types);
+        // }
+
+        // languages
+        // if($request->has('language') && !empty($request->get('language'))) {
+        //     $languagesValue = $request->get('language');
+        //     $languages = explode(",", $languagesValue);
+        //     // No Need Data from Language
+        //     $activityQuery->leftJoin('activity_languages', 'activity_languages.activity_id', '=', 'activities.id');
+        //     $activityQuery->whereIn('activity_languages.language_id', $languages);
+        // }
+
+        // Search Params
+        if($request->has('sourceType') && !empty($request->get('sourceType')) && $request->has('sourceId') && !empty($request->get('sourceId'))) {
+            $sourceType = $request->get('sourceType');
+            $sourceId = $request->get('sourceId');
+            if ($sourceType == "state") {
+                $activityQuery->leftJoin('activity_states', 'activity_states.activity_id', '=', 'activities.id');
+                $activityQuery->where('activity_states.state_id', $sourceId);
+            }else {
+                $activityQuery->leftJoin('activity_locations', 'activity_locations.activity_id', '=', 'activities.id');
+                $activityQuery->where('activity_locations.location_id', $sourceId);
+            }
+
+
+        }else if($request->has('searchTerm') && !empty($request->get('searchTerm'))) {
+            //search in address
+            $searchTerm = $request->get('searchTerm');
+            // TODO: JSON Treatment is Pending
+            $activityQuery->where('activities.address', 'LIKE', '%'.$searchTerm.'%');
+        }
+
+
+        $pageNumber = 1;
+        if($request->has('pageNo') && !empty($request->get('pageNo'))) {
+            $pageNumber = $request->get('pageNo');
+        }
+
+
+        $activities = $activityQuery->groupBy('activities.id')->paginate(12, ['*'], 'page', $pageNumber);
+        // TODO: Include Status Check
+        // $activityQuery->where('status', activity::)
+
+        return View::make('sites.partials.results.activity', ['activities' => $activities, 'view' => $view]);
 
     }
 

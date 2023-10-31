@@ -1,23 +1,24 @@
 <div class="form-group row">
     @php
-        if (empty($id)) {
-            $id = isset($name) ? str_replace('[]', '', str_replace('_', '-', $name)) : $name;
-        }
+    if (empty($id)) {
+        $id = isset($name) ? str_replace('[]', '', str_replace('_', '-', $name)) : $name;
+    }
     @endphp
     @if (!isset($col))
-        <div class="col-lg-12">
-            @if (isset($label) && !empty($label))
-                <label class="subform-card-label" for="{{ $id }}">{{ $label }}</label>
-                @if (isset($desc) && !empty($desc))
-                    <p>{{ $desc }}</p>
-                @endif
-            @endif
+    <div class="col-lg-12">
+        @if (isset($label) && !empty($label))
+        <label class="subform-card-label" for="{{ $id }}">{{ $label }}</label>
+        @if (isset($desc) && !empty($desc))
+        <p>{{ $desc }}</p>
+        @endif
+        @endif
         @else
-            @if (isset($label) && !empty($label))
-                <label class="col-lg-2 col-form-label" for="{{ $id }}">{{ $label }}</label>
+        @if (isset($label) && !empty($label))
+        <label class="col-lg-2 col-form-label" for="{{ $id }}">{{ $label }}</label>
+        @endif
+        <div class="col-lg-10">
             @endif
-            <div class="col-lg-10">
-    @endif
+
     <div class="media-controls">
         <input type="hidden" class="form-control media-input {{ $class ?? '' }} gallery-input " name="{{ $name ?? '' }}"
             value="{{ $value ? json_encode($value) : '' }}" />
@@ -30,10 +31,10 @@
             @if($value && isset($value[0]))
             <img src="{{$value[0]['url']}}"  class="img" height="100" width="100" />
             @endif
+
         </div>
     </div>
+       </div>
+   </div>
 
 
-
-</div>
-</div>

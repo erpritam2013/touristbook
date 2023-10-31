@@ -20,7 +20,7 @@
                                 <li class="{{matchRouteName('admin.posts.index')}}"><a href="{{route('admin.posts.index')}}">List</a></li>
                                 <li class="{{matchRouteName('admin.posts.create')}}"><a href="{{route('admin.posts.create')}}">Add New</a></li>
                                   <li class="{{matchRouteName('admin.terms.categories.index')}}"><a href="{{route('admin.terms.categories.index')}}">Categories</a></li>
-                                <li class="{{matchRouteName('admin.terms.types.index')}}"><a href="{{route('admin.terms.types.index')}}">Types</a></li>
+                                <li class="{{matchRouteName('admin.terms.tags.index')}}"><a href="{{route('admin.terms.tags.index')}}">Tags</a></li>
                             </ul>
                         </li>
                         <li class="{{matchRouteGroupName('terms','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
@@ -80,7 +80,7 @@
 
                         @if( auth()->user()->isAdmin() )
                         <li class="{{matchRouteGroupName('users','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                            class="fas fa-hotel sidebar-icon-users"></i><span class="nav-text">User</span></a>
+                            class="fas fa-users sidebar-icon-touristbook"></i><span class="nav-text">User</span></a>
                             <ul aria-expanded="false" class="{{matchRouteGroupName('users','child')}}">
                                 <li class="{{matchRouteName('admin.users.index')}}"><a href="{{route('admin.users.index')}}">List</a></li>
                                 <li class="{{matchRouteName('admin.users.create')}}"><a href="{{route('admin.users.create')}}">Add New</a></li>

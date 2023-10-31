@@ -203,7 +203,7 @@
             </div>
             <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 Nopadding section-footer">
 
-               <div class="tour-service-price" title="Price usually vary or subject to change please visit website to view the best deal.">
+               <div class="tour-service-price" >
 
                 <span class="tour-avg">
                     {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
@@ -222,7 +222,7 @@
 
                 {!!get_price($tour,'₹')!!}
 
-                <span class="unit"><span class="price-ex"><i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;position: absolute;top: -3px;"></i></span></span>
+                <span class="unit"><span class="price-ex"><i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;position: absolute;top: -3px;"><span class="TravelGo-opt-tooltip min-w-500px-fs-14fpx">Price usually vary or subject to change please visit website to view the best deal.</span></i></span></span>
 
 
             </div>
@@ -234,7 +234,7 @@
         <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 Nopadding st-more-information collapse" id="st-tour-content-{{ $tour->id }}">
            @if(!empty($tour->detail->highlights))
 
-           <div class="st-highlight-info">
+           <div class="st-highlight-info p-3">
             <h3 class="st-section-title">Highlights</h3>
             <div class="row" >
                 @foreach($tour->detail->highlights as $key => $highlights)
@@ -278,13 +278,14 @@
 
         @endphp
         @if(!empty($include) || !empty($exclude))
-        <div class="row">  
+        <div class="row p-3" id="st-include-exclude">  
             <div class="col-xs-6 col-sm-6">
                 @if(!empty($include))
                 @php $include_arr = explode("\n", $include); @endphp
                 <div class="st-include">
+                     <h3 class="st-section-title font-weight-bold">Inclusions</h3>
                     @if(!empty($include_arr))
-                    <ul class="include" style="list-style:none;">
+                    <ul class="include p-0" style="list-style:none;line-height: 2;">
                         @foreach($include_arr as $in_k => $in_v)
                         <li style="color:#000;">
                             {!!getNewIcon('check-1', '#2ECC71', '14px', '14px', false)!!}
@@ -301,8 +302,9 @@
                 @if(!empty($exclude))
                 @php $exclude_arr = explode("\n", $exclude); @endphp
                 <div class="st-exclude">
+                       <h3 class="st-section-title font-weight-bold">Exclusions</h3>
                     @if(!empty($include_arr))
-                    <ul class="exclude" style="list-style:none;">
+                    <ul class="exclude p-0" style="list-style:none;line-height: 2;">
                         @foreach($exclude_arr as $ex_k => $ex_v)
                         <li style="color:#000;">
                             {!!getNewIcon('remove', '#ff0000', '14px', '14px', false)!!}
