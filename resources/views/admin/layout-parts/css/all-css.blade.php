@@ -34,7 +34,7 @@
 <link href="{!! asset('admin-part/css/custom-style.css') !!}" rel="stylesheet">
 @endpush
 <!-- For List or Index page css -->
-@if(Route::getRoutes()->match(request())->methods[0] == 'GET' && matchRouteNameMatch('index'))
+@if(Route::getRoutes()->match(request())->methods[0] == 'GET' && (matchRouteNameMatch('index') || matchRouteNameMatch('pageIndex')))
 @push('dataTable_css')
 <!-- Datatable -->
 <link href="{!! asset('admin-part/vendor/datatables/css/jquery.dataTables.min.css') !!}" rel="stylesheet">

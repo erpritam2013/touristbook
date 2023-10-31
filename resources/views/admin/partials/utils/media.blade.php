@@ -16,8 +16,9 @@
         @if (isset($label) && !empty($label))
         <label class="col-lg-2 col-form-label" for="{{ $id }}">{{ $label }}</label>
         @endif
+      
         <div class="col-lg-10">
-            @endif
+    @endif
 
     <div class="media-controls">
         <input type="hidden" class="form-control media-input {{ $class ?? '' }} gallery-input " name="{{ $name ?? '' }}"

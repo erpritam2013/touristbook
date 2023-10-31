@@ -635,9 +635,11 @@
 												<figure><a href="{{route('tour',$near_tour->slug)}}"><img src="https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2023/04/collage-2022-09-04T081031.435-1.jpg" class="img-fluid" alt="">
 													{{--<div class="read_more"><span>View Detail</span></div>--}}
 												</a> </figure>
-												<div class="listroBoxmain">
+												<div class="listroBoxmain p-2">
 													<h2 class="service-title"><a href="{{route('tour',$near_tour->slug)}}">{!!ucwords($near_tour->name ?? '')!!}</a></h2>
-													<p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!$near_tour->address ?? ""!!}</span></p></div>
+													<p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!shortDescription($near_tour->address ?? '',50)!!}</span>@if(strlen($near_tour->address) > 50)
+														&nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$near_tour->address}}" data-more_data_label="Address" style="color:#fba009;"></i>
+													@endif</p></div>
 													<ul>
 														<li class="mt-0 mb-0">
 															<p class="card-text text-muted ">
@@ -678,11 +680,16 @@
 												<div class="col-md-3 col-sm-3  col-xs-12">
 													<div class="listroBox">
 														<figure><a href="{{route('hotel',$near_hotel->slug)}}"><img src="https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2022/08/Tents-10.webp" class="img-fluid" alt="">
-																{{--<div class="read_more"><span>View Detail</span></div>--}}
+															{{--<div class="read_more"><span>View Detail</span></div>--}}
 														</a> </figure>
-														<div class="listroBoxmain">
+														<div class="listroBoxmain p-2">
 															<h2 class="service-title"><a href="{{route('hotel',$near_hotel->slug)}}">{!!ucwords($near_hotel->name ?? '')!!}</a></h2>
-															<p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!$near_hotel->address ?? ""!!}</span></p></div>
+															@php
+															$address = (!empty($near_hotel->address ))?$near_hotel->address:$near_hotel->hotel_attributes['corporateAddress'];
+															@endphp
+															<p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!shortDescription($address,50)!!}</span>@if(strlen($address) > 50)
+																&nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$address}}" data-more_data_label="Address" style="color:#fba009;"></i>
+															@endif</p></div>
 															<ul>
 																<li class="mt-0 mb-0">
 																	{!!getNewIcon('time-clock-circle-1', '#5E6D77', '17px', '17px')!!}{!!$near_hotel->duration_day!!}
@@ -722,11 +729,13 @@
 														<div class="col-md-3 col-sm-3  col-xs-12">
 															<div class="listroBox">
 																<figure><a href="{{route('activity',$near_activity->slug)}}"><img src="{{asset('sites/images/hotels/room1.jpg')}}" class="img-fluid" alt="">
-																		{{--<div class="read_more"><span>View Detail</span></div>--}}
+																	{{--<div class="read_more"><span>View Detail</span></div>--}}
 																</a> </figure>
-																<div class="listroBoxmain">
+																<div class="listroBoxmain p-2">
 																	<h2 class="service-title"><a href="{{route('activity',$near_activity->slug)}}">{!!ucwords($near_activity->name ?? '')!!}</a></h2>
-																	<p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!$near_activity->address ?? ""!!}</span></p></div>
+																	<p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!shortDescription($near_activity->address ?? '',50)!!}</span>@if(strlen($near_activity->address) > 50)
+																		&nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$near_activity->address}}" data-more_data_label="Address" style="color:#fba009;"></i>
+																	@endif</p></div>
 																	<ul>
 																		<li class="mt-0 mb-0">
 																			<p class="card-text text-muted ">
@@ -769,11 +778,13 @@
 																<div class="col-md-3 col-sm-3  col-xs-12">
 																	<div class="listroBox">
 																		<figure><a href="{{route('location',$near_location->slug)}}"><img src="https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2023/07/banner-image-2-270x200.jpg" class="img-fluid" alt="">
-																				{{--<div class="read_more"><span>View Detail</span></div>--}}
+																			{{--<div class="read_more"><span>View Detail</span></div>--}}
 																		</a> </figure>
-																		<div class="listroBoxmain">
+																		<div class="listroBoxmain p-2">
 																			<h2 class="service-title"><a href="{{route('location',$near_location->slug)}}">{!!ucwords($near_location->name ?? '')!!}</a></h2>
-																			<p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!$near_location->map_address ?? ""!!}</span></p></div>
+																			<p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!shortDescription($near_location->map_address ?? '',50)!!}</span>@if(strlen($near_location->map_address) > 50)
+																				&nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$near_location->map_address}}" data-more_data_label="Address" style="color:#fba009;"></i>
+																			@endif</p></div>
 																		</div>
 																	</div>
 																	@endforeach

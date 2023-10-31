@@ -2,6 +2,8 @@
 
 return [
 
+    'page_types' => ['Hotel', 'Tour', 'Car', 'Activity','Room', 'Flight', 'Rental','Location','Post','hotelDetail', 'tourDetail', 'carDetail', 'activityDetail','roomDetail', 'flightDetail', 'rentalDetail','locationDetail','postDetail'],
+    
     'post_types' => ['Hotel', 'Tour', 'Car', 'Activity','Room', 'Flight', 'Rental','Location','Post'],
     'booking_options' => [
       'instant' => 'Instant Booking', 

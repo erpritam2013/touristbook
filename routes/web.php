@@ -261,6 +261,19 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
 
     Route::delete('post/bulk-delete', [PostController::class,'bulk_delete'])->name('posts.bulk-delete');
      Route::get('post/changeStatus', [PostController::class,'changeStatus'])->name('changeStatusPost');
+     // Page Resource
+
+    Route::prefix('pages')->name('pages.')->group(function() {
+        Route::get('/', [PagesController::class,'pages'])->name('pageIndex');
+        Route::get('/create', [PagesController::class,'create'])->name('create');
+        Route::post('/', [PagesController::class,'store'])->name('store');
+        Route::get('/{page}/edit', [PagesController::class,'edit'])->name('edit');
+        Route::get('/{page}', [PagesController::class,'update'])->name('update');
+        Route::delete('/{page}', [PagesController::class,'destroy'])->name('destroy');
+    });
+
+    Route::delete('page/bulk-delete', [PagesController::class,'bulk_delete'])->name('pages.bulk-delete');
+     Route::get('page/changeStatus', [PagesController::class,'changeStatus'])->name('changeStatusPage');
 
      // Room Resource
     Route::resource('rooms', RoomController::class);

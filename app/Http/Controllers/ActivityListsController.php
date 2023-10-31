@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Interfaces\ActivityListsRepositoryInterface;
 use App\Interfaces\ActivityRepositoryInterface;
 use App\Models\ActivityLists;
+use App\Models\Activity;
 use App\Http\Requests\StoreActivityListsRequest;
 use App\Http\Requests\UpdateActivityListsRequest;
 use Illuminate\Http\JsonResponse;
@@ -95,6 +96,9 @@ private function _prepareBasicData() {
     ];
 
     $activity_list = $this->activityListsRepository->createActivityLists($activityListsDetails);
+    if ($activity_list) {
+        $activity_list->activity_list()->attach($request->get('activity_id'));
+    }
     Session::flash('success','Activity Lists Created Successfully');
     return redirect()->Route('admin.activity-lists.index');
 }
@@ -145,18 +149,22 @@ private function _prepareBasicData() {
      */
     public function update(UpdateActivityListsRequest $request,$id)
     {
-
+  
        $activityLists = ActivityLists::find($id);
        $activityListsDetails = [
         'title' => $request->title,
-        'slug' => (!empty($request->slug) && $activityLists->slug != $request->slug)?SlugService::createSlug(ActivityLists::class, 'slug', $request->slug):$activityLists->slug,
+        // 'slug' => (!empty($request->slug) && $activityLists->slug != $request->slug)?SlugService::createSlug(ActivityLists::class, 'slug', $request->slug):$activityLists->slug,
         'description' => $request->description,
         'custom_icon' => $request->custom_icon,
         'status' => $request->status,
             // TODO: created_by pending as Authentication is not Yet Completed
     ];
 
-    $activity_list = $this->activityListsRepository->updateActivityLists($activityLists->id,$activityListsDetails);
+      $this->activityListsRepository->updateActivityLists($activityLists->id,$activityListsDetails);
+
+     if ($activityLists) {
+        $activityLists->activity_list()->sync($request->get('activity_id'));
+    }
     Session::flash('success','Activity Lists Updated Successfully');
     return redirect()->Route('admin.activity-lists.edit',$activityLists->id);
 }
