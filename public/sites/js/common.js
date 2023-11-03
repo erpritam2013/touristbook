@@ -124,6 +124,24 @@ window.showActivityZoneTab = function(ele){
         }
 }
 
+window.readMoreText = function(ele) {
+  let btn = ele;
+  let key = $(btn).data('key');
+  let desc = $(`#long-description-${key}`);
+  let show_text = '';
+   show_text = $(desc).data('show_text');
+    console.log(show_text)
+  if (show_text === "more") {
+    desc.css({'height':'100%'});
+    btn.innerHTML = "Read Less";
+    $(desc).data('show_text','less').attr('data-show_text','less');
+  }else{
+    desc.css({'height':'170px'});
+    btn.innerHTML = "Read More";
+    $(desc).data('show_text','more').attr('data-show_text','more');
+  }
+}
+
 
 $('.activity-zone-li').on('click','a.nav-link',function(e){
     let id = $(this).attr('href');

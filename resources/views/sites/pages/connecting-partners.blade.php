@@ -1,7 +1,11 @@
 @extends('sites.layouts.main')
 @section('title',$title)
 @section('content')
-
+@include('sites.partials.banner', [
+        'bannerUrl' => 'https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2023/04/Screenshot-2023-04-02-210926.jpg',
+        'bannerTitle' => 'Connecting Partners',
+        'bannerSubTitle' => '',
+    ])
 <div class="section section-padding">
             <div class="container">
                 <div class="row">

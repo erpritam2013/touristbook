@@ -3,8 +3,17 @@
  
  <!-- Booking Options -->
 @include('admin.partials.utils.select_box', ['items' => $booking_options, 'name'=> 'st_booking_option_type','selected'=>$tour->st_booking_option_type ?? "",'label'=>'Booking Options'])
-<!-- tour Gallery -->
-@include('admin.partials.utils.media', ['name'=> 'gallery','label'=>'tour Gallery','desc'=>"Upload tour images to show to customers",'value'=>$tour->detail->gallery ?? '','id' => ""])
+
+{{-- Gallery --}}
+
+  @include('admin.partials.utils.gallery', [
+            'name' => 'gallery',
+            'label' => 'Tour Gallery',
+            'value' => $tour->detail->gallery ?? [],
+            'id' => 'tour-gallery',
+            'smode' => 'multiple',
+        ])
+
 <!-- tour Zone Video -->
 @include('admin.partials.utils.input', ['name'=> 'video','label'=>'tour Zone Video','desc'=>"Input youtube/vimeo url here",'value'=>$tour->detail->video ?? '','id' => "",'control'=>'url'])
  

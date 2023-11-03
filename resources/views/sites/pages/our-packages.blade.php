@@ -3,7 +3,7 @@
 
 @section('content')
     @include('sites.partials.banner', [
-        'bannerUrl' => asset('sites/images/banner/hotel.jpg'),
+        'bannerUrl' => 'https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2022/09/PKG-BANNER-IMAGE.webp',
         'bannerTitle' => 'Our Packages',
         'bannerSubTitle' => '',
     ])

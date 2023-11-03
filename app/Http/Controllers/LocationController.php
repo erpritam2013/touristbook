@@ -104,7 +104,12 @@ private function _prepareBasicData() {
     public function store(StoreLocationRequest $request)
     {
 
-
+      if (isset($request->featured_image)) {
+     
+           $request->merge([
+            'featured_image' => json_decode($request->featured_image),
+        ]);
+       }
 
       $locationDetails = [
         "name" => $request->name,
@@ -118,6 +123,7 @@ private function _prepareBasicData() {
         "latitude" => $request->latitude,
         "longitude" => $request->longitude,
         "zoom_level" => $request->zoom_level,
+        'featured_image' => $request->featured_image,
         'status' => $request->status,
             // TODO: created_by pending as Authentication is not Yet Completed
     ];
@@ -131,6 +137,8 @@ private function _prepareBasicData() {
             'gallery' => Null,
         ]);
        }
+
+
      $location->locationMeta()->create($request->only([
         "location_for_filter",
         "location_content",
@@ -234,6 +242,13 @@ public function changeStatus(Request $request): JsonResponse
      */
     public function update(UpdateLocationRequest $request, Location $location)
     {
+
+          if (isset($request->featured_image)) {
+     
+           $request->merge([
+            'featured_image' => json_decode($request->featured_image),
+        ]);
+       }
        $locationDetails = [
         "name" => $request->name,
         "description" => $request->description,
@@ -248,6 +263,7 @@ public function changeStatus(Request $request): JsonResponse
         "longitude" => $request->longitude,
         "zoom_level" => $request->zoom_level,
         'status' => $request->status,
+        'featured_image' => $request->featured_image,
             // TODO: created_by pending as Authentication is not Yet Completed
     ];
 

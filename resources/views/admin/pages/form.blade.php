@@ -17,6 +17,7 @@
         <div class="col-xl-4">
             @include('admin.pages.partials.publish-card', ['page'=>$page ?? null])
              @include('admin.partials.cards.featured-image', ['item'=> $page])
+             @include('admin.pages.partials.types', ['item'=> $page])
 
         </div>
     </div>

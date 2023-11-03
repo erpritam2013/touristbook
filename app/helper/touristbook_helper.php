@@ -165,25 +165,25 @@ if (!function_exists('mediaTemplate')) {
       $html .='<div class="media-controls">';
 
       $html .='<input type="hidden" class="form-control media-input '.$class.' gallery-input " name="'.$name.'"
-            value="'.$value ? json_encode($value) : "".'" />';
+      value="'.$value ? json_encode($value) : "".'" />';
       if($smode == 'single'){
         if($value && isset($value[0])){
             $value_url= $value[0]['url'];
         }
-         $html .='<input type="text" class="form-control media-input '.$class.' gallery-input " name="'.$name.'" value="'.$value_url.'" id="'.$id.'" placeholder="Enter '.$label.'..."/>';
-     }
-     $html .='<button type="button" class="btn btn-primary mt-2 add-media-btn" smode="'.$smode.'" selectedImages="'.$value ? json_encode($value) : "".'"  >+</button>';
-     $html .='<button type="button" class="btn btn-danger mt-2 remove-media-btn">-</button>';
-     $html .='<div class="media-preview">';
-      if($value && isset($value[0])){
-            $html .='<img src="'.$value[0]['url'].'"  class="img" height="100" width="100" />';
-        }
-     $html .='</div>';
-     $html .='</div>';
-     $html .='</div>';
-     $html .='</div>';
- }
- return $html;
+        $html .='<input type="text" class="form-control media-input '.$class.' gallery-input " name="'.$name.'" value="'.$value_url.'" id="'.$id.'" placeholder="Enter '.$label.'..."/>';
+    }
+    $html .='<button type="button" class="btn btn-primary mt-2 add-media-btn" smode="'.$smode.'" selectedImages="'.$value ? json_encode($value) : "".'"  >+</button>';
+    $html .='<button type="button" class="btn btn-danger mt-2 remove-media-btn">-</button>';
+    $html .='<div class="media-preview">';
+    if($value && isset($value[0])){
+        $html .='<img src="'.$value[0]['url'].'"  class="img" height="100" width="100" />';
+    }
+    $html .='</div>';
+    $html .='</div>';
+    $html .='</div>';
+    $html .='</div>';
+}
+return $html;
 }
 }
 if (!function_exists('radioInputTemplate')) {
@@ -327,11 +327,7 @@ if (!function_exists('rangeInputTemplate')) {
 
        $html .=' <input type="number" class="form-control " readonly="" id="'.$id.'_range_input_show" oninput="'.$id.'.value=value" value="'.$value.'">';
        $html .=' </div>';
-
        $html .='</div>';
-
-
-
        $html .='</div> ';
        $html .='</div>';
    }
@@ -369,11 +365,9 @@ if (!function_exists('textareaTemplate')) {
         $desc = (!empty($desc))?$desc: '';
 
         $html .='<div class="form-group row">';
-
         if(empty($id)){
            $id = (isset($name))? str_replace('[]', '',str_replace('_', '-', $name)):$name;
        }
-
        if(!isset($col)){
         $html .='<div class="col-lg-12">';
         if(isset($label) && !empty($label)){
@@ -401,9 +395,78 @@ if (!function_exists('selectBoxTemplate')) {
      $html = "";
      if (!empty($fields_data)) {
         extract($fields_data);
+        $name = (!empty($name))?$name: '';
+        $label = (!empty($label))?$label: '';
+        $id = (!empty($id))?$id: '';
+        $class = (!empty($class))?$class: '';
+        $rows = (!empty($rows))?$rows: 8;
+        $value = (!empty($value))?$value: '';
+        $name = (!empty($name))?$name: '';
+        $label = (!empty($label))?$label: '';
+        $option_attr = (!empty($option_attr))?$option_attr: '';
+        $parent_class = (!empty($parent_class))?$parent_class: '';
+        $attr = (!empty($attr))?$attr: '';
+        $first_option_text = (!empty($first_option_text))?$first_option_text:ucwords($label);
+        $html .='<div class="form-group row '.$parent_class .'">';
 
+        if(isset($multiple) && !empty($multiple)){
+          $multiple = 'multiple="multiple"';
+      }else{
+          $multiple = "";
+      }
+      if(empty($id)){
+       $id = (isset($name))? str_replace('[]', '',str_replace('_', '-', $name)):$name;
+   } 
+
+   if(!isset($col)){
+    $html .='<div class="col-lg-12">';
+    if(isset($label) && !empty($label)){
+     $html .='<label class="subform-card-label" for="'.$id.'">'.$label.'</label>';
+     if(isset($desc) && !empty($desc)){
+      $html .='<p>'.$desc.'</p>';
+  }
+}
+}else{
+ if(isset($label) && !empty($label)){
+     $html .='<label class="col-lg-2 col-form-label" for="'.$id.'">'.$label.'</label>';
+     if(isset($desc) && !empty($desc)){
+      $html .='<p>'.$desc.'</p>';
+  }
+}
+$html .='<div class="col-lg-10">';
+}
+$selected = (empty($items))?$selected:"";
+$html .='<select class="form-control single-select-placeholder-touristbook '.$class .'" id="'.$id.'" name="'.$name.'" '.$multiple.' '.$attr.'  selected_value="'.$selected.'">';
+if(!isset($first_empty_option)){
+    if(isset($label) && !empty($label)){
+        $html .='<option value="" '.$option_attr.'>Select '.$first_option_text.'</option>';
+    }else{
+        $html .='<option value="" '.$option_attr.' >--Select--</option>';
     }
-    return $html;
+}
+if(!empty($items)){
+
+    foreach($items as $item){
+        if(is_array($selected)){
+
+            $selected_attr =  in_array($item->id, $selected) ? 'selected' : ""; 
+            $html .='<option value="'.$item->id.'" '. $selected_attr .' '.$option_attr.' >'.$item->value.'</option>';
+        }else{
+            $selected_attr = ($item->id == $selected) ? 'selected' : "" ; 
+            $html .='<option value="'.$item->id.'" '.$selected_attr.' '.$option_attr.' >'.$item->value.'</option>';
+        }
+    }
+}
+
+$html .='</select>';
+
+if(isset($required)){
+    $html .=get_form_error_msg($errors, $name);
+}
+$html .='</div>';
+$html .='</div>';
+}
+return $html;
 }
 }
 
@@ -413,46 +476,46 @@ if (!function_exists('getStar')) {
         $html_star = "";
         if ($rating != 0) {
             if ($rating == 5) {
-            $html_star .='<i class="fa fa-star blue"></i>';
-            $html_star .='<i class="fa fa-star blue"></i>';
-            $html_star .='<i class="fa fa-star blue"></i>';
-            $html_star .='<i class="fa fa-star blue"></i>';
-            $html_star .='<i class="fa fa-star blue"></i>';
+                $html_star .='<i class="fa fa-star blue"></i>';
+                $html_star .='<i class="fa fa-star blue"></i>';
+                $html_star .='<i class="fa fa-star blue"></i>';
+                $html_star .='<i class="fa fa-star blue"></i>';
+                $html_star .='<i class="fa fa-star blue"></i>';
 
             }elseif ($rating == 4) {
-            $html_star .='<i class="fa fa-star blue"></i>';
-            $html_star .='<i class="fa fa-star blue"></i>';
-            $html_star .='<i class="fa fa-star blue"></i>';
-            $html_star .='<i class="fa fa-star blue"></i>';
-            $html_star .='<i class="fa fa-star gray"></i>';
+                $html_star .='<i class="fa fa-star blue"></i>';
+                $html_star .='<i class="fa fa-star blue"></i>';
+                $html_star .='<i class="fa fa-star blue"></i>';
+                $html_star .='<i class="fa fa-star blue"></i>';
+                $html_star .='<i class="fa fa-star gray"></i>';
             }elseif ($rating == 3) {
-            $html_star .='<i class="fa fa-star blue"></i>';
-            $html_star .='<i class="fa fa-star blue"></i>';
-            $html_star .='<i class="fa fa-star blue"></i>';
-            $html_star .='<i class="fa fa-star gray"></i>';
-            $html_star .='<i class="fa fa-star gray"></i>';
+                $html_star .='<i class="fa fa-star blue"></i>';
+                $html_star .='<i class="fa fa-star blue"></i>';
+                $html_star .='<i class="fa fa-star blue"></i>';
+                $html_star .='<i class="fa fa-star gray"></i>';
+                $html_star .='<i class="fa fa-star gray"></i>';
             }elseif ($rating == 2) {
               $html_star .='<i class="fa fa-star blue"></i>';
+              $html_star .='<i class="fa fa-star blue"></i>';
+              $html_star .='<i class="fa fa-star gray"></i>';
+              $html_star .='<i class="fa fa-star gray"></i>';
+              $html_star .='<i class="fa fa-star gray"></i>';
+          }elseif ($rating == 1) {
             $html_star .='<i class="fa fa-star blue"></i>';
-            $html_star .='<i class="fa fa-star gray"></i>';
-            $html_star .='<i class="fa fa-star gray"></i>';
-            $html_star .='<i class="fa fa-star gray"></i>';
-            }elseif ($rating == 1) {
-            $html_star .='<i class="fa fa-star blue"></i>';
-            $html_star .='<i class="fa fa-star gray"></i>';
-            $html_star .='<i class="fa fa-star gray"></i>';
-            $html_star .='<i class="fa fa-star gray"></i>';
-            $html_star .='<i class="fa fa-star gray"></i>';
-            }
-        }else{
-            $html_star .='<i class="fa fa-star gray"></i>';
             $html_star .='<i class="fa fa-star gray"></i>';
             $html_star .='<i class="fa fa-star gray"></i>';
             $html_star .='<i class="fa fa-star gray"></i>';
             $html_star .='<i class="fa fa-star gray"></i>';
         }
-        return $html_star;
+    }else{
+        $html_star .='<i class="fa fa-star gray"></i>';
+        $html_star .='<i class="fa fa-star gray"></i>';
+        $html_star .='<i class="fa fa-star gray"></i>';
+        $html_star .='<i class="fa fa-star gray"></i>';
+        $html_star .='<i class="fa fa-star gray"></i>';
     }
+    return $html_star;
+}
 }
 if (!function_exists('get_price')) {
     function get_price($obj,$currency_symbal='₹')
@@ -559,17 +622,17 @@ if (!function_exists('unsetValueActivityTourismZone')) {
 
 if (!function_exists('getCustomIcons')) {
     function getCustomIcons($custom_icons)
-   {
+    {
 
        $css = "<style>";
        if (isset($custom_icons) && !empty($custom_icons)) {
            foreach ($custom_icons as $key => $custom_icon) {
-                $css .= ".".$custom_icon->slug."{background:url(".$custom_icon->uri.") no-repeat center!important;}";
-           }
-       }
-      $css .="</style>";
-      return $css;
-   }
+            $css .= ".".$custom_icon->slug."{background:url(".$custom_icon->uri.") no-repeat center!important;}";
+        }
+    }
+    $css .="</style>";
+    return $css;
+}
 }
 
 if (!function_exists('touristbook_custom_grouping_val')) {
@@ -589,33 +652,33 @@ if (!function_exists('touristbook_custom_grouping_val')) {
             // $temp['description'] = $item['description'];
             // $temp['youtube_link'] = $item['youtube_link'];
           $result[$parent][] = $temp;
-        }else{
+      }else{
           $temp[$field_name.'-'.'title'] = $item[$field_name.'-'.'title'];
             // $temp['description'] = $item['description'];
             // $temp['youtube_link'] = $item['youtube_link'];
           $result[$no_parent][] = $temp;
-        }
-        // }
       }
-      return $result;
-    }else{
-      return;
-    }
+        // }
   }
+  return $result;
+}else{
+  return;
+}
+}
 }
 if (!function_exists('castImageValue')) {
     function castImageValue($data,$field_name,$type)
     {
        if (!empty($data)) {
          $file_key = $field_name.'-'.$type;
-          foreach ($data as $key => $value) {
+         foreach ($data as $key => $value) {
             $file = json_decode($value[$file_key],true);
             if (!empty($file) && is_array($file)) {
                $data[$key][$file_key] = $file;
-            }
-      }
-  }
-  return $data;
+           }
+       }
+   }
+   return $data;
 }
 }
 if (!function_exists('setTermSpace')) {
@@ -667,14 +730,14 @@ if (!function_exists('getSingleCustomIcon')) {
     {
         $icon = '';
         if (!empty($id)) {
-        $NamespacedModel = 'App\\Models\\CustomIcon';
-          $result = $NamespacedModel::findOrFail($id);
-          if ($result) {
+            $NamespacedModel = 'App\\Models\\CustomIcon';
+            $result = $NamespacedModel::findOrFail($id);
+            if ($result) {
               $icon = $result->slug;
           }
-        }
-        return $icon;
-    }
+      }
+      return $icon;
+  }
 }
 if (!function_exists('getPostData')) {
     function getPostData($model=null,$parameters=[],$type='object'){
@@ -729,7 +792,7 @@ if (!function_exists('exploreArrayData')) {
     function exploreArrayData($data="",$key=null){
 
         $result = "";
-        if (!empty($json_data)) {
+        if (!empty($data)) {
             if (!empty($key)) {
                $collection = collect($data);
                $result = $collection->get($key);

@@ -23,6 +23,7 @@ class Tour extends Model
     protected $casts = [
         'discount_by_child' => 'array',
         'discount_by_adult' => 'array',
+        'featured_image' => 'array',
         'extra_price' => 'array',
         'is_featured'=>'boolean',
         'hide_adult_in_booking_form'=>'boolean',

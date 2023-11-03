@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\location;
 use App\Models\ActivityList;
 use App\Models\ActivityLists;
+use App\Models\ActivityDetail;
 use App\Models\Terms\Attraction;
 use App\Models\Terms\Language;
 use App\Models\Terms\State;
@@ -39,6 +40,7 @@ class Activity extends Model
         'min_price'=>'float',
         'deposit_payment_amount'=>'float',
         'rating'=>'float',
+        'featured_image' => 'array',
     ];
 
     public function sluggable(): Array

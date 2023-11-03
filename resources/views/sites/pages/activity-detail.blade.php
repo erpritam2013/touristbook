@@ -305,11 +305,11 @@
 								data-height="1075"'!!}@endif
 								>
 								<div class="row">
-									@foreach( $st_activity_lists as $key => $activity )
+									@foreach( $st_activity_lists as $key => $activity__ )
 									@php
-									$custom_icon = getSingleCustomIcon($activity->custom_icon);
-									$long_description = $activity->description;
-									$long_description_without_tag = strip_tags($activity->description);
+									$custom_icon = getSingleCustomIcon($activity__->custom_icon);
+									$long_description = $activity__->description;
+									
 									@endphp
 									<div class="col-xs-12 col-sm-12">
 										<div class="item has-matchHeight">
@@ -329,31 +329,31 @@
 
 													</div>
 												</div>
-												<div class="col-xs-12 col-sm-9">
+												<div class="col-xs-12 col-sm-9 ">
 													<div class="st-activity-heading">
-														<h3>{{$activity->title}}</h3>
+														<h3>{{$activity__->title}}</h3>
 													</div>
 													@if (!empty($long_description))
-													@php $desc_len = strlen($long_description_without_tag)@endphp
-													<div class="st-activity-description" data-toggle-section="st-activity-description-{{$key}}"
-													@if ( $desc_len > 400 ){{'data-show-all="st-activity-description-'.$key.'"
-													data-height="170"'}} @endif>
+													@php 
 
-													<div class="long-description">
+													$desc_len = strlen($long_description);
+                          $style_desc = 'style="overflow:hidden;height:100%;"';
+                          $show_attr = 'data-show_text="all"';
+                          if($desc_len > 400){
+                          	$style_desc = 'style="overflow:hidden;height:170px;"';
+                          	$show_attr = 'data-show_text="more"';
+                          }
 
+													@endphp
+													<div class="st-activity-description">
+													<div class="long-description" id="long-description-{{$key}}" {!!$style_desc!!} {!!$show_attr!!}>
 														{!!$long_description!!}
 													</div>
 												</div>
 												@endif
-												<div class="more-btn" data-len="{{$desc_len}}">
-
+												<div class="more-btn p-2" >
 													@if( $desc_len > 400 )
-													<a href="#" style="padding: 9px 0px;font-size: 15px;" class="st-link block" data-show-target="st-activity-description-{{$key}}"
-													data-text-less="Read Less"
-													data-text-more="Read More"><span
-													class="text">Read More</span>
-													<i
-													class="fa fa-caret-down ml3"></i></a>
+												<a href="javascript:void(0);" class="btn btn-grad btn-sm" onclick="readMoreText(this)" id="readBtn" data-len="{{$desc_len}}" data-key="{{$key}}">Read More</a>
 													@endif
 
 												</div>
@@ -376,6 +376,7 @@
 					<i
 					class="fa fa-caret-down ml3"></i></a>
 					@endif
+
 					@if(!empty($activity_zone))
 					<div class="mt-5 bbpb text-justify" id="activity-zone-area">
 						<div align="center"><a data-toggle="collapse" href="#activity-zone-area-pdf" role="button" aria-expanded="true" aria-controls="activity-zone-area-pdf" style="text-decoration: none;" class="btn btn-grad" onclick="showActivityZoneTab(this);">Activity Zone...
@@ -406,6 +407,7 @@
 						</div>
 					</div>
 					@endif
+	
 					{{-- tourism zone --}}
 					@if(!empty($tourismZone))
 					<div class="mt-5 bbpb text-justify" id="tourism-zone-area" >
@@ -420,6 +422,7 @@
 								</div>
 								@endif
 							</div>
+
 							@if($tourismZone && !empty($tourismZone->tourism_zone))
 							<div class="col-md-12 mt-3">
 								<ul class="nav nav-tabs custom-tabs-detail" id="tourism-zone-area-pdf">
@@ -492,6 +495,7 @@
 						<div class="alert alert-warning mt15">No found data.</div>
 						@endif
 					</div>
+
 					<div class="tab-pane" id="st-program-section">
 						@if (!empty($activity->detail->activity_program))
 						<div class="section mt-4">
