@@ -65,7 +65,7 @@ class RoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function index(RoomDataTable $dataTable)
+    public function index(RoomDataTable $dataTable)
     {
         $data['rooms'] = Room::count();
         $data['title'] = 'Room List';
@@ -73,7 +73,7 @@ class RoomController extends Controller
     }
 
 
-     public function changeStatus(Request $request): JsonResponse
+    public function changeStatus(Request $request): JsonResponse
     {
         $roomId = $request->id;
         $roomDetails = [
@@ -107,83 +107,88 @@ class RoomController extends Controller
      */
     public function store(StoreRoomRequest $request)
     {
+     if (isset($request->featured_image)) {
+         
+       $request->merge([
+        'featured_image' => json_decode($request->featured_image),
+    ]);
+   }
+   $roomDetails = [
 
-       $roomDetails = [
-
-          
-          'name' =>$request->name,
-          'hotel_id' =>$request->hotel_id,
-          'slug' => SlugService::createSlug(room::class, 'slug', $request->name),
-          'description' =>$request->description,
-          'excerpt' =>$request->excerpt,
-          'address' =>$request->address,
-          'price' =>$request->price,
-          'number_room' =>$request->number_room,
-          'adult_number' =>$request->adult_number,
-          'children_number' =>$request->children_number,
-          'adult_price' =>$request->adult_price,
-          'child_price' =>$request->child_price,
-          'extra_price' =>$request->extra_price,
-          'extra_price_unit' =>$request->extra_price_unit,
-          'featured_image' =>$request->featured_image,
-          'featured_image_id' =>$request->featured_image_id,
+      
+      'name' =>$request->name,
+      'hotel_id' =>$request->hotel_id,
+      'slug' => SlugService::createSlug(room::class, 'slug', $request->name),
+      'description' =>$request->description,
+      'excerpt' =>$request->excerpt,
+      'address' =>$request->address,
+      'price' =>$request->price,
+      'number_room' =>$request->number_room,
+      'adult_number' =>$request->adult_number,
+      'children_number' =>$request->children_number,
+      'adult_price' =>$request->adult_price,
+      'child_price' =>$request->child_price,
+      'extra_price' =>$request->extra_price,
+      'extra_price_unit' =>$request->extra_price_unit,
+      'featured_image' =>$request->featured_image,
+          // 'featured_image_id' =>$request->featured_image_id,
           // 'created_by' =>$request->created_by,
-          'status' =>$request->status,
-          
+      'status' =>$request->status,
+      
 
 
             // TODO: created_by pending as Authentication is not Yet Completed
-      ];
+  ];
 
 
-      if ($request->has('st_room_external_booking') && $request->st_room_external_booking == 0) {
-          $request->merge([
-            'st_room_external_booking_link' => null,
-        ]);
-      }
+  if ($request->has('st_room_external_booking') && $request->st_room_external_booking == 0) {
+      $request->merge([
+        'st_room_external_booking_link' => null,
+    ]);
+  }
 
-      $room = $this->roomRepository->createRoom($roomDetails);
+  $room = $this->roomRepository->createRoom($roomDetails);
 
-      if ($room) {
+  if ($room) {
             // TODO: Move this to Repository
 
-        $roomMetaData = [
+    $roomMetaData = [
 
-          "st_booking_option_type",
-          "gallery",
-          "hotel_alone_room_layout",
-          "disable_adult_name",
-          "disable_children_name",
+      "st_booking_option_type",
+      "gallery",
+      "hotel_alone_room_layout",
+      "disable_adult_name",
+      "disable_children_name",
 
           // "room_facility_preview_id",
-          "room_facility_preview",
+      "room_facility_preview",
 
-          "bed_number",
-          "room_footage",
-          "st_room_external_booking",
-          "st_room_external_booking_link",
-          "add_new_facility",
-          "room_description",
-          "social_links",
+      "bed_number",
+      "room_footage",
+      "st_room_external_booking",
+      "st_room_external_booking_link",
+      "add_new_facility",
+      "room_description",
+      "social_links",
 
-      ];
+  ];
 
-      $room->detail()->create($request->only($roomMetaData));
-
-
+  $room->detail()->create($request->only($roomMetaData));
 
 
-      $room->facilities()->attach($request->get('facilities'));
-      $room->types()->attach($request->get('type'));
-      $room->locations()->attach($request->get('location_id'));
-      
+
+
+  $room->facilities()->attach($request->get('facilities'));
+  $room->types()->attach($request->get('type'));
+  $room->locations()->attach($request->get('location_id'));
+  
             // activitiescard
-  }
+}
 
 
         // return $room;
-   Session::flash('success','Room Created Successfully');
-   return redirect()->Route('admin.rooms.index');
+Session::flash('success','Room Created Successfully');
+return redirect()->Route('admin.rooms.index');
 }
 
     /**
@@ -206,17 +211,17 @@ class RoomController extends Controller
     public function edit(Room $room)
     {
        $room = Room::with([
-            'facilities', 'types', 'hotels', 'locations',])->find($room->id);
+        'facilities', 'types', 'hotels', 'locations',])->find($room->id);
 
-        if (empty($room)) {
-            return back();
-        }
-
-        $data['title'] = 'Room Edit';
-        $data['room'] = $room;
-        $data = array_merge_recursive($data, $this->_prepareBasicData());
-        return view('admin.rooms.edit', $data);
+       if (empty($room)) {
+        return back();
     }
+
+    $data['title'] = 'Room Edit';
+    $data['room'] = $room;
+    $data = array_merge_recursive($data, $this->_prepareBasicData());
+    return view('admin.rooms.edit', $data);
+}
 
     /**
      * Update the specified resource in storage.
@@ -227,83 +232,88 @@ class RoomController extends Controller
      */
     public function update(UpdateRoomRequest $request, Room $room)
     {
-
-      
-        $roomDetails = [
-          'name' =>$request->name,
-          'hotel_id' =>$request->hotel_id,
+      if (isset($request->featured_image)) {
+       
+         $request->merge([
+            'featured_image' => json_decode($request->featured_image),
+        ]);
+     }
+     
+     $roomDetails = [
+      'name' =>$request->name,
+      'hotel_id' =>$request->hotel_id,
           //'slug' => SlugService::createSlug(room::class, 'slug', $request->name),
-          'description' =>$request->description,
-          'excerpt' =>$request->excerpt,
-          'address' =>$request->address,
-          'price' =>$request->price,
-          'number_room' =>$request->number_room,
-          'adult_number' =>$request->adult_number,
-          'children_number' =>$request->children_number,
-          'adult_price' =>$request->adult_price,
-          'child_price' =>$request->child_price,
-          'extra_price' =>$request->extra_price,
-          'extra_price_unit' =>$request->extra_price_unit,
-          'featured_image' =>$request->featured_image,
-          'featured_image_id' =>$request->featured_image_id,
+      'description' =>$request->description,
+      'excerpt' =>$request->excerpt,
+      'address' =>$request->address,
+      'price' =>$request->price,
+      'number_room' =>$request->number_room,
+      'adult_number' =>$request->adult_number,
+      'children_number' =>$request->children_number,
+      'adult_price' =>$request->adult_price,
+      'child_price' =>$request->child_price,
+      'extra_price' =>$request->extra_price,
+      'extra_price_unit' =>$request->extra_price_unit,
+      'featured_image' =>$request->featured_image,
+          // 'featured_image_id' =>$request->featured_image_id,
           // 'created_by' =>$request->created_by,
-          'status' =>$request->status,
-          
+      'status' =>$request->status,
+      
 
 
             // TODO: created_by pending as Authentication is not Yet Completed
-      ];
+  ];
 
 
-      if ($request->has('st_room_external_booking') && $request->st_room_external_booking == 0) {
-          $request->merge([
-            'st_room_external_booking_link' => null,
-        ]);
-      }
+  if ($request->has('st_room_external_booking') && $request->st_room_external_booking == 0) {
+      $request->merge([
+        'st_room_external_booking_link' => null,
+    ]);
+  }
 
-      $this->roomRepository->updateRoom($room->id,$roomDetails);
+  $this->roomRepository->updateRoom($room->id,$roomDetails);
 
-      if ($room) {
+  if ($room) {
             // TODO: Move this to Repository
 
-        $roomMetaData = [
+    $roomMetaData = [
 
-          "st_booking_option_type",
-          "gallery",
-          "hotel_alone_room_layout",
-          "disable_adult_name",
-          "disable_children_name",
+      "st_booking_option_type",
+      "gallery",
+      "hotel_alone_room_layout",
+      "disable_adult_name",
+      "disable_children_name",
 
           // "room_facility_preview_id",
-          "room_facility_preview",
+      "room_facility_preview",
 
-          "bed_number",
-          "room_footage",
-          "st_room_external_booking",
-          "st_room_external_booking_link",
-          "add_new_facility",
-          "room_description",
-          "social_links",
+      "bed_number",
+      "room_footage",
+      "st_room_external_booking",
+      "st_room_external_booking_link",
+      "add_new_facility",
+      "room_description",
+      "social_links",
 
-      ];
+  ];
 
-      $room->detail()->update($request->only($roomMetaData));
-
-
+  $room->detail()->update($request->only($roomMetaData));
 
 
-      $room->facilities()->sync($request->get('facilities'));
-      $room->types()->sync($request->get('type'));
-      $room->locations()->sync($request->get('location_id'));
-      
+
+
+  $room->facilities()->sync($request->get('facilities'));
+  $room->types()->sync($request->get('type'));
+  $room->locations()->sync($request->get('location_id'));
+  
             // activitiescard
-  }
+}
 
 
         // return $room;
-   Session::flash('success','Room Updated Successfully');
-   return redirect()->Route('admin.rooms.edit',$room->id);
-    }
+Session::flash('success','Room Updated Successfully');
+return redirect()->Route('admin.rooms.edit',$room->id);
+}
 
     /**
      * Remove the specified resource from storage.
@@ -315,20 +325,20 @@ class RoomController extends Controller
     {
       $roomId = $room->id;
 
-        $this->roomRepository->deleteRoom($roomId);
-        Session::flash('success','Room Deleted Successfully');
-        return back();
+      $this->roomRepository->deleteRoom($roomId);
+      Session::flash('success','Room Deleted Successfully');
+      return back();
+  }
+
+
+  public function bulk_delete(Request $request)
+  {
+    if (!empty($request->ids)) {
+
+        $roomIds = get_array_mapping(json_decode($request->ids));
+        $this->roomRepository->deleteBulkRoom($roomIds);
+        Session::flash('success', 'Room Bulk Deleted Successfully');
     }
-
-
-    public function bulk_delete(Request $request)
-    {
-        if (!empty($request->ids)) {
-
-            $roomIds = get_array_mapping(json_decode($request->ids));
-            $this->roomRepository->deleteBulkRoom($roomIds);
-            Session::flash('success', 'Room Bulk Deleted Successfully');
-        }
-        return back();
-    }
+    return back();
+}
 }

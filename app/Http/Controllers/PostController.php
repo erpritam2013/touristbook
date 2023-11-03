@@ -80,8 +80,13 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
 
-
-       $postDetails = [
+     if (isset($request->featured_image)) {
+       
+         $request->merge([
+            'featured_image' => json_decode($request->featured_image),
+        ]);
+     }
+     $postDetails = [
         'name' => $request->name,
         'description' => $request->description,
         'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
@@ -118,11 +123,11 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-       $postId = $request->route('postId');
+     $postId = $request->route('postId');
 
-       $post = $this->postRepository->getPostById($postId);
+     $post = $this->postRepository->getPostById($postId);
 
-       if (empty($post)) {
+     if (empty($post)) {
         return back();
     }
 }
@@ -158,7 +163,14 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-      $postDetails = [
+
+      if (isset($request->featured_image)) {
+       
+         $request->merge([
+            'featured_image' => json_decode($request->featured_image),
+        ]);
+     }
+     $postDetails = [
         'name' => $request->name,
         'description' => $request->description,
         //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),

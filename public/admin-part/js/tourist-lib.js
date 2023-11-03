@@ -578,7 +578,12 @@ $(".submit-media").on("click", function() {
     let jsonStringify = JSON.stringify(selectedImages)
     if(targetElem.attr('smode') == "single") {
         // jsonStringify = selectedImages[0].url;
+
+        if(selectedImages.length != 0){
         targetElem.parent().find('.media-txt-only').first().val(selectedImages[0].url);
+        }else{
+            targetElem.parent().find('.media-txt-only').first().val('');
+        }
     }
 
     targetElem.attr("selectedImages", jsonStringify)

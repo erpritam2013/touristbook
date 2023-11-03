@@ -2,6 +2,7 @@
 
     @if ($activities->isNotEmpty())
     @foreach ($activities as $key => $activity)
+    
     <div class="col-lg-12 col-md-12 col-sm-12 activity-list-page">
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -10,8 +11,10 @@
                         <figure> 
                             {{--<a href="tour-detailed.html" class="wishlist_bt"></a>--}}
                             {!!is_featured($activity->is_featured,'Featured')!!}
+
+                            @php $featured_image = (!empty($activity->featured_image))?$activity->featured_image[0]['url']:null;@endphp
                             <a
-                            href="{{route('activity',$activity->slug)}}"><img src="https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2023/04/collage-2023-04-15T133436.483-compressed.jpg"
+                            href="{{route('activity',$activity->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/350x250.jpg')}}"
                             class="img-fluid" alt="">
                             {{--<div class="read_more"><span>Read more</span></div>--}}
                         </a> </figure>

@@ -1,6 +1,7 @@
 <div class="row">
 
     @if ($hotels->isNotEmpty())
+
     @foreach ($hotels as $key => $hotel)
     <div class="col-lg-12 col-md-12 col-sm-12 hotel-list-page">
         <div class="row">
@@ -10,8 +11,9 @@
                         <figure> 
                             {{--<a href="hotel-detailed.html" class="wishlist_bt"></a>--}}
                             {!!is_featured($hotel->is_featured)!!}
+                            @php $featured_image = (!empty($hotel->featured_image))?$hotel->featured_image[0]['url']:null;@endphp
                             <a
-                            href="{{route('hotel',$hotel->slug)}}"><img src="{{$hotel->featured_image ?? asset('sites/images/dummy/350x250.jpg')}}"
+                            href="{{route('hotel',$hotel->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/350x250.jpg')}}"
                             class="img-fluid" alt="">
                             {{--<div class="read_more"><span>Read more</span></div>--}}
                         </a> </figure>

@@ -154,6 +154,12 @@ class HotelController extends Controller
     public function store(StoreHotelRequest $request)
     {
         // dd($request->all());
+          if (isset($request->featured_image)) {
+     
+           $request->merge([
+            'featured_image' => json_decode($request->featured_image),
+        ]);
+       }
         $images = json_decode($request->images);
         $hotelDetails = [
             'name' => $request->name,
