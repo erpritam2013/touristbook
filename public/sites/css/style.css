@@ -10776,7 +10776,7 @@ label.lbl-search-box {
 body.tour-list-page .ui-autocomplete.ui-menu {
     width: 36.5% !important;
     margin-top: 111px;
-    top: -4864.31px!important;
+    top: -4672.31px!important;
 }
 
 
@@ -10802,6 +10802,9 @@ body.tour-list-page .ui-autocomplete.ui-menu {
 /*extra css hotel start*/
 
 
+.hotel-list-page .ui-autocomplete.ui-menu{
+	top: -3167.2px !important;
+}
 .hotel-list-page .TravelGo-opt-list a {
 	float: right;
 	width: 36px;
@@ -12784,9 +12787,9 @@ body.activity-list-page input.main-search-box {
 	font-size: 16px;
 }
 body.activity-list-page .ui-autocomplete.ui-menu {
-    width: 36.5% !important;
+    width: 32.2% !important;
     margin-top: 111px;
-    top: -4864.31px!important;
+    top: -2132.39px!important;
 }
 
 
@@ -14195,6 +14198,18 @@ body.activity-detail-page #st-program-section .card-header:not(.collapsed) .rota
 }
 /*filter label border color css end*/
 
+/*about page start css*/
+body.about-page .innerpage-banner.left {
+    text-align: left;
+    height: 230px;
+}
+/*about page end css*/
 
+/*connecting partners page start css*/
+body.connecting-partners-page .innerpage-banner.left {
+    text-align: left;
+    height: 230px;
+}
+/*connecting partners page end css*/
 
 

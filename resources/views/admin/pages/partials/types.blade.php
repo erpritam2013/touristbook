@@ -6,9 +6,9 @@
     <div class="card-body">
 
    
-        <!-- Excerpt -->
+        <!-- Page Type -->
       
- {!!selectBoxTemplate(['items' => config('global.page_types'), 'name'=> 'type','selected'=>$selected,'lebal'=>'Page Type'])!!}
+ {!!selectBoxTemplate(['items' => $booking_options, 'name'=> 'type','selected'=>null,'lebal'=>'Page Type'])!!}
        
 
     </div>

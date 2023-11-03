@@ -40,23 +40,13 @@
 
 {{-- Gallery --}}
 
-<div class="form-group row ">
-    <div class="col-lg-12">
-
-        @include('admin.partials.utils.gallery', [
+  @include('admin.partials.utils.gallery', [
             'name' => 'images',
             'label' => 'Hotel Gallery',
             'value' => $hotel->images ?? [],
             'id' => 'hotel-gallery',
             'smode' => 'multiple',
         ])
-
-
-        {{-- <label class="subform-card-label" for="hotel-gallery">Hotel Gallery</label> --}}
-
-
-    </div>
-</div>
 
 
 {!!inputTemplate(['name'=> 'coupon_code','label'=>'Coupon Code','value'=>$hotel->coupon_code ?? '','id' => ""])!!}

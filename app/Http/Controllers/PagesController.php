@@ -234,6 +234,8 @@ class PagesController extends Controller
             abort(404);
         }
 
+
+
         $data['activity'] = $activity;
         $data['title'] = 'Activity :: '.ucwords($activity->name);
         $data['body_class'] = 'activity-detail-page';
@@ -258,6 +260,8 @@ class PagesController extends Controller
         if($state) {
             $data['tourismZone'] =  $state->tourism_zones->first();
         }
+
+
         return view('sites.pages.activity-detail', $data);
 
         //return view('sites.pages.tour-detail', compact('hotel', 'tourismZone'));

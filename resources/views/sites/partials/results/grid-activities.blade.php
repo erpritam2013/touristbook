@@ -5,9 +5,10 @@
                 <div class="listroBox" latitude="{{$activity->latitude}}" longitude="{{$activity->longitude}}">
                     <figure> {{--<a href="{{route('activity',$activity->slug)}}" class="wishlist_bt"></a>--}}
                     {!!is_featured($activity->is_featured)!!}
+                            @php $featured_image = (!empty($activity->featured_image))?$activity->featured_image[0]['url']:null;@endphp
                      <a href="{{route('activity',$activity->slug)}}"><img
-                                src="/sites/images/activities/room6.jpg" class="img-fluid" alt="">
-                            <div class="read_more"><span>Read more</span></div>
+                                src="{{$featured_image ?? asset('sites/images/dummy/350x250.jpg')}}" class="img-fluid" alt="">
+                            {{--<div class="read_more"><span>Read more</span></div>--}}
                         </a> </figure>
                     <div class="listroBoxmain">
                         <h4 class="service-title"><a href="{{route('activity',$activity->slug)}}">{{ $activity->name }}</a></h4>
@@ -53,16 +54,12 @@
                     </div>
                         </li>
                         <li>
-                            
                              <div class="tour-social-links collapse fl-wrap" id="tour-social-links-{{$activity->id}}">
 
                     <a href="#" class="TravelGo-js-favorite"><i class="fas fa-heart"></i><span class="TravelGo-opt-tooltip">Save</span></a> 
                     <a href="#" class="TravelGo-js-favorite"><i class="fas fa-heart"></i><span class="TravelGo-opt-tooltip">Save</span></a> 
                     <a href="#" class="TravelGo-js-favorite"><i class="fas fa-heart"></i><span class="TravelGo-opt-tooltip">Save</span></a> 
                     <a href="#" class="TravelGo-js-favorite"><i class="fas fa-heart"></i><span class="TravelGo-opt-tooltip">Save</span></a> 
-
-
-
                 </div>
                         </li>
                     </ul>
