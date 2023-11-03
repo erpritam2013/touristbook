@@ -10,8 +10,9 @@
                         <figure> 
                             {{--<a href="tour-detailed.html" class="wishlist_bt"></a>--}}
                             {!!is_featured($tour->is_featured,'Featured Tour')!!}
+                             @php $featured_image = (!empty($tour->featured_image))?$tour->featured_image[0]['url']:null;@endphp
                             <a
-                            href="{{route('tour',$tour->slug)}}"><img src="https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2023/04/collage-2022-09-04T081031.435-1.jpg"
+                            href="{{route('tour',$tour->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/350x250.jpg')}}"
                             class="img-fluid" alt="">
                             {{--<div class="read_more"><span>Read more</span></div>--}}
                         </a> </figure>
