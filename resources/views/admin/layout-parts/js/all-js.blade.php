@@ -8,10 +8,10 @@
         <script src="{!! asset('admin-part/js/custom.min.js') !!}"></script>
         @endpush
         @push('map_js')
-        <script
+      <!--   <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCF8MnYK1Ft-lPa3_B6rirg2IJzptB4m1Y&v=weekly&libraries=places&callback=Function.prototype"
         defer
-        ></script>
+        ></script> -->
         @endpush
 
 
@@ -22,7 +22,7 @@
         @endpush
         @push('sortable_js')
         <!-- Sortable JS  -->
-        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+        <!-- <script src="{{asset('admin-part/vendor/jquery-ui/jquery-ui-1.13.2.custom/jquery-ui.js')}}"></script> -->
         @endpush
         @if(matchRouteNameMatch('locations'))
 

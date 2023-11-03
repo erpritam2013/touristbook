@@ -110,7 +110,7 @@ class RoomController extends Controller
      if (isset($request->featured_image)) {
          
        $request->merge([
-        'featured_image' => json_decode($request->featured_image),
+        'featured_image' => json_decode($request->featured_image,true),
     ]);
    }
    $roomDetails = [
@@ -235,7 +235,7 @@ return redirect()->Route('admin.rooms.index');
       if (isset($request->featured_image)) {
        
          $request->merge([
-            'featured_image' => json_decode($request->featured_image),
+            'featured_image' => json_decode($request->featured_image,true),
         ]);
      }
      
