@@ -9,7 +9,7 @@
                                     @include('admin.locations.partials.location-settings', ['location'=>$location ?? null])
 
                                     @include('admin.locations.partials.extra-notes', ['location'=>$location ?? null])
-                                    
+
                                 </div>
                                 <div class="col-xl-4">
                                     @include('admin.locations.partials.publish-card', ['location'=>$location ?? null])
