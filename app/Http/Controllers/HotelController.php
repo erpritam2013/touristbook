@@ -140,14 +140,14 @@ class HotelController extends Controller
         $data['title'] = 'Hotel';
         $data['hotel'] = $hotel;
         $data = array_merge_recursive($data, $this->_prepareBasicData());
-        if (!empty($hotel->detail->todovideo)) {
-           $hotel->detail->todovideo = castImageValue($hotel->detail->todovideo,'todovideo','file');
-        }
-        if (!empty($hotel->detail->eventmeeting)) {
-           $hotel->detail->eventmeeting = castImageValue($hotel->detail->eventmeeting,'eventmeeting','file');
-        }
-        
-        
+        // if (!empty($hotel->detail->todovideo)) {
+        //    $hotel->detail->todovideo = castImageValue($hotel->detail->todovideo,'todovideo','file');
+        // }
+        // if (!empty($hotel->detail->eventmeeting)) {
+        //    $hotel->detail->eventmeeting = castImageValue($hotel->detail->eventmeeting,'eventmeeting','file');
+        // }
+
+
         return view('admin.hotels.edit', $data);
     }
 
@@ -155,7 +155,7 @@ class HotelController extends Controller
     {
         // dd($request->all());
           if (isset($request->featured_image)) {
-     
+
            $request->merge([
             'featured_image' => json_decode($request->featured_image),
         ]);
@@ -272,7 +272,7 @@ class HotelController extends Controller
     public function update(UpdateHotelRequest $request, Hotel $hotel)
     {
 
-       
+
         $images = json_decode($request->images);
         $hotelDetails = [
             'name' => $request->name,
