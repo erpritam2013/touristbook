@@ -104,12 +104,13 @@ private function _prepareBasicData() {
     public function store(StoreLocationRequest $request)
     {
 
-      if (isset($request->featured_image)) {
+
+      // if (isset($request->featured_image)) {
      
-           $request->merge([
-            'featured_image' => json_decode($request->featured_image),
-        ]);
-       }
+      //      $request->merge([
+      //       'featured_image' => json_decode($request->featured_image,true),
+      //   ]);
+      //  }
 
       $locationDetails = [
         "name" => $request->name,
@@ -124,12 +125,13 @@ private function _prepareBasicData() {
         "longitude" => $request->longitude,
         "zoom_level" => $request->zoom_level,
         'featured_image' => $request->featured_image,
+        'logo' => $request->logo,
         'status' => $request->status,
             // TODO: created_by pending as Authentication is not Yet Completed
     ];
-  //dd($locationDetails);
+  
     $location = $this->locationRepository->createLocation($locationDetails);
-
+    
     if($location) {
 
       if($request->gallery == '' || empty($request->gallery) || count($request->gallery) == 0) {
@@ -228,6 +230,35 @@ public function changeStatus(Request $request): JsonResponse
     $data['title'] = 'Location Edit';
     $data['location'] = $location;
     $data = array_merge_recursive($data, $this->_prepareBasicData());
+
+    // if (!empty($location->detail->place_to_visit)) {
+    //        $location->detail->place_to_visit = castImageValue($location->detail->place_to_visit,'place_to_visit','image');
+    //     }
+     
+    // if (!empty($location->detail->fair_and_festivals)) {
+    //        $location->detail->fair_and_festivals = castImageValue($location->detail->fair_and_festivals,'fair_and_festivals','image');
+    //     }
+    // if (!empty($location->detail->culinary_retreat)) {
+    //        $location->detail->culinary_retreat = castImageValue($location->detail->culinary_retreat,'culinary_retreat','image');
+    //     }
+    // if (!empty($location->detail->shopaholics_anonymous)) {
+    //        $location->detail->shopaholics_anonymous = castImageValue($location->detail->shopaholics_anonymous,'shopaholics_anonymous','image');
+    //     }
+    // if (!empty($location->detail->what_to_do)) {
+    //        $location->detail->what_to_do = castImageValue($location->detail->what_to_do,'what_to_do','image');
+    //     }
+    // if (!empty($location->detail->hotel_activities)) {
+    //        $location->detail->hotel_activities = castImageValue($location->detail->hotel_activities,'hotel_activities','image');
+    //     }
+    // if (!empty($location->detail->by_aggregators)) {
+    //        $location->detail->by_aggregators = castImageValue($location->detail->by_aggregators,'by_aggregators','image');
+    //     }
+    // if (!empty($location->detail->b_govt_subsidiaries)) {
+    //        $location->detail->b_govt_subsidiaries = castImageValue($location->detail->b_govt_subsidiaries,'b_govt_subsidiaries','image');
+    //     }
+    // if (!empty($location->detail->by_hotels)) {
+    //        $location->detail->by_hotels = castImageValue($location->detail->by_hotels,'by_hotels','image');
+    //     }
         // TODO: Need to Improve here (Fetch from Cache)
     
     return view('admin.locations.edit', $data);
@@ -243,12 +274,12 @@ public function changeStatus(Request $request): JsonResponse
     public function update(UpdateLocationRequest $request, Location $location)
     {
 
-          if (isset($request->featured_image)) {
+       //    if (isset($request->featured_image)) {
      
-           $request->merge([
-            'featured_image' => json_decode($request->featured_image),
-        ]);
-       }
+       //     $request->merge([
+       //      'featured_image' => json_decode($request->featured_image,true),
+       //  ]);
+       // }
        $locationDetails = [
         "name" => $request->name,
         "description" => $request->description,
@@ -264,6 +295,7 @@ public function changeStatus(Request $request): JsonResponse
         "zoom_level" => $request->zoom_level,
         'status' => $request->status,
         'featured_image' => $request->featured_image,
+        'logo' => $request->logo,
             // TODO: created_by pending as Authentication is not Yet Completed
     ];
 
