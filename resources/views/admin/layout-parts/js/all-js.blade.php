@@ -8,10 +8,10 @@
         <script src="{!! asset('admin-part/js/custom.min.js') !!}"></script>
         @endpush
         @push('map_js')
-      <!--   <script
+        <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCF8MnYK1Ft-lPa3_B6rirg2IJzptB4m1Y&v=weekly&libraries=places&callback=Function.prototype"
         defer
-        ></script> -->
+        ></script>
         @endpush
 
 
@@ -20,10 +20,9 @@
         <script src="{!! asset('admin-part/vendor/ckeditor/ckeditor.js') !!}"></script>
         <script src="{!! asset('admin-part/vendor/ckeditor/config.js') !!}"></script>
         @endpush
-        @push('sortable_js')
+       @push('sortable_js')
         <!-- Sortable JS  -->
-        <!-- <script src="{{asset('admin-part/vendor/jquery-ui/jquery-ui-1.13.2.custom/jquery-ui.js')}}"></script> -->
-        @endpush
+        <script src="{!! asset('admin-part/js/jquery-ui.min.js') !!}"></script>@endpush
         @if(matchRouteNameMatch('locations'))
 
         @push('asColorPicker-js')
@@ -49,7 +48,7 @@
         @endpush
       
         @push('all-min-js')
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+        <script src="{!! asset('admin-part/js/fontawesome.all.js') !!}"></script>
         @endpush
         @push('font-awesome-picker-js')
         <script src="{!! asset('admin-part/vendor/fontawesome-iconpicker/js/fontawesome-iconpicker.js') !!}"></script>

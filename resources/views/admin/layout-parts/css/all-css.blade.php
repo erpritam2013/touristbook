@@ -12,7 +12,7 @@
 @endif
 @push('jquery-ui.css')
 <!-- Sortable -->
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="{!! asset('admin-part/css/jquery-ui.css')!!}">
 @endpush
 @push('jqvmap-min-css')
 <!-- global css -->
