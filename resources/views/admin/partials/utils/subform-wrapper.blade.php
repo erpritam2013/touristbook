@@ -68,26 +68,30 @@ $first_element = reset($typeData);
           @elseif($typeFields[$controlId]['control'] == 'media')
           <div class="media-controls ">
             <input type="hidden" class="form-control media-input {{ $elemClass ?? '' }} gallery-input " name="{{ $type }}[{{ $key }}][{{ $controlId }}]"
-            value="{{ $value ? json_encode($value) : '' }}" />
+            value="{{ $value }}" />
+            @php
+                $parsedValue = json_decode($value, true)
+            @endphp
+
             <input type="text"
             class="form-control media-txt-only {{ $elemClass }}" readonly="true"
-            value="@if(is_array($value) && isset($value[0])){{$value[0]['url']}}@endif"
+            value="@if(is_array($parsedValue) && isset($parsedValue[0]) && isset($parsedValue[0]['url'])  ){{$parsedValue[0]['url']}}@endif"
             id="{{ $type . '-tsign-' . $key . '-tsign-' . $controlId }}"
             placeholder="Enter {{ $typeFields[$controlId]['label'] }}..." />
 
             <button type="button" class="btn btn-primary mt-2 add-media-btn"
-            smode="single" selectedImages="{{ $value ? json_encode($value) : '' }}">+</button>
+            smode="single" selectedImages="{{ $value ?? '' }}">+</button>
             <button type="button"
             class="btn btn-danger mt-2 remove-media-btn">-</button>
             <div class="media-preview">
 
-             @if(is_array($value) && isset($value[0]))
-             <img src="{{$value[0]['url']}}"  class="img" height="100" width="100" />
+             @if(is_array($parsedValue) && isset($parsedValue[0]) && isset($parsedValue[0]['url']) )
+             <img src="{{$parsedValue[0]['url']}}"  class="img" height="100" width="100" />
              @endif
            </div>
          </div>
 
-         @elseif($typeFields[$controlId]['control'] == 'gallery') 
+         @elseif($typeFields[$controlId]['control'] == 'gallery')
          <div class="gallery-controls">
           <input type="hidden" class="form-control gallery-input {{ $elemClass ?? '' }}" name="{{ $type }}[{{ $key }}][{{ $controlId }}]"
           value="{{ json_encode($value) ?? json_encode([]) }}" id="{{ $type . '-tsign-' . $key . '-tsign-' . $controlId }}" placeholder="Enter {{ $typeFields[$controlId]['label'] }}..." />

@@ -20,9 +20,10 @@
         <script src="{!! asset('admin-part/vendor/ckeditor/ckeditor.js') !!}"></script>
         <script src="{!! asset('admin-part/vendor/ckeditor/config.js') !!}"></script>
         @endpush
-       @push('sortable_js')
+        @push('sortable_js')
         <!-- Sortable JS  -->
-        <script src="{!! asset('admin-part/js/jquery-ui.min.js') !!}"></script>@endpush
+        <script src="{!! asset('admin-part/js/jquery-ui.min.js') !!}"></script>
+        @endpush
         @if(matchRouteNameMatch('locations'))
 
         @push('asColorPicker-js')
@@ -46,14 +47,14 @@
         @push('inline-custom-function')
         <script src="{!! asset('admin-part/js/inline-custom-function.js') !!}"></script>
         @endpush
-      
+
         @push('all-min-js')
         <script src="{!! asset('admin-part/js/fontawesome.all.js') !!}"></script>
         @endpush
         @push('font-awesome-picker-js')
         <script src="{!! asset('admin-part/vendor/fontawesome-iconpicker/js/fontawesome-iconpicker.js') !!}"></script>
         <script src="{!! asset('admin-part/vendor/fontawesome-iconpicker/js/fontawesome-iconpicker-init.js') !!}"></script>
-       
+
         @endpush
         <!-- For list or index page js -->
         @if(Route::getRoutes()->match(request())->methods[0] == 'GET' && (matchRouteNameMatch('index') || matchRouteNameMatch('pageIndex')))
@@ -71,7 +72,7 @@
         @endif
         <!-- For create and edit page js -->
         @if(Route::getRoutes()->match(request())->methods[0] == 'GET' && (matchRouteNameMatch('create') || matchRouteNameMatch('edit')))
-        
+
         @push('jquery_validation-js')
         <!-- Jquery Validation -->
         <script src="{!! asset('admin-part/vendor/jquery-validation/jquery.validate.min.js') !!}"></script>
