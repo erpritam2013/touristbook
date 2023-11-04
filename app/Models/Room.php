@@ -20,7 +20,9 @@ class Room extends Model
         'extra_price' => 'array',
         'price'=>'float',
         'adult_price'=>'float',
-        'child_price'=>'float'
+        'child_price'=>'float',
+        'featured_image'=> 'array'
+        
     ];
 
     public function sluggable(): Array

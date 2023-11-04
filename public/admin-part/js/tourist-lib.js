@@ -173,14 +173,14 @@ if (btnAddSubForm.length > 0) {
         );
 
         // Sortable Initialized
-    // let cardListElm = $(".list-types");
-    // if (cardListElm.length > 0) {
-    //     cardListElm.sortable({
-    //         update: function (event, ui) {
-    //             changeSubformOrder($(this));
-    //         },
-    //     });
-    // }
+    let cardListElm = $(".list-types");
+    if (cardListElm.length > 0) {
+        cardListElm.sortable({
+            update: function (event, ui) {
+                changeSubformOrder($(this));
+            },
+        });
+    }
     } // If Block Ends
 
     // ------------------- CK Editor Setup -----------------------
@@ -208,7 +208,7 @@ if (btnAddSubForm.length > 0) {
 
     // Call InitMap if Exists
     if (mapElem) {
-        //initMap();
+        initMap();
     }
 
     // Set markup on Map

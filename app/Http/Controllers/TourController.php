@@ -135,12 +135,12 @@ class TourController extends Controller
     public function store(StoreTourRequest $request)
     {
             
-       if (isset($request->featured_image)) {
+     //   if (isset($request->featured_image)) {
            
-         $request->merge([
-            'featured_image' => json_decode($request->featured_image,true),
-        ]);
-     }
+     //     $request->merge([
+     //        'featured_image' => json_decode($request->featured_image,true),
+     //    ]);
+     // }
 
         $tourDetails = [
 
@@ -352,12 +352,12 @@ public function changeStatus(Request $request): JsonResponse
     {
 
 
-       if (isset($request->featured_image)) {
+     //   if (isset($request->featured_image)) {
 
-         $request->merge([
-            'featured_image' => json_decode($request->featured_image,true),
-        ]);
-     }
+     //     $request->merge([
+     //        'featured_image' => json_decode($request->featured_image,true),
+     //    ]);
+     // }
      $tourDetails = [
 
         'name' => $request->name,

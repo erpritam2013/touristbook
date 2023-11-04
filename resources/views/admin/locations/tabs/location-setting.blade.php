@@ -11,7 +11,7 @@
 </div>
 <hr>
 
-@include('admin.partials.utils.media', ['name'=> 'image','label'=>'Feature image','desc'=>"Upload feature image for this location",'value'=>$location->logo ?? '','id' => ""])
+@include('admin.partials.utils.media', ['name'=> 'logo','label'=>'Feature image','desc'=>"Upload feature image for this location",'value'=>$location->logo ?? '','id' => ""])
 
 <hr>
 <!-- Set location as feature -->
