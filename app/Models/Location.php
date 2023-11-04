@@ -16,10 +16,9 @@ class Location extends Model
     const INACTIVE = 0;
     protected $guarded = [];
 
-    // protected $casts = [
-    //     'location_attributes' => 'array',
-    //     'contact' => 'array'
-    // ];
+    protected $casts = [
+        'featured_image'=> 'array'
+    ];
 
     public function sluggable(): Array
     {
