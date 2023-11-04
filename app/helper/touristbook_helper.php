@@ -167,15 +167,17 @@ if (!function_exists('mediaTemplate')) {
       $html .='<input type="hidden" class="form-control media-input '.$class.' gallery-input " name="'.$name.'"
       value="'.$value ? json_encode($value) : "".'" />';
       if($smode == 'single'){
-        if($value && isset($value[0])){
+        if(is_array($value) && isset($value[0])){
             $value_url= $value[0]['url'];
         }
         $html .='<input type="text" class="form-control media-input '.$class.' gallery-input " name="'.$name.'" value="'.$value_url.'" id="'.$id.'" placeholder="Enter '.$label.'..."/>';
     }
-    $html .='<button type="button" class="btn btn-primary mt-2 add-media-btn" smode="'.$smode.'" selectedImages="'.$value ? json_encode($value) : "".'"  >+</button>';
+    $json_encode = is_array($value) ? json_encode($value) : "";
+    $html .='<button type="button" class="btn btn-primary mt-2 add-media-btn" smode="'.$smode.'" selectedImages="'.$json_encode.'"  >+</button>';
     $html .='<button type="button" class="btn btn-danger mt-2 remove-media-btn">-</button>';
     $html .='<div class="media-preview">';
-    if($value && isset($value[0])){
+    if(is_array($value) && isset($value[0])){
+
         $html .='<img src="'.$value[0]['url'].'"  class="img" height="100" width="100" />';
     }
     $html .='</div>';

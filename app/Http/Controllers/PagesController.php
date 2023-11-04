@@ -261,13 +261,11 @@ class PagesController extends Controller
             $data['tourismZone'] =  $state->tourism_zones->first();
         }
 
-
         return view('sites.pages.activity-detail', $data);
 
         //return view('sites.pages.tour-detail', compact('hotel', 'tourismZone'));
 
     }
-
     public function getHotels(Request $request, $view = "list") {
 
         if (isMobileDevice()) {
@@ -377,6 +375,8 @@ class PagesController extends Controller
         return View::make('sites.partials.results.hotel', ['hotels' => $hotels, 'view' => $view]);
 
     }
+
+
 
   public function getTours(Request $request, $view = "list") {
 
@@ -573,6 +573,50 @@ class PagesController extends Controller
         return View::make('sites.partials.results.activity', ['activities' => $activities, 'view' => $view]);
 
     }
+
+    /*get location*/
+
+     public function getLocations(Request $request, $view = "grid")
+    {
+        $view = "grid";
+          $locationQuery = location::query();
+        $locationQuery->selectRaw(' locations.*');
+
+        // Search Params
+        if($request->has('sourceType') && !empty($request->get('sourceType')) && $request->has('sourceId') && !empty($request->get('sourceId'))) {
+            $sourceType = $request->get('sourceType');
+            $sourceId = $request->get('sourceId');
+            if ($sourceType == "state") {
+                $locationQuery->leftJoin('location_states', 'location_states.location_id', '=', 'locations.id');
+                $locationQuery->where('location_states.state_id', $sourceId);
+            }else {
+                // $locationQuery->leftJoin('locations', 'location_locations.location_id', '=', 'locations.id');
+                $locationQuery->where('locations.id', $sourceId);
+            }
+
+
+        }else if($request->has('searchTerm') && !empty($request->get('searchTerm'))) {
+            //search in address
+            $searchTerm = $request->get('searchTerm');
+            // TODO: JSON Treatment is Pending
+            $locationQuery->where('locations.address', 'LIKE', '%'.$searchTerm.'%');
+        }
+
+
+        $pageNumber = 1;
+        if($request->has('pageNo') && !empty($request->get('pageNo'))) {
+            $pageNumber = $request->get('pageNo');
+        }
+
+
+        $locations = $locationQuery->groupBy('locations.id')->paginate(12, ['*'], 'page', $pageNumber);
+        // TODO: Include Status Check
+        // $locationQuery->where('status', location::)
+
+        return View::make('sites.partials.results.location', ['locations' => $locations, 'view' => $view]);
+
+    }
+
 
     public function inquiry(Request $request)
     {

@@ -34,6 +34,12 @@ class LocationMeta extends Model
         'hotel_activities'=>'array',
         'location_packages'=>'array',
         'location_for_filter'=>'array',
-        'hotel_locations'=>'array'
+        'hotel_locations'=>'array',
+        'fair_and_festivals_image' => 'array',
+        'get_to_know_image'=> 'array',
+        'save_your_pocket_image'=> 'array',
+        'save_your_environment_image'=> 'array',
     ];
 }
+
+

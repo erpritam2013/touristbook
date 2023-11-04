@@ -49,7 +49,7 @@
         @endpush
 
         @push('all-min-js')
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+        <script src="{!! asset('admin-part/js/fontawesome.all.js') !!}"></script>
         @endpush
         @push('font-awesome-picker-js')
         <script src="{!! asset('admin-part/vendor/fontawesome-iconpicker/js/fontawesome-iconpicker.js') !!}"></script>

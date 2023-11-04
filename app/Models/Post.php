@@ -15,6 +15,9 @@ class Post extends Model
     const INACTIVE = 0;
 
     protected $guarded = [];
+    protected $casts = [
+        'featured_image'=> 'array'
+    ];
 
     public function sluggable(): Array
     {
