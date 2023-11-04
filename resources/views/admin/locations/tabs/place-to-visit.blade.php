@@ -7,7 +7,7 @@
 
 
     </div>
-</div> 
+</div>
 <div class="border p-2 mb-2">
     <h4>Place To Visit</h4>
     @include('admin.partials.utils.subform-wrapper', ["subformData" => $location->locationMeta->place_to_visit ?? null, 'type' => 'place_to_visit', 'btnTitle' => 'Add New'])
