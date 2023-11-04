@@ -80,12 +80,12 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
 
-     if (isset($request->featured_image)) {
+     // if (isset($request->featured_image)) {
 
-         $request->merge([
-            'featured_image' => json_decode($request->featured_image,true),
-        ]);
-     }
+     //     $request->merge([
+     //        'featured_image' => json_decode($request->featured_image,true),
+     //    ]);
+     // }
      $postDetails = [
         'name' => $request->name,
         'description' => $request->description,
@@ -164,12 +164,12 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, Post $post)
     {
 
-      if (isset($request->featured_image)) {
+     //  if (isset($request->featured_image)) {
 
-         $request->merge([
-            'featured_image' => json_decode($request->featured_image,true),
-        ]);
-     }
+     //     $request->merge([
+     //        'featured_image' => json_decode($request->featured_image,true),
+     //    ]);
+     // }
      $postDetails = [
         'name' => $request->name,
         'description' => $request->description,

@@ -107,12 +107,12 @@ class RoomController extends Controller
      */
     public function store(StoreRoomRequest $request)
     {
-     if (isset($request->featured_image)) {
+   //   if (isset($request->featured_image)) {
          
-       $request->merge([
-        'featured_image' => json_decode($request->featured_image,true),
-    ]);
-   }
+   //     $request->merge([
+   //      'featured_image' => json_decode($request->featured_image,true),
+   //  ]);
+   // }
    $roomDetails = [
 
       
@@ -232,12 +232,12 @@ return redirect()->Route('admin.rooms.index');
      */
     public function update(UpdateRoomRequest $request, Room $room)
     {
-      if (isset($request->featured_image)) {
+     //  if (isset($request->featured_image)) {
        
-         $request->merge([
-            'featured_image' => json_decode($request->featured_image,true),
-        ]);
-     }
+     //     $request->merge([
+     //        'featured_image' => json_decode($request->featured_image,true),
+     //    ]);
+     // }
      
      $roomDetails = [
       'name' =>$request->name,

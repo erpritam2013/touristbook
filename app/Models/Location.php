@@ -17,11 +17,8 @@ class Location extends Model
     protected $guarded = [];
 
     protected $casts = [
-<<<<<<< HEAD
-        'featured_image' => 'array',
-=======
-        'featured_image'=> 'array'
->>>>>>> 38b2784b9fbb92b96e377395fa6cb8616c84e40b
+        'featured_image'=> 'array',
+        'logo'=> 'array',
     ];
 
     public function sluggable(): Array
