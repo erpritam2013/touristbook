@@ -29337,7 +29337,7 @@ body .iconpicker .iconpicker-items .iconpicker-item.active {
 
 
 .file-list.row {
-    height: 100%;
+    height: 400px;
     overflow-y: scroll;
 }
 div#paginationList {
@@ -29349,4 +29349,17 @@ div#paginationList {
 
 .file-thumb, .file-thumb:hover {
     color: #000;
+}
+
+.edit-context {
+    padding: 2px;
+    margin: 0;
+    line-height: 1;
+    font-size: 12px;
+    width: 100%;
+    text-align: center;
+    background-color: orange;
+    color: #fff;
+    border: 1px solid orange;
+    border-radius: 5px;
 }
