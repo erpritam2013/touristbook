@@ -2,37 +2,37 @@
 @section('title',$title)
 @section('content')
 
-
 <section>
-	<!-- Slider main container-->
-	<div class="swiper-container detail-slider slider-gallery">
-		<!-- Additional required wrapper-->
-		<div class="swiper-wrapper">
-			<!-- Slides-->
-			<div class="swiper-slide"><a data-toggle="gallery-top" title="Our street"><img
-				src="{{ asset('sites/images/hotels/room-details1.jpg') }}" alt="Our street" class="img-fluid"></a>
-			</div>
-			<div class="swiper-slide"><a data-toggle="gallery-top" title="Outside"><img
-				src="{{ asset('sites/images/hotels/room-details2.jpg') }}" alt="Outside" class="img-fluid"></a>
-			</div>
-			<div class="swiper-slide"><a data-toggle="gallery-top" title="Rear entrance"><img
-				src="{{ asset('sites/images/hotels/room-details3.jpg') }}" alt="Rear entrance"
-				class="img-fluid"></a></div>
-				<div class="swiper-slide"><a data-toggle="gallery-top" title="Kitchen"><img
-					src="{{ asset('sites/images/hotels/room-details4.jpg') }}" alt="Kitchen" class="img-fluid"></a>
-				</div>
-				<div class="swiper-slide"><a data-toggle="gallery-top" title="Bedroom"><img
-					src="{{ asset('sites/images/hotels/room-details.jpg') }}" alt="Bedroom" class="img-fluid"></a>
-				</div>
-				<div class="swiper-slide"><a data-toggle="gallery-top" title="Bedroom"><img
-					src="{{ asset('sites/images/hotels/room-details2.jpg') }}" alt="Bedroom" class="img-fluid"></a>
-				</div>
-			</div>
-			<div class="swiper-pagination swiper-pagination-white"></div>
-			<div class="swiper-button-prev swiper-button-white"></div>
-			<div class="swiper-button-next swiper-button-white"></div>
-		</div>
-	</section>
+  <!-- Slider main container-->
+  <div class="swiper-container detail-slider slider-gallery" style="height: 283px;">
+    <!-- Additional required wrapper-->
+    <div class="swiper-wrapper">
+      <!-- Slides-->
+  
+      @if(empty($activity->detail->gallery))
+      @foreach($activity->detail->gallery as $gallery)
+      <div class="swiper-slide"><a data-toggle="gallery-top" title="activity gallery" style="width: 452px;height: 301px;" ><img
+        src="{{ $gallery['url'] }}" alt="Our street" class="img-fluid" width="452" height="301"></a>
+      </div>
+      @endforeach
+      @else
+      <div class="swiper-slide"><a data-toggle="gallery-top" title="activity gallery"><img
+        src="{{ asset('sites/images/dummy/450x300.jpg') }}" alt="activity gallery" class="img-fluid"></a>
+      </div>
+      <div class="swiper-slide"><a data-toggle="gallery-top" title="activity gallery"><img
+        src="{{ asset('sites/images/dummy/450x300.jpg') }}" alt="activity gallery" class="img-fluid"></a>
+      </div>
+      <div class="swiper-slide"><a data-toggle="gallery-top" title="activity gallery"><img
+        src="{{ asset('sites/images/dummy/450x300.jpg') }}" alt="activity gallery" class="img-fluid"></a>
+      </div>
+      @endif
+     
+      </div>
+      <div class="swiper-pagination swiper-pagination-white"></div>
+      <div class="swiper-button-prev swiper-button-white"></div>
+      <div class="swiper-button-next swiper-button-white"></div>
+    </div>
+  </section>
 
 
 	<section class="pt40 pb80 listingDetails Campaigns">

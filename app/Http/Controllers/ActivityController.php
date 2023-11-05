@@ -104,20 +104,20 @@ class ActivityController extends Controller
     {
 
      //   if (isset($request->featured_image)) {
-           
+     
      //     $request->merge([
      //        'featured_image' => json_decode($request->featured_image,true),
      //    ]);
      // }
-     $activityDetails = [
+       $activityDetails = [
 
-      'name' =>$request->name,
-      'slug' => SlugService::createSlug(Activity::class, 'slug', $request->name),
-      'description' =>$request->description,
-      'excerpt' =>$request->excerpt,
-      'external_link' =>$request->external_link,
-      'address' =>$request->address,
-      'price' =>$request->price,
+          'name' =>$request->name,
+          'slug' => SlugService::createSlug(Activity::class, 'slug', $request->name),
+          'description' =>$request->description,
+          'excerpt' =>$request->excerpt,
+          'external_link' =>$request->external_link,
+          'address' =>$request->address,
+          'price' =>$request->price,
           // 'sale_price' =>$request->sale_price,
           // 'child_price' =>$request->child_price,
           // 'disable_children_name' =>$request->disable_children_name,
@@ -133,42 +133,42 @@ class ActivityController extends Controller
           // 'hide_infant_in_booking_form' =>$request->hide_infant_in_booking_form,
           // 'min_price' =>$request->min_price,
           // 'extra_price' =>$request->extra_price,
-      'st_activity_external_booking' =>(!empty($request->st_activity_external_booking))?$request->st_activity_external_booking:0,
-      'st_activity_external_booking_link' =>$request->st_activity_external_booking_link,
-      'deposit_payment_status' =>$request->deposit_payment_status,
-      'deposit_payment_amount' =>$request->deposit_payment_amount,
-      'type_activity' =>$request->type_activity,
-      'rating' =>(!empty($request->rating))?$request->rating:0,
-      'activity_booking_period' =>$request->activity_booking_period,
-      'min_people' =>(!empty($request->min_people))?$request->min_people:0,
-      'max_people' =>(!empty($request->max_people))?$request->max_people:0,
-      'duration' =>(!empty($request->duration))?$request->duration:'',
-      'is_sale_schedule' =>(!empty($request->is_sale_schedule))?$request->is_sale_schedule:0,
-      'discount' =>(!empty($request->discount))?$request->discount:0,
-      'sale_price_from' =>$request->sale_price_from,
-      'sale_price_to' =>$request->sale_price_to,
-      'discount_type' =>$request->discount_type,
-      'is_featured' =>$request->is_featured,
-      'status' =>$request->status,
-      'logo' =>$request->logo,
-      'featured_image' =>$request->featured_image,
+          'st_activity_external_booking' =>(!empty($request->st_activity_external_booking))?$request->st_activity_external_booking:0,
+          'st_activity_external_booking_link' =>$request->st_activity_external_booking_link,
+          'deposit_payment_status' =>$request->deposit_payment_status,
+          'deposit_payment_amount' =>$request->deposit_payment_amount,
+          'type_activity' =>$request->type_activity,
+          'rating' =>(!empty($request->rating))?$request->rating:0,
+          'activity_booking_period' =>$request->activity_booking_period,
+          'min_people' =>(!empty($request->min_people))?$request->min_people:0,
+          'max_people' =>(!empty($request->max_people))?$request->max_people:0,
+          'duration' =>(!empty($request->duration))?$request->duration:'',
+          'is_sale_schedule' =>(!empty($request->is_sale_schedule))?$request->is_sale_schedule:0,
+          'discount' =>(!empty($request->discount))?$request->discount:0,
+          'sale_price_from' =>$request->sale_price_from,
+          'sale_price_to' =>$request->sale_price_to,
+          'discount_type' =>$request->discount_type,
+          'is_featured' =>$request->is_featured,
+          'status' =>$request->status,
+          'logo' =>$request->logo,
+          'featured_image' =>$request->featured_image,
 
 
 
             // TODO: created_by pending as Authentication is not Yet Completed
-  ];
-  if (isset($request->activity_program_style)) {
-     if ($request->activity_program_style == 'style1' || $request->activity_program_style == 'style3') {
-         $request->merge([
+      ];
+      if (isset($request->activity_program_style)) {
+       if ($request->activity_program_style == 'style1' || $request->activity_program_style == 'style3') {
+           $request->merge([
             'activity_program_bgr' => [],
         ]);
-     }elseif ($request->activity_program_style == 'style2') {
-         $request->merge([
+       }elseif ($request->activity_program_style == 'style2') {
+           $request->merge([
             'activity_program' => [],
         ]);
-     }
-     
-     if (isset($request->activity_zones)) {
+       }
+       
+       if (isset($request->activity_zones)) {
         
         $request->merge([
             'activity_zones' => unsetValueActivityTourismZone($request->activity_zones)
@@ -190,24 +190,28 @@ $activity = $this->activityRepository->createActivity($activityDetails);
 
 if ($activity) {
             // TODO: Move this to Repository
-
-    $activityMetaData = [
-      'map_address',
-      'latitude',
-      'longitude',
-      'zoom_level',
-      'enable_street_views_google_map',
-      'gallery',
-      'video',
-      'contact',
-      'venue_facilities',
-      'activity_include',
-      'activity_exclude',
-      'activity_highlight',
-      'activity_program_style',
-      'activity_program',
-      'activity_program_bgr',
-      'activity_faq',
+   if($request->gallery == '' || empty($request->gallery)) {
+     $request->merge([
+        'gallery' => Null,
+    ]);
+ }
+ $activityMetaData = [
+  'map_address',
+  'latitude',
+  'longitude',
+  'zoom_level',
+  'enable_street_views_google_map',
+  'gallery',
+  'video',
+  'contact',
+  'venue_facilities',
+  'activity_include',
+  'activity_exclude',
+  'activity_highlight',
+  'activity_program_style',
+  'activity_program',
+  'activity_program_bgr',
+  'activity_faq',
           // 'calendar_check_in',
           // 'calendar_check_out',
           // 'calendar_adult_price',
@@ -223,31 +227,31 @@ if ($activity) {
           // 'st_cancel_percent',
           // 'ical_url',
           // 'is_meta_payment_gateway_st_submit_form',
-      'child_policy',
-      'booking_policy',
-      'refund_and_cancellation_policy',
-      'country',
-      'st_activity_external_booking_link',
-      'activity_zones',
-      'st_activity_corporate_address',
-      'st_activity_short_address',
-      'social_links',
-      'properties_near_by',
-      'check_editing',
+  'child_policy',
+  'booking_policy',
+  'refund_and_cancellation_policy',
+  'country',
+  'st_activity_external_booking_link',
+  'activity_zones',
+  'st_activity_corporate_address',
+  'st_activity_short_address',
+  'social_links',
+  'properties_near_by',
+  'check_editing',
 
-  ];
+];
 
-  $activity->detail()->create($request->only($activityMetaData));
-  
-  
+$activity->detail()->create($request->only($activityMetaData));
 
-  
-  $activity->activity_zone()->attach($request->get('activity_zone_id'));
-  $activity->attractions()->attach($request->get('attraction'));
-  $activity->locations()->attach($request->get('location_id'));
-  $activity->languages()->attach($request->get('language'));
-  $activity->term_activity_lists()->attach($request->get('term_activity_list'));
-  $activity->states()->attach($request->get('state_id'));
+
+
+
+$activity->activity_zone()->attach($request->get('activity_zone_id'));
+$activity->attractions()->attach($request->get('attraction'));
+$activity->locations()->attach($request->get('location_id'));
+$activity->languages()->attach($request->get('language'));
+$activity->term_activity_lists()->attach($request->get('term_activity_list'));
+$activity->states()->attach($request->get('state_id'));
             // activitiescard
 }
         // return $activity;
@@ -266,13 +270,13 @@ public function ActivityZoneByCountry(Request $request): JsonResponse
         if (!empty($activity)) {
 
             if (!empty($activity->activity_zone)) {
-             $existed_value = $activity->activity_zone[0]->id;
-         }
-     }
- }
- $activityZone = $this->activityZoneRepository->getActivityZoneByCountry($country)->toArray();
+               $existed_value = $activity->activity_zone[0]->id;
+           }
+       }
+   }
+   $activityZone = $this->activityZoneRepository->getActivityZoneByCountry($country)->toArray();
 
- return response()->json(['data' => $activityZone,'existed_value'=>$existed_value]);
+   return response()->json(['data' => $activityZone,'existed_value'=>$existed_value]);
 }
 
 public function changeStatus(Request $request): JsonResponse
@@ -379,38 +383,38 @@ public function changeStatus(Request $request): JsonResponse
             // TODO: created_by pending as Authentication is not Yet Completed
       ];
       if (isset($request->activity_program_style)) {
-         if ($request->activity_program_style == 'style1' || $request->activity_program_style == 'style3') {
-             $request->merge([
-                'activity_program_bgr' => [],
-            ]);
-         }elseif ($request->activity_program_style == 'style2') {
-             $request->merge([
-                'activity_program' => [],
-            ]);
-         }
-         
-         if (isset($request->activity_zones)) {
-            
-            $request->merge([
-                'activity_zones' => unsetValueActivityTourismZone($request->activity_zones)
-            ]);
-        }
-
-        if (empty($request->activity_zone_id)) {
-            
-            $request->merge([
-                'activity_zone_id' => null
-            ]);
-        }
+       if ($request->activity_program_style == 'style1' || $request->activity_program_style == 'style3') {
+           $request->merge([
+            'activity_program_bgr' => [],
+        ]);
+       }elseif ($request->activity_program_style == 'style2') {
+           $request->merge([
+            'activity_program' => [],
+        ]);
+       }
+       
+       if (isset($request->activity_zones)) {
+        
+        $request->merge([
+            'activity_zones' => unsetValueActivityTourismZone($request->activity_zones)
+        ]);
     }
 
+    if (empty($request->activity_zone_id)) {
+        
+        $request->merge([
+            'activity_zone_id' => null
+        ]);
+    }
+}
 
 
 
-    $this->activityRepository->updateActivity($activity->id,$activityDetails);
-    
 
-    if ($activity) {
+$this->activityRepository->updateActivity($activity->id,$activityDetails);
+
+
+if ($activity) {
             // TODO: Move this to Repository
 
   //   $activityMetaData = [
@@ -458,24 +462,28 @@ public function changeStatus(Request $request): JsonResponse
   //     'check_editing',
 
   // ];
-
-      $activity->detail()->update($request->only([
-          'map_address',
-          'latitude',
-          'longitude',
-          'zoom_level',
-          'enable_street_views_google_map',
-          'gallery',
-          'video',
-          'contact',
-          'venue_facilities',
-          'activity_include',
-          'activity_exclude',
-          'activity_highlight',
-          'activity_program_style',
-          'activity_program',
-          'activity_program_bgr',
-          'activity_faq',
+ if($request->gallery == '' || empty($request->gallery)) {
+     $request->merge([
+        'gallery' => Null,
+    ]);
+ }
+ $activity->detail()->update($request->only([
+  'map_address',
+  'latitude',
+  'longitude',
+  'zoom_level',
+  'enable_street_views_google_map',
+  'gallery',
+  'video',
+  'contact',
+  'venue_facilities',
+  'activity_include',
+  'activity_exclude',
+  'activity_highlight',
+  'activity_program_style',
+  'activity_program',
+  'activity_program_bgr',
+  'activity_faq',
           // 'calendar_check_in',
           // 'calendar_check_out',
           // 'calendar_adult_price',
@@ -491,34 +499,34 @@ public function changeStatus(Request $request): JsonResponse
           // 'st_cancel_percent',
           // 'ical_url',
           // 'is_meta_payment_gateway_st_submit_form',
-          'child_policy',
-          'booking_policy',
-          'refund_and_cancellation_policy',
-          'country',
-          'st_activity_external_booking_link',
-          'activity_zones',
-          'st_activity_corporate_address',
-          'st_activity_short_address',
-          'social_links',
-          'properties_near_by',
-          'check_editing',
+  'child_policy',
+  'booking_policy',
+  'refund_and_cancellation_policy',
+  'country',
+  'st_activity_external_booking_link',
+  'activity_zones',
+  'st_activity_corporate_address',
+  'st_activity_short_address',
+  'social_links',
+  'properties_near_by',
+  'check_editing',
 
-      ]));
-      
-      
+]));
+ 
+ 
 
-      
-      $activity->activity_zone()->sync($request->get('activity_zone_id'));
-      $activity->attractions()->sync($request->get('attraction'));
-      $activity->locations()->sync($request->get('location_id'));
-      $activity->languages()->sync($request->get('language'));
-      $activity->term_activity_lists()->sync($request->get('term_activity_list'));
-      $activity->states()->sync($request->get('state_id'));
+ 
+ $activity->activity_zone()->sync($request->get('activity_zone_id'));
+ $activity->attractions()->sync($request->get('attraction'));
+ $activity->locations()->sync($request->get('location_id'));
+ $activity->languages()->sync($request->get('language'));
+ $activity->term_activity_lists()->sync($request->get('term_activity_list'));
+ $activity->states()->sync($request->get('state_id'));
             // activitiescard
-  }
+}
         // return $activity;
-  Session::flash('success','Activity Updated Successfully');
-  return redirect()->Route('admin.activities.edit',$activity->id);
+Session::flash('success','Activity Updated Successfully');
+return redirect()->Route('admin.activities.edit',$activity->id);
 }
 
     /**
@@ -529,7 +537,7 @@ public function changeStatus(Request $request): JsonResponse
      */
     public function destroy(Request $request,$id)
     {
-     
+       
         $activityId = $id;
         $this->activityRepository->deleteActivity($activityId);
         Session::flash('success','Activity Deleted Successfully');

@@ -17,8 +17,8 @@
 
         @if(Route::getRoutes()->match(request())->methods[0] == 'GET' && (matchRouteNameMatch('create') || matchRouteNameMatch('edit')))
         @push('ckeditor_js')<!-- ckediter -->
-        <script src="{!! asset('admin-part/vendor/ckeditor/ckeditor.js') !!}"></script>
-        <script src="{!! asset('admin-part/vendor/ckeditor/config.js') !!}"></script>
+        <script src="{!! asset('admin-part/ckeditor/ckeditor.js') !!}"></script>
+        <script src="{!! asset('admin-part/ckeditor/config.js') !!}"></script>
         @endpush
         @push('sortable_js')
         <!-- Sortable JS  -->

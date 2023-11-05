@@ -25,7 +25,8 @@
         <button type="button" class="btn btn-primary mt-2 add-gallery-btn" smode="{{ $smode ?? 'single' }}"
             selectedImages="{{ json_encode($value) ?? json_encode([]) }}">+</button>
         <div class="media-preview">
-            @if($value)
+           
+            @if(!empty($value) && isset($value) && is_array($value))
                 <div class="row">
                 @foreach($value as $image)
                 <div class="col-xl-3">

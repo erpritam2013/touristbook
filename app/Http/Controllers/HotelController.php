@@ -161,7 +161,7 @@ class HotelController extends Controller
        //      'featured_image' => json_decode($request->featured_image,true),
        //  ]);
        // }
-        $images = json_decode($request->images);
+        //$images = json_decode($request->images);
         $hotelDetails = [
             'name' => $request->name,
             'description' => $request->description,
@@ -187,7 +187,7 @@ class HotelController extends Controller
             'policies' => $request->policy,
             'notices' => $request->notices,
             'status' => $request->status,
-            'images' => $images
+            'images' => !empty($request->images)?$request->images:Null
             // TODO: created_by pending as Authentication is not Yet Completed
         ];
 
@@ -195,6 +195,7 @@ class HotelController extends Controller
 
         if ($hotel) {
             // TODO: Move this to Repository
+
             $hotel->detail()->create($request->only([
                 'map_address',
                 'latitude',
@@ -283,7 +284,7 @@ class HotelController extends Controller
 
 
 
-        $images = json_decode($request->images);
+        //$images = json_decode($request->images);
         $hotelDetails = [
             'name' => $request->name,
             'description' => $request->description,
@@ -309,7 +310,7 @@ class HotelController extends Controller
             'policies' => $request->policy,
             'notices' => $request->notices,
             'status' => $request->status,
-            'images' => $images
+            'images' => !empty($request->images)?$request->images:Null
             // TODO: created_by pending as Authentication is not Yet Completed
         ];
 
