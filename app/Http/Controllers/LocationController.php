@@ -105,16 +105,12 @@ private function _prepareBasicData() {
     {
 
 
-      // if (isset($request->featured_image)) {
      
-      //      $request->merge([
-      //       'featured_image' => json_decode($request->featured_image,true),
-      //   ]);
-      //  }
 
       $locationDetails = [
         "name" => $request->name,
         "description" => $request->description,
+         'slug' => (!empty($request->slug) && $location->slug != $request->slug)?SlugService::createSlug(Location::class, 'slug', $request->slug):$location->slug,
         //logo s3 integration pending
         "color" => $request->color,
         "is_featured" => $request->is_featured,
@@ -134,7 +130,7 @@ private function _prepareBasicData() {
     
     if($location) {
 
-      if($request->gallery == '' || empty($request->gallery) || count($request->gallery) == 0) {
+      if($request->gallery == '' || empty($request->gallery)) {
            $request->merge([
             'gallery' => Null,
         ]);
@@ -220,8 +216,8 @@ public function changeStatus(Request $request): JsonResponse
      */
     public function edit($id)
     {
-
-
+  
+  
        $location = Location::with(['places', 'states', 'types'])->find($id);
 
        if (empty($location)) {
@@ -231,34 +227,7 @@ public function changeStatus(Request $request): JsonResponse
     $data['location'] = $location;
     $data = array_merge_recursive($data, $this->_prepareBasicData());
 
-    // if (!empty($location->detail->place_to_visit)) {
-    //        $location->detail->place_to_visit = castImageValue($location->detail->place_to_visit,'place_to_visit','image');
-    //     }
-     
-    // if (!empty($location->detail->fair_and_festivals)) {
-    //        $location->detail->fair_and_festivals = castImageValue($location->detail->fair_and_festivals,'fair_and_festivals','image');
-    //     }
-    // if (!empty($location->detail->culinary_retreat)) {
-    //        $location->detail->culinary_retreat = castImageValue($location->detail->culinary_retreat,'culinary_retreat','image');
-    //     }
-    // if (!empty($location->detail->shopaholics_anonymous)) {
-    //        $location->detail->shopaholics_anonymous = castImageValue($location->detail->shopaholics_anonymous,'shopaholics_anonymous','image');
-    //     }
-    // if (!empty($location->detail->what_to_do)) {
-    //        $location->detail->what_to_do = castImageValue($location->detail->what_to_do,'what_to_do','image');
-    //     }
-    // if (!empty($location->detail->hotel_activities)) {
-    //        $location->detail->hotel_activities = castImageValue($location->detail->hotel_activities,'hotel_activities','image');
-    //     }
-    // if (!empty($location->detail->by_aggregators)) {
-    //        $location->detail->by_aggregators = castImageValue($location->detail->by_aggregators,'by_aggregators','image');
-    //     }
-    // if (!empty($location->detail->b_govt_subsidiaries)) {
-    //        $location->detail->b_govt_subsidiaries = castImageValue($location->detail->b_govt_subsidiaries,'b_govt_subsidiaries','image');
-    //     }
-    // if (!empty($location->detail->by_hotels)) {
-    //        $location->detail->by_hotels = castImageValue($location->detail->by_hotels,'by_hotels','image');
-    //     }
+    
         // TODO: Need to Improve here (Fetch from Cache)
     
     return view('admin.locations.edit', $data);
@@ -274,16 +243,11 @@ public function changeStatus(Request $request): JsonResponse
     public function update(UpdateLocationRequest $request, Location $location)
     {
 
-       //    if (isset($request->featured_image)) {
      
-       //     $request->merge([
-       //      'featured_image' => json_decode($request->featured_image,true),
-       //  ]);
-       // }
        $locationDetails = [
         "name" => $request->name,
         "description" => $request->description,
-        'slug' => (!empty($request->slug) && $location->slug != $request->slug)?SlugService::createSlug(Location::class, 'slug', $request->slug):$location->slug,
+       
         //logo s3 integration pending
         "color" => $request->color,
         "is_featured" => $request->is_featured,
@@ -304,7 +268,7 @@ public function changeStatus(Request $request): JsonResponse
     
     if($location) {
      
-     if($request->gallery == '' || empty($request->gallery) || count($request->gallery) == 0) {
+     if($request->gallery == '' || empty($request->gallery)) {
            $request->merge([
             'gallery' => Null,
         ]);

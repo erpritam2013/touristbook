@@ -151,7 +151,11 @@ class RoomController extends Controller
 
   if ($room) {
             // TODO: Move this to Repository
-
+     if($request->gallery == '' || empty($request->gallery)) {
+           $request->merge([
+            'gallery' => Null,
+        ]);
+       }
     $roomMetaData = [
 
       "st_booking_option_type",
@@ -275,7 +279,11 @@ return redirect()->Route('admin.rooms.index');
 
   if ($room) {
             // TODO: Move this to Repository
-
+    if($request->gallery == '' || empty($request->gallery)) {
+           $request->merge([
+            'gallery' => Null,
+        ]);
+       }
     $roomMetaData = [
 
       "st_booking_option_type",
