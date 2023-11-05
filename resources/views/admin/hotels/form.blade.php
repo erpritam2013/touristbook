@@ -48,6 +48,9 @@
 
 
     <button type="submit" class="btn btn-primary">@isset($hotel->id)Update @else Save @endisset</button>
+    @if(isset($hotel->id))
+    <input type="submit" class="btn btn-success" name="iscompleted" value="Update and Complete Editing" style="color: #fff;" />
+    @endif
     @if(!isset($hotel->id))
     <button type="button" class="btn btn-light" onclick="window.location.replace('{{ url()->previous() }}')">Cancel</button>
     @endif

@@ -38,11 +38,15 @@ class HotelDataTable extends DataTable
                     }
                     return '<input data-id="'.$row->id.'" class="toggle-class" type="checkbox" data-size="sm" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url="'.route("admin.changeStatusHotel").'" data-on="Active" data-off="InActive" '.$checked.'>';
                 })->addColumn('address',function($row){
-                    
+
                     return $row->address;
+                })->editColumn('name', function($row) {
+                    $nameHtml = '<p>'.$row->name.'</p>';
+                    $editHtml = $row->isEditing() ? '<p class="edit-context">Editing</p>' : '';
+                    return $nameHtml.$editHtml;
                 })->addColumn('del',function($row){
                  return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'">';
-            })->rawColumns(['status','action','del','address']);
+            })->rawColumns(['status','action','del','address', 'name']);
     }
 
     /**
