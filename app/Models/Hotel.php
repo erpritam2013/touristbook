@@ -14,9 +14,11 @@ use App\Models\Terms\PropertyType;
 use App\Models\Terms\State;
 use App\Models\Terms\TermActivity;
 use App\Models\Terms\TopService;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Support\Facades\Auth;
 
 class Hotel extends Model
 {
@@ -34,6 +36,7 @@ class Hotel extends Model
         'notices' => 'array',
         'images' => 'array',
         'featured_image' => 'array',
+        'editing_expiry_time' => 'datetime'
     ];
 
     public function sluggable(): Array
@@ -43,6 +46,25 @@ class Hotel extends Model
                 'source' => 'name'
             ]
         ];
+    }
+
+
+    public function edited() {
+        $this->fill([
+            'editor_id' => Auth::user()->id,
+            'is_editing' => true,
+            'editing_expiry_time' => Carbon::now()->addMinutes(5)
+        ]);
+        $this->save();
+    }
+
+    public function freeEditing() {
+        $this->is_editing = false;
+        $this->save();
+    }
+
+    public function isEditing() {
+        return $this->is_editing && !$this->editing_expiry_time->isPast() && $this->editor_id != Auth::user()->id;
     }
 
 
