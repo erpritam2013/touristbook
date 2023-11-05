@@ -200,7 +200,7 @@ if (btnAddSubForm.length > 0) {
                 mapTypeId: "terrain",
             });
 
-            console.log(google.maps.places);
+            //console.log(google.maps.places);
         }
     }
 
@@ -339,14 +339,14 @@ paginationList.appendChild(listItem);
 }
 
 const fillImagesToList = (filesWrapper) => {
-    console.log("filesWrapper", filesWrapper)
+    //console.log("filesWrapper", filesWrapper)
     let files = filesWrapper.data
     let mediaListHtml = ''
     if(files.length > 0) {
         console.log("Entering")
         files.forEach((file, idx) => {
-            console.log(selectedImages);
-            console.log(hasValueForKey(selectedImages, 'id', file.id))
+           // console.log(selectedImages);
+         //   console.log(hasValueForKey(selectedImages, 'id', file.id))
             let active_class = hasValueForKey(selectedImages, 'id', file.id) ? 'active' : ''
 
 
@@ -630,9 +630,9 @@ $("body").on("click", mediaSelector, function(){
     loadImages();
 });
 
-if($(mediaSelector).length > 0) {
-    // Load Image on load
-    loadImages();
-}
+// if($(mediaSelector).length > 0) {
+//     // Load Image on load
+//     loadImages();
+// }
 
 });
