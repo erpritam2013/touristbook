@@ -103,12 +103,12 @@ class ActivityController extends Controller
     public function store(StoreActivityRequest $request)
     {
 
-       if (isset($request->featured_image)) {
+     //   if (isset($request->featured_image)) {
            
-         $request->merge([
-            'featured_image' => json_decode($request->featured_image),
-        ]);
-     }
+     //     $request->merge([
+     //        'featured_image' => json_decode($request->featured_image,true),
+     //    ]);
+     // }
      $activityDetails = [
 
       'name' =>$request->name,

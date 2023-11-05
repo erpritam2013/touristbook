@@ -12739,6 +12739,12 @@ body.tour-detail-page ul.tour-routes li span.tour-route-span {
 .tour-samilar .listroBox figure,.hotel-samilar .listroBox figure,.activity-samilar .listroBox figure,.destination-samilar .listroBox figure{
     height: 200px;
 }
+
+
+.activity-read-more,.activity-read-more:focus {
+    color: #fba009!important;
+    font-weight: 600;
+}
 /*comman css end*/
 
 /*activity list css start*/
@@ -14211,5 +14217,50 @@ body.connecting-partners-page .innerpage-banner.left {
     height: 230px;
 }
 /*connecting partners page end css*/
+
+/*location list css start*/
+
+body.destinations-page .location-grid-view .grid-list-item .read_more {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	margin-top: -12px;
+	-webkit-transform: translateY(10px);
+	-moz-transform: translateY(10px);
+	-ms-transform: translateY(10px);
+	-o-transform: translateY(10px);
+	transform: translateY(10px);
+	text-align: center;
+	opacity: 0;
+	visibility: hidden;
+	width: 100%;
+	-webkit-transition: all .6s;
+	transition: all .6s;
+	z-index: 2;
+}
+body.destinations-page .location-grid-view .grid-list-item .read_more span {
+	background-color: #07509e91;
+	background-color: #07509e91;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	-ms-border-radius: 20px;
+	border-radius: 10px;
+	display: inline-block;
+	color: #fff;
+	font-size: 14px;
+	padding: 8px 25px;
+	text-transform: uppercase;
+}
+
+body.destinations-page .location-grid-view .grid-list-item:hover .read_more {
+	opacity: 1;
+	visibility: visible;
+	-webkit-transform: translateY(0);
+	-moz-transform: translateY(0);
+	-ms-transform: translateY(0);
+	-o-transform: translateY(0);
+	transform: translateY(0);
+}
+/*location list css end*/
 
 

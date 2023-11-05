@@ -134,7 +134,14 @@ class TourController extends Controller
      */
     public function store(StoreTourRequest $request)
     {
-      
+            
+     //   if (isset($request->featured_image)) {
+           
+     //     $request->merge([
+     //        'featured_image' => json_decode($request->featured_image,true),
+     //    ]);
+     // }
+
         $tourDetails = [
 
             'name' => $request->name,
@@ -212,10 +219,10 @@ class TourController extends Controller
   }
 
   $tour = $this->tourRepository->createTour($tourDetails);
-  
+
   if ($tour) {
             // TODO: Move this to Repository
-   
+
     $tourMetaData = [
 
        "map_address" , 
@@ -268,14 +275,14 @@ class TourController extends Controller
    ];
 
    $tour->detail()->create($request->only($tourMetaData));
-   
+
 
    $tour->package_types()->attach($request->get('package_types'));
    $tour->other_packages()->attach($request->get('other_packages'));
    $tour->types()->attach($request->get('types'));
    $tour->languages()->attach($request->get('language'));
    if (!empty($request->state_id[0])) {
-       
+
        $tour->states()->attach($request->get('state_id'));
    }
    $tour->locations()->attach($request->get('location_id'));
@@ -326,7 +333,7 @@ public function changeStatus(Request $request): JsonResponse
      if (empty($tour)) {
         return back();
     }
-    
+
     $data['title'] = 'Tour Edit';
     $data['tour'] = $tour;
     $data = array_merge_recursive($data, $this->_prepareBasicData());
@@ -343,14 +350,14 @@ public function changeStatus(Request $request): JsonResponse
      */
     public function update(UpdateTourRequest $request, Tour $tour)
     {
-        
-        
-       if (isset($request->featured_image)) {
-           
-         $request->merge([
-            'featured_image' => json_decode($request->featured_image),
-        ]);
-     }
+
+
+     //   if (isset($request->featured_image)) {
+
+     //     $request->merge([
+     //        'featured_image' => json_decode($request->featured_image,true),
+     //    ]);
+     // }
      $tourDetails = [
 
         'name' => $request->name,
@@ -431,7 +438,7 @@ $this->tourRepository->updateTour($tour->id,$tourDetails);
 
 if ($tour) {
             // TODO: Move this to Repository
-  
+
     $tourMetaData = [
 
        "map_address" , 
@@ -488,13 +495,13 @@ if ($tour) {
      // }else{
      //     $tour->detail()->create($request->only($tourMetaData));
      // }
-   
+
    $tour->package_types()->sync($request->get('package_types'));
    $tour->other_packages()->sync($request->get('other_packages'));
    $tour->types()->sync($request->get('type'));
    $tour->languages()->sync($request->get('language'));
    if (!empty($request->state_id[0])) {
-       
+
        $tour->states()->sync($request->get('state_id'));
    }
    $tour->locations()->sync($request->get('location_id'));

@@ -275,14 +275,24 @@
 								</div>
 							</div>
 							<div class="col-lg-9 col-md-12 col-sm-12 ">
-
+                
 								@if ($activity->term_activity_lists->isNotEmpty())
-								<div class="section mt-4 terms-section" id="term-activity-lists">
+
+								<div class="section mt-4 terms-section mb-4" id="term-activity-lists">
 									<h2 class="st-heading-section">Activities</h2>
 									<div class="row mt-3">
-										@foreach ($activity->term_activity_lists as $term_activity_lists)
-										<div class="col-xs-6 {{(isMobileDevice())?'col-sm-6':'col-sm-4'}} f-15">
-											<div class="item-term">
+										@foreach ($activity->term_activity_lists as $al_key => $term_activity_lists)
+										@php $hidden_class = '';
+										@endphp
+										@if(count($activity->term_activity_lists) > 5)
+										@if($al_key <= 5)
+                     @php $hidden_class = '';@endphp
+                     @else
+                     @php $hidden_class = 'd-none';@endphp
+                     @endif
+										@endif
+										<div class="col-xs-6 {{(isMobileDevice())?'col-sm-6':'col-sm-4'}} f-15 ">
+											<div class="item-term {{$hidden_class}}">
 												<i class="fa fa-dot-circle mr-3"></i>
 												<span>{{ $term_activity_lists->name }}</span>
 
@@ -290,8 +300,10 @@
 										</div>
 										@endforeach
 									</div>
+								<a href="javascript:void(0)" onclick="readMoreTerm(this)" data-show_text="more" class="activity-read-more pt-2 pb-2">Read More...</a>
 								</div>
 
+                
 								@endif
 
 								@php
@@ -299,7 +311,7 @@
 								$count = count( $st_activity_lists );
 
 								@endphp
-
+                
 								<div class="activity-list" data-toggle-section="st-activity-list"
 								@if ( $count > 6 ){!!'data-show-all="st-activity-list"
 								data-height="1075"'!!}@endif
