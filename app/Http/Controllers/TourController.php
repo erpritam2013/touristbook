@@ -222,7 +222,11 @@ class TourController extends Controller
 
   if ($tour) {
             // TODO: Move this to Repository
-
+     if($request->gallery == '' || empty($request->gallery)) {
+           $request->merge([
+            'gallery' => Null,
+        ]);
+       }
     $tourMetaData = [
 
        "map_address" , 
@@ -438,7 +442,11 @@ $this->tourRepository->updateTour($tour->id,$tourDetails);
 
 if ($tour) {
             // TODO: Move this to Repository
-
+ if($request->gallery == '' || empty($request->gallery)) {
+           $request->merge([
+            'gallery' => Null,
+        ]);
+       }
     $tourMetaData = [
 
        "map_address" , 

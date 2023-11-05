@@ -21,7 +21,7 @@ class TouristMediaGenerator implements PathGenerator
      */
     public function getPathForConversions(Media $media): string
     {
-        return $this->getBasePath($media).'/conversions/';
+        return $this->getBasePath($media).'/';
     }
 
     /*

@@ -598,6 +598,16 @@ if (!function_exists('getCountries')) {
         return $getCountries;
     }
 }
+
+if (!function_exists('getConversionUrl')) {
+    function getConversionUrl($id,$conversion_type=''){
+
+        $NamespacedModel = 'App\\Models\\File' ;
+        $file = $NamespacedModel::findOrFail($id);
+        return $file->getFirstMediaUrl('images',$conversion_type);
+        
+    }
+}
 if (!function_exists('unsetValueActivityTourismZone')) {
     function unsetValueActivityTourismZone($data)
     {

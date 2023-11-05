@@ -121,7 +121,7 @@ window.showCountryZone = () => {
      let id = $("#tour-id").data('id');
      let country = $('.tour-extra-fields #st-tours-country').children('option:selected').val();
     let country_zone_section = $('.tour-extra-fields #country-zone-id');
-     console.log(country_zone_section);
+     //console.log(country_zone_section);
      if (country_zone_section.length != 0) {
         
     if (country != "" && typeof country != 'undefined') {
