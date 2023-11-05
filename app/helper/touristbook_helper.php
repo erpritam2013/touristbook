@@ -416,7 +416,7 @@ if (!function_exists('selectBoxTemplate')) {
       }
       if(empty($id)){
        $id = (isset($name))? str_replace('[]', '',str_replace('_', '-', $name)):$name;
-   } 
+   }
 
    if(!isset($col)){
     $html .='<div class="col-lg-12">';
@@ -449,10 +449,10 @@ if(!empty($items)){
     foreach($items as $item){
         if(is_array($selected)){
 
-            $selected_attr =  in_array($item->id, $selected) ? 'selected' : ""; 
+            $selected_attr =  in_array($item->id, $selected) ? 'selected' : "";
             $html .='<option value="'.$item->id.'" '. $selected_attr .' '.$option_attr.' >'.$item->value.'</option>';
         }else{
-            $selected_attr = ($item->id == $selected) ? 'selected' : "" ; 
+            $selected_attr = ($item->id == $selected) ? 'selected' : "" ;
             $html .='<option value="'.$item->id.'" '.$selected_attr.' '.$option_attr.' >'.$item->value.'</option>';
         }
     }
@@ -933,6 +933,16 @@ if(!function_exists('get_form_success_msg')){
         </button><strong>Success!</strong>&nbsp;'.$success.'</div>';
 
         return  $form_success;
+    }
+}
+
+if(!function_exists('print_error_message')){
+    function print_error_message($error){
+
+        $errMsg='<div class="alert alert-danger alert-dismissible alert-alt solid fade show"><button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
+        </button><strong>Success!</strong>&nbsp;'.$error.'</div>';
+
+        return  $errMsg;
     }
 }
 

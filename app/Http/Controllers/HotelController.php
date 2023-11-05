@@ -137,6 +137,14 @@ class HotelController extends Controller
             return back();
         }
 
+        if($hotel->isEditing()) {
+            Session::flash('error','Hotel is being Edited. Please wait till its fully edited!');
+            return redirect()->Route('admin.hotels.index');
+        }
+
+        // Set Editing Status
+        $hotel->edited();
+
         $data['title'] = 'Hotel';
         $data['hotel'] = $hotel;
         $data = array_merge_recursive($data, $this->_prepareBasicData());
@@ -271,8 +279,6 @@ class HotelController extends Controller
     }
     public function update(UpdateHotelRequest $request, Hotel $hotel)
     {
-
-
         $images = json_decode($request->images);
         $hotelDetails = [
             'name' => $request->name,
@@ -362,7 +368,11 @@ class HotelController extends Controller
             // activitiescard
         }
         // return $hotel;
-        Session::flash('success','Hotel Created Successfully');
+        Session::flash('success','Hotel Updated Successfully');
+        if(!is_null($request->iscompleted)) {
+            $hotel->freeEditing();
+            return redirect()->Route('admin.hotels.index');
+        }
         return redirect()->Route('admin.hotels.edit',$hotel->id);
     }
 
