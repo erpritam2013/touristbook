@@ -175,22 +175,12 @@
 
             <span class="hotel-avg">
                 {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
-
-                <?php //if(STHotel::is_show_min_price()): ?>
-
-                <?php// _e("From", ST_TEXTDOMAIN) ?>
-
-                <?php //else:?>
-
-                <?php //_e("Avg", ST_TEXTDOMAIN) ?>
-
-                <?php //endif;?>
                 Avg
             </span>
 
             {!!get_price($hotel,'₹')!!}
 
-            <span class="unit"><?php// echo __('per night', ST_TEXTDOMAIN); ?>  per night<span class="price-ex"><i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;position: absolute;top: -3px;"><span class="TravelGo-opt-tooltip min-w-500px-fs-14fpx">Price usually vary or subject to change please visit website to view the best deal.</span></i></span></span>
+            <span class="unit">/per night<span class="price-ex"><i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;position: absolute;top: -3px;"><span class="TravelGo-opt-tooltip min-w-500px-fs-14fpx">Price usually vary or subject to change please visit website to view the best deal.</span></i></span></span>
 
 
         </div>
