@@ -157,16 +157,6 @@
 
                 <span class="tour-avg">
                     {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
-
-                    <?php //if(STtour::is_show_min_price()): ?>
-
-                    <?php// _e("From", ST_TEXTDOMAIN) ?>
-
-                    <?php //else:?>
-
-                    <?php //_e("Avg", ST_TEXTDOMAIN) ?>
-
-                    <?php //endif;?>
                     Avg
                 </span>
 
