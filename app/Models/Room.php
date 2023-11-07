@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\RoomDetail;
 use App\Models\Hotel;
+use App\Models\Location;
 use App\Models\Terms\Facility;
 use App\Models\Terms\Type;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -43,7 +44,7 @@ class Room extends Model
     }
 
       public function locations() {
-        return $this->belongsToMany(location::class, 'room_locations', 'room_id', 'location_id');
+        return $this->belongsToMany(Location::class, 'room_locations', 'room_id', 'location_id');
     }
 
     public function hotels() {
