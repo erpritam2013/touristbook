@@ -190,11 +190,11 @@ $activity = $this->activityRepository->createActivity($activityDetails);
 
 if ($activity) {
             // TODO: Move this to Repository
-   if($request->gallery == '' || empty($request->gallery)) {
-     $request->merge([
-        'gallery' => Null,
-    ]);
- }
+   if($request->gallery == '' || empty($request->gallery) || $request->gallery == '"[]"' ) {
+           $request->merge([
+            'gallery' => "[]",
+        ]);
+       }
  $activityMetaData = [
   'map_address',
   'latitude',
