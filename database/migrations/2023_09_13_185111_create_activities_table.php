@@ -26,10 +26,10 @@ return new class extends Migration
             $table->decimal('child_price', 10, 2)->default(0);
             $table->boolean('disable_children_name')->default(0);
             $table->boolean('hide_children_in_booking_form')->default(0);
-            $table->json('discount_by_child')->default(0);
+            $table->json('discount_by_child')->nullable();
             $table->decimal('adult_price', 10, 2)->default(0);
             $table->boolean('hide_adult_in_booking_form')->default(0);
-            $table->json('discount_by_adult')->default(0);
+            $table->json('discount_by_adult')->nullable();
             $table->string('discount_by_people_type')->nullable();
             $table->string('calculator_discount_by_people_type')->nullable();
             $table->decimal('infant_price', 10, 2)->default(0);

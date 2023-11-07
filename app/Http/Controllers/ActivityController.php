@@ -190,7 +190,8 @@ $activity = $this->activityRepository->createActivity($activityDetails);
 
 if ($activity) {
             // TODO: Move this to Repository
-  if($request->gallery == '' || empty($request->gallery) || $request->gallery == '"[]"' ) {
+
+   if($request->gallery == '' || empty($request->gallery) || $request->gallery == '"[]"' ) {
            $request->merge([
             'gallery' => "[]",
         ]);
