@@ -1243,18 +1243,18 @@ $("body").on("click", mediaSelector, function(){
         // console.log("SImage Type", typeof sImages)
         //  console.log("SImage Val", sImages)
 
-     if(isJSON(sImages)) {
+      if(isJSON(sImages)) {
 
         selectedImages = JSON.parse(sImages)
 
         // console.log("S-Images", selectedImages)
         // console.log("S-Images Type", typeof selectedImages)
 
-     }else{
+      }else{
         
         selectedImages = sImages;
 
-     }
+      }
 
         // TODO: Set Mode (Single/Multi)
 
