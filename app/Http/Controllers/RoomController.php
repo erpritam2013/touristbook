@@ -151,6 +151,7 @@ class RoomController extends Controller
 
   if ($room) {
             // TODO: Move this to Repository
+
      if($request->gallery == '' || empty($request->gallery) || $request->gallery == '"[]"' ) {
            $request->merge([
             'gallery' => "[]",
@@ -279,6 +280,7 @@ return redirect()->Route('admin.rooms.index');
 
   if ($room) {
             // TODO: Move this to Repository
+
      if($request->gallery == '' || empty($request->gallery) || $request->gallery == '"[]"' ) {
            $request->merge([
             'gallery' => "[]",

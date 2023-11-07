@@ -131,12 +131,12 @@ private function _prepareBasicData() {
     
     if($location) {
 
+
     if($request->gallery == '' || empty($request->gallery) || $request->gallery == '"[]"' ) {
            $request->merge([
             'gallery' => "[]",
         ]);
        }
-
 
      $location->locationMeta()->create($request->only([
         "location_for_filter",
@@ -272,6 +272,7 @@ public function changeStatus(Request $request): JsonResponse
     
     if($location) {
      
+
    if($request->gallery == '' || empty($request->gallery) || $request->gallery == '"[]"' ) {
            $request->merge([
             'gallery' => "[]",

@@ -190,6 +190,7 @@ $activity = $this->activityRepository->createActivity($activityDetails);
 
 if ($activity) {
             // TODO: Move this to Repository
+
    if($request->gallery == '' || empty($request->gallery) || $request->gallery == '"[]"' ) {
            $request->merge([
             'gallery' => "[]",
@@ -462,11 +463,11 @@ if ($activity) {
   //     'check_editing',
 
   // ];
- if($request->gallery == '' || empty($request->gallery)) {
-     $request->merge([
-        'gallery' => Null,
-    ]);
- }
+ if($request->gallery == '' || empty($request->gallery) || $request->gallery == '"[]"' ) {
+           $request->merge([
+            'gallery' => "[]",
+        ]);
+       }
  $activity->detail()->update($request->only([
   'map_address',
   'latitude',
