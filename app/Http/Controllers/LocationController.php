@@ -180,7 +180,7 @@ private function _prepareBasicData() {
 
      $location->types()->attach($request->get('type'));
      $location->places()->attach($request->get('places'));
-     if(isset($request->get('state_id')[0]) && !empty($request->get('state_id')[0])){
+     if(isset($request->state_id[0]) && !empty($request->state_id[0])){
               $location->states()->attach($request->get('state_id'));
      }
 
@@ -267,7 +267,7 @@ public function changeStatus(Request $request): JsonResponse
             // TODO: created_by pending as Authentication is not Yet Completed
     ];
 
-    $location = $this->locationRepository->updateLocation($location->id,$locationDetails);
+    $this->locationRepository->updateLocation($location->id,$locationDetails);
 
     
     if($location) {
@@ -320,7 +320,9 @@ public function changeStatus(Request $request): JsonResponse
 
      $location->types()->sync($request->get('location_type'));
      $location->places()->sync($request->get('places'));
+     if (isset($request->state_id[0]) && !empty($request->state_id[0])) {
      $location->states()->sync($request->get('state_id'));
+     }
  }
  Session::flash('success','Location Updated Successfully');
  return redirect()->Route('admin.locations.edit',$location->id);
