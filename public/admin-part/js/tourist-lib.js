@@ -799,7 +799,7 @@ $('.file-list').on("click", ".file", function() {
         }else {
 
                 // Multiple Selection
-
+            console.log('select',typeof selectedImages);
             $(this).addClass('active')
 
             selectedImages.push({
