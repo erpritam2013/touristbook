@@ -180,7 +180,7 @@ class HotelController extends Controller
             // TODO: logo and featured_image ----> S3 Integration
             'featured_image' => $request->featured_image,
             'hotel_video' => $request->hotel_video,
-            'rating' => $request->rating,
+            'rating' => !empty($request->rating)?$request->rating:0,
             'coupon_code' => $request->coupon_code,
             'hotel_attributes' => $request->hotel_attributes,
             'contact' => $request->contact,
@@ -244,7 +244,9 @@ class HotelController extends Controller
             $hotel->propertyTypes()->attach($request->get('propertyTypes'));
             $hotel->accessibles()->attach($request->get('accessibles'));
             $hotel->meetingEvents()->attach($request->get('meetingAndEvents'));
+            if (!empty($request->state_id[0])) {
             $hotel->states()->attach($request->get('state_id'));
+            }
             $hotel->occupancies()->attach($request->get('occupancies'));
             $hotel->deals()->attach($request->get('deals'));
             $hotel->activities()->attach($request->get('activitiescard'));
@@ -303,7 +305,7 @@ class HotelController extends Controller
             // TODO: logo and featured_image ----> S3 Integration
             'featured_image' => $request->featured_image,
             'hotel_video' => $request->hotel_video,
-            'rating' => $request->rating,
+            'rating' => !empty($request->rating)?$request->rating:0,
             'coupon_code' => $request->coupon_code,
             'hotel_attributes' => $request->hotel_attributes,
             'contact' => $request->contact,
@@ -373,7 +375,10 @@ class HotelController extends Controller
             $hotel->propertyTypes()->sync($request->get('propertyTypes'));
             $hotel->accessibles()->sync($request->get('accessibles'));
             $hotel->meetingEvents()->sync($request->get('meetingAndEvents'));
+            
+             if (!empty($request->state_id[0])) {
             $hotel->states()->sync($request->get('state_id'));
+            }
             $hotel->occupancies()->sync($request->get('occupancies'));
             $hotel->deals()->sync($request->get('deals'));
             $hotel->activities()->sync($request->get('activitiescard'));
