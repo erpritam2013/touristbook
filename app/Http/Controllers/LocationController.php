@@ -320,9 +320,8 @@ public function changeStatus(Request $request): JsonResponse
 
      $location->types()->sync($request->get('location_type'));
      $location->places()->sync($request->get('places'));
-     if (isset($request->state_id[0]) && !empty($request->state_id[0])) {
      $location->states()->sync($request->get('state_id'));
-     }
+     
  }
  Session::flash('success','Location Updated Successfully');
  return redirect()->Route('admin.locations.edit',$location->id);
@@ -336,7 +335,7 @@ public function changeStatus(Request $request): JsonResponse
      */
     public function destroy(Location $location)
     {
-        if ($locotion) {
+        if ($location) {
             $locationId = $location->id;
 
             $this->locationRepository->deleteLocation($locationId);
