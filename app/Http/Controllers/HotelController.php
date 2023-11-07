@@ -180,7 +180,7 @@ class HotelController extends Controller
             // TODO: logo and featured_image ----> S3 Integration
             'featured_image' => $request->featured_image,
             'hotel_video' => $request->hotel_video,
-            'rating' => $request->rating,
+            'rating' => !empty($request->rating)?$request->rating:0,
             'coupon_code' => $request->coupon_code,
             'hotel_attributes' => $request->hotel_attributes,
             'contact' => $request->contact,
@@ -305,7 +305,7 @@ class HotelController extends Controller
             // TODO: logo and featured_image ----> S3 Integration
             'featured_image' => $request->featured_image,
             'hotel_video' => $request->hotel_video,
-            'rating' => $request->rating,
+            'rating' => !empty($request->rating)?$request->rating:0,
             'coupon_code' => $request->coupon_code,
             'hotel_attributes' => $request->hotel_attributes,
             'contact' => $request->contact,
@@ -375,7 +375,7 @@ class HotelController extends Controller
             $hotel->propertyTypes()->sync($request->get('propertyTypes'));
             $hotel->accessibles()->sync($request->get('accessibles'));
             $hotel->meetingEvents()->sync($request->get('meetingAndEvents'));
-            if (!empty($request->state_id[0])) {
+             if (!empty($request->state_id[0])) {
             $hotel->states()->sync($request->get('state_id'));
             }
             $hotel->occupancies()->sync($request->get('occupancies'));
