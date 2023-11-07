@@ -29,7 +29,6 @@ class FileController extends Controller
         $uploadedFile = $request->file('file');
         // TODO: Need to Improve
         $file = new File();
-        dd($file);
         $file->save();
 
         $file->addMedia($uploadedFile)

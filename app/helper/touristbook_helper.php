@@ -602,9 +602,17 @@ if (!function_exists('getCountries')) {
 if (!function_exists('getConversionUrl')) {
     function getConversionUrl($id,$conversion_type=''){
 
-        $NamespacedModel = 'App\\Models\\File' ;
-        $file = $NamespacedModel::findOrFail($id);
+        $NamespacedModel = 'App\\Models\\File';
+        $NamespacedModelMedia = 'App\\Models\\Media';
+       
+        $media = $NamespacedModelMedia::find($id);
+        if (!empty($media)) {
+        $file = $NamespacedModel::find($media->model_id);
+        if (!empty($file)) {
         return $file->getFirstMediaUrl('images',$conversion_type);
+        }
+        }
+        return null;
         
     }
 }
