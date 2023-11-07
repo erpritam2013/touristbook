@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\location;
+use App\Models\Location;
 use App\Models\TourDetail;
 use App\Models\CountryZone;
 use App\Models\Terms\Type;
@@ -64,7 +64,7 @@ class Tour extends Model
 
 
     public function locations() {
-        return $this->belongsToMany(location::class, 'tour_locations', 'tour_id', 'location_id');
+        return $this->belongsToMany(Location::class, 'tour_locations', 'tour_id', 'location_id');
     }
 
     public function languages() {

@@ -10,7 +10,7 @@ use App\Http\Controllers\PropertyTypeController;
 use App\Http\Controllers\PackageTypeController;
 use App\Http\Controllers\MeetingAndEventController;
 use App\Http\Controllers\HotelController;
-use App\Http\Controllers\locationController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\OccupancyController;

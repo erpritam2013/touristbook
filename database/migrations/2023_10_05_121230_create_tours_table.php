@@ -45,8 +45,8 @@ return new class extends Migration
             $table->string('logo')->nullable();
             $table->string('featured_image')->nullable();
             $table->string('discount_type')->nullable();
-            $table->json('discount_by_child')->default(0);
-            $table->json('discount_by_adult')->default(0);
+            $table->json('discount_by_child')->nullable();
+            $table->json('discount_by_adult')->nullable();
             $table->string('discount_by_people_type')->nullable();
             $table->string('calculator_discount_by_people_type')->nullable();
             $table->boolean('hide_adult_in_booking_form')->default(0);
