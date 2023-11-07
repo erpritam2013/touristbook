@@ -286,7 +286,6 @@ class TourController extends Controller
    $tour->types()->attach($request->get('types'));
    $tour->languages()->attach($request->get('language'));
    if (!empty($request->state_id[0])) {
-
        $tour->states()->attach($request->get('state_id'));
    }
    $tour->locations()->attach($request->get('location_id'));

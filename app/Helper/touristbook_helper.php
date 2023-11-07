@@ -15,23 +15,23 @@ if (!function_exists('customStringReplaceWithStrCase')) {
         if ($str_case == "ucwords") {
             $result = ucwords(str_replace($search, $replace_value, $subject));
         }elseif($str_case == "strtolower"){
-         $result = strtolower(str_replace($search, $replace_value, $subject));
-     }elseif($str_case == "strtoupper"){
-      $result = strtoupper(str_replace($search, $replace_value, $subject));
-  }else{
-   $result = str_replace($search, $replace_value, $subject);
-}
+           $result = strtolower(str_replace($search, $replace_value, $subject));
+       }elseif($str_case == "strtoupper"){
+          $result = strtoupper(str_replace($search, $replace_value, $subject));
+      }else{
+         $result = str_replace($search, $replace_value, $subject);
+     }
 
-return $result;
-}
+     return $result;
+ }
 }
 if (!function_exists('shortDescription')) {
- function shortDescription($text,$length=150)
- {
-  $result = "";
-  $result = mb_strimwidth($text, 0, $length, "......");
-  return $result;
-}
+   function shortDescription($text,$length=150)
+   {
+      $result = "";
+      $result = mb_strimwidth($text, 0, $length, "......");
+      return $result;
+  }
 }
 function FunctionName($value='')
 {
@@ -42,8 +42,8 @@ if (!function_exists('touristbook_sanitize_title')) {
     {
         if (!empty($value)) {
             if (!empty($extra_txt)) {
-               $value .= ' '.$extra_txt;
-           }
+             $value .= ' '.$extra_txt;
+         }
      $value = str_replace(' ', '-', strtolower($value)); // Replaces all spaces with hyphens.
  }else{
     return "";
@@ -63,7 +63,7 @@ if (!function_exists('is_featured')) {
     function is_featured($value,$title='featured') {
 
         if (isset($value)) {
-           if ($value == 1) {
+         if ($value == 1) {
 
             return ' <div class="service-tag bestseller">
             <div class="feature_class st_featured featured">'.ucwords($title).'</div>
@@ -78,56 +78,56 @@ if (!function_exists('inputTemplate')) {
     function inputTemplate($fields_data)
     {
         $html = "";
-        if (!empty($fields_data)) {
-           extract($fields_data);
+        if (!empty($fields_data) && is_array($fields_data)) {
+         extract($fields_data);
 
 
-           $hidden_class = (!empty($hidden_class))?$hidden_class:'';
-           $value = (!empty($value))?$value:'';
-           $class = (!empty($class))?$class:'';
-           $control = (!empty($control))?$control:'text';
-           $hidden_class = (!empty($hidden_class))?$hidden_class:'';
-           $html .='<div class="form-group row '.$hidden_class.'">';
+         $hidden_class = (!empty($hidden_class))?$hidden_class:'';
+         $value = (!empty($value))?$value:'';
+         $class = (!empty($class))?$class:'';
+         $control = (!empty($control))?$control:'text';
+         $hidden_class = (!empty($hidden_class))?$hidden_class:'';
+         $html .='<div class="form-group row '.$hidden_class.'">';
 
-           if(empty($id)){
-             $id = (isset($name))? str_replace('[]', '',str_replace('_', '-', $name)):$name;
-         }
+         if(empty($id)){
+           $id = (isset($name))? str_replace('[]', '',str_replace('_', '-', $name)):$name;
+       }
 
-         if(!isset($col)){
-             $html .='<div class="col-lg-12">';
-             if(isset($label) && !empty($label))
-             {
-                 $html .='<label class="subform-card-label" for="'.$id.'">'.$label;
+       if(!isset($col)){
+           $html .='<div class="col-lg-12">';
+           if(isset($label) && !empty($label))
+           {
+               $html .='<label class="subform-card-label" for="'.$id.'">'.$label;
 
-                 if(isset($required) && $required){
-                     $html .='<span class="text-danger">*</span>';
-                 }
-                 $html .='</label>';
-                 if(isset($desc) && !empty($desc)){
-                     $html .='<p>'.$desc.'</p>';
+               if(isset($required) && $required){
+                   $html .='<span class="text-danger">*</span>';
+               }
+               $html .='</label>';
+               if(isset($desc) && !empty($desc)){
+                   $html .='<p>'.$desc.'</p>';
 
-                 }
-             }
-         }else{
+               }
+           }
+       }else{
 
 
 
-             if(isset($label) && !empty($label)){
-                 $html .='<label class="col-lg-2 col-form-label" for="'.$id.'">'.$label;
-                 if(isset($required) && $required) {
-                     $html .='<span class="text-danger">*</span>';
-                 }
-                 $html .='</label>';
-             }
-             $html .='<div class="col-lg-10">';
-         }
-         $html .='<input type="'.$control.'" class="form-control '.$class.'" id="'.$id.'" name="'.$name.'" value="'.$value.'" placeholder="Enter a '.$label.'..">';
+           if(isset($label) && !empty($label)){
+               $html .='<label class="col-lg-2 col-form-label" for="'.$id.'">'.$label;
+               if(isset($required) && $required) {
+                   $html .='<span class="text-danger">*</span>';
+               }
+               $html .='</label>';
+           }
+           $html .='<div class="col-lg-10">';
+       }
+       $html .='<input type="'.$control.'" class="form-control '.$class.'" id="'.$id.'" name="'.$name.'" value="'.$value.'" placeholder="Enter a '.$label.'..">';
 
-         $html .='</div>';
-         $html .='</div>';
-     }
-     return $html;
- }
+       $html .='</div>';
+       $html .='</div>';
+   }
+   return $html;
+}
 
 }
 
@@ -135,55 +135,114 @@ if (!function_exists('mediaTemplate')) {
 
     function mediaTemplate($fields_data)
     {
-     $html = "";
-     if (!empty($fields_data)) {
+       $html = "";
+       if (!empty($fields_data) && is_array($fields_data)) {
         extract($fields_data);
         $html .='<div class="form-group row">';
 
         if(empty($id)){
-           $id = (isset($name))? str_replace('[]', '',str_replace('_', '-', $name)):$name;
-       }
-       $class = (!empty($class))?$class:'';
-       $value = (!empty($value))?$value:'';
-       $label = (!empty($label))?$label:'';
-       $smode = (!empty($smode))?$smode:'single';
-       $id = (!empty($id))?$id:'';
-       if(!isset($col)){
-           $html .='<div class="col-lg-12">';
-           if(isset($label) && !empty($label)){
-              $html .='<label class="subform-card-label" for="'.$id.'">'.$label.'</label>';
-              if(isset($desc) && !empty($desc)){
-                  $html .='<p>'.$desc.'</p>';
-              }
+         $id = (isset($name))? str_replace('[]', '',str_replace('_', '-', $name)):$name;
+     }
+     $class = (!empty($class))?$class:'';
+     $value = (!empty($value))?$value:'';
+     $label = (!empty($label))?$label:'';
+     $smode = (!empty($smode))?$smode:'single';
+     $id = (!empty($id))?$id:'';
+     if(!isset($col)){
+         $html .='<div class="col-lg-12">';
+         if(isset($label) && !empty($label)){
+          $html .='<label class="subform-card-label" for="'.$id.'">'.$label.'</label>';
+          if(isset($desc) && !empty($desc)){
+              $html .='<p>'.$desc.'</p>';
           }
-      }else{
-          if(isset($label) && !empty($label)){
-              $html .='<label class="col-lg-2 col-form-label" for="'.$id.'">'.$label.'</label>';
-          }
-          $html .='<div class="col-lg-10">';
       }
-      $html .='<div class="media-controls">';
+  }else{
+      if(isset($label) && !empty($label)){
+          $html .='<label class="col-lg-2 col-form-label" for="'.$id.'">'.$label.'</label>';
+      }
+      $html .='<div class="col-lg-10">';
+  }
+  $html .='<div class="media-controls">';
 
-      $html .='<input type="hidden" class="form-control media-input '.$class.' gallery-input " name="'.$name.'"
-      value="'.$value ? json_encode($value) : "".'" />';
-      if($smode == 'single'){
-        if(is_array($value) && isset($value[0])){
-            $value_url= $value[0]['url'];
-        }
-        $html .='<input type="text" class="form-control media-input '.$class.' gallery-input " name="'.$name.'" value="'.$value_url.'" id="'.$id.'" placeholder="Enter '.$label.'..."/>';
-    }
-    $json_encode = is_array($value) ? json_encode($value) : "";
-    $html .='<button type="button" class="btn btn-primary mt-2 add-media-btn" smode="'.$smode.'" selectedImages="'.$json_encode.'"  >+</button>';
-    $html .='<button type="button" class="btn btn-danger mt-2 remove-media-btn">-</button>';
-    $html .='<div class="media-preview">';
+  $html .='<input type="hidden" class="form-control media-input '.$class.' gallery-input " name="'.$name.'"
+  value="'.$value ? json_encode($value) : "".'" />';
+  if($smode == 'single'){
     if(is_array($value) && isset($value[0])){
+        $value_url= $value[0]['url'];
+    }
+    $html .='<input type="text" class="form-control media-input '.$class.' gallery-input " name="'.$name.'" value="'.$value_url.'" id="'.$id.'" placeholder="Enter '.$label.'..."/>';
+}
+$json_encode = is_array($value) ? json_encode($value) : "";
+$html .='<button type="button" class="btn btn-primary mt-2 add-media-btn" smode="'.$smode.'" selectedImages="'.$json_encode.'"  >+</button>';
+$html .='<button type="button" class="btn btn-danger mt-2 remove-media-btn">-</button>';
+$html .='<div class="media-preview">';
+if(is_array($value) && isset($value[0])){
 
-        $html .='<img src="'.$value[0]['url'].'"  class="img" height="100" width="100" />';
+    $html .='<img src="'.$value[0]['url'].'"  class="img" height="100" width="100" />';
+}
+$html .='</div>';
+$html .='</div>';
+$html .='</div>';
+$html .='</div>';
+}
+return $html;
+}
+}
+if (!function_exists('galleryTemplate')) {
+
+    function galleryTemplate($fields_data)
+    {
+       $html = "";
+       if (!empty($fields_data) && is_array($fields_data)) {
+        extract($fields_data);
+        $html .='<div class="form-group row">';
+
+        if(empty($id)){
+         $id = (isset($name))? str_replace('[]', '',str_replace('_', '-', $name)):$name;
+     }
+     $class = (!empty($class))?$class:'';
+     $value = (!empty($value))?$value:'';
+     $label = (!empty($label))?$label:'';
+     $smode = (!empty($smode))?$smode:'single';
+     $id = (!empty($id))?$id:'';
+
+
+     if (!isset($col)){
+        $html .='<div class="col-lg-12">';
+        if (isset($label) && !empty($label)){
+            $html .='<label for="'. $id .'" class="subform-card-label">'. $label .'</label>';
+            if (isset($desc) && !empty($desc)){
+                $html .='<p>'. $desc .'</p>';
+            }
+        }
+    }else{
+        if (isset($label) && !empty($label)){
+            $html .='<label class="col-lg-2 col-form-label subform-card-label" for="'. $id .'">'. $label .'</label>';
+        }
+        $html .='<div class="col-lg-10">';
+    }
+    $html .=' <div class="gallery-controls">';
+    $json_decode__ = (!empty($value) && isset($value) && is_array($value))?json_encode($value):json_encode([]);
+    $html .='<input type="hidden" class="form-control gallery-input '. $class .'" name="'. $name ?? '' .'" value="'. $json_decode__ .'" id="'. $id .'" placeholder="Enter '. $label ?? '' .'..." />';
+    $html .='<button type="button" class="btn btn-primary mt-2 add-gallery-btn" smode="'.$smode.'" selectedImages="'. $json_decode__ .'">+</button>';
+    $html .='<div class="media-preview">';
+
+    if(!empty($value) && isset($value) && is_array($value)){
+        $html .='<div class="row">';
+        foreach($value as $image){
+            $html .='<div class="col-xl-3">';
+            if(is_array($image)){
+                $html .='<img src="'.$image['url'].'" class="img" height="100" width="100" id="image-path-'.$image['id'].'" />';
+            }
+            $html .='</div>';
+        }
+        $html .='</div>';
     }
     $html .='</div>';
+    $html .=' </div>';
     $html .='</div>';
     $html .='</div>';
-    $html .='</div>';
+
 }
 return $html;
 }
@@ -192,8 +251,8 @@ if (!function_exists('radioInputTemplate')) {
 
     function radioInputTemplate($fields_data)
     {
-     $html = "";
-     if (!empty($fields_data)) {
+       $html = "";
+       if (!empty($fields_data) && is_array($fields_data)) {
         extract($fields_data);
 
         $hidden_class = (!empty($hidden_class))?$hidden_class:'';
@@ -205,35 +264,35 @@ if (!function_exists('radioInputTemplate')) {
         $html .='<div class="form-group row '.$hidden_class.'">';
 
         if(empty($id)){
-           $id = (isset($name))? str_replace('[]', '',str_replace('_', '-', $name)):$name;
-       }
-       $set_label_class = "";
-       if(!isset($col)){
-           $html .='<div class="col-lg-12">';
-           if(isset($label) && !empty($label)){
-               $html .='<label class="subform-card-label" for="'.$id.'">'.$label;
-               if(isset($required) && $required){
-                   $html .='<span class="text-danger">*</span>';
-               }
-               $html .='</label>';
-               if(isset($desc) && !empty($desc)){
-                   $html .='<p>'.$desc.'</p>';
-               }else{
-                   $html .='<br>';
-               }
-           }
-       }else{
-           if(isset($label) && !empty($label)){
-               $html .='<label class="col-lg-2 col-form-label" for="'.$id.'">'.$label;
-               if(isset($required) && $required){
-                   $html .='<span class="text-danger">*</span>';
-               }
-               $html .='</label>';
-           }
-           $html .='<div class="col-lg-10">';
-       }
+         $id = (isset($name))? str_replace('[]', '',str_replace('_', '-', $name)):$name;
+     }
+     $set_label_class = "";
+     if(!isset($col)){
+         $html .='<div class="col-lg-12">';
+         if(isset($label) && !empty($label)){
+             $html .='<label class="subform-card-label" for="'.$id.'">'.$label;
+             if(isset($required) && $required){
+                 $html .='<span class="text-danger">*</span>';
+             }
+             $html .='</label>';
+             if(isset($desc) && !empty($desc)){
+                 $html .='<p>'.$desc.'</p>';
+             }else{
+                 $html .='<br>';
+             }
+         }
+     }else{
+         if(isset($label) && !empty($label)){
+             $html .='<label class="col-lg-2 col-form-label" for="'.$id.'">'.$label;
+             if(isset($required) && $required){
+                 $html .='<span class="text-danger">*</span>';
+             }
+             $html .='</label>';
+         }
+         $html .='<div class="col-lg-10">';
+     }
 
-       if(!empty($input) && is_array($input)){
+     if(!empty($input) && is_array($input)){
         if(isset($on_off_switch)){
             $html .='<div class="on-off-switch">';
         }
@@ -245,9 +304,9 @@ if (!function_exists('radioInputTemplate')) {
                 if($item->{$name} == $input_value){
                     $set_label_class = $label_class[$input_value].'-checked';
                 }else{
-                 $set_label_class = $label_class[$input_value];
-             }
-         }else{
+                   $set_label_class = $label_class[$input_value];
+               }
+           }else{
             if($input_value == 0){
               $set_label_class = $label_class[$input_value].'-checked';
           }else{
@@ -275,8 +334,8 @@ if (!function_exists('rangeInputTemplate')) {
 
     function rangeInputTemplate($fields_data)
     {
-     $html = "";
-     if (!empty($fields_data)) {
+       $html = "";
+       if (!empty($fields_data) && is_array($fields_data)) {
         extract($fields_data);
 
         $name = (!empty($name))?$name: '';
@@ -296,43 +355,43 @@ if (!function_exists('rangeInputTemplate')) {
             $html .='<div class="form-group row">';
 
             if(empty($id)){
-               $id = $name;
-           }
+             $id = $name;
+         }
 
-           if(!isset($col)){
-               $html .='<div class="col-lg-12">';
-               if(isset($label) && !empty($label)){
-                   $html .='<label class="subform-card-label" for="'.$id.'">'.$label;
-                   if(isset($required) && $required){
-                       $html .='<span class="text-danger">*</span>';
-                   }
-                   $html .='</label>';
-                   if(isset($desc) && !empty($desc)){
-                     $html .=' <p>'.$desc.'</p>';
+         if(!isset($col)){
+             $html .='<div class="col-lg-12">';
+             if(isset($label) && !empty($label)){
+                 $html .='<label class="subform-card-label" for="'.$id.'">'.$label;
+                 if(isset($required) && $required){
+                     $html .='<span class="text-danger">*</span>';
                  }
-             }
-         }else{
-           if(isset($label) && !empty($label)){
-               $html .='<label class="col-lg-2 col-form-label" for="'.$id.'">'.$label;
-               if(isset($required) && $required){
-                   $html .='<span class="text-danger">*</span>';
+                 $html .='</label>';
+                 if(isset($desc) && !empty($desc)){
+                   $html .=' <p>'.$desc.'</p>';
                }
-               $html .='</label>';
            }
-           $html .='<div class="col-lg-10">';
-       }
-       $html .='<div class="row">';
-       $html .='<div class="col-sm-9">';
-       $html .='<input type="range" min="'.$min.'" max="'.$max.'" step="'.$step.'" class="form-control '.$class.'" id="'.$id.'" name="'.$name.'" value="'.$value.'" onchange="rangeValue(this)" oninput="'.$id.'_range_input_show.value=value">';
-       $html .='</div>';
-       $html .='<div class="col-lg-3">';
+       }else{
+         if(isset($label) && !empty($label)){
+             $html .='<label class="col-lg-2 col-form-label" for="'.$id.'">'.$label;
+             if(isset($required) && $required){
+                 $html .='<span class="text-danger">*</span>';
+             }
+             $html .='</label>';
+         }
+         $html .='<div class="col-lg-10">';
+     }
+     $html .='<div class="row">';
+     $html .='<div class="col-sm-9">';
+     $html .='<input type="range" min="'.$min.'" max="'.$max.'" step="'.$step.'" class="form-control '.$class.'" id="'.$id.'" name="'.$name.'" value="'.$value.'" onchange="rangeValue(this)" oninput="'.$id.'_range_input_show.value=value">';
+     $html .='</div>';
+     $html .='<div class="col-lg-3">';
 
-       $html .=' <input type="number" class="form-control " readonly="" id="'.$id.'_range_input_show" oninput="'.$id.'.value=value" value="'.$value.'">';
-       $html .=' </div>';
-       $html .='</div>';
-       $html .='</div> ';
-       $html .='</div>';
-   }
+     $html .=' <input type="number" class="form-control " readonly="" id="'.$id.'_range_input_show" oninput="'.$id.'.value=value" value="'.$value.'">';
+     $html .=' </div>';
+     $html .='</div>';
+     $html .='</div> ';
+     $html .='</div>';
+ }
 }
 return $html;
 }
@@ -340,21 +399,21 @@ return $html;
 if (!function_exists('touristbook_string_explode')) {
     function touristbook_string_explode($field)
     {
-     $result = "";
-     if (preg_match('/[,]/', $field) && !empty($field)) {
-         $result = explode(',',$field);
-     }else{
-      $result = $field;
+       $result = "";
+       if (preg_match('/[,]/', $field) && !empty($field)) {
+           $result = explode(',',$field);
+       }else{
+          $result = $field;
+      }
+      return $result;
   }
-  return $result;
-}
 }
 if (!function_exists('textareaTemplate')) {
 
     function textareaTemplate($fields_data)
     {
-     $html = "";
-     if (!empty($fields_data)) {
+       $html = "";
+       if (!empty($fields_data) && is_array($fields_data)) {
         extract($fields_data);
         $name = (!empty($name))?$name: '';
         $label = (!empty($label))?$label: '';
@@ -368,9 +427,9 @@ if (!function_exists('textareaTemplate')) {
 
         $html .='<div class="form-group row">';
         if(empty($id)){
-           $id = (isset($name))? str_replace('[]', '',str_replace('_', '-', $name)):$name;
-       }
-       if(!isset($col)){
+         $id = (isset($name))? str_replace('[]', '',str_replace('_', '-', $name)):$name;
+     }
+     if(!isset($col)){
         $html .='<div class="col-lg-12">';
         if(isset($label) && !empty($label)){
           $html .='<label class="subform-card-label" for="'.$id.'">'.$label.'</label>';
@@ -394,8 +453,8 @@ if (!function_exists('selectBoxTemplate')) {
 
     function selectBoxTemplate($fields_data)
     {
-     $html = "";
-     if (!empty($fields_data)) {
+       $html = "";
+       if (!empty($fields_data) && is_array($fields_data)) {
         extract($fields_data);
         $name = (!empty($name))?$name: '';
         $label = (!empty($label))?$label: '';
@@ -417,25 +476,25 @@ if (!function_exists('selectBoxTemplate')) {
           $multiple = "";
       }
       if(empty($id)){
-       $id = (isset($name))? str_replace('[]', '',str_replace('_', '-', $name)):$name;
-   }
+         $id = (isset($name))? str_replace('[]', '',str_replace('_', '-', $name)):$name;
+     }
 
-   if(!isset($col)){
-    $html .='<div class="col-lg-12">';
-    if(isset($label) && !empty($label)){
-     $html .='<label class="subform-card-label" for="'.$id.'">'.$label.'</label>';
-     if(isset($desc) && !empty($desc)){
-      $html .='<p>'.$desc.'</p>';
+     if(!isset($col)){
+        $html .='<div class="col-lg-12">';
+        if(isset($label) && !empty($label)){
+           $html .='<label class="subform-card-label" for="'.$id.'">'.$label.'</label>';
+           if(isset($desc) && !empty($desc)){
+              $html .='<p>'.$desc.'</p>';
+          }
+      }
+  }else{
+   if(isset($label) && !empty($label)){
+       $html .='<label class="col-lg-2 col-form-label" for="'.$id.'">'.$label.'</label>';
+       if(isset($desc) && !empty($desc)){
+          $html .='<p>'.$desc.'</p>';
+      }
   }
-}
-}else{
- if(isset($label) && !empty($label)){
-     $html .='<label class="col-lg-2 col-form-label" for="'.$id.'">'.$label.'</label>';
-     if(isset($desc) && !empty($desc)){
-      $html .='<p>'.$desc.'</p>';
-  }
-}
-$html .='<div class="col-lg-10">';
+  $html .='<div class="col-lg-10">';
 }
 $selected = (empty($items))?$selected:"";
 $html .='<select class="form-control single-select-placeholder-touristbook '.$class .'" id="'.$id.'" name="'.$name.'" '.$multiple.' '.$attr.'  selected_value="'.$selected.'">';
@@ -540,13 +599,13 @@ if (!function_exists('get_price')) {
 if (!function_exists('getNewIcon')) {
     function getNewIcon($name = '', $color = '', $width = '', $height = '', $stroke = false)
     {
-       $fonts = config('fonts');
+     $fonts = config('fonts');
          // if ($fonts) {
          //        if (isset($fonts)) {
          //            self::$fonts = $fonts;
          //        }
          //    }
-       if (empty($fonts)) {
+     if (empty($fonts)) {
         return '';
     }
     if (!isset($fonts[$name])) {
@@ -604,13 +663,13 @@ if (!function_exists('getConversionUrl')) {
 
         $NamespacedModel = 'App\\Models\\File';
         $NamespacedModelMedia = 'App\\Models\\Media';
-       
+
         $media = $NamespacedModelMedia::find($id);
         if (!empty($media)) {
-        $file = $NamespacedModel::find($media->model_id);
-        if (!empty($file)) {
-        return $file->getFirstMediaUrl('images',$conversion_type);
-        }
+            $file = $NamespacedModel::find($media->model_id);
+            if (!empty($file)) {
+                return $file->getFirstMediaUrl('images',$conversion_type);
+            }
         }
         return null;
         
@@ -619,24 +678,24 @@ if (!function_exists('getConversionUrl')) {
 if (!function_exists('unsetValueActivityTourismZone')) {
     function unsetValueActivityTourismZone($data)
     {
-       if (!empty($data)) {
-          foreach ($data as $key => $value) {
-             if ($data[$key]['activity_zones-url_link_status'] == 'slug') {
-                 unset($data[$key]['activity_zones-file']);
-                 unset($data[$key]['activity_zones-web_link']);
-             }elseif ($data[$key]['activity_zones-url_link_status'] == 'file') {
-                 unset($data[$key]['activity_zones-slug']);
-                 unset($data[$key]['activity_zones-web_link']);
-             }elseif ($data[$key]['activity_zones-url_link_status'] == 'web_link') {
-              unset($data[$key]['activity_zones-file']);
-              unset($data[$key]['activity_zones-slug']);
-          }
-
+     if (!empty($data)) {
+      foreach ($data as $key => $value) {
+       if ($data[$key]['activity_zones-url_link_status'] == 'slug') {
+           unset($data[$key]['activity_zones-file']);
+           unset($data[$key]['activity_zones-web_link']);
+       }elseif ($data[$key]['activity_zones-url_link_status'] == 'file') {
+           unset($data[$key]['activity_zones-slug']);
+           unset($data[$key]['activity_zones-web_link']);
+       }elseif ($data[$key]['activity_zones-url_link_status'] == 'web_link') {
+          unset($data[$key]['activity_zones-file']);
+          unset($data[$key]['activity_zones-slug']);
       }
+
   }
+}
 
 
-  return $data;
+return $data;
 }
 }
 
@@ -644,9 +703,9 @@ if (!function_exists('getCustomIcons')) {
     function getCustomIcons($custom_icons)
     {
 
-       $css = "<style>";
-       if (isset($custom_icons) && !empty($custom_icons)) {
-           foreach ($custom_icons as $key => $custom_icon) {
+     $css = "<style>";
+     if (isset($custom_icons) && !empty($custom_icons)) {
+         foreach ($custom_icons as $key => $custom_icon) {
             $css .= ".".$custom_icon->slug."{background:url(".$custom_icon->uri.") no-repeat center!important;}";
         }
     }
@@ -689,16 +748,16 @@ if (!function_exists('touristbook_custom_grouping_val')) {
 if (!function_exists('castImageValue')) {
     function castImageValue($data,$field_name,$type)
     {
-       if (!empty($data)) {
-         $file_key = $field_name.'-'.$type;
-         foreach ($data as $key => $value) {
-            $file = json_decode($value[$file_key],true);
-            if (!empty($file) && is_array($file)) {
-               $data[$key][$file_key] = $file;
-           }
-       }
-   }
-   return $data;
+     if (!empty($data)) {
+       $file_key = $field_name.'-'.$type;
+       foreach ($data as $key => $value) {
+        $file = json_decode($value[$file_key],true);
+        if (!empty($file) && is_array($file)) {
+         $data[$key][$file_key] = $file;
+     }
+ }
+}
+return $data;
 }
 }
 if (!function_exists('setTermSpace')) {
@@ -766,8 +825,8 @@ if (!function_exists('getPostData')) {
         if (!empty($model) && !empty($parameters)) {
             $NamespacedModel = 'App\\Models\\' . $model;
             $getPostData = $NamespacedModel::get($parameters)->map(function($post, $key) use($type){
-             if ($type == 'object') {
-                 return (object)[
+               if ($type == 'object') {
+                   return (object)[
                     'id' => $post->id,
                     'value' => (isset($post->name))?$post->name:$post->title,
                 ];
@@ -798,14 +857,14 @@ if (!function_exists('exploreJsonData')) {
             if (empty($key)) {
                 $result = $json_decode;
             }else{
-               $collection = collect($json_decode);
+             $collection = collect($json_decode);
 
-               $result = $collection->get($key);
-           }
+             $result = $collection->get($key);
+         }
 
-           return $result;
-       }
-   }
+         return $result;
+     }
+ }
 }
 
 if (!function_exists('exploreArrayData')) {
@@ -814,20 +873,20 @@ if (!function_exists('exploreArrayData')) {
         $result = "";
         if (!empty($data)) {
             if (!empty($key)) {
-               $collection = collect($data);
-               $result = $collection->get($key);
-           }else{
-               $collection = collect($data);
-               $result = $collection->get();
-           }
-       }
-       return $result;
-   }
+             $collection = collect($data);
+             $result = $collection->get($key);
+         }else{
+             $collection = collect($data);
+             $result = $collection->get();
+         }
+     }
+     return $result;
+ }
 }
 if (!function_exists('matchRouteName')) {
     function matchRouteName($current_route=null){
-     $active_class = "";
-     if (!empty($current_route)) {
+       $active_class = "";
+       if (!empty($current_route)) {
         $routeName = getRouteName();
         if ($routeName == $current_route) {
             $active_class = 'mm-active';
@@ -839,8 +898,8 @@ if (!function_exists('matchRouteName')) {
 }
 if (!function_exists('matchSiteRouteName')) {
     function matchSiteRouteName($current_route=null){
-     $active_class = "";
-     if (!empty($current_route)) {
+       $active_class = "";
+       if (!empty($current_route)) {
         $routeName = getRouteName();
         if ($routeName == $current_route) {
             $active_class = 'active';
@@ -852,8 +911,8 @@ if (!function_exists('matchSiteRouteName')) {
 }
 if (!function_exists('matchRouteNameMatch')) {
     function matchRouteNameMatch($current_route=null){
-     $active_class = false;
-     if (!empty($current_route)) {
+       $active_class = false;
+       if (!empty($current_route)) {
         $routeName = getRouteName();
         $arr = explode('.', $routeName);
         if (in_array($current_route, $arr)) {
@@ -868,11 +927,11 @@ if (!function_exists('matchRouteNameMatch')) {
 if (!function_exists('getIconColorClass')) {
     function getIconColorClass(){
 
-     $i_color_dashboard = config('global.i_color_dashboard');
-     $get_color = array_rand($i_color_dashboard);
-     return "text-".$i_color_dashboard[$get_color]." border-".$i_color_dashboard[$get_color];
+       $i_color_dashboard = config('global.i_color_dashboard');
+       $get_color = array_rand($i_color_dashboard);
+       return "text-".$i_color_dashboard[$get_color]." border-".$i_color_dashboard[$get_color];
 
- }
+   }
 }
 if (!function_exists('matchRouteGroupName')) {
     function matchRouteGroupName($route_group_name, $group_type=null){
@@ -908,14 +967,14 @@ if(!function_exists('get_body_error_msg')){
         foreach ($errors->all() as $error){
 
 
-           $form_error .='<div class="alert alert-danger alert-dismissible alert-alt solid fade show"><button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
-           </button><strong>Error!</strong>&nbsp;'.$error.'</div>';
-       }
+         $form_error .='<div class="alert alert-danger alert-dismissible alert-alt solid fade show"><button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
+         </button><strong>Error!</strong>&nbsp;'.$error.'</div>';
+     }
 
 
 
-       return  $form_error;
-   }
+     return  $form_error;
+ }
 }
 if (!function_exists('fatchIconByErrorCodeMetch')) {
 
@@ -929,19 +988,19 @@ if (!function_exists('fatchIconByErrorCodeMetch')) {
         }elseif ($code == '402') {
             $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
         }elseif ($code == '403') {
-         $i_html = '<i class="fa fa-times-circle text-danger"></i>';
-     }elseif ($code == '404') {
+           $i_html = '<i class="fa fa-times-circle text-danger"></i>';
+       }elseif ($code == '404') {
         $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
     }elseif ($code == '419') {
-     $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
- }elseif ($code == '429') {
+       $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
+   }elseif ($code == '429') {
     $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
 }elseif ($code == '500') {
     $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
 }elseif ($code == '503') {
     $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
 }else{
- $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
+   $i_html = '<i class="fa fa-exclamation-triangle text-warning"></i>';
 }
 return $i_html;
 }
@@ -968,7 +1027,7 @@ if(!function_exists('print_error_message')){
 
 if(!function_exists('get_edit_select_check_pvr_old_value')){
     function get_edit_select_check_pvr_old_value($input,$compair_obj,$compair_prop, $current_ele, $type){
-     if((!empty($compair_obj->{$compair_prop}))&&(empty(old($input)))){
+       if((!empty($compair_obj->{$compair_prop}))&&(empty(old($input)))){
         $select= $compair_obj->{$compair_prop};
     }else{
         $select= old($input);
@@ -988,15 +1047,15 @@ if(!function_exists('get_edit_select_check_pvr_old_value')){
 if(!function_exists('setCheckboxActiveInactiveStyle')){
     function setCheckboxActiveInactiveStyle($input,$compair_obj,$compair_prop, $current_ele, $type,$class){
 
-       if ($class == 'active-inactive') {
+     if ($class == 'active-inactive') {
         if ($type != 'select') {
-           return $class.'-switch';
-       }else{
+         return $class.'-switch';
+     }else{
         return "";
     }
 }else{
 
- if((!empty($compair_obj->{$compair_prop}))&&(empty(old($input)))){
+   if((!empty($compair_obj->{$compair_prop}))&&(empty(old($input)))){
     $select= $compair_obj->{$compair_prop};
 }else{
     $select= old($input);
@@ -1012,8 +1071,8 @@ if($select==$current_ele){
 }else{
 
     if ($type != 'select') {
-       return $class.'-switch';
-   }else{
+     return $class.'-switch';
+ }else{
     return "";
 }
 
@@ -1032,7 +1091,7 @@ if(!function_exists('get_edit_select_post_types_old_value')){
         if (!empty($current_ele)) {
 
             if ($type == 'select') {
-             if ($compair_prop == $current_ele) {
+               if ($compair_prop == $current_ele) {
                 return 'selected="selected"';
             }else{
                 return '';
@@ -1074,34 +1133,34 @@ if (!function_exists('get_time_format')) {
     function get_time_format($value,$with_t=false) {
         $cenvertedTime = date('d-m-Y H:i:s');
         if ($with_t) {
-         $cenvertedTime = date('d-m-Y H:i:s',strtotime($value));
-     }else{
-         $cenvertedTime = date('d-m-Y',strtotime($value));
-     }
-     return $cenvertedTime;
- }
+           $cenvertedTime = date('d-m-Y H:i:s',strtotime($value));
+       }else{
+           $cenvertedTime = date('d-m-Y',strtotime($value));
+       }
+       return $cenvertedTime;
+   }
 }
 if (!function_exists('get_array_mapping')) {
     function get_array_mapping($data,$field=false) {
         $result = [];
         if (!empty($data)) {
-         $collection = collect($data);
-         if ($field) {
+           $collection = collect($data);
+           if ($field) {
 
             $result = $collection->map(function ($value,$key) {
-             return (object)[
+               return (object)[
                 'id'=> $key,
                 'value'=>$value
             ];
         });
         }else{
 
-         $result = $collection->map(function (int $item, int $key) {
+           $result = $collection->map(function (int $item, int $key) {
             return (int)$item;
         });
-     }
- }
- return $result->all();
+       }
+   }
+   return $result->all();
 
 
 }
