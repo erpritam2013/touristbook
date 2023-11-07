@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\location;
+use App\Models\Location;
 use App\Models\ActivityList;
 use App\Models\ActivityLists;
 use App\Models\ActivityDetail;
@@ -65,7 +65,7 @@ class Activity extends Model
 
 
     public function locations() {
-        return $this->belongsToMany(location::class, 'activity_locations', 'activity_id', 'location_id');
+        return $this->belongsToMany(Location::class, 'activity_locations', 'activity_id', 'location_id');
     }
 
     public function languages() {
