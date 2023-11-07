@@ -285,8 +285,8 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
      Route::get('room/changeStatus', [RoomController::class,'changeStatus'])->name('changeStatusRoom');
 
      // Location Resource
+    Route::resource('locations', locationController::class);
     Route::prefix('locations')->name('locations.')->group(function() {
-    Route::resource('/', locationController::class)->parameters(['' => 'location']);
 
     });
     Route::delete('location/bulk-delete', [locationController::class,'bulk_delete'])->name('location.bulk-delete');
