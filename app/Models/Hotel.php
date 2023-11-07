@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Room;
+use App\Models\HotelDetail;
+use App\Models\Location;
 use App\Models\Terms\Accessible;
 use App\Models\Terms\Amenity;
 use App\Models\Terms\DealsDiscount;
@@ -117,7 +120,7 @@ class Hotel extends Model
     }
 
     public function locations() {
-        return $this->belongsToMany(location::class, 'hotel_locations', 'hotel_id', 'location_id');
+        return $this->belongsToMany(Location::class, 'hotel_locations', 'hotel_id', 'location_id');
     }
 
     public function detail() {
