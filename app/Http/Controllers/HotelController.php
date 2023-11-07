@@ -148,13 +148,6 @@ class HotelController extends Controller
         $data['title'] = 'Hotel';
         $data['hotel'] = $hotel;
         $data = array_merge_recursive($data, $this->_prepareBasicData());
-        // if (!empty($hotel->detail->todovideo)) {
-        //    $hotel->detail->todovideo = castImageValue($hotel->detail->todovideo,'todovideo','file');
-        // }
-        // if (!empty($hotel->detail->eventmeeting)) {
-        //    $hotel->detail->eventmeeting = castImageValue($hotel->detail->eventmeeting,'eventmeeting','file');
-        // }
-
 
         return view('admin.hotels.edit', $data);
     }
