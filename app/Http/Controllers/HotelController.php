@@ -185,7 +185,7 @@ class HotelController extends Controller
             'hotel_attributes' => $request->hotel_attributes,
             'contact' => $request->contact,
             'address' => $request->address,
-            'avg_price' => (float)$request->avg_price,
+            'avg_price' => !empty($request->avg_price)?$request->avg_price:0,
             'is_allowed_full_day' => $request->is_allowed_full_day,
             // TODO: check_in, check_out jquery plugin for time setup
             'check_in' => $request->check_in,
@@ -310,7 +310,7 @@ class HotelController extends Controller
             'hotel_attributes' => $request->hotel_attributes,
             'contact' => $request->contact,
             'address' => $request->address,
-            'avg_price' => (float)$request->avg_price,
+            'avg_price' => !empty($request->avg_price)?$request->avg_price:0,
             'is_allowed_full_day' => $request->is_allowed_full_day,
             // TODO: check_in, check_out jquery plugin for time setup
             'check_in' => $request->check_in,
