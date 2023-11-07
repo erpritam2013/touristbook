@@ -117,7 +117,7 @@ class ActivityController extends Controller
           'excerpt' =>$request->excerpt,
           'external_link' =>$request->external_link,
           'address' =>$request->address,
-          'price' =>$request->price,
+          'price' =>!empty($request->price)?$request->price:0,
           // 'sale_price' =>$request->sale_price,
           // 'child_price' =>$request->child_price,
           // 'disable_children_name' =>$request->disable_children_name,
@@ -182,10 +182,6 @@ class ActivityController extends Controller
         ]);
     }
 }
-
-
-
-
 $activity = $this->activityRepository->createActivity($activityDetails);
 
 if ($activity) {
