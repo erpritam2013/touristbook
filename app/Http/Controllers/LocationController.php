@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Location;
 use Session;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 use App\Http\Requests\StoreLocationRequest;
 use App\Http\Requests\UpdateLocationRequest;
 use App\DataTables\LocationDataTable;
@@ -110,7 +111,7 @@ private function _prepareBasicData() {
       $locationDetails = [
         "name" => $request->name,
         "description" => $request->description,
-         'slug' => (!empty($request->slug) && $location->slug != $request->slug)?SlugService::createSlug(Location::class, 'slug', $request->slug):$location->slug,
+         'slug' => SlugService::createSlug(Location::class, 'slug', $request->name),
         //logo s3 integration pending
         "color" => $request->color,
         "is_featured" => $request->is_featured,
@@ -130,9 +131,9 @@ private function _prepareBasicData() {
     
     if($location) {
 
-      if($request->gallery == '' || empty($request->gallery)) {
+    if($request->gallery == '' || empty($request->gallery) || $request->gallery == '"[]"' ) {
            $request->merge([
-            'gallery' => Null,
+            'gallery' => "[]",
         ]);
        }
 
@@ -179,7 +180,10 @@ private function _prepareBasicData() {
 
      $location->types()->attach($request->get('type'));
      $location->places()->attach($request->get('places'));
-     $location->states()->attach($request->get('state_id'));
+     if(isset($request->get('state_id')[0]) && !empty($request->get('state_id')[0])){
+              $location->states()->attach($request->get('state_id'));
+     }
+
 
  }
    //return $location;
@@ -268,9 +272,9 @@ public function changeStatus(Request $request): JsonResponse
     
     if($location) {
      
-     if($request->gallery == '' || empty($request->gallery)) {
+   if($request->gallery == '' || empty($request->gallery) || $request->gallery == '"[]"' ) {
            $request->merge([
-            'gallery' => Null,
+            'gallery' => "[]",
         ]);
        }
      $location->locationMeta()->update($request->only([

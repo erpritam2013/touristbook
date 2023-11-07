@@ -222,9 +222,10 @@ class TourController extends Controller
 
   if ($tour) {
             // TODO: Move this to Repository
-     if($request->gallery == '' || empty($request->gallery)) {
+
+    if($request->gallery == '' || empty($request->gallery) || $request->gallery == '"[]"' ) {
            $request->merge([
-            'gallery' => Null,
+            'gallery' => "[]",
         ]);
        }
     $tourMetaData = [
@@ -442,9 +443,10 @@ $this->tourRepository->updateTour($tour->id,$tourDetails);
 
 if ($tour) {
             // TODO: Move this to Repository
- if($request->gallery == '' || empty($request->gallery)) {
+ 
+ if($request->gallery == '' || empty($request->gallery) || $request->gallery == '"[]"' ) {
            $request->merge([
-            'gallery' => Null,
+            'gallery' => "[]",
         ]);
        }
     $tourMetaData = [
