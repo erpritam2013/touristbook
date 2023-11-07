@@ -162,7 +162,12 @@ class HotelController extends Controller
        //      'featured_image' => json_decode($request->featured_image,true),
        //  ]);
        // }
-        //$images = json_decode($request->images);
+        if($request->images == '' || empty($request->images) || $request->images == '"[]"' ) {
+           $request->merge([
+            'images' => "[]",
+        ]);
+       }
+        // $images = json_decode($request->images);
         $hotelDetails = [
             'name' => $request->name,
             'description' => $request->description,
@@ -284,10 +289,14 @@ class HotelController extends Controller
        //      'featured_image' => json_decode($request->featured_image,true),
        //  ]);
        // }
+        if($request->images == '' || empty($request->images) || $request->images == '"[]"' ) {
+           $request->merge([
+            'images' => "[]",
+        ]);
+       }
 
 
-
-        //$images = json_decode($request->images);
+       // $images = json_decode($request->images);
         $hotelDetails = [
             'name' => $request->name,
             'description' => $request->description,
