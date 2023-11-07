@@ -375,7 +375,6 @@ class HotelController extends Controller
             $hotel->propertyTypes()->sync($request->get('propertyTypes'));
             $hotel->accessibles()->sync($request->get('accessibles'));
             $hotel->meetingEvents()->sync($request->get('meetingAndEvents'));
-            
              if (!empty($request->state_id[0])) {
             $hotel->states()->sync($request->get('state_id'));
             }
