@@ -5,7 +5,7 @@
                 <div class="listroBox" latitude="{{$activity->latitude}}" longitude="{{$activity->longitude}}">
                     <figure> {{--<a href="{{route('activity',$activity->slug)}}" class="wishlist_bt"></a>--}}
                     {!!is_featured($activity->is_featured)!!}
-                            @php $featured_image = (!empty($activity->featured_image))?$activity->featured_image[0]['url']:null;@endphp
+                            @php $featured_image = (!empty($activity->featured_image) && isset($activity->featured_image[0]['id']))?getConversionUrl($activity->featured_image[0]['id'],'270x200'):null;@endphp
                      <a href="{{route('activity',$activity->slug)}}"><img
                                 src="{{$featured_image ?? asset('sites/images/dummy/350x250.jpg')}}" class="img-fluid" alt="">
                             {{--<div class="read_more"><span>Read more</span></div>--}}

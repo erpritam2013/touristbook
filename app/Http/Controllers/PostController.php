@@ -175,7 +175,7 @@ class PostController extends Controller
         'description' => $request->description,
         //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
         'excerpt' => $request->excerpt,
-        'gallery' => (!empty($request->gallery))?$request->gallery:Null,
+        'gallery' => ($request->gallery == '' || empty($request->gallery) || $request->gallery == '"[]"' )?$request->gallery:"[]",
         'link' => $request->link,
             // TODO: logo and featured_image ----> S3 Integration
         'extra_price_unit' => $request->extra_price_unit,
