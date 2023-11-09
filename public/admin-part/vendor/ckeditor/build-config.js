@@ -1,6 +1,6 @@
 ﻿/**
- * @license Copyright (c) 2003-2021, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or https://ckeditor.com/license
+ * @license Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license/
  */
 
 /**
@@ -13,10 +13,10 @@
  * (1) https://ckeditor.com/cke4/builder
  *     Visit online builder to build CKEditor from scratch.
  *
- * (2) https://ckeditor.com/cke4/builder/107bd6028d5b3c7180b360e283e55eda
+ * (2) https://ckeditor.com/cke4/builder/6490967e78ab135a44d8c0998d90e841
  *     Visit online builder to build CKEditor, starting with the same setup as before.
  *
- * (3) https://ckeditor.com/cke4/builder/download/107bd6028d5b3c7180b360e283e55eda
+ * (3) https://ckeditor.com/cke4/builder/download/6490967e78ab135a44d8c0998d90e841
  *     Straight download link to the latest version of CKEditor (Optimized) with the same setup as before.
  *
  * NOTE:
@@ -25,7 +25,7 @@
  */
 
 var CKBUILDER_CONFIG = {
-	skin: 'moonocolor',
+	skin: 'moono-lisa',
 	preset: 'full',
 	ignore: [
 		'.DS_Store',
@@ -59,9 +59,6 @@ var CKBUILDER_CONFIG = {
 		'basicstyles' : 1,
 		'bidi' : 1,
 		'blockquote' : 1,
-		'btgrid' : 1,
-		'ckawesome' : 1,
-		'ckeditorfa' : 1,
 		'clipboard' : 1,
 		'colorbutton' : 1,
 		'colordialog' : 1,
@@ -78,7 +75,6 @@ var CKBUILDER_CONFIG = {
 		'find' : 1,
 		'floatingspace' : 1,
 		'font' : 1,
-		'fontawesome5' : 1,
 		'format' : 1,
 		'forms' : 1,
 		'horizontalrule' : 1,

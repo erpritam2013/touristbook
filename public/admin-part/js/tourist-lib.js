@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     var base_admin_url = $("#base-admin-url").val();
 
-
+    var preloader = $('body div#preloader');
 
     // Map Variable
 
@@ -199,14 +199,18 @@ if (btnAddSubForm.length > 0) {
         targetElem.attr("index", newIndex);
 
 
-
+         
             // Ck Editor Added
+        setTimeout(function() {
 
+            preloader.css({'display':'none','z-index':0});
+        
         targetElem.find(".tourist-editor").each((idx, te) => {
 
             if (!$(te).next().hasClass("cke")) CKEDITOR.replace(te);
 
         });
+        }, 3000);
 
 
 
@@ -241,9 +245,11 @@ if (btnAddSubForm.length > 0) {
         // Button Clicked Event
 
     btnAddSubForm.on("click", function () {
-
+        
         elemRef = $(this);
 
+        preloader.css({'display':'block','z-index':1});
+        
         let subformType = elemRef.attr("subform-type");
 
         let targetSelector = elemRef.attr("target-selector");
@@ -369,7 +375,8 @@ if (btnAddSubForm.length > 0) {
 
 
     // ------------------- CK Editor Setup -----------------------
-
+setTimeout(function() {
+            
     if (touristEditorsElems.length > 0) {
 
         touristEditorsElems.each(function (idx, te) {
@@ -379,6 +386,7 @@ if (btnAddSubForm.length > 0) {
         });
 
     }
+        }, 3000);
 
 
 
