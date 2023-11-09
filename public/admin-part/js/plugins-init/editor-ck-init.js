@@ -1,9 +1,9 @@
-(function($) {
-    "use strict"
+// (function($) {
+//     "use strict"
 
-    CKEDITOR.replace('ck_editor');
-
-
+//     CKEDITOR.replace('ck_editor');
 
 
-})(jQuery);
+
+
+// })(jQuery);

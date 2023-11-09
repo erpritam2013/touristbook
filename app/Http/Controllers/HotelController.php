@@ -148,13 +148,6 @@ class HotelController extends Controller
         $data['title'] = 'Hotel';
         $data['hotel'] = $hotel;
         $data = array_merge_recursive($data, $this->_prepareBasicData());
-        // if (!empty($hotel->detail->todovideo)) {
-        //    $hotel->detail->todovideo = castImageValue($hotel->detail->todovideo,'todovideo','file');
-        // }
-        // if (!empty($hotel->detail->eventmeeting)) {
-        //    $hotel->detail->eventmeeting = castImageValue($hotel->detail->eventmeeting,'eventmeeting','file');
-        // }
-
 
         return view('admin.hotels.edit', $data);
     }
@@ -169,7 +162,12 @@ class HotelController extends Controller
        //      'featured_image' => json_decode($request->featured_image,true),
        //  ]);
        // }
-        $images = json_decode($request->images);
+        if($request->images == '' || empty($request->images) || $request->images == '"[]"' ) {
+           $request->merge([
+            'images' => "[]",
+        ]);
+       }
+        // $images = json_decode($request->images);
         $hotelDetails = [
             'name' => $request->name,
             'description' => $request->description,
@@ -180,12 +178,12 @@ class HotelController extends Controller
             // TODO: logo and featured_image ----> S3 Integration
             'featured_image' => $request->featured_image,
             'hotel_video' => $request->hotel_video,
-            'rating' => $request->rating,
+            'rating' => !empty($request->rating)?$request->rating:0,
             'coupon_code' => $request->coupon_code,
             'hotel_attributes' => $request->hotel_attributes,
             'contact' => $request->contact,
             'address' => $request->address,
-            'avg_price' => (float)$request->avg_price,
+            'avg_price' => !empty($request->avg_price)?$request->avg_price:0,
             'is_allowed_full_day' => $request->is_allowed_full_day,
             // TODO: check_in, check_out jquery plugin for time setup
             'check_in' => $request->check_in,
@@ -195,7 +193,7 @@ class HotelController extends Controller
             'policies' => $request->policy,
             'notices' => $request->notices,
             'status' => $request->status,
-            'images' => $images
+            'images' => !empty($request->images)?$request->images:Null
             // TODO: created_by pending as Authentication is not Yet Completed
         ];
 
@@ -203,6 +201,7 @@ class HotelController extends Controller
 
         if ($hotel) {
             // TODO: Move this to Repository
+
             $hotel->detail()->create($request->only([
                 'map_address',
                 'latitude',
@@ -288,10 +287,14 @@ class HotelController extends Controller
        //      'featured_image' => json_decode($request->featured_image,true),
        //  ]);
        // }
+        if($request->images == '' || empty($request->images) || $request->images == '"[]"' ) {
+           $request->merge([
+            'images' => "[]",
+        ]);
+       }
 
 
-
-        $images = json_decode($request->images);
+       // $images = json_decode($request->images);
         $hotelDetails = [
             'name' => $request->name,
             'description' => $request->description,
@@ -302,12 +305,12 @@ class HotelController extends Controller
             // TODO: logo and featured_image ----> S3 Integration
             'featured_image' => $request->featured_image,
             'hotel_video' => $request->hotel_video,
-            'rating' => $request->rating,
+            'rating' => !empty($request->rating)?$request->rating:0,
             'coupon_code' => $request->coupon_code,
             'hotel_attributes' => $request->hotel_attributes,
             'contact' => $request->contact,
             'address' => $request->address,
-            'avg_price' => (float)$request->avg_price,
+            'avg_price' => !empty($request->avg_price)?$request->avg_price:0,
             'is_allowed_full_day' => $request->is_allowed_full_day,
             // TODO: check_in, check_out jquery plugin for time setup
             'check_in' => $request->check_in,
@@ -317,7 +320,7 @@ class HotelController extends Controller
             'policies' => $request->policy,
             'notices' => $request->notices,
             'status' => $request->status,
-            'images' => $images
+            'images' => !empty($request->images)?$request->images:Null
             // TODO: created_by pending as Authentication is not Yet Completed
         ];
 
@@ -372,7 +375,9 @@ class HotelController extends Controller
             $hotel->propertyTypes()->sync($request->get('propertyTypes'));
             $hotel->accessibles()->sync($request->get('accessibles'));
             $hotel->meetingEvents()->sync($request->get('meetingAndEvents'));
+           
             $hotel->states()->sync($request->get('state_id'));
+           
             $hotel->occupancies()->sync($request->get('occupancies'));
             $hotel->deals()->sync($request->get('deals'));
             $hotel->activities()->sync($request->get('activitiescard'));

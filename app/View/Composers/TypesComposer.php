@@ -6,7 +6,7 @@ use App\Interfaces\TypeRepositoryInterface;
 use App\Models\Terms\Type;
 use Illuminate\View\View;
 
-class TypeComposer
+class TypesComposer
 {
 
     public function __construct(private TypeRepositoryInterface $typeRepository) {}

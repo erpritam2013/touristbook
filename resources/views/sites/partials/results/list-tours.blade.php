@@ -10,7 +10,7 @@
                         <figure> 
                             {{--<a href="tour-detailed.html" class="wishlist_bt"></a>--}}
                             {!!is_featured($tour->is_featured,'Featured Tour')!!}
-                             @php $featured_image = (!empty($tour->featured_image))?$tour->featured_image[0]['url']:null;@endphp
+                             @php $featured_image = (!empty($tour->featured_image) && isset($tour->featured_image[0]['id']))?getConversionUrl($tour->featured_image[0]['id'],'270x200'):null;@endphp
                             <a
                             href="{{route('tour',$tour->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/350x250.jpg')}}"
                             class="img-fluid" alt="">
@@ -208,16 +208,6 @@
 
                 <span class="tour-avg">
                     {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
-
-                    <?php //if(STtour::is_show_min_price()): ?>
-
-                    <?php// _e("From", ST_TEXTDOMAIN) ?>
-
-                    <?php //else:?>
-
-                    <?php //_e("Avg", ST_TEXTDOMAIN) ?>
-
-                    <?php //endif;?>
                     Avg
                 </span>
 

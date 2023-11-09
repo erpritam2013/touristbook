@@ -42,7 +42,7 @@
         <script src="{!! asset('admin-part/js/touristbook-terms-custom.js') !!}"></script>
         @endpush
         @push('tourist-lib-js')
-        <script src="{!! asset('admin-part/js/tourist-lib.js') !!}"></script>
+        <script src="{!! asset('admin-part/js/tourist-lib.js?unique='.time()) !!}"></script>
         @endpush
         @push('inline-custom-function')
         <script src="{!! asset('admin-part/js/inline-custom-function.js') !!}"></script>
