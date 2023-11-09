@@ -131,13 +131,6 @@ private function _prepareBasicData() {
     
     if($location) {
 
-
-    if($request->gallery == '' || empty($request->gallery) || $request->gallery == '"[]"' ) {
-           $request->merge([
-            'gallery' => "[]",
-        ]);
-       }
-
      $location->locationMeta()->create($request->only([
         "location_for_filter",
         "location_content",
@@ -177,12 +170,10 @@ private function _prepareBasicData() {
         "helpful_facts",
 
     ]));
-
+    
      $location->types()->attach($request->get('type'));
      $location->places()->attach($request->get('places'));
-     if(isset($request->state_id[0]) && !empty($request->state_id[0])){
-              $location->states()->attach($request->get('state_id'));
-     }
+     $location->states()->attach($request->get('state_id'));
 
 
  }
@@ -273,11 +264,7 @@ public function changeStatus(Request $request): JsonResponse
     if($location) {
      
 
-   if($request->gallery == '' || empty($request->gallery) || $request->gallery == '"[]"' ) {
-           $request->merge([
-            'gallery' => "[]",
-        ]);
-       }
+   
      $location->locationMeta()->update($request->only([
         "location_for_filter",
         "location_content",

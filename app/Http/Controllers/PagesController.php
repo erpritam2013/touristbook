@@ -128,7 +128,10 @@ public function hotelDetail(Request $request, $slug) {
     $data['title'] = 'Hotel :: '.ucwords($hotel->name);
     $data['body_class'] = 'hotel-detail-page';
     $state = $hotel->states()->first();
-    $data['nearByHotel'] = null;
+    $data['nearByHotel'] = collect([]);
+    $data['nearByTour'] =  collect([]);
+    $data['nearByActivity'] =collect([]);
+    $data['nearByLocation'] = collect([]);
     if (!empty($state->id)) {
       $data = $this->nearByRecords($data,$state->id,$hotel->id,'Hotel');
   }
@@ -208,7 +211,10 @@ public function tourDetail(Request $request, $slug) {
     $data['title'] = 'Our Package :: '.ucwords($tour->name);
     $data['body_class'] = 'tour-detail-page';
     $state = $tour->states()->first();
-
+    $data['nearByHotel'] = collect([]);
+    $data['nearByTour'] =  collect([]);
+    $data['nearByActivity'] =collect([]);
+    $data['nearByLocation'] = collect([]);
     if (!empty($state->id)) {
       $data = $this->nearByRecords($data,$state->id,$tour->id,'Tour');
   }
@@ -244,7 +250,10 @@ public function activityDetail(Request $request, $slug) {
     if (!empty($state->id)) {
       $data = $this->nearByRecords($data,$state->id,$activity->id,'Activity');
   }
-
+    $data['nearByHotel'] = collect([]);
+    $data['nearByTour'] =  collect([]);
+    $data['nearByActivity'] =collect([]);
+    $data['nearByLocation'] = collect([]);
   $data['activity_zone'] = null;
   if (!empty($activity->detail->activity_zones)) {
    $data['activity_zone'] = $activity->activity_zone->first();
@@ -281,10 +290,10 @@ public function locationDetail(Request $request, $slug) {
     $data['title'] = 'Loction :: '.ucwords($location->name);
     $data['body_class'] = 'destination-detail-page';
     $state = $location->states()->first();
-    $data['nearByHotel'] = [];
-    $data['nearByTour'] =  [];
-    $data['nearByActivity'] =[];
-    $data['nearByLocation'] = [];
+    $data['nearByHotel'] = collect([]);
+    $data['nearByTour'] =  collect([]);
+    $data['nearByActivity'] =collect([]);
+    $data['nearByLocation'] = collect([]);
     if (!empty($state->id)) {
       $data = $this->nearByRecords($data,$state->id,$location->id,'Location');
   }
@@ -304,7 +313,7 @@ public function locationDetail(Request $request, $slug) {
         // if($state) {
         //     $data['tourismZone'] =  $state->tourism_zones->first();
         // }
-
+   
   return view('sites.pages.location-detail', $data);
 
         //return view('sites.pages.tour-detail', compact('hotel', 'tourismZone'));
