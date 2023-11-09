@@ -3,7 +3,7 @@
 @section('content')
     @include('sites.partials.banner', [
         'bannerUrl' => 'https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2023/04/Screenshot-2023-04-02-202920.jpg',
-        'bannerTitle' => 'Destinations',
+        'bannerTitle' => 'Explore Amazing Destinations',
         'bannerSubTitle' => '',
     ])
 
@@ -60,7 +60,7 @@
 </div>
 @endif
 
-    <section class="pt80 pb80 cruise-grid-view">
+    <section class="pb20 destination-grid-view">
         <div class="map-content-loading">
             <div class="st-loader"></div>
         </div>

@@ -844,13 +844,15 @@ if (!function_exists('getPostData')) {
     }
 }
 
+
+
 if (!function_exists('exploreJsonData')) {
     function exploreJsonData($json_data="",$key=null){
 
         $result = "";
         if (!empty($json_data)) {
             if (!is_array($json_data)) {
-                $json_decode = json_decode($json_data);
+                $json_decode = json_decode($json_data,true);
             }else{
                 $json_decode = $json_data;
             }
@@ -864,6 +866,20 @@ if (!function_exists('exploreJsonData')) {
 
          return $result;
      }
+ }
+}
+if (!function_exists('exploreJsonRecord')) {
+    function exploreJsonRecord($json_data="",$key=null){
+
+        $result = "";
+        if (!empty($json_data)) {
+             $json_decode = json_decode($json_data,true);
+             $collection = collect($json_decode);
+             $result = $collection->get($key);
+
+        }
+         return $result;
+     
  }
 }
 
