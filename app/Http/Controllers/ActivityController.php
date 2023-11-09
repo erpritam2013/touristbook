@@ -520,9 +520,7 @@ if ($activity) {
  $activity->locations()->sync($request->get('location_id'));
  $activity->languages()->sync($request->get('language'));
  $activity->term_activity_lists()->sync($request->get('term_activity_list'));
- if (!isset($request->state_id[0]) && !empty($request->state_id[0])) {
  $activity->states()->sync($request->get('state_id'));
- }
             // activitiescard
 }
         // return $activity;
