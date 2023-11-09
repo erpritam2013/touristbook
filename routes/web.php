@@ -67,7 +67,7 @@ Route::get('/connecting-partners', [PagesController::class, 'connecting_partners
 Route::get('/st_hotel/{slug}', [PagesController::class, 'hotelDetail'])->name('hotel');
 Route::get('/st_tour/{slug}', [PagesController::class, 'tourDetail'])->name('tour');
 Route::get('/st_activity/{slug}', [PagesController::class, 'activityDetail'])->name('activity');
-Route::get('/st_location/{slug}', [PagesController::class, 'tourDetail'])->name('location');
+Route::get('/st_location/{slug}', [PagesController::class, 'locationDetail'])->name('location');
 
 
 Route::get('/get-hotels/{view}', [PagesController::class, 'getHotels'])->name('get-hotels');
