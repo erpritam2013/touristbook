@@ -507,10 +507,7 @@ if ($tour) {
    $tour->other_packages()->sync($request->get('other_packages'));
    $tour->types()->sync($request->get('type'));
    $tour->languages()->sync($request->get('language'));
-   if (!empty($request->state_id[0])) {
-
        $tour->states()->sync($request->get('state_id'));
-   }
    $tour->locations()->sync($request->get('location_id'));
 }
             // return $tour;
