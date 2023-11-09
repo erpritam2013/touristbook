@@ -223,7 +223,7 @@ if (!function_exists('galleryTemplate')) {
     }
     $html .=' <div class="gallery-controls">';
     $json_decode__ = (!empty($value) && isset($value) && is_array($value))?json_encode($value):json_encode([]);
-    $html .='<input type="hidden" class="form-control gallery-input '. $class .'" name="'. $name ?? '' .'" value="'. $json_decode__ .'" id="'. $id .'" placeholder="Enter '. $label ?? '' .'..." />';
+    $html .='<input type="hidden" class="form-control gallery-input '. $class .'" name="'. $name.'" value="'. $json_decode__ .'" id="'. $id .'" placeholder="Enter '. $label.'..." />';
     $html .='<button type="button" class="btn btn-primary mt-2 add-gallery-btn" smode="'.$smode.'" selectedImages="'. $json_decode__ .'">+</button>';
     $html .='<div class="media-preview">';
 
