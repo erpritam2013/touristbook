@@ -53,6 +53,7 @@ use App\Repositories\ActivityRepository;
 use App\Interfaces\RoomRepositoryInterface;
 use App\Repositories\RoomRepository;
 use App\Interfaces\CategoryRepositoryInterface;
+use App\Interfaces\ConversionRepositoryInterface;
 use App\Repositories\CategoryRepository;
 use App\Interfaces\TagRepositoryInterface;
 use App\Repositories\TagRepository;
@@ -69,6 +70,7 @@ use App\Repositories\PageRepository;
 use App\Repositories\OtherPackageRepository;
 use App\Interfaces\TourRepositoryInterface;
 use App\Interfaces\UserRepositoryInterface;
+use App\Repositories\ConversionRepository;
 use App\Repositories\TourRepository;
 use App\Repositories\UserRepository;
 
@@ -116,6 +118,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(TourRepositoryInterface::class, TourRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(PageRepositoryInterface::class, PageRepository::class);
+        $this->app->bind(ConversionRepositoryInterface::class, ConversionRepository::class);
 
 
     }
