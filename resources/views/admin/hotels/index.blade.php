@@ -28,7 +28,7 @@
 
             @if(Session::has('error'))
             {!!print_error_message(Session::get('error'))!!}
-            @endif
+        @endif
 
             <div class="table-responsive">
              {{ $dataTable->table() }}
