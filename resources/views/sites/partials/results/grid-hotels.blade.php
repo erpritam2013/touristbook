@@ -5,7 +5,7 @@
                 <div class="listroBox" latitude="{{$hotel->latitude}}" longitude="{{$hotel->longitude}}">
                     <figure> {{--<a href="{{route('hotel',$hotel->slug)}}" class="wishlist_bt"></a>--}}
                     {!!is_featured($hotel->is_featured)!!}
-                      @php $featured_image = (!empty($hotel->featured_image))?$hotel->featured_image[0]['url']:null;@endphp
+                      @php $featured_image = (!empty($hotel->featured_image) && isset($hotel->featured_image[0]['id']))?getConversionUrl($hotel->featured_image[0]['id'],'270x200'):null;@endphp
                      <a href="{{route('hotel',$hotel->slug)}}"><img
                                 src="{{$featured_image ?? asset('sites/images/dummy/350x250.jpg')}}" class="img-fluid" alt="">
                           <div class="read_more"><span>Read more</span></div>
@@ -19,32 +19,14 @@
                         <li>
                             <p class="card-text text-muted service-price"><span class="hotel-avg">
                     {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
-
-                    <?php //if(STHotel::is_show_min_price()): ?>
-
-                    <?php// _e("From", ST_TEXTDOMAIN) ?>
-
-                    <?php //else:?>
-
-                    <?php //_e("Avg", ST_TEXTDOMAIN) ?>
-
-                    <?php //endif;?>
                     Avg
                 </span>
 
                 <span class="price">
-
-                    <?php
-
-                    //$price = STHotel::get_price();
-
-                    //echo TravelHelper::format_money($price);
-
-                    ?>
                     4700
                 </span>
 
-                <span class="unit"><?php// echo __('per night', ST_TEXTDOMAIN); ?>  /per night</span></p>
+                <span class="unit">/per night</span></p>
                         </li>
                         <li>
                              <div class="social-link-list"> 

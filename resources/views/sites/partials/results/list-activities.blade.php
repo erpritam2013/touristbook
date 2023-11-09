@@ -9,17 +9,17 @@
                 <div class="row listroBox" latitude="{{$activity->latitude}}" longitude="{{$activity->longitude}}">
                     <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 Nopadding">
                         <figure> 
-                            {{--<a href="tour-detailed.html" class="wishlist_bt"></a>--}}
+                            {{--<a href="activity-detailed.html" class="wishlist_bt"></a>--}}
                             {!!is_featured($activity->is_featured,'Featured')!!}
 
-                            @php $featured_image = (!empty($activity->featured_image))?$activity->featured_image[0]['url']:null;@endphp
+                           @php $featured_image = (!empty($activity->featured_image) && isset($activity->featured_image[0]['id']))?getConversionUrl($activity->featured_image[0]['id'],'270x200'):null;@endphp
                             <a
                             href="{{route('activity',$activity->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/350x250.jpg')}}"
                             class="img-fluid" alt="">
                             {{--<div class="read_more"><span>Read more</span></div>--}}
                         </a> </figure>
                     </div>
-                    <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 Nopadding tour-content">
+                    <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 Nopadding activity-content">
                         <div class="listroBoxmain">
                              
                             <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{shortDescription($activity->address,50) ?? ''}}@if(strlen($activity->address) > 50)
@@ -84,7 +84,7 @@
                 <div class="TravelGo-category-footer fl-wrap">
 
                     <div class="TravelGo-category-price btn-grad">
-                        <a data-toggle="collapse" href="#st-tour-content-{{ $activity->id }}" role="button" aria-expanded="false" aria-controls="st-tour-content-{{ $activity->id }}" style="text-decoration: none;" >More Info...
+                        <a data-toggle="collapse" href="#st-activity-content-{{ $activity->id }}" role="button" aria-expanded="false" aria-controls="st-activity-content-{{ $activity->id }}" style="text-decoration: none;" >More Info...
                             <i class="fa fa-angle-down"></i>
                         </a>
                     </div>
@@ -92,11 +92,11 @@
                     <div class="TravelGo-opt-list"> 
                         {{--<a href="#" class="single-map-item"><i class="fas fa-map-marker-alt"></i><span class="TravelGo-opt-tooltip">On the map</span></a> --}}
                         <a href="#" class="TravelGo-js-favorite"><i class="fas fa-heart"></i><span class="TravelGo-opt-tooltip">Save</span></a> 
-                        <a data-toggle="collapse" href="#tour-social-links-{{ $activity->id }}" role="button" aria-expanded="false" aria-controls="tour-social-links-{{ $activity->id }}"  class="TravelGo-js-booking"><i class="fa fa-share"></i><span class="TravelGo-opt-tooltip">Show Social Links</span></a> 
+                        <a data-toggle="collapse" href="#activity-social-links-{{ $activity->id }}" role="button" aria-expanded="false" aria-controls="activity-social-links-{{ $activity->id }}"  class="TravelGo-js-booking"><i class="fa fa-share"></i><span class="TravelGo-opt-tooltip">Show Social Links</span></a> 
                     </div>
 
                 </div>
-                <div class="activity-social-links collapse fl-wrap" id="tour-social-links-{{$activity->id}}">
+                <div class="activity-social-links collapse fl-wrap" id="activity-social-links-{{$activity->id}}">
 
                     <a class="TravelGo-js-favorite"
 
@@ -153,20 +153,10 @@
             </div>
             <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 Nopadding section-footer">
 
-               <div class="tour-service-price">
+               <div class="activity-service-price">
 
-                <span class="tour-avg">
+                <span class="activity-avg">
                     {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
-
-                    <?php //if(STtour::is_show_min_price()): ?>
-
-                    <?php// _e("From", ST_TEXTDOMAIN) ?>
-
-                    <?php //else:?>
-
-                    <?php //_e("Avg", ST_TEXTDOMAIN) ?>
-
-                    <?php //endif;?>
                     Avg
                 </span>
 
@@ -177,11 +167,11 @@
 
             </div>
 
-            <div class="view-tour-btn"><a href="{{route('activity',$activity->slug)}}" class="btn btn-sm btn-grad text-white pt-2 pb-2 text-capitalize">VIEW ACTIVITY</a></div>
+            <div class="view-activity-btn"><a href="{{route('activity',$activity->slug)}}" class="btn btn-sm btn-grad text-white pt-2 pb-2 text-capitalize">VIEW ACTIVITY</a></div>
 
 
         </div>
-        <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 Nopadding st-more-information collapse" id="st-tour-content-{{ $activity->id }}">
+        <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 Nopadding st-more-information collapse" id="st-activity-content-{{ $activity->id }}">
 
            @if(!empty($activity->detail->activity_zones))
 

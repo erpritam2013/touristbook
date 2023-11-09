@@ -104,7 +104,7 @@ class ActivityController extends Controller
     {
 
      //   if (isset($request->featured_image)) {
-           
+       
      //     $request->merge([
      //        'featured_image' => json_decode($request->featured_image,true),
      //    ]);
@@ -117,7 +117,7 @@ class ActivityController extends Controller
       'excerpt' =>$request->excerpt,
       'external_link' =>$request->external_link,
       'address' =>$request->address,
-      'price' =>$request->price,
+      'price' =>!empty($request->price)?$request->price:0,
           // 'sale_price' =>$request->sale_price,
           // 'child_price' =>$request->child_price,
           // 'disable_children_name' =>$request->disable_children_name,
@@ -182,16 +182,11 @@ class ActivityController extends Controller
         ]);
     }
 }
-
-
-
-
 $activity = $this->activityRepository->createActivity($activityDetails);
 
 if ($activity) {
             // TODO: Move this to Repository
-
-    $activityMetaData = [
+   $activityMetaData = [
       'map_address',
       'latitude',
       'longitude',
@@ -238,10 +233,10 @@ if ($activity) {
   ];
 
   $activity->detail()->create($request->only($activityMetaData));
-  
-  
 
-  
+
+
+
   $activity->activity_zone()->attach($request->get('activity_zone_id'));
   $activity->attractions()->attach($request->get('attraction'));
   $activity->locations()->attach($request->get('location_id'));
@@ -337,7 +332,7 @@ public function changeStatus(Request $request): JsonResponse
           'excerpt' =>$request->excerpt,
           'external_link' =>$request->external_link,
           'address' =>$request->address,
-          'price' =>$request->price,
+          'price' =>!empty($request->price)?$request->price:0,
           // 'sale_price' =>$request->sale_price,
           // 'child_price' =>$request->child_price,
           // 'disable_children_name' =>$request->disable_children_name,
@@ -408,7 +403,7 @@ public function changeStatus(Request $request): JsonResponse
 
 
     $this->activityRepository->updateActivity($activity->id,$activityDetails);
-    
+
 
     if ($activity) {
             // TODO: Move this to Repository
@@ -458,8 +453,7 @@ public function changeStatus(Request $request): JsonResponse
   //     'check_editing',
 
   // ];
-
-      $activity->detail()->update($request->only([
+       $activity->detail()->update($request->only([
           'map_address',
           'latitude',
           'longitude',
@@ -504,21 +498,21 @@ public function changeStatus(Request $request): JsonResponse
           'check_editing',
 
       ]));
-      
-      
+       
+       
 
-      
-      $activity->activity_zone()->sync($request->get('activity_zone_id'));
-      $activity->attractions()->sync($request->get('attraction'));
-      $activity->locations()->sync($request->get('location_id'));
-      $activity->languages()->sync($request->get('language'));
-      $activity->term_activity_lists()->sync($request->get('term_activity_list'));
-      $activity->states()->sync($request->get('state_id'));
+       
+       $activity->activity_zone()->sync($request->get('activity_zone_id'));
+       $activity->attractions()->sync($request->get('attraction'));
+       $activity->locations()->sync($request->get('location_id'));
+       $activity->languages()->sync($request->get('language'));
+       $activity->term_activity_lists()->sync($request->get('term_activity_list'));
+       $activity->states()->sync($request->get('state_id'));
             // activitiescard
-  }
+   }
         // return $activity;
-  Session::flash('success','Activity Updated Successfully');
-  return redirect()->Route('admin.activities.edit',$activity->id);
+   Session::flash('success','Activity Updated Successfully');
+   return redirect()->Route('admin.activities.edit',$activity->id);
 }
 
     /**

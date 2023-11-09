@@ -70,7 +70,7 @@ $first_element = reset($typeData);
             <input type="hidden" class="form-control media-input {{ $elemClass ?? '' }} gallery-input " name="{{ $type }}[{{ $key }}][{{ $controlId }}]"
             value="{{ $value }}" />
             @php
-                $parsedValue = json_decode($value, true)
+                $parsedValue = !empty($value)?json_decode($value, true):'';
             @endphp
 
             <input type="text"

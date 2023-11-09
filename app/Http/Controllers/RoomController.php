@@ -122,7 +122,7 @@ class RoomController extends Controller
       'description' =>$request->description,
       'excerpt' =>$request->excerpt,
       'address' =>$request->address,
-      'price' =>$request->price,
+      'price' =>!empty($request->price)?$request->price:0,
       'number_room' =>$request->number_room,
       'adult_number' =>$request->adult_number,
       'children_number' =>$request->children_number,
@@ -152,6 +152,11 @@ class RoomController extends Controller
   if ($room) {
             // TODO: Move this to Repository
 
+     if($request->gallery == '' || empty($request->gallery) || $request->gallery == '"[]"' ) {
+           $request->merge([
+            'gallery' => "[]",
+        ]);
+       }
     $roomMetaData = [
 
       "st_booking_option_type",
@@ -246,7 +251,7 @@ return redirect()->Route('admin.rooms.index');
       'description' =>$request->description,
       'excerpt' =>$request->excerpt,
       'address' =>$request->address,
-      'price' =>$request->price,
+      'price' =>!empty($request->price)?$request->price:0,
       'number_room' =>$request->number_room,
       'adult_number' =>$request->adult_number,
       'children_number' =>$request->children_number,
@@ -276,6 +281,11 @@ return redirect()->Route('admin.rooms.index');
   if ($room) {
             // TODO: Move this to Repository
 
+     if($request->gallery == '' || empty($request->gallery) || $request->gallery == '"[]"' ) {
+           $request->merge([
+            'gallery' => "[]",
+        ]);
+       }
     $roomMetaData = [
 
       "st_booking_option_type",
