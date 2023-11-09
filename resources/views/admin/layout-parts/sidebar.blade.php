@@ -29,7 +29,7 @@
                             <ul aria-expanded="false" class="{{matchRouteGroupName('pages','child')}}">
                                 <li class="{{matchRouteName('admin.pages.index')}}"><a href="{{route('admin.pages.pageIndex')}}">List</a></li>
                                 <li class="{{matchRouteName('admin.pages.create')}}"><a href="{{route('admin.pages.create')}}">Add New</a></li>
-                                 
+
                             </ul>
                         </li>
                         <li class="{{matchRouteGroupName('terms','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
@@ -259,6 +259,16 @@
                                     <li><a href="./page-lock-screen.html">Lock Screen</a></li>
                                 </ul>
                             </li>--}}
+
+                            <li class="{{matchRouteGroupName('conversions','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="fas fa-currency sidebar-icon-touristbook"></i><span class="nav-text">Currency Conversions</span></a>
+                                <ul aria-expanded="false" class="{{matchRouteGroupName('conversions','child')}}">
+                                    <li class="{{matchRouteName('admin.conversions.index')}}"><a href="{{route('admin.conversions.index')}}">List</a></li>
+                                    <li class="{{matchRouteName('admin.conversions.create')}}"><a href="{{route('admin.conversions.create')}}">Add Currency</a></li>
+                                </ul>
+                            </li>
+
+
                         </ul>
                     </div>
 
