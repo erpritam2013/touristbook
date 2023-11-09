@@ -27,29 +27,41 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // TODO : Need Improvement by putting it to separate file. Or May be used it for Custom Collection for Models
-        Collection::macro('toNested', function () {
-            $parentKey = "parent_id";
-            $grouped = $this->groupBy($parentKey);
+
+        if (isset(request()->state_id) && empty(request()->state_id[0])) {
+          request()->merge([
+            'state_id' => [],
+        ]);
+      }
+
+      if(request()->gallery == '' || empty(request()->gallery) || request()->gallery == '"[]"' ) {
+           request()->merge([
+            'gallery' => "[]",
+        ]);
+       }
+      Collection::macro('toNested', function () {
+        $parentKey = "parent_id";
+        $grouped = $this->groupBy($parentKey);
 
 
-            $nestedCollection = function ($parentId) use ($grouped, &$nestedCollection) {
-                $groupedArr = $grouped->get($parentId, []);
-                return collect($groupedArr)->map(function ($resource) use ($nestedCollection) {
-                    return [
-                        'id' => $resource['id'],
-                        'name' => $resource['name'],
-                        'children' => $nestedCollection($resource['id']),
-                    ];
-                });
-            };
+        $nestedCollection = function ($parentId) use ($grouped, &$nestedCollection) {
+            $groupedArr = $grouped->get($parentId, []);
+            return collect($groupedArr)->map(function ($resource) use ($nestedCollection) {
+                return [
+                    'id' => $resource['id'],
+                    'name' => $resource['name'],
+                    'children' => $nestedCollection($resource['id']),
+                ];
+            });
+        };
 
-            $nestedResult = $nestedCollection(0);
-            return $nestedResult;
-        });
-        Validator::extend('unique_custom', function ($attribute, $value, $parameters)
-        {
+        $nestedResult = $nestedCollection(0);
+        return $nestedResult;
+    });
+      Validator::extend('unique_custom', function ($attribute, $value, $parameters)
+      {
     // Get the parameters passed to the rule
-           if (count($parameters) == 4) {
+         if (count($parameters) == 4) {
             list($table, $field, $field2, $field2Value) = $parameters;
             if ($field2 == 'id') {
                 return DB::table($table)->where($field,$value)->where($field2,'!=', $field2Value)->count() == 0;
@@ -70,12 +82,12 @@ class AppServiceProvider extends ServiceProvider
         
     });
 
-        Validator::replacer('unique_custom', function($message, $attribute, $rule, $parameters){
+      Validator::replacer('unique_custom', function($message, $attribute, $rule, $parameters){
 
-         if ($rule == 'unique_custom' && $message == 'validation.unique_custom') {
-             $message = 'The '.$attribute.' has already been taken.';
-         }
-         return $message;
-     });  
-    }
+       if ($rule == 'unique_custom' && $message == 'validation.unique_custom') {
+           $message = 'The '.$attribute.' has already been taken.';
+       }
+       return $message;
+   });  
+  }
 }
