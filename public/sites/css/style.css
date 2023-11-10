@@ -12824,7 +12824,7 @@ body.activity-list-page .ui-autocomplete.ui-menu {
 
 	border-left: 1px solid #dfdfdf;
 }
-.activity-list-page .tour-service-price {
+.activity-list-page .activity-service-price {
 	position: relative;
 	top: 40px;
 	color: #07509e;
@@ -12834,25 +12834,25 @@ body.activity-list-page .ui-autocomplete.ui-menu {
 	position: relative;
 	top: 75px;
 }
-.activity-list-page .tour-service-price span.tour-avg{
+.activity-list-page .activity-service-price span.tour-avg{
 	color: #5e6d77;
 	font-weight: 500;
 	position: relative;
 	left: -28px;
 }
-.activity-list-page .tour-service-price span.price{
+.activity-list-page .activity-service-price span.price{
 	font-size: 35px;
 	display: block;
 	line-height: 42px;
 	color: black;
 }
-.activity-list-page .tour-service-price span.unit{
+.activity-list-page .activity-service-price span.unit{
 	color: #5e6d77;
 	left: 11px;
 	font-size: 12px;
 	position: relative;
 }
-.activity-list-page .tour-service-price span.unit span.price-ex {
+.activity-list-page .activity-service-price span.unit span.price-ex {
 	font-weight: bold;
 	padding-left: 3px;
 	color: #000!important;
