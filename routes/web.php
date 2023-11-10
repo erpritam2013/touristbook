@@ -31,6 +31,7 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\TourismZoneController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ConversionController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\PostController;
@@ -341,6 +342,11 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
     Route::get('tour/country/country-zones', [TourController::class,'CountryZoneByCountry'])->name('CountryZoneByCountry');
 
     Route::get('activity/changeStatus', [ActivityController::class,'changeStatus'])->name('changeStatusActivity');
+
+
+    Route::resource('conversions', ConversionController::class);
+    Route::delete('conversions/bulk-delete', [ConversionController::class,'bulk_delete'])->name('conversions.bulk-delete');
+    Route::get('conversions/changeStatus', [ConversionController::class,'changeStatus'])->name('conversions.changeStatus');
 
     Route::middleware(['isAdmin'])->group(function() {
 
