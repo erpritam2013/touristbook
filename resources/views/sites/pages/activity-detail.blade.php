@@ -746,7 +746,9 @@
 						<div class="p-3 shadow ml-lg-4 rounded sticky-top d-none" style="top: 120px;" id="zone-tabs-div-section">
 							<div class="zone-tabs-div">
 								@if(!isMobileDevice())
+								@if(!empty($activity_zone->activity_zone_section))
 								@include('sites.partials.filters.activity-tabs',['sections'=>$activity_zone->activity_zone_section,'activity_zone_pdf_link'=>$activity_zone->activity_zone_pdf])
+								@endif
 								@endif
 							</div>
 						</div>
