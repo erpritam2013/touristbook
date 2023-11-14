@@ -69,6 +69,7 @@ Route::get('/st_hotel/{slug}', [PagesController::class, 'hotelDetail'])->name('h
 Route::get('/st_tour/{slug}', [PagesController::class, 'tourDetail'])->name('tour');
 Route::get('/st_activity/{slug}', [PagesController::class, 'activityDetail'])->name('activity');
 Route::get('/st_location/{slug}', [PagesController::class, 'locationDetail'])->name('location');
+Route::get('/location-detail-fetch/{view}', [PagesController::class, 'locationDetailFetch'])->name('locationDetailFetch');
 
 
 Route::get('/get-hotels/{view}', [PagesController::class, 'getHotels'])->name('get-hotels');
