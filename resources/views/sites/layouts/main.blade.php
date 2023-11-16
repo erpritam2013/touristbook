@@ -69,6 +69,7 @@
     <script src="{{asset('sites/js/common.js')}}" type="text/javascript" defer></script>
     @if(isset($body_class) && $body_class == 'destination-detail-page')
     <script src="{{asset('sites/js/fetchDestinaitonDetail.js')}}" type="text/javascript" defer></script>
+    
     @endif
 
     {{-- <script src="{{asset('sites/js/map_infobox.js')}}" type="text/javascript" defer></script>
