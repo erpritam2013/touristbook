@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
- @include('admin.layout-parts.head')
+   @include('admin.layout-parts.head')
 
 </head>
 
@@ -11,7 +11,7 @@
     <!--*******************
         Preloader start
         ********************-->
-       <div id="preloader">
+        <div id="preloader">
             <div class="sk-three-bounce">
                 <div class="sk-child sk-bounce1"></div>
                 <div class="sk-child sk-bounce2"></div>
@@ -63,6 +63,8 @@
         ***********************************-->
         @include('admin.layout-parts.foot')
 
-    </body>
+        @include('admin.partials.modals.video')
 
-    </html>
+</body>
+
+</html>
