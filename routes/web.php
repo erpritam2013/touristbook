@@ -42,6 +42,7 @@ use App\Http\Controllers\CustomIconController;
 
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::post('/updateCurrency', function (\Illuminate\Http\Request $request) {
+    $currency = $request->input('currency');
+
+    Session::put('currency', $currency);
+
+    return response()->json(['message' => 'Session updated successfully', 'success' => true]);
+});
+
+
 
 Route::get('/', [PagesController::class, 'index'])->name('home');
 Route::get('/hotels', [PagesController::class, 'hotels'])->name('hotels');
