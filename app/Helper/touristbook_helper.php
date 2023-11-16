@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Conversion;
+use Illuminate\Support\Facades\Session;
+
 if (!function_exists('getRouteName')) {
     function getRouteName(){
 
@@ -585,14 +588,19 @@ if (!function_exists('get_price')) {
         $price_html = "";
         $price_html .= '<span class="price">';
         $price_html .=   $currency_symbal;
-        if (isset($obj->avg_price)) {
-            $price_html .=   (!empty($obj->avg_price))?round($obj->avg_price):0;
-        }else{
-          $price_html .=   (!empty($obj->price))?round($obj->price):0;
-      }
-      $price_html .= '</span>';
+        $priceObject = Conversion::where('currency_name', Session::get('currency'))->first();
+        $price = 0;
+        if($priceObject != null) {
+            if (isset($obj->avg_price)) {
+                $price = $priceObject->conversion_rate * ((!empty($obj->avg_price))?round($obj->avg_price):0);
+            }else{
+                $price = $priceObject->conversion_rate * ((!empty($obj->price))?round($obj->price):0);
+            }
+        }
+        $price_html .= number_format((float)$price, 2, '.', '');
+        $price_html .= '</span>';
 
-      return $price_html;
+        return $price_html;
   }
 }
 
@@ -672,7 +680,7 @@ if (!function_exists('getConversionUrl')) {
             }
         }
         return null;
-        
+
     }
 }
 if (!function_exists('unsetValueActivityTourismZone')) {
@@ -879,7 +887,7 @@ if (!function_exists('exploreJsonRecord')) {
 
         }
          return $result;
-     
+
  }
 }
 
@@ -1181,6 +1189,3 @@ if (!function_exists('get_array_mapping')) {
 
 }
 }
-
-
-?>

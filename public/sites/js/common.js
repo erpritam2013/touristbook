@@ -181,7 +181,7 @@ $('.activity-zone-li').on('click','a.nav-link',function(e){
         let t = $(id);
         let parent = t.closest('#activity-zone-area-pdf');
         let top = parent.offset().top;
-        
+
         if (isMobile()) {
             top = top + 1100;
 
@@ -212,7 +212,7 @@ $('#pocketPDFtab').on('click','a.nav-link',function(e){
         let parent_childs = parent.children('.tab-pane');
         let parent_nav_childs = parent_nav_tab.children('.nav-item');
         let tab_content_index = t.index();
-        
+
         parent_nav_childs.each(function(k,v){
             if (k != tab_content_index) {
                 $(v).children('a.nav-link').removeClass('active');
@@ -252,7 +252,7 @@ $('#tourism-zone-area-pdf').on('click','a.nav-link',function(e){
         console.log(parent_nav_childs);
 
         let tab_content_index = t.index();
-        
+
         parent_nav_childs.each(function(k,v){
             if (k != tab_content_index) {
                 $(v).children('a.nav-link').removeClass('active');
@@ -410,17 +410,17 @@ const fetchParameters = () => {
     let selectedActivities = compiledCheckboxes(".filter-activities");
     if (selectedActivities) {
         params.activities = selectedActivities;
-    }   
+    }
      // Fetch term activity list If any
     let selectedTermActivityLists = compiledCheckboxes(".filter-term-activity-lists");
     if (selectedTermActivityLists) {
         params.term_activity_lists = selectedTermActivityLists;
-    }  
+    }
     // Fetch rating If any
     let selectedRating = compiledCheckboxes(".filter-rating");
     if (selectedRating) {
         params.rating = selectedRating;
-    } 
+    }
     // Fetch activity-package-lists If any
     let selectedActivityPackageList = compiledCheckboxes(".filter-activity-package-lists");
     if (selectedActivityPackageList) {
@@ -575,7 +575,7 @@ function loadStreetMap() {
             animation: google.maps.Animation.BOUNCE,
             gestureHandling: 'cooperative',
             streetViewControl: false,
-            
+
         });
 
             let panorama = map.getStreetView(); // TODO fix type
@@ -692,5 +692,53 @@ function loadStreetMap() {
  //  var firstTab = new bootstrap.Tab(firstTabEl)
 
  //  firstTab.show()
+
+
+
+// Function to get currency icon based on currency code
+function getCurrencyIcon(currencyCode) {
+    // TODO: Write Code
+    return '<i class="fa fa-money mr-2"></i>'
+
+}
+
+// Function to update session with selected currency
+function updateSession(currency) {
+    fetch('/updateCurrency', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({ currency: currency })
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Session updated successfully.');
+            window.location.reload();
+        } else {
+            console.error('Failed to update session.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+// Currency Changer
+$("#currency-dropdown .dropdown-item").on("click", function() {
+    let selectedCurrency = $(this).attr('data-value');
+    let currencyIcon = getCurrencyIcon(selectedCurrency);
+
+    document.getElementById('dropdownCurrency').innerHTML = currencyIcon + selectedCurrency
+
+    // Send AJAX request to update session
+    updateSession(selectedCurrency);
+});
+
+
+
+
+
 
 })();
