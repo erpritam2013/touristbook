@@ -42,7 +42,7 @@
         {{--<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-images">
           Images
         </a> </li>--}}
-        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-videos">
+        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-videos" onclick="fetchDestinaitonDetail(this)" data-target_element="video">
           Videos
         </a> </li>
       </ul>

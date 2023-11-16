@@ -41,6 +41,7 @@ use App\Http\Controllers\TourController;
 use App\Http\Controllers\CustomIconController;
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VideoGalleryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -98,7 +99,7 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
         Route::get('load-images', [FileController::class, 'loadImages'])->name('load');
         Route::post('upload', [FileController::class, 'uploadImages'])->name('upload');
     });
-
+    
 
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
     /*terms grouping*/
@@ -225,6 +226,9 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
 
     // Route::resource('custom-icons', CustomIconController::class);
     Route::prefix('settings')->name('settings.')->group(function() {
+    /*video gallery Routes*/
+    Route::resource('video-galleries', VideoGalleryController::class);
+    Route::delete('video-gallery/bulk-delete', [VideoGalleryController::class,'bulk_delete'])->name('video-galleries.bulk-delete');    
     Route::prefix('custom-icons')->name('custom-icons.')->group(function() {
     Route::get('/', [CustomIconController::class,'index'])->name('index');
     Route::post('/', [CustomIconController::class,'store'])->name('store');
