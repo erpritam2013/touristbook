@@ -42,13 +42,15 @@ class AppServiceProvider extends ServiceProvider
         if (!$defaultCurrency) {
             // Set your default currency here (INR in this case)
             Session::put('currency', 'INR');
+            Session::put('currency_symbol', '₹');
         }
 
-        if (request()->gallery == '' || empty(request()->gallery) || request()->gallery == '"[]"') {
-            request()->merge([
-                'gallery' => "[]",
-            ]);
-        }
+        // Note: It is adding gallery key to every request
+        // if (request()->gallery == '' || empty(request()->gallery) || request()->gallery == '"[]"') {
+        //     request()->merge([
+        //         'gallery' => "[]",
+        //     ]);
+        // }
         Collection::macro('toNested', function () {
             $parentKey = "parent_id";
             $grouped = $this->groupBy($parentKey);
