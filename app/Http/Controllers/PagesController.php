@@ -191,6 +191,7 @@ if ($p_type == 'Location') {
 }
 $locationQuery->leftJoin('location_states', 'location_states.location_id', '=', 'locations.id');
 $locationQuery->where('location_states.state_id', $state_id);
+
 $locationQuery->inRandomOrder();
 $locationQuery->limit(4);
 $nearlocations=  $locationQuery->get();
@@ -668,6 +669,13 @@ public function getLocations(Request $request, $view = "grid")
 
     return View::make('sites.partials.results.location', ['locations' => $locations, 'view' => $view]);
 
+}
+
+public function locationDetailFetch(Request $request,$view)
+{
+      $id = $request->location_id;
+      $location = Location::findOrFail($id);
+      return View::make('sites.partials.location-details.'.$view, ['location' => $location]);
 }
 
 
