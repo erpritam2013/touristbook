@@ -29,7 +29,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // TODO : Need Improvement by putting it to separate file. Or May be used it for Custom Collection for Models
-
         if (isset(request()->state_id) && empty(request()->state_id[0])) {
             request()->merge([
                 'state_id' => [],
