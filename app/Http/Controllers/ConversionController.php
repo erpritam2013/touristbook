@@ -7,6 +7,7 @@ use App\Http\Requests\StoreConversionRequest;
 use App\Http\Requests\UpdateConversionRequest;
 use App\Interfaces\ConversionRepositoryInterface;
 use App\Models\Conversion;
+use App\Models\Terms\Country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -39,6 +40,8 @@ class ConversionController extends Controller
     public function create()
     {
         $data['title'] = 'Add new conversion';
+        $data['currencyList'] = config('currency');
+        $data['countryCodes'] = Country::all();
         return view('admin.conversions.create', $data);
     }
 
@@ -87,6 +90,8 @@ class ConversionController extends Controller
         $data['conversion'] = $conversion;
 
         $data['title'] = 'Edit Conversion';
+        $data['currencyList'] = config('currency');
+        $data['countryCodes'] = Country::all();
 
         if (empty($data['conversion'])) {
             return back();
