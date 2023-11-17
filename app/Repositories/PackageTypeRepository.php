@@ -57,9 +57,9 @@ class PackageTypeRepository implements PackageTypeRepositoryInterface
         if($type)
             $packageTypeBuilder->where('package_type_type',$type);
 
-         $package_types = $packageTypeBuilder->get(['id','name', 'parent_id']);
+         $package_types = $packageTypeBuilder->get(['id','name', 'parent_id','button','extra_data']);
 
-        $nestedResult = $package_types->toNested();
+        $nestedResult = $package_types->toPackageTypeNested();
 
         return  $nestedResult;
     }
