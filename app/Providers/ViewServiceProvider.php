@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Conversion;
 use App\View\Composers\ActivitiesComposer;
 use App\View\Composers\AmenitiesComposer;
 use App\View\Composers\BreadcrumbComposer;
@@ -16,7 +17,9 @@ use App\View\Composers\PackageTypeComposer;
 use App\View\Composers\TypesComposer;
 use App\View\Composers\ReviewScoreComposer;
 use App\View\Composers\TermActivityListComposer;
+use App\View\Composers\OtherPackageComposer;
 use Illuminate\Support\Facades;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 // use Illuminate\View\View;
@@ -94,12 +97,22 @@ class ViewServiceProvider extends ServiceProvider
             ActivitiesComposer::class
         );
         View::composer(
-            ['sites.partials.filters.typsFilter'],
+            ['sites.partials.filters.filterTypes'],
             TypesComposer::class
+        );
+        View::composer(
+            ['sites.partials.filters.otherPackageFilter'],
+            OtherPackageComposer::class
         );
 
 
-
+        View::composer('*', function ($view) {
+            // Check if the current route does not have the 'admin' prefix
+            if (!Request::is('admin/*')) {
+                $currency_list = Conversion::where('status', 1)->select('currency_name', 'country_code')->get();
+                $view->with('currency_list', $currency_list);
+            }
+        });
 
 
         // Using closure based composers...

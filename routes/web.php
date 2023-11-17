@@ -41,7 +41,10 @@ use App\Http\Controllers\TourController;
 use App\Http\Controllers\CustomIconController;
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VideoGalleryController;
+use App\Models\Conversion;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +56,21 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::post('/updateCurrency', function (\Illuminate\Http\Request $request) {
+    $currency = $request->input('currency');
+
+
+    $conversion = Conversion::where('currency_name', $currency)->first();
+    if($conversion){
+        Session::put('currency', $currency);
+        Session::put('currency_symbol', $conversion->currency_symbol);
+    }
+
+    return response()->json(['message' => 'Session updated successfully', 'success' => true]);
+});
+
+
 
 Route::get('/', [PagesController::class, 'index'])->name('home');
 Route::get('/hotels', [PagesController::class, 'hotels'])->name('hotels');
@@ -69,6 +87,7 @@ Route::get('/st_hotel/{slug}', [PagesController::class, 'hotelDetail'])->name('h
 Route::get('/st_tour/{slug}', [PagesController::class, 'tourDetail'])->name('tour');
 Route::get('/st_activity/{slug}', [PagesController::class, 'activityDetail'])->name('activity');
 Route::get('/st_location/{slug}', [PagesController::class, 'locationDetail'])->name('location');
+Route::get('/location-detail-fetch/{view}', [PagesController::class, 'locationDetailFetch'])->name('locationDetailFetch');
 
 
 Route::get('/get-hotels/{view}', [PagesController::class, 'getHotels'])->name('get-hotels');
@@ -224,6 +243,11 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
 
     // Route::resource('custom-icons', CustomIconController::class);
     Route::prefix('settings')->name('settings.')->group(function() {
+    /*video gallery Routes*/
+    Route::resource('video-galleries', VideoGalleryController::class);
+    Route::post('gallery-video', [VideoGalleryController::class,'gallery_videos'])->name('gallery-video');
+    Route::delete('video-gallery/bulk-delete', [VideoGalleryController::class,'bulk_delete'])->name('video-galleries.bulk-delete');    
+
     Route::prefix('custom-icons')->name('custom-icons.')->group(function() {
     Route::get('/', [CustomIconController::class,'index'])->name('index');
     Route::post('/', [CustomIconController::class,'store'])->name('store');

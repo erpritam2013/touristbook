@@ -38,7 +38,7 @@
                         <li class="social-icons-item social-twitter m-0"> <a class="social-icons-link w-auto pl-2"
                                 href="#"><i class="fab fa-instagram"></i></a> </li>
                     </ul>
-                   
+
                     <!-- Top info -->
                     <ul class="nav list-unstyled ml-3">
                         <li class="nav-item mr-3"> <a class="navbar-link" href="javascript:void(0)"><i class="fas fa-phone"></i>&nbsp;+91 98177-02160, 61, 62, 63</a> </li>
@@ -58,11 +58,27 @@
                                 href="sign-up.html">Register</a> <a class="dropdown-item" href="#">Settings</a>
                         </div>
                     </div>
+
+                    <!-- Currency -->
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownCurrency" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-money mr-2"></i>{{session('currency', 'INR')}}</a>
+                        <div class="dropdown-menu shadow" aria-labelledby="dropdownAccount" id="currency-dropdown">
+
+                            @if($currency_list)
+                                @foreach($currency_list as $currencyItem)
+                                    <a class="dropdown-item" href="#" data-value="{{$currencyItem->currency_name}}">{{$currencyItem->currency_name}}</a>
+                                @endforeach
+                            @endif
+
+                        </div>
+                    </div>
+
                     <!-- top link -->
                     <ul class="nav">
                         <li class="nav-item"> <a class="nav-link" href="#">Contact</a> </li>
                     </ul>
-                  
+
 
                      <!-- Language -->
                     <div class="dropdown top-language"> <a class="dropdown-toggle" href="#" role="button"
@@ -104,13 +120,13 @@
                     </li>
                     <li class="nav-item {{matchSiteRouteName('hotels')}}"> <a class="nav-link" href="{{route('hotels')}}" id="docMenu" aria-haspopup="true" aria-expanded="false">Hotels</a>
                     </li>
-                  
+
                     <li class="nav-item dropdown {{matchSiteRouteName('about')}}"> <a class="nav-link dropdown-toggle" href="#" id="docMenu"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">About</a>
                         <ul class="dropdown-menu" aria-labelledby="docMenu">
                             <li><a class="dropdown-item" href="{{route('about')}}">About Us</a></li>
                             <li><a class="dropdown-item" href="{{route('connecting-partners')}}">Connecting Partners</a></li>
-                           
+
                         </ul>
                     </li>
                    <li class="nav-item {{matchSiteRouteName('our-packages')}}"> <a class="nav-link" href="{{route('our-packages')}}" id="docMenu" aria-haspopup="true" aria-expanded="false">Our Packages</a>

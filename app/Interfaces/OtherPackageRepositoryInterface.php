@@ -12,6 +12,7 @@ interface OtherPackageRepositoryInterface
     public function updateOtherPackage($OtherPackageId, array $newDetails);
     public function getOtherPackagesByType(string $type);
 
+    public function getActiveTourOtherPackagesWithParentSeprated($type);
     public function getActiveOtherPackagesList($type);
     
 }

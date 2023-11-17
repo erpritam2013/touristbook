@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Conversion;
+use Illuminate\Support\Facades\Session;
+
 if (!function_exists('getRouteName')) {
     function getRouteName(){
 
@@ -32,10 +35,6 @@ if (!function_exists('shortDescription')) {
       $result = mb_strimwidth($text, 0, $length, "......");
       return $result;
   }
-}
-function FunctionName($value='')
-{
-    // code...
 }
 if (!function_exists('touristbook_sanitize_title')) {
     function touristbook_sanitize_title($value="",$extra_txt='')
@@ -584,15 +583,21 @@ if (!function_exists('get_price')) {
 
         $price_html = "";
         $price_html .= '<span class="price">';
+        $priceObject = Conversion::where('currency_name', Session::get('currency'))->first();
+        $price = 0;
+        if($priceObject != null) {
+            $currency_symbal = $priceObject->currency_symbol;
+            if (isset($obj->avg_price)) {
+                $price = $priceObject->conversion_rate * ((!empty($obj->avg_price))?round($obj->avg_price):0);
+            }else{
+                $price = $priceObject->conversion_rate * ((!empty($obj->price))?round($obj->price):0);
+            }
+        }
         $price_html .=   $currency_symbal;
-        if (isset($obj->avg_price)) {
-            $price_html .=   (!empty($obj->avg_price))?round($obj->avg_price):0;
-        }else{
-          $price_html .=   (!empty($obj->price))?round($obj->price):0;
-      }
-      $price_html .= '</span>';
+        $price_html .= number_format((float)$price, 2, '.', '');
+        $price_html .= '</span>';
 
-      return $price_html;
+        return $price_html;
   }
 }
 
@@ -672,7 +677,7 @@ if (!function_exists('getConversionUrl')) {
             }
         }
         return null;
-        
+
     }
 }
 if (!function_exists('unsetValueActivityTourismZone')) {
@@ -818,6 +823,22 @@ if (!function_exists('getSingleCustomIcon')) {
       return $icon;
   }
 }
+if (!function_exists('getSingleRecord')) {
+    function getSingleRecord($id,$model,$term=false)
+    {
+        $detail = "";
+        if (!empty($model)) {
+            if ($term) {
+             $NamespacedModel = 'App\\Models\\Terms\\' . $model;
+            }else{ 
+             $NamespacedModel = 'App\\Models\\' . $model;
+            }
+
+           $detail = $NamespacedModel::findOrFail($id);
+        }
+        return $detail;
+    }
+}
 if (!function_exists('getPostData')) {
     function getPostData($model=null,$parameters=[],$type='object'){
 
@@ -879,7 +900,7 @@ if (!function_exists('exploreJsonRecord')) {
 
         }
          return $result;
-     
+
  }
 }
 
@@ -1181,6 +1202,3 @@ if (!function_exists('get_array_mapping')) {
 
 }
 }
-
-
-?>
