@@ -68,6 +68,28 @@ class AppServiceProvider extends ServiceProvider
             $nestedResult = $nestedCollection(0);
             return $nestedResult;
         });
+
+        Collection::macro('toPackageTypeNested', function () {
+            $parentKey = "parent_id";
+            $grouped = $this->groupBy($parentKey);
+
+
+            $nestedCollection = function ($parentId) use ($grouped, &$nestedCollection) {
+                $groupedArr = $grouped->get($parentId, []);
+                return collect($groupedArr)->map(function ($resource) use ($nestedCollection) {
+                    return [
+                        'id' => $resource['id'],
+                        'name' => $resource['name'],
+                        'button' => $resource['button'],
+                        'extra_data' => $resource['extra_data'],
+                        'children' => $nestedCollection($resource['id']),
+                    ];
+                });
+            };
+
+            $nestedResult = $nestedCollection(0);
+            return $nestedResult;
+        });
         Validator::extend('unique_custom', function ($attribute, $value, $parameters) {
             // Get the parameters passed to the rule
             if (count($parameters) == 4) {

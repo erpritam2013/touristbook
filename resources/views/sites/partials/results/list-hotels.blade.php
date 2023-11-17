@@ -170,7 +170,7 @@
 
         </div>
         <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 Nopadding section-footer">
-           <div class="view-hotel-btn"><a href="#" class="btn btn-sm btn-grad text-white mb-0 padding">VIEW HOTEL</a></div>
+           <div class="view-hotel-btn"><a href="{{route('hotel',$hotel->slug)}}" class="btn btn-sm btn-grad text-white mb-0 padding">VIEW HOTEL</a></div>
            <div class="hotel-service-price">
 
             <span class="hotel-avg">

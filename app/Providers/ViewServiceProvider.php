@@ -16,6 +16,7 @@ use App\View\Composers\PackageTypeComposer;
 use App\View\Composers\TypesComposer;
 use App\View\Composers\ReviewScoreComposer;
 use App\View\Composers\TermActivityListComposer;
+use App\View\Composers\OtherPackageComposer;
 use Illuminate\Support\Facades;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -94,8 +95,12 @@ class ViewServiceProvider extends ServiceProvider
             ActivitiesComposer::class
         );
         View::composer(
-            ['sites.partials.filters.typsFilter'],
+            ['sites.partials.filters.filterTypes'],
             TypesComposer::class
+        );
+        View::composer(
+            ['sites.partials.filters.otherPackageFilter'],
+            OtherPackageComposer::class
         );
 
 

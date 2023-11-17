@@ -65,7 +65,7 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <div class="col-lg-10">
-                                    <select class="form-control single-select-placeholder-touristbook" id="term-type" name="package_type_type" data-url="{{route('admin.terms.ajaxGetpackageType')}}" data-term_title="Package Type">
+                                    <select class="form-control single-select-placeholder-touristbook" id="term-type" name="package_type_type" data-url="{{route('admin.terms.ajaxGetPackageType')}}" data-term_title="Package Type">
                                         @if(!empty($post_types))
                                         <option value="">Select Type</option>
                                         @foreach($post_types as $type)

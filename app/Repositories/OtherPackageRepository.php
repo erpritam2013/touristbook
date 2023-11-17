@@ -69,4 +69,16 @@ class OtherPackageRepository implements OtherPackageRepositoryInterface
         $type = OtherPackage::TOUR_TYPE;
         return $this->getActiveOtherPackagesList($type);
     }
+
+     public function getActiveTourOtherPackagesWithParentSeprated($type=null)
+    {
+         $tourOtherPackagesBuilder = OtherPackage::orderBy('name','asc')->where('status', OtherPackage::ACTIVE);
+         if($type)
+            $tourOtherPackagesBuilder->where('other_package_type',$type);
+
+         $tourOtherPackagess = $tourOtherPackagesBuilder->get(['id','name','parent_id']);
+         $result = $tourOtherPackagess->where('parent_id','!=',0)->groupBy('parent_id');
+        
+         return $result;
+    }
 }
