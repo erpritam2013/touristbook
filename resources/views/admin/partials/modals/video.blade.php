@@ -1,3 +1,4 @@
+@section('video_action', route('admin.settings.gallery-video'))
  <div class="modal fade" id="video-modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -7,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-               
+               <form action="@yield('video_action')" method="post">
                 <div class="form-group row">
                     <label class="col-lg-2 col-form-label" for="name">Url
                     </label>
@@ -30,7 +31,7 @@
                  <textarea class="form-control" id="description" name="description" rows="2"></textarea>
              </div>
          </div>
-         
+               </form>
      </div>
      <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

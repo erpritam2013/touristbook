@@ -10,19 +10,19 @@
     var markers = [];
 
     function isMobile() {
-       if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-         return true;
-     }
-     return false;
- }
+     if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+       return true;
+   }
+   return false;
+}
 
  // Get the button:
- let mybutton = document.getElementById("topScrollSite");
+let mybutton = document.getElementById("topScrollSite");
 
 // When the user scrolls down 20px from the top of the document, show the button
- window.onscroll = function() {scrollWindow()};
+window.onscroll = function() {scrollWindow()};
 
- function scrollWindow() {
+function scrollWindow() {
   if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
     mybutton.style.display = "block";
 } else {
@@ -32,9 +32,9 @@
 
 function isJSON(something) {
     if (typeof something != 'string')
-     something = JSON.stringify(something);
+       something = JSON.stringify(something);
 
- try {
+   try {
     JSON.parse(something);
     return true;
 } catch (e) {
@@ -68,24 +68,24 @@ window.showMoreData = function(data){
             let get_html = showAmenities(result);
             $('body #showMoreDataBody').html(get_html);
         }else if (label == 'Activity List') {
-         let get_html = showAmenities(result);
-         $('body #showMoreDataBody').html(get_html);
-     }
+           let get_html = showAmenities(result);
+           $('body #showMoreDataBody').html(get_html);
+       }
        // console.log(result);
- }else{
+   }else{
     let html = '';
     if (label == 'Address') {
 
       html = `<p class="service-location"><i class="fa fa-map-marker" aria-hidden="true" style="color:#fba009;"></i>&nbsp;${showMoreData}</p>`;
   }else if(label == 'Package Route'){
-   html += '<div class="tour-routes">';
-   html += '<ul>';
-   html += '<li>';
-   html += `<span class="tour-route-span">${showMoreData}</span>`;
-   html += '</li>';
-   html += '</ul>';
-   html += '</div>';
-}else{
+     html += '<div class="tour-routes">';
+     html += '<ul>';
+     html += '<li>';
+     html += `<span class="tour-route-span">${showMoreData}</span>`;
+     html += '</li>';
+     html += '</ul>';
+     html += '</div>';
+ }else{
     html = `<p class="service-location">${showMoreData}</p>`;
 }
 $('body #showMoreDataBody').html(html);
@@ -116,8 +116,8 @@ $('#custom-tabs').on('click','a.nav-link',function(e){
     }
 });
 window.showActivityZoneTab = function(ele){
-   let zone_tabs_div_section = $('#zone-tabs-div-section');
-   if (zone_tabs_div_section.hasClass('d-none')) {
+ let zone_tabs_div_section = $('#zone-tabs-div-section');
+ if (zone_tabs_div_section.hasClass('d-none')) {
     zone_tabs_div_section.removeClass('d-none');
 }else{
     zone_tabs_div_section.addClass('d-none');
@@ -127,18 +127,19 @@ window.showActivityZoneTab = function(ele){
 window.readMoreText = function(ele) {
   let btn = ele;
   let key = $(btn).data('key');
-  let desc = $(`#long-description-${key}`);
+  let desc_id = $(btn).data('desc_id');
+  let desc = $(`${desc_id}`);
   let show_text = '';
   show_text = $(desc).data('show_text');
   console.log(show_text)
   if (show_text === "more") {
     desc.css({'height':'100%'});
     btn.innerHTML = "Read Less";
-    $(desc).data('show_text','less').zattr('data-show_text','less');
+    $(desc).data('show_text','less').attr('data-show_text','less');
 }else{
     desc.css({'height':'170px'});
     btn.innerHTML = "Read More";
-    $(desc).data('show_text','more').zattr('data-show_text','more');
+    $(desc).data('show_text','more').attr('data-show_text','more');
 }
 }
 
@@ -156,6 +157,7 @@ window.readMoreTerm = function(ele) {
     $(btn).data('show_text','more').attr('data-show_text','more');
 }
 
+
 if (terms.length != 0) {
   $.each(terms,function(key,value){
 
@@ -165,11 +167,77 @@ if (terms.length != 0) {
           }
       }else{
         if (show_text === 'more') {
-         $(value).removeClass('d-none');
-     }else{
-         $(value).addClass('d-none');
-     }
- }
+           $(value).removeClass('d-none');
+       }else{
+           $(value).addClass('d-none');
+       }
+   }
+})
+}
+}
+
+window.readMoreActivityList = function(ele) {
+  let btn = ele;
+  let parent = $(btn).parent('.activity-list');
+  let activity_list_item = $(parent).find('.st-activity-item');
+  let show_text = $(btn).data('show_text');
+
+  if (show_text === 'more') {
+    btn.innerHTML = "Show Less...";
+    $(btn).data('show_text','less').attr('data-show_text','less');
+}else{
+    btn.innerHTML = "Show All...";
+    $(btn).data('show_text','more').attr('data-show_text','more');
+}
+console.log(activity_list_item)
+if (activity_list_item.length != 0) {
+  $.each(activity_list_item,function(key,value){
+
+      if (key <= 1) {
+          if ($(value).hasClass('d-none')) {
+              $(value).removeClass('d-none');
+          }
+      }else{
+        if (show_text === 'more') {
+           $(value).removeClass('d-none');
+       }else{
+           $(value).addClass('d-none');
+       }
+   }
+})
+}
+}
+
+
+
+window.readMoreActivityPackage = function(ele) {
+  let btn = ele;
+  let parent = $(btn).parent('.activity-packages');
+  let activity_package_item = $(parent).find('.activity-packages-item');
+  let show_text = $(btn).data('show_text');
+
+  if (show_text === 'more') {
+    btn.innerHTML = "Show Less...";
+    $(btn).data('show_text','less').attr('data-show_text','less');
+}else{
+    btn.innerHTML = "Show All...";
+    $(btn).data('show_text','more').attr('data-show_text','more');
+}
+console.log(activity_package_item)
+if (activity_package_item.length != 0) {
+  $.each(activity_package_item,function(key,value){
+
+      if (key == 0) {
+          if ($(value).hasClass('d-none')) {
+              $(value).removeClass('d-none');
+          }
+      }else{
+        if (show_text === 'more') {
+           $(value).removeClass('d-none');
+       }else{
+           $(value).addClass('d-none');
+       }
+   }
 })
 }
 }
@@ -308,30 +376,30 @@ $('.form-inquiry').on('submit',function(e){
         complete: hideLoader,
         success: function (data,status,response) {
             if (response.status == 200) {
-               $('.form-success').show();
-               $('.form-success').find('.msg').text(data.msg);
-               console.log(data.msg);
-               $(form)[0].reset();
-           }else{
-               $('.form-error').show();
-               $('.form-error').find('.msg').text(data.msg);
-           }
+             $('.form-success').show();
+             $('.form-success').find('.msg').text(data.msg);
+             console.log(data.msg);
+             $(form)[0].reset();
+         }else{
+             $('.form-error').show();
+             $('.form-error').find('.msg').text(data.msg);
+         }
 
-           setTimeout(function() {
-               $('.form-success').hide();
-               $('.form-error').hide();
-           }, 3000);
+         setTimeout(function() {
+             $('.form-success').hide();
+             $('.form-error').hide();
+         }, 3000);
 
 
-       },
-       error:function(data){
-          $('.form-error').show();
-          $('.form-error').show().find('.msg').text(data.msg);
-          setTimeout(function() {
-           $('.form-error').hide();
-       }, 3000);
-      },
-  });
+     },
+     error:function(data){
+      $('.form-error').show();
+      $('.form-error').show().find('.msg').text(data.msg);
+      setTimeout(function() {
+         $('.form-error').hide();
+     }, 3000);
+  },
+});
 });
 
 const compiledCheckboxes = (selector) => {
@@ -340,7 +408,6 @@ const compiledCheckboxes = (selector) => {
     $(selector + ":checked").each(function () {
         checkedValues.push($(this).val());
     });
-
         // Join the checked values into a comma-separated string
     return checkedValues.join(",");
 };
@@ -425,6 +492,11 @@ const fetchParameters = () => {
     let selectedActivityPackageList = compiledCheckboxes(".filter-activity-package-lists");
     if (selectedActivityPackageList) {
         params.activity_package_lists = selectedActivityPackageList;
+    }
+    // Fetch other package If any
+    let selectedOtherPackage = compiledCheckboxes(".filter-other-package");
+    if (selectedOtherPackage) {
+        params.other_packages = selectedOtherPackage;
     }
 
         // Location or State Search
@@ -615,8 +687,26 @@ function loadStreetMap() {
     // Filter Checkbox Change
     $(".filter-option").on("change", function () {
         let view = $(".view-changer").attr("view-id");
-        fetchRecords(view, fetchParameters());
-    });
+        if ($(this).hasClass('filter-other-package')) {
+            // console.log($(this).data('parent'))
+            if (typeof $(this).data('parent') != 'undefined') {
+
+                let parent = $(this).closest('.main-title-tal')
+
+            // console.log(parent);
+                if ($(parent).hasClass('collapsed')) {
+
+                 $(".filter-other-package:checked").each(function () {
+                    $(this).prop('checked', false).trigger('change');
+                });
+
+             }
+         }
+
+
+     }
+     fetchRecords(view, fetchParameters());
+ });
 
     resultInfo.on("click", ".page-link", function () {
         let view = $(".view-changer").attr("view-id");
@@ -696,6 +786,7 @@ function loadStreetMap() {
 
 
 // Function to get currency icon based on currency code
+
 function getCurrencyIcon(currencyCode) {
     // TODO: Write Code
     return '<i class="fa fa-money mr-2"></i>'
@@ -735,6 +826,7 @@ $("#currency-dropdown .dropdown-item").on("click", function() {
     // Send AJAX request to update session
     updateSession(selectedCurrency);
 });
+
 
 
 

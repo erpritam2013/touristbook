@@ -1749,7 +1749,16 @@ body.tour-list-page .innerpage-banner.left {
 body.tour-list-page .Filter-left label.form-label {
 	text-transform: capitalize!important;
 }
-
+body.tour-list-page .st-highlight ul li:before {
+    content: "";
+    border: 1px solid #fba009;
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+    border-radius: 50%;
+    margin-top: 5px;
+    background: transparent;
+}
 @media (min-width:320px) and (max-width:768px){
 	.innerpage-banner.left {
 
@@ -11190,7 +11199,52 @@ body.hotel-list-page .search-form-mobile {
 /*extra hotel css end*/
 
 /*extra css tour start*/
+body.tour-list-page #package_types_filter .min-w-280px-fs-15fpx {
+    min-width: 280px!important;
+    font-size: 20px;
+}
+body.tour-list-page #package_types_filter .TravelGo-opt-tooltip {
+	top: 25px;
+    height: auto;
+    min-width: 100px;
+}
+body.tour-list-page #package_types_filter .custom-checkbox .feature-btn{
+    position: absolute;
+    top: -8px;
+    padding: 6px 12px;
+    font-weight: 600;
+    animation-duration: 1200ms;
+    animation-name: blink-feature-btn;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    -webkit-animation:blink-feature-btn 1200ms infinite; /* Safari and Chrome */
+}
+@keyframes blink-feature-btn {
+    from {
+        color: #000;
+    }
+    to {
+       color:#fba009;
+    }
+}
+@-webkit-keyframes blink-feature-btn {
+    from {
+        color: #000;
+    }
+    to {
+        color:#fba009;
+    }
+}
 
+body.tour-list-page #package_types_filter .custom-checkbox .feature-btn:hover{
+    background-color: #fff;
+}
+
+body.tour-list-page #package_types_filter .custom-checkbox .btn.btn-default {
+    border-radius: 3px;
+    color: #fba009;
+    border: 1px solid #D7DCE3;
+}
 
 .tour-list-page .TravelGo-opt-list a {
 	float: right;
@@ -12262,6 +12316,133 @@ body.hotel-detail-page .listingDetails .booking-search > .row {
 /*hotel detail page end css*/
 
 /*tour detail page start css*/
+
+/*tourism zone tour detail page css start*/
+
+   body.tour-detail-page #tourism-zone-area .tab-content p{
+    	color:#000!important;
+    }
+
+    body.tour-detail-page #tourism-zone-area .tab-content table {
+    	/*font-family: arial, sans-serif;*/
+    	border-collapse: collapse;
+    	width: 100%;
+    }
+
+    body.tour-detail-page #tourism-zone-area .tab-content table thead tr th {
+
+    	background: #ddd;
+    }
+
+    body.tour-detail-page #tourism-zone-area .btgrid .row {
+    	border: 5px solid #eee;
+    	padding: 10px;
+    	margin-right: 0px;
+    	margin-left: 0px;
+    }
+
+    body.tour-detail-page #tourism-zone-area .btgrid .row div:nth-child(odd){
+    	border-left: 1px solid #d7dce324;
+    	border-right: 1px solid #d7dce324;
+    	background-color: #d7dce324;
+    	padding-top: 5px;
+    	padding-left: 15px;
+    }
+    body.tour-detail-page #tourism-zone-area .btgrid .row div:nth-child(even){
+    	border-left: 1px solid #D7DCE3;
+    	border-right: 1px solid #D7DCE3;
+    	background-color: #D7DCE3;
+    	padding-top: 5px;
+    	padding-left: 15px;
+    }
+    .bt1pxe9ecef{
+    	border-top: 1px solid #e9ecef;
+    }
+    body.tour-detail-page #tourism-zone-area .tab-content td, th {
+    	border: 1px solid #D7DCE3;
+    	text-align: left;
+    	padding: 8px;
+    }
+
+    body.tour-detail-page #tourism-zone-area .tab-content tr:nth-child(even) {
+    	background-color: #D7DCE3;
+    	padding: 5px;
+    }
+
+    body.tour-detail-page #tourism-zone-area .tab-content .st-description .btgrid ul li {
+
+    	float: none;
+    	width: 100%;
+    }
+
+    body.tour-detail-page #tourism-zone-area .tab-content .nav-tabs li.tourism-zone-li a {
+    	background-color: var(--main-color, #1A2B48);
+    	color: #fff;
+    	border-color: var(--main-color, #1A2B48);
+    	padding: 7px 30px;
+    	border-radius: 3px 3px 0 0;
+    	font-size: 14px;
+    	margin-right: 1px;
+    }
+
+    body.tour-detail-page #tourism-zone-area .tab-content .nav-tabs li.tourism-zone-li{
+
+    	margin: 1px;
+    }
+
+    body.tour-detail-page #tourism-zone-area .tab-content .nav-tabs li.tourism-zone-li.active a {
+    	background-color: var(--link-color, #5191FA);
+    	color: #fff;
+    	border-color: var(--link-color, #5191FA);
+    }
+/*tourism zone tour detail page css end*/
+body.tour-detail-page .st-highlight .st-highlight-info{
+	padding: 5px 0px;
+    margin: 0px -30px;
+}
+
+body.tour-detail-page .st-helpful-facts ul,
+body.tour-detail-page .st-highlight .st-highlight-info ul {
+    padding-left: 25px;
+    border: 1px solid #dddddd;
+    color: #000;
+/*    margin-top: 25px;*/
+    margin-bottom: 20px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+
+body.tour-detail-page .st-helpful-facts .row.st-htm-blocks{
+	    margin: 0px -15px;
+}
+body.tour-detail-page .st-helpful-facts .row.st-htm-blocks ul li:before,
+ body.tour-detail-page .st-important-notes .row.st-htm-blocks ul li:before,
+ body.tour-detail-page .st-highlight .st-highlight-info ul li:before, 
+ body.tour-detail-page .st-senstive-data .row.st-htm-blocks ul li:before {
+    content: "";
+    border: 1px solid #fba009;
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+body.tour-detail-page .st-helpful-facts .row.st-htm-blocks ul li:nth-child(odd),
+body.tour-detail-page .st-highlight .st-highlight-info ul li:nth-child(odd) {
+    padding: 10px;
+    margin-bottom: 0px!important;
+    list-style: none;
+}
+
+body.tour-detail-page .st-helpful-facts .row.st-htm-blocks ul li:nth-child(even),
+body.tour-detail-page .st-highlight .st-highlight-info ul li:nth-child(even) {
+    background-color: #dddddd;
+    padding: 10px;
+    margin-bottom: 0px!important;
+    list-style: none;
+}
 
 body.tour-detail-page div#section-contact {
 	margin-left: -15px;

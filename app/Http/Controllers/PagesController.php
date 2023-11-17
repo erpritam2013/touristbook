@@ -225,6 +225,11 @@ public function tourDetail(Request $request, $slug) {
     $data['countryZone'] =  $tour->country_zone;
 }
 
+  $data['tourismZone'] = null;
+  if($state) {
+    $data['tourismZone'] =  $state->tourism_zones()->first();
+}
+
 
 return view('sites.pages.tour-detail', $data);
 
@@ -298,6 +303,8 @@ public function locationDetail(Request $request, $slug) {
     if (!empty($state->id)) {
       $data = $this->nearByRecords($data,$state->id,$location->id,'Location');
   }
+
+
 
          // $data['activity_zone'] = null;
          // if (!empty($activity->detail->activity_zones)) {
@@ -413,6 +420,7 @@ public function getHotels(Request $request, $view = "list") {
             // TODO: JSON Treatment is Pending
             // TODO: title
         $hotelQuery->where('hotels.address', 'LIKE', '%'.$searchTerm.'%');
+        $hotelQuery->orWhere('hotels.name', 'LIKE', '%'.$searchTerm.'%');
     }
 
 
@@ -473,11 +481,12 @@ public function getTours(Request $request, $view = "list") {
         $tourQuery->whereIn('tour_package_types.package_type_id', $package_types);
     }
 
-        // orther_packages
-    if($request->has('orther_packages') && !empty($request->get('orther_packages'))) {
-        $orther_packagesValue = $request->get('orther_packages');
-        $orther_packages = explode(",", $orther_packagesValue);
-        $tourQuery->whereIn('tour_orther_packages.orther_package_id', $orther_packages);
+        // other_packages
+    if($request->has('other_packages') && !empty($request->get('other_packages'))) {
+        $other_packagesValue = $request->get('other_packages');
+        $other_packages = explode(",", $other_packagesValue);
+        $tourQuery->leftJoin('tour_other_packages', 'tour_other_packages.tour_id', '=', 'tours.id');
+        $tourQuery->whereIn('tour_other_packages.other_package_id', $other_packages);
     }
 
         // types
@@ -516,6 +525,7 @@ public function getTours(Request $request, $view = "list") {
         $searchTerm = $request->get('searchTerm');
             // TODO: JSON Treatment is Pending
         $tourQuery->where('tours.address', 'LIKE', '%'.$searchTerm.'%');
+        $tourQuery->orWhere('tours.name', 'LIKE', '%'.$searchTerm.'%');
     }
 
 
@@ -611,6 +621,7 @@ public function getActivities(Request $request, $view = "list") {
         $searchTerm = $request->get('searchTerm');
             // TODO: JSON Treatment is Pending
         $activityQuery->where('activities.address', 'LIKE', '%'.$searchTerm.'%');
+        $activityQuery->orWhere('activities.name', 'LIKE', '%'.$searchTerm.'%');
     }
 
 
@@ -654,6 +665,7 @@ public function getLocations(Request $request, $view = "grid")
         $searchTerm = $request->get('searchTerm');
             // TODO: JSON Treatment is Pending
         $locationQuery->where('locations.address', 'LIKE', '%'.$searchTerm.'%');
+        $locationQuery->orWhere('locations.name', 'LIKE', '%'.$searchTerm.'%');
     }
 
 

@@ -177,8 +177,6 @@
             @endforeach
           </div>
         </div>
-        @else
-        <div class="alert alert-warning mt15">No offer and packages found.</div>
         @endif
 
 
@@ -200,8 +198,6 @@
 
           </div>
         </div>
-        @else
-        <div class="alert alert-warning mt15">No Food information found.</div>
         @endif
 
       </div>
@@ -221,8 +217,6 @@
 
           </div>
         </div>
-        @else
-        <div class="alert alert-warning mt15">No Complimentary information found.</div>
         @endif
 
       </div>
@@ -246,8 +240,6 @@
           </div>
 
         </div>
-        @else
-        <div class="alert alert-warning mt15">No ID proofs required.</div>
 
         @endif
       </div>
@@ -288,8 +280,6 @@
 
                     </div>
                     @endforeach
-                    @else
-                    <div class="alert alert-warning mt15">No Policy/Rule found.</div>
                     @endif
 
 
@@ -325,8 +315,6 @@
 
           </div>
         </div>
-        @else
-        <div class="alert alert-warning mt15">No payment details found.</div>
         @endif
       </div>
 
@@ -348,9 +336,6 @@
 
           </div>
         </div>
-        @else
-        <div class="alert alert-warning mt15">No Environment Information provided.
-        </div>
         @endif
       </div>
 
@@ -371,8 +356,6 @@
 
         </div>
       </div>
-      @else
-      <div class="alert alert-warning mt15">Not Available.</div>
       @endif
       @if (!empty($hotel->detail->pocketPDF))
 
@@ -404,8 +387,6 @@
       </div>
     </div>
 
-    @else
-    <div class="alert alert-warning mt15">Not Available.</div>
     @endif
 
 
@@ -427,8 +408,7 @@
       @endforeach
     </div>
   </div>
-  @else
-  <div class="alert alert-warning mt15">No offer and packages found.</div>
+ 
   @endif
 </div>
 
