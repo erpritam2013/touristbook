@@ -42,6 +42,7 @@ use App\Http\Controllers\CustomIconController;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VideoGalleryController;
+use App\Models\Conversion;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -59,7 +60,12 @@ use Illuminate\Support\Facades\Session;
 Route::post('/updateCurrency', function (\Illuminate\Http\Request $request) {
     $currency = $request->input('currency');
 
-    Session::put('currency', $currency);
+
+    $conversion = Conversion::where('currency_name', $currency)->first();
+    if($conversion){
+        Session::put('currency', $currency);
+        Session::put('currency_symbol', $conversion->currency_symbol);
+    }
 
     return response()->json(['message' => 'Session updated successfully', 'success' => true]);
 });
@@ -110,7 +116,7 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
         Route::get('load-images', [FileController::class, 'loadImages'])->name('load');
         Route::post('upload', [FileController::class, 'uploadImages'])->name('upload');
     });
-    
+
 
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
     /*terms grouping*/
@@ -241,6 +247,7 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
     Route::resource('video-galleries', VideoGalleryController::class);
     Route::post('gallery-video', [VideoGalleryController::class,'gallery_videos'])->name('gallery-video');
     Route::delete('video-gallery/bulk-delete', [VideoGalleryController::class,'bulk_delete'])->name('video-galleries.bulk-delete');    
+
     Route::prefix('custom-icons')->name('custom-icons.')->group(function() {
     Route::get('/', [CustomIconController::class,'index'])->name('index');
     Route::post('/', [CustomIconController::class,'store'])->name('store');

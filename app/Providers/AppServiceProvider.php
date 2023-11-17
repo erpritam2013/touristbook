@@ -42,8 +42,11 @@ class AppServiceProvider extends ServiceProvider
         if (!$defaultCurrency) {
             // Set your default currency here (INR in this case)
             Session::put('currency', 'INR');
+
+            Session::put('currency_symbol', '₹');
         }
 
+        // Note: It is adding gallery key to every request
         if (request()->gallery == '' || empty(request()->gallery) || request()->gallery == '"[]"') {
             request()->merge([
                 'gallery' => "[]",
@@ -68,7 +71,6 @@ class AppServiceProvider extends ServiceProvider
             $nestedResult = $nestedCollection(0);
             return $nestedResult;
         });
-
         Collection::macro('toPackageTypeNested', function () {
             $parentKey = "parent_id";
             $grouped = $this->groupBy($parentKey);
