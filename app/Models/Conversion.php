@@ -14,6 +14,4 @@ class Conversion extends Model
 
     protected $guarded = [];
 
-
-
 }
