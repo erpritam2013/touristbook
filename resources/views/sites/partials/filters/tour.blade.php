@@ -6,7 +6,7 @@
         @include('sites.partials.filters.durationFilter')
 
         @include('sites.partials.filters.packageTypeFilter')
-        @include('sites.partials.filters.filterTypes')
+        @include('sites.partials.filters.otherPackageFilter')
 
         
 

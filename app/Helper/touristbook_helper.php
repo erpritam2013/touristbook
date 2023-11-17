@@ -36,10 +36,6 @@ if (!function_exists('shortDescription')) {
       return $result;
   }
 }
-function FunctionName($value='')
-{
-    // code...
-}
 if (!function_exists('touristbook_sanitize_title')) {
     function touristbook_sanitize_title($value="",$extra_txt='')
     {
@@ -826,6 +822,22 @@ if (!function_exists('getSingleCustomIcon')) {
       }
       return $icon;
   }
+}
+if (!function_exists('getSingleRecord')) {
+    function getSingleRecord($id,$model,$term=false)
+    {
+        $detail = "";
+        if (!empty($model)) {
+            if ($term) {
+             $NamespacedModel = 'App\\Models\\Terms\\' . $model;
+            }else{ 
+             $NamespacedModel = 'App\\Models\\' . $model;
+            }
+
+           $detail = $NamespacedModel::findOrFail($id);
+        }
+        return $detail;
+    }
 }
 if (!function_exists('getPostData')) {
     function getPostData($model=null,$parameters=[],$type='object'){
