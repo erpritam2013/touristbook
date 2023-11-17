@@ -29,9 +29,28 @@
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="col-lg-10">
-                                <input type="text" class="form-control" id="currency_name" name="currency_name" value="{{old('currency_name', $conversion->currency_name ?? '')}}" placeholder="Enter a Currency Name..">
+                                <select class="form-control" id="currency_name" name="currency_name">
+                                    @foreach($currencyList as $currencyKey=>$currencyName)
+                                        <option value="{{$currencyKey}}" @if(old('currency_name', $conversion->currency_name ?? '') == $currencyKey) selected @endif >{{$currencyName}}</option>
+                                    @endforeach
+                                </select>
 
                                 {!! get_form_error_msg($errors, 'currency_name') !!}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-lg-2 col-form-label" for="country_code">Country
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-10">
+                                <select class="form-control" id="country_code" name="country_code">
+                                    @foreach($countryCodes as $countryCode)
+                                        <option value="{{$countryCode->code}}" @if(old('country_code', $conversion->country_code ?? '') == $countryCode->code) selected @endif >{{$countryCode->countryname}}</option>
+                                    @endforeach
+                                </select>
+
+                                {!! get_form_error_msg($errors, 'currency_code') !!}
                             </div>
                         </div>
 
@@ -48,6 +67,17 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label class="col-lg-2 col-form-label" for="currency_symbol">Currency Symbol
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" id="currency_symbol" name="currency_symbol" value="{{old('currency_symbol', $conversion->currency_symbol ?? '')}}" >
+
+                                {!! get_form_error_msg($errors, 'currency_symbol') !!}
+                            </div>
+                        </div>
+
 
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label" for="status">Status
@@ -60,6 +90,15 @@
                                 <label class="col-form-label {{setCheckboxActiveInactiveStyle('status', $conversion ?? "",'status',0, 'chacked','inactive')}}">
                                     <input type="radio" name="status" {!!get_edit_select_check_pvr_old_value('status', $conversion ?? "",'status',0, 'chacked')!!} value="0">&nbsp;Inactive
                                 </label>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label class="col-lg-2 col-form-label" for="is_rtl">Is RTL</label>
+                            <div class="col-lg-10">
+                                <input type="checkbox" class="form-input" id="is_rtl" name="is_rtl" @if(old('is_rtl', $conversion->is_rtl ?? '0') == '1') checked @endif />
+
                             </div>
                         </div>
 

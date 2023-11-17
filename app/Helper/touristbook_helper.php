@@ -586,6 +586,7 @@ if (!function_exists('get_price')) {
         $priceObject = Conversion::where('currency_name', Session::get('currency'))->first();
         $price = 0;
         if($priceObject != null) {
+            $currency_symbal = $priceObject->currency_symbol;
             if (isset($obj->avg_price)) {
                 $price = $priceObject->conversion_rate * ((!empty($obj->avg_price))?round($obj->avg_price):0);
             }else{

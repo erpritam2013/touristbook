@@ -786,45 +786,47 @@ function loadStreetMap() {
 
 
 // Function to get currency icon based on currency code
-    function getCurrencyIcon(currencyCode) {
-    // TODO: Write Code
-        return '<i class="fa fa-money mr-2"></i>'
 
-    }
+function getCurrencyIcon(currencyCode) {
+    // TODO: Write Code
+    return '<i class="fa fa-money mr-2"></i>'
+
+}
 
 // Function to update session with selected currency
-    function updateSession(currency) {
-        fetch('/updateCurrency', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify({ currency: currency })
-        })
-        .then(response => {
-            if (response.ok) {
-                console.log('Session updated successfully.');
-                window.location.reload();
-            } else {
-                console.error('Failed to update session.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
+function updateSession(currency) {
+    fetch('/updateCurrency', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({ currency: currency })
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Session updated successfully.');
+            window.location.reload();
+        } else {
+            console.error('Failed to update session.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
 
 // Currency Changer
-    $("#currency-dropdown .dropdown-item").on("click", function() {
-        let selectedCurrency = $(this).attr('data-value');
-        let currencyIcon = getCurrencyIcon(selectedCurrency);
+$("#currency-dropdown .dropdown-item").on("click", function() {
+    let selectedCurrency = $(this).attr('data-value');
+    let currencyIcon = getCurrencyIcon(selectedCurrency);
 
-        document.getElementById('dropdownCurrency').innerHTML = currencyIcon + selectedCurrency
+    document.getElementById('dropdownCurrency').innerHTML = currencyIcon + selectedCurrency
 
     // Send AJAX request to update session
-        updateSession(selectedCurrency);
-    });
+    updateSession(selectedCurrency);
+});
+
 
 
 
