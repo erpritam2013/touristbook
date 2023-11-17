@@ -25,6 +25,8 @@ class StoreConversionRequest extends FormRequest
     {
         return [
             'currency_name' => 'required|max:255',
+            'country_code' => 'required|max:255',
+            'currency_symbol' => 'required|max:255',
         ];
     }
 }

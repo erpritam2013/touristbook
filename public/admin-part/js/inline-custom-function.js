@@ -168,4 +168,55 @@ window.showCountryZone = () => {
 };
 showCountryZone();
 
+const ShowVideos(get_response){
+      
+      let galery_video_div = $('#gallery-video');
+      $(galery_video_div).html(get_response);
+}
+
+const SubmitVideo = function(ele,type){
+    if (type == 'add') {
+
+    let form = $(ele);
+    let formData = $(ele).serialize();
+    let method = "POST";
+    let action = $(ele).attr('action');
+    }else if(type == 'remove'){
+       // let method = "DELETE"; 
+     console.log('panding..');
+    }
+  $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type: method,
+        dataType: "html",
+        url: action,
+        data: formData,
+        // beforeSend: showLoader,
+        // complete: hideLoader,
+        success: function (data) {
+           ShowVideos(data);
+
+       },
+       error:function(data){
+         alert('something went wrong!');
+      },
+  });
+}
+
+$('.submit-video,.edit-video,.remove-video').on('click',function(){
+    
+    let type = $(this).data('type');
+    if (type == 'add') {
+        let form_id = $('#video-modal');
+        SubmitVideo(form_id,form_data);
+
+    }else if (type == 'remove') {
+
+    }
+})
+
 }(jQuery))
