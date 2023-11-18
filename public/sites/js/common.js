@@ -134,6 +134,7 @@ window.readMoreText = function(ele) {
   }else{
     desc = $(`#long-description-${key}`);
   }
+
   let show_text = '';
   show_text = $(desc).data('show_text');
   //console.log(show_text)
@@ -791,7 +792,7 @@ function loadStreetMap() {
 
 
 // Function to get currency icon based on currency code
-    function getCurrencyIcon(currencyCode) {
+function getCurrencyIcon(currencyCode) {
     // TODO: Write Code
         return '<i class="fa fa-money mr-2"></i>'
 
@@ -830,6 +831,7 @@ function loadStreetMap() {
     // Send AJAX request to update session
         updateSession(selectedCurrency);
     });
+
 
 
 
