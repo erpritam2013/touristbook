@@ -246,8 +246,7 @@
 										<span class="accicon"><i class="fas fa-angle-down rotate-icon"></i></span>
 									</div>
 									<div id="st-program-{{$key}}" class="collapse {{$key == 0?'show':''}}" data-parent="#accordionStProgram">
-										<div class="card-body">
-											<pre style="color:#000000;">{{$tours_program['tours_program-description']}}</pre>
+										<div class="card-body">{!!$tours_program['tours_program-description']!!}
 										</div>
 									</div>
 								</div>
