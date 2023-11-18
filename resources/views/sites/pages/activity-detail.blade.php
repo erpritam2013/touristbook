@@ -626,7 +626,7 @@
 							@endif
 						</div>
 
-						<div class="tab-pane" id="st-program-section">
+						{{--<div class="tab-pane" id="st-program-section">
 							@if (!empty($activity->detail->activity_program))
 							<div class="section mt-4">
 								<h2 class="st-heading-section">Itinerary</h2>
@@ -647,7 +647,7 @@
 								</div>
 							</div>
 							@endif
-						</div>
+						</div>--}}
 
 						<div class="tab-pane text-justify p-3 border m-0" id="section-contact">
 							@if(!empty($activity->detail->contact))
