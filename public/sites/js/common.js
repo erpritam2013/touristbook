@@ -128,10 +128,15 @@ window.readMoreText = function(ele) {
   let btn = ele;
   let key = $(btn).data('key');
   let desc_id = $(btn).data('desc_id');
-  let desc = $(`${desc_id}`);
+  let desc = '';
+  if (typeof desc_id != 'undefined') {
+    desc = $(`${desc_id}`);
+  }else{
+    desc = $(`#long-description-${key}`);
+  }
   let show_text = '';
   show_text = $(desc).data('show_text');
-  console.log(show_text)
+  //console.log(show_text)
   if (show_text === "more") {
     desc.css({'height':'100%'});
     btn.innerHTML = "Read Less";
