@@ -11,7 +11,7 @@
       @if(!empty($hotel->images))
       @foreach($hotel->images as $gallery)
       <div class="swiper-slide"><a data-toggle="gallery-top" title="hotel gallery" style="width: 452px;height: 300px;" ><img
-        src="{{ $gallery['url'] }}" alt="Our street" class="img-fluid" style="width: 452px;height: 300px;" ></a>
+        src="{{ getConversionUrl($gallery['id'],'450x300') }}" alt="Our street" class="img-fluid" style="width: 452px;height: 300px;" ></a>
       </div>
       @endforeach
       @else
