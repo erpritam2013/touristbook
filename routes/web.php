@@ -246,7 +246,7 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
     /*video gallery Routes*/
     Route::resource('video-galleries', VideoGalleryController::class);
     Route::post('gallery-video', [VideoGalleryController::class,'gallery_videos'])->name('gallery-video');
-    Route::delete('video-gallery/bulk-delete', [VideoGalleryController::class,'bulk_delete'])->name('video-galleries.bulk-delete');    
+    Route::delete('video-gallery/bulk-delete', [VideoGalleryController::class,'bulk_delete'])->name('video-galleries.bulk-delete'); 
 
     Route::prefix('custom-icons')->name('custom-icons.')->group(function() {
     Route::get('/', [CustomIconController::class,'index'])->name('index');

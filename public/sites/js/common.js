@@ -128,10 +128,16 @@ window.readMoreText = function(ele) {
   let btn = ele;
   let key = $(btn).data('key');
   let desc_id = $(btn).data('desc_id');
-  let desc = $(`${desc_id}`);
+  let desc = '';
+  if (typeof desc_id != 'undefined') {
+    desc = $(`${desc_id}`);
+  }else{
+    desc = $(`#long-description-${key}`);
+  }
+
   let show_text = '';
   show_text = $(desc).data('show_text');
-  console.log(show_text)
+  //console.log(show_text)
   if (show_text === "more") {
     desc.css({'height':'100%'});
     btn.innerHTML = "Read Less";
@@ -786,46 +792,45 @@ function loadStreetMap() {
 
 
 // Function to get currency icon based on currency code
-
 function getCurrencyIcon(currencyCode) {
     // TODO: Write Code
-    return '<i class="fa fa-money mr-2"></i>'
+        return '<i class="fa fa-money mr-2"></i>'
 
-}
+    }
 
 // Function to update session with selected currency
-function updateSession(currency) {
-    fetch('/updateCurrency', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({ currency: currency })
-    })
-    .then(response => {
-        if (response.ok) {
-            console.log('Session updated successfully.');
-            window.location.reload();
-        } else {
-            console.error('Failed to update session.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
+    function updateSession(currency) {
+        fetch('/updateCurrency', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ currency: currency })
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Session updated successfully.');
+                window.location.reload();
+            } else {
+                console.error('Failed to update session.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
 
 // Currency Changer
-$("#currency-dropdown .dropdown-item").on("click", function() {
-    let selectedCurrency = $(this).attr('data-value');
-    let currencyIcon = getCurrencyIcon(selectedCurrency);
+    $("#currency-dropdown .dropdown-item").on("click", function() {
+        let selectedCurrency = $(this).attr('data-value');
+        let currencyIcon = getCurrencyIcon(selectedCurrency);
 
-    document.getElementById('dropdownCurrency').innerHTML = currencyIcon + selectedCurrency
+        document.getElementById('dropdownCurrency').innerHTML = currencyIcon + selectedCurrency
 
     // Send AJAX request to update session
-    updateSession(selectedCurrency);
-});
+        updateSession(selectedCurrency);
+    });
 
 
 

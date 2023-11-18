@@ -71,6 +71,7 @@ class AppServiceProvider extends ServiceProvider
             $nestedResult = $nestedCollection(0);
             return $nestedResult;
         });
+      
         Collection::macro('toPackageTypeNested', function () {
             $parentKey = "parent_id";
             $grouped = $this->groupBy($parentKey);
