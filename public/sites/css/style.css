@@ -14786,12 +14786,22 @@ body.destination-detail-page .listingDetails #location-content #tab-need_to_know
 
 /*destination detail page tabs css start*/
 
+
+
 body.destination-detail-page #places .grid-item .item-border,
 body.destination-detail-page #culinary_retreat .grid-item .item-border,
 body.destination-detail-page #shopaholics_anonymous .grid-item .item-border,
 body.destination-detail-page #fair_and_festivals .grid-item .item-border {
 	padding: 5px;
 	border: 1px solid #ddd;
+}
+
+body.destination-detail-page #places .thumbnail.places-image img,
+body.destination-detail-page #culinary_retreat .thumbnail.culinary-retreat-image img,
+body.destination-detail-page #fair_and_festivals .thumbnail.fair-and-festivals-image img,
+body.destination-detail-page #shopaholics_anonymous .thumbnail.shopaholics-anonymous-image img {
+    width: 270px;
+    height: 200px;
 }
 body.destination-detail-page .grid-item h4.service-title {
 	font-size: 22px;
