@@ -168,22 +168,33 @@ window.showCountryZone = () => {
 };
 showCountryZone();
 
-const ShowVideos(get_response){
+const ShowVideos = function(get_response){
       
       let galery_video_div = $('#gallery-video');
       $(galery_video_div).html(get_response);
 }
 
-const SubmitVideo = function(ele,type){
+window.SubmitVideo = function(ele,type){
     if (type == 'add') {
-
-    let form = $(ele);
-    let formData = $(ele).serialize();
-    let method = "POST";
-    let action = $(ele).attr('action');
+    console.log(type);
+    let modal_id = $(ele);
+    var formData = $(modal_id).find('#form-video-modal').serialize();
+    let image_url = $(modal_id).find('#image_url');
+    
+    if (image_url.val() == "") {
+         $('#image_url-error').remove();
+        let error_html = '<div id="image_url-error" class="invalid-feedback animated fadeInUp" style="display: block;">Please enter a video url</div>';
+        image_url.after(error_html);
+        return false;
+    }else{
+        $('#image_url-error').remove();
+    }
+    // let method = "POST";
+    var action = $(modal_id).find('#form-video-modal').attr('action');
     }else if(type == 'remove'){
        // let method = "DELETE"; 
      console.log('panding..');
+     return false;
     }
   $.ajaxSetup({
         headers: {
@@ -191,7 +202,7 @@ const SubmitVideo = function(ele,type){
         }
     });
     $.ajax({
-        type: method,
+        type: 'POST',
         dataType: "html",
         url: action,
         data: formData,
@@ -207,16 +218,18 @@ const SubmitVideo = function(ele,type){
   });
 }
 
-$('.submit-video,.edit-video,.remove-video').on('click',function(){
-    
-    let type = $(this).data('type');
-    if (type == 'add') {
-        let form_id = $('#video-modal');
-        SubmitVideo(form_id,form_data);
+// $('.submit-video').on('click',function(){
+//     console.log('hre');
+//     let type = $(this).data('type');
+//     let modal_id = $('#video-modal');
+//     if (type == 'add') {
+//         SubmitVideo(modal_id,type);
 
-    }else if (type == 'remove') {
-
-    }
-})
+//     }else if (type == 'remove') {
+//        return false;
+//     }else if(type == 'close'){
+//       $(modal_id).find('#form-video-modal')[0].reset();
+//     }
+// })
 
 }(jQuery))
