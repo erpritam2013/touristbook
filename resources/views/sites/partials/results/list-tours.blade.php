@@ -211,7 +211,7 @@
                 Avg
             </span>
 
-            {!!get_price($tour,'₹')!!}
+            {!!get_price($tour)!!}
 
             <span class="unit"><span class="price-ex"><i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;position: absolute;top: -3px;"><span class="TravelGo-opt-tooltip min-w-500px-fs-14fpx">Price usually vary or subject to change please visit website to view the best deal.</span></i></span></span>
 
