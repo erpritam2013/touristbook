@@ -305,28 +305,25 @@ $('#pocketPDFtab').on('click','a.nav-link',function(e){
         return false;
     }
 });
-$('#tourism-zone-area-pdf').on('click','a.nav-link',function(e){
+window.tourism_zone_area_pdf = function(ele){
 
-    let id = $(this).attr('href');
+ 
+    let id = $(ele).attr('href');
     if (typeof id != 'undefined') {
 
         let t = $(id);
         let parent = t.parent('div.tab-content');
-        let parent_nav_tab = $(this).parent('.nav-item').parent('ul.custom-tabs-detail');
-        console.log(parent_nav_tab);
+        let parent_nav_tab = $(ele).parent('.nav-item').parent('ul.custom-tabs-detail');
+
         let top = parent.offset().top;
         if (isMobile()) {
             top = top - 300;
-
         }else{
             top = top - 250;
         }
         let parent_childs = parent.children('.tab-pane');
         let parent_nav_childs = parent_nav_tab.children('.nav-item');
-        console.log(parent_nav_childs);
-
         let tab_content_index = t.index();
-
         parent_nav_childs.each(function(k,v){
             if (k != tab_content_index) {
                 $(v).children('a.nav-link').removeClass('active');
@@ -338,13 +335,13 @@ $('#tourism-zone-area-pdf').on('click','a.nav-link',function(e){
             }
         })
         t.show();
-        $(this).addClass('active');
+        $(ele).addClass('active');
         // t.hide();
         // $(window).scrollTop(top);
         $('html, body').animate({scrollTop:top}, 'slow');
         return false;
     }
-});
+}
 
 moreLi.on("click", function () {
     $(this).parent().find(".li-hide").removeClass("li-hide");

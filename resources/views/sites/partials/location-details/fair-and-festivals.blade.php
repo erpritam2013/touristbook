@@ -3,7 +3,7 @@ $fair_and_festivals_banner = (!empty($location->locationMeta->fair_and_festivals
 @endphp
 @if(!empty($location->locationMeta->fair_and_festivals_image) && isset($location->locationMeta->fair_and_festivals_image[0]['id']))
 <div class="row mb-4">
-	<div class="col-md-12 p-2 bg-dark">
+	<div class="col-md-12 p-2">
 		<img class="banner-image-lt" src="{{$fair_and_festivals_banner ?? asset('sites/images/dummy/1250x500.jpg')}}" style="width: 100%;height: 500px;" />
 	</div>
 </div>

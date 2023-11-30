@@ -65,7 +65,7 @@ class PageDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(7)
+                    ->orderBy(6)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
