@@ -22,9 +22,7 @@
                     Avg
                 </span>
 
-                <span class="price">
-                    4700
-                </span>
+                 {!!get_price($hotel)!!}
 
                 <span class="unit">/per night</span></p>
                         </li>

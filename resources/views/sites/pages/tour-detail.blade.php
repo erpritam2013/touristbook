@@ -552,8 +552,10 @@
 					@if($tourismZone)
 					<div class="mt-2" id="tourism-zone-area">
 
-						<div align="center"><a data-toggle="collapse" href="#tourism-zone-div" role="button" aria-expanded="true" aria-controls="tourism-zone-div" style="text-decoration: none;" class="btn btn-grad">Tourism Zone...
-						</a></div>
+						<div align="center">
+							<a data-toggle="collapse" href="#tourism-zone-div" role="button" aria-expanded="true" aria-controls="tourism-zone-div" style="text-decoration: none;" class="btn btn-grad">Tourism Zone...
+							</a>
+						</div>
 						<div class="collapse row" id="tourism-zone-div">
 
 							<div class="col-md-12">
@@ -571,14 +573,14 @@
 
 								<ul class="nav nav-tabs custom-tabs-detail" id="tourism-zone-area-pdf">
 									@foreach($tourismZone->tourism_zone as $key => $tzone)
-									<li class="nav-item"> <a class="nav-link {{($key == 0)?'active':''}}" data-toggle="tab" href="#{{touristbook_sanitize_title($tzone['tourism_zone-title'])}}"> {!!$tzone['tourism_zone-title']!!} </a> </li>
+									<li class="nav-item"> <a class="nav-link {{($key == 0)?'active':''}}" data-toggle="tab" href="#{{touristbook_sanitize_title($tzone['tourism_zone-title'])}}"  onclick="tourism_zone_area_pdf(this)"> {!!$tzone['tourism_zone-title']!!} </a> </li>
 									@endforeach
 
 								</ul>
 
 								<div class="tab-content text-justify">
-									@foreach($tourismZone->tourism_zone as $key => $tzone)
-									<div class="tab-pane" id="{{touristbook_sanitize_title($tzone['tourism_zone-title'])}}">
+									@foreach($tourismZone->tourism_zone as $key2 => $tzone)
+									<div class="tab-pane {{($key2 == 0)?'active':''}}" id="{{touristbook_sanitize_title($tzone['tourism_zone-title'])}}">
 
 										{!!$tzone['tourism_zone-description']!!}
 
@@ -592,8 +594,8 @@
 							@endif
 
 						</div>
-						@endif
 					</div>
+					@endif
 
 
 
@@ -670,7 +672,6 @@
 
 					</div>
 				</div>
-
 				<div class="col-lg-12 col-md-12 col-sm-12 bt1pxe9ecef">
 					<!-- market purpose -->
 					<div class="market-purpose">
@@ -744,164 +745,153 @@
 													@php
 													$address = (!empty($near_location->address ))?$near_location->address:"";
 													@endphp
-													<p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!shortDescription($address,30)!!}</span>@if(strlen($address) > 30)
+													
+													@if($address)	<p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!shortDescription($address,30)!!}</span>@if(strlen($address) > 30)
 														&nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$address}}" data-more_data_label="Address" style="color:#fba009;"></i>
-													@endif</p></div>
-													<ul>
-														<li class="mt-0 mb-0">
-															<p class="card-text text-muted ">
-																<span class="h6 text-primary">
-																	<span class="location-avg">
-																		{!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
-																		Avg
-																	</span>
-																{!!get_price($near_location)!!}</span> / per night</p>
-															</li>
-															<li class="mt-0 mb-0">
-																{{--<a href="{{route('location',$near_location->slug)}}" class="btn btn-grad text-white mt-0 mb-0 btn-sm">View Detail</a>--}}
-
-
-															</li>
-														</ul>
-													</div>
+													@endif</p>@endif
 												</div>
-												@endforeach
-												@else
-												<div class="col-md-8 col-sm-8 col-xs-12 alert alert-warning mt15">No Near By Location found.</div>
-												@endif
+												
 											</div>
 										</div>
-									</section>
+										@endforeach
+										@else
+										<div class="col-md-8 col-sm-8 col-xs-12 alert alert-warning mt15">No Near By Location found.</div>
+										@endif
+									</div>
+								</div>
+							</section>
 
-									<section class="Categories pt10 hotel-samilar">
-										<div class="container">
-											<div class="row">
-												<div class="col-md-8">
-													<p class="mt-0 mb-0 nopadding st-heading-section">Hotel You May Like</p>
+							<section class="Categories pt10 hotel-samilar">
+								<div class="container">
+									<div class="row">
+										<div class="col-md-8">
+											<p class="mt-0 mb-0 nopadding st-heading-section">Hotel You May Like</p>
+										</div>
+										<div class="col-md-4 d-lg-flex align-items-center justify-content-end"><a href="{{route('hotels')}}" class="blist text-sm ml-2"> See all our hotel<i class="fas fa-angle-double-right ml-2"></i></a></div>
+									</div>
+									<div class="row">
+										@if($nearByHotel->count() != 0)
+										@foreach($nearByHotel as $near_hotel)
+										<div class="col-md-3 col-sm-3  col-xs-12">
+											<div class="listroBox">
+												@php $featured_image = (!empty($near_hotel->featured_image) && isset($near_hotel->featured_image[0]['id']))?getConversionUrl($near_hotel->featured_image[0]['id'],'270x200'):null;@endphp
+												<figure><a href="{{route('hotel',$near_hotel->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="location image">
+													<div class="read_more"><span>{!!ucwords($near_hotel->name ?? '')!!}</span></div>
+												</a> </figure>
+												<div class="listroBoxmain p-2">
+													<h2 class="service-title"><a href="{{route('hotel',$near_hotel->slug)}}">{!!ucwords($near_hotel->name ?? '')!!}</a></h2>
+													@php
+													$address = (!empty($near_hotel->address ))?$near_hotel->address:$near_hotel->hotel_attributes['corporateAddress'];
+													@endphp
+													@if($address)
+													<p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!shortDescription($address,30)!!}</span>@if(strlen($address) > 30)
+														&nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$address}}" data-more_data_label="Address" style="color:#fba009;"></i>
+													@endif</p>
+													@endif
+													@if(!empty($near_hotel->duration_day))
+													<p>{!!getNewIcon('time-clock-circle-1', '#5E6D77', '17px', '17px')!!}{!!$near_hotel->duration_day!!}</p>
+												@endif</div>
+												<ul class="near-price-block">
+
+													<li class="mt-0 mb-0 near-price-block-1">
+														<p class="card-text text-muted ">
+															<span class="h6 text-primary">
+																<span class="hotel-avg">
+																	{!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
+																	Avg
+																</span>
+															{!!get_price($near_hotel)!!}</span> / per night</p>
+														</li>
+													</ul>
 												</div>
-												<div class="col-md-4 d-lg-flex align-items-center justify-content-end"><a href="{{route('hotels')}}" class="blist text-sm ml-2"> See all our hotel<i class="fas fa-angle-double-right ml-2"></i></a></div>
 											</div>
-											<div class="row">
-												@if($nearByHotel->count() != 0)
-												@foreach($nearByHotel as $near_hotel)
-												<div class="col-md-3 col-sm-3  col-xs-12">
-													<div class="listroBox">
-														@php $featured_image = (!empty($near_hotel->featured_image) && isset($near_hotel->featured_image[0]['id']))?getConversionUrl($near_hotel->featured_image[0]['id'],'270x200'):null;@endphp
-														<figure><a href="{{route('hotel',$near_hotel->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="location image">
-															<div class="read_more"><span>{!!ucwords($near_hotel->name ?? '')!!}</span></div>
-														</a> </figure>
-														<div class="listroBoxmain p-2">
-															<h2 class="service-title"><a href="{{route('hotel',$near_hotel->slug)}}">{!!ucwords($near_hotel->name ?? '')!!}</a></h2>
-															@php
-															$address = (!empty($near_hotel->address ))?$near_hotel->address:$near_hotel->hotel_attributes['corporateAddress'];
-															@endphp
-															<p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!shortDescription($address,30)!!}</span>@if(strlen($address) > 30)
-																&nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$address}}" data-more_data_label="Address" style="color:#fba009;"></i>
-															@endif</p>
-															@if(!empty($near_hotel->duration_day))
-															<p>{!!getNewIcon('time-clock-circle-1', '#5E6D77', '17px', '17px')!!}{!!$near_hotel->duration_day!!}</p>
-														@endif</div>
-														<ul class="near-price-block">
-
-															<li class="mt-0 mb-0 near-price-block-1">
+											@endforeach
+											@else
+											<div class="col-md-8 col-sm-8 col-xs-12 alert alert-warning mt15">No Near By Hotels found.</div>
+											@endif
+										</div>
+									</div>
+								</section>
+								<section class="Categories pt10 activitysamilar">
+									<div class="container">
+										<div class="row">
+											<div class="col-md-8">
+												<p class="mt-0 mb-0 nopadding st-heading-section">Activity You May Like</p>
+											</div>
+											<div class="col-md-4 d-lg-flex align-items-center justify-content-end"><a href="{{route('activities')}}" class="blist text-sm ml-2"> See all activities<i class="fas fa-angle-double-right ml-2"></i></a></div>
+										</div>
+										<div class="row">
+											@if($nearByActivity->count() != 0)
+											@foreach($nearByActivity as $near_activity)
+											<div class="col-md-3 col-sm-3  col-xs-12">
+												<div class="listroBox">
+													@php $featured_image = (!empty($near_activity->featured_image) && isset($near_activity->featured_image[0]['id']))?getConversionUrl($near_activity->featured_image[0]['id'],'270x200'):null;@endphp
+													<figure><a href="{{route('activity',$near_activity->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="activity image">
+														<div class="read_more"><span>{!!ucwords($near_activity->name ?? '')!!}</span></div>
+													</a> </figure>
+													<div class="listroBoxmain p-2">
+														<h2 class="service-title"><a href="{{route('activity',$near_activity->slug)}}">{!!ucwords($near_activity->name ?? '')!!}</a></h2>
+														<p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!shortDescription($near_activity->address ?? '',30)!!}</span>@if(strlen($near_activity->address) > 30)
+															&nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$near_activity->address}}" data-more_data_label="Address" style="color:#fba009;"></i>
+														@endif</p></div>
+														<ul>
+															<li class="mt-0 mb-0">
 																<p class="card-text text-muted ">
 																	<span class="h6 text-primary">
-																		<span class="hotel-avg">
+																		<span class="location-avg">
 																			{!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
 																			Avg
 																		</span>
-																	{!!get_price($near_hotel)!!}</span> / per night</p>
+																	{!!get_price($near_activity)!!}</span></p>
+																</li>
+																<li class="mt-0 mb-0">
+																	{{--<a href="{{route('activity',$near_activity->slug)}}" class="btn btn-grad text-white mt-0 mb-0 btn-sm">View Detail</a>--}}
+
 																</li>
 															</ul>
 														</div>
 													</div>
 													@endforeach
 													@else
-													<div class="col-md-8 col-sm-8 col-xs-12 alert alert-warning mt15">No Near By Hotels found.</div>
+													<div class="col-md-8 col-sm-8 col-xs-12 alert alert-warning mt15">No Near By Activities found.</div>
 													@endif
 												</div>
 											</div>
 										</section>
-										<section class="Categories pt10 activitysamilar">
-											<div class="container">
-												<div class="row">
-													<div class="col-md-8">
-														<p class="mt-0 mb-0 nopadding st-heading-section">Activity You May Like</p>
-													</div>
-													<div class="col-md-4 d-lg-flex align-items-center justify-content-end"><a href="{{route('activities')}}" class="blist text-sm ml-2"> See all activities<i class="fas fa-angle-double-right ml-2"></i></a></div>
-												</div>
-												<div class="row">
-													@if($nearByActivity->count() != 0)
-													@foreach($nearByActivity as $near_activity)
-													<div class="col-md-3 col-sm-3  col-xs-12">
-														<div class="listroBox">
-															@php $featured_image = (!empty($near_activity->featured_image) && isset($near_activity->featured_image[0]['id']))?getConversionUrl($near_activity->featured_image[0]['id'],'270x200'):null;@endphp
-															<figure><a href="{{route('activity',$near_activity->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="activity image">
-																<div class="read_more"><span>{!!ucwords($near_activity->name ?? '')!!}</span></div>
-															</a> </figure>
-															<div class="listroBoxmain p-2">
-																<h2 class="service-title"><a href="{{route('activity',$near_activity->slug)}}">{!!ucwords($near_activity->name ?? '')!!}</a></h2>
-																<p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!shortDescription($near_activity->address ?? '',30)!!}</span>@if(strlen($near_activity->address) > 30)
-																	&nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$near_activity->address}}" data-more_data_label="Address" style="color:#fba009;"></i>
-																@endif</p></div>
-																<ul>
-																	<li class="mt-0 mb-0">
-																		<p class="card-text text-muted ">
-																			<span class="h6 text-primary">
-																				<span class="location-avg">
-																					{!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
-																					Avg
-																				</span>
-																			{!!get_price($near_activity)!!}</span></p>
-																		</li>
-																		<li class="mt-0 mb-0">
-																			{{--<a href="{{route('activity',$near_activity->slug)}}" class="btn btn-grad text-white mt-0 mb-0 btn-sm">View Detail</a>--}}
 
-																		</li>
-																	</ul>
-																</div>
-															</div>
-															@endforeach
-															@else
-															<div class="col-md-8 col-sm-8 col-xs-12 alert alert-warning mt15">No Near By Activities found.</div>
-															@endif
-														</div>
-													</div>
-												</section>
-
-											</div>
-
-
-										</div>
 									</div>
-								</div>
-							</section>
 
 
-
-							{{-- Modal for Street Map --}}
-
-
-							<div class="modal fade" id="streetModal" tabindex="-1" role="dialog" aria-labelledby="streetLabel"
-							aria-hidden="true" style="z-index: 999999;">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title" id="streetLabel">{{ $tour->name }}</h5>
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
-									</div>
-									<div class="modal-body">
-										<div id="map-street" style="height: 400px; width:100%" lat="{{ $tour->detail->latitude }}"
-											lng="{{ $tour->detail->longitude }}" zoom_level="{{ $tour->detail->zoom_level }}"></div>
-										</div>
-										<div class="modal-footer">
-
-										</div>
-									</div>
 								</div>
 							</div>
+						</div>
+					</section>
 
 
-							@endsection
+
+					{{-- Modal for Street Map --}}
+
+
+					<div class="modal fade" id="streetModal" tabindex="-1" role="dialog" aria-labelledby="streetLabel"
+					aria-hidden="true" style="z-index: 999999;">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="streetLabel">{{ $tour->name }}</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div id="map-street" style="height: 400px; width:100%" lat="{{ $tour->detail->latitude }}"
+									lng="{{ $tour->detail->longitude }}" zoom_level="{{ $tour->detail->zoom_level }}"></div>
+								</div>
+								<div class="modal-footer">
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					@endsection

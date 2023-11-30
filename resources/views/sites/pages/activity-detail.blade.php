@@ -542,7 +542,7 @@
 						{{-- tourism zone --}}
 						@if(!empty($tourismZone))
 						<div class="mt-5 bbpb text-justify" id="tourism-zone-area" >
-							<div align="center"><a data-toggle="collapse" href="#tourism-zone-area-pdf" role="button" aria-expanded="true" aria-controls="tourism-zone-area-pdf" style="text-decoration: none;" class="btn btn-grad">Tourism Zone...
+							<div align="center"><a data-toggle="collapse" href="#tourism-zone-area-pdf" role="button" aria-expanded="true" aria-controls="tourism-zone-area-pdf" style="text-decoration: none;" class="btn btn-grad"  onclick="tourism_zone_area_pdf(this)">Tourism Zone...
 							</a></div>
 							<div class="collapse row" id="tourism-zone-area-pdf">
 								<div class="col-md-12 ">
@@ -939,25 +939,12 @@
 																@php
 																$address = (!empty($near_location->address ))?$near_location->address:"";
 																@endphp
+																@if($address)
 																<p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!shortDescription($address,30)!!}</span>@if(strlen($address) > 30)
 																	&nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$address}}" data-more_data_label="Address" style="color:#fba009;"></i>
-																@endif</p></div>
-																<ul>
-																	<li class="mt-0 mb-0">
-																		<p class="card-text text-muted ">
-																			<span class="h6 text-primary">
-																				<span class="location-avg">
-																					{!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
-																					Avg
-																				</span>
-																			{!!get_price($near_location)!!}</span> / per night</p>
-																		</li>
-																		<li class="mt-0 mb-0">
-																			{{--<a href="{{route('location',$near_location->slug)}}" class="btn btn-grad text-white mt-0 mb-0 btn-sm">View Detail</a>--}}
-
-
-																		</li>
-																	</ul>
+																@endif</p>@endif
+															</div>
+																
 																</div>
 															</div>
 															@endforeach
