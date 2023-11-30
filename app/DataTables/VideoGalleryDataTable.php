@@ -23,8 +23,8 @@ class VideoGalleryDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))->addIndexColumn()->addColumn('action', function ($row) {
-                    $html = ' <a href="'.route("admin.video-galleries.edit",$row->id).'" class="btn btn-primary" title="Edit"><i class="fa fa-edit"></i></a>';
-                    $html .= '<a href="'.route("admin.video-galleries.show",$row->id).'" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>';
+                    $html = ' <a href="'.route("admin.settings.video-galleries.edit",$row->id).'" class="btn btn-primary" title="Edit"><i class="fa fa-edit"></i></a>';
+                    $html .= '<a href="'.route("admin.settings.video-galleries.show",$row->id).'" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>';
                     $html .= '<a href="javascript:void(0);" class="btn btn-danger del_entity_form" title="Delete" item_id="'.$row->id.'" data-text="video gallery"><i class="fa fa-trash"></i></a>';
                     return $html;
                 })->editColumn('created_at', function($row) {
@@ -59,7 +59,7 @@ class VideoGalleryDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(7)
+                    ->orderBy(4)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),

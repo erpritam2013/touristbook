@@ -63,6 +63,17 @@ return [
             ]) : [],
         ],
 
+        'mysql2' => [
+            'driver'    => 'mysql',
+            'host'      => '45.113.122.178',
+            'database'  => 'atestimc_traveler',
+            'username'  => 'atestimc_traveler',
+            'password'  => 'traveler@!!4567',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),

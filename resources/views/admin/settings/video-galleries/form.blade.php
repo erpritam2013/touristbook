@@ -1,4 +1,4 @@
-<form class="form-valide" id="video_gallery-form" action="@yield('video_gallery_action')" method="video_gallery">
+<form class="form-valide" id="video_gallery-form" action="@yield('video_gallery_action')" method="POST">
     {{ csrf_field() }}
     @yield('video_gallery_form_method')
     <div class="row">
