@@ -130,6 +130,87 @@ if (!function_exists('inputTemplate')) {
 
 }
 
+if (!function_exists('parseVideos')) {
+  function parseVideos($videoString = null){
+    
+    // RETURN DATA
+    $videos = array();
+    if (!empty($videoString)) {
+        // SPLIT ON LINE BREAKS
+        $videoString = stripslashes(trim($videoString));
+        $videoString = explode("\n", $videoString);
+        $videoString = array_filter($videoString, 'trim');
+        // CHECK EACH VIDEO FOR PROPER FORMATTING
+        foreach ($videoString as $video) {
+            // CHECK FOR IFRAME TO GET THE VIDEO URL
+            if (strpos($video, 'iframe') !== FALSE) {
+                // RETRIEVE THE VIDEO URL
+                $anchorRegex = '/src="(.*)?"/isU';
+                $results = array();
+                if (preg_match($anchorRegex, $video, $results)) {
+                    $link = trim($results[1]);
+                }
+            } else {
+                // WE ALREADY HAVE A URL
+                $link = $video;
+            }
+            // IF WE HAVE A URL, PARSE IT DOWN
+            if (!empty($link)) {
+                // INITIAL VALUES
+                $video_id = NULL;
+                $videoIdRegex = NULL;
+                $results = array();
+                // CHECK FOR TYPE OF YOUTUBE LINK
+                if (strpos($link, 'youtu') !== FALSE) {
+                    if (strpos($link, 'youtube.com') !== FALSE) {
+                        if (strpos($link, 'youtube.com/watch') !== FALSE) {
+                            $videoIdRegex = '/[\?\&]v=([^\?\&]+)/';
+                        }else{
+                            // works on:
+                            // http://www.youtube.com/embed/VIDEOID
+                            // http://www.youtube.com/embed/VIDEOID?modestbranding=1&rel=0
+                            // http://www.youtube.com/v/VIDEO-ID?fs=1&hl=en_US
+                            ///[\?\&]v=([^\?\&]+)/
+                            $videoIdRegex = '/youtube.com\/(?:embed|v){1}\/([a-zA-Z0-9_]+)\??/i';
+                        }
+                    } else if (strpos($link, 'youtu.be') !== FALSE) {
+                        // works on:
+                        // http://youtu.be/daro6K6mym8
+                        $videoIdRegex = '/youtu.be\/([a-zA-Z0-9_]+)\??/i';
+                    }
+                    if ($videoIdRegex !== NULL) {
+                        if (preg_match($videoIdRegex, $link, $results)) {
+                            $video_str = 'https://www.youtube.com/embed/%s?autoplay=0';
+                            $thumbnail_str = 'http://img.youtube.com/vi/%s/2.jpg';
+                            $fullsize_str = 'http://img.youtube.com/vi/%s/0.jpg';
+                            $video_id = $results[1];
+                            $video_type = 'youtube';
+                        }
+                    }
+                }
+                // CHECK IF WE HAVE A VIDEO ID, IF SO, ADD THE VIDEO METADATA
+                if (!empty($video_id)) {
+                    // add to return
+                    $videos = array(
+                        'url' => sprintf($video_str, $video_id),
+                        'thumbnail' => sprintf($fullsize_str, $video_id),
+                        'video_type' => sprintf($video_type, $video_id),
+                    );
+                }else{
+                    $videos = array(
+                        'url' => null,
+                        'thumbnail' => null,
+                        'video_type' => '0',
+                    );
+                }
+            }
+        }
+    }
+    // RETURN ARRAY OF PARSED VIDEOS
+    return $videos;
+}
+}
+
 if (!function_exists('mediaTemplate')) {
 
     function mediaTemplate($fields_data)
@@ -162,12 +243,13 @@ if (!function_exists('mediaTemplate')) {
       $html .='<div class="col-lg-10">';
   }
   $html .='<div class="media-controls">';
-
+  $value = $value ? json_encode($value) : '';
   $html .='<input type="hidden" class="form-control media-input '.$class.' gallery-input " name="'.$name.'"
-  value="'.$value ? json_encode($value) : "".'" />';
+  value="'.$value.'" />';
   if($smode == 'single'){
+    $value_url = '';
     if(is_array($value) && isset($value[0])){
-        $value_url= $value[0]['url'];
+        $value_url = $value[0]['url'];
     }
     $html .='<input type="text" class="form-control media-input '.$class.' gallery-input " name="'.$name.'" value="'.$value_url.'" id="'.$id.'" placeholder="Enter '.$label.'..."/>';
 }
@@ -589,12 +671,15 @@ if (!function_exists('get_price')) {
             $currency_symbal = $priceObject->currency_symbol;
             if (isset($obj->avg_price)) {
                 $price = $priceObject->conversion_rate * ((!empty($obj->avg_price))?round($obj->avg_price):0);
+            }elseif (isset($obj->price)) {
+                  $price = $priceObject->conversion_rate * ((!empty($obj->price))?round($obj->price):0);
             }else{
-                $price = $priceObject->conversion_rate * ((!empty($obj->price))?round($obj->price):0);
+            $price = $obj;
             }
         }
         $price_html .=   $currency_symbal;
-        $price_html .= number_format((float)$price, 2, '.', '');
+        $price_html .= ceil($price);
+         //$price_html .= number_format((float)$price, 2, '.', '');
         $price_html .= '</span>';
 
         return $price_html;
@@ -837,6 +922,16 @@ if (!function_exists('getSingleRecord')) {
            $detail = $NamespacedModel::findOrFail($id);
         }
         return $detail;
+    }
+}
+
+if (!function_exists('GetVideoGallery')) {
+    function GetVideoGallery($location)
+    {
+        $NamespacedModel = 'App\\Models\\VideoGallery';
+
+        $GetVideoGallery = $NamespacedModel::where('name',ucwords($location->name))->orWhere('location_id',$location->id)->first();
+        return $GetVideoGallery;
     }
 }
 if (!function_exists('getPostData')) {

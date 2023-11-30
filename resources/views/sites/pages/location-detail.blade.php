@@ -17,7 +17,7 @@
 <section class="pt20 pb80 listingDetails Campaigns">
   <div class="container">
     <div class="map-content-loading">
-        <div class="st-loader"></div>
+      <div class="st-loader"></div>
     </div>
     <div class="row">
 
@@ -28,13 +28,14 @@
         @endphp
         @include('sites.partials.breadcrumb',['location_route'=>$l_route,'location_name'=>$location->locations[0]->name ?? '','post_name'=>ucwords($location->name)])--}}
         {{--<h1 class="st-heading">{{ $location->name }}</h1>--}}
-        <ul class="nav nav-tabs sticky-top location-tabs" id="location-tabs" style="top:120px;z-index:99;">
+        <!-- sticky-top class style="top:120px;z-index:99;" -->
+        <ul class="nav nav-tabs location-tabs" id="location-tabs">
           <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#tab-place_to_visit"> Place To Visit </a>
           </li>
-          <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-stay"> Stay
+          <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-stay" onclick="fetchDestinaitonDetail(this)" data-target_element="hotels"> Stay
           </a>
         </li>
-        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-package">Packages & Activities</a> </li>
+        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-packages-activities" onclick="fetchDestinaitonDetail(this)" data-target_element="packages-activities">Packages & Activities</a> </li>
         {{--<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-what_to_do"> What To Do </a> </li>--}}
         <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-need_to_know">
           Nead To Know
@@ -42,7 +43,7 @@
         {{--<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-images">
           Images
         </a> </li>--}}
-        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-videos" onclick="fetchDestinaitonDetail(this)" data-target_element="video">
+        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-videos" onclick="fetchDestinaitonDetail(this)" data-target_element="videos">
           Videos
         </a> </li>
       </ul>
@@ -50,6 +51,7 @@
       <!-- custom-content end -->
       <div class="tab-content pt-1" id="location-content">
         <!-- place to visit start -->
+
         <div class="tab-pane show active" id="tab-place_to_visit">
           <ul class="nav nav-tabs" id="place_to_visit_child_tab">
             <li class="nav-item active"><a class="nav-link active" href="#places"  data-toggle="tab" onclick="fetchDestinaitonDetail(this)" data-target_element="places">Places</a></li>
@@ -64,18 +66,28 @@
 
             <li class="nav-item"><a class="nav-link" href="#shopaholics_anonymous" data-toggle="tab" onclick="fetchDestinaitonDetail(this)" data-target_element="shopaholics-anonymous">Shopaholic Anonymous</a></li>
 
-            <li class="nav-item"><a class="nav-link" href="#weather"  data-toggle="tab" >Weather</a></li>
+            <li class="nav-item"><a class="nav-link" href="#weather"  data-toggle="tab" onclick="fetchWeather(this)" data-lat="{{$location->latitude ?? ''}}" data-long="{{$location->longitude ?? ''}}" data-address="{{$location->name ?? ''}}" data-name="{{$location->map_address ?? ''}}">Weather</a></li>
 
-            <li  class="nav-item"><a class="nav-link" href="#location"  data-toggle="tab">Location</a></li>
+            <li  class="nav-item"><a class="nav-link" data-toggle="tab" href="#location" >Location</a></li>
 
           </ul>
 
           <div class="tab-content">
            <!-- places start -->
            <div class="tab-pane active" id="places">
-           
+
            </div>
            <!-- places end -->
+           <!--stay start -->
+           <div class="tab-pane" id="tab-stay">
+
+           </div>
+           <!-- stay end -->
+           <!-- package and activity start -->
+           <div class="tab-pane" id="tab-packages-activities">
+
+           </div>
+           <!-- package and activity end -->
            <!-- best time to visit start -->
            <div class="tab-pane" id="best_time_to_visit">
 
@@ -108,15 +120,17 @@
            <!-- weather end -->
            <!-- location start -->
            <div class="tab-pane" id="location">
+            <div id="map-street" style="height: 600px; width:100%" lat="{{ $location->latitude }}"
+              lng="{{ $location->longitude }}" zoom_level="{{ $location->zoom_level }}">
+            </div>
+          </div>
+          <!-- location end -->
+        </div>
 
-           </div>
-           <!-- location end -->
-         </div>
-
-       </div>
-       <!-- place to visit end -->
-       <!-- need_to_know start -->
-       <div class="tab-pane " id="tab-need_to_know">
+      </div>
+      <!-- place to visit end -->
+      <!-- need_to_know start -->
+      <div class="tab-pane " id="tab-need_to_know">
         <ul class="nav nav-tabs" id="need_to_know_child_tab">
           <li  class="nav-item"><a class="nav-link" href="#tab-get_to_know" data-toggle="tab" onclick="fetchDestinaitonDetail(this)" data-target_element="get-to-know">Get To Know </a></li>
           <li class="nav-item"><a class="nav-link" href="#tab-tourism_zone" data-toggle="tab" onclick="fetchDestinaitonDetail(this)" data-target_element="tourism-zone">Tourism Zone</a></li>
@@ -152,7 +166,7 @@
          <!-- save_the_environment end -->
          <!-- faqs start -->
          <div class="tab-pane" id="tab-faqs">
-
+          
          </div>
          <!-- faqs end -->
 
@@ -195,25 +209,10 @@
               @php
               $address = (!empty($near_location->address ))?$near_location->address:"";
               @endphp
-              <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!shortDescription($address,50)!!}</span>@if(strlen($address) > 50)
+              @if($address)<p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!shortDescription($address,50)!!}</span>@if(strlen($address) > 50)
                 &nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$address}}" data-more_data_label="Address" style="color:#fba009;"></i>
-              @endif</p></div>
-              <ul>
-                <li class="mt-0 mb-0">
-                  <p class="card-text text-muted ">
-                    <span class="h6 text-primary">
-                      <span class="location-avg">
-                       {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
-                       Avg
-                     </span>
-                   {!!get_price($near_location)!!}</span> / per night</p>
-                 </li>
-                 <li class="mt-0 mb-0">
-                  {{--<a href="{{route('location',$near_location->slug)}}" class="btn btn-grad text-white mt-0 mb-0 btn-sm">View Detail</a>--}}
-
-
-                </li>
-              </ul>
+              @endif</p>@endif
+            </div>
             </div>
           </div>
           @endforeach
