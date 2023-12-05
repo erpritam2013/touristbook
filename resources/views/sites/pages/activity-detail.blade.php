@@ -575,12 +575,12 @@
 						</div>
 						@endif
 
-						<div class="tab-pane" id="st-include-exclude">
 							@php 
 							$include = $activity->detail->activity_include ?? '';
 							$exclude = $activity->detail->activity_exclude ?? '';
 							@endphp
 							@if(!empty($include) || !empty($exclude))
+						<div class="tab-pane" id="st-include-exclude">
 							<div class="row">  
 								<div class="col-xs-6 col-sm-6">
 									@if(!empty($include))
@@ -623,8 +623,8 @@
 								</div>
 							</div>
 						
-							@endif
 						</div>
+							@endif
 
 						{{--<div class="tab-pane" id="st-program-section">
 							@if (!empty($activity->detail->activity_program))

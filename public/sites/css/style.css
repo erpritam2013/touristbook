@@ -13128,14 +13128,23 @@ body.activity-list-page .ui-autocomplete.ui-menu {
 	padding: 10px 0px 0px 0;
 }
 .activity-list-page .st-highlight-info a {
-	color: #07509e;
+    color: #07509e;
+    font-size: 15px;
+    font-weight: 600;
 }
 
 .activity-list-page .st-highlight-info ul li {
 	display: inline-block;
 	padding: 1px 5px 1px 2px;
 }
-.activity-list-page .st-highlight-info ul li:before {
+
+.activity-list-page .st-highlight-info .st-highlight-icon {
+    font-size: 14px;
+    color: #FBA009;
+    padding-right: 0px;
+    margin-right: 5px;
+}
+/*.activity-list-page .st-highlight-info ul li:before {
 	content: '\f111';
 	font-family: "Font Awesome 5 Free";
 	font-size: 7px;
@@ -13146,7 +13155,7 @@ body.activity-list-page .ui-autocomplete.ui-menu {
 	margin-right: 5px;
 	position: relative;
 	bottom: 1px;
-}
+}*/
 .activity-list-page .listroBox .listroBoxmain p {
 	margin-bottom: 5px;
 }
