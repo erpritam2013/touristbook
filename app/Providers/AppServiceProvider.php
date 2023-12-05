@@ -42,15 +42,16 @@ class AppServiceProvider extends ServiceProvider
         if (!$defaultCurrency) {
             // Set your default currency here (INR in this case)
             Session::put('currency', 'INR');
+
             Session::put('currency_symbol', '₹');
         }
 
         // Note: It is adding gallery key to every request
-        // if (request()->gallery == '' || empty(request()->gallery) || request()->gallery == '"[]"') {
-        //     request()->merge([
-        //         'gallery' => "[]",
-        //     ]);
-        // }
+        if (isset(request()->gallery) && (request()->gallery == '' || empty(request()->gallery) || request()->gallery == '"[]"')) {
+            request()->merge([
+                'gallery' => "[]",
+            ]);
+        }
         Collection::macro('toNested', function () {
             $parentKey = "parent_id";
             $grouped = $this->groupBy($parentKey);
@@ -62,6 +63,28 @@ class AppServiceProvider extends ServiceProvider
                     return [
                         'id' => $resource['id'],
                         'name' => $resource['name'],
+                        'children' => $nestedCollection($resource['id']),
+                    ];
+                });
+            };
+
+            $nestedResult = $nestedCollection(0);
+            return $nestedResult;
+        });
+      
+        Collection::macro('toPackageTypeNested', function () {
+            $parentKey = "parent_id";
+            $grouped = $this->groupBy($parentKey);
+
+
+            $nestedCollection = function ($parentId) use ($grouped, &$nestedCollection) {
+                $groupedArr = $grouped->get($parentId, []);
+                return collect($groupedArr)->map(function ($resource) use ($nestedCollection) {
+                    return [
+                        'id' => $resource['id'],
+                        'name' => $resource['name'],
+                        'button' => $resource['button'],
+                        'extra_data' => $resource['extra_data'],
                         'children' => $nestedCollection($resource['id']),
                     ];
                 });

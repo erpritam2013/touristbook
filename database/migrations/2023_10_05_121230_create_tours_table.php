@@ -40,7 +40,7 @@ return new class extends Migration
             $table->integer('discount')->default(0);
              $table->dateTime('sale_price_from')->nullable();
             $table->dateTime('sale_price_to')->nullable();
-            $table->dateTime('price_type')->nullable();
+            $table->string('price_type')->nullable();
             $table->boolean('is_featured')->default(false);
             $table->string('logo')->nullable();
             $table->string('featured_image')->nullable();

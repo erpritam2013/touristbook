@@ -60,6 +60,7 @@ use Illuminate\Support\Facades\Session;
 Route::post('/updateCurrency', function (\Illuminate\Http\Request $request) {
     $currency = $request->input('currency');
 
+
     $conversion = Conversion::where('currency_name', $currency)->first();
     if($conversion){
         Session::put('currency', $currency);
@@ -244,7 +245,10 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
     Route::prefix('settings')->name('settings.')->group(function() {
     /*video gallery Routes*/
     Route::resource('video-galleries', VideoGalleryController::class);
-    Route::delete('video-gallery/bulk-delete', [VideoGalleryController::class,'bulk_delete'])->name('video-galleries.bulk-delete');
+    Route::get('gallery-video', [VideoGalleryController::class,'gallery_videos'])->name('gallery-video');
+    Route::post('gallery-video', [VideoGalleryController::class,'gallery_videos'])->name('gallery-video');
+    Route::delete('video-gallery/bulk-delete', [VideoGalleryController::class,'bulk_delete'])->name('video-galleries.bulk-delete'); 
+
     Route::prefix('custom-icons')->name('custom-icons.')->group(function() {
     Route::get('/', [CustomIconController::class,'index'])->name('index');
     Route::post('/', [CustomIconController::class,'store'])->name('store');
