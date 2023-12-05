@@ -1,0 +1,1 @@
+<div id="image_url-error" class="invalid-feedback animated fadeInUp" style="display: block;">{{$err}}</div>

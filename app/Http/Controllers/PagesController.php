@@ -5,6 +5,7 @@ use App\Interfaces\PageRepositoryInterface;
 use App\Models\Hotel;
 use App\Models\Page;
 use App\Models\Tour;
+use App\Models\VideoGallery;
 use App\Models\Location;
 use App\Models\CustomIcon;
 use App\Models\Activity;
@@ -13,20 +14,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use App\DataTables\PageDataTable;
+use DB;
 class PagesController extends Controller
 {
 
-   private PageRepositoryInterface $pageRepository;
+ private PageRepositoryInterface $pageRepository;
 
-   public function __construct(PageRepositoryInterface $pageRepository)
-   {
+ public function __construct(PageRepositoryInterface $pageRepository)
+ {
     $this->pageRepository = $pageRepository;
 }
 public function index() {
-   $data['post_type'] = 'Home';
-   $data['title'] = 'Home';
-   $data['body_class'] = 'home-page';
-   return view('sites.pages.home',$data);
+ $data['post_type'] = 'Home';
+ $data['title'] = 'Home';
+ $data['body_class'] = 'home-page';
+ return view('sites.pages.home',$data);
 }
 
 public function pages(PageDataTable $dataTable)
@@ -225,6 +227,11 @@ public function tourDetail(Request $request, $slug) {
     $data['countryZone'] =  $tour->country_zone;
 }
 
+$data['tourismZone'] = null;
+if($state) {
+    $data['tourismZone'] =  $state->tourism_zones()->first();
+}
+
 
 return view('sites.pages.tour-detail', $data);
 
@@ -251,23 +258,23 @@ public function activityDetail(Request $request, $slug) {
     if (!empty($state->id)) {
       $data = $this->nearByRecords($data,$state->id,$activity->id,'Activity');
   }
-    $data['nearByHotel'] = collect([]);
-    $data['nearByTour'] =  collect([]);
-    $data['nearByActivity'] =collect([]);
-    $data['nearByLocation'] = collect([]);
+  $data['nearByHotel'] = collect([]);
+  $data['nearByTour'] =  collect([]);
+  $data['nearByActivity'] =collect([]);
+  $data['nearByLocation'] = collect([]);
   $data['activity_zone'] = null;
   if (!empty($activity->detail->activity_zones)) {
-   $data['activity_zone'] = $activity->activity_zone->first();
-}
+     $data['activity_zone'] = $activity->activity_zone->first();
+ }
 
-$data['custom_icons'] = null;
-$custom_icons = CustomIcon::get(['id','slug','path','uri']);
-if (!empty($custom_icons)) {
-   $data['custom_icons'] = $custom_icons;
-}
-$data['tourismZone'] = null;
+ $data['custom_icons'] = null;
+ $custom_icons = CustomIcon::get(['id','slug','path','uri']);
+ if (!empty($custom_icons)) {
+     $data['custom_icons'] = $custom_icons;
+ }
+ $data['tourismZone'] = null;
 
-if($state) {
+ if($state) {
     $data['tourismZone'] =  $state->tourism_zones->first();
 }
 
@@ -278,14 +285,10 @@ return view('sites.pages.activity-detail', $data);
 }
 public function locationDetail(Request $request, $slug) {
 
-
-
     $location = Location::with(['places', 'types', 'states', 'locationMeta'])->where('slug', $slug)->first();
     if(!$location) {
         abort(404);
     }
-
-
 
     $data['location'] = $location;
     $data['title'] = 'Loction :: '.ucwords($location->name);
@@ -295,9 +298,11 @@ public function locationDetail(Request $request, $slug) {
     $data['nearByTour'] =  collect([]);
     $data['nearByActivity'] =collect([]);
     $data['nearByLocation'] = collect([]);
+
     if (!empty($state->id)) {
       $data = $this->nearByRecords($data,$state->id,$location->id,'Location');
   }
+
 
          // $data['activity_zone'] = null;
          // if (!empty($activity->detail->activity_zones)) {
@@ -314,7 +319,7 @@ public function locationDetail(Request $request, $slug) {
         // if($state) {
         //     $data['tourismZone'] =  $state->tourism_zones->first();
         // }
-   
+
   return view('sites.pages.location-detail', $data);
 
         //return view('sites.pages.tour-detail', compact('hotel', 'tourismZone'));
@@ -413,6 +418,7 @@ public function getHotels(Request $request, $view = "list") {
             // TODO: JSON Treatment is Pending
             // TODO: title
         $hotelQuery->where('hotels.address', 'LIKE', '%'.$searchTerm.'%');
+        $hotelQuery->orWhere('hotels.name', 'LIKE', '%'.$searchTerm.'%');
     }
 
 
@@ -473,11 +479,12 @@ public function getTours(Request $request, $view = "list") {
         $tourQuery->whereIn('tour_package_types.package_type_id', $package_types);
     }
 
-        // orther_packages
-    if($request->has('orther_packages') && !empty($request->get('orther_packages'))) {
-        $orther_packagesValue = $request->get('orther_packages');
-        $orther_packages = explode(",", $orther_packagesValue);
-        $tourQuery->whereIn('tour_orther_packages.orther_package_id', $orther_packages);
+        // other_packages
+    if($request->has('other_packages') && !empty($request->get('other_packages'))) {
+        $other_packagesValue = $request->get('other_packages');
+        $other_packages = explode(",", $other_packagesValue);
+        $tourQuery->leftJoin('tour_other_packages', 'tour_other_packages.tour_id', '=', 'tours.id');
+        $tourQuery->whereIn('tour_other_packages.other_package_id', $other_packages);
     }
 
         // types
@@ -516,6 +523,7 @@ public function getTours(Request $request, $view = "list") {
         $searchTerm = $request->get('searchTerm');
             // TODO: JSON Treatment is Pending
         $tourQuery->where('tours.address', 'LIKE', '%'.$searchTerm.'%');
+        $tourQuery->orWhere('tours.name', 'LIKE', '%'.$searchTerm.'%');
     }
 
 
@@ -611,6 +619,7 @@ public function getActivities(Request $request, $view = "list") {
         $searchTerm = $request->get('searchTerm');
             // TODO: JSON Treatment is Pending
         $activityQuery->where('activities.address', 'LIKE', '%'.$searchTerm.'%');
+        $activityQuery->orWhere('activities.name', 'LIKE', '%'.$searchTerm.'%');
     }
 
 
@@ -654,6 +663,7 @@ public function getLocations(Request $request, $view = "grid")
         $searchTerm = $request->get('searchTerm');
             // TODO: JSON Treatment is Pending
         $locationQuery->where('locations.address', 'LIKE', '%'.$searchTerm.'%');
+        $locationQuery->orWhere('locations.name', 'LIKE', '%'.$searchTerm.'%');
     }
 
 
@@ -673,9 +683,17 @@ public function getLocations(Request $request, $view = "grid")
 
 public function locationDetailFetch(Request $request,$view)
 {
-      $id = $request->location_id;
-      $location = Location::findOrFail($id);
-      return View::make('sites.partials.location-details.'.$view, ['location' => $location]);
+  $id = $request->location_id;
+  $location = Location::findOrFail($id);
+  if ($view == 'tourism-zone') {
+   $state = $location->states()->first();
+   if($state) {
+    $tourismZone =  $state->tourism_zones->first();
+}
+return View::make('sites.partials.location-details.'.$view,['tourismZone'=>$tourismZone]);
+}else{
+  return View::make('sites.partials.location-details.'.$view, ['location' => $location]);
+}   
 }
 
 

@@ -15,22 +15,22 @@ class File extends Model implements HasMedia
         $this->addMediaConversion('thumbnail')
               ->width(100)
               ->height(100)
-              ->sharpen(10)
+              ->quality(90)
               ->keepOriginalImageFormat();
         $this->addMediaConversion('450x300')
               ->width(450)
               ->height(300)
-              ->sharpen(10)
+              ->quality(100)
               ->keepOriginalImageFormat();
         $this->addMediaConversion('350x250')
               ->width(350)
               ->height(250)
-              ->sharpen(10)
+              ->quality(100)
               ->keepOriginalImageFormat();
         $this->addMediaConversion('270x200')
               ->width(270)
               ->height(200)
-              ->sharpen(10)
+              ->quality(90)
               ->keepOriginalImageFormat();
     }
 

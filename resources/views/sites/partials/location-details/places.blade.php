@@ -15,10 +15,16 @@
  			<div class="item-border">
  				<div class="item">
  					<div class="thumbnail places-image">
+
  						@php 
- 						$place_to_visit_image = (!empty($place_to_visit['place_to_visit-image']) && isset($place_to_visit['place_to_visit-image'][0]['id']))?getConversionUrl($place_to_visit['place_to_visit-image'][0]['id'],'270x200'):null;
+ 						if(!empty($place_to_visit['place_to_visit-image'])){
+
+ 						$place_to_visit_image_arr = json_decode($place_to_visit['place_to_visit-image'],true);
+ 						$place_to_visit_image = (!empty($place_to_visit_image_arr) && isset($place_to_visit_image_arr[0]['id']))?getConversionUrl($place_to_visit_image_arr[0]['id'],'270x200'):null;
+ 						}
+
  						@endphp
- 						<img class="" src="{{$place_to_visit_image ?? asset('sites/images/dummy/270x200.jpg')}}" alt="{{strtolower($place_to_visit['place_to_visit-title'])}}-image">
+ 						<img class="" src="{{$place_to_visit_image ?? asset('sites/images/dummy/270x200.jpg')}}" alt="{{strtolower($place_to_visit['place_to_visit-title'])}} image">
  					</div>
  				</div>
  			</div>

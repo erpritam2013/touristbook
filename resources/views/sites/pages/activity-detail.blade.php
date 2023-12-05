@@ -320,8 +320,19 @@
 							@if ( $count > 6 ){!!'data-show-all="st-activity-list"
 							data-height="1075"'!!}@endif
 							>
+							<h2 class="st-heading-section">Activity List</h2>
 							<div class="row">
 								@foreach( $st_activity_lists as $key => $activity__ )
+
+								@php $al_hidden_class = '';
+									@endphp
+									@if(count($st_activity_lists) > 3)
+									@if($key <= 2)
+									@php $al_hidden_class = '';@endphp
+									@else
+									@php $al_hidden_class = 'd-none';@endphp
+									@endif
+									@endif
 								@php
 								$custom_icon = getSingleCustomIcon($activity__->custom_icon);
 								$long_description = $activity__->description;
@@ -329,7 +340,7 @@
 								@endphp
 								<div class="col-xs-12 col-sm-12">
 									<div class="item has-matchHeight">
-										<div class="st-activity-item">
+										<div class="st-activity-item {{$al_hidden_class}}">
 											<div class="row">
 
 												<div class="col-xs-12 col-sm-3">
@@ -369,7 +380,7 @@
 													@endif
 													<div class="more-btn p-2" >
 														@if( $desc_len > 400 )
-														<a href="javascript:void(0);" class="btn btn-grad btn-sm" onclick="readMoreText(this)" id="readBtn" data-len="{{$desc_len}}" data-key="{{$key}}">Read More</a>
+														<a href="javascript:void(0);" class="btn btn-grad btn-sm" onclick="readMoreText(this)" id="readBtn" data-len="{{$desc_len}}" data-key="{{$key}}" data-desc_id="#long-description-{{$key}}">Read More</a>
 														@endif
 
 													</div>
@@ -383,15 +394,119 @@
 								</div>
 								@endforeach
 							</div>
+								@if(count($st_activity_lists) > 3)
+							<a href="javascript:void(0)" onclick="readMoreActivityList(this)" data-show_text="more" class="activity-read-more pt-2 pb-2">Show All...</a>
+							@endif
 						</div>
-						@if ( $count > 6 )
+
+
+						{{--@if ( $count > 6 )
 						<a href="#" style="padding: 9px 0px;font-size: 15px;" class="st-link block" data-show-target="st-activity-list"
 						data-text-less="Show Less"
 						data-text-more="Show All"><span
 						class="text">Show All</span>
 						<i
 						class="fa fa-caret-down ml3"></i></a>
-						@endif
+						@endif--}}
+
+						{{--activity package--}}
+							@php
+							$st_activity_package = $activity->activity_packages;
+							$ap_count = count( $st_activity_package );
+
+							@endphp
+
+							<div class="activity-packages" data-toggle-section="activity-packages"
+							@if ( $ap_count > 6 ){!!'data-show-all="st-activity-package"
+							data-height="1075"'!!}@endif
+							>
+							<h2 class="st-heading-section">Activity Package</h2>
+							<div class="row">
+								@foreach( $st_activity_package as $ap_key => $activity_package__ )
+
+									@php $ap_hidden_class = '';
+									@endphp
+									@if(count($st_activity_package) > 3)
+									@if($ap_key <= 2)
+									@php $ap_hidden_class = '';@endphp
+									@else
+									@php $ap_hidden_class = 'd-none';@endphp
+									@endif
+									@endif
+								@php
+								$ap_custom_icon = getSingleCustomIcon($activity_package__->custom_icon);
+								$ap_long_description = $activity_package__->description;
+
+								@endphp
+								<div class="col-xs-12 col-sm-12">
+									<div class="item has-matchHeight">
+										<div class="activity-packages-item {{$ap_hidden_class}}">
+											<div class="row">
+
+												<div class="col-xs-12 col-sm-3">
+													<div class="activity-packages-icon"> 
+
+
+														@if (!empty($ap_custom_icon))
+
+														<i class="{{$ap_custom_icon}}"></i>
+														@else
+														<i class="fa fa-cogs"></i>
+														@endif
+
+													</div>
+												</div>
+												<div class="col-xs-12 col-sm-9 ">
+													<div class="activity-packages-heading">
+														<h3>{{$activity_package__->title}}</h3>
+													</div>
+													@if (!empty($ap_long_description))
+													@php 
+
+													$ap_desc_len = strlen($ap_long_description);
+													$ap_style_desc = 'style="overflow:hidden;height:100%;"';
+													$ap_show_attr = 'data-show_text="all"';
+													if($ap_desc_len > 400){
+														$ap_style_desc = 'style="overflow:hidden;height:170px;"';
+														$ap_show_attr = 'data-show_text="more"';
+													}
+
+													@endphp
+													<div class="activity-packages-description">
+														<div class="long-description" id="ap-long-description-{{$ap_key}}" {!!$ap_style_desc!!} {!!$ap_show_attr!!}>
+															{!!$ap_long_description!!}
+														</div>
+													</div>
+													@endif
+													<div class="more-btn p-2" >
+														@if( $ap_desc_len > 400 )
+														<a href="javascript:void(0);" class="btn btn-grad btn-sm" onclick="readMoreText(this)" id="readBtn" data-len="{{$ap_desc_len}}" data-key="{{$ap_key}}" data-desc_id="#ap-long-description-{{$ap_key}}">Read More</a>
+														@endif
+
+													</div>
+												</div>
+											</div>
+
+										</div>
+
+
+									</div>
+								</div>
+								@endforeach
+							</div>
+								@if(count($st_activity_lists) > 3)
+							<a href="javascript:void(0)" onclick="readMoreActivityPackage(this)" data-show_text="more" class="activity-read-more pt-2 pb-2">Show All...</a>
+							@endif
+						</div>
+
+						{{--@if ( $ap_count > 6 )
+						<a href="#" style="padding: 9px 0px;font-size: 15px;" class="st-link block" data-show-target="activity-packages"
+						data-text-less="Show Less"
+						data-text-more="Show All"><span
+						class="text">Show All</span>
+						<i
+						class="fa fa-caret-down ml3"></i></a>
+						@endif--}}
 
 						@if(!empty($activity_zone))
 						<div class="mt-5 bbpb text-justify" id="activity-zone-area">
@@ -427,7 +542,7 @@
 						{{-- tourism zone --}}
 						@if(!empty($tourismZone))
 						<div class="mt-5 bbpb text-justify" id="tourism-zone-area" >
-							<div align="center"><a data-toggle="collapse" href="#tourism-zone-area-pdf" role="button" aria-expanded="true" aria-controls="tourism-zone-area-pdf" style="text-decoration: none;" class="btn btn-grad">Tourism Zone...
+							<div align="center"><a data-toggle="collapse" href="#tourism-zone-area-pdf" role="button" aria-expanded="true" aria-controls="tourism-zone-area-pdf" style="text-decoration: none;" class="btn btn-grad"  onclick="tourism_zone_area_pdf(this)">Tourism Zone...
 							</a></div>
 							<div class="collapse row" id="tourism-zone-area-pdf">
 								<div class="col-md-12 ">
@@ -460,12 +575,12 @@
 						</div>
 						@endif
 
-						<div class="tab-pane" id="st-include-exclude">
 							@php 
 							$include = $activity->detail->activity_include ?? '';
 							$exclude = $activity->detail->activity_exclude ?? '';
 							@endphp
 							@if(!empty($include) || !empty($exclude))
+						<div class="tab-pane" id="st-include-exclude">
 							<div class="row">  
 								<div class="col-xs-6 col-sm-6">
 									@if(!empty($include))
@@ -507,12 +622,11 @@
 
 								</div>
 							</div>
-							@else
-							<div class="alert alert-warning mt15">No found data.</div>
-							@endif
+						
 						</div>
+							@endif
 
-						<div class="tab-pane" id="st-program-section">
+						{{--<div class="tab-pane" id="st-program-section">
 							@if (!empty($activity->detail->activity_program))
 							<div class="section mt-4">
 								<h2 class="st-heading-section">Itinerary</h2>
@@ -525,18 +639,15 @@
 											<span class="accicon"><i class="fas fa-angle-down rotate-icon"></i></span>
 										</div>
 										<div id="st-program-{{$key}}" class="collapse {{$key == 0?'show':''}}" data-parent="#accordionStProgram">
-											<div class="card-body">
-												<pre style="color:#000000;">{{$activity_program['activity_program-description']}}</pre>
+											<div class="card-body">{!!$activity_program['activity_program-description']!!}
 											</div>
 										</div>
 									</div>
 									@endforeach
 								</div>
 							</div>
-							@else
-							<div class="alert alert-warning mt15">No Itinerary found.</div>
 							@endif
-						</div>
+						</div>--}}
 
 						<div class="tab-pane text-justify p-3 border m-0" id="section-contact">
 							@if(!empty($activity->detail->contact))
@@ -680,8 +791,6 @@
 									</div>
 								</div>
 							</div>
-							@else
-							<div class="alert alert-warning mt15">No contact information found.</div>
 							@endif
 						</div>
 						<!-- map location -->
@@ -830,25 +939,12 @@
 																@php
 																$address = (!empty($near_location->address ))?$near_location->address:"";
 																@endphp
+																@if($address)
 																<p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!shortDescription($address,30)!!}</span>@if(strlen($address) > 30)
 																	&nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$address}}" data-more_data_label="Address" style="color:#fba009;"></i>
-																@endif</p></div>
-																<ul>
-																	<li class="mt-0 mb-0">
-																		<p class="card-text text-muted ">
-																			<span class="h6 text-primary">
-																				<span class="location-avg">
-																					{!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
-																					Avg
-																				</span>
-																			{!!get_price($near_location)!!}</span> / per night</p>
-																		</li>
-																		<li class="mt-0 mb-0">
-																			{{--<a href="{{route('location',$near_location->slug)}}" class="btn btn-grad text-white mt-0 mb-0 btn-sm">View Detail</a>--}}
-
-
-																		</li>
-																	</ul>
+																@endif</p>@endif
+															</div>
+																
 																</div>
 															</div>
 															@endforeach

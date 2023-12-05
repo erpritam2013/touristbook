@@ -1,6 +1,6 @@
 <div class="mb-left">
 	<div class="mb-left-title">
-		<label for="form_amenities_types" class="form-label">Activity List</label>
+		<label for="form_activity_list" class="form-label">Activity List</label>
 		<i class="fa fa-angle-up" aria-hidden="true"></i>
 	</div>
 	

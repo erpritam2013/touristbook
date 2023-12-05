@@ -11,7 +11,7 @@
       @if(!empty($hotel->images))
       @foreach($hotel->images as $gallery)
       <div class="swiper-slide"><a data-toggle="gallery-top" title="hotel gallery" style="width: 452px;height: 300px;" ><img
-        src="{{ $gallery['url'] }}" alt="Our street" class="img-fluid" style="width: 452px;height: 300px;" ></a>
+        src="{{ getConversionUrl($gallery['id'],'450x300') }}" alt="Our street" class="img-fluid" style="width: 452px;height: 300px;" ></a>
       </div>
       @endforeach
       @else
@@ -177,8 +177,6 @@
             @endforeach
           </div>
         </div>
-        @else
-        <div class="alert alert-warning mt15">No offer and packages found.</div>
         @endif
 
 
@@ -200,8 +198,6 @@
 
           </div>
         </div>
-        @else
-        <div class="alert alert-warning mt15">No Food information found.</div>
         @endif
 
       </div>
@@ -221,8 +217,6 @@
 
           </div>
         </div>
-        @else
-        <div class="alert alert-warning mt15">No Complimentary information found.</div>
         @endif
 
       </div>
@@ -246,8 +240,6 @@
           </div>
 
         </div>
-        @else
-        <div class="alert alert-warning mt15">No ID proofs required.</div>
 
         @endif
       </div>
@@ -288,8 +280,6 @@
 
                     </div>
                     @endforeach
-                    @else
-                    <div class="alert alert-warning mt15">No Policy/Rule found.</div>
                     @endif
 
 
@@ -325,8 +315,6 @@
 
           </div>
         </div>
-        @else
-        <div class="alert alert-warning mt15">No payment details found.</div>
         @endif
       </div>
 
@@ -348,9 +336,6 @@
 
           </div>
         </div>
-        @else
-        <div class="alert alert-warning mt15">No Environment Information provided.
-        </div>
         @endif
       </div>
 
@@ -371,8 +356,6 @@
 
         </div>
       </div>
-      @else
-      <div class="alert alert-warning mt15">Not Available.</div>
       @endif
       @if (!empty($hotel->detail->pocketPDF))
 
@@ -404,8 +387,6 @@
       </div>
     </div>
 
-    @else
-    <div class="alert alert-warning mt15">Not Available.</div>
     @endif
 
 
@@ -427,8 +408,7 @@
       @endforeach
     </div>
   </div>
-  @else
-  <div class="alert alert-warning mt15">No offer and packages found.</div>
+ 
   @endif
 </div>
 
@@ -693,7 +673,7 @@
 
     <ul class="nav nav-tabs custom-tabs-detail" id="tourism-zone-area-pdf">
       @foreach($tourismZone->tourism_zone as $key => $tzone)
-      <li class="nav-item"> <a class="nav-link {{($key == 0)?'active':''}}" data-toggle="tab" href="#{{touristbook_sanitize_title($tzone['tourism_zone-title'])}}"> {!!$tzone['tourism_zone-title']!!} </a> </li>
+      <li class="nav-item"> <a class="nav-link {{($key == 0)?'active':''}}" data-toggle="tab" href="#{{touristbook_sanitize_title($tzone['tourism_zone-title'])}}" onclick="tourism_zone_area_pdf(this)"> {!!$tzone['tourism_zone-title']!!} </a> </li>
       @endforeach
 
     </ul>
@@ -1070,9 +1050,10 @@
                   @php
                   $address = (!empty($near_location->address ))?$near_location->address:"";
                   @endphp
-                  <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!shortDescription($address ?? '',30)!!}</span>@if(strlen($address) > 30)
+                  @if($address)<p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!shortDescription($address ?? '',30)!!}</span>@if(strlen($address) > 30)
                     &nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$address}}" data-more_data_label="Address" style="color:#fba009;"></i>
-                  @endif</p></div>
+                  @endif</p>@endif
+                </div>
                 </div>
               </div>
               @endforeach
