@@ -26,7 +26,8 @@ class User extends Authenticatable
         'email',
         'password',
         'is_active',
-        'role'
+        'role',
+        'wp_id'
     ];
 
     /**
