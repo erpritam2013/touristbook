@@ -6,15 +6,18 @@
     <div class="card-body">
 
         <div class="form-group row">
-            <label class="col-lg-3 col-form-label" for="name">Name
+            <label class="col-lg-3 col-form-label" for="vg-name">Name
                 <span class="text-danger">*</span>
             </label>
             <div class="col-lg-9">
-                <input type="text" class="form-control" id="name" name="name" value="{{$video_gallery->name ?? ''}}" placeholder="Enter a name..">
+                <input type="text" class="form-control" id="vg-name" name="name" value="{{$video_gallery->name ?? ''}}" placeholder="Enter a name..">
 
                 {!! get_form_error_msg($errors, 'name') !!}
             </div>
         </div>
+
+        <!-- Location -->
+        {!!selectBoxTemplate(['items' => $locations, 'name'=> 'location_id','selected'=>$video_gallery->location_id ?? "",'label'=>'Location','col'=>'col-lg-3','id'=>'vg-location-id','col_s' => 'col-lg-9'])!!}
 
         
         {{--<div class="form-group row">
