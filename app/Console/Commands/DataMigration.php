@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Tour;
 use App\Models\User;
+use App\Models\Location;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -43,7 +44,7 @@ class DataMigration extends Command
      * Truncating Tables
      */
     public function truncate_tables() {
-        $tables = ['users', 'tours'];
+        $tables = ['users', 'tours','locations'];
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
         foreach($tables as $table) {
             DB::table($table)->truncate();
@@ -82,13 +83,98 @@ class DataMigration extends Command
                 $users->push($user);
             }
         }
-
         if($users->isNotEmpty()) {
             User::insert($users->toArray());
         }
 
         $this->info("User Data Loading Completed");
 
+    }
+
+    public function tourist_is_serialized( $data, $strict = true ) {
+        // If it isn't a string, it isn't serialized.
+        if ( ! is_string( $data ) ) {
+            return false;
+        }
+        $data = trim( $data );
+        if ( 'N;' === $data ) {
+            return true;
+        }
+        if ( strlen( $data ) < 4 ) {
+            return false;
+        }
+        if ( ':' !== $data[1] ) {
+            return false;
+        }
+        if ( $strict ) {
+            $lastc = substr( $data, -1 );
+            if ( ';' !== $lastc && '}' !== $lastc ) {
+                return false;
+            }
+        } else {
+            $semicolon = strpos( $data, ';' );
+            $brace     = strpos( $data, '}' );
+            // Either ; or } must exist.
+            if ( false === $semicolon && false === $brace ) {
+                return false;
+            }
+            // But neither must be in the first X characters.
+            if ( false !== $semicolon && $semicolon < 3 ) {
+                return false;
+            }
+            if ( false !== $brace && $brace < 4 ) {
+                return false;
+            }
+        }
+        $token = $data[0];
+        switch ( $token ) {
+            case 's':
+                if ( $strict ) {
+                    if ( '"' !== substr( $data, -2, 1 ) ) {
+                        return false;
+                    }
+                } elseif ( ! str_contains( $data, '"' ) ) {
+                    return false;
+                }
+                // Or else fall through.
+            case 'a':
+            case 'O':
+            case 'E':
+                return (bool) preg_match( "/^{$token}:[0-9]+:/s", $data );
+            case 'b':
+            case 'i':
+            case 'd':
+                $end = $strict ? '$' : '';
+                return (bool) preg_match( "/^{$token}:[0-9.E+-]+;$end/", $data );
+        }
+        return false;
+    }
+
+    public function unserialize_data_format_in_array($value,$field="")
+    {
+        $result = [];
+        if ($this->tourist_is_serialized($value)) {
+            
+            $get_unserialized_value = unserialize($value);
+            if (!empty($field)) {
+                if (is_array($get_unserialized_value)) {
+                    $final_result = [];
+                    $collect = collect($get_unserialized_value);
+                    $final_result = $collect->map(function($response)use($field){
+                           $map = [];
+                           foreach ($response as $key => $value) {
+                               $map[$field.'-'.$key] = $value;
+                               return [$map];
+                           }
+
+                    });
+                }
+            }else{
+               $result = $get_unserialized_value;
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -111,7 +197,7 @@ class DataMigration extends Command
             ->where('p.post_type', 'st_tours')
             ->where('p.post_status', 'publish')
             ->orderBy('p.ID', 'desc')
-            ->chunk(500, function ($results) {
+            ->chunk(30, function ($results) {
                 // Build 500 Objects
                 $nestedResults = [];
 
@@ -174,7 +260,7 @@ class DataMigration extends Command
                             "disable_adult_name" => $this->get_key_data($n_result["postmeta"], "disable_adult_name"),
                             "disable_children_name" => $this->get_key_data($n_result["postmeta"], "disable_children_name"),
                             "disable_infant_name" => $this->get_key_data($n_result["postmeta"], "disable_infant_name"),
-                            "extra_price" => $this->get_key_data($n_result["postmeta"], "extra_price"),
+                            "extra_price" => $this->unserialize_data_format_in_array($this->get_key_data($n_result["postmeta"], "extra_price"),"extra_price"),
                             "created_at" => $n_result["post_date_gmt"],
                             "country_zone_id" => $this->get_key_data($n_result["postmeta"], "st_country_zone_id"),
                             "tour_price_by" => $this->get_key_data($n_result["postmeta"], "tour_price_by")
@@ -202,6 +288,87 @@ class DataMigration extends Command
     }
 
 
+    /**
+     * location Module
+     */
+    public function location_migrate() {
+        $this->info("Location Data Loading...");
+         $results = DB::connection($this->wp_connection)->table('wp_posts as p')
+        ->select('p.*', 'pm.*')
+        ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+        ->whereIn('pm.meta_key', ["color","location_country","zipcode","map_lat","map_lng","map_zoom","map_type","is_featured","_thumbnail_id"])
+        ->where('p.post_type', 'location')
+        ->where('p.post_status', 'publish')
+        ->orderBy('p.ID', 'desc')
+
+        ->get();
+
+
+                // Build 500 Objects
+            $nestedResults = [];
+
+            foreach ($results as $result) {
+                $postId = $result->ID;
+                    unset($result->ID); // Remove the ID field from the main post data
+
+                    if (!isset($nestedResults[$postId])) {
+                        $nestedResults[$postId] = (array) $result;
+                        $nestedResults[$postId]['postmeta'] = [];
+                    }
+
+                    $metaKey = $result->meta_key;
+                    $metaValue = $result->meta_value;
+
+                    unset($result->meta_key, $result->meta_value); // Remove meta_key and meta_value fields
+
+                    $nestedResults[$postId]['postmeta'][$metaKey] = $metaValue;
+                }
+
+                // TODO: Can think better way
+                // One more iteration for Laravel Specific
+                $locations = collect([]);
+                if(!empty($nestedResults)) {
+                    foreach($nestedResults as $postId => $n_result) {
+                        $location = [
+                            "wp_id" => $postId,
+                            "name" => $n_result["post_title"],
+                            "color" => $this->get_key_data($n_result["postmeta"], "color"),
+                            "slug" => $n_result["post_name"],
+                            "description" => $n_result["post_content"],
+                            "excerpt" => $n_result["post_excerpt"], 
+                            "country" => $this->get_key_data($n_result["postmeta"], "location_country"),
+                            "zipcode" => $this->get_key_data($n_result["postmeta"], "zipcode"),
+                            "latitude" => $this->get_key_data($n_result["postmeta"], "map_lat"),
+                            "longitude" => $this->get_key_data($n_result["postmeta"], "map_lng"),
+                            "zoom_level" => $this->get_key_data($n_result["postmeta"], "map_zoom"),
+                            "map_type" => $this->get_key_data($n_result["postmeta"], "map_type"),
+                            "map_address" => "",
+                            "is_featured" => $this->get_key_data($n_result["postmeta"], "is_featured"),
+                            "parent_id" => $n_result["post_parent"],
+                            "menu_order" => $n_result["menu_order"],
+                            "logo" => $this->get_key_data($n_result["postmeta"], "logo"),
+                            "featured_image" => $this->get_key_data($n_result["postmeta"], "_thumbnail_id"),
+                            "status" => 1,
+
+                        ];
+
+                        $locations->push($location);
+
+
+                    }
+
+                    Location::insert($locations->toArray());
+                }
+
+
+
+
+
+         
+        $this->info("Location Data Loading Completed");
+    }
+
+
 
     /**
      * Execute the console command.
@@ -220,18 +387,13 @@ class DataMigration extends Command
             $this->truncate_tables();
             $this->info("Table Truncated...");
         }
-
         // User Module
         $this->user_migrate();
-
         // Tour Module
-        $this->tour_migrate();
+       $this->tour_migrate();
+        // Location Module
+        $this->location_migrate();
 
-
-
-
-
-
-        return Command::SUCCESS;
+       return Command::SUCCESS;
     }
 }
