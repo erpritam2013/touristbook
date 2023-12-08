@@ -160,7 +160,9 @@ class DataMigration extends Command
 
                 if (is_array($get_unserialized_value)) {
                     // $final_result = [];
-                    $collect = collect($get_unserialized_value);
+
+                    // $collect = collect($get_unserialized_value);
+
            
                     foreach ($get_unserialized_value as $key => $value) {
                         foreach ($value as $k => $v) { 
@@ -402,13 +404,13 @@ class DataMigration extends Command
             $this->truncate_tables();
             $this->info("Table Truncated...");
         }
-       //  // User Module
-       //  $this->user_migrate();
-       //  // Tour Module
-       // $this->tour_migrate();
-       //  // Location Module
-       //  $this->location_migrate();
-       dd($this->unserialize_data_format_in_array('a:1:{i:0;a:4:{s:5:"title";s:0:"";s:3:"key";s:0:"";s:6:"key_to";s:0:"";s:5:"value";s:0:"";}}','discount_by_child'));
+        // User Module
+        $this->user_migrate();
+        // Tour Module
+       $this->tour_migrate();
+        // Location Module
+        $this->location_migrate();
+
        return Command::SUCCESS;
     }
 }
