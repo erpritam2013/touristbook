@@ -570,14 +570,16 @@ if (!function_exists('selectBoxTemplate')) {
       }
   }else{
    if(isset($label) && !empty($label)){
-       $html .='<label class="col-lg-2 col-form-label" for="'.$id.'">'.$label.'</label>';
+      $col = ($col == 'col-lg-3')?$col:'col-lg-2';
+       $html .='<label class="'.$col.' col-form-label" for="'.$id.'">'.$label.'</label>';
        if(isset($desc) && !empty($desc)){
           $html .='<p>'.$desc.'</p>';
       }
   }
-  $html .='<div class="col-lg-10">';
+  $col_s = ($col_s == 'col-lg-9')?$col_s:'col-lg-10';
+  $html .='<div class="'.$col_s.'">';
 }
-$selected = (empty($items))?$selected:"";
+//$selected = (empty($items))?$selected:"";
 $html .='<select class="form-control single-select-placeholder-touristbook '.$class .'" id="'.$id.'" name="'.$name.'" '.$multiple.' '.$attr.'  selected_value="'.$selected.'">';
 if(!isset($first_empty_option)){
     if(isset($label) && !empty($label)){
@@ -594,6 +596,7 @@ if(!empty($items)){
             $selected_attr =  in_array($item->id, $selected) ? 'selected' : "";
             $html .='<option value="'.$item->id.'" '. $selected_attr .' '.$option_attr.' >'.$item->value.'</option>';
         }else{
+            
             $selected_attr = ($item->id == $selected) ? 'selected' : "" ;
             $html .='<option value="'.$item->id.'" '.$selected_attr.' '.$option_attr.' >'.$item->value.'</option>';
         }
@@ -1272,8 +1275,9 @@ if (!function_exists('get_time_format')) {
        return $cenvertedTime;
    }
 }
+
 if (!function_exists('get_array_mapping')) {
-    function get_array_mapping($data,$field=false) {
+    function get_array_mapping($data,$field=false,$map_type=false) {
         $result = [];
         if (!empty($data)) {
            $collection = collect($data);
@@ -1286,10 +1290,19 @@ if (!function_exists('get_array_mapping')) {
             ];
         });
         }else{
+           if ($map_type=true) {
+                $result = $collection->map(function ($value,$key) {
+             return (object)[
+                'id'=> touristbook_sanitize_title($value),
+                'value'=>$value
+            ];
+        });
+           }else{
 
            $result = $collection->map(function (int $item, int $key) {
             return (int)$item;
         });
+           }
        }
    }
    return $result->all();
