@@ -100,6 +100,11 @@ public function activities(Request $request) {
 
     return view('sites.pages.activities', $data);
 }
+
+public function page_templates(Request $request,$view)
+{
+    return View::make('admin.pages.page_templates.'.$view);
+}
 public function our_packages(Request $request) {
 
     $data['post_type'] = 'Tour';

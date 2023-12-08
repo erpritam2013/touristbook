@@ -292,11 +292,13 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
 
     Route::prefix('pages')->name('pages.')->group(function() {
         Route::get('/', [PagesController::class,'pages'])->name('pageIndex');
+        Route::get('/extra-data{view}', [PagesController::class,'page_templates'])->name('pageExtraData');
         Route::get('/create', [PagesController::class,'create'])->name('create');
         Route::post('/', [PagesController::class,'store'])->name('store');
         Route::get('/{page}/edit', [PagesController::class,'edit'])->name('edit');
         Route::get('/{page}', [PagesController::class,'update'])->name('update');
         Route::delete('/{page}', [PagesController::class,'destroy'])->name('destroy');
+
     });
 
     Route::delete('page/bulk-delete', [PagesController::class,'bulk_delete'])->name('pages.bulk-delete');
