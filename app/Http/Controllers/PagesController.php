@@ -103,7 +103,7 @@ public function activities(Request $request) {
 
 public function page_templates(Request $request,$view)
 {
-    return view('admin.pages.page_templates.'.$view);
+    return View::make('admin.pages.page_templates.'.$view);
 }
 public function our_packages(Request $request) {
 
