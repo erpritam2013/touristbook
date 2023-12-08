@@ -160,7 +160,9 @@ class DataMigration extends Command
 
                 if (is_array($get_unserialized_value)) {
                     // $final_result = [];
+
                     // $collect = collect($get_unserialized_value);
+
            
                     foreach ($get_unserialized_value as $key => $value) {
                         foreach ($value as $k => $v) { 
@@ -408,7 +410,7 @@ class DataMigration extends Command
        $this->tour_migrate();
         // Location Module
         $this->location_migrate();
-  
+
        return Command::SUCCESS;
     }
 }
