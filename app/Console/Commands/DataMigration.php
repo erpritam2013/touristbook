@@ -157,17 +157,32 @@ class DataMigration extends Command
             
             $get_unserialized_value = unserialize($value);
             if (!empty($field)) {
-                if (is_array($get_unserialized_value)) {
-                    $final_result = [];
-                    $collect = collect($get_unserialized_value);
-                    $final_result = $collect->map(function($response)use($field){
-                           $map = [];
-                           foreach ($response as $key => $value) {
-                               $map[$field.'-'.$key] = $value;
-                               return [$map];
-                           }
 
-                    });
+                if (is_array($get_unserialized_value)) {
+                    // $final_result = [];
+                    $collect = collect($get_unserialized_value);
+           
+                    foreach ($get_unserialized_value as $key => $value) {
+                        foreach ($value as $k => $v) { 
+                          $result[$key][$field.'-'.$k] = $v;
+                        }
+                    }
+
+                    // $result = $collect->each(function($items,int $key) use($field,&$result){
+                    //        return collect($items)->each(function($item,$k) use ($field,$result,$key){
+                    //     dd($field);
+                    //          $new_key = $field.'-'.$k;
+                    //            return $result[$key][$new_key] = $item;
+
+                    //        });
+                           
+                    //        // foreach ($items as $k => $v) {
+                    //        //  $new_key = $field.'-'.$k;
+                    //        //     $result[$key][$new_key] = $v;
+                    //        // }
+                           
+                    // });
+                    //      return $result->toArray();
                 }
             }else{
                $result = $get_unserialized_value;
@@ -387,13 +402,13 @@ class DataMigration extends Command
             $this->truncate_tables();
             $this->info("Table Truncated...");
         }
-        // User Module
-        $this->user_migrate();
-        // Tour Module
-       $this->tour_migrate();
-        // Location Module
-        $this->location_migrate();
-
+       //  // User Module
+       //  $this->user_migrate();
+       //  // Tour Module
+       // $this->tour_migrate();
+       //  // Location Module
+       //  $this->location_migrate();
+       dd($this->unserialize_data_format_in_array('a:1:{i:0;a:4:{s:5:"title";s:0:"";s:3:"key";s:0:"";s:6:"key_to";s:0:"";s:5:"value";s:0:"";}}','discount_by_child'));
        return Command::SUCCESS;
     }
 }
