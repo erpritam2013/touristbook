@@ -3,6 +3,7 @@
     @yield('page_form_method')
     <div class="row">
         <div class="col-xl-8">
+             <input type="hidden" id="base-url" value="{{route('admin.pages.pageIndex')}}" />
             @include('admin.pages.partials.basic-card', ['page'=>$page ?? null])
 
             @include('admin.pages.partials.page-info-card', ['page'=>$page ?? null])
