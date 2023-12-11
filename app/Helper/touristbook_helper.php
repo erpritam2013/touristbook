@@ -251,7 +251,7 @@ if (!function_exists('mediaTemplate')) {
     if(is_array($value) && isset($value[0])){
         $value_url = $value[0]['url'];
     }
-    $html .='<input type="text" class="form-control media-input '.$class.' gallery-input " name="'.$name.'" value="'.$value_url.'" id="'.$id.'" placeholder="Enter '.$label.'..."/>';
+    $html .='<input type="text" class="form-control media-input '.$class.' gallery-input " value="'.$value_url.'" id="'.$id.'" placeholder="Enter '.$label.'..."/>';
 }
 $json_encode = is_array($value) ? json_encode($value) : "";
 $html .='<button type="button" class="btn btn-primary mt-2 add-media-btn" smode="'.$smode.'" selectedImages="'.$json_encode.'"  >+</button>';
