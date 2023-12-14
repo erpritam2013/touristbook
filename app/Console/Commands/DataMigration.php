@@ -180,7 +180,9 @@ class DataMigration extends Command
                             }else{
                               $result[$key][$field.'-'.$k] = $v;
 
+
                           }
+
                       }
                   }
 
@@ -421,7 +423,6 @@ public function radio_value_modify($value)
             ->orderBy('p.ID', 'desc');
 
             $results = $pQuery->get();
-
             $nestedResults = [];
             $serializer_fields = ['discount_by_child'];
             foreach ($results as $result) {
@@ -770,8 +771,6 @@ public function radio_value_modify($value)
                     Location::insert($locations->toArray());
                 }
 
-
-
                 $this->info("Location Data Loading Completed");
             }
 
@@ -898,7 +897,6 @@ public function radio_value_modify($value)
 
 
             }
-
 
             $this->info("Location Meta Data Loading Completed");
         }
