@@ -40,7 +40,7 @@ class TouristMediaGenerator implements PathGenerator
 
         $prefix = config('media-library.prefix', '');
 
-        $customPrefix = "wp-content/uploads/". $media->created_at->year."/". $media->created_at->month;
+        $customPrefix = "wp-content/uploads/". $media->created_at->year."/".date('m',strtotime($media->created_at));
 
         if ($prefix !== '') {
             return $prefix . '/'.$customPrefix;
