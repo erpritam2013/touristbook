@@ -901,6 +901,84 @@ public function radio_value_modify($value)
             $this->info("Location Meta Data Loading Completed");
         }
 
+        /*country zone migration*/
+
+        public function st_country_zones_migration()
+        {
+            $this->info("Country zones Data Loading...");
+        $results = DB::connection($this->wp_connection)->table('wp_posts as p')
+        ->select('p.*', 'pm.*')
+        ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+        ->whereIn('pm.meta_key', ["color","location_country","zipcode","map_lat","map_lng","map_zoom","map_type","is_featured","_thumbnail_id"])
+        ->where('p.post_type', 'st_country_zones')
+        ->where('p.post_status', 'publish')
+        ->orderBy('p.ID', 'desc')
+
+        ->get();
+
+
+                // Build 500 Objects
+        $nestedResults = [];
+
+        foreach ($results as $result) {
+            $postId = $result->ID;
+                    unset($result->ID); // Remove the ID field from the main post data
+
+                    if (!isset($nestedResults[$postId])) {
+                        $nestedResults[$postId] = (array) $result;
+                        $nestedResults[$postId]['postmeta'] = [];
+                    }
+
+                    $metaKey = $result->meta_key;
+                    $metaValue = $result->meta_value;
+
+                    unset($result->meta_key, $result->meta_value); // Remove meta_key and meta_value fields
+
+                    $nestedResults[$postId]['postmeta'][$metaKey] = $metaValue;
+                }
+
+                // TODO: Can think better way
+                // One more iteration for Laravel Specific
+                $locations = collect([]);
+                if(!empty($nestedResults)) {
+                    foreach($nestedResults as $postId => $n_result) {
+                        $location = [
+                            "wp_id" => $postId,
+                            "name" => $n_result["post_title"],
+                            "color" => $this->get_key_data($n_result["postmeta"], "color"),
+                            "slug" => $n_result["post_name"],
+                            "description" => $n_result["post_content"],
+                            "excerpt" => $n_result["post_excerpt"],
+                            "country" => $this->get_key_data($n_result["postmeta"], "location_country"),
+                            "zipcode" => $this->get_key_data($n_result["postmeta"], "zipcode"),
+                            "latitude" => $this->get_key_data($n_result["postmeta"], "map_lat"),
+                            "longitude" => $this->get_key_data($n_result["postmeta"], "map_lng"),
+                            "zoom_level" => $this->get_key_data($n_result["postmeta"], "map_zoom"),
+                            "map_type" => $this->get_key_data($n_result["postmeta"], "map_type"),
+                            "map_address" => "",
+                            "is_featured" => $this->get_key_data($n_result["postmeta"], "is_featured"),
+                            "parent_id" => $n_result["post_parent"],
+                            "menu_order" => $n_result["menu_order"],
+                            "logo" => $this->get_key_data($n_result["postmeta"], "logo"),
+
+                            "featured_image" => $this->string_to_json($this->get_key_data($n_result["postmeta"], "_thumbnail_id"),'image_id'),
+                            "status" => 1,
+                            "created_at"=>$n_result["post_date_gmt"],
+                            "updated_at"=>$n_result["post_modified"]
+
+                        ];
+
+                        $locations->push($location);
+
+
+                    }
+                     //dd($locations->toArray());
+                    Location::insert($locations->toArray());
+                }
+
+                $this->info("Location Data Loading Completed");
+        }
+
     /**
      * Execute the console command.
      *
@@ -927,12 +1005,12 @@ public function radio_value_modify($value)
         //$this->user_migrate();
 
         // Tour Module
-        //$this->tour_migrate();
+         $this->tour_migrate();
         // Location Module
-        $this->location_migrate();
+        //$this->location_migrate();
 
          // Location Meta Module
-        $this->location_meta_migrate();
+        //$this->location_meta_migrate();
         
 
 
