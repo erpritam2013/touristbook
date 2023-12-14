@@ -8,6 +8,7 @@
         "php": "^8.0.2",
         "cviebrock/eloquent-sluggable": "^9.0",
         "doctrine/dbal": "^3.6",
+        "erusev/parsedown": "^1.7",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
         "laravel/framework": "^9.19",
@@ -15,6 +16,7 @@
         "laravel/tinker": "^2.7",
         "league/flysystem-aws-s3-v3": "^3.16",
         "spatie/laravel-medialibrary": "^10.0.0",
+        "tehwave/laravel-shortcodes": "^1.4",
         "yajra/laravel-datatables": "^9.0"
     },
     "require-dev": {
