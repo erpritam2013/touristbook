@@ -52,7 +52,7 @@ class DataMigration extends Command
      */
     public function truncate_tables()
     {
-        $tables = ['locations', 'location_meta'];
+        $tables = ['locations', 'location_meta', 'users', 'tours', 'tour_details'];
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
         foreach ($tables as $table) {
             DB::table($table)->truncate();
@@ -363,12 +363,16 @@ class DataMigration extends Command
             } elseif ($type == 'image_id') {
 
                 $file = File::where('wp_id', $string)->first();
-                $media = Media::where('model_id', $file->id)->first();
-                $test['id'] = $media->id;
-                $test['url'] = $file->getFirstMediaUrl('images');
-                $result[] = $test;
-                if (!$format) {
-                    $result = json_encode($result);
+                if($file){
+                    $media = Media::where('model_id', $file->id)->first();
+                    if($media) {
+                        $test['id'] = $media->id;
+                        $test['url'] = $file->getFirstMediaUrl('images');
+                        $result[] = $test;
+                        if (!$format) {
+                            $result = json_encode($result);
+                        }
+                    }
                 }
             }
         }
@@ -418,7 +422,56 @@ class DataMigration extends Command
                 $tourDetail = [
                     "tour_id" => $tourId,
                     "latitude" => $this->get_key_data($postmeta, "map_lat"),
-
+                    // Need to add values here
+                    "longitude" => $this->get_key_data($postmeta, "map_lng"),
+                    "zoom_level" => $this->get_key_data($postmeta, "map_zoom"),
+                    "enable_street_views_google_map" => $this->get_key_data($postmeta, "enable_street_views_google_map"),
+                    "is_iframe" => $this->get_key_data($postmeta, "is_iframe"),
+                    "st_booking_option_type" => $this->get_key_data($postmeta, "st_booking_option_type"),
+                    "gallery" => $this->get_key_data($postmeta, "gallery"),
+                    "video" => $this->get_key_data($postmeta, "video"),
+                    // {"info":null,"email":"erpritam2013@gmail.com","website":"https:\/\/www.tripclap.com\/contact-us","phone":"8295294203","fax":"122354556"}
+                    "contact" => json_encode([
+                        "info" => $this->get_key_data($postmeta, "show_agent_contact_info"),
+                        "email" => $this->get_key_data($postmeta, "email"),
+                        "phone" => $this->get_key_data($postmeta, "phone"),
+                        "fax" => $this->get_key_data($postmeta, "fax")
+                    ]),
+                    "st_tour_external_booking" => $this->get_key_data($postmeta, "st_tour_external_booking"),
+                    "st_tour_external_booking_link" => $this->get_key_data($postmeta, "st_tour_external_booking_link"),
+                    "tours_coupan" => $this->get_key_data($postmeta, "tours_coupan"),
+                    "tours_include" => $this->get_key_data($postmeta, "tours_include"),
+                    "tours_exclude" => $this->get_key_data($postmeta, "tours_exclude"),
+                    "tours_highlight" => $this->get_key_data($postmeta, "tours_highlight"),
+                    "tour_sponsored_by" => $this->get_key_data($postmeta, "tour_sponsored_by"),
+                    "tours_destinations" => $this->get_key_data($postmeta, "tours_destinations"),
+                    "tour_helpful_facts" => $this->get_key_data($postmeta, "tour_helpful_facts"),
+                    "tours_program_style" => $this->get_key_data($postmeta, "tours_program_style"),
+                    "tours_program" => $this->get_key_data($postmeta, "tours_program"),
+                    "tours_program_bgr" => $this->get_key_data($postmeta, "tours_program_bgr"),
+                    "tours_program_style4" => $this->get_key_data($postmeta, "tours_program_style4"),
+                    "tours_faq" => $this->get_key_data($postmeta, "tours_faq"),
+                    "st_tours_country" => $this->get_key_data($postmeta, "st_tours_country"),
+                    "package_route" => $this->get_key_data($postmeta, "package_route"),
+                    "calendar_check_in" => $this->get_key_data($postmeta, "calendar_check_in"),
+                    "calendar_check_out" => $this->get_key_data($postmeta, "calendar_check_out"),
+                    "calendar_adult_price" => $this->get_key_data($postmeta, "calendar_adult_price"),
+                    "calendar_child_price" => $this->get_key_data($postmeta, "calendar_child_price"),
+                    "calendar_infant_price" => $this->get_key_data($postmeta, "calendar_infant_price"),
+                    "calendar_starttime_hour" => $this->get_key_data($postmeta, "calendar_starttime_hour"),
+                    "calendar_starttime_minute" => $this->get_key_data($postmeta, "calendar_starttime_minute"),
+                    "calendar_starttime_format" => $this->get_key_data($postmeta, "calendar_starttime_format"),
+                    "calendar_status" => $this->get_key_data($postmeta, "calendar_status"),
+                    "calendar_groupday" => $this->get_key_data($postmeta, "calendar_groupday"),
+                    "st_allow_cancel" => $this->get_key_data($postmeta, "st_allow_cancel"),
+                    "st_cancel_percent" => $this->get_key_data($postmeta, "st_cancel_percent"),
+                    "st_cancel_number_days" => $this->get_key_data($postmeta, "st_cancel_number_days"),
+                    "ical_url" => $this->get_key_data($postmeta, "ical_url"),
+                    "is_meta_payment_gateway_st_submit_form" => $this->get_key_data($postmeta, "is_meta_payment_gateway_st_submit_form"),
+                    "helpful_facts" => $this->get_key_data($postmeta, "helpful_facts"),
+                    "sponsored_by" => $this->get_key_data($postmeta, "sponsored_by"),
+                    "sponsored_description" => $this->get_key_data($postmeta, "sponsored_description"),
+                    "sponsored_title" => $this->get_key_data($postmeta, "sponsored_title"),
 
                 ];
 
@@ -948,12 +1001,12 @@ class DataMigration extends Command
         //$this->user_migrate();
 
         // Tour Module
-        //$this->tour_migrate();
+        $this->tour_migrate();
         // Location Module
-        $this->location_migrate();
+        // $this->location_migrate();
 
         // Location Meta Module
-        $this->location_meta_migrate();
+        // $this->location_meta_migrate();
 
 
 
