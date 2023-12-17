@@ -29,6 +29,8 @@ class Type extends Model
        'lebal_type',
        'type',
        'status',
+       'wp_term_id',
+       'wp_taxonomy_id'
    ];
     public function sluggable(): Array
    {

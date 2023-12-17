@@ -8,7 +8,9 @@ use App\Models\File;
 use App\Models\Media;
 use App\Models\Location;
 use App\Models\LocationMeta;
+use App\Models\Terms\Type;
 use App\Models\TourDetail;
+use App\Models\TourType;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -34,6 +36,21 @@ class DataMigration extends Command
 
     protected $wp_connection = 'wordpress_sql';
 
+    protected $term_category_dictionary = [
+        'Tour' => [
+            "column" => 'st_tour_type',
+            "laravel_table" => 'tour_types'
+        ],
+        'Room' => [
+            "column" => 'room_type',
+            "laravel_table" => 'room_types'
+        ],
+        'Location' => [
+            "column" => 'st_location_type',
+            "laravel_table" => 'location_types'
+        ],
+    ];
+
 
     /**
      * Isset Utility
@@ -52,7 +69,7 @@ class DataMigration extends Command
      */
     public function truncate_tables()
     {
-        $tables = ['locations', 'location_meta', 'users', 'tours', 'tour_details'];
+        $tables = ['locations', 'location_meta', 'users', 'types', 'tour_types'];
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
         foreach ($tables as $table) {
             DB::table($table)->truncate();
@@ -975,6 +992,78 @@ class DataMigration extends Command
         $this->info("Location Meta Data Loading Completed");
     }
 
+    public function setup_types() {
+
+        foreach($this->term_category_dictionary as $type => $term_values) {
+            $type_list = collect([]);
+
+            $term_data = DB::connection($this->wp_connection)->table('wp_terms as wt')
+                            ->select('wt.*', 'wtt.*')
+                            ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+                            ->where('wtt.taxonomy', $term_values['column'])
+                            ->orderBy('wt.term_id', 'asc')
+                            ->get();
+
+            if($term_data->isNotEmpty()) {
+                foreach($term_data as $term_row) {
+                    $single_type = [
+                        "name" => $term_row->name,
+                        "slug" => $term_row->slug,
+                        "parent_id" => 0, // We will set it
+                        "description" => $term_row->description,
+                        "type" => $type,
+                        "wp_term_id" => $term_row->term_id,
+                        "wp_taxonomy_id" => $term_row->term_taxonomy_id
+                    ];
+
+                    $type_list->push($single_type);
+
+                }
+
+                Type::insert($type_list->toArray());
+
+            }
+
+        }
+
+
+
+    }
+
+    public function associate_type_table($objects, $types, $type_rel_class ) {
+
+        dump($types->pluck('wp_taxonomy_id')->toArray());
+
+        // Fetch association Records
+        $related_records = DB::connection($this->wp_connection)->table('wp_term_relationships')
+                                ->whereIn('object_id', $objects->pluck('wp_id')->toArray())
+                                ->whereIn('term_taxonomy_id', $types->pluck('wp_taxonomy_id')->toArray())
+                                ->get();
+
+        $final_list  = [];
+        $objectMapper = $objects->pluck('id', 'wp_id')->toArray();
+        $typeMapper = $types->pluck('id', 'wp_taxonomy_id')->toArray();
+
+        foreach($related_records as $record) {
+            if(isset($objectMapper[$record->object_id]) && isset($typeMapper[$record->term_taxonomy_id])) {
+                $this->info("Append");
+                $final_row = [
+                    // Need to dynamically tour_id, type_id column
+                    'tour_id' => $objectMapper[$record->object_id],
+                    'type_id' => $typeMapper[$record->term_taxonomy_id]
+                ];
+
+                $final_list[] = $final_row;
+
+            }
+        }
+
+        if(!empty($final_list)) {
+            $type_rel_class::insert($final_list);
+        }
+
+    }
+
     /**
      * Execute the console command.
      *
@@ -1001,12 +1090,22 @@ class DataMigration extends Command
         //$this->user_migrate();
 
         // Tour Module
-        $this->tour_migrate();
+        // $this->tour_migrate();
         // Location Module
         // $this->location_migrate();
 
         // Location Meta Module
         // $this->location_meta_migrate();
+
+
+        // Setup Types
+        $this->setup_types();
+        // Associate with Types
+        // For Tour
+        $tours = Tour::get();
+        $types = Type::where('type', 'Tour')->get();
+        $this->associate_type_table($tours, $types, TourType::class);
+
 
 
 
