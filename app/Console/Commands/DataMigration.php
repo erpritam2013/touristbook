@@ -9,6 +9,9 @@ use App\Models\Media;
 use App\Models\Location;
 use App\Models\CountryZone;
 use App\Models\LocationMeta;
+use App\Models\Terms\Type;
+use App\Models\TourDetail;
+use App\Models\TourType;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -34,6 +37,21 @@ class DataMigration extends Command
 
     protected $wp_connection = 'wordpress_sql';
 
+    protected $term_category_dictionary = [
+        'Tour' => [
+            "column" => 'st_tour_type',
+            "laravel_table" => 'tour_types'
+        ],
+        'Room' => [
+            "column" => 'room_type',
+            "laravel_table" => 'room_types'
+        ],
+        'Location' => [
+            "column" => 'st_location_type',
+            "laravel_table" => 'location_types'
+        ],
+    ];
+
 
     /**
      * Isset Utility
@@ -49,8 +67,10 @@ class DataMigration extends Command
     /**
      * Truncating Tables
      */
+
     public function truncate_tables(array $tables) {
         //$tables = ['users','tours','locations','location_meta','country_zones'];
+
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
         foreach($tables as $table) {
             DB::table($table)->truncate();
@@ -380,6 +400,7 @@ public function string_to_json($string,$type='',$format=false)
         if (!$format) {
             $result = json_encode($result);
         }
+
     }
 
 }
@@ -398,6 +419,101 @@ public function radio_value_modify($value)
  }
  return $result;
 }
+
+public function load_tour_details() {
+        $this->info("Tour Details Loading...");
+        $post_collections = DB::connection($this->wp_connection)->table("wp_st_tours")->select("post_id")->get();
+        $postIds = $post_collections->pluck('post_id')->toArray();
+
+        $tourIds = Tour::whereIn("wp_id", $postIds)->select("wp_id", "id")->pluck('id', 'wp_id');
+
+        foreach (array_chunk($postIds, 200) as $pIds) {
+
+            // Get Postmeta
+            $pQuery = DB::connection($this->wp_connection)->table('wp_posts as p')
+                ->select('p.*', 'pm.*')
+                ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+                ->whereIn('pm.meta_key', [
+                    'map_type', 'st_google_map', 'map_lat', 'map_lng', 'map_zoom', 'enable_street_views_google_map', 'is_iframe', 'st_booking_option_type', 'gallery', 'video', 'show_agent_contact_info','email','phone','fax','website', 'st_tour_external_booking', 'st_tour_external_booking_link', 'tours_coupan', 'tours_include', 'tours_exclude', 'tours_highlight', 'tour_sponsored_by', 'tours_destinations', 'tour_helpful_facts', 'tours_program_style', 'tours_program', 'tours_program_bgr', 'tours_program_style4', 'tours_faq', 'st_tours_country', 'package_route', 'calendar_check_in', 'calendar_check_out', 'calendar_adult_price', 'calendar_child_price', 'calendar_infant_price', 'calendar_starttime_hour', 'calendar_starttime_minute', 'calendar_starttime_format', 'calendar_status', 'calendar_groupday', 'st_allow_cancel', 'st_cancel_percent', 'st_cancel_number_days', 'ical_url', 'is_meta_payment_gateway_st_submit_form', 'helpful_facts', 'sponsored_by', 'sponsored_description', 'sponsored_title'
+                ])
+                ->whereIn('p.ID', $pIds)
+                ->orderBy('p.ID', 'desc');
+
+            $results = $pQuery->get();
+
+            $tourDetails = collect([]);
+            // Directly insert into $tourDetails
+            foreach($results as $postmeta){
+
+                $tourId = $tourIds[$postmeta["ID"]];
+
+                $tourDetail = [
+                    "tour_id" => $tourId,
+                    "latitude" => $this->get_key_data($postmeta, "map_lat"),
+                    // Need to add values here
+                    "longitude" => $this->get_key_data($postmeta, "map_lng"),
+                    "zoom_level" => $this->get_key_data($postmeta, "map_zoom"),
+                    "enable_street_views_google_map" => $this->get_key_data($postmeta, "enable_street_views_google_map"),
+                    "is_iframe" => $this->get_key_data($postmeta, "is_iframe"),
+                    "st_booking_option_type" => $this->get_key_data($postmeta, "st_booking_option_type"),
+                    "gallery" => $this->get_key_data($postmeta, "gallery"),
+                    "video" => $this->get_key_data($postmeta, "video"),
+                    // {"info":null,"email":"erpritam2013@gmail.com","website":"https:\/\/www.tripclap.com\/contact-us","phone":"8295294203","fax":"122354556"}
+                    "contact" => json_encode([
+                        "info" => $this->get_key_data($postmeta, "show_agent_contact_info"),
+                        "email" => $this->get_key_data($postmeta, "email"),
+                        "phone" => $this->get_key_data($postmeta, "phone"),
+                        "fax" => $this->get_key_data($postmeta, "fax")
+                    ]),
+                    "st_tour_external_booking" => $this->get_key_data($postmeta, "st_tour_external_booking"),
+                    "st_tour_external_booking_link" => $this->get_key_data($postmeta, "st_tour_external_booking_link"),
+                    "tours_coupan" => $this->get_key_data($postmeta, "tours_coupan"),
+                    "tours_include" => $this->get_key_data($postmeta, "tours_include"),
+                    "tours_exclude" => $this->get_key_data($postmeta, "tours_exclude"),
+                    "tours_highlight" => $this->get_key_data($postmeta, "tours_highlight"),
+                    "tour_sponsored_by" => $this->get_key_data($postmeta, "tour_sponsored_by"),
+                    "tours_destinations" => $this->get_key_data($postmeta, "tours_destinations"),
+                    "tour_helpful_facts" => $this->get_key_data($postmeta, "tour_helpful_facts"),
+                    "tours_program_style" => $this->get_key_data($postmeta, "tours_program_style"),
+                    "tours_program" => $this->get_key_data($postmeta, "tours_program"),
+                    "tours_program_bgr" => $this->get_key_data($postmeta, "tours_program_bgr"),
+                    "tours_program_style4" => $this->get_key_data($postmeta, "tours_program_style4"),
+                    "tours_faq" => $this->get_key_data($postmeta, "tours_faq"),
+                    "st_tours_country" => $this->get_key_data($postmeta, "st_tours_country"),
+                    "package_route" => $this->get_key_data($postmeta, "package_route"),
+                    "calendar_check_in" => $this->get_key_data($postmeta, "calendar_check_in"),
+                    "calendar_check_out" => $this->get_key_data($postmeta, "calendar_check_out"),
+                    "calendar_adult_price" => $this->get_key_data($postmeta, "calendar_adult_price"),
+                    "calendar_child_price" => $this->get_key_data($postmeta, "calendar_child_price"),
+                    "calendar_infant_price" => $this->get_key_data($postmeta, "calendar_infant_price"),
+                    "calendar_starttime_hour" => $this->get_key_data($postmeta, "calendar_starttime_hour"),
+                    "calendar_starttime_minute" => $this->get_key_data($postmeta, "calendar_starttime_minute"),
+                    "calendar_starttime_format" => $this->get_key_data($postmeta, "calendar_starttime_format"),
+                    "calendar_status" => $this->get_key_data($postmeta, "calendar_status"),
+                    "calendar_groupday" => $this->get_key_data($postmeta, "calendar_groupday"),
+                    "st_allow_cancel" => $this->get_key_data($postmeta, "st_allow_cancel"),
+                    "st_cancel_percent" => $this->get_key_data($postmeta, "st_cancel_percent"),
+                    "st_cancel_number_days" => $this->get_key_data($postmeta, "st_cancel_number_days"),
+                    "ical_url" => $this->get_key_data($postmeta, "ical_url"),
+                    "is_meta_payment_gateway_st_submit_form" => $this->get_key_data($postmeta, "is_meta_payment_gateway_st_submit_form"),
+                    "helpful_facts" => $this->get_key_data($postmeta, "helpful_facts"),
+                    "sponsored_by" => $this->get_key_data($postmeta, "sponsored_by"),
+                    "sponsored_description" => $this->get_key_data($postmeta, "sponsored_description"),
+                    "sponsored_title" => $this->get_key_data($postmeta, "sponsored_title"),
+
+                ];
+
+                $tourDetails->push($tourDetail);
+
+            }
+
+            TourDetail::insert($tourDetails->toArray());
+
+        }
+
+        $this->info("Tour Details Loaded");
+    }
+
 
     /**
      * Tour Module
@@ -984,6 +1100,83 @@ public function radio_value_modify($value)
             $this->info("Country Zone Data Loading Completed");
         }
 
+
+    public function setup_types() {
+
+        foreach($this->term_category_dictionary as $type => $term_values) {
+            $type_list = collect([]);
+
+            $term_data = DB::connection($this->wp_connection)->table('wp_terms as wt')
+                            ->select('wt.*', 'wtt.*')
+
+                            ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+                            ->leftJoin('wp_termmeta')
+                            ->where('wtt.taxonomy', $term_values['column'])
+                            ->orderBy('wt.term_id', 'asc');
+
+                            dump($term_data->toSql());
+                            dd($term_data->getBindings());
+
+            if($term_data->isNotEmpty()) {
+                foreach($term_data as $term_row) {
+                    $single_type = [
+                        "name" => $term_row->name,
+                        "slug" => $term_row->slug,
+                        "parent_id" => 0, // We will set it
+                        "description" => $term_row->description,
+                        "type" => $type,
+                        "wp_term_id" => $term_row->term_id,
+                        "wp_taxonomy_id" => $term_row->term_taxonomy_id
+                    ];
+
+                    $type_list->push($single_type);
+
+                }
+
+                Type::insert($type_list->toArray());
+
+            }
+
+        }
+
+
+
+    }
+
+    public function associate_type_table($objects, $types, $type_rel_class ) {
+
+        dump($types->pluck('wp_taxonomy_id')->toArray());
+
+        // Fetch association Records
+        $related_records = DB::connection($this->wp_connection)->table('wp_term_relationships')
+                                ->whereIn('object_id', $objects->pluck('wp_id')->toArray())
+                                ->whereIn('term_taxonomy_id', $types->pluck('wp_taxonomy_id')->toArray())
+                                ->get();
+
+        $final_list  = [];
+        $objectMapper = $objects->pluck('id', 'wp_id')->toArray();
+        $typeMapper = $types->pluck('id', 'wp_taxonomy_id')->toArray();
+
+        foreach($related_records as $record) {
+            if(isset($objectMapper[$record->object_id]) && isset($typeMapper[$record->term_taxonomy_id])) {
+                $this->info("Append");
+                $final_row = [
+                    // Need to dynamically tour_id, type_id column
+                    'tour_id' => $objectMapper[$record->object_id],
+                    'type_id' => $typeMapper[$record->term_taxonomy_id]
+                ];
+
+                $final_list[] = $final_row;
+
+            }
+        }
+
+        if(!empty($final_list)) {
+            $type_rel_class::insert($final_list);
+        }
+
+    }
+
     /**
      * Execute the console command.
      *
@@ -997,10 +1190,10 @@ public function radio_value_modify($value)
         
         // Truncating Tables
         if($isFresh == "clean") {
-            // $tables = ['users','tours','locations','location_meta','country_zones'];
+             $tables = ['users','tours','locations','location_meta','country_zones'];
             $tables = ['country_zones'];
             $this->info("Truncating tables...");
-            $this->truncate_tables($tables);
+            //$this->truncate_tables($tables);
             $this->info("Table Truncated...");
         }
 
@@ -1012,13 +1205,26 @@ public function radio_value_modify($value)
         //$this->user_migrate();
 
         // Tour Module
-        //$this->tour_migrate();
+        // $this->tour_migrate();
         // Location Module
-        //$this->location_migrate();
+
+        // $this->location_migrate();
+
+        // Location Meta Module
+        // $this->location_meta_migrate();
+
+
+        // Setup Types
+        $this->setup_types();
+        // Associate with Types
+        // For Tour
+        // $tours = Tour::get();
+        // $types = Type::where('type', 'Tour')->get();
+        // $this->associate_type_table($tours, $types, TourType::class);
 
          // Location Meta Module
         //$this->location_meta_migrate();
-        $this->st_country_zones_migration();
+        //$this->st_country_zones_migration();
 
         return Command::SUCCESS;
 
