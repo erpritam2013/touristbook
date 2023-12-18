@@ -17,6 +17,8 @@ class CountryZone extends Model implements HasMedia
     protected $casts = [
         'country_zone_section'=>'array',
         'country_zone_catering'=>'array',
+        'icon'=>'array',
+        'image'=>'array',
     ];
 
        public function sluggable(): Array

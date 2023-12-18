@@ -29363,3 +29363,34 @@ div#paginationList {
     border: 1px solid orange;
     border-radius: 5px;
 }
+
+#preloader-file {
+    position: absolute;
+    width: 100%;
+    height: 90%;
+    left: 0;
+    top: 130px;
+    background-color: #fff;
+}
+
+.preloader-card  {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    left: -7px;
+    top: 40px;
+    background-color: #fff;
+    padding: 15px 0px;
+}
+
+#file-modal .modal-dialog.modal-fullscreen {
+    max-width: 100%;
+    padding: 0px 15px;
+}
+div#tb-image-prev {
+    padding: 50px;
+}
+.show-prev-image-data {
+    padding: 80px 40px;
+    background: #ddd9;
+}

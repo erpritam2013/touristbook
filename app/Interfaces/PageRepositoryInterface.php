@@ -10,4 +10,5 @@ interface PageRepositoryInterface
     public function deleteBulkPage($pageId);
     public function createPage(array $pageDetails);
     public function updatePage($pageId, array $newDetails);
+    public function getPageByType($pageId, string $type);
 }

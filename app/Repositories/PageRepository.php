@@ -33,4 +33,9 @@ class PageRepository implements PageRepositoryInterface
         return Page::whereId($pageId)->update($newDetails);
     }
 
+    public function getPageByType($pageId,$type)
+    {
+        return Page::whereId($pageId)->where('type',$type)->first();
+    }
+
 }
