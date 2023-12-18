@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
-@section('post_action', route('admin.pages.store'))
-@section('post_form_method', method_field('POST'))
+@section('page_action', route('admin.pages.store'))
+@section('page_form_method', method_field('POST'))
 @section('title',$title)
 @section('content')
 <div class="container-fluid">
