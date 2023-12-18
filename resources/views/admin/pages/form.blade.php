@@ -1,4 +1,4 @@
-<form class="form-valide" id="page-form" action="@yield('page_action')" method="page">
+<form class="form-valide" id="page-form" action="@yield('page_action')" method="post">
     {{ csrf_field() }}
     @yield('page_form_method')
     <div class="row">
@@ -8,6 +8,7 @@
 
             @include('admin.pages.partials.page-info-card', ['page'=>$page ?? null])
 
+            @include('admin.pages.partials.extra-data', ['page'=>$page ?? null])
 
             @include('admin.pages.partials.excerpt', ['page'=>$page ?? null])
             @include('admin.pages.partials.social-link-section', ['page'=>$page ?? null])
@@ -16,6 +17,7 @@
 
         </div>
         <div class="col-xl-4">
+           
             @include('admin.pages.partials.publish-card', ['page'=>$page ?? null])
              @include('admin.partials.cards.featured-image', ['item'=> $page])
              @include('admin.pages.partials.types', ['item'=> $page])

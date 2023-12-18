@@ -243,18 +243,21 @@ if (!function_exists('mediaTemplate')) {
       $html .='<div class="col-lg-10">';
   }
   $html .='<div class="media-controls">';
-  $value = $value ? json_encode($value) : '';
+  
+  $value_e = $value ? json_encode($value) : '';
   $html .='<input type="hidden" class="form-control media-input '.$class.' gallery-input " name="'.$name.'"
-  value="'.$value.'" />';
+  value="'.htmlspecialchars($value_e,ENT_QUOTES).'" />';
   if($smode == 'single'){
     $value_url = '';
+   
     if(is_array($value) && isset($value[0])){
         $value_url = $value[0]['url'];
     }
-    $html .='<input type="text" class="form-control media-input '.$class.' gallery-input " value="'.$value_url.'" id="'.$id.'" placeholder="Enter '.$label.'..."/>';
+    $html .='<input type="text" class="form-control media-txt-only" value="'.$value_url.'" id="'.$id.'" placeholder="Enter '.$label.'..."/>';
 }
 $json_encode = is_array($value) ? json_encode($value) : "";
-$html .='<button type="button" class="btn btn-primary mt-2 add-media-btn" smode="'.$smode.'" selectedImages="'.$json_encode.'"  >+</button>';
+
+$html .='<button type="button" class="btn btn-primary mt-2 add-media-btn" smode="'.$smode.'" selectedImages="'.htmlspecialchars($json_encode,ENT_QUOTES).'"  >+</button>';
 $html .='<button type="button" class="btn btn-danger mt-2 remove-media-btn">-</button>';
 $html .='<div class="media-preview">';
 if(is_array($value) && isset($value[0])){
@@ -304,8 +307,8 @@ if (!function_exists('galleryTemplate')) {
     }
     $html .=' <div class="gallery-controls">';
     $json_decode__ = (!empty($value) && isset($value) && is_array($value))?json_encode($value):json_encode([]);
-    $html .='<input type="hidden" class="form-control gallery-input '. $class .'" name="'. $name.'" value="'. $json_decode__ .'" id="'. $id .'" placeholder="Enter '. $label.'..." />';
-    $html .='<button type="button" class="btn btn-primary mt-2 add-gallery-btn" smode="'.$smode.'" selectedImages="'. $json_decode__ .'">+</button>';
+    $html .='<input type="hidden" class="form-control gallery-input '. $class .'" name="'. $name.'" value="'. htmlspecialchars($json_decode__,ENT_QUOTES) .'" id="'. $id .'" placeholder="Enter '. $label.'..." />';
+    $html .='<button type="button" class="btn btn-primary mt-2 add-gallery-btn" smode="'.$smode.'" selectedImages="'. htmlspecialchars($json_decode__,ENT_QUOTES) .'">+</button>';
     $html .='<div class="media-preview">';
 
     if(!empty($value) && isset($value) && is_array($value)){
@@ -1290,7 +1293,7 @@ if (!function_exists('get_array_mapping')) {
             ];
         });
         }else{
-           if ($map_type=true) {
+           if ($map_type == true) {
                 $result = $collection->map(function ($value,$key) {
              return (object)[
                 'id'=> touristbook_sanitize_title($value),
@@ -1309,4 +1312,23 @@ if (!function_exists('get_array_mapping')) {
 
 
 }
+}
+
+
+if (!function_exists('tourist_array_mapping')) {
+    function tourist_array_mapping($data)
+    {
+        $result = [];
+        if (!empty($data)) {
+        $collection = collect($data);
+              $result = $collection->map(function ($value,$key) {
+             return (object)[
+                'id'=> $value,
+                'value'=>$value
+            ];
+        });
+        }
+        return $result;
+
+    }
 }

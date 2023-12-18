@@ -3,9 +3,9 @@
 <!-- country -->
 @include('admin.partials.utils.select_box', ['items' => $countries, 'name'=> 'country','selected'=>$country_zone->country ?? "",'label'=>'Country'])
 <!-- Country Zone Icon -->
-@include('admin.partials.utils.media', ['name'=> 'icon','label'=>'Country Zone Icon','desc'=>"Upload Icon Image For Country Zone",'value'=>$country_zone->icon ?? '','id' => ""])
+{!!mediaTemplate(['name'=> 'icon','label'=>'Country Zone Icon','desc'=>"Upload Icon Image For Country Zone",'value'=>$country_zone->icon ?? '','id' => ""])!!}
 <!-- Country Zone Banner Image -->
-@include('admin.partials.utils.media', ['name'=> 'image','label'=>'Country Zone Banner Image','desc'=>"Upload Banner Image For Country Zone",'value'=>$country_zone->image ?? '','id' => ""])
+{!!mediaTemplate(['name'=> 'image','label'=>'Country Zone Banner Image','desc'=>"Upload Banner Image For Country Zone",'value'=>$country_zone->image ?? '','id' => ""])!!}
 
  <div class="form-group row">
 
