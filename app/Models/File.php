@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use App\Models\Media as tourist_Media;
 class File extends Model implements HasMedia
 {
     use InteractsWithMedia;
@@ -17,24 +18,27 @@ class File extends Model implements HasMedia
               ->height(100)
               ->quality(90)
               ->keepOriginalImageFormat();
-        $this->addMediaConversion('450x300')
-              ->width(450)
+        $this->addMediaConversion('768x576')
+              ->width(768)
+              ->height(576)
+              ->quality(100)
+              ->keepOriginalImageFormat();
+        $this->addMediaConversion('600x450')
+              ->width(600)
+              ->height(450)
+              ->quality(100)
+              ->keepOriginalImageFormat();
+        $this->addMediaConversion('300x300')
+              ->width(300)
               ->height(300)
               ->quality(100)
-              ->keepOriginalImageFormat();
-        $this->addMediaConversion('350x250')
-              ->width(350)
-              ->height(250)
-              ->quality(100)
-              ->keepOriginalImageFormat();
-        $this->addMediaConversion('270x200')
-              ->width(270)
-              ->height(200)
-              ->quality(90)
               ->keepOriginalImageFormat();
     }
 
   
-
+ public function get_media()
+{
+    return $this->belongsTo(tourist_Media::class, 'id', 'model_id');
+}
      
 }

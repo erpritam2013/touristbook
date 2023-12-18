@@ -18,10 +18,16 @@ class FileController extends Controller
 
         if($request->has('searchTxt') && !empty($request->get('searchTxt'))) {
             $searchTxt = $request->get('searchTxt');
-            $mediaQuery->where('file_name', 'LIKE', '%'.$searchTxt.'%');
+            $mediaQuery->where('file_name', 'LIKE', '%'.$searchTxt.'%')->orWhere('name', 'LIKE', '%'.$searchTxt.'%');
         }
+        // $mediaQuery->get('id')
+         //$item->responsive_images = getConversionUrl($item->id,'thumbnail');
+         $media_list = $mediaQuery->paginate(20, ['*'], 'page', $pageNumber);
+         $media_list->reduce(function($carry, $item){
+           $item->thumbnail = getConversionUrl($item->id,'thumbnail');
+           return $item;
 
-        $media_list = $mediaQuery->paginate(20, ['*'], 'page', $pageNumber);
+         });
         return response()->json($media_list);
     }
 
@@ -40,7 +46,8 @@ class FileController extends Controller
         return [
             'url' => $media->getUrl(),
             'id' => $media->id,
-            'name' => $media->name
+            'name' => $media->name,
+            'thumbnail' => $file->getFirstMediaUrl('images','thumbnail')
         ];
     }
 }

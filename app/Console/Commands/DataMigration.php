@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\File;
 use App\Models\Media;
 use App\Models\Location;
+use App\Models\CountryZone;
 use App\Models\LocationMeta;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -48,8 +49,8 @@ class DataMigration extends Command
     /**
      * Truncating Tables
      */
-    public function truncate_tables() {
-        $tables = ['locations','location_meta'];
+    public function truncate_tables(array $tables) {
+        //$tables = ['users','tours','locations','location_meta','country_zones'];
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
         foreach($tables as $table) {
             DB::table($table)->truncate();
@@ -300,9 +301,9 @@ public function extract_shortcode($text,$field='')
              $compiledDescription = Shortcode::compile($text,$shortcodes);
              $result = $compiledDescription;
              //$result = json_encode($result);
-        }elseif ($field == 'description') {
+         }elseif ($field == 'description') {
 
-        }
+         }
      }
  }
  return $result;
@@ -352,12 +353,13 @@ public function string_to_json($string,$type='',$format=false)
         $convert_string_2 = str_replace('https://test.thetouristbook.com/', '', $convert_string_1);
         $convert_string_3 = str_replace('https://test-touristbook.com/', '', $convert_string_2);
         $s3_image = DB::connection($this->wp_connection)->table('wp_as3cf_items as s3_image')
+        ->select('source_id')
         ->where('path','like',$convert_string_3)
         ->select('s3_image.*')
         ->first();
         if (!empty($s3_image->source_id)) {
             $file = File::where('wp_id',$s3_image->source_id)->first();
-            $media = Media::where('model_id',$file->id)->first();
+            $media = $file->get_media;
             $test['id'] = $media->id;
             $test['url'] = $file->getFirstMediaUrl('images');
             $result[] = $test;
@@ -369,9 +371,11 @@ public function string_to_json($string,$type='',$format=false)
     }elseif ($type == 'image_id') {
 
         $file = File::where('wp_id',$string)->first();
-        $media = Media::where('model_id',$file->id)->first();
-        $test['id'] = $media->id;
-        $test['url'] = $file->getFirstMediaUrl('images');
+        if (!empty($file)) {
+            $media = $file->get_media;
+            $test['id'] = $media->id;
+            $test['url'] = $file->getFirstMediaUrl('images');
+        }
         $result[] = $test;
         if (!$format) {
             $result = json_encode($result);
@@ -398,7 +402,8 @@ public function radio_value_modify($value)
     /**
      * Tour Module
      */
-    public function tour_migrate() {
+    public function tour_migrate() 
+    {
         $this->info("Tour Data Loading...");
         $post_collections = DB::connection($this->wp_connection)->table("wp_st_tours")->select("post_id")->get();
         $postIds = $post_collections->pluck('post_id')->toArray();
@@ -512,11 +517,7 @@ public function radio_value_modify($value)
 
 
         }
-
-
         // TODO: Tour Details
-
-
         $this->info("Tour Data Loading Completed");
     }
 
@@ -901,27 +902,28 @@ public function radio_value_modify($value)
             $this->info("Location Meta Data Loading Completed");
         } 
 
-             /*country zone migration*/
+        /*country zone migration*/
 
         public function st_country_zones_migration()
         {
             $this->info("Country zones Data Loading...");
-        $results = DB::connection($this->wp_connection)->table('wp_posts as p')
-        ->select('p.*', 'pm.*')
-        ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
-        ->whereIn('pm.meta_key', ["color","location_country","zipcode","map_lat","map_lng","map_zoom","map_type","is_featured","_thumbnail_id"])
-        ->where('p.post_type', 'st_country_zones')
-        ->where('p.post_status', 'publish')
-        ->orderBy('p.ID', 'desc')
+            $results = DB::connection($this->wp_connection)->table('wp_posts as p')
+            ->select('p.*', 'pm.*')
+            ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+            ->whereIn('pm.meta_key', ["country_zone_title","country","country_zone_icon","country_zone_image","country_description","country_zone_section","country_zone_catering_title", 
+                "custom_country_zone_catering_url" ])
+            ->where('p.post_type', 'st_country_zones')
+            ->where('p.post_status', 'publish')
+            ->orderBy('p.ID', 'desc')
 
-        ->get();
+            ->get();
 
+              // Build 500 Objects
+            $nestedResults = [];
+            $serializer_fields =  ["country_zone_section"];
 
-                // Build 500 Objects
-        $nestedResults = [];
-
-        foreach ($results as $result) {
-            $postId = $result->ID;
+            foreach ($results as $result) {
+                $postId = $result->ID;
                     unset($result->ID); // Remove the ID field from the main post data
 
                     if (!isset($nestedResults[$postId])) {
@@ -934,49 +936,52 @@ public function radio_value_modify($value)
 
                     unset($result->meta_key, $result->meta_value); // Remove meta_key and meta_value fields
 
-                    $nestedResults[$postId]['postmeta'][$metaKey] = $metaValue;
+                    if(in_array($metaKey, $serializer_fields)) {
+                    // Serialized Results
+                        $nestedResults[$postId]['postmeta'][$metaKey] = $this->unserialize_data_format_in_array($metaValue,$metaKey);
+                    }else {
+                        $nestedResults[$postId]['postmeta'][$metaKey] = $metaValue;
+                    }
                 }
 
                 // TODO: Can think better way
                 // One more iteration for Laravel Specific
-                $locations = collect([]);
+                $country_zones = collect([]);
                 if(!empty($nestedResults)) {
                     foreach($nestedResults as $postId => $n_result) {
-                        $location = [
-                            "wp_id" => $postId,
-                            "name" => $n_result["post_title"],
-                            "color" => $this->get_key_data($n_result["postmeta"], "color"),
-                            "slug" => $n_result["post_name"],
-                            "description" => $n_result["post_content"],
-                            "excerpt" => $n_result["post_excerpt"],
-                            "country" => $this->get_key_data($n_result["postmeta"], "location_country"),
-                            "zipcode" => $this->get_key_data($n_result["postmeta"], "zipcode"),
-                            "latitude" => $this->get_key_data($n_result["postmeta"], "map_lat"),
-                            "longitude" => $this->get_key_data($n_result["postmeta"], "map_lng"),
-                            "zoom_level" => $this->get_key_data($n_result["postmeta"], "map_zoom"),
-                            "map_type" => $this->get_key_data($n_result["postmeta"], "map_type"),
-                            "map_address" => "",
-                            "is_featured" => $this->get_key_data($n_result["postmeta"], "is_featured"),
-                            "parent_id" => $n_result["post_parent"],
-                            "menu_order" => $n_result["menu_order"],
-                            "logo" => $this->get_key_data($n_result["postmeta"], "logo"),
-
-                            "featured_image" => $this->string_to_json($this->get_key_data($n_result["postmeta"], "_thumbnail_id"),'image_id'),
-                            "status" => 1,
-                            "created_at"=>$n_result["post_date_gmt"],
-                            "updated_at"=>$n_result["post_modified"]
-
-                        ];
-
-                        $locations->push($location);
 
 
-                    }
-                     //dd($locations->toArray());
-                    Location::insert($locations->toArray());
+                      $coutry_zone_catering = [
+                        "title"=> $this->get_key_data($n_result["postmeta"], "country_zone_catering_title"),
+                        "url"=> $this->get_key_data($n_result["postmeta"], "custom_country_zone_catering_url")
+                    ];
+                    $country_zone = [
+                        "title" => $n_result["post_title"], 
+                        "description" => $n_result["post_content"], 
+                        "excerpt" => $n_result["post_excerpt"], 
+                        "slug" => $n_result["post_name"],
+                        "sub_title" => $this->get_key_data($n_result["postmeta"], "country_zone_title"), 
+                        "country" => $this->get_key_data($n_result["postmeta"], "country"),
+                        "icon" => $this->string_to_json($this->get_key_data($n_result["postmeta"], "country_zone_icon"),'image'), 
+                        "image" => $this->string_to_json($this->get_key_data($n_result["postmeta"], "country_zone_image"),'image'), 
+                        "country_zone_description" => $this->get_key_data($n_result["postmeta"], "country_description"), 
+                        "country_zone_section" => $this->get_key_data($n_result["postmeta"], "country_zone_section"),
+                        "country_zone_catering" => json_encode($coutry_zone_catering),
+                        "created_by" => $n_result["post_author"], 
+                        "status" => 1,
+                        "created_at"=>$n_result["post_date_gmt"],
+                        "updated_at"=>$n_result["post_modified"]
+                    ];
+
+                    $country_zones->push($country_zone);
+
+
                 }
+                     //dd($locations->toArray());
+                CountryZone::insert($country_zones->toArray());
+            }
 
-                $this->info("Location Data Loading Completed");
+            $this->info("Country Zone Data Loading Completed");
         }
 
     /**
@@ -989,30 +994,31 @@ public function radio_value_modify($value)
         $this->info("Migration Started......");
 
         $isFresh = $this->argument('is_fresh');
-
+        
         // Truncating Tables
         if($isFresh == "clean") {
+            // $tables = ['users','tours','locations','location_meta','country_zones'];
+            $tables = ['country_zones'];
             $this->info("Truncating tables...");
-            $this->truncate_tables();
+            $this->truncate_tables($tables);
             $this->info("Table Truncated...");
         }
 
          // File Module
-       // $this->file_migrate();
+       //$this->file_migrate();
          // Media Module
-        //$this->media_migrate();
+      //  $this->media_migrate();
         // User Module
         //$this->user_migrate();
 
         // Tour Module
-         $this->tour_migrate();
+        //$this->tour_migrate();
         // Location Module
         //$this->location_migrate();
 
          // Location Meta Module
         //$this->location_meta_migrate();
-        
-
+        $this->st_country_zones_migration();
 
         return Command::SUCCESS;
 

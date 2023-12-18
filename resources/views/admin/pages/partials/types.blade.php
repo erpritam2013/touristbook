@@ -1,14 +1,14 @@
 <div class="card">
     <div class="card-header border-bottom">
-        <h4 class="card-title">Page Template</h4>
+        <h4 class="card-title" >Page Template</h4>
     </div>
 
-    <div class="card-body">
+    <div class="card-body" id="page-type-card-body">
 
    
         <!-- Page Type -->
       
- {!!selectBoxTemplate(['items' => $page_types, 'name'=> 'type','selected'=>null,'lebal'=>'Page Template','attr'=>'onchange="fetchPageTemplate(this)"'])!!}
+ {!!selectBoxTemplate(['items' => $page_types, 'name'=> 'type','selected'=>$page->type ?? null,'lebal'=>'Page Template','id'=>'page-type'])!!}
        
 
     </div>

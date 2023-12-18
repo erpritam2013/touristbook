@@ -170,12 +170,13 @@ class PostController extends Controller
      //        'featured_image' => json_decode($request->featured_image,true),
      //    ]);
      // }
+        
      $postDetails = [
         'name' => $request->name,
         'description' => $request->description,
-        //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
+        'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
         'excerpt' => $request->excerpt,
-        'gallery' => ($request->gallery == '' || empty($request->gallery) || $request->gallery == '"[]"' )?$request->gallery:"[]",
+        'gallery' => $request->gallery,
         'link' => $request->link,
             // TODO: logo and featured_image ----> S3 Integration
         'extra_price_unit' => $request->extra_price_unit,
