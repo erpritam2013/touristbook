@@ -3,6 +3,18 @@
 use App\Models\Conversion;
 use Illuminate\Support\Facades\Session;
 
+
+if (!function_exists('purify_html')) {
+    function purify_html($html)
+    {
+        $config = HTMLPurifier_Config::createDefault();
+        $purifier = new HTMLPurifier($config);
+
+        return $purifier->purify($html);
+    }
+}
+
+
 if (!function_exists('getRouteName')) {
     function getRouteName(){
 
