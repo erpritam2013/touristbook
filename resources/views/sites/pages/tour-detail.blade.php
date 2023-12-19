@@ -12,7 +12,7 @@
 			@if(!empty($tour->detail->gallery))
 			@foreach($tour->detail->gallery as $gallery)
 			<div class="swiper-slide"><a data-toggle="gallery-top" title="tour gallery" style="width: 452px;height:300px;" ><img
-				src="{{ getConversionUrl($gallery['id'],'450x300') }}" alt="Our street" class="img-fluid" style="452px;height:300px;"></a>
+				src="{{ getConversionUrl($gallery['id'],'600x450') }}" alt="Our street" class="img-fluid" style="452px;height:300px;"></a>
 			</div>
 			@endforeach
 			@else
@@ -63,7 +63,7 @@
 
 				</div>
 				<div class="sub-heading">
-					<p class="mb-3">{!!getNewIcon('Ico_maps', '#666666', '16px', '16px', true)!!}{{ $tour->detail->map_address }}
+					<p class="mb-3">{!!getNewIcon('Ico_maps', '#666666', '16px', '16px', true)!!}{{ $tour->detail->map_address ?? $tour->address ?? ''}}
 						<a href="javascript:void(0)" class="ml-2 text-secondary text-sm view-street-map" data-toggle="modal"
 						data-target="#streetModal">View on map</a>
 					</p>
@@ -495,8 +495,8 @@
 				<!-- map location -->
 
 				<div id="map-location">
-					<div id="map-street" style="height: 100%; width:100%" lat="{{ $tour->detail->latitude }}"
-						lng="{{ $tour->detail->longitude }}" zoom_level="{{ $tour->detail->zoom_level }}"></div>
+					<div id="map-street" style="height: 100%; width:100%" lat="{{ $tour->detail->latitude ?? ''}}"
+						lng="{{ $tour->detail->longitude ?? ''}}" zoom_level="{{ $tour->detail->zoom_level ?? 20}}"></div>
 
 					</div>
 
@@ -690,7 +690,7 @@
 									@foreach($nearByTour as $near_tour)
 									<div class="col-md-3 col-sm-3  col-xs-12">
 										<div class="listroBox">
-											@php $featured_image = (!empty($near_tour->featured_image) && isset($near_tour->featured_image[0]['id']))?getConversionUrl($near_tour->featured_image[0]['id'],'270x200'):null;@endphp
+											@php $featured_image = (!empty($near_tour->featured_image) && isset($near_tour->featured_image[0]['id']))?getConversionUrl($near_tour->featured_image[0]['id'],'300x300'):null;@endphp
 											<figure><a href="{{route('tour',$near_tour->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="tour image">
 												<div class="read_more"><span>{!!ucwords($near_tour->name ?? '')!!}</span></div>
 											</a> </figure>
@@ -736,7 +736,7 @@
 										@foreach($nearByLocation as $near_location)
 										<div class="col-md-3 col-sm-3  col-xs-12">
 											<div class="listroBox">
-												@php $featured_image = (!empty($near_location->featured_image) && isset($near_location->featured_image[0]['id']))?getConversionUrl($near_location->featured_image[0]['id'],'270x200'):null;@endphp
+												@php $featured_image = (!empty($near_location->featured_image) && isset($near_location->featured_image[0]['id']))?getConversionUrl($near_location->featured_image[0]['id'],'300x300'):null;@endphp
 												<figure><a href="{{route('location',$near_location->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="">
 													<div class="read_more"><span>{!!ucwords($near_location->name ?? '')!!}</span></div>
 												</a> </figure>
@@ -774,7 +774,7 @@
 										@foreach($nearByHotel as $near_hotel)
 										<div class="col-md-3 col-sm-3  col-xs-12">
 											<div class="listroBox">
-												@php $featured_image = (!empty($near_hotel->featured_image) && isset($near_hotel->featured_image[0]['id']))?getConversionUrl($near_hotel->featured_image[0]['id'],'270x200'):null;@endphp
+												@php $featured_image = (!empty($near_hotel->featured_image) && isset($near_hotel->featured_image[0]['id']))?getConversionUrl($near_hotel->featured_image[0]['id'],'300x300'):null;@endphp
 												<figure><a href="{{route('hotel',$near_hotel->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="location image">
 													<div class="read_more"><span>{!!ucwords($near_hotel->name ?? '')!!}</span></div>
 												</a> </figure>
@@ -825,7 +825,7 @@
 											@foreach($nearByActivity as $near_activity)
 											<div class="col-md-3 col-sm-3  col-xs-12">
 												<div class="listroBox">
-													@php $featured_image = (!empty($near_activity->featured_image) && isset($near_activity->featured_image[0]['id']))?getConversionUrl($near_activity->featured_image[0]['id'],'270x200'):null;@endphp
+													@php $featured_image = (!empty($near_activity->featured_image) && isset($near_activity->featured_image[0]['id']))?getConversionUrl($near_activity->featured_image[0]['id'],'300x300'):null;@endphp
 													<figure><a href="{{route('activity',$near_activity->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="activity image">
 														<div class="read_more"><span>{!!ucwords($near_activity->name ?? '')!!}</span></div>
 													</a> </figure>
@@ -883,8 +883,8 @@
 								</button>
 							</div>
 							<div class="modal-body">
-								<div id="map-street" style="height: 400px; width:100%" lat="{{ $tour->detail->latitude }}"
-									lng="{{ $tour->detail->longitude }}" zoom_level="{{ $tour->detail->zoom_level }}"></div>
+								<div id="map-street" style="height: 400px; width:100%" lat="{{ $tour->detail->latitude ?? ''}}"
+									lng="{{ $tour->detail->longitude ?? ''}}" zoom_level="{{ $tour->detail->zoom_level ?? 20}}"></div>
 								</div>
 								<div class="modal-footer">
 
