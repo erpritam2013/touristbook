@@ -62,12 +62,12 @@
                                 @if($key <=1)
 
                                 @if($activity_zones['activity_zones-url_link_status'] == 'slug')
-                                <li><a href="{{route('activity',$activity->slug)}}?link={{$activity_zones['activity_zones-slug']}}" target="_blank">{{$activity_zones['activity_zones-title']}}</a></li>
+                                <li><i class="fas fa-location-arrow st-highlight-icon"></i><a href="{{route('activity',$activity->slug)}}?link={{$activity_zones['activity_zones-slug']}}" target="_blank">{{$activity_zones['activity_zones-title']}}</a></li>
                                 @elseif($activity_zones['activity_zones-url_link_status'] == 'web-link')
-                                <li><a href="{{$activity_zones['activity_zones-web_link']}}" target="_blank">{{$activity_zones['activity_zones-title']}}</a></li>
+                                <li><i class="fas fa-location-arrow st-highlight-icon"></i><a href="{{$activity_zones['activity_zones-web_link']}}" target="_blank">{{$activity_zones['activity_zones-title']}}</a></li>
 
                                 @else
-                                <li><a href="{{$activity_zones['activity_zones-file']}}" target="_blank">{{$activity_zones['activity_zones-title']}}</a></li>
+                                <li><i class="fas fa-location-arrow st-highlight-icon"></i><a href="{{$activity_zones['activity_zones-file']}}" target="_blank">{{$activity_zones['activity_zones-title']}}</a></li>
                                 @endif
                                 @endif
                                 @endforeach

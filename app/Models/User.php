@@ -26,7 +26,8 @@ class User extends Authenticatable
         'email',
         'password',
         'is_active',
-        'role'
+        'role',
+        'wp_id'
     ];
 
     /**
@@ -35,7 +36,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
+        // 'password',
         'remember_token',
     ];
 

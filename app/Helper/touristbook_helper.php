@@ -243,18 +243,21 @@ if (!function_exists('mediaTemplate')) {
       $html .='<div class="col-lg-10">';
   }
   $html .='<div class="media-controls">';
-  $value = $value ? json_encode($value) : '';
+  
+  $value_e = $value ? json_encode($value) : '';
   $html .='<input type="hidden" class="form-control media-input '.$class.' gallery-input " name="'.$name.'"
-  value="'.$value.'" />';
+  value="'.htmlspecialchars($value_e,ENT_QUOTES).'" />';
   if($smode == 'single'){
     $value_url = '';
+   
     if(is_array($value) && isset($value[0])){
         $value_url = $value[0]['url'];
     }
-    $html .='<input type="text" class="form-control media-input '.$class.' gallery-input " name="'.$name.'" value="'.$value_url.'" id="'.$id.'" placeholder="Enter '.$label.'..."/>';
+    $html .='<input type="text" class="form-control media-txt-only" value="'.$value_url.'" id="'.$id.'" placeholder="Enter '.$label.'..."/>';
 }
 $json_encode = is_array($value) ? json_encode($value) : "";
-$html .='<button type="button" class="btn btn-primary mt-2 add-media-btn" smode="'.$smode.'" selectedImages="'.$json_encode.'"  >+</button>';
+
+$html .='<button type="button" class="btn btn-primary mt-2 add-media-btn" smode="'.$smode.'" selectedImages="'.htmlspecialchars($json_encode,ENT_QUOTES).'"  >+</button>';
 $html .='<button type="button" class="btn btn-danger mt-2 remove-media-btn">-</button>';
 $html .='<div class="media-preview">';
 if(is_array($value) && isset($value[0])){
@@ -304,8 +307,8 @@ if (!function_exists('galleryTemplate')) {
     }
     $html .=' <div class="gallery-controls">';
     $json_decode__ = (!empty($value) && isset($value) && is_array($value))?json_encode($value):json_encode([]);
-    $html .='<input type="hidden" class="form-control gallery-input '. $class .'" name="'. $name.'" value="'. $json_decode__ .'" id="'. $id .'" placeholder="Enter '. $label.'..." />';
-    $html .='<button type="button" class="btn btn-primary mt-2 add-gallery-btn" smode="'.$smode.'" selectedImages="'. $json_decode__ .'">+</button>';
+    $html .='<input type="hidden" class="form-control gallery-input '. $class .'" name="'. $name.'" value="'. htmlspecialchars($json_decode__,ENT_QUOTES) .'" id="'. $id .'" placeholder="Enter '. $label.'..." />';
+    $html .='<button type="button" class="btn btn-primary mt-2 add-gallery-btn" smode="'.$smode.'" selectedImages="'. htmlspecialchars($json_decode__,ENT_QUOTES) .'">+</button>';
     $html .='<div class="media-preview">';
 
     if(!empty($value) && isset($value) && is_array($value)){
@@ -570,14 +573,16 @@ if (!function_exists('selectBoxTemplate')) {
       }
   }else{
    if(isset($label) && !empty($label)){
-       $html .='<label class="col-lg-2 col-form-label" for="'.$id.'">'.$label.'</label>';
+      $col = ($col == 'col-lg-3')?$col:'col-lg-2';
+       $html .='<label class="'.$col.' col-form-label" for="'.$id.'">'.$label.'</label>';
        if(isset($desc) && !empty($desc)){
           $html .='<p>'.$desc.'</p>';
       }
   }
-  $html .='<div class="col-lg-10">';
+  $col_s = ($col_s == 'col-lg-9')?$col_s:'col-lg-10';
+  $html .='<div class="'.$col_s.'">';
 }
-$selected = (empty($items))?$selected:"";
+//$selected = (empty($items))?$selected:"";
 $html .='<select class="form-control single-select-placeholder-touristbook '.$class .'" id="'.$id.'" name="'.$name.'" '.$multiple.' '.$attr.'  selected_value="'.$selected.'">';
 if(!isset($first_empty_option)){
     if(isset($label) && !empty($label)){
@@ -595,6 +600,7 @@ if(!empty($items)){
             $html .='<option value="'.$item->id.'" '. $selected_attr .' '.$option_attr.' >'.$item->value.'</option>';
         }else{
             $selected_attr = ($item->id == $selected) ? 'selected' : "" ;
+           
             $html .='<option value="'.$item->id.'" '.$selected_attr.' '.$option_attr.' >'.$item->value.'</option>';
         }
     }
@@ -1272,8 +1278,9 @@ if (!function_exists('get_time_format')) {
        return $cenvertedTime;
    }
 }
+
 if (!function_exists('get_array_mapping')) {
-    function get_array_mapping($data,$field=false) {
+    function get_array_mapping($data,$field=false,$map_type=false) {
         $result = [];
         if (!empty($data)) {
            $collection = collect($data);
@@ -1286,14 +1293,42 @@ if (!function_exists('get_array_mapping')) {
             ];
         });
         }else{
+           if ($map_type == true) {
+                $result = $collection->map(function ($value,$key) {
+             return (object)[
+                'id'=> touristbook_sanitize_title($value),
+                'value'=>$value
+            ];
+        });
+           }else{
 
            $result = $collection->map(function (int $item, int $key) {
             return (int)$item;
         });
+           }
        }
    }
    return $result->all();
 
 
 }
+}
+
+
+if (!function_exists('tourist_array_mapping')) {
+    function tourist_array_mapping($data)
+    {
+        $result = [];
+        if (!empty($data)) {
+        $collection = collect($data);
+              $result = $collection->map(function ($value,$key) {
+             return (object)[
+                'id'=> $value,
+                'value'=>$value
+            ];
+        });
+        }
+        return $result;
+
+    }
 }

@@ -24,7 +24,7 @@ class PageDataTable extends DataTable
     {
          return (new EloquentDataTable($query))->addIndexColumn()->addColumn('action', function ($row) {
                     $html = ' <a href="'.route("admin.pages.edit",$row->id).'" class="btn btn-primary" title="Edit"><i class="fa fa-edit"></i></a>';
-                    $html .= '<a href="'.route("admin.pages.show",$row->id).'" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>';
+                    // $html .= '<a href="'.route("admin.pages.show",$row->id).'" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>';
                     $html .= '<a href="javascript:void(0);" class="btn btn-danger del_entity_form" title="Delete" item_id="'.$row->id.'" data-text="page"><i class="fa fa-trash"></i></a>';
                     return $html;
                 })->editColumn('created_at', function($row) {

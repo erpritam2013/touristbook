@@ -1,9 +1,18 @@
 (function($){
     "use strict"
-
+    var base_url = $("#base-url").val();
     var preloader = $('body div#preloader');
     var gallery_videos = new Array();; 
 /*on range chnage calling*/	
+
+    const showLoader = function() {
+        $("#preloader").show();
+    }
+
+    // Function to hide the loader
+    const hideLoader = function() {
+        $("#preloader").hide();
+    }
     window.rangeValue = (ele) =>{
       let id = ele.id;
       // $('body #show-range-input').value(ele.value);
@@ -34,9 +43,9 @@
 // });
 
     Array.prototype.forEach.call(rangeInputs, input => {
-     console.log(input);
-     input.addEventListener('input', handleInputChange)
- });
+       console.log(input);
+       input.addEventListener('input', handleInputChange)
+   });
 
     numberInput.addEventListener('input', handleInputChange)
 
@@ -62,6 +71,11 @@ function displayPopup() {
 	console.log('activity_program_style');
 }
 
+$('#vg-location-id').on('change',function(){
+    let location = $(this).children('option:selected').text();
+    $('#vg-name').val(location);
+})
+
 
 
 /*country select show activity zone start js*/
@@ -78,11 +92,11 @@ window.showActivityZone = () => {
         let fields_data = {};
         if (typeof id != 'undefined') {
 
-           fields_data.id = id;
-       }
-       fields_data.country = country;
-       console.log(fields_data);
-       $.get(userURL,fields_data,function (data) {
+         fields_data.id = id;
+     }
+     fields_data.country = country;
+     console.log(fields_data);
+     $.get(userURL,fields_data,function (data) {
     // let options = "";
         if (data.length != 0) {
             let existed_activity_zone_id = data.existed_value;
@@ -106,10 +120,10 @@ window.showActivityZone = () => {
         }
 
     });
-   }else{
-     activity_zone_section.closest('.activity-zone-id-section').addClass('d-none');
-     activity_zone_section.find('option').remove();
- }
+ }else{
+   activity_zone_section.closest('.activity-zone-id-section').addClass('d-none');
+   activity_zone_section.find('option').remove();
+}
 }
 
 };
@@ -119,11 +133,11 @@ showActivityZone();
 
 /*country select show country zone start js*/
 window.showCountryZone = () => {
- let id = $("#tour-id").data('id');
- let country = $('.tour-extra-fields #st-tours-country').children('option:selected').val();
- let country_zone_section = $('.tour-extra-fields #country-zone-id');
+   let id = $("#tour-id").data('id');
+   let country = $('.tour-extra-fields #st-tours-country').children('option:selected').val();
+   let country_zone_section = $('.tour-extra-fields #country-zone-id');
      //console.log(country_zone_section);
- if (country_zone_section.length != 0) {
+   if (country_zone_section.length != 0) {
 
     if (country != "" && typeof country != 'undefined') {
 
@@ -132,11 +146,11 @@ window.showCountryZone = () => {
         let fields_data = {};
         if (typeof id != 'undefined') {
 
-           fields_data.id = id;
-       }
-       fields_data.country = country;
-       console.log(fields_data);
-       $.get(userURL,fields_data,function (data) {
+         fields_data.id = id;
+     }
+     fields_data.country = country;
+     console.log(fields_data);
+     $.get(userURL,fields_data,function (data) {
     // let options = "";
         if (data.length != 0) {
             let existed_country_zone_id = data.existed_value;
@@ -160,7 +174,7 @@ window.showCountryZone = () => {
         }
 
     });
-   }else{
+ }else{
     country_zone_section.closest('.country-zone-id-section').addClass('d-none');
     country_zone_section.find('option').remove();
 }
@@ -176,22 +190,22 @@ const ShowVideos = function(get_response){
 }
 
 const filterArray = (arr) => {
- let get_result = [];
- for (var i = 0; i < arr.length; i++) {
+   let get_result = [];
+   for (var i = 0; i < arr.length; i++) {
     get_result[arr[i].name] = arr[i].value;
 }
 return get_result;
 }
 
 const matchArrayValue = (get_arr,value) => {
-   console.log(get_arr);
-   let result = false;
-   get_arr.filter(function(v,i) {
+ console.log(get_arr);
+ let result = false;
+ get_arr.filter(function(v,i) {
     if (v.image_url == value) {
         result = true;
     } 
 });   
-   return result;
+ return result;
 }
 const isJSON = function(something) {
     if (typeof something != 'string')
@@ -206,9 +220,9 @@ const isJSON = function(something) {
 }
 
 const showErrorHtml = function(image_url,err,get_html=false){
- $('#image_url-error').remove();
- let error_html = '<div id="image_url-error" class="invalid-feedback animated fadeInUp" style="display: block;">'+err+'</div>';
- if (!get_html) {
+   $('#image_url-error').remove();
+   let error_html = '<div id="image_url-error" class="invalid-feedback animated fadeInUp" style="display: block;">'+err+'</div>';
+   if (!get_html) {
     image_url.after(error_html);
 }else{
 
@@ -318,27 +332,27 @@ const CardbodyIndexChanges = (text, idx) => {
             }
             let gallery_videos_count = gallery_videos.length; 
             if (gallery_videos.length == 0) {
-             gallery_videos.push(filterArray(formData));
+               gallery_videos.push(filterArray(formData));
 
-             formData_2.gallery_videos = JSON.stringify(convertArrayToObject(gallery_videos));
+               formData_2.gallery_videos = JSON.stringify(convertArrayToObject(gallery_videos));
 
-         }else{ 
+           }else{ 
             if (matchArrayValue(gallery_videos,filterArray(formData).image_url)) {
 
-             showErrorHtml(image_url,'This video already added!');
-             return false;
-         }else{  
-             gallery_videos_count = gallery_videos.length; 
-             gallery_videos.push(filterArray(formData))
+               showErrorHtml(image_url,'This video already added!');
+               return false;
+           }else{  
+               gallery_videos_count = gallery_videos.length; 
+               gallery_videos.push(filterArray(formData))
 
-             formData_2.gallery_videos = JSON.stringify(convertArrayToObject(gallery_videos));
-             formData_2.video_index = gallery_videos_count;
-         }
+               formData_2.gallery_videos = JSON.stringify(convertArrayToObject(gallery_videos));
+               formData_2.video_index = gallery_videos_count;
+           }
 
-     }
+       }
     // let method = "POST";
-     action = $(modal_id).find('#form-video-modal').attr('action');
- }else if(type == 'remove'){
+       action = $(modal_id).find('#form-video-modal').attr('action');
+   }else if(type == 'remove'){
     let video_id = $(ele).data('video_id');
     if (video_id != "") {
       formData_2.action = 'remove';
@@ -350,8 +364,8 @@ const CardbodyIndexChanges = (text, idx) => {
    // changeCardbodyOrder($(ele).parent().parent().parent().parent());
     let removeItem = $(ele).parent().find('#image_url-vsign-'+video_index).val();
     let newgallery_videos = $.grep(gallery_videos, function(value) {
-     return value.image_url != removeItem;
- });
+       return value.image_url != removeItem;
+   });
     gallery_videos = newgallery_videos;
     //formData_2.video_index = video_index;
     formData_2.gallery_videos = JSON.stringify(convertArrayToObject(gallery_videos));
@@ -376,17 +390,17 @@ $.ajax({
         // beforeSend: showLoader,
         // complete: hideLoader,
     success: function (response) {
-       if (isJSON(response)) {
-           let final_result = jQuery.parseJSON( response );
-           showErrorHtml(image_url,final_result.error,true);
-           let removeItem = $(image_url).val();
-           let newgallery_videos = $.grep(gallery_videos, function(value) {
-             return value.image_url != removeItem;
-         });
-           gallery_videos = newgallery_videos;
-           return false;
-       }
-       if (type == 'add') {
+     if (isJSON(response)) {
+         let final_result = jQuery.parseJSON( response );
+         showErrorHtml(image_url,final_result.error,true);
+         let removeItem = $(image_url).val();
+         let newgallery_videos = $.grep(gallery_videos, function(value) {
+           return value.image_url != removeItem;
+       });
+         gallery_videos = newgallery_videos;
+         return false;
+     }
+     if (type == 'add') {
 
         $('body #form-video-modal')[0].reset();
         $('#video-modal').modal('hide');
@@ -395,18 +409,77 @@ $.ajax({
 
 },
 error:function(response){
- alert('something went wrong!');
+   alert('something went wrong!');
 },
 });
 }
 
 if ($('body #video-gallery-id').length) {
-   SubmitVideo();
+ SubmitVideo();
 }
 window.modalClose = function(ele){
     $('#image_url-error').remove();
     $('body #form-video-modal')[0].reset();
 }
+window.CopyToClipboard = (elem) => {
+
+     var targetId = "_hiddenCopyText_";
+    var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
+    var origSelectionStart, origSelectionEnd;
+    if (isInput) {
+        // can just use the original source element for the selection and copy
+        target = elem;
+        origSelectionStart = elem.selectionStart;
+        origSelectionEnd = elem.selectionEnd;
+    } else {
+        // must use a temporary form element for the selection and copy
+        target = document.getElementById(targetId);
+        if (!target) {
+            var target = document.createElement("textarea");
+            target.style.position = "absolute";
+            target.style.left = "-9999px";
+            target.style.top = "0";
+            target.id = targetId;
+            document.body.appendChild(target);
+        }
+        target.textContent = elem.textContent;
+    }
+    // select the content
+    var currentFocus = document.activeElement;
+    target.focus();
+    target.setSelectionRange(0, target.value.length);
+    
+    // copy the selection
+    var succeed;
+    try {
+          succeed = document.execCommand("copy");
+    } catch(e) {
+        succeed = false;
+    }
+    // restore original focus
+    if (currentFocus && typeof currentFocus.focus === "function") {
+        currentFocus.focus();
+    }
+    
+    if (isInput) {
+        // restore prior selection
+        elem.setSelectionRange(origSelectionStart, origSelectionEnd);
+    } else {
+        // clear temporary content
+        target.textContent = "";
+    }
+  
+  // Alert the copied text
+  $('.prev-success').removeClass('d-none');
+  setTimeout(function(){
+  $('.prev-success').addClass('d-none');
+  },3000)
+    return succeed;
+  //alert("Copied the text: " + copyText.text);
+}
+
+
+
 
 
 // $('.submit-video').on('click',function(){
