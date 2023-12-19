@@ -599,8 +599,8 @@ if(!empty($items)){
             $selected_attr =  in_array($item->id, $selected) ? 'selected' : "";
             $html .='<option value="'.$item->id.'" '. $selected_attr .' '.$option_attr.' >'.$item->value.'</option>';
         }else{
-            
             $selected_attr = ($item->id == $selected) ? 'selected' : "" ;
+           
             $html .='<option value="'.$item->id.'" '.$selected_attr.' '.$option_attr.' >'.$item->value.'</option>';
         }
     }

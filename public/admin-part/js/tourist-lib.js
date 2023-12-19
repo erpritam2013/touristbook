@@ -436,11 +436,8 @@ if (cardListElm.length > 0) {
 
     // ------------------- CK Editor Setup -----------------------
 setTimeout(function() {
-
     if (touristEditorsElems.length > 0) {
-        touristEditorsElems.each(function (idx, te) {
-     console.log(te)
-                
+        touristEditorsElems.each(function (idx, te) {   
             CKEDITOR.replace(te);
 
         });
@@ -1378,9 +1375,19 @@ const processedPageTemplateHtml = function(data,id){
         fetchSubForm(subformType, targetElem);
 
         }); // On Click Event Block Ends
+       setTimeout(function() {
+
+        $(`body ${id}`).find(".tourist-editor").each((idx, te) => {
+
+            if (!$(te).next().hasClass("cke")) CKEDITOR.replace(te);
+
+        });
+    }, 1000);
  }else{
     $(`body ${id}`).children().remove();
 }
+
+
 }
 
 const fetchPageTemplate = function(ele){
