@@ -221,6 +221,7 @@ class DataMigration extends Command
                               $result[$key][$field.'-'.$k] = $v;
 
 
+
                           }
 
                       }
@@ -429,6 +430,7 @@ if (!empty($result)) {
     $result = "";
 }
 
+
 }
 public function radio_value_modify($value)
 {
@@ -470,6 +472,7 @@ public function geolocationaddress($lat, $long)
 
     return $address;
 }
+
 
 public function load_tour_details() {
         $this->info("Tour Details Loading...");
@@ -949,7 +952,9 @@ public function load_tour_details() {
                             "longitude" => $this->get_key_data($n_result["postmeta"], "map_lng"),
                             "zoom_level" => $this->get_key_data($n_result["postmeta"], "map_zoom"),
                             "map_type" => $this->get_key_data($n_result["postmeta"], "map_type"),
+
                             "map_address" => $this->geolocationaddress($this->get_key_data($n_result["postmeta"], "map_lat"),$this->get_key_data($n_result["postmeta"], "map_lng")),
+
                             "is_featured" => $this->get_key_data($n_result["postmeta"], "is_featured"),
                             "parent_id" => $n_result["post_parent"],
                             "menu_order" => $n_result["menu_order"],
@@ -1018,6 +1023,7 @@ public function load_tour_details() {
                     }else {
                         $nestedResults[$postId]['postmeta'][$metaKey] = $metaValue;
                     }
+
                 }
 
                 // dump($nestedResults);
@@ -1093,8 +1099,6 @@ public function load_tour_details() {
 
                 }
 
-
-
             }
 
             $this->info("Location Meta Data Loading Completed");
@@ -1115,6 +1119,7 @@ public function load_tour_details() {
             ->orderBy('p.ID', 'desc')
 
             ->get();
+
 
               // Build 500 Objects
             $nestedResults = [];
@@ -1236,6 +1241,7 @@ public function wp_term_country_refind($value)
         foreach($this->term_category_dictionary as $type => $term_values) {
             $type_list = collect([]);
 
+
             $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
                             ->select('wt.*', 'wtt.*','wtm.meta_key','wtm.meta_value')
 
@@ -1267,9 +1273,7 @@ public function wp_term_country_refind($value)
                     }
                 }
 
-             
-
-                        
+ 
 
             if(!empty($nestedResults)) {
                 foreach($nestedResults as $termId => $n_result) {
@@ -1697,6 +1701,7 @@ public function wp_term_country_refind($value)
         
         // Truncating Tables
         if($isFresh == "clean") {
+
              //$tables = ['users','tours','locations','location_meta','country_zones'];
              //$term_table = ['types','tour_types'];
             // $term_table = ['package_types','tour_package_types'];
@@ -1706,6 +1711,7 @@ public function wp_term_country_refind($value)
             //$tables = ['country_zones'];
             $this->info("Truncating tables...");
             $this->truncate_tables($tables);
+
             $this->info("Table Truncated...");
         }
 
@@ -1736,6 +1742,7 @@ public function wp_term_country_refind($value)
        // $this->setup_states();
         // Associate with Types
         // For Tour
+
        //$tours = Tour::get();
       // $types = Type::where('type', 'Tour')->get();
        //$this->associate_type_table($tours, $types, TourType::class);
@@ -1749,13 +1756,15 @@ public function wp_term_country_refind($value)
 
        // $this->associate_other_package_table($tours, $other_packages, TourOtherPackage::class);
 
+
          // Location Meta Module
         //$this->location_meta_migrate();
         //$this->st_country_zones_migration();
+
         //$this->associate_term_parent_id(OtherPackage::class,'other_package_type','Tour');
         
        // $this->associate_states_table($tours, $states, TourState::class);
-       
+
         return Command::SUCCESS;
 
     }
