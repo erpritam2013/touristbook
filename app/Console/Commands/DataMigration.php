@@ -15,9 +15,12 @@ use App\Models\Terms\OtherPackage;
 use App\Models\Terms\State;
 use App\Models\TourDetail;
 use App\Models\TourType;
+<<<<<<< HEAD
 use App\Models\TourPackageType;
 use App\Models\TourState;
 use App\Models\TourOtherPackage;
+=======
+>>>>>>> 582fdbab68a7c0165778d6e366b26fc7ca458372
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -418,7 +421,10 @@ public function string_to_json($string,$type='',$format=false)
         if (!$format) {
             $result = json_encode($result);
         }
+<<<<<<< HEAD
         }
+=======
+>>>>>>> 582fdbab68a7c0165778d6e366b26fc7ca458372
 
     }
 
@@ -435,11 +441,15 @@ public function radio_value_modify($value)
     $result = 0;
     if (!empty($value) && $value == 'on') {
      $result = 1;
+<<<<<<< HEAD
         //dump($result);
+=======
+>>>>>>> 582fdbab68a7c0165778d6e366b26fc7ca458372
  }
  return $result;
 }
 
+<<<<<<< HEAD
 public function geolocationaddress($lat, $long)
 {
     $geocode = "https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$long&sensor=false&key=AIzaSyCF8MnYK1Ft-lPa3_B6rirg2IJzptB4m1Y";
@@ -471,6 +481,8 @@ public function geolocationaddress($lat, $long)
     return $address;
 }
 
+=======
+>>>>>>> 582fdbab68a7c0165778d6e366b26fc7ca458372
 public function load_tour_details() {
         $this->info("Tour Details Loading...");
         $post_collections = DB::connection($this->wp_connection)->table("wp_st_tours")->select("post_id")->get();
@@ -1183,6 +1195,7 @@ public function load_tour_details() {
         }
 
 
+<<<<<<< HEAD
 public function wp_option_get_value($key)
 {
     $result = "";
@@ -1231,13 +1244,28 @@ public function wp_term_country_refind($value)
     }
     return $result;
 }
+=======
+>>>>>>> 582fdbab68a7c0165778d6e366b26fc7ca458372
     public function setup_types() {
          $this->info("Terms Type Data Loading...");
         foreach($this->term_category_dictionary as $type => $term_values) {
             $type_list = collect([]);
 
+<<<<<<< HEAD
             $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
                             ->select('wt.*', 'wtt.*','wtm.meta_key','wtm.meta_value')
+=======
+            $term_data = DB::connection($this->wp_connection)->table('wp_terms as wt')
+                            ->select('wt.*', 'wtt.*')
+
+                            ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+                            ->leftJoin('wp_termmeta')
+                            ->where('wtt.taxonomy', $term_values['column'])
+                            ->orderBy('wt.term_id', 'asc');
+
+                            dump($term_data->toSql());
+                            dd($term_data->getBindings());
+>>>>>>> 582fdbab68a7c0165778d6e366b26fc7ca458372
 
                             ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
                             ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id') 
@@ -1445,6 +1473,7 @@ public function wp_term_country_refind($value)
 
     }
 
+<<<<<<< HEAD
 
     public function setup_other_packages() {
          $this->info("Terms Other Package Data Loading...");
@@ -1684,6 +1713,8 @@ public function wp_term_country_refind($value)
 
     }
 
+=======
+>>>>>>> 582fdbab68a7c0165778d6e366b26fc7ca458372
     /**
      * Execute the console command.
      *
@@ -1697,6 +1728,7 @@ public function wp_term_country_refind($value)
         
         // Truncating Tables
         if($isFresh == "clean") {
+<<<<<<< HEAD
              //$tables = ['users','tours','locations','location_meta','country_zones'];
              //$term_table = ['types','tour_types'];
             // $term_table = ['package_types','tour_package_types'];
@@ -1704,8 +1736,12 @@ public function wp_term_country_refind($value)
             // $term_table = ['states','tour_states'];
             $tables = ['tour_details'];
             //$tables = ['country_zones'];
+=======
+             $tables = ['users','tours','locations','location_meta','country_zones'];
+            $tables = ['country_zones'];
+>>>>>>> 582fdbab68a7c0165778d6e366b26fc7ca458372
             $this->info("Truncating tables...");
-            $this->truncate_tables($tables);
+            //$this->truncate_tables($tables);
             $this->info("Table Truncated...");
         }
 
@@ -1736,6 +1772,7 @@ public function wp_term_country_refind($value)
        // $this->setup_states();
         // Associate with Types
         // For Tour
+<<<<<<< HEAD
        //$tours = Tour::get();
       // $types = Type::where('type', 'Tour')->get();
        //$this->associate_type_table($tours, $types, TourType::class);
@@ -1748,14 +1785,23 @@ public function wp_term_country_refind($value)
        //$states = State::get();
 
        // $this->associate_other_package_table($tours, $other_packages, TourOtherPackage::class);
+=======
+        // $tours = Tour::get();
+        // $types = Type::where('type', 'Tour')->get();
+        // $this->associate_type_table($tours, $types, TourType::class);
+>>>>>>> 582fdbab68a7c0165778d6e366b26fc7ca458372
 
          // Location Meta Module
         //$this->location_meta_migrate();
         //$this->st_country_zones_migration();
+<<<<<<< HEAD
         //$this->associate_term_parent_id(OtherPackage::class,'other_package_type','Tour');
         
        // $this->associate_states_table($tours, $states, TourState::class);
        
+=======
+
+>>>>>>> 582fdbab68a7c0165778d6e366b26fc7ca458372
         return Command::SUCCESS;
 
     }
