@@ -1,4 +1,5 @@
 <?php
+
 // use Doctrine\DBAL\Types\{EnumType, Type};
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,6 +17,7 @@ return new class extends Migration
     //         Log::info($exception->getMessage());
     //     }
     // }
+
     /**
      * Run the migrations.
      *
@@ -23,12 +25,14 @@ return new class extends Migration
      */
     public function up()
     {
+
         // Schema::table('pages', function (Blueprint $table) {
         //     $table->enum('type',config('global.page_types'))->nullable()->change();
            
         // });
         $implode_v = "'".implode("','", config('global.page_types'))."'";
            \DB::statement("ALTER TABLE `pages` CHANGE `type` `type` ENUM(".$implode_v.") NULL;");
+
     }
 
     /**
