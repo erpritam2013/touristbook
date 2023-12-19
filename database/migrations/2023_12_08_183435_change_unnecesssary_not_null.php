@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::table('tours', function (Blueprint $table) {
             $table->string('external_link')->nullable()->change();
             $table->string('tour_price_by')->nullable()->change();
-            $table->double('extra_price')->nullable()->change();
+            $table->json('extra_price')->nullable()->change();
 
         });
     }
