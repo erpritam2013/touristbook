@@ -15,9 +15,11 @@ use App\Models\Terms\OtherPackage;
 use App\Models\Terms\State;
 use App\Models\TourDetail;
 use App\Models\TourType;
+
 use App\Models\TourPackageType;
 use App\Models\TourState;
 use App\Models\TourOtherPackage;
+
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -419,7 +421,9 @@ public function string_to_json($string,$type='',$format=false)
         if (!$format) {
             $result = json_encode($result);
         }
+
         }
+
 
     }
 
@@ -437,7 +441,6 @@ public function radio_value_modify($value)
     $result = 0;
     if (!empty($value) && $value == 'on') {
      $result = 1;
-        //dump($result);
  }
  return $result;
 }
@@ -472,7 +475,6 @@ public function geolocationaddress($lat, $long)
 
     return $address;
 }
-
 
 public function load_tour_details() {
         $this->info("Tour Details Loading...");
@@ -699,6 +701,7 @@ public function load_tour_details() {
                         "disable_children_name" => $this->radio_value_modify($this->get_key_data($n_result["postmeta"], "disable_children_name")),
                         "disable_infant_name" => $this->radio_value_modify($this->get_key_data($n_result["postmeta"], "disable_infant_name")),
                         "extra_price" => $this->get_key_data($n_result["postmeta"], "extra_price"),
+                        "created_by" => $n_result["post_author"], 
                         "created_at" => $n_result["post_date_gmt"],
                         "updated_at" => $n_result["post_modified_gmt"],
                         "country_zone_id" => $this->get_key_data($n_result["postmeta"], "st_country_zone_id"),
@@ -962,6 +965,7 @@ public function load_tour_details() {
 
                             "featured_image" => $this->string_to_json($this->get_key_data($n_result["postmeta"], "_thumbnail_id"),'image_id'),
                             "status" => 1,
+                            "created_by" => $n_result["post_author"], 
                             "created_at"=>$n_result["post_date_gmt"],
                             "updated_at"=>$n_result["post_modified"]
 
@@ -1187,7 +1191,6 @@ public function load_tour_details() {
             $this->info("Country Zone Data Loading Completed");
         }
 
-
 public function wp_option_get_value($key)
 {
     $result = "";
@@ -1236,10 +1239,12 @@ public function wp_term_country_refind($value)
     }
     return $result;
 }
+
     public function setup_types() {
          $this->info("Terms Type Data Loading...");
         foreach($this->term_category_dictionary as $type => $term_values) {
             $type_list = collect([]);
+
 
 
             $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
@@ -1448,7 +1453,6 @@ public function wp_term_country_refind($value)
         }
 
     }
-
 
     public function setup_other_packages() {
          $this->info("Terms Other Package Data Loading...");
@@ -1688,6 +1692,7 @@ public function wp_term_country_refind($value)
 
     }
 
+
     /**
      * Execute the console command.
      *
@@ -1709,6 +1714,7 @@ public function wp_term_country_refind($value)
             // $term_table = ['states','tour_states'];
             $tables = ['tour_details'];
             //$tables = ['country_zones'];
+
             $this->info("Truncating tables...");
             $this->truncate_tables($tables);
 
@@ -1757,13 +1763,6 @@ public function wp_term_country_refind($value)
        // $this->associate_other_package_table($tours, $other_packages, TourOtherPackage::class);
 
 
-         // Location Meta Module
-        //$this->location_meta_migrate();
-        //$this->st_country_zones_migration();
-
-        //$this->associate_term_parent_id(OtherPackage::class,'other_package_type','Tour');
-        
-       // $this->associate_states_table($tours, $states, TourState::class);
 
         return Command::SUCCESS;
 
