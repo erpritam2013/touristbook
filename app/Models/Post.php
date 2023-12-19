@@ -16,7 +16,8 @@ class Post extends Model
 
     protected $guarded = [];
     protected $casts = [
-        'featured_image'=> 'array'
+        'featured_image'=> 'array',
+        'gallery'=> 'array'
     ];
 
     public function sluggable(): Array

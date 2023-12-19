@@ -48,6 +48,7 @@ class VideoGalleryController extends Controller
     {
         $data['title'] = 'Video Gallery';
         $data['video_gallery'] = new VideoGallery();
+        $data['locations'] = getPostData('Location',['id','name']);
 
         return view('admin.settings.video-galleries.create', $data);
     }
@@ -117,7 +118,8 @@ class VideoGalleryController extends Controller
 
 
        $videoDetails = [
-        'name' =>ucwords($request->name)
+        'name' =>ucwords($request->name),
+        'location_id' =>$request->location_id
     ];
 
     $video = VideoGallery::create($videoDetails);
@@ -153,6 +155,7 @@ class VideoGalleryController extends Controller
     {
         $data['title'] = 'Video Gallery';
         $data['video_gallery'] = VideoGallery::find($id);
+        $data['locations'] = getPostData('Location',['id','name']);
         return view('admin.settings.video-galleries.edit', $data);
     }
 
@@ -167,7 +170,8 @@ class VideoGalleryController extends Controller
     {
        $video = VideoGallery::find($id);
        $videoDetails = [
-        'name' =>ucwords($request->name)
+        'name' =>ucwords($request->name),
+        'location_id' =>$request->location_id
     ];
 
     VideoGallery::where('id',$id)->update($videoDetails);

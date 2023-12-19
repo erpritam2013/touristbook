@@ -1,28 +1,84 @@
-$(document).ready(function () {
-
-    var base_admin_url = $("#base-admin-url").val();
+$(document).ready(function ($) {
+    var base_url = $("#base-url").val();
 
     var preloader = $('body div#preloader');
 
+
+    const showLoader = function() {
+        $('.nav-pills .nav-link.active:after').css({'position':'relative'})
+        preloader.css({'display':'block','z-index':9999});
+
+    }
+
+    // Function to hide the loader
+    const hideLoader = function() {
+
+        preloader.css({'display':'none','z-index':0});
+        $('.nav-pills .nav-link.active:after').css({'position':'absolute'})
+    }
+
+    const showImagePrevHtml = function(tb_data){
+
+        console.log(Object.keys(tb_data).length != 0);
+        let html = '';
+        if (Object.keys(tb_data).length != 0) {
+
+         html +='<div class="form-group row">';
+         html +='<img src="'+tb_data.imageUrl+'" width="250" height="250">';
+         html +='</div>';
+         html +='<div class="form-group row">';
+         html +='<label>Title</label>';
+         html +='<input class="form-control" id="tb-image-name-prev" readonly value="'+tb_data.title+'">';
+         html +='</div>';
+         html +='<div class="form-group row">';
+         html +='<label>Image Url</label>';
+         html +='<textarea class="form-control" id="tb-image-url-prev" readonly rows="5" title="'+tb_data.url+'">'+tb_data.url+'</textarea>';
+         html +='</div>';
+         html +='<div class="form-group row">';
+         html +=`<button onclick="CopyToClipboard(document.getElementById('tb-image-url-prev'))" class="btn btn-sm btn-info">Copy Url to Clipboard</button>`;
+         html +='<span class="prev-success d-none" aria-hidden="true" style="padding: 5px;color: green;">Copied!</span>';
+         html +='</div>';
+     }else{
+      html += '<div class="show-prev-image-data">Show Image Preview!</div>';
+  }
+  return html;
+}
+
+$('.nav-link').on('click',function(){
+
+    if ($(this).attr('href') == '#upload-media') {   
+        let obj_image = new Object(); 
+        $('#tb-image-prev').html(showImagePrevHtml(obj_image));
+    }
+})
+$("#file-modal").on("hidden.bs.modal", function () {
+    let obj_image = new Object(); 
+    $('#tb-image-prev').html(showImagePrevHtml(obj_image));
+});
+
+var base_admin_url = $("#base-admin-url").val();
+
+
+
     // Map Variable
 
-    const addressTextboxSingle = document.getElementById("address");
+const addressTextboxSingle = document.getElementById("address");
 
-    const addressTextbox = document.getElementById("map_address");
+const addressTextbox = document.getElementById("map_address");
 
-    const latitudeTextbox = document.getElementById("latitude");
+const latitudeTextbox = document.getElementById("latitude");
 
-    const longitudeTextbox = document.getElementById("longitude");
+const longitudeTextbox = document.getElementById("longitude");
 
-    const zoomTextbox = document.getElementById("zoom_level");
-
-
-
-    const mapElem = document.getElementById("map");
+const zoomTextbox = document.getElementById("zoom_level");
 
 
 
-    let touristEditorsElems = $(".tourist-editor");
+const mapElem = document.getElementById("map");
+
+
+
+let touristEditorsElems = $(".tourist-editor");
 
 
 
@@ -62,15 +118,15 @@ $(document).ready(function () {
 
 
 
-const isJSON = (something) => {
+    const isJSON = (something) => {
 
         if (typeof something != 'string')
 
-         something = JSON.stringify(something);
+           something = JSON.stringify(something);
 
 
 
-     try {
+       try {
 
         JSON.parse(something);
 
@@ -132,237 +188,107 @@ const changeSubformOrder = (parentElem) => {
 
 
 
-let btnAddSubForm = $(".btn-add-subform");
+var btnAddSubForm = $(".btn-add-subform");
 
-if (btnAddSubForm.length > 0) {
+
+// if (btnAddSubForm.length > 0) {
 
         // Fetch HTML from Server
 
-    const fetchSubForm = (type, targetElem) => {
+const fetchSubForm = (type, targetElem) => {
 
-        let template_url = base_admin_url + "/template/" + type;
+    let template_url = base_admin_url + "/template/" + type;
 
-        $.ajax({
+    preloader = $(`body #preloader_card_${type}`);
+    $.ajax({
 
-            type: "GET",
+        type: "GET",
 
-            dataType: "json",
+        dataType: "json",
+        beforeSend: showLoader,
+        complete: hideLoader,
+        url: template_url,
+        success: function (data) {
 
-            url: template_url,
+            if (data.html) {
 
-            success: function (data) {
+                processedSubForm(data.html, targetElem);
 
-                if (data.html) {
+            }
 
-                    processedSubForm(data.html, targetElem);
+        },
 
-                }
+    });
 
-            },
-
-        });
-
-    };
+};
 
 
 
         // Processed and Append HTML
 
-    const processedSubForm = (html, targetElem) => {
+const processedSubForm = (html, targetElem) => {
 
-        let recentUsedIndex = parseInt(targetElem.attr("index"));
+    let recentUsedIndex = parseInt(targetElem.attr("index"));
 
-        let newIndex = recentUsedIndex + 1;
+    let newIndex = recentUsedIndex + 1;
 
-        let cardTitlePattern = '<span class="card-title-text">(.*?)</span>';
+    let cardTitlePattern = '<span class="card-title-text">(.*?)</span>';
 
 
 
             // Change Based on Pattern
 
-        let newHtmlContent = subformIndexChanges(html, newIndex);
+    let newHtmlContent = subformIndexChanges(html, newIndex);
 
-        const match = new RegExp(cardTitlePattern).exec(newHtmlContent);
+    const match = new RegExp(cardTitlePattern).exec(newHtmlContent);
 
-        if (match) {
+    if (match) {
 
-            const newSubHtml = '<span class="card-title-text"></span>';
+        const newSubHtml = '<span class="card-title-text"></span>';
 
-            newHtmlContent = newHtmlContent.replace(match[0], newSubHtml);
+        newHtmlContent = newHtmlContent.replace(match[0], newSubHtml);
 
-        }
-
-
-
-        targetElem.append(newHtmlContent);
-
-        targetElem.attr("index", newIndex);
+    }
 
 
-         
+
+    targetElem.append(newHtmlContent);
+
+    targetElem.attr("index", newIndex);
+
+
+
             // Ck Editor Added
-        setTimeout(function() {
+    setTimeout(function() {
 
-            preloader.css({'display':'none','z-index':0});
-        
+        //preloader.css({'display':'none','z-index':0});
+
         targetElem.find(".tourist-editor").each((idx, te) => {
 
             if (!$(te).next().hasClass("cke")) CKEDITOR.replace(te);
 
         });
-        }, 3000);
+    }, 3000);
 
 
 
             // Sortable
 
-        if (targetElem.hasClass("ui-sortable")) {
+    if (targetElem.hasClass("ui-sortable")) {
 
                 // Refresh
 
-            targetElem.sortable("refresh");
+        targetElem.sortable("refresh");
 
-        } else {
+    } else {
 
                 // Create
 
-            targetElem.sortable({
-
-                update: function (event, ui) {
-
-                    changeSubformOrder(targetElem);
-
-                },
-
-            });
-
-        }
-
-    };
-
-
-
-        // Button Clicked Event
-
-    btnAddSubForm.on("click", function () {
-        
-        elemRef = $(this);
-
-        preloader.css({'display':'block','z-index':1});
-        
-        let subformType = elemRef.attr("subform-type");
-
-        let targetSelector = elemRef.attr("target-selector");
-
-        let targetElem = $(targetSelector);
-
-
-
-            // Call Ajax Call
-
-        fetchSubForm(subformType, targetElem);
-
-        }); // On Click Event Block Ends
-
-
-
-        // Delete the Card
-
-    $("body").on("click", ".delete-card", function () {
-
-        if (confirm('Are you sure you want to remove this?')) {
-
-
-
-            $(this).parents(".subform-card").first().remove();
-
-        }else{
-
-            return false;
-
-        }
-
-    });
-
-
-
-        // Edit the Card
-
-    $("body").on("click", ".edit-card", function () {
-
-        let super_parent = $(this).closest('.list-types').children('li.subform-card');
-
-        let parent = $(this).parents('.subform-card');
-
-        $.each(super_parent,function(key,ele){
-
-            if (parent.index() != key) {
-
-                $(ele).find('.card-body').hide();
-
-            }
-
-        });
-
-        $(this)
-
-        .parents(".subform-card")
-
-        .first()
-
-        .find(".card-body")
-
-        .first()
-
-        .toggle();
-
-    });
-
-
-
-        // Title Added
-
-    $("body").on(
-
-        "keyup",
-
-        ".subform-card .card-body input[type=text]",
-
-        function () {
-
-            $(this)
-
-            .parents(".subform-card")
-
-            .each(function () {
-
-                        // TODO: Dynamic par is missing
-
-                $(this)
-
-                .find(".card-title-text")
-
-                .text(($(this).find("input[type=text]").val().length > 30)?$(this).find("input[type=text]").val().substring(0,30) + '.....':$(this).find("input[type=text]").val());
-
-            });
-
-        }
-
-        );
-
-
-
-        // Sortable Initialized
-
-    let cardListElm = $(".list-types");
-
-    if (cardListElm.length > 0) {
-
-        cardListElm.sortable({
+        targetElem.sortable({
 
             update: function (event, ui) {
 
-                changeSubformOrder($(this));
+                changeSubformOrder(targetElem);
 
             },
 
@@ -370,35 +296,168 @@ if (btnAddSubForm.length > 0) {
 
     }
 
-    } // If Block Ends
+};
+
+
+
+        // Button Clicked Event
+
+btnAddSubForm.on("click", function () {
+
+    elemRef = $(this);
+
+    //preloader.css({'display':'block','z-index':1});
+
+    let subformType = elemRef.attr("subform-type");
+
+    let targetSelector = elemRef.attr("target-selector");
+
+    let targetElem = $(targetSelector);
+
+
+
+            // Call Ajax Call
+
+    fetchSubForm(subformType, targetElem);
+
+});
+
+
+
+
+
+        // Delete the Card
+
+$("body").on("click", ".delete-card", function () {
+
+    if (confirm('Are you sure you want to remove this?')) {
+
+
+
+        $(this).parents(".subform-card").first().remove();
+
+    }else{
+
+        return false;
+
+    }
+
+});
+
+
+
+        // Edit the Card
+
+$("body").on("click", ".edit-card", function () {
+
+    let super_parent = $(this).closest('.list-types').children('li.subform-card');
+
+    let parent = $(this).parents('.subform-card');
+
+    $.each(super_parent,function(key,ele){
+
+        if (parent.index() != key) {
+
+            $(ele).find('.card-body').hide();
+
+        }
+
+    });
+
+    $(this)
+
+    .parents(".subform-card")
+
+    .first()
+
+    .find(".card-body")
+
+    .first()
+
+    .toggle();
+
+});
+
+
+
+        // Title Added
+
+$("body").on(
+
+    "keyup",
+
+    ".subform-card .card-body input[type=text]",
+
+    function () {
+
+        $(this)
+
+        .parents(".subform-card")
+
+        .each(function () {
+
+                        // TODO: Dynamic par is missing
+
+            $(this)
+
+            .find(".card-title-text")
+
+            .text(($(this).find("input[type=text]").val().length > 30)?$(this).find("input[type=text]").val().substring(0,30) + '.....':$(this).find("input[type=text]").val());
+
+        });
+
+    }
+
+    );
+
+
+
+        // Sortable Initialized
+
+let cardListElm = $(".list-types");
+
+if (cardListElm.length > 0) {
+
+    cardListElm.sortable({
+
+        update: function (event, ui) {
+
+            changeSubformOrder($(this));
+
+        },
+
+    });
+
+}
+
+    //} // If Block Ends
 
 
 
     // ------------------- CK Editor Setup -----------------------
 setTimeout(function() {
-            
-    if (touristEditorsElems.length > 0) {
 
-        touristEditorsElems.each(function (idx, te) {
+    if (touristEditorsElems.length > 0) {
+        touristEditorsElems.each(function (idx, te) {   
 
             CKEDITOR.replace(te);
 
         });
 
     }
-        }, 3000);
+}, 3000);
 
 
 
     // Initialize Map
 
-    let iconBase = '/admin-part/images/map/';
+let iconBase = '/admin-part/images/map/';
 
-    function initMap() {
+function initMap() {
 
-        if(mapElem) {
+    if(mapElem) {
 
-            map = new google.maps.Map(mapElem, {
+        map = new google.maps.Map(mapElem, {
 
                 zoom: 1, // Default
 
@@ -412,9 +471,9 @@ setTimeout(function() {
 
             //console.log(google.maps.places);
 
-        }
-
     }
+
+}
 
 
 
@@ -424,187 +483,187 @@ setTimeout(function() {
 
     // Call InitMap if Exists
 
-    if (mapElem) {
+if (mapElem) {
 
-        initMap();
+    initMap();
 
-    }
+}
 
 
 
     // Set markup on Map
 
-    const setMarkupOnMap = (geometryList) => {
+const setMarkupOnMap = (geometryList) => {
 
-        if (map) {
+    if (map) {
 
-            if (markers.length > 0) {
+        if (markers.length > 0) {
 
                 // Clear all markers.
 
-                markers.forEach(function (marker) {
+            markers.forEach(function (marker) {
 
-                    marker.setMap(null);
+                marker.setMap(null);
 
-                });
+            });
 
-            }
+        }
 
 
 
-            geometryList.forEach((latLng) => {
+        geometryList.forEach((latLng) => {
 
                 // Add to Markers for Further access
 
-                markers.push(
+            markers.push(
 
-                    new google.maps.Marker({
+                new google.maps.Marker({
 
-                        position: new google.maps.LatLng(
+                    position: new google.maps.LatLng(
 
-                            latLng.latitude,
+                        latLng.latitude,
 
-                            latLng.longitude
+                        latLng.longitude
 
-                            ),
+                        ),
 
-                        map: map,
+                    map: map,
 
                        // icon: iconBase + 'map_marker.png'
 
-                    })
+                })
 
-                    );
+                );
 
-            });
+        });
 
 
 
             // Listen for the marker's position change event.
 
-            let lastAddedMarker = markers[markers.length - 1];
+        let lastAddedMarker = markers[markers.length - 1];
 
-            map.setCenter(lastAddedMarker.getPosition());
+        map.setCenter(lastAddedMarker.getPosition());
 
-        }
+    }
 
-    };
+};
 
 
 
     // Set Zoom Level
 
-    const setZoomLevel = (level) => {
+const setZoomLevel = (level) => {
 
-        map.setZoom(level);
+    map.setZoom(level);
 
-    };
+};
 
 
 
     // Place Changed
 
-    const onPlaceChanged = () => {
+const onPlaceChanged = () => {
 
-        console.log("Place Changed Trigger");
+    console.log("Place Changed Trigger");
 
-        let latitude = latitudeTextbox.value;
+    let latitude = latitudeTextbox.value;
 
-        let longitude = longitudeTextbox.value;
+    let longitude = longitudeTextbox.value;
 
-        let zoomLevel = parseInt(zoomTextbox.value);
-
-
-
-        let geometryList = [
-
-        {
-
-            latitude,
-
-            longitude,
-
-        },
-
-        ];
+    let zoomLevel = parseInt(zoomTextbox.value);
 
 
 
-        setMarkupOnMap(geometryList);
+    let geometryList = [
 
-        setZoomLevel(zoomLevel);
+    {
 
-    };
+        latitude,
+
+        longitude,
+
+    },
+
+    ];
 
 
 
-    if(addressTextbox){
+    setMarkupOnMap(geometryList);
+
+    setZoomLevel(zoomLevel);
+
+};
 
 
 
-        // Autocompletion Addres Bar
+if(addressTextbox){
 
-        const autocomplete = new google.maps.places.Autocomplete(addressTextbox, {
 
-            types: ["geocode"],
-
-        });
 
         // Autocompletion Addres Bar
 
-        new google.maps.places.Autocomplete(addressTextboxSingle, {
+    const autocomplete = new google.maps.places.Autocomplete(addressTextbox, {
 
-            types: ["geocode"],
+        types: ["geocode"],
 
-        });
+    });
+
+        // Autocompletion Addres Bar
+
+    new google.maps.places.Autocomplete(addressTextboxSingle, {
+
+        types: ["geocode"],
+
+    });
 
 
 
         // Event listener for the autocomplete object.
 
-        autocomplete.addListener("place_changed", function () {
+    autocomplete.addListener("place_changed", function () {
 
             // Get the selected place.
 
-            const place = autocomplete.getPlace();
+        const place = autocomplete.getPlace();
 
             // Set the address textbox to the selected place's address.
 
-            addressTextbox.value = place.formatted_address;
+        addressTextbox.value = place.formatted_address;
 
 
 
-            let latitude = place.geometry.location.lat();
+        let latitude = place.geometry.location.lat();
 
-            let longitude = place.geometry.location.lng();
-
-
-
-            latitudeTextbox.value = latitude;
-
-            longitudeTextbox.value = longitude;
+        let longitude = place.geometry.location.lng();
 
 
 
-            onPlaceChanged();
+        latitudeTextbox.value = latitude;
 
-        });
-
-    }
+        longitudeTextbox.value = longitude;
 
 
+
+        onPlaceChanged();
+
+    });
+
+}
 
 
 
 
 
-    if(latitudeTextbox) latitudeTextbox.onchange = onPlaceChanged;
 
-    if(longitudeTextbox) longitudeTextbox.onchange = onPlaceChanged;
 
-    if(zoomTextbox) zoomTextbox.onchange = onPlaceChanged;
+if(latitudeTextbox) latitudeTextbox.onchange = onPlaceChanged;
 
-    if(zoomTextbox) zoomTextbox.onkeyup = onPlaceChanged;
+if(longitudeTextbox) longitudeTextbox.onchange = onPlaceChanged;
+
+if(zoomTextbox) zoomTextbox.onchange = onPlaceChanged;
+
+if(zoomTextbox) zoomTextbox.onkeyup = onPlaceChanged;
 
 
 
@@ -612,21 +671,21 @@ setTimeout(function() {
 
 
 
-    function hasValueForKey(array, key, value) {
+function hasValueForKey(array, key, value) {
 
-        for (const object of array) {
+    for (const object of array) {
 
-          if (object.hasOwnProperty(key) && object[key] == value) {
+      if (object.hasOwnProperty(key) && object[key] == value) {
 
-            return true;
-
-        }
+        return true;
 
     }
 
+}
 
 
-    return false;
+
+return false;
 
 }
 
@@ -708,17 +767,16 @@ const fillImagesToList = (filesWrapper) => {
 
 
 
-
-
             mediaListHtml += `
 
-            <div class="col-md-1 mt-4 file  ${active_class} " style="background-image: url(${file.original_url})">
+            <div class="col-md-1 mt-4 file  ${active_class} " style="background-image: url(${file.thumbnail})">
 
-            <a href="javascript:void(0);" data-id="${file.id}" data-url="${file.original_url}" class="file-thumb">
 
-            <img src="${file.original_url}" class="img-responsive img-holder" />
+            <a href="javascript:void(0);" data-id="${file.id}" data-url="${file.original_url}" class="file-thumb" data-name="${file.name}">
 
-            <p class="text-center mb-2 text-break">${file.file_name}</p>
+            <img src="${file.thumbnail}" class="img-responsive img-holder" />
+
+
 
 
 
@@ -737,6 +795,8 @@ const fillImagesToList = (filesWrapper) => {
     createPaginationFromLinks(filesWrapper.links)
 
 }
+
+
 
 
 
@@ -781,12 +841,16 @@ $('.file-list').on("click", ".file", function() {
     let fileId = $(this).find('a').first().attr('data-id');
 
     let fileUrl = $(this).find('a').first().attr('data-url')
-
-
-
+    let fileName = $(this).find('a').first().attr('data-name')
+    let tb_image_prev_data = new Object();
     if(!$(this).hasClass('active')) {
 
             // adding
+         tb_image_prev_data.title = fileName;
+         tb_image_prev_data.imageUrl = fileUrl;
+         tb_image_prev_data.url = fileUrl;
+
+         $('#tb-image-prev').html(showImagePrevHtml(tb_image_prev_data));
 
         if(mediaMode == "single") {
 
@@ -805,7 +869,7 @@ $('.file-list').on("click", ".file", function() {
             }];
 
         }else {
-
+           
                 // Multiple Selection
             console.log('select',typeof selectedImages);
             $(this).addClass('active')
@@ -825,7 +889,7 @@ $('.file-list').on("click", ".file", function() {
     }else {
 
             // removing
-
+         $('#tb-image-prev').html(showImagePrevHtml(tb_image_prev_data));
         if(mediaMode == "single") {
 
                 // Remove active class from All
@@ -866,7 +930,7 @@ $('.file-list').on("click", ".file", function() {
 const loadImages = (url = null, searchTxt = '') => {
 
     let image_url = (url != null) ? url : base_admin_url + "/files/load-images";
-
+    preloader = $('body div#preloader-file');
     $.ajax({
 
         type: "GET",
@@ -878,6 +942,8 @@ const loadImages = (url = null, searchTxt = '') => {
             searchTxt: searchTxt
 
         },
+        beforeSend: showLoader,
+        complete: hideLoader,
 
         url: image_url,
 
@@ -1173,7 +1239,7 @@ $(".submit-media").on("click", function() {
 
         if(selectedImages.length != 0){
 
-        targetElem.parent().find('.media-txt-only').first().val(selectedImages[0].url);
+            targetElem.parent().find('.media-txt-only').first().val(selectedImages[0].url);
 
         }else{
 
@@ -1223,8 +1289,13 @@ $(".submit-media").on("click", function() {
 
 
 let mediaSelector = ".add-media-btn, .add-gallery-btn"
+let mediaRemove = '.remove-media-btn';
 
 
+// $("body").on("click", mediaRemove, function(){
+
+//     alert('remove');
+// });
 
     // Specifically for Subform
 
@@ -1244,25 +1315,25 @@ $("body").on("click", mediaSelector, function(){
 
         // TODO: Set Selected Items
 
-    let sImages = $(this).attr("selectedImages")
+    let sImages = $.trim($(this).attr("selectedImages"))
 
     selectedImages = [];
 
         // console.log("SImage Type", typeof sImages)
         //  console.log("SImage Val", sImages)
 
-      if(isJSON(sImages)) {
+    if(isJSON(sImages)) {
 
         selectedImages = JSON.parse(sImages)
 
         // console.log("S-Images", selectedImages)
         // console.log("S-Images Type", typeof selectedImages)
 
-      }else{
-        
+    }else{
+
         selectedImages = sImages;
 
-      }
+    }
 
         // TODO: Set Mode (Single/Multi)
 
@@ -1275,6 +1346,100 @@ $("body").on("click", mediaSelector, function(){
         // Load Images / Refresh Images
 
     loadImages();
+
+});
+
+const convertToSlug = function(Text) {
+  return Text.toLowerCase()
+  .replace(/ /g, "-")
+  .replace(/[^\w-]+/g, "");
+}
+
+
+const processedPageTemplateHtml = function(data,id){
+    if (data != '') {
+     $(`body ${id}`).html(data);
+     $('#page-extra-data').on("click",'.btn-add-subform', function () {
+
+        elemRef = $(this);
+
+        //preloader.css({'display':'block','z-index':1});
+        
+        let subformType = elemRef.attr("subform-type");
+
+        let targetSelector = elemRef.attr("target-selector");
+
+        let targetElem = $(targetSelector);
+
+
+
+            // Call Ajax Call
+
+        fetchSubForm(subformType, targetElem);
+
+        }); // On Click Event Block Ends
+
+       setTimeout(function() {
+
+        $(`body ${id}`).find(".tourist-editor").each((idx, te) => {
+
+            if (!$(te).next().hasClass("cke")) CKEDITOR.replace(te);
+
+        });
+    }, 1000);
+ }else{
+    $(`body ${id}`).children().remove();
+}
+
+}
+
+const fetchPageTemplate = function(ele){
+
+    let target_element = $(ele).children('option:selected').val();
+    //let target_element = $(ele).data('target_element');
+    //let location_id = $('.destination-all-content').data('location_id');
+
+    if (typeof target_element != 'undefined') {
+        if (target_element != '') {
+            target_element = convertToSlug(target_element);
+            let endpoint = base_url + "/extra-data/"+target_element;
+            let id = $('#page-id').val();
+            let params = new Object();
+            if (typeof id != 'undefined') {
+                params.id = id;
+            }
+
+
+            $.ajax({
+                type: "GET",
+                dataType: "html",
+                url: endpoint,
+                data:params,
+                beforeSend: showLoader,
+                complete: hideLoader,
+                success: function (response) {
+                    processedPageTemplateHtml(response,'#page-extra-data');
+
+                },
+                error:function(response) {
+                 alert('something went wrong!')
+             }
+         });
+        }else{
+            $(`body #page-extra-data`).children().remove();
+        }
+    }else{
+        $(`body #page-extra-data`).children().remove();
+    }
+}
+
+let pageType = $('body #page-type');
+
+if (pageType.children('option:selected').val() != "") {
+    fetchPageTemplate(pageType);
+}
+$(pageType).on('change',function(){
+ fetchPageTemplate(this);
 
 });
 

@@ -264,8 +264,6 @@ public function changeStatus(Request $request): JsonResponse
     
     if($location) {
      
-
-   
      $location->locationMeta()->update($request->only([
         "location_for_filter",
         "location_content",

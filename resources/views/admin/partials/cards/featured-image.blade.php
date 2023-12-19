@@ -5,6 +5,6 @@
 
 	<div class="card-body">
 		<!-- featured_image  -->
-		@include('admin.partials.utils.media', ['name'=> 'featured_image','label'=>'Featured Image','value'=>$item->featured_image ?? '','id' => ""])
+		{!!mediaTemplate(['name'=> 'featured_image','label'=>'Featured Image','value'=>$item->featured_image ?? '','id' => ""])!!}
 	</div>
 </div>

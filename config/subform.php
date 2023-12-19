@@ -58,6 +58,53 @@ return [
             ]
 
         ],
+    'about_info' => [
+            "fields" => [
+                "about_info-title" => [
+                    'label' => "Title",
+                    'control' => 'text'
+                ],
+                "about_info-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea',
+                    'class' => 'tourist-editor'
+                ]
+            ]
+
+        ],
+    'about_team' => [
+            "fields" => [
+                "about_team-name" => [
+                    'label' => "Name",
+                    'control' => 'text'
+                ],
+                "about_team-position" => [
+                    'label' => "Position",
+                    'control' => 'text'
+                ],
+                "about_team-image" => [
+                    'label' => "Image",
+                    'control' => 'media'
+                ],
+                "about_team-facebook" => [
+                    'label' => "Facebook Link",
+                    'control' => 'url'
+                ],
+                "about_team-twitter" => [
+                    'label' => "Twitter Link",
+                    'control' => 'url'
+                ],
+                "about_team-instagram" => [
+                    'label' => "Instagram Link",
+                    'control' => 'url'
+                ],
+                "about_team-youtube" => [
+                    'label' => "Youtube Link",
+                    'control' => 'url'
+                ],
+            ]
+
+        ],
     'foods' => [
             "fields" => [
                 "foods-title" => [

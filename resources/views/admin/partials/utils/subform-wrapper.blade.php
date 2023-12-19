@@ -1,3 +1,4 @@
+
 <ul class="list-{{ $type }} list-types"
 index="{{ !empty($subformData) && !is_null($subformData) && is_array($subformData) ? count($subformData) - 1 : -1 }}">
 
@@ -29,6 +30,7 @@ $first_element = reset($typeData);
     </div>
 
     <div class="card-body" style="display: none;">
+
       @foreach ($typeData as $controlId => $value)
       @if (isset($typeFields[$controlId]))
       @php
@@ -70,7 +72,7 @@ $first_element = reset($typeData);
             <input type="hidden" class="form-control media-input {{ $elemClass ?? '' }} gallery-input " name="{{ $type }}[{{ $key }}][{{ $controlId }}]"
             value="{{ $value }}" />
             @php
-                $parsedValue = !empty($value)?json_decode($value, true):'';
+            $parsedValue = !empty($value)?json_decode($value, true):'';
             @endphp
 
             <input type="text"
@@ -161,5 +163,12 @@ $first_element = reset($typeData);
 
 </ul>
 <p>You can re-order with drag & drop, the order will update after saving.</p>
+<div id="preloader_card_{{$type}}" class="preloader-card" style="display: none; z-index: 0;">
+  <div class="sk-three-bounce">
+    <div class="sk-child sk-bounce1"></div>
+    <div class="sk-child sk-bounce2"></div>
+    <div class="sk-child sk-bounce3"></div>
+  </div>
+</div>
 <a href="javascript:void(0);" class="btn btn-primary btn-add-subform" subform-type="{{ $type }}"
 target-selector=".list-{{ $type }}">{{ $btnTitle }}</a>

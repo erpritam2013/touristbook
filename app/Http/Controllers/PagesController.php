@@ -14,7 +14,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use App\DataTables\PageDataTable;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 use DB;
+use Auth;
 class PagesController extends Controller
 {
 
@@ -99,6 +101,19 @@ public function activities(Request $request) {
     $data['sourceId'] = $request->get('source_id');
 
     return view('sites.pages.activities', $data);
+}
+
+public function page_templates(Request $request,$view)
+{
+    $data = [];
+    if (isset($request->id)) {
+        $id = $request->id;
+        $page = $this->pageRepository->getPageByType($id,$view);
+        if (!empty($page)) {
+            $data['page'] = $page;
+        }
+    }
+    return View::make('admin.pages.page_templates.'.$view,$data);
 }
 public function our_packages(Request $request) {
 
@@ -730,4 +745,121 @@ public function getLocationState(Request $request) {
     return response()->json($results, 200);
 
 }
+
+function store(Request $request,)
+{
+
+  $extra_data = [];
+
+  $extra_data['about_info'] = $request->about_info;
+  $extra_data['about_team'] = $request->about_team;
+  $extra_data["page_sidebar_pos"] = $request->page_sidebar_pos;
+  $extra_data["page_sidebar"] = $request->page_sidebar;
+  $extra_data["social_links"] = $request->social_links;
+  $request->merge([
+    'extra_data' => $extra_data,
+]);
+
+  
+  $pageDetails = [
+    'name' => $request->name,
+    'slug' => SlugService::createSlug(Page::class, 'slug', $request->name),
+    'description' => $request->description,
+    "gallery" => $request->gallery,
+    "media" => $request->media,
+    "link" => $request->link,
+    "extra_data" => $request->extra_data,
+    "excerpt" => $request->excerpt,
+    "status" => $request->status,
+    "featured_image" => $request->featured_image,
+    "type" => $request->type,
+    "created_by"=> Auth::user()->id,
+];
+
+$this->pageRepository->createPage($pageDetails);
+Session::flash('success','Page Created Successfully');
+return redirect()->Route('admin.pages.pageIndex');
+}
+
+public function edit(Page $page)
+{
+    // $page = $this->pageRepository->getPageById($id);
+
+    if (empty($page)) {
+        return back();
+    }
+    
+    $data['title'] = 'Page Edit';
+    $data['page'] = $page;
+        //$data = array_merge_recursive($data, $this->_prepareBasicData());
+    return view('admin.pages.edit', $data);
+}
+
+function update(Request $request,Page $page)
+{
+
+  if (!empty($page)) {
+     abort(404);
+  }
+  $extra_data = [];
+
+  $extra_data['about_info'] = $request->about_info;
+  $extra_data['about_team'] = $request->about_team;
+  $extra_data["page_sidebar_pos"] = $request->page_sidebar_pos;
+  $extra_data["page_sidebar"] = $request->page_sidebar;
+  $extra_data["social_links"] = $request->social_links;
+  $request->merge([
+    'extra_data' => $extra_data,
+]);
+
+  
+  $pageDetails = [
+    'name' => $request->name,
+    //'slug' => SlugService::createSlug(Page::class, 'slug', $request->name),
+    'description' => $request->description,
+    "gallery" => $request->gallery,
+    "media" => $request->media,
+    "link" => $request->link,
+    "extra_data" => $request->extra_data,
+    "excerpt" => $request->excerpt,
+    "status" => $request->status,
+    "featured_image" => $request->featured_image,
+    "type" => $request->type,
+    "created_by"=> Auth::user()->id,
+];
+
+
+$this->pageRepository->updatePage($id,$pageDetails);
+Session::flash('success','Page Updated Successfully');
+return redirect()->Route('admin.pages.edit',$id);
+}
+
+function destroy(Page $page)
+{
+     $pageId = $page->id;
+        $this->pageRepository->deletePage($pageId);
+         Session::flash('success','Page Deleted Successfully');
+        return back();
+}
+
+  /**
+     * Remove the specified all resource from storage.
+     *
+     * @param  \App\Models\Page  $page
+     * @return \Illuminate\Http\Response
+     */
+
+     public function bulk_delete(Request $request)
+    {
+      
+         if (!empty($request->ids)) {
+        
+        $pageIds = get_array_mapping(json_decode($request->ids));
+        
+        $this->pageRepository->deleteBulkPage($pageIds);
+         Session::flash('success','Page Bulk Deleted Successfully');
+        }
+        return back();
+    }
+
 }

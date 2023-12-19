@@ -100,6 +100,13 @@
       0 => 'Spatie\\MediaLibrary\\MediaLibraryServiceProvider',
     ),
   ),
+  'tehwave/laravel-shortcodes' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'tehwave\\Shortcodes\\Providers\\ShortcodesServiceProvider',
+    ),
+  ),
   'yajra/laravel-datatables-buttons' => 
   array (
     'providers' => 

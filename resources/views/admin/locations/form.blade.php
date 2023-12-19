@@ -1,4 +1,4 @@
-     <form class="form-valide" id="location-form" action="@yield('location_action')" method="post">
+     <form class="form-valide" id="location-form" action="@yield('location_action')" method="post" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             @section('method_field')
                             @show
