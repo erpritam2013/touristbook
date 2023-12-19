@@ -28,10 +28,12 @@
          
             @if(!empty($value) && isset($value) && is_array($value))
                 <div class="row">
+
                 @foreach($value as $image)
                 <div class="col-xl-3">
                     @if(is_array($image))
-                    <img src="{{$image['url']}}" class="img" height="100" width="100" id="image-path-{{$image['id']}}" />
+                    
+                    <img src="{{$image['url'] ?? ''}}" class="img" height="100" width="100" id="image-path-{{$image['id']}}" />
                     @endif
                 </div>
                 @endforeach
