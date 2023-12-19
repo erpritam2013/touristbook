@@ -333,8 +333,6 @@ public function changeStatus(Request $request): JsonResponse
 
     $data['title'] = 'Tour Edit';
     $data['tour'] = $tour;
-
-    $data['test_html'] = purify_html('{<section class=\"wpb-content-wrapper\"><div class=\"vc_row wpb_row st bg-holder\"><div class="container"><div class='row'>\n\t<div class=\"wpb_column column_container col-md-12\"><div class=\"vc_column-inner wpb_wrapper\">\n\t\t\t\n\t<div class=\"wpb_text_column wpb_content_element  div-desc\" >\n\t\t<div class=\"wpb_wrapper\">\n\t\t\t<p>Rishikesh, Valley of Flowers, Hemkund Lokpal, and Badrinath offer a unique combination of adventure, spirituality, and natural beauty, making them a popular tourist destination in India. Visitors to these destinations can expect to see stunning natural beauty, experience spiritual. You can enjoy cultural activities, and participate in adventure sports.<\/p>\n\n\t\t<\/div>\n\t<\/div>\n<\/div>\n\t<\/div> \n<\/div><!--End .row--><\/div><!--End .container--><\/div>\n<\/section>}');
     $data = array_merge_recursive($data, $this->_prepareBasicData());
 
     return view('admin.tours.edit', $data);

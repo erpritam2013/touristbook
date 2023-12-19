@@ -701,6 +701,7 @@ public function load_tour_details() {
                         "disable_children_name" => $this->radio_value_modify($this->get_key_data($n_result["postmeta"], "disable_children_name")),
                         "disable_infant_name" => $this->radio_value_modify($this->get_key_data($n_result["postmeta"], "disable_infant_name")),
                         "extra_price" => $this->get_key_data($n_result["postmeta"], "extra_price"),
+                        "created_by" => $n_result["post_author"], 
                         "created_at" => $n_result["post_date_gmt"],
                         "updated_at" => $n_result["post_modified_gmt"],
                         "country_zone_id" => $this->get_key_data($n_result["postmeta"], "st_country_zone_id"),
@@ -964,6 +965,7 @@ public function load_tour_details() {
 
                             "featured_image" => $this->string_to_json($this->get_key_data($n_result["postmeta"], "_thumbnail_id"),'image_id'),
                             "status" => 1,
+                            "created_by" => $n_result["post_author"], 
                             "created_at"=>$n_result["post_date_gmt"],
                             "updated_at"=>$n_result["post_modified"]
 
