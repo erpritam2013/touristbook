@@ -438,9 +438,8 @@ if (cardListElm.length > 0) {
 setTimeout(function() {
 
     if (touristEditorsElems.length > 0) {
-        touristEditorsElems.each(function (idx, te) {
-     console.log(te)
-                
+        touristEditorsElems.each(function (idx, te) {   
+
             CKEDITOR.replace(te);
 
         });
@@ -771,6 +770,7 @@ const fillImagesToList = (filesWrapper) => {
             mediaListHtml += `
 
             <div class="col-md-1 mt-4 file  ${active_class} " style="background-image: url(${file.thumbnail})">
+
 
             <a href="javascript:void(0);" data-id="${file.id}" data-url="${file.original_url}" class="file-thumb" data-name="${file.name}">
 
@@ -1378,9 +1378,19 @@ const processedPageTemplateHtml = function(data,id){
         fetchSubForm(subformType, targetElem);
 
         }); // On Click Event Block Ends
+
+       setTimeout(function() {
+
+        $(`body ${id}`).find(".tourist-editor").each((idx, te) => {
+
+            if (!$(te).next().hasClass("cke")) CKEDITOR.replace(te);
+
+        });
+    }, 1000);
  }else{
     $(`body ${id}`).children().remove();
 }
+
 }
 
 const fetchPageTemplate = function(ele){
