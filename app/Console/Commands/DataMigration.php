@@ -16,9 +16,11 @@ use App\Models\Terms\OtherPackage;
 use App\Models\Terms\State;
 use App\Models\TourDetail;
 use App\Models\TourType;
+
 use App\Models\TourPackageType;
 use App\Models\TourState;
 use App\Models\TourOtherPackage;
+
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -364,6 +366,7 @@ class DataMigration extends Command
         } else {
             $result = json_encode($result);
         }
+
         if (!empty($result)) {
 
             return $result;
@@ -453,6 +456,7 @@ class DataMigration extends Command
             } else {
                 $address = 'Not Found';
             }
+
         } else {
             $address = 'Not Found';
         }
@@ -461,8 +465,10 @@ class DataMigration extends Command
     }
 
 
+
     public function load_tour_details()
     {
+
         $this->info("Tour Details Loading...");
         $post_collections = DB::connection($this->wp_connection)->table("wp_st_tours")->select("post_id")->get();
         $postIds = $post_collections->pluck('post_id')->toArray();
@@ -782,6 +788,7 @@ class DataMigration extends Command
                         "disable_children_name" => $this->radio_value_modify($this->get_key_data($n_result["postmeta"], "disable_children_name")),
                         "disable_infant_name" => $this->radio_value_modify($this->get_key_data($n_result["postmeta"], "disable_infant_name")),
                         "extra_price" => $this->get_key_data($n_result["postmeta"], "extra_price"),
+                        "created_by" => $n_result["post_author"], 
                         "created_at" => $n_result["post_date_gmt"],
                         "updated_at" => $n_result["post_modified_gmt"],
                         "country_zone_id" => $this->get_key_data($n_result["postmeta"], "st_country_zone_id"),
@@ -1002,6 +1009,7 @@ class DataMigration extends Command
             $metaValue = $result->meta_value;
 
             unset($result->meta_key, $result->meta_value); // Remove meta_key and meta_value fields
+
 
             $nestedResults[$postId]['postmeta'][$metaKey] = $metaValue;
         }
@@ -1277,8 +1285,7 @@ class DataMigration extends Command
                 $unserialize = unserialize($value);
                 if (is_array($unserialize)) {
                     if (isset($unserialize['st_icon'])) {
-
-                        $result = $unserialize['st_icon'];
+                       $result = $unserialize['st_icon'];
                     }
                 }
             }
@@ -1303,11 +1310,14 @@ class DataMigration extends Command
         }
         return $result;
     }
+
     public function setup_types()
     {
         $this->info("Terms Type Data Loading...");
         foreach ($this->term_category_dictionary as $type => $term_values) {
+
             $type_list = collect([]);
+
 
 
             $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
@@ -1512,6 +1522,7 @@ class DataMigration extends Command
         $this->info("Terms Other Package Data Loading...");
 
         foreach ($this->tour_other_package as $type => $term_values) {
+
             $other_package_list = collect([]);
 
             $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
@@ -1735,6 +1746,7 @@ class DataMigration extends Command
         }
     }
 
+
     /**
      * Execute the console command.
      *
@@ -1756,6 +1768,7 @@ class DataMigration extends Command
             // $term_table = ['states','tour_states'];
             $tables = ['tour_details'];
             //$tables = ['country_zones'];
+
             $this->info("Truncating tables...");
             $this->truncate_tables($tables);
 
@@ -1803,12 +1816,12 @@ class DataMigration extends Command
 
         // $this->associate_other_package_table($tours, $other_packages, TourOtherPackage::class);
 
-
         // Location Meta Module
         //$this->location_meta_migrate();
         //$this->st_country_zones_migration();
 
         //$this->associate_term_parent_id(OtherPackage::class,'other_package_type','Tour');
+
 
         // $this->associate_states_table($tours, $states, TourState::class);
 
