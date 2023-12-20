@@ -497,7 +497,7 @@ return [
                     'label' => "Image",
                     'control' => 'media'
                 ],
-                "tours_program-description" => [
+                "tours_program-desc" => [
                     'label' => "Description",
                     'control' => 'textarea'
                 ],

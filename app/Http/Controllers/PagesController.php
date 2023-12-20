@@ -472,7 +472,7 @@ public function getTours(Request $request, $view = "list") {
         $minimum = $range[0];
         $maximum = $range[1];
 
-        $tourQuery->whereBetween("avg_price", [$minimum, $maximum]);
+        $tourQuery->whereBetween("price", [$minimum, $maximum]);
     }
 
     if($request->has('duration_day') && !empty($request->get('duration_day'))) {
@@ -481,7 +481,7 @@ public function getTours(Request $request, $view = "list") {
             // $minimum = $duration_day[0];
             // $maximum = $duration_day[1];
 
-        $hotelQuery->whereIn("duration_day",$duration_day);
+        $tourQuery->whereIn("duration_day",$duration_day);
     }
 
 
@@ -745,19 +745,31 @@ public function getLocationState(Request $request) {
     return response()->json($results, 200);
 
 }
-
-function store(Request $request,)
+public function set_extra_data_of_page($request)
 {
+    $extra_data = [];
+  if (isset($request->type) && !empty($request->type)) {
+    if ($request->type == 'About') {
+        
+      $extra_data['about_info'] = $request->about_info;
+      $extra_data['about_team'] = $request->about_team;
+    }
+    if ($request->type == 'Tour') {
+        $extra_data = $request->extra_data;
+    }
 
-  $extra_data = [];
-
-  $extra_data['about_info'] = $request->about_info;
-  $extra_data['about_team'] = $request->about_team;
+  }
   $extra_data["page_sidebar_pos"] = $request->page_sidebar_pos;
   $extra_data["page_sidebar"] = $request->page_sidebar;
   $extra_data["social_links"] = $request->social_links;
-  $request->merge([
-    'extra_data' => $extra_data,
+
+  return $extra_data;
+}
+function store(Request $request,)
+{
+
+ $request->merge([
+    'extra_data' => $this->set_extra_data_of_page($request),
 ]);
 
   
@@ -795,21 +807,17 @@ public function edit(Page $page)
     return view('admin.pages.edit', $data);
 }
 
+
+
 function update(Request $request,Page $page)
 {
 
-  if (!empty($page)) {
+  if (empty($page)) {
      abort(404);
   }
-  $extra_data = [];
-
-  $extra_data['about_info'] = $request->about_info;
-  $extra_data['about_team'] = $request->about_team;
-  $extra_data["page_sidebar_pos"] = $request->page_sidebar_pos;
-  $extra_data["page_sidebar"] = $request->page_sidebar;
-  $extra_data["social_links"] = $request->social_links;
+  
   $request->merge([
-    'extra_data' => $extra_data,
+    'extra_data' => $this->set_extra_data_of_page($request),
 ]);
 
   
@@ -829,11 +837,20 @@ function update(Request $request,Page $page)
 ];
 
 
-$this->pageRepository->updatePage($id,$pageDetails);
+$this->pageRepository->updatePage($page->id,$pageDetails);
 Session::flash('success','Page Updated Successfully');
-return redirect()->Route('admin.pages.edit',$id);
+return redirect()->Route('admin.pages.edit',$page->id);
 }
-
+public function changeStatus(Request $request)
+{
+    $pageId = $request->id;
+    $pageDetails = [
+        'status' => $request->status,
+    ];
+    $this->pageRepository->updatePage($pageId, $pageDetails);
+    
+    return response()->json(['success'=>'Status change successfully.']);
+}
 function destroy(Page $page)
 {
      $pageId = $page->id;

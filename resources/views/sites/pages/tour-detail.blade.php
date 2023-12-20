@@ -12,7 +12,7 @@
 			@if(!empty($tour->detail->gallery))
 			@foreach($tour->detail->gallery as $gallery)
 			<div class="swiper-slide"><a data-toggle="gallery-top" title="tour gallery" style="width: 452px;height:300px;" ><img
-				src="{{ getConversionUrl($gallery['id'],'600x450') }}" alt="Our street" class="img-fluid" style="452px;height:300px;"></a>
+				src="{{ getConversionUrl($gallery['id'],'600x450') }}" alt="Our street" class="img-fluid" style="width: 452px;height:300px;"></a>
 			</div>
 			@endforeach
 			@else
@@ -246,7 +246,7 @@
 										<span class="accicon"><i class="fas fa-angle-down rotate-icon"></i></span>
 									</div>
 									<div id="st-program-{{$key}}" class="collapse {{$key == 0?'show':''}}" data-parent="#accordionStProgram">
-										<div class="card-body">{!!$tours_program['tours_program-description']!!}
+										<div class="card-body">{!!$tours_program['tours_program-desc']!!}
 										</div>
 									</div>
 								</div>
@@ -356,10 +356,10 @@
 
 									@php 
 
-									$email = touristbook_string_explode($tour->detail->contact['email']);
-									$website = touristbook_string_explode($tour->detail->contact['website']);
-									$phone = touristbook_string_explode($tour->detail->contact['phone']);
-									$fax = touristbook_string_explode($tour->detail->contact['fax']);
+									$email = touristbook_string_explode($tour->detail->contact['email'] ?? '');
+									$website = touristbook_string_explode($tour->detail->contact['website'] ?? '');
+									$phone = touristbook_string_explode($tour->detail->contact['phone'] ?? '');
+									$fax = touristbook_string_explode($tour->detail->contact['fax'] ?? '');
 
 									$address = $tour->address;
 
