@@ -63,7 +63,7 @@ class DataMigration extends Command
         "column" => 'package-type',
         "laravel_table" => 'tour_package_types'
     ],
-];  
+];
 protected $tour_other_package = [
   'Tour' => [
     "column" => 'other-packages',
@@ -555,7 +555,7 @@ public function load_tour_details() {
                     "st_booking_option_type" => $this->get_key_data($n_result['postmeta'], "st_booking_option_type"),
                     "gallery" =>$this->comma_saprated_to_array($this->get_key_data($n_result['postmeta'], "gallery"),'gallery'),
                     "video" => $this->get_key_data($n_result['postmeta'], "video"),
-                    
+
                     "contact" => json_encode([
                         "info" => $this->get_key_data($n_result['postmeta'], "show_agent_contact_info"),
                         "email" => $this->get_key_data($n_result['postmeta'], "email"),
@@ -817,7 +817,7 @@ public function load_tour_details() {
                         "disable_children_name" => $this->radio_value_modify($this->get_key_data($n_result["postmeta"], "disable_children_name")),
                         "disable_infant_name" => $this->radio_value_modify($this->get_key_data($n_result["postmeta"], "disable_infant_name")),
                         "extra_price" => $this->get_key_data($n_result["postmeta"], "extra_price"),
-                        "created_by" => $n_result["post_author"], 
+                        "created_by" => $n_result["post_author"],
                         "created_at" => $n_result["post_date_gmt"],
                         "updated_at" => $n_result["post_modified_gmt"],
                         "country_zone_id" => $this->get_key_data($n_result["postmeta"], "st_country_zone_id"),
@@ -1134,7 +1134,7 @@ public function load_tour_details() {
                 }
             }
 
-    
+
             // TODO: Can think better way
             // One more iteration for Laravel Specific
             $location_metas = collect([]);
@@ -1202,7 +1202,7 @@ public function load_tour_details() {
 
                     $location_metas->push($location_meta);
                 }
-                  
+
                 LocationMeta::insert($location_metas->toArray());
                 $this->info("Location 5 Details Loaded");
             }
@@ -1353,7 +1353,7 @@ public function setup_types() {
     ->select('wt.*', 'wtt.*','wtm.meta_key','wtm.meta_value')
 
     ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
-    ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id') 
+    ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
     ->where('wtt.taxonomy', $term_values['column'])
     ->orderBy('wt.term_id', 'asc')->get();
 
@@ -1483,7 +1483,7 @@ public function setup_types() {
        ->select('wt.*', 'wtt.*','wtm.meta_key','wtm.meta_value')
 
        ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
-       ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id') 
+       ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
        ->where('wtt.taxonomy', 'languages')
        ->orderBy('wt.term_id', 'asc')->get();
 
@@ -1548,7 +1548,7 @@ public function setup_types() {
        ->select('wt.*', 'wtt.*','wtm.meta_key','wtm.meta_value')
 
        ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
-       ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id') 
+       ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
        ->where('wtt.taxonomy', 'places')
        ->orderBy('wt.term_id', 'asc')->get();
 
@@ -1601,7 +1601,7 @@ public function setup_types() {
     public function associate_comman_relationship_table($objects, $terms, $term_rel_class,$field_1 ,$field_2 ) {
 
        // dump($terms->pluck('wp_taxonomy_id')->toArray());
-          
+
         // Fetch association Records
             $related_records = DB::connection($this->wp_connection)->table('wp_term_relationships')
             ->whereIn('object_id', $objects->pluck('wp_id')->toArray())
@@ -1628,7 +1628,7 @@ public function setup_types() {
 
                 }
             }
-           
+
             if(!empty($final_list)) {
                 $term_rel_class::insert($final_list);
 
@@ -1877,7 +1877,7 @@ public function setup_types() {
          foreach ($terms_parent as $parent) {
              if ($term->wp_taxonomy_id == $parent->parent_id) {
                  $parent->parent_id = $term->id;
-                 $parent->update(); 
+                 $parent->update();
              }
          }
      }
@@ -1992,7 +1992,7 @@ public function setup_types() {
                 }
 
             }
-        
+
             if(!empty($final_list)) {
                 $state_rel_class::insert($final_list);
             }
@@ -2039,11 +2039,11 @@ public function setup_types() {
             $related_records = DB::connection($this->wp_connection)->table('wp_st_tours')
             ->whereIn('post_id', $objects->pluck('wp_id')->toArray())->get();
 
-            
+
             $final_list  = [];
             $objectMapper = $objects->pluck('id', 'wp_id')->toArray();
             $locationMapper = $locations->pluck('id', 'wp_id')->toArray();
-            
+
             foreach($related_records as $record) {
                 if(isset($objectMapper[$record->post_id])) {
                     $this->info("Append");
@@ -2060,7 +2060,7 @@ public function setup_types() {
 
                 }
             }
-            
+
             if(!empty($final_list)) {
                 $location_rel_class::insert($final_list);
             }
@@ -2165,7 +2165,7 @@ public function setup_types() {
        //$this->associate_states_table($activities, $states, ActivityState::class,'activity_id');
       // $this->associate_states_table($hotels, $states, HotelState::class,'hotel_id');
        //$this->associate_language_table($tours, $languages, TourLanguage::class);
-       
+
        //$this->associate_tour_location_table($tours, $locations, TourLocation::class );
       //$this->associate_type_table($tours, $types, TourType::class);
 
@@ -2173,7 +2173,7 @@ public function setup_types() {
         // For Tour
         // $tours = Tour::get();
          // $package_types = PackageType::where('package_type_type', 'Tour')->get();
-        $places = Place::get();  
+        $places = Place::get();
         $this->associate_comman_relationship_table($locations, $places, LocationPlace::class,'location_id','place_id');
           // $this->associate_comman_relationship_table($tours, $package_types, TourPackageType::class,'tour_id','package_type_id');
         // $this->associate_package_type_table($tours, $package_types, TourPackageType::class);
@@ -2182,13 +2182,12 @@ public function setup_types() {
 
         //$this->associate_other_package_table($tours, $other_packages, TourOtherPackage::class);
 
-       
+
       //   //$this->chnage_content($tours,'st_tours');
-      
-     
+
+
       //$this->associate_term_parent_id(OtherPackage::class, 'other_package_type', 'Tour');
        return Command::SUCCESS;
 
    }
 }
-
