@@ -425,8 +425,8 @@ public function string_to_json($string,$type='',$format=false)
                 $result = json_encode($result);
             }
 
-        }
 
+        }
 
     }
 
@@ -436,6 +436,7 @@ if (!empty($result)) {
 }else{
     $result = "";
 }
+
 
 
 }
@@ -505,10 +506,12 @@ public function get_content_from_wp($id, $post_type)
    return $content;
 }
 
+
 public function load_tour_details() {
     $this->info("Tour Details Loading...");
     $post_collections = DB::connection($this->wp_connection)->table("wp_st_tours")->select("post_id")->get();
     $postIds = $post_collections->pluck('post_id')->toArray();
+
 
     $tourIds = Tour::whereIn("wp_id", $postIds)->select("wp_id", "id")->pluck('id', 'wp_id');
     $recourd_count = 0;
@@ -954,6 +957,7 @@ public function load_tour_details() {
             $postId = $result->ID;
                     unset($result->ID); // Remove the ID field from the main post data
 
+
                     if (!isset($nestedResults[$postId])) {
                         $nestedResults[$postId] = (array) $result;
                         $nestedResults[$postId]['postmeta'] = [];
@@ -1155,7 +1159,9 @@ public function load_tour_details() {
             ->get();
 
 
+
               // Build 500 Objects
+
             $nestedResults = [];
             $serializer_fields =  ["country_zone_section"];
 
@@ -1345,8 +1351,10 @@ public function setup_types() {
     public function setup_package_types() {
      $this->info("Terms Package Type Data Loading...");
 
+
      foreach($this->tour_package_type as $type => $term_values) {
         $package_type_list = collect([]);
+
 
         $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
         ->select('wt.*', 'wtt.*','wtm.meta_key','wtm.meta_value')
@@ -1969,9 +1977,11 @@ public function setup_states() {
 
        // $this->associate_other_package_table($tours, $other_packages, TourOtherPackage::class);
 
+
         //$this->chnage_content($tours,'st_tours');
 
       return Command::SUCCESS;
 
   }
 }
+
