@@ -501,13 +501,13 @@ public function changeStatus(Request $request): JsonResponse
        
        
 
-       
-       $activity->activity_zone()->sync($request->get('activity_zone_id'));
-       $activity->attractions()->sync($request->get('attraction'));
-       $activity->locations()->sync($request->get('location_id'));
-       $activity->languages()->sync($request->get('language'));
-       $activity->term_activity_lists()->sync($request->get('term_activity_list'));
-       $activity->states()->sync($request->get('state_id'));
+ $activity->activity_zone()->sync($request->get('activity_zone_id'));
+ $activity->attractions()->sync($request->get('attraction'));
+ $activity->locations()->sync($request->get('location_id'));
+ $activity->languages()->sync($request->get('language'));
+ $activity->term_activity_lists()->sync($request->get('term_activity_list'));
+ $activity->states()->sync($request->get('state_id'));
+
             // activitiescard
    }
         // return $activity;
