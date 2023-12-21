@@ -699,6 +699,7 @@ if (!function_exists('get_price')) {
         }
         $priceObject = Conversion::where('currency_name', Session::get('currency'))->first();
         $price = 0;
+
         if($priceObject != null) {
             $currency_symbal = $priceObject->currency_symbol;
             if (is_object($obj)) {
@@ -708,19 +709,30 @@ if (!function_exists('get_price')) {
             }elseif (isset($obj->price)) {
                   $price = $priceObject->conversion_rate * ((!empty($obj->price))?round($obj->price):0);
             }else{
-            $price = $obj;
+            $price = $obj->price;
             }
             }else{
              $price = $priceObject->conversion_rate * ((!empty($obj))?round($obj):0);
             }
+        }else{
+             if (is_object($obj)) {
+                $price = ((!empty($obj->price))?round($obj->price):0);
+             }else{
+              $price = $obj;
+
+             }
         }
         $price_html .=   $currency_symbal;
+        if (is_float($price)) {
         $price_html .= ceil($price);
+        }else{
+        $price_html .= $price;
+        }
          //$price_html .= number_format((float)$price, 2, '.', '');
         if (is_object($obj)) {
         $price_html .= '</span>';
         }
-
+      
         return $price_html;
   }
 }
