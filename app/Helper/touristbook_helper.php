@@ -277,7 +277,7 @@ if (!function_exists('mediaTemplate')) {
     if(is_array($value) && isset($value[0])){
         $value_url = $value[0]['url'];
     }
-    $html .='<input type="text" class="form-control media-txt-only" value="'.$value_url.'" id="'.$id.'" placeholder="Enter '.$label.'..."/>';
+    $html .='<input type="url" class="form-control media-txt-only" value="'.$value_url.'" id="'.$id.'" placeholder="Enter '.$label.'..."/>';
 }
 $json_encode = is_array($value) ? json_encode($value) : "";
 
