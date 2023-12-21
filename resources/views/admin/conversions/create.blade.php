@@ -29,7 +29,8 @@
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="col-lg-10">
-                                <select class="form-control" id="currency_name" name="currency_name">
+                                <select class="form-control single-select-placeholder-touristbook" id="currency_name" name="currency_name">
+                                    <option value="">--Select--</option>
                                     @foreach($currencyList as $currencyKey=>$currencyName)
                                         <option value="{{$currencyKey}}" @if(old('currency_name', $conversion->currency_name ?? '') == $currencyKey) selected @endif >{{$currencyName}}</option>
                                     @endforeach
@@ -44,7 +45,8 @@
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="col-lg-10">
-                                <select class="form-control" id="country_code" name="country_code">
+                                <select class="form-control single-select-placeholder-touristbook" id="country_code" name="country_code">
+                                    <option value="">--Select--</option>
                                     @foreach($countryCodes as $countryCode)
                                         <option value="{{$countryCode->code}}" @if(old('country_code', $conversion->country_code ?? '') == $countryCode->code) selected @endif >{{$countryCode->countryname}}</option>
                                     @endforeach
