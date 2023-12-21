@@ -23,6 +23,7 @@ $first_element = reset($typeData);
             $elemClass = isset($typeFields[$controlId]['class']) ? $typeFields[$controlId]['class'] : '';
             $rows = isset($typeFields[$controlId]['rows']) ? $typeFields[$controlId]['rows'] : 8;
             $desc = isset($typeFields[$controlId]['desc']) ? $typeFields[$controlId]['desc'] : '';
+            $cols = isset($typeFields[$controlId]['cols']) ? $typeFields[$controlId]['cols'] : '';
             @endphp
             @php
             $hideClass = isset($typeFields[$controlId]['hide']) ? $typeFields[$controlId]['hide'] : '';
@@ -41,12 +42,12 @@ $first_element = reset($typeData);
                 @elseif($typeFields[$controlId]['control'] == "url")
                 <input type="url" class="form-control {{$elemClass}} " name="{{$type}}[{{$key}}][{{$controlId}}]" value="{{$value ?? ''}}" id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}" placeholder="Enter {{$typeFields[$controlId]['label']}}...">
                 @elseif($typeFields[$controlId]['control'] == "textarea")
-                <textarea class="form-control {{$elemClass}} " name="{{$type}}[{{$key}}][{{$controlId}}]"  id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}" placeholder="Enter {{$typeFields[$controlId]['label']}}..." rows="{{$rows ?? 8}}">{{$value ?? ''}}</textarea>
+                <textarea class="form-control {{$elemClass}} " name="{{$type}}[{{$key}}][{{$controlId}}]"  id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}" placeholder="Enter {{$typeFields[$controlId]['label']}}..." rows="{{$rows ?? 8}}" cols="{{$cols ?? ''}}">{{$value ?? ''}}</textarea>
                 @elseif($typeFields[$controlId]['control'] == "media")
                 <div class="media-controls ">
                     <input type="hidden" class="form-control media-input {{ $elemClass ?? '' }} gallery-input " name="{{$type}}[{{$key}}][{{$controlId}}]"
                     value="" />
-                    <input type="text" class="form-control  media-txt-only {{$elemClass}}" readonly="true"  value="" id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}" placeholder="Enter {{$typeFields[$controlId]['label']}}..."/>
+                    <input type="url" class="form-control  media-txt-only {{$elemClass}}" readonly="true"  value="" id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}" placeholder="Enter {{$typeFields[$controlId]['label']}}..."/>
 
                     <button type="button" class="btn btn-primary mt-2 add-media-btn" smode="single" selectedImages="{{$value ?? ''}}"  >+</button>
                     <button type="button" class="btn btn-danger mt-2 remove-media-btn">-</button>

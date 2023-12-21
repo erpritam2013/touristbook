@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('tours', function (Blueprint $table) {
-            $table->string('external_link')->nullable()->change();
-            $table->string('tour_price_by')->nullable()->change();
-            $table->json('extra_price')->nullable()->change();
-
-
+        Schema::table('languages', function (Blueprint $table) {
+            $table->bigInteger('wp_term_id')->nullable();
+            $table->bigInteger('wp_taxonomy_id')->nullable();
         });
     }
 
@@ -29,8 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('tours', function (Blueprint $table) {
-            //
+        Schema::table('languages', function (Blueprint $table) {
+             $table->dropColumn(['wp_term_id', 'wp_taxonomy_id']);
         });
     }
 };

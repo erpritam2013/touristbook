@@ -294,7 +294,7 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
         Route::get('/', [PagesController::class,'pages'])->name('pageIndex');
         Route::get('/extra-data/{view}', [PagesController::class,'page_templates'])->name('pageExtraData');
         Route::get('/create', [PagesController::class,'create'])->name('create');
-        Route::post('/', [PagesController::class,'  '])->name('store');
+        Route::post('/', [PagesController::class,'store'])->name('store');
         Route::get('/{page}/edit', [PagesController::class,'edit'])->name('edit');
         Route::put('/{page}', [PagesController::class,'update'])->name('update');
         Route::delete('/{page}', [PagesController::class,'destroy'])->name('destroy');
