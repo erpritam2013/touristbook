@@ -14,6 +14,7 @@ $typeFields = Config::get('subform.' . $type . '.fields');
 
 @if (!empty($typeData))
 @php
+if0
 $first_element = reset($typeData);
 @endphp
 <li class="subform-card">
@@ -77,7 +78,7 @@ $first_element = reset($typeData);
             $parsedValue = !empty($value)?json_decode($value, true):'';
             @endphp
 
-            <input type="text"
+            <input type="url"
             class="form-control media-txt-only {{ $elemClass }}" readonly="true"
             value="@if(is_array($parsedValue) && isset($parsedValue[0]) && isset($parsedValue[0]['url'])  ){{$parsedValue[0]['url']}}@endif"
             id="{{ $type . '-tsign-' . $key . '-tsign-' . $controlId }}"

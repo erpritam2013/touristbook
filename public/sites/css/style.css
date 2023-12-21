@@ -15215,6 +15215,10 @@ body.destination-detail-page .destination-all-content #tab-packages-activities .
     font-size: 20px;
 }
 }
+body #showMoreData #showMoreDataBody{
+  overflow: auto;
+  height: 300px;  
+}
 /*destination detail page tabs css end*/
 
 
