@@ -9,20 +9,27 @@ use App\Models\Media;
 use App\Models\Location;
 use App\Models\CountryZone;
 use App\Models\Hotel;
+use App\Models\Activity;
 use App\Models\LocationMeta;
 use App\Models\Terms\Type;
 use App\Models\Terms\PackageType;
 use App\Models\Terms\OtherPackage;
 use App\Models\Terms\State;
+use App\Models\Terms\Place;
 use App\Models\Terms\Language;
 use App\Models\TourLanguage;
 use App\Models\TourLocation;
 use App\Models\ActivityLanguage;
 use App\Models\TourDetail;
 use App\Models\TourType;
+use App\Models\LocationPlace;
 
 use App\Models\TourPackageType;
 use App\Models\TourState;
+use App\Models\LocationState;
+use App\Models\ActivityState;
+use App\Models\HotelState;
+use App\Models\RoomState;
 use App\Models\TourOtherPackage;
 
 use Illuminate\Console\Command;
@@ -56,7 +63,7 @@ class DataMigration extends Command
         "column" => 'package-type',
         "laravel_table" => 'tour_package_types'
     ],
-];  
+];
 protected $tour_other_package = [
   'Tour' => [
     "column" => 'other-packages',
@@ -334,7 +341,12 @@ protected $term_category_dictionary = [
                 }
             }
         }
-        return $result;
+        if (!empty($result)) {
+
+    return $result;
+}else{
+    $result = null;
+}
     }
 
 
@@ -454,7 +466,7 @@ public function geolocationaddress($lat, $long)
 }
 public function get_content_from_wp($id, $post_type)
 {
-    $geocode = "https://test.thetouristbook.com/wp-json/wtrest/tours?id=$id&post_type=$post_type";
+    $geocode = "https://test.thetouristbook.com/wp-json/wtrest/posts?id=$id&post_type=$post_type";
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $geocode);
@@ -543,7 +555,7 @@ public function load_tour_details() {
                     "st_booking_option_type" => $this->get_key_data($n_result['postmeta'], "st_booking_option_type"),
                     "gallery" =>$this->comma_saprated_to_array($this->get_key_data($n_result['postmeta'], "gallery"),'gallery'),
                     "video" => $this->get_key_data($n_result['postmeta'], "video"),
-                    
+
                     "contact" => json_encode([
                         "info" => $this->get_key_data($n_result['postmeta'], "show_agent_contact_info"),
                         "email" => $this->get_key_data($n_result['postmeta'], "email"),
@@ -603,7 +615,109 @@ public function load_tour_details() {
 
         $this->info("Tour Details Loaded");
     }
+ /**
+     * Hotel Module Migration
+     */
+    public function hotel_migrate() {
 
+        $this->info("Hotel Data Loading...");
+        $post_collections = DB::connection($this->wp_connection)->table("wp_st_hotel")->select("post_id")->get();
+        $postIds = $post_collections->pluck('post_id')->toArray();
+
+        foreach (array_chunk($postIds, 200) as $pIds) {
+
+            $pQuery = DB::connection($this->wp_connection)->table('wp_posts as p')
+                ->select('p.*', 'pm.*', 'wp_st_hotel.*')
+                ->leftJoin("wp_st_hotel", "wp_st_hotel.post_id", '=', 'p.ID')
+                ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+                ->whereIn('pm.meta_key', [
+                   'address', 'hotel_link', 'food_and_dining', 'is_featured', 'logo', '_thumbnail_id', 'email', 'phone', 'fax', 'website', 'show_agent_contact_info', 'allow_full_day', 'check_in_time', 'check_out_time', 'hotel_policy', 'important_notices_data', 'gallery'
+                ])
+                ->where('p.post_type', 'st_hotel')
+                ->where('p.post_status', 'publish')
+                ->whereIn('p.ID', $pIds)
+                ->orderBy('p.ID', 'desc');
+
+            $results = $pQuery->get();
+            $nestedResults = [];
+           // $serializer_fields = ['hotel_policy', 'important_notices_data'];
+            $serializer_fields_no_prefix = [];
+            foreach ($results as $result) {
+                $postId = $result->ID;
+                unset($result->ID); // Remove the ID field from the main post data
+
+                if (!isset($nestedResults[$postId])) {
+                    $nestedResults[$postId] = (array) $result;
+                    $nestedResults[$postId]['postmeta'] = [];
+                }
+
+                $metaKey = $result->meta_key;
+                $metaValue = $result->meta_value;
+
+                unset($result->meta_key, $result->meta_value); // Remove meta_key and meta_value fields
+
+                // if(in_array($metaKey, $serializer_fields_no_prefix)){
+                //     $nestedResults[$postId]['postmeta'][$metaKey] = $this->unserialize_data_format_in_array($metaValue);
+                // }
+
+                // if (in_array($metaKey, $serializer_fields)) {
+                //     // Serialized Results
+                //     $nestedResults[$postId]['postmeta'][$metaKey] = $this->unserialize_data_format_in_array($metaValue, $metaKey);
+                // } else {
+                // }
+                $nestedResults[$postId]['postmeta'][$metaKey] = $metaValue;
+            }
+
+
+            // TODO: Can think better way
+            // One more iteration for Laravel Specific
+            $hotels = collect([]);
+            if (!empty($nestedResults)) {
+                foreach ($nestedResults as $postId => $n_result) {
+                    $hotel = [
+                        "wp_id" => $postId,
+                        "name" => $n_result["post_title"],
+                        "slug" =>  $n_result["post_name"],
+                        "description" => $n_result["post_content"],
+                        "address" => $this->get_key_data($n_result["postmeta"], "address"),
+                        "external_link" => $this->get_key_data($n_result["postmeta"], "hotel_link"),
+                        "food_dining" => $this->get_key_data($n_result["postmeta"], "food_and_dining"),
+                        "is_featured" => $this->get_key_data($n_result["postmeta"], "is_featured"),
+                        "logo" => $this->get_key_data($n_result["postmeta"], "logo"),
+                        "featured_image" => $this->string_to_json($this->get_key_data($n_result["postmeta"], "_thumbnail_id"), 'image_id'),
+                        "hotel_video" => $this->get_key_data($n_result["postmeta"], "address"),
+                        "rating" => $n_result["rating"],
+                        "coupon_code" => $this->get_key_data($n_result["postmeta"], "address"),
+                        "hotel_attributes" => '',
+                        "contact" => '',
+                        "avg_price" => '',
+                        "is_allowed_full_day" => '',
+                        "check_in" => '',
+                        "check_out" => '',
+                        "book_before_day" => '',
+                        "book_before_arrival" => '',
+                        "policies" => $this->unserialize_data_format_in_array($this->get_key_data($n_result["postmeta"], "hotel_policy"),'policies'),
+                        "notices" => $this->unserialize_data_format_in_array($this->get_key_data($n_result["postmeta"], "important_notices_data"),'notices'),
+                        "check_editing"  => '',
+                        "created_by" => '',
+                        "created_at" => '',
+                        "updated_at" => '',
+                        "images" => gallery,
+                    ];
+
+                    $hotels->push($hotel);
+                }
+
+                Hotel::insert($hotels->toArray());
+            }
+        }
+        // TODO: Tour Details
+        $this->info("Hotel Data Loading Completed");
+
+
+
+
+    }
 
     /**
      * Tour Module
@@ -703,7 +817,7 @@ public function load_tour_details() {
                         "disable_children_name" => $this->radio_value_modify($this->get_key_data($n_result["postmeta"], "disable_children_name")),
                         "disable_infant_name" => $this->radio_value_modify($this->get_key_data($n_result["postmeta"], "disable_infant_name")),
                         "extra_price" => $this->get_key_data($n_result["postmeta"], "extra_price"),
-                        "created_by" => $n_result["post_author"], 
+                        "created_by" => $n_result["post_author"],
                         "created_at" => $n_result["post_date_gmt"],
                         "updated_at" => $n_result["post_modified_gmt"],
                         "country_zone_id" => $this->get_key_data($n_result["postmeta"], "st_country_zone_id"),
@@ -1020,7 +1134,7 @@ public function load_tour_details() {
                 }
             }
 
-    
+
             // TODO: Can think better way
             // One more iteration for Laravel Specific
             $location_metas = collect([]);
@@ -1085,9 +1199,10 @@ public function load_tour_details() {
                         "updated_at" => $n_result["post_modified_gmt"]
 
                     ];
+
                     $location_metas->push($location_meta);
                 }
-                  
+
                 LocationMeta::insert($location_metas->toArray());
                 $this->info("Location 5 Details Loaded");
             }
@@ -1234,13 +1349,11 @@ public function setup_types() {
    foreach($this->term_category_dictionary as $type => $term_values) {
     $type_list = collect([]);
 
-
-
     $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
     ->select('wt.*', 'wtt.*','wtm.meta_key','wtm.meta_value')
 
     ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
-    ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id') 
+    ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
     ->where('wtt.taxonomy', $term_values['column'])
     ->orderBy('wt.term_id', 'asc')->get();
 
@@ -1267,7 +1380,6 @@ public function setup_types() {
                     }
 
                 }
-            }
 
             if(!empty($nestedResults)) {
                 foreach($nestedResults as $termId => $n_result) {
@@ -1291,8 +1403,10 @@ public function setup_types() {
 
                 Type::insert($type_list->toArray());
             }
-            $this->info("Terms Type Data Loading Completed");
         }
+
+            $this->info("Terms Type Data Loading Completed");
+}
 
         public function setup_package_types() {
            $this->info("Terms Package Type Data Loading...");
@@ -1369,7 +1483,7 @@ public function setup_types() {
        ->select('wt.*', 'wtt.*','wtm.meta_key','wtm.meta_value')
 
        ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
-       ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id') 
+       ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
        ->where('wtt.taxonomy', 'languages')
        ->orderBy('wt.term_id', 'asc')->get();
 
@@ -1427,7 +1541,101 @@ public function setup_types() {
 
 
         }
+        public function setup_places() {
+       $this->info("Terms Place Data Loading...");
+       $place_list = collect([]);
+       $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
+       ->select('wt.*', 'wtt.*','wtm.meta_key','wtm.meta_value')
 
+       ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+       ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
+       ->where('wtt.taxonomy', 'places')
+       ->orderBy('wt.term_id', 'asc')->get();
+
+
+       $nestedResults = [];
+            // $serializer_fields =  ["country_zone_section"];
+
+       foreach ($results as $result) {
+        $termId = $result->term_id;
+                    //unset($result->term_id); // Remove the ID field from the main term data
+
+        if (!isset($nestedResults[$termId])) {
+            $nestedResults[$termId] = (array) $result;
+            $nestedResults[$termId]['termmeta'] = [];
+        }
+
+        $metaKey = $result->meta_key;
+        $metaValue = $result->meta_value;
+
+                    unset($result->meta_key, $result->meta_value); // Remove meta_key and meta_value fields
+                    if (!empty($metaKey)) {
+
+                        $nestedResults[$termId]['termmeta'][$metaKey] = $metaValue;
+                    }
+                }
+
+
+
+                if(!empty($nestedResults)) {
+                    foreach($nestedResults as $termId => $n_result) {
+                        $tax_met_value = 'tax_meta_'.$n_result['term_taxonomy_id'];
+                        $single_place = [
+                            "name" => $n_result['name'],
+                            "slug" => $n_result['slug'],
+                        "parent_id" => $n_result['parent'], // We will set it
+                        "description" => $n_result['description'],
+                        "wp_term_id" => $termId,
+                        "icon"=> $this->wp_term_icon_refind($this->wp_option_get_value($tax_met_value)),
+                        "wp_taxonomy_id" => $n_result['term_taxonomy_id']
+                    ];
+
+                    $place_list->push($single_place);
+
+                }
+                Place::insert($place_list->toArray());
+            }
+            $this->info("Terms Places Data Loading Completed");
+        }
+
+    public function associate_comman_relationship_table($objects, $terms, $term_rel_class,$field_1 ,$field_2 ) {
+
+       // dump($terms->pluck('wp_taxonomy_id')->toArray());
+
+        // Fetch association Records
+            $related_records = DB::connection($this->wp_connection)->table('wp_term_relationships')
+            ->whereIn('object_id', $objects->pluck('wp_id')->toArray())
+            ->whereIn('term_taxonomy_id', $terms->pluck('wp_taxonomy_id')->toArray())
+
+            ->get();
+
+
+            $final_list  = [];
+            $objectMapper = $objects->pluck('id', 'wp_id')->toArray();
+            $termMapper = $terms->pluck('id', 'wp_taxonomy_id')->toArray();
+
+            foreach($related_records as $record) {
+                if(isset($objectMapper[$record->object_id]) && isset($termMapper[$record->term_taxonomy_id])) {
+                    $this->info("Append");
+                    $final_row = [
+
+                    // Need to dynamically tour_id, type_id column
+                        $field_1  => $objectMapper[$record->object_id],
+                        $field_2  => $termMapper[$record->term_taxonomy_id]
+                    ];
+
+                    $final_list[] = $final_row;
+
+                }
+            }
+
+            if(!empty($final_list)) {
+                $term_rel_class::insert($final_list);
+
+            }
+
+
+        }
 
         
         public function associate_language_table($objects, $languages, $language_rel_class ) {
@@ -1669,7 +1877,7 @@ public function setup_types() {
          foreach ($terms_parent as $parent) {
              if ($term->wp_taxonomy_id == $parent->parent_id) {
                  $parent->parent_id = $term->id;
-                 $parent->update(); 
+                 $parent->update();
              }
          }
      }
@@ -1750,7 +1958,7 @@ public function setup_types() {
 
         }
 
-        public function associate_states_table($objects, $states, $state_rel_class ) {
+        public function associate_states_table($objects, $states, $state_rel_class,$field) {
 
 
         // dump($types->pluck('wp_taxonomy_id')->toArray());
@@ -1771,11 +1979,11 @@ public function setup_types() {
 
             foreach($related_records as $record) {
                 if(isset($objectMapper[$record->object_id]) && isset($stateMapper[$record->term_taxonomy_id])) {
-                    $this->info("Append");
+                    $this->info("Append ass");
                     $final_row = [
 
                     // Need to dynamically tour_id, type_id column
-                        'tour_id' => $objectMapper[$record->object_id],
+                        $field => $objectMapper[$record->object_id],
                         'state_id' => $stateMapper[$record->term_taxonomy_id]
                     ];
 
@@ -1831,11 +2039,11 @@ public function setup_types() {
             $related_records = DB::connection($this->wp_connection)->table('wp_st_tours')
             ->whereIn('post_id', $objects->pluck('wp_id')->toArray())->get();
 
-            
+
             $final_list  = [];
             $objectMapper = $objects->pluck('id', 'wp_id')->toArray();
             $locationMapper = $locations->pluck('id', 'wp_id')->toArray();
-            
+
             foreach($related_records as $record) {
                 if(isset($objectMapper[$record->post_id])) {
                     $this->info("Append");
@@ -1852,7 +2060,7 @@ public function setup_types() {
 
                 }
             }
-            
+
             if(!empty($final_list)) {
                 $location_rel_class::insert($final_list);
             }
@@ -1883,19 +2091,24 @@ public function setup_types() {
 
              // $tables = ['users','tours','locations','location_meta','country_zones'];
              // $tables = ['locations','location_meta'];
-             $tables = ['location_meta'];
-         // $tables = ['tour_locations'];
-          // $term_table = ['languages','tour_languages'];
-          // $term_table = ['types','tour_types'];
+            // $tables = ['location_meta'];
+           //$tables = ['tour_locations'];
+           // $term_table = ['languages','tour_languages'];
+           //$term_table = ['types','tour_types'];
 
-            // $term_table = ['package_types','tour_package_types'];
-            // $term_table = ['other_packages','tour_other_packages'];
-            // $term_table = ['states','tour_states'];
+              //$term_table = ['package_types','tour_package_types'];
+          //  $term_table = ['other_packages','tour_other_packages'];
+             // $term_table = ['states','tour_states'];
+              $term_table = ['places','location_places'];
+              //$term_table = ['location_states'];
+             //$term_table = ['hotel_states'];
+             //$term_table = ['activity_states'];
             //$tables = ['tour_details'];
             //$tables = ['country_zones'];
 
            $this->info("Truncating tables...");
-           $this->truncate_tables($tables);
+          $this->truncate_tables($term_table);
+           //$this->truncate_tables($tables);
 
            $this->info("Table Truncated...");
        }
@@ -1923,43 +2136,58 @@ public function setup_types() {
          //$this->location_migrate();
 
         // Location Meta Module
-        $this->location_meta_migrate();
+       // $this->location_meta_migrate();
 
 
         // Setup Types
 
 
-        // $this->setup_types();
-        // $this->setup_package_types();
-        //$this->setup_other_packages();
-     // $this->setup_language();
-       // $this->setup_states();
+         //$this->setup_types();
+         //$this->setup_package_types();
+       // $this->setup_other_packages();
+       // $this->setup_language();
+        //$this->setup_states();
+       $this->setup_places();
         // Associate with Types
         // For Tour
 
-       //$tours = Tour::get();
-      // $types = Type::where('type', 'Tour')->get();
-      // $languages = Language::get();
-      // $this->associate_language_table($tours, $languages, TourLanguage::class);
-       //$locations = Location::get();
+        //$tours = Tour::get();
+        $locations = Location::get();
+       // $hotels = Hotel::get();
+       // $activities = Activity::get();
+       // $tours = Tour::where('description','like','%[vc_row]%')->get();
+
+        //$types = Type::where('type', 'Tour')->get();
+       //$languages = Language::get();
+       //$states = State::get();
+      // $this->associate_states_table($tours, $states, TourState::class,'tour_id');
+      //$this->associate_states_table($locations, $states, LocationState::class,'location_id');
+       //$this->associate_states_table($activities, $states, ActivityState::class,'activity_id');
+      // $this->associate_states_table($hotels, $states, HotelState::class,'hotel_id');
+       //$this->associate_language_table($tours, $languages, TourLanguage::class);
+
        //$this->associate_tour_location_table($tours, $locations, TourLocation::class );
       //$this->associate_type_table($tours, $types, TourType::class);
 
         // Associate with Types
         // For Tour
-        //$tours = Tour::get();
-        // $package_types = PackageType::where('package_type_type', 'Tour')->get();
+        // $tours = Tour::get();
+         // $package_types = PackageType::where('package_type_type', 'Tour')->get();
+        $places = Place::get();
+        $this->associate_comman_relationship_table($locations, $places, LocationPlace::class,'location_id','place_id');
+          // $this->associate_comman_relationship_table($tours, $package_types, TourPackageType::class,'tour_id','package_type_id');
         // $this->associate_package_type_table($tours, $package_types, TourPackageType::class);
-        //$other_packages = OtherPackage::where('other_package_type', 'Tour')->get();
+       // $other_packages = OtherPackage::where('other_package_type', 'Tour')->get();
         //$states = State::get();
 
-        // $this->associate_other_package_table($tours, $other_packages, TourOtherPackage::class);
+        //$this->associate_other_package_table($tours, $other_packages, TourOtherPackage::class);
 
 
-        //$this->chnage_content($tours,'st_tours');
+      //   //$this->chnage_content($tours,'st_tours');
 
+
+      //$this->associate_term_parent_id(OtherPackage::class, 'other_package_type', 'Tour');
        return Command::SUCCESS;
 
    }
 }
-
