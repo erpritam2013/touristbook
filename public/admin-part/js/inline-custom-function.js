@@ -495,5 +495,13 @@ window.CopyToClipboard = (elem) => {
 //       $(modal_id).find('#form-video-modal')[0].reset();
 //     }
 // })
+window.searchTerm = function(ele){
+ let value = $(ele).val().toLowerCase();
+ let term = $(ele).data('term');
+    $(`body .${term} ul.checkbox-list li`).filter(function() {
+
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+  });
+}
 
 }(jQuery))
