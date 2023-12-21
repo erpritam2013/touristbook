@@ -20,8 +20,12 @@ class TourPriceComposer
      */
     public function compose(View $view): void
     {
+        $currency = '₹';
         $priceObject = Conversion::where('currency_name', Session::get('currency'))->first();
-        $currency = $priceObject->currency_symbol; // Will be Fetched from Session
+        if(!empty($priceObject)){
+            $currency = $priceObject->currency_symbol; // Will be Fetched from Session
+        }
+       
 
         $this->priceRanges = [
             [
