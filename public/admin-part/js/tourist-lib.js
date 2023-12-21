@@ -46,13 +46,13 @@ $(document).ready(function ($) {
 
 $('.nav-link').on('click',function(){
 
-    if ($(this).attr('href') == '#upload-media') {   
-        let obj_image = new Object(); 
+    if ($(this).attr('href') == '#upload-media') {
+        let obj_image = new Object();
         $('#tb-image-prev').html(showImagePrevHtml(obj_image));
     }
 })
 $("#file-modal").on("hidden.bs.modal", function () {
-    let obj_image = new Object(); 
+    let obj_image = new Object();
     $('#tb-image-prev').html(showImagePrevHtml(obj_image));
 });
 
@@ -438,7 +438,7 @@ if (cardListElm.length > 0) {
 setTimeout(function() {
 
     if (touristEditorsElems.length > 0) {
-        touristEditorsElems.each(function (idx, te) {   
+        touristEditorsElems.each(function (idx, te) {
 
             CKEDITOR.replace(te);
 
@@ -664,6 +664,10 @@ if(longitudeTextbox) longitudeTextbox.onchange = onPlaceChanged;
 if(zoomTextbox) zoomTextbox.onchange = onPlaceChanged;
 
 if(zoomTextbox) zoomTextbox.onkeyup = onPlaceChanged;
+setTimeout(function() {
+    if(zoomTextbox) zoomTextbox.onchange()
+}, 1000)
+
 
 
 
@@ -869,7 +873,7 @@ $('.file-list').on("click", ".file", function() {
             }];
 
         }else {
-           
+
                 // Multiple Selection
             console.log('select',typeof selectedImages);
             $(this).addClass('active')
@@ -1364,7 +1368,7 @@ const processedPageTemplateHtml = function(data,id){
         elemRef = $(this);
 
         //preloader.css({'display':'block','z-index':1});
-        
+
         let subformType = elemRef.attr("subform-type");
 
         let targetSelector = elemRef.attr("target-selector");
