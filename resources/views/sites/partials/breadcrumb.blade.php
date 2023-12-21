@@ -4,6 +4,7 @@
     @if(!empty($location_name))
     <li class="breadcrumb-item"><a href="{{$location_route ?? '#'}}" target="_blank"><i class="ti-home"></i> {!!ucwords($location_name)!!}</a></li>
     @endif
-    <li class="breadcrumb-item active">{!!$post_name ?? ''!!}</li>
+    <li class="breadcrumb-item active">{!!purify_string($post_name ?? '')!!}</li>
   </ol>
 </nav>
+
