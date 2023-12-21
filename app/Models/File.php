@@ -28,9 +28,9 @@ class File extends Model implements HasMedia
               ->height(450)
               ->quality(100)
               ->keepOriginalImageFormat();
-        $this->addMediaConversion('300x300')
-              ->width(300)
-              ->height(300)
+        $this->addMediaConversion('450x417')
+              ->width(450)
+              ->height(417)
               ->quality(100)
               ->keepOriginalImageFormat();
     }

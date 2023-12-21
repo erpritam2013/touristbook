@@ -8257,9 +8257,10 @@ h5, .h5 {
 }
 
 h1.st-heading {
-	color: #07509e;
-	text-transform: capitalize;
-	font-size: 30px;
+    color: #07509e;
+    text-transform: capitalize;
+    font-size: 25px;
+    padding-top: 15px;
 }
 
 .sticky-top {
@@ -10785,9 +10786,10 @@ label.lbl-search-box {
 
 
 body.tour-list-page .ui-autocomplete.ui-menu {
-	width: 36.5% !important;
-	margin-top: 111px;
-	top: -4672.31px!important;
+    width: 36.5% !important;
+    margin-top: 111px;
+    top: -5092.83px!important;
+    left: 349px!important;
 }
 
 
@@ -10974,7 +10976,7 @@ body.tour-list-page .ui-autocomplete.ui-menu {
 border-top: none;
 }
 .hotel-list-page h4.service-title{
-	font-size: 23px;
+	font-size: 18px;
 }
 .hotel-grid-view h4.service-title {
 	font-size: 18px;
@@ -11405,7 +11407,7 @@ body.tour-list-page #package_types_filter .custom-checkbox .btn.btn-default {
 border-top: none;
 }
 .tour-list-page h4.service-title, .tour-grid-view h4.service-title {
-	font-size: 23px;
+    font-size: 18px;
 }
 .tour-list-page h4.service-title a, .tour-grid-view h4.service-title a{
 	color: #fba009;
@@ -11423,9 +11425,9 @@ body.tour-list-page #st-include-exclude .st-exclude ul.exclude li {
 	list-style-type: none;
 	vertical-align: middle;
 }
-.tour-list-page .listroBox figure{
-	margin: 15px 0;
-	height: 220px;
+.tour-list-page .listroBox figure {
+    margin: 15px 0;
+    height: 255px;
 }
 
 
@@ -12910,7 +12912,7 @@ body.tour-detail-page ul.tour-routes {
 	border-left: 5px solid #07509e;
 }
 body.tour-detail-page ul.tour-routes li span.tour-route-span {
-	font-size: 20px;
+	font-size: 18px;
 	color: #fba009!important;
 	padding-left: 0px;
 	padding-right: 10px;
@@ -13167,7 +13169,7 @@ body.activity-list-page .ui-autocomplete.ui-menu {
 border-top: none;
 }
 .activity-list-page h4.service-title, .tour-grid-view h4.service-title {
-	font-size: 23px;
+	font-size: 18px;
 }
 .activity-list-page h4.service-title a, .tour-grid-view h4.service-title a{
 	color: #fba009;

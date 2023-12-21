@@ -40,8 +40,8 @@ class TourDataTable extends DataTable
                     }
                     return '<input data-id="'.$row->id.'" class="toggle-class" type="checkbox" data-size="sm" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url="'.route("admin.changeStatusTour").'" data-on="Active" data-off="InActive" '.$checked.'>';
                 })->addColumn('address',function($row){
-                    $tourDetail = $row->detail;
-                    return ($tourDetail) ? $tourDetail->map_address : '';
+                    //$tourDetail = $row->detail;
+                    return ($row->address) ? $row->address : '';
                 })->addColumn('del',function($row){
                  return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'">';
             })->rawColumns(['status','action','del','address']);

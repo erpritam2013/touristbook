@@ -1,6 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Interfaces\AmenityRepositoryInterface;
+use App\Interfaces\DealsDiscountRepositoryInterface;
+use App\Interfaces\MedicareAssistanceRepositoryInterface;
+use App\Interfaces\MeetingAndEventRepositoryInterface;
+use App\Interfaces\PropertyTypeRepositoryInterface;
+use App\Interfaces\TermActivityRepositoryInterface;
 use App\Interfaces\PageRepositoryInterface;
 use App\Models\Hotel;
 use App\Models\Page;
@@ -20,18 +27,56 @@ use Auth;
 class PagesController extends Controller
 {
 
- private PageRepositoryInterface $pageRepository;
+   private PageRepositoryInterface $pageRepository;
 
- public function __construct(PageRepositoryInterface $pageRepository)
- {
+
+   public function __construct(
+    PageRepositoryInterface $pageRepository,
+    AmenityRepositoryInterface $amenityRepository,
+    MedicareAssistanceRepositoryInterface $medicareAssistanceRepository,
+
+    PropertyTypeRepositoryInterface $propertyTypeRepository,
+
+    MeetingAndEventRepositoryInterface $meetingAndEventRepository,
+
+    DealsDiscountRepositoryInterface $dealDiscountRepository,
+    TermActivityRepositoryInterface $activityRepository
+)
+   {
     $this->pageRepository = $pageRepository;
+
+        $this->amenityRepository = $amenityRepository;
+        $this->medicareAssistanceRepository = $medicareAssistanceRepository;
+       
+        $this->propertyTypeRepository = $propertyTypeRepository;
+       
+        $this->meetingAndEventRepository = $meetingAndEventRepository;
+        
+        $this->dealDiscountRepository = $dealDiscountRepository;
+        $this->activityRepository = $activityRepository;
+
 }
 public function index() {
- $data['post_type'] = 'Home';
- $data['title'] = 'Home';
- $data['body_class'] = 'home-page';
- return view('sites.pages.home',$data);
+   $data['post_type'] = 'Home';
+   $data['title'] = 'Home';
+   $data['body_class'] = 'home-page';
+   return view('sites.pages.home',$data);
 }
+
+private function _prepareBasicData() {
+
+        // TODO: Need to Improve here (Fetch from Cache)
+        $data['amenities'] = $this->amenityRepository->getActiveHotelAmenitiesList();
+        $data['medicare_assistance'] = $this->medicareAssistanceRepository->getActiveHotelMedicareAssistancesList();
+        $data['proparty_types'] = $this->propertyTypeRepository->getActiveHotelPropertyTypesList();
+        $data['meetings_and_events'] = $this->meetingAndEventRepository->getActiveHotelMeetingAndEventsList();
+
+        $data['deals_discount'] = $this->dealDiscountRepository->getActiveHotelDealsDiscountsList();
+        $data['activities'] = $this->activityRepository->getActiveHotelTermActivitiesList();
+
+        return $data;
+
+    }
 
 public function pages(PageDataTable $dataTable)
 {
@@ -113,6 +158,11 @@ public function page_templates(Request $request,$view)
             $data['page'] = $page;
         }
     }
+
+    if ($view == 'hotel') {
+      $data = array_merge_recursive($data, $this->_prepareBasicData());
+    }
+    dd($data);
     return View::make('admin.pages.page_templates.'.$view,$data);
 }
 public function our_packages(Request $request) {
@@ -279,17 +329,17 @@ public function activityDetail(Request $request, $slug) {
   $data['nearByLocation'] = collect([]);
   $data['activity_zone'] = null;
   if (!empty($activity->detail->activity_zones)) {
-     $data['activity_zone'] = $activity->activity_zone->first();
- }
+   $data['activity_zone'] = $activity->activity_zone->first();
+}
 
- $data['custom_icons'] = null;
- $custom_icons = CustomIcon::get(['id','slug','path','uri']);
- if (!empty($custom_icons)) {
-     $data['custom_icons'] = $custom_icons;
- }
- $data['tourismZone'] = null;
+$data['custom_icons'] = null;
+$custom_icons = CustomIcon::get(['id','slug','path','uri']);
+if (!empty($custom_icons)) {
+   $data['custom_icons'] = $custom_icons;
+}
+$data['tourismZone'] = null;
 
- if($state) {
+if($state) {
     $data['tourismZone'] =  $state->tourism_zones->first();
 }
 
@@ -472,7 +522,7 @@ public function getTours(Request $request, $view = "list") {
         $minimum = $range[0];
         $maximum = $range[1];
 
-        $tourQuery->whereBetween("avg_price", [$minimum, $maximum]);
+        $tourQuery->whereBetween("price", [$minimum, $maximum]);
     }
 
     if($request->has('duration_day') && !empty($request->get('duration_day'))) {
@@ -481,7 +531,7 @@ public function getTours(Request $request, $view = "list") {
             // $minimum = $duration_day[0];
             // $maximum = $duration_day[1];
 
-        $hotelQuery->whereIn("duration_day",$duration_day);
+        $tourQuery->whereIn("duration_day",$duration_day);
     }
 
 
@@ -701,11 +751,11 @@ public function locationDetailFetch(Request $request,$view)
   $id = $request->location_id;
   $location = Location::findOrFail($id);
   if ($view == 'tourism-zone') {
-   $state = $location->states()->first();
-   if($state) {
-    $tourismZone =  $state->tourism_zones->first();
-}
-return View::make('sites.partials.location-details.'.$view,['tourismZone'=>$tourismZone]);
+     $state = $location->states()->first();
+     if($state) {
+        $tourismZone =  $state->tourism_zones->first();
+    }
+    return View::make('sites.partials.location-details.'.$view,['tourismZone'=>$tourismZone]);
 }else{
   return View::make('sites.partials.location-details.'.$view, ['location' => $location]);
 }   
@@ -745,23 +795,35 @@ public function getLocationState(Request $request) {
     return response()->json($results, 200);
 
 }
+public function set_extra_data_of_page($request)
+{
+    $extra_data = [];
+    if (isset($request->type) && !empty($request->type)) {
+        if ($request->type == 'About') {
 
+          $extra_data['about_info'] = $request->about_info;
+          $extra_data['about_team'] = $request->about_team;
+      }
+      if ($request->type == 'Tour') {
+        $extra_data = $request->extra_data;
+    }
+
+}
+$extra_data["page_sidebar_pos"] = $request->page_sidebar_pos;
+$extra_data["page_sidebar"] = $request->page_sidebar;
+$extra_data["social_links"] = $request->social_links;
+
+return $extra_data;
+}
 function store(Request $request,)
 {
 
-  $extra_data = [];
-
-  $extra_data['about_info'] = $request->about_info;
-  $extra_data['about_team'] = $request->about_team;
-  $extra_data["page_sidebar_pos"] = $request->page_sidebar_pos;
-  $extra_data["page_sidebar"] = $request->page_sidebar;
-  $extra_data["social_links"] = $request->social_links;
-  $request->merge([
-    'extra_data' => $extra_data,
+   $request->merge([
+    'extra_data' => $this->set_extra_data_of_page($request),
 ]);
 
-  
-  $pageDetails = [
+
+   $pageDetails = [
     'name' => $request->name,
     'slug' => SlugService::createSlug(Page::class, 'slug', $request->name),
     'description' => $request->description,
@@ -795,25 +857,21 @@ public function edit(Page $page)
     return view('admin.pages.edit', $data);
 }
 
+
+
 function update(Request $request,Page $page)
 {
 
-  if (!empty($page)) {
-     abort(404);
-  }
-  $extra_data = [];
+  if (empty($page)) {
+   abort(404);
+}
 
-  $extra_data['about_info'] = $request->about_info;
-  $extra_data['about_team'] = $request->about_team;
-  $extra_data["page_sidebar_pos"] = $request->page_sidebar_pos;
-  $extra_data["page_sidebar"] = $request->page_sidebar;
-  $extra_data["social_links"] = $request->social_links;
-  $request->merge([
-    'extra_data' => $extra_data,
+$request->merge([
+    'extra_data' => $this->set_extra_data_of_page($request),
 ]);
 
-  
-  $pageDetails = [
+
+$pageDetails = [
     'name' => $request->name,
     //'slug' => SlugService::createSlug(Page::class, 'slug', $request->name),
     'description' => $request->description,
@@ -829,17 +887,26 @@ function update(Request $request,Page $page)
 ];
 
 
-$this->pageRepository->updatePage($id,$pageDetails);
+$this->pageRepository->updatePage($page->id,$pageDetails);
 Session::flash('success','Page Updated Successfully');
-return redirect()->Route('admin.pages.edit',$id);
+return redirect()->Route('admin.pages.edit',$page->id);
 }
-
+public function changeStatus(Request $request)
+{
+    $pageId = $request->id;
+    $pageDetails = [
+        'status' => $request->status,
+    ];
+    $this->pageRepository->updatePage($pageId, $pageDetails);
+    
+    return response()->json(['success'=>'Status change successfully.']);
+}
 function destroy(Page $page)
 {
-     $pageId = $page->id;
-        $this->pageRepository->deletePage($pageId);
-         Session::flash('success','Page Deleted Successfully');
-        return back();
+   $pageId = $page->id;
+   $this->pageRepository->deletePage($pageId);
+   Session::flash('success','Page Deleted Successfully');
+   return back();
 }
 
   /**
@@ -849,17 +916,17 @@ function destroy(Page $page)
      * @return \Illuminate\Http\Response
      */
 
-     public function bulk_delete(Request $request)
-    {
-      
-         if (!empty($request->ids)) {
-        
-        $pageIds = get_array_mapping(json_decode($request->ids));
-        
-        $this->pageRepository->deleteBulkPage($pageIds);
-         Session::flash('success','Page Bulk Deleted Successfully');
-        }
-        return back();
-    }
+  public function bulk_delete(Request $request)
+  {
+
+   if (!empty($request->ids)) {
+
+    $pageIds = get_array_mapping(json_decode($request->ids));
+
+    $this->pageRepository->deleteBulkPage($pageIds);
+    Session::flash('success','Page Bulk Deleted Successfully');
+}
+return back();
+}
 
 }

@@ -36,6 +36,8 @@ $first_element = reset($typeData);
       @php
       $elemClass = isset($typeFields[$controlId]['class']) ? $typeFields[$controlId]['class'] : '';
       $desc = isset($typeFields[$controlId]['desc']) ? $typeFields[$controlId]['desc'] : '';
+      $rows = isset($typeFields[$controlId]['rows']) ? $typeFields[$controlId]['rows'] : 8;
+      $cols = isset($typeFields[$controlId]['cols']) ? $typeFields[$controlId]['cols'] : '';
       @endphp
       @php
       $hideClass = isset($typeFields[$controlId]['hide']) ? $typeFields[$controlId]['hide'] : '';
@@ -66,7 +68,7 @@ $first_element = reset($typeData);
           <textarea class="form-control {{ $elemClass }} "
           name="{{ $type }}[{{ $key }}][{{ $controlId }}]"
           id="{{ $type . '-tsign-' . $key . '-tsign-' . $controlId }}"
-          placeholder="Enter {{ $typeFields[$controlId]['label'] }}...">{{ $value ?? '' }}</textarea>
+          placeholder="Enter {{ $typeFields[$controlId]['label'] }}..." rows="{{$rows ?? 8}}" cols="{{$cols ?? ''}}">{{ $value ?? '' }}</textarea>
           @elseif($typeFields[$controlId]['control'] == 'media')
           <div class="media-controls ">
             <input type="hidden" class="form-control media-input {{ $elemClass ?? '' }} gallery-input " name="{{ $type }}[{{ $key }}][{{ $controlId }}]"
