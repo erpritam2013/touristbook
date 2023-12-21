@@ -224,7 +224,7 @@ $hotelQuery->leftJoin('hotel_states', 'hotel_states.hotel_id', '=', 'hotels.id')
 $hotelQuery->where('hotel_states.state_id', $state_id);
 $hotelQuery->inRandomOrder();
 $hotelQuery->limit(4);
-$nearhotels=  $hotelQuery->get();
+$nearhotels =  $hotelQuery->get();
 $data['nearByHotel'] = $nearhotels;
 /*near by tour*/
 $tourQuery = [];
@@ -236,7 +236,7 @@ $tourQuery->leftJoin('tour_states', 'tour_states.tour_id', '=', 'tours.id');
 $tourQuery->where('tour_states.state_id', $state_id);
 $tourQuery->inRandomOrder();
 $tourQuery->limit(4);
-$neartours=  $tourQuery->get();
+$neartours =  $tourQuery->get();
 $data['nearByTour'] = $neartours;
 /*near by activity*/
 $activityQuery = [];
@@ -248,7 +248,7 @@ $activityQuery->leftJoin('activity_states', 'activity_states.activity_id', '=', 
 $activityQuery->where('activity_states.state_id', $state_id);
 $activityQuery->inRandomOrder();
 $activityQuery->limit(4);
-$nearactivity=  $activityQuery->get();
+$nearactivity =  $activityQuery->get();
 $data['nearByActivity'] = $nearactivity;
 /*near by location*/
 $locationQuery = [];

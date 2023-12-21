@@ -307,7 +307,7 @@ $('#pocketPDFtab').on('click','a.nav-link',function(e){
 });
 window.tourism_zone_area_pdf = function(ele){
 
- 
+
     let id = $(ele).attr('href');
     if (typeof id != 'undefined') {
 
@@ -577,12 +577,32 @@ const processedResultInfo = (html) => {
 };
 
 
+// Reset Clear Filter
+$(".btn-clear-filter").on("click", function() {
+    let view = $(".view-changer").attr("view-id");
+    // Checkboxes Reset
+    $('.filter-option').prop('checked', false);
+    // Radio Button Reset
+    $(".custom-control-input").prop("checked", false);
+    fetchRecords(view, fetchParameters())
+    return false;
+
+})
+
 
     // Common Function to Hit and get data
 const fetchRecords = (view, options = {}) => {
         // TODO: Place check; so that it only works for hotel list page
         // possibly add page in body class
     let get_hotel = $('#result-info').data('type');
+
+    if(Object.keys(options).length > 0){
+        // Selected Something and Need to Show Clear Filter
+        $(".btn-clear-filter").show()
+    }else {
+        // Not Selected; Can Hide Clear Filter
+        $(".btn-clear-filter").hide()
+    }
 
     if (typeof get_hotel != 'undefined') {
         if (get_hotel == 'get-locations') {

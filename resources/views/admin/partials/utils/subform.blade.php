@@ -47,7 +47,7 @@ $first_element = reset($typeData);
                 <div class="media-controls ">
                     <input type="hidden" class="form-control media-input {{ $elemClass ?? '' }} gallery-input " name="{{$type}}[{{$key}}][{{$controlId}}]"
                     value="" />
-                    <input type="text" class="form-control  media-txt-only {{$elemClass}}" readonly="true"  value="" id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}" placeholder="Enter {{$typeFields[$controlId]['label']}}..."/>
+                    <input type="url" class="form-control  media-txt-only {{$elemClass}}" readonly="true"  value="" id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}" placeholder="Enter {{$typeFields[$controlId]['label']}}..."/>
 
                     <button type="button" class="btn btn-primary mt-2 add-media-btn" smode="single" selectedImages="{{$value ?? ''}}"  >+</button>
                     <button type="button" class="btn btn-danger mt-2 remove-media-btn">-</button>
