@@ -153,93 +153,109 @@ protected $term_category_dictionary = [
         $this->info("User Data Loading Completed");
     }
 
-    public function tourist_is_serialized($data, $strict = true)
+
+    public function check_content($content,$post_id,$post_type)
     {
+
+        if (!empty($content)) {
+
+            if (str_contains($content, '[vc_row]')) {
+               return $this->get_content_from_wp($post_id,$post_type);
+           }else{
+            return $content;
+        }
+    }else{
+        return null;
+    }
+}
+
+public function tourist_is_serialized($data, $strict = true)
+{
         // If it isn't a string, it isn't serialized.
-        if (!is_string($data)) {
-            return false;
-        }
-        $data = trim($data);
-        if ('N;' === $data) {
-            return true;
-        }
-        if (strlen($data) < 4) {
-            return false;
-        }
-        if (':' !== $data[1]) {
-            return false;
-        }
-        if ($strict) {
-            $lastc = substr($data, -1);
-            if (';' !== $lastc && '}' !== $lastc) {
-                return false;
-            }
-        } else {
-            $semicolon = strpos($data, ';');
-            $brace     = strpos($data, '}');
-            // Either ; or } must exist.
-            if (false === $semicolon && false === $brace) {
-                return false;
-            }
-            // But neither must be in the first X characters.
-            if (false !== $semicolon && $semicolon < 3) {
-                return false;
-            }
-            if (false !== $brace && $brace < 4) {
-                return false;
-            }
-        }
-        $token = $data[0];
-        switch ($token) {
-            case 's':
-            if ($strict) {
-                if ('"' !== substr($data, -2, 1)) {
-                    return false;
-                }
-            } elseif (!str_contains($data, '"')) {
-                return false;
-            }
-                // Or else fall through.
-            case 'a':
-            case 'O':
-            case 'E':
-            return (bool) preg_match("/^{$token}:[0-9]+:/s", $data);
-            case 'b':
-            case 'i':
-            case 'd':
-            $end = $strict ? '$' : '';
-            return (bool) preg_match("/^{$token}:[0-9.E+-]+;$end/", $data);
-        }
+    if (!is_string($data)) {
         return false;
     }
+    $data = trim($data);
+    if ('N;' === $data) {
+        return true;
+    }
+    if (strlen($data) < 4) {
+        return false;
+    }
+    if (':' !== $data[1]) {
+        return false;
+    }
+    if ($strict) {
+        $lastc = substr($data, -1);
+        if (';' !== $lastc && '}' !== $lastc) {
+            return false;
+        }
+    } else {
+        $semicolon = strpos($data, ';');
+        $brace     = strpos($data, '}');
+            // Either ; or } must exist.
+        if (false === $semicolon && false === $brace) {
+            return false;
+        }
+            // But neither must be in the first X characters.
+        if (false !== $semicolon && $semicolon < 3) {
+            return false;
+        }
+        if (false !== $brace && $brace < 4) {
+            return false;
+        }
+    }
+    $token = $data[0];
+    switch ($token) {
+        case 's':
+        if ($strict) {
+            if ('"' !== substr($data, -2, 1)) {
+                return false;
+            }
+        } elseif (!str_contains($data, '"')) {
+            return false;
+        }
+                // Or else fall through.
+        case 'a':
+        case 'O':
+        case 'E':
+        return (bool) preg_match("/^{$token}:[0-9]+:/s", $data);
+        case 'b':
+        case 'i':
+        case 'd':
+        $end = $strict ? '$' : '';
+        return (bool) preg_match("/^{$token}:[0-9.E+-]+;$end/", $data);
+    }
+    return false;
+}
 
-    public function unserialize_data_format_in_array($value, $field = "")
-    {
+public function unserialize_data_format_in_array($value, $field = "")
+{
 
-        $result = "";
-        if (!empty($value)) {
+    $result = "";
+    if (!empty($value)) {
 
-            if ($this->tourist_is_serialized($value)) {
+        if ($this->tourist_is_serialized($value)) {
 
 
-                $get_unserialized_value = unserialize($value);
-                if (!empty($field)) {
+            $get_unserialized_value = unserialize($value);
+            if (!empty($field)) {
 
-                    if (is_array($get_unserialized_value)) {
-                        $result = [];
+                if (is_array($get_unserialized_value)) {
+                    $result = [];
                         // $final_result = [];
 
                         // $collect = collect($get_unserialized_value);
-                        $image_keys = ['video_thumbnail', 'image'];
-                        foreach ($get_unserialized_value as $key => $value) {
-                            foreach ($value as $k => $v) {
-                                if (in_array($k, $image_keys)) {
-                                    $result[$key][$field . '-' . $k] = $this->string_to_json($v, 'image');
-                                } else {
-                                    $result[$key][$field . '-' . $k] = $v;
-                                }
+                    $image_keys = ['video_thumbnail', 'image'];
+                    foreach ($get_unserialized_value as $key => $value) {
+                        foreach ($value as $k => $v) {
+                            if (in_array($k, $image_keys)) {
+                                $result[$key][$field . '-' . $k] = $this->string_to_json($v, 'image');
+                            } else {
+                                $result[$key][$field . '-' . $k] = $v;
                             }
                         }
+                    }
 
                         // $result = $collect->each(function($items,int $key) use($field,&$result){
                         //        return collect($items)->each(function($item,$k) use ($field,$result,$key){
@@ -256,98 +272,98 @@ protected $term_category_dictionary = [
 
                         // });
                         //      return $result->toArray();
-                        $result = json_encode($result);
-                    }
-                } else {
-
-                    $result = json_encode($get_unserialized_value);
+                    $result = json_encode($result);
                 }
+            } else {
+
+                $result = json_encode($get_unserialized_value);
             }
-        }
-
-        if (!empty($result)) {
-
-            return $result;
-        } else {
-
-            $result = "[]";
-            return $result;
         }
     }
 
-    public function media_sizes($value)
-    {
-        $result = "";
-        if (!empty($value)) {
-            $result = [];
-            $json_decode = json_decode($value, true);
-            if (!empty($json_decode) && is_array($json_decode)) {
-                if (isset($json_decode['sizes'])) {
+    if (!empty($result)) {
 
-                    $sizes = $json_decode['sizes'];
-                    if (count($sizes) > 0) {
-                        foreach ($sizes as $key => $size) {
-                            if ($key == 'thumbnail') {
-                                $result[$key] = true;
-                            } else {
-                                if (isset($size['width']) && isset($size['height'])) {
-                                    $temp_key = $size['width'] . 'x' . $size['height'];
-                                    $result[$temp_key] = true;
-                                }
-                            }
-                        }
-                        $result = json_encode($result);
-                    }
-                }
-            }
-        }
-        if (!empty($result)) {
+        return $result;
+    } else {
 
-            return $result;
-        } else {
-
-            $result = "[]";
-            return $result;
-        }
-    }
-
-    public function set_image_date($value)
-    {
-        $result = date('Y-m-d h:i:s');
-        if (!empty($value)) {
-            $data_convert_array = explode('/', $value);
-            $year_month = $data_convert_array[0] . '-' . $data_convert_array[1];
-            $date = date_create($year_month);
-            $date_format = date_format($date, "Y-m-d h:i:s");
-            $result = $date_format;
-        }
+        $result = "[]";
         return $result;
     }
+}
 
+public function media_sizes($value)
+{
+    $result = "";
+    if (!empty($value)) {
+        $result = [];
+        $json_decode = json_decode($value, true);
+        if (!empty($json_decode) && is_array($json_decode)) {
+            if (isset($json_decode['sizes'])) {
 
-    public function extract_shortcode($text, $field = '')
-    {
-        $result = "";
-        if (!empty($text)) {
-            if (!empty($field)) {
-                if ($field == 'video') {
-                    $shortcodes = collect([
-                        new origincode_videogallery,
-                    ]);
-                    $compiledDescription = Shortcode::compile($text, $shortcodes);
-                    $result = $compiledDescription;
-                    //$result = json_encode($result);
-                } elseif ($field == 'description') {
+                $sizes = $json_decode['sizes'];
+                if (count($sizes) > 0) {
+                    foreach ($sizes as $key => $size) {
+                        if ($key == 'thumbnail') {
+                            $result[$key] = true;
+                        } else {
+                            if (isset($size['width']) && isset($size['height'])) {
+                                $temp_key = $size['width'] . 'x' . $size['height'];
+                                $result[$temp_key] = true;
+                            }
+                        }
+                    }
+                    $result = json_encode($result);
                 }
             }
         }
-        if (!empty($result)) {
-
-    return $result;
-}else{
-    $result = null;
-}
     }
+    if (!empty($result)) {
+
+        return $result;
+    } else {
+
+        $result = "[]";
+        return $result;
+    }
+}
+
+public function set_image_date($value)
+{
+    $result = date('Y-m-d h:i:s');
+    if (!empty($value)) {
+        $data_convert_array = explode('/', $value);
+        $year_month = $data_convert_array[0] . '-' . $data_convert_array[1];
+        $date = date_create($year_month);
+        $date_format = date_format($date, "Y-m-d h:i:s");
+        $result = $date_format;
+    }
+    return $result;
+}
+
+
+public function extract_shortcode($text, $field = '')
+{
+    $result = "";
+    if (!empty($text)) {
+        if (!empty($field)) {
+            if ($field == 'video') {
+                $shortcodes = collect([
+                    new origincode_videogallery,
+                ]);
+                $compiledDescription = Shortcode::compile($text, $shortcodes);
+                $result = $compiledDescription;
+                    //$result = json_encode($result);
+            } elseif ($field == 'description') {
+            }
+        }
+    }
+    if (!empty($result)) {
+
+        return $result;
+    }else{
+        $result = null;
+    }
+}
 
 
 public function comma_saprated_to_array($value,$type='')
@@ -615,35 +631,37 @@ public function load_tour_details() {
 
         $this->info("Tour Details Loaded");
     }
+
+
  /**
      * Hotel Module Migration
      */
-    public function hotel_migrate() {
+  public function hotel_migrate() {
 
-        $this->info("Hotel Data Loading...");
-        $post_collections = DB::connection($this->wp_connection)->table("wp_st_hotel")->select("post_id")->get();
-        $postIds = $post_collections->pluck('post_id')->toArray();
+    $this->info("Hotel Data Loading...");
+    $post_collections = DB::connection($this->wp_connection)->table("wp_st_hotel")->select("post_id")->get();
+    $postIds = $post_collections->pluck('post_id')->toArray();
 
-        foreach (array_chunk($postIds, 200) as $pIds) {
+    foreach (array_chunk($postIds, 200) as $pIds) {
 
-            $pQuery = DB::connection($this->wp_connection)->table('wp_posts as p')
-                ->select('p.*', 'pm.*', 'wp_st_hotel.*')
-                ->leftJoin("wp_st_hotel", "wp_st_hotel.post_id", '=', 'p.ID')
-                ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
-                ->whereIn('pm.meta_key', [
-                   'address', 'hotel_link', 'food_and_dining', 'is_featured', 'logo', '_thumbnail_id', 'email', 'phone', 'fax', 'website', 'show_agent_contact_info', 'allow_full_day', 'check_in_time', 'check_out_time', 'hotel_policy', 'important_notices_data', 'gallery'
-                ])
-                ->where('p.post_type', 'st_hotel')
-                ->where('p.post_status', 'publish')
-                ->whereIn('p.ID', $pIds)
-                ->orderBy('p.ID', 'desc');
+        $pQuery = DB::connection($this->wp_connection)->table('wp_posts as p')
+        ->select('p.*', 'pm.*', 'wp_st_hotel.*')
+        ->leftJoin("wp_st_hotel", "wp_st_hotel.post_id", '=', 'p.ID')
+        ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+        ->whereIn('pm.meta_key', [
+           'address', 'hotel_link', 'food_and_dining', 'is_featured', 'logo', '_thumbnail_id', 'email', 'phone', 'fax', 'website', 'show_agent_contact_info', 'allow_full_day', 'check_in_time', 'check_out_time', 'hotel_policy', 'important_notices_data', 'gallery','video','hotel_booking_period','min_book_room','st_hotel_corporate_address','price_avg','is_allowed_full_day'
+       ])
+        ->where('p.post_type', 'st_hotel')
+        ->where('p.post_status', 'publish')
+        ->whereIn('p.ID', $pIds)
+        ->orderBy('p.ID', 'desc');
 
-            $results = $pQuery->get();
-            $nestedResults = [];
+        $results = $pQuery->get();
+        $nestedResults = [];
            // $serializer_fields = ['hotel_policy', 'important_notices_data'];
-            $serializer_fields_no_prefix = [];
-            foreach ($results as $result) {
-                $postId = $result->ID;
+        $serializer_fields_no_prefix = [];
+        foreach ($results as $result) {
+            $postId = $result->ID;
                 unset($result->ID); // Remove the ID field from the main post data
 
                 if (!isset($nestedResults[$postId])) {
@@ -678,31 +696,39 @@ public function load_tour_details() {
                         "wp_id" => $postId,
                         "name" => $n_result["post_title"],
                         "slug" =>  $n_result["post_name"],
-                        "description" => $n_result["post_content"],
+                        "description" => $this->check_content($n_result["post_content"],$postId,'st_hotel'),
                         "address" => $this->get_key_data($n_result["postmeta"], "address"),
                         "external_link" => $this->get_key_data($n_result["postmeta"], "hotel_link"),
                         "food_dining" => $this->get_key_data($n_result["postmeta"], "food_and_dining"),
                         "is_featured" => $this->get_key_data($n_result["postmeta"], "is_featured"),
-                        "logo" => $this->get_key_data($n_result["postmeta"], "logo"),
+                        "logo" => $this->string_to_json($this->get_key_data($n_result["postmeta"], "logo"),'image'),
                         "featured_image" => $this->string_to_json($this->get_key_data($n_result["postmeta"], "_thumbnail_id"), 'image_id'),
-                        "hotel_video" => $this->get_key_data($n_result["postmeta"], "address"),
-                        "rating" => $n_result["rating"],
+                        "hotel_video" => $this->get_key_data($n_result["postmeta"], "video"),
+                        "rating" => $n_result["rate_review"],
                         "coupon_code" => $this->get_key_data($n_result["postmeta"], "address"),
-                        "hotel_attributes" => '',
-                        "contact" => '',
-                        "avg_price" => '',
-                        "is_allowed_full_day" => '',
-                        "check_in" => '',
-                        "check_out" => '',
-                        "book_before_day" => '',
-                        "book_before_arrival" => '',
+                        "hotel_attributes" => json_decode([
+                         "corporateAddress"=> $this->get_key_data($n_result["postmeta"], "st_hotel_corporate_address")
+                     ]),
+                        "contact" => json_encode([
+                         "email" =>$this->get_key_data($n_result["postmeta"], "email"),
+                         "phone" =>$this->get_key_data($n_result["postmeta"], "phone"),
+                         "fax" =>$this->get_key_data($n_result["postmeta"], "fax"),
+                         "website" =>$this->get_key_data($n_result["postmeta"], "website"),
+                         "show_agent_contact_info" =>$this->get_key_data($n_result["postmeta"], "show_agent_contact_info")
+                     ]),
+                        "avg_price" => $this->get_key_data($n_result["postmeta"], "price_avg"),
+                        "is_allowed_full_day" =>  $this->radio_value_modify($this->get_key_data($n_result['postmeta'], "allow_full_day")),
+                        "check_in" => $this->get_key_data($n_result["postmeta"], "check_in_time"),
+                        "check_out" => $this->get_key_data($n_result["postmeta"], "check_out_time"),
+                        "book_before_day" => $this->get_key_data($n_result["postmeta"], "hotel_booking_period"),
+                        "book_before_arrival" => $this->get_key_data($n_result["postmeta"], "min_book_room"),
                         "policies" => $this->unserialize_data_format_in_array($this->get_key_data($n_result["postmeta"], "hotel_policy"),'policies'),
                         "notices" => $this->unserialize_data_format_in_array($this->get_key_data($n_result["postmeta"], "important_notices_data"),'notices'),
-                        "check_editing"  => '',
-                        "created_by" => '',
-                        "created_at" => '',
-                        "updated_at" => '',
-                        "images" => gallery,
+                        "check_editing"  => null,
+                        "created_by" => $n_result["post_author"],
+                        "created_at" => $n_result["post_date_gmt"],
+                        "updated_at" => $n_result["post_modified_gmt"],
+                        "images" => $this->comma_saprated_to_array($this->get_key_data($n_result['postmeta'], "gallery"),'gallery'),,
                     ];
 
                     $hotels->push($hotel);
@@ -713,10 +739,6 @@ public function load_tour_details() {
         }
         // TODO: Tour Details
         $this->info("Hotel Data Loading Completed");
-
-
-
-
     }
 
     /**
@@ -1134,7 +1156,7 @@ public function load_tour_details() {
                 }
             }
 
-    
+
             // TODO: Can think better way
             // One more iteration for Laravel Specific
             $location_metas = collect([]);
@@ -1195,14 +1217,14 @@ public function load_tour_details() {
                         'packages' => 'tour',
                         'stay' => 'hotel',
                         'child_tabs' => $this->get_key_data($n_result["postmeta"], "child_tabs"),
-                         "created_at" => $n_result["post_date_gmt"],
+                        "created_at" => $n_result["post_date_gmt"],
                         "updated_at" => $n_result["post_modified_gmt"]
 
                     ];
 
                     $location_metas->push($location_meta);
                 }
-                  
+
                 LocationMeta::insert($location_metas->toArray());
                 $this->info("Location 5 Details Loaded");
             }
@@ -1381,12 +1403,12 @@ public function setup_types() {
 
                 }
 
-            if(!empty($nestedResults)) {
-                foreach($nestedResults as $termId => $n_result) {
-                    $tax_met_value = 'tax_meta_'.$n_result['term_taxonomy_id'];
-                    $single_type = [
-                        "name" => $n_result['name'],
-                        "slug" => $n_result['slug'],
+                if(!empty($nestedResults)) {
+                    foreach($nestedResults as $termId => $n_result) {
+                        $tax_met_value = 'tax_meta_'.$n_result['term_taxonomy_id'];
+                        $single_type = [
+                            "name" => $n_result['name'],
+                            "slug" => $n_result['slug'],
 
                         "parent_id" => 0, // We will set it
                         "description" => $n_result['description'],
@@ -1405,38 +1427,38 @@ public function setup_types() {
             }
         }
 
-            $this->info("Terms Type Data Loading Completed");
-}
+        $this->info("Terms Type Data Loading Completed");
+    }
 
-        public function setup_package_types() {
-           $this->info("Terms Package Type Data Loading...");
+    public function setup_package_types() {
+       $this->info("Terms Package Type Data Loading...");
 
-           foreach($this->tour_package_type as $type => $term_values) {
-            $package_type_list = collect([]);
+       foreach($this->tour_package_type as $type => $term_values) {
+        $package_type_list = collect([]);
 
-            $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
-            ->select('wt.*', 'wtt.*','wtm.meta_key','wtm.meta_value')
+        $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
+        ->select('wt.*', 'wtt.*','wtm.meta_key','wtm.meta_value')
 
-            ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
-            ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
-            ->where('wtt.taxonomy', $term_values['column'])
-            ->orderBy('wt.term_id', 'asc')->get();
+        ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+        ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
+        ->where('wtt.taxonomy', $term_values['column'])
+        ->orderBy('wt.term_id', 'asc')->get();
 
 
-            $nestedResults = [];
+        $nestedResults = [];
             // $serializer_fields =  ["country_zone_section"];
 
-            foreach ($results as $result) {
-                $termId = $result->term_id;
+        foreach ($results as $result) {
+            $termId = $result->term_id;
                     //unset($result->term_id); // Remove the ID field from the main term data
 
-                if (!isset($nestedResults[$termId])) {
-                    $nestedResults[$termId] = (array) $result;
-                    $nestedResults[$termId]['termmeta'] = [];
-                }
+            if (!isset($nestedResults[$termId])) {
+                $nestedResults[$termId] = (array) $result;
+                $nestedResults[$termId]['termmeta'] = [];
+            }
 
-                $metaKey = $result->meta_key;
-                $metaValue = $result->meta_value;
+            $metaKey = $result->meta_key;
+            $metaValue = $result->meta_value;
 
                     unset($result->meta_key, $result->meta_value); // Remove meta_key and meta_value fields
                     if (!empty($metaKey)) {
@@ -1542,31 +1564,31 @@ public function setup_types() {
 
         }
         public function setup_places() {
-       $this->info("Terms Place Data Loading...");
-       $place_list = collect([]);
-       $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
-       ->select('wt.*', 'wtt.*','wtm.meta_key','wtm.meta_value')
+           $this->info("Terms Place Data Loading...");
+           $place_list = collect([]);
+           $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
+           ->select('wt.*', 'wtt.*','wtm.meta_key','wtm.meta_value')
 
-       ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
-       ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id') 
-       ->where('wtt.taxonomy', 'places')
-       ->orderBy('wt.term_id', 'asc')->get();
+           ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+           ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id') 
+           ->where('wtt.taxonomy', 'places')
+           ->orderBy('wt.term_id', 'asc')->get();
 
 
-       $nestedResults = [];
+           $nestedResults = [];
             // $serializer_fields =  ["country_zone_section"];
 
-       foreach ($results as $result) {
-        $termId = $result->term_id;
+           foreach ($results as $result) {
+            $termId = $result->term_id;
                     //unset($result->term_id); // Remove the ID field from the main term data
 
-        if (!isset($nestedResults[$termId])) {
-            $nestedResults[$termId] = (array) $result;
-            $nestedResults[$termId]['termmeta'] = [];
-        }
+            if (!isset($nestedResults[$termId])) {
+                $nestedResults[$termId] = (array) $result;
+                $nestedResults[$termId]['termmeta'] = [];
+            }
 
-        $metaKey = $result->meta_key;
-        $metaValue = $result->meta_value;
+            $metaKey = $result->meta_key;
+            $metaValue = $result->meta_value;
 
                     unset($result->meta_key, $result->meta_value); // Remove meta_key and meta_value fields
                     if (!empty($metaKey)) {
@@ -1598,10 +1620,10 @@ public function setup_types() {
             $this->info("Terms Places Data Loading Completed");
         }
 
-    public function associate_comman_relationship_table($objects, $terms, $term_rel_class,$field_1 ,$field_2 ) {
+        public function associate_comman_relationship_table($objects, $terms, $term_rel_class,$field_1 ,$field_2 ) {
 
        // dump($terms->pluck('wp_taxonomy_id')->toArray());
-          
+
         // Fetch association Records
             $related_records = DB::connection($this->wp_connection)->table('wp_term_relationships')
             ->whereIn('object_id', $objects->pluck('wp_id')->toArray())
@@ -1628,7 +1650,7 @@ public function setup_types() {
 
                 }
             }
-           
+
             if(!empty($final_list)) {
                 $term_rel_class::insert($final_list);
 
@@ -1992,7 +2014,7 @@ public function setup_types() {
                 }
 
             }
-        
+
             if(!empty($final_list)) {
                 $state_rel_class::insert($final_list);
             }
@@ -2092,6 +2114,7 @@ public function setup_types() {
              // $tables = ['users','tours','locations','location_meta','country_zones'];
              // $tables = ['locations','location_meta'];
             // $tables = ['location_meta'];
+             $tables = ['hotels'];
            //$tables = ['tour_locations'];
            // $term_table = ['languages','tour_languages'];
            //$term_table = ['types','tour_types'];
@@ -2099,19 +2122,19 @@ public function setup_types() {
               //$term_table = ['package_types','tour_package_types'];
           //  $term_table = ['other_packages','tour_other_packages'];
              // $term_table = ['states','tour_states'];
-              $term_table = ['places','location_places'];
+          //$term_table = ['places','location_places'];
               //$term_table = ['location_states'];
              //$term_table = ['hotel_states'];
              //$term_table = ['activity_states'];
             //$tables = ['tour_details'];
             //$tables = ['country_zones'];
 
-           $this->info("Truncating tables...");
-          $this->truncate_tables($term_table);
-           //$this->truncate_tables($tables);
+          $this->info("Truncating tables...");
+         // $this->truncate_tables($term_table);
+           $this->truncate_tables($tables);
 
-           $this->info("Table Truncated...");
-       }
+          $this->info("Table Truncated...");
+      }
 
 
          // File Module
@@ -2138,6 +2161,9 @@ public function setup_types() {
         // Location Meta Module
        // $this->location_meta_migrate();
 
+        // Hotel Module
+       $this->hotel_migrate();
+
 
         // Setup Types
 
@@ -2147,12 +2173,12 @@ public function setup_types() {
        // $this->setup_other_packages();
        // $this->setup_language();
         //$this->setup_states();
-       $this->setup_places();
+      // $this->setup_places();
         // Associate with Types
         // For Tour
 
         //$tours = Tour::get();
-        $locations = Location::get();
+        //$locations = Location::get();
        // $hotels = Hotel::get();
        // $activities = Activity::get();
        // $tours = Tour::where('description','like','%[vc_row]%')->get();
@@ -2165,7 +2191,7 @@ public function setup_types() {
        //$this->associate_states_table($activities, $states, ActivityState::class,'activity_id');
       // $this->associate_states_table($hotels, $states, HotelState::class,'hotel_id');
        //$this->associate_language_table($tours, $languages, TourLanguage::class);
-       
+
        //$this->associate_tour_location_table($tours, $locations, TourLocation::class );
       //$this->associate_type_table($tours, $types, TourType::class);
 
@@ -2173,8 +2199,8 @@ public function setup_types() {
         // For Tour
         // $tours = Tour::get();
          // $package_types = PackageType::where('package_type_type', 'Tour')->get();
-        $places = Place::get();  
-        $this->associate_comman_relationship_table($locations, $places, LocationPlace::class,'location_id','place_id');
+        //$places = Place::get();  
+        //$this->associate_comman_relationship_table($locations, $places, LocationPlace::class,'location_id','place_id');
           // $this->associate_comman_relationship_table($tours, $package_types, TourPackageType::class,'tour_id','package_type_id');
         // $this->associate_package_type_table($tours, $package_types, TourPackageType::class);
        // $other_packages = OtherPackage::where('other_package_type', 'Tour')->get();
@@ -2182,13 +2208,15 @@ public function setup_types() {
 
         //$this->associate_other_package_table($tours, $other_packages, TourOtherPackage::class);
 
-       
+
       //   //$this->chnage_content($tours,'st_tours');
       
-     
-      //$this->associate_term_parent_id(OtherPackage::class, 'other_package_type', 'Tour');
-       return Command::SUCCESS;
 
-   }
+      //$this->associate_term_parent_id(OtherPackage::class, 'other_package_type', 'Tour');
+
+
+      return Command::SUCCESS;
+
+  }
 }
 
