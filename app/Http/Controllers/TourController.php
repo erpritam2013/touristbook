@@ -493,6 +493,7 @@ public function changeStatus(Request $request): JsonResponse
      //     $tour->detail()->create($request->only($tourMetaData));
      // }
 
+
  $tour->package_types()->sync($request->get('package_types'));
  $tour->other_packages()->sync($request->get('other_packages'));
  $tour->types()->sync($request->get('type'));

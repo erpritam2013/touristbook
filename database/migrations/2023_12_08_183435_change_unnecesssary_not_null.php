@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('tour_price_by')->nullable()->change();
             $table->json('extra_price')->nullable()->change();
 
+
         });
     }
 
