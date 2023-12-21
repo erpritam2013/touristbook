@@ -3,7 +3,8 @@
 namespace App\View\Composers;
 
 use Illuminate\View\View;
-
+use App\Models\Conversion;
+use Illuminate\Support\Facades\Session;
 class TourPriceComposer
 {
 
@@ -19,7 +20,8 @@ class TourPriceComposer
      */
     public function compose(View $view): void
     {
-        $currency = '₹'; // Will be Fetched from Session
+        $priceObject = Conversion::where('currency_name', Session::get('currency'))->first();
+        $currency = $priceObject->currency_symbol; // Will be Fetched from Session
 
         $this->priceRanges = [
             [
@@ -28,7 +30,7 @@ class TourPriceComposer
                 'min' => 0,
                 'max' => 10000,
                 'step' => 0,
-                'label' => 'Below  '.$currency.'10000'
+                'label' => 'Below  '.get_price(10000)
             ],
             [
                 'value' => '10000;19999',
@@ -36,7 +38,7 @@ class TourPriceComposer
                 'min' => 10000,
                 'max' => 19999,
                 'step' => 0,
-                'label' => $currency.'10000'.'-'.$currency.'20000'
+                'label' => get_price(10000).'-'.get_price(20000)
             ],
             [
                 'value' => '30000;39999',
@@ -44,7 +46,7 @@ class TourPriceComposer
                 'min' => 20000,
                 'max' => 29999,
                 'step' => 0,
-                'label' => $currency.'20000'.'-'.$currency.'30000'
+                'label' => get_price(20000).'-'.get_price(30000)
             ],
             [
                 'value' => '30000;39999',
@@ -52,7 +54,7 @@ class TourPriceComposer
                 'min' => 30000,
                 'max' => 39999,
                 'step' => 0,
-                'label' => $currency.'30000'.'-'.$currency.'40000'
+                'label' => get_price(30000).'-'.get_price(40000)
             ],
             [
                 'value' => '40000;49999',
@@ -60,7 +62,7 @@ class TourPriceComposer
                 'min' => 40000,
                 'max' => 49999,
                 'step' => 0,
-                'label' => $currency.'40000'.'-'.$currency.'50000'
+                'label' => get_price(40000).'-'.get_price(50000)
             ],
             [
                 'value' => '0;50000',
@@ -68,7 +70,7 @@ class TourPriceComposer
                 'min' => 0,
                 'max' => 50000,
                 'step' => 0,
-                'label' => 'Up to '.$currency.'50000'
+                'label' => 'Up to '.get_price(50000)
             ]
         ];
 

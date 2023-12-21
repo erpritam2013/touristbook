@@ -13,6 +13,18 @@ if (!function_exists('purify_html')) {
         return $purifier->purify($html);
     }
 }
+if (!function_exists('purify_string')) {
+    function purify_string($string)
+    {
+        if (!empty($string)) {
+        $string = preg_replace('/[^A-Za-z0-9\-]/', ' ', $string);
+        $string = str_replace('-', " ", $string);
+        $string = str_replace('_', " ", $string);
+        }
+
+        return $string;
+    }
+}
 
 
 if (!function_exists('getRouteName')) {
@@ -682,11 +694,15 @@ if (!function_exists('get_price')) {
     {
 
         $price_html = "";
+        if (is_object($obj)) {
         $price_html .= '<span class="price">';
+        }
         $priceObject = Conversion::where('currency_name', Session::get('currency'))->first();
         $price = 0;
         if($priceObject != null) {
             $currency_symbal = $priceObject->currency_symbol;
+            if (is_object($obj)) {
+                
             if (isset($obj->avg_price)) {
                 $price = $priceObject->conversion_rate * ((!empty($obj->avg_price))?round($obj->avg_price):0);
             }elseif (isset($obj->price)) {
@@ -694,11 +710,16 @@ if (!function_exists('get_price')) {
             }else{
             $price = $obj;
             }
+            }else{
+             $price = $priceObject->conversion_rate * ((!empty($obj))?round($obj):0);
+            }
         }
         $price_html .=   $currency_symbal;
         $price_html .= ceil($price);
          //$price_html .= number_format((float)$price, 2, '.', '');
+        if (is_object($obj)) {
         $price_html .= '</span>';
+        }
 
         return $price_html;
   }
@@ -771,7 +792,10 @@ if (!function_exists('getConversionUrl')) {
 
         $NamespacedModel = 'App\\Models\\File';
         $NamespacedModelMedia = 'App\\Models\\Media';
-
+        $conversion_arr = ["thumbnail","768x576","600x450","450x417"];
+        if (!in_array($conversion_type, $conversion_arr)) {
+            $conversion_type = "";
+        }
         $media = $NamespacedModelMedia::find($id);
         if (!empty($media)) {
             $file = $NamespacedModel::find($media->model_id);

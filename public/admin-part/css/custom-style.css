@@ -389,6 +389,59 @@ background: #fff!important; }
 /*custom icon end css*/
 
 
+/*comman filter terms start*/
+
+
+body .amenity-card .card-body .amenity-list,
+body .proparty-types-card .card-body .amenity-list,
+body .medicare-assistance-card .card-body .amenity-list,
+body .meetings-and-event-card .card-body .amenity-list,
+body .deals-discount-card .card-body .amenity-list,
+body .activities-card .card-body .amenity-list{
+overflow: auto;
+height: 300px;
+margin-top: 10px;
+}
+
+
+body .amenity-card-padding .card-body .amenity-list,
+body .proparty-types-card-padding .card-body .amenity-list,
+body .medicare-assistance-card-padding .card-body .amenity-list,
+body .meetings-and-event-card-padding .card-body .amenity-list,
+body .deals-discount-card-padding .card-body .amenity-list,
+body .activities-card-padding .card-body .amenity-list{
+    margin-top: 10px;
+}
+
+
+body .amenity-card-padding,
+body .proparty-types-card-padding,
+body .medicare-assistance-card-padding,
+body .meetings-and-event-card-padding,
+body .deals-discount-card-padding,
+body .activities-card-padding
+ {
+    border: 1px solid #ddd;
+}
+
+
+
+
+amenity-card
+body .amenity-card-padding
+proparty-types-card
+body .proparty-types-card-padding
+medicare-assistance-card
+body .medicare-assistance-card-padding
+meetings-and-event-card
+body .meetings-and-event-card-padding
+deals-discount-card
+body .deals-discount-card-padding
+activities-card
+body .activities-card-padding
+/*comman filter terms end*/
+
+
 
 
 
