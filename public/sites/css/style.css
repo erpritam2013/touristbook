@@ -10668,6 +10668,7 @@ div#btn-clear-filter {
 	color: #fba009;
 	font-weight: 600;
 	font-size: 16px;
+    cursor: pointer;
 }
 
 ::-webkit-scrollbar {
@@ -10934,8 +10935,8 @@ body.tour-list-page .ui-autocomplete.ui-menu {
 	margin-right: 0px;
 }
 .hotel-list-page .listroBox ul li:last-child {
-	margin: 0px 0 0 0; 
-	float: left; 
+	margin: 0px 0 0 0;
+	float: left;
 }
 .hotel-list-page p.service-location,.hotel-grid-view p.service-location {
 	color: #07509e!important;
@@ -10988,7 +10989,7 @@ border-top: none;
 	color: #07509e;
 }
 .hotel-list-page .listroBox figure{
-	
+
 	height: 240px;
 }
 
@@ -11365,8 +11366,8 @@ body.tour-list-page #package_types_filter .custom-checkbox .btn.btn-default {
 	margin-right: 0px;
 }
 .tour-list-page .listroBox ul li:last-child {
-	margin: 0px 0 0 0; 
-	float: left; 
+	margin: 0px 0 0 0;
+	float: left;
 }
 .tour-list-page p.service-location,.tour-grid-view p.service-location {
 	color: #07509e!important;
@@ -11465,7 +11466,7 @@ body.tour-list-page #st-include-exclude .st-exclude ul.exclude li {
 	padding-left: 5px;
 	background: transparent;
 	border-left: 5px solid #fba009;
-	height: auto; 
+	height: auto;
 	margin-top: 5px;
 	margin-bottom: 5px;
 	margin-left: 15px;
@@ -12274,7 +12275,7 @@ body.hotel-detail-page .listingDetails .booking-search > .row {
     .breadcrumb-item.active {
     	color: #07509e;
     }
-    @media (min-width:320px) and (max-width:768px){ 
+    @media (min-width:320px) and (max-width:768px){
     	body.hotel-detail-page #pocketPDFtab .st-description ul li {
 
     		float: none;
@@ -12422,7 +12423,7 @@ body.tour-detail-page .st-helpful-facts .row.st-htm-blocks{
 }
 body.tour-detail-page .st-helpful-facts .row.st-htm-blocks ul li:before,
 body.tour-detail-page .st-important-notes .row.st-htm-blocks ul li:before,
-body.tour-detail-page .st-highlight .st-highlight-info ul li:before, 
+body.tour-detail-page .st-highlight .st-highlight-info ul li:before,
 body.tour-detail-page .st-senstive-data .row.st-htm-blocks ul li:before {
 	content: "";
 	border: 1px solid #fba009;
@@ -12837,7 +12838,7 @@ body.tour-detail-page #st-program-section .card-header .title {
 }
 body.tour-detail-page #st-program-section .card-header .accicon {
 	float: right;
-	font-size: 20px;  
+	font-size: 20px;
 	width: 1.2em;
 }
 body.tour-detail-page #st-program-section .card-header{
@@ -13118,8 +13119,8 @@ body.activity-list-page .ui-autocomplete.ui-menu {
 	margin-right: 0px;
 }
 .activity-list-page .listroBox ul li:last-child {
-	margin: 0px 0 0 0; 
-	float: left; 
+	margin: 0px 0 0 0;
+	float: left;
 }
 .activity-list-page p.service-location,.tour-grid-view p.service-location {
 	color: #07509e!important;
@@ -13188,7 +13189,7 @@ border-top: none;
 	padding-left: 5px;
 	background: transparent;
 	border-left: 5px solid #fba009;
-	height: auto; 
+	height: auto;
 	margin-top: 5px;
 	margin-bottom: 5px;
 	margin-left: 15px;
@@ -13290,7 +13291,7 @@ body.activity-list-page #st-include-exclude .st-exclude ul.exclude li {
 		font-size: 26px!important;
 	}
 	body.activity-list-page .Filter-left .mb-left ul.review-score-filter label span {
-		display: unset; 
+		display: unset;
 	}
 
 
@@ -13310,7 +13311,7 @@ body.activity-list-page #st-include-exclude .st-exclude ul.exclude li {
     margin-right: 1px;
 }*/
 /*body.activity-detail-page #activity-zone-area-pdf .nav-tabs li.activity-zone-li{
-  
+
     margin: 1px;
 }*/
 /*body.activity-detail-page #activity-zone-area-pdf .nav-tabs li.activity-zone-li.active a {
@@ -13355,7 +13356,7 @@ body.activity-detail-page img.activity-left-img {
 	float: left;
 	margin: 5px 10px 10px 0px!important;
 }
-@media (min-width:320px) and (max-width:768px){ 
+@media (min-width:320px) and (max-width:768px){
 
 	body.activity-detail-page #activity-zone-area-pdf .title {
 		padding: 10px;
@@ -13821,7 +13822,7 @@ body.activity-detail-page #st-program-section .card-header .title {
 }
 body.activity-detail-page #st-program-section .card-header .accicon {
 	float: right;
-	font-size: 20px;  
+	font-size: 20px;
 	width: 1.2em;
 }
 body.activity-detail-page #st-program-section .card-header{
@@ -13932,7 +13933,7 @@ body.activity-detail-page #tourism-zone-area-pdf .nav-tabs li.tourism-zone-li.ac
 	color: #fff;
 	border-color: var(--link-color, #5191FA);
 }
-@media (min-width:320px) and (max-width:768px){ 
+@media (min-width:320px) and (max-width:768px){
 	body.activity-detail-page #tourism-zone-area-pdf .nav-tabs>li.tourism-zone-li,body.single.single-st_tours #tourism-zone-area-pdf .nav-tabs>li.tourism-zone-li {
 		float: none!important;
 		margin-bottom: 10px!important;
@@ -14341,7 +14342,7 @@ body.activity-detail-page #st-program-section .card-header .title {
 }
 body.activity-detail-page #st-program-section .card-header .accicon {
 	float: right;
-	font-size: 20px;  
+	font-size: 20px;
 	width: 1.2em;
 }
 body.activity-detail-page #st-program-section .card-header{
@@ -14533,7 +14534,7 @@ body.destinations-page .innerpage-banner .innerpage-title span {
 }
 @media (min-width: 1200px){
 	body.destinations-page .innerpage-banner .innerpage-title span {
-		left: 305px;  
+		left: 305px;
 	}
 }
 body.destinations-page .destination-item a {
@@ -14794,7 +14795,7 @@ body.destination-detail-page #tab-tourism_zone #tourism-zone-div .tab-content .n
 body.destination-detail-page #tab-tourism_zone #tourism-zone-div .tab-content{
 	border: 5px solid #ddd;
 	border-top: unset;
-} 
+}
 body.destination-detail-page #tab-tourism_zone #tourism-zone-div .tab-content .nav-tabs li.tourism-zone-li.active a {
 	background-color: var(--link-color, #5191FA);
 	color: #fff;
@@ -14840,10 +14841,10 @@ body.destination-detail-page .innerpage-banner.left {
 }
 body.destination-detail-page .listroBoxmain .service-title a{
 	color: #fba009;
-} 
+}
 body.destination-detail-page .listroBoxmain .service-title a:hover{
 	color: #07509e;
-} 
+}
 
 body.destination-detail-page .destination-all-content #tab-stay .owl-theme .owl-nav,
 body.destination-detail-page .destination-all-content #tab-packages-activities .owl-theme .owl-nav {
@@ -14857,7 +14858,7 @@ body.destination-detail-page .destination-all-content #tab-packages-activities .
     right: 0px;
     top: -285px;
 }
- 
+
 body.destination-detail-page .destination-all-content #tab-stay .owl-nav button.owl-next,
 body.destination-detail-page .destination-all-content #tab-packages-activities .owl-nav button.owl-next {
     position: relative;
