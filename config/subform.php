@@ -1,26 +1,30 @@
 <?php
 return [
 
-    'policy' => [
+    'policies' => [
             "fields" => [
-                "policy-title" => [
+                "policies-title" => [
                     'label' => "Title",
                     'control' => 'text'
                 ],
-                "policy-description" => [
+                "policies-policy_description" => [
                     'label' => "Policy Description",
                     'control' => 'textarea'
+                ],
+                "policies-policy_parent" => [
+                    'label' => "Policy Parent Important Note Title",
+                    'control' => 'text'
                 ]
             ]
 
         ],
     'notices' => [
             "fields" => [
-                "notice-title" => [
+                "notices-title" => [
                     'label' => "Title",
                     'control' => 'text'
                 ],
-                "notice-description" => [
+                "notices-description" => [
                     'label' => "Description",
                     'control' => 'textarea',
                     'class' => 'tourist-editor'
@@ -34,7 +38,7 @@ return [
                     'label' => "Title",
                     'control' => 'text'
                 ],
-                "highlights-url" => [
+                "highlights-url_link" => [
                     'label' => "URL Link",
                     'control' => 'text'
                 ],
