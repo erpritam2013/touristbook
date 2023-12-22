@@ -9,6 +9,7 @@ use App\Models\Media;
 use App\Models\Location;
 use App\Models\CountryZone;
 use App\Models\Hotel;
+use App\Models\HotelDetail;
 use App\Models\Activity;
 use App\Models\LocationMeta;
 use App\Models\Terms\Type;
@@ -236,11 +237,13 @@ public function unserialize_data_format_in_array($value, $field = "")
     if (!empty($value)) {
 
         if ($this->tourist_is_serialized($value)) {
-
+         
 
             $get_unserialized_value = unserialize($value);
             if (!empty($field)) {
-
+               if ($field == 'pocketPDF') {
+                  dd($get_unserialized_value);
+               }
                 if (is_array($get_unserialized_value)) {
                     $result = [];
                         // $final_result = [];
@@ -249,11 +252,10 @@ public function unserialize_data_format_in_array($value, $field = "")
                     $image_keys = ['video_thumbnail', 'image'];
                     foreach ($get_unserialized_value as $key => $value) {
                         foreach ($value as $k => $v) {
+                            $result[$key][$field . '-' . $k] = $v;
                             if (in_array($k, $image_keys)) {
                                 $result[$key][$field . '-' . $k] = $this->string_to_json($v, 'image');
-                            } else {
-                                $result[$key][$field . '-' . $k] = $v;
-                            }
+                            } 
                         }
                     }
 
@@ -700,13 +702,13 @@ public function load_tour_details() {
                         "address" => $this->get_key_data($n_result["postmeta"], "address"),
                         "external_link" => $this->get_key_data($n_result["postmeta"], "hotel_link"),
                         "food_dining" => $this->get_key_data($n_result["postmeta"], "food_and_dining"),
-                        "is_featured" => $this->get_key_data($n_result["postmeta"], "is_featured"),
+                        "is_featured" => $this->radio_value_modify($this->get_key_data($n_result["postmeta"], "is_featured")),
                         "logo" => $this->string_to_json($this->get_key_data($n_result["postmeta"], "logo"),'image'),
                         "featured_image" => $this->string_to_json($this->get_key_data($n_result["postmeta"], "_thumbnail_id"), 'image_id'),
                         "hotel_video" => $this->get_key_data($n_result["postmeta"], "video"),
                         "rating" => $n_result["rate_review"],
                         "coupon_code" => $this->get_key_data($n_result["postmeta"], "address"),
-                        "hotel_attributes" => json_decode([
+                        "hotel_attributes" => json_encode([
                          "corporateAddress"=> $this->get_key_data($n_result["postmeta"], "st_hotel_corporate_address")
                      ]),
                         "contact" => json_encode([
@@ -728,18 +730,127 @@ public function load_tour_details() {
                         "created_by" => $n_result["post_author"],
                         "created_at" => $n_result["post_date_gmt"],
                         "updated_at" => $n_result["post_modified_gmt"],
-                        "images" => $this->comma_saprated_to_array($this->get_key_data($n_result['postmeta'], "gallery"),'gallery'),,
+                        "images" => $this->comma_saprated_to_array($this->get_key_data($n_result['postmeta'], "gallery"),'gallery'),
                     ];
-
+                    
                     $hotels->push($hotel);
                 }
 
                 Hotel::insert($hotels->toArray());
+                 $this->info("Hotel Data 200 done");
             }
         }
-        // TODO: Tour Details
+        // TODO: Hotel Details
         $this->info("Hotel Data Loading Completed");
     }
+
+    /**
+     * Hotel Detail Moudle
+      */
+
+    public function load_hotel_details() {
+    $this->info("Hotel Details Loading...");
+    $post_collections = DB::connection($this->wp_connection)->table("wp_st_hotel")->select("post_id")->get();
+    $postIds = $post_collections->pluck('post_id')->toArray();
+
+    $hotelIds = Hotel::whereIn("wp_id", $postIds)->select("wp_id", "id")->pluck('id', 'wp_id');
+    $recourd_count = 0;
+    foreach (array_chunk($postIds, 200) as $pIds) {
+
+            // Get Postmeta
+
+        $pQuery = DB::connection($this->wp_connection)->table('wp_posts as p')
+        ->select('p.*', 'pm.*')
+        ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+        ->whereIn('pm.meta_key',["map_lat","map_lng","map_zoom","hotel_highlight","hotel_report","hotel_facilities_amenities","hotel_food","food_and_dining","hotel_complimentary","hotel_helpful_facts","hotel_save_your_pocket","save_your_pocket_pdf","hotel_save_the_environment","hotel_land_mark","hotel_things_to_do","hotel_offer_package","hotel_things_to_do_video_link","hotel_meetings_events","hotel_tourism_zone","hotel_tourism_zone_heading_desc","tourism_zone_pdf","hotel_activities","hotel_rooms_amenities","hotel_transport","hotel_payment_mode","hotel_id_proofs","hotel_emergency_links","facebook_custom_link", "twitter_custom_link", "instagram_custom_link", "you_tube_custom_link"])
+        ->whereIn('p.ID', $pIds)
+        ->orderBy('p.ID', 'desc');
+        $results = $pQuery->get();
+        $nestedResults = [];
+
+        foreach ($results as $result) {
+           $postId = $result->ID;
+                    unset($result->ID); // Remove the ID field from the main post data
+
+
+                    if (!isset($nestedResults[$postId])) {
+                        $nestedResults[$postId] = (array) $result;
+                        $nestedResults[$postId]['postmeta'] = [];
+                    }
+
+                    $metaKey = $result->meta_key;
+                    $metaValue = $result->meta_value;
+
+                unset($result->meta_key, $result->meta_value); // Remove meta_key and meta_value fields
+
+
+
+                $nestedResults[$postId]['postmeta'][$metaKey] = $metaValue;
+            }
+
+            $hotelDetails = collect([]);
+            // Directly insert into $hotelDetails
+
+
+            foreach($nestedResults as $postId => $n_result){
+
+                $hotelId = $hotelIds[$postId];
+
+
+                $latitude = $this->get_key_data($n_result['postmeta'], "map_lat");
+                $longitude = $this->get_key_data($n_result['postmeta'], "map_lng");
+
+
+                $hotelDetail =  [
+                    "hotel_id" => $hotelId,
+                'map_address'=>$this->geolocationaddress($latitude,$longitude),
+                "latitude" => $this->get_key_data($n_result['postmeta'], "map_lat"),
+                "longitude" => $this->get_key_data($n_result['postmeta'], "map_lng"),
+                "zoom_level" => $this->get_key_data($n_result['postmeta'], "map_zoom"),
+                "highlights" => $this->unserialize_data_format_in_array($this->get_key_data($n_result['postmeta'], "hotel_highlight"),'highlights'),
+                "hotel_report" => $this->get_key_data($n_result['postmeta'], "hotel_report"),
+                "facilityAmenities" => $this->unserialize_data_format_in_array($this->get_key_data($n_result['postmeta'], "hotel_facilities_amenities"),'facilityAmenities'),
+                "foods" => $this->unserialize_data_format_in_array($this->get_key_data($n_result['postmeta'], "hotel_food"),'foods'),
+                "drinks" => $this->get_key_data($n_result['postmeta'], "food_and_dining"),
+                "complimentary" => $this->unserialize_data_format_in_array($this->get_key_data($n_result['postmeta'], "hotel_complimentary"),'complimentary'),
+                "helpfulfacts" => $this->get_key_data($n_result['postmeta'], "hotel_helpful_facts"),
+                "save_pocket" => $this->get_key_data($n_result['postmeta'], "hotel_save_your_pocket"),
+                "pocketPDF" => $this->unserialize_data_format_in_array($this->get_key_data($n_result['postmeta'], "save_your_pocket_pdf"),'pocketPDF'),
+                "save_environment" => $this->get_key_data($n_result['postmeta'], "hotel_save_the_environment"),
+                "landmark" => $this->unserialize_data_format_in_array($this->get_key_data($n_result['postmeta'], "hotel_land_mark"),'landmark'),
+                "todo" => $this->unserialize_data_format_in_array($this->get_key_data($n_result['postmeta'], "hotel_things_to_do"),'todo'),
+                "offers" => $this->unserialize_data_format_in_array($this->get_key_data($n_result['postmeta'], "hotel_offer_package"),'offers'),
+                "todovideo" => $this->unserialize_data_format_in_array($this->get_key_data($n_result['postmeta'], "hotel_things_to_do_video_link"),'todovideo'),
+                "eventmeeting" => $this->unserialize_data_format_in_array($this->get_key_data($n_result['postmeta'], "hotel_meetings_events"),'eventmeeting'),
+                "tourism_zone" => $this->get_key_data($n_result['postmeta'], "hotel_tourism_zone"),
+                "tourism_zone_heading" => $this->get_key_data($n_result['postmeta'], "hotel_tourism_zone_heading_desc"),
+                "tourismzonepdf" => $this->unserialize_data_format_in_array($this->get_key_data($n_result['postmeta'], "tourism_zone_pdf"),'tourismzonepdf'),
+                "activities" => $this->unserialize_data_format_in_array($this->get_key_data($n_result['postmeta'], "hotel_activities"),'activities'),
+                "room_amenities" => $this->get_key_data($n_result['postmeta'], "hotel_rooms_amenities"),
+                "transport" => $this->unserialize_data_format_in_array($this->get_key_data($n_result['postmeta'], "hotel_transport"),'transport'),
+                "payment_mode" => $this->get_key_data($n_result['postmeta'], "hotel_payment_mode"),
+                "id_proofs" => $this->get_key_data($n_result['postmeta'], "hotel_id_proofs"),
+                "emergencyLinks" => $this->unserialize_data_format_in_array($this->get_key_data($n_result['postmeta'], "hotel_emergency_links"),'emergencyLinks'),
+                "social_links" => json_encode( [
+                   "facebook_custom_link" => $this->get_key_data($n_result['postmeta'],'facebook_custom_link'),
+                   "twitter_custom_link" => $this->get_key_data($n_result['postmeta'],'twitter_custom_link'),
+                   "instagram_custom_link" => $this->get_key_data($n_result['postmeta'],'instagram_custom_link'),
+                   "you_tube_custom_link" => $this->get_key_data($n_result['postmeta'],'you_tube_custom_link')
+               ]),
+               "created_at" => $n_result['post_date_gmt'],
+               "updated_at" => $n_result['post_modified_gmt'],
+           ];
+           $this->info("200 Record Loaded");
+           $hotelDetails->push($hotelDetail);
+
+       }
+
+       HotelDetail::insert($hotelDetails->toArray());
+
+   }
+
+   $this->info("Hotel Details Loaded");
+}
 
     /**
      * Tour Module
@@ -2114,7 +2225,8 @@ public function setup_types() {
              // $tables = ['users','tours','locations','location_meta','country_zones'];
              // $tables = ['locations','location_meta'];
             // $tables = ['location_meta'];
-             $tables = ['hotels'];
+             $tables = ['hotel_details'];
+             // $tables = ['hotels','hotel_details'];
            //$tables = ['tour_locations'];
            // $term_table = ['languages','tour_languages'];
            //$term_table = ['types','tour_types'];
@@ -2131,7 +2243,7 @@ public function setup_types() {
 
           $this->info("Truncating tables...");
          // $this->truncate_tables($term_table);
-           $this->truncate_tables($tables);
+          $this->truncate_tables($tables);
 
           $this->info("Table Truncated...");
       }
@@ -2162,7 +2274,8 @@ public function setup_types() {
        // $this->location_meta_migrate();
 
         // Hotel Module
-       $this->hotel_migrate();
+       // $this->hotel_migrate();
+       $this->load_hotel_details();
 
 
         // Setup Types
@@ -2213,6 +2326,9 @@ public function setup_types() {
       
 
       //$this->associate_term_parent_id(OtherPackage::class, 'other_package_type', 'Tour');
+
+ //         $temp = DB::connection($this->wp_connection)->table('wp_postmeta as wp')->select('wp.meta_value')->where('post_id',17559)->where('meta_key','like','save_your_pocket_pdf')->first();
+ // dd($this->unserialize_data_format_in_array("$temp->meta_value","save_your_pocket_pdf"));
 
 
       return Command::SUCCESS;
