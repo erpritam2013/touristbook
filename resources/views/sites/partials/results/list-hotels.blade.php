@@ -59,7 +59,7 @@
                                <ul> 
                                 @foreach($hotel->detail->highlights as $key => $highlights)
                                 @if($key <=1)
-                                @php   $url_add = $highlights['highlights-url']; @endphp
+                                @php   $url_add = $highlights['highlights-url_link']; @endphp
 
                                 @if(!empty($highlights['highlights-file']))
                                 @php 
@@ -214,7 +214,7 @@
     <h3 class="st-section-title">Highlights</h3>
     <div class="row" >
         @foreach($hotel->detail->highlights as $key => $highlights)
-        @php   $url_add = $highlights['highlights-url']; @endphp
+        @php   $url_add = $highlights['highlights-url_link']; @endphp
 
         @if(!empty($highlights['highlights-file']))
         @php 
