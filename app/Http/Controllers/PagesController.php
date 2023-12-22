@@ -363,7 +363,6 @@ public function locationDetail(Request $request, $slug) {
     $data['nearByTour'] =  collect([]);
     $data['nearByActivity'] =collect([]);
     $data['nearByLocation'] = collect([]);
-
     if (!empty($state->id)) {
       $data = $this->nearByRecords($data,$state->id,$location->id,'Location');
   }
