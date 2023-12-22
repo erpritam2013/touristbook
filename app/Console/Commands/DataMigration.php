@@ -2217,7 +2217,7 @@ public function setup_types() {
 
 
 
-             //$tables = ['users','tours','locations','location_meta','country_zones']
+             $tables = ['users','tours','tour_details','locations','location_meta','country_zones','files','media'];
           // $tables = ['tours','tour_details'];
              // $tables = ['tours','tour_details','users','files','media'];
              //$term_table = ['types','tour_types'];
@@ -2225,7 +2225,7 @@ public function setup_types() {
              // $tables = ['users','tours','locations','location_meta','country_zones'];
              // $tables = ['locations','location_meta'];
             // $tables = ['location_meta'];
-             $tables = ['hotel_details'];
+            // $tables = ['hotel_details'];
              // $tables = ['hotels','hotel_details'];
            //$tables = ['tour_locations'];
            // $term_table = ['languages','tour_languages'];
@@ -2250,9 +2250,9 @@ public function setup_types() {
 
 
          // File Module
-       //$this->file_migrate();
+       $this->file_migrate();
          // Media Module
-       // $this->media_migrate();
+       $this->media_migrate();
 
         // File Module
         //$this->file_migrate();
@@ -2275,7 +2275,7 @@ public function setup_types() {
 
         // Hotel Module
        // $this->hotel_migrate();
-       $this->load_hotel_details();
+      // $this->load_hotel_details();
 
 
         // Setup Types
