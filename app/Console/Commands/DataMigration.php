@@ -1607,7 +1607,7 @@ public function setup_types() {
 
         $this->info("Terms Package Type Data Loading Completed");
     }
-
+   
 
     public function setup_language() {
        $this->info("Terms Language Data Loading...");
@@ -1770,7 +1770,7 @@ public function setup_types() {
 
         }
 
-
+        
         public function associate_language_table($objects, $languages, $language_rel_class ) {
 
        // dump($languages->pluck('wp_taxonomy_id')->toArray());
