@@ -264,12 +264,12 @@
                   <td>
                     @if (!empty($hotel->policies))
                     @foreach ($hotel->policies as $policy)
-                    <strong>{{ $policy['policy-title'] }}</strong>
+                    <strong>{{ $policy['policies-title'] }}</strong>
 
                     <div class="row">
 
                       @php 
-                      $policy_description_arr = explode("\n",trim($policy['policy-description']));
+                      $policy_description_arr = explode("\n",trim($policy['policies-policy_description']));
                       @endphp
                       @foreach($policy_description_arr as $k_ipd => $v_ipd)
                       <div class="col-xs-12 col-sm-12" style="color:#000000"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="    font-size: 7px;color: transparent;"></i> 
@@ -537,11 +537,11 @@
         <article class="TravelGo-category-listing fl-wrap important-note-wraps">
 
           <div class="row fetch important-note-rooms mt-4 pl-lg-5 pr-lg-5 pb-5">
-            <h1 class="st-heading-section col-md-12">{{ $notice['notice-title'] }}
+            <h1 class="st-heading-section col-md-12">{{ $notice['notices-title'] }}
             </h1>
 
             <div class="col-md-12 text-justify">
-              {!! $notice['notice-description'] !!}
+              {!! $notice['notices-description'] !!}
             </div>
           </div>
 
