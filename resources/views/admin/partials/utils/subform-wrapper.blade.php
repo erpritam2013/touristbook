@@ -14,7 +14,6 @@ $typeFields = Config::get('subform.' . $type . '.fields');
 
 @if (!empty($typeData))
 @php
-if0
 $first_element = reset($typeData);
 @endphp
 <li class="subform-card">

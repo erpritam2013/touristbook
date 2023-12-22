@@ -8902,12 +8902,12 @@ img {
 	border-bottom: 1px solid #e5e5e5;
 }
 .resultBar h2 {
-	color: #07509e;
-	font-weight: 600;
-	text-transform: capitalize;
-	font-size: 24px;
-	margin-bottom: 0;
-	display: inline-block;
+    color: #07509e;
+    font-weight: 400;
+    text-transform: capitalize;
+    font-size: 24px;
+    margin-bottom: 0;
+    display: inline-block;
 }
 .resultBar h2 span {
 	font-weight: 500;
@@ -11630,7 +11630,7 @@ body .search-form-wrapper{
 	width: 100%;
 	left: 0;
 	top: -50px;
-	z-index: 99;
+	z-index: 1;
 }
 body.tour-list-page .search-form-wrapper {
 
