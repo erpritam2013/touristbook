@@ -107,6 +107,7 @@ class ViewServiceProvider extends ServiceProvider
 
 
         View::composer('*', function ($view) {
+        
             // Check if the current route does not have the 'admin' prefix
             if (!Request::is('admin/*')) {
                 $currency_list = Conversion::where('status', 1)->select('currency_name', 'country_code')->get();
