@@ -10,8 +10,9 @@ use App\Models\Location;
 use App\Models\CountryZone;
 use App\Models\Hotel;
 use App\Models\HotelDetail;
-use App\Models\Activity;
 use App\Models\LocationMeta;
+use App\Models\Activity;
+use App\Models\ActivityDetail;
 
 use App\Models\HotelFacility;
 use App\Models\HotelAmenities;
@@ -57,6 +58,8 @@ use App\Models\TourState;
 use App\Models\LocationState;
 use App\Models\ActivityState;
 use App\Models\RoomState;
+use App\Models\Room;
+use App\Models\RoomDetail;
 use App\Models\TourOtherPackage;
 
 use Illuminate\Console\Command;
@@ -113,6 +116,21 @@ class DataMigration extends Command
         ],
     ];
 
+      public function get_image_name($value,$type="")
+    {
+        $result = "";
+        if (!empty($type)) {
+            if ($type == 'image') {
+                $data_convert_array = explode('/', $value);
+                $result = $data_convert_array[2];
+            }
+        }else{
+            $str_replace = str_replace('_', '-', $value);
+            $result = $str_replace;
+        }
+        return $result;
+        
+    }
 
     /**
      * Isset Utility
@@ -344,8 +362,8 @@ class DataMigration extends Command
                 }
             }
         }
-        if (!empty($result)) {
 
+        if (!empty($result)) {
             return $result;
         } else {
 
@@ -645,11 +663,12 @@ class DataMigration extends Command
                     "created_at" => $n_result["post_date_gmt"],
                     "updated_at" => $n_result["post_modified_gmt"]
                 ];
-                $recourd_count = $recourd_count + 200;
-                $this->info("$recourd_count Record Loaded");
+
                 $tourDetails->push($tourDetail);
             }
 
+                $recourd_count = $recourd_count+200;
+                $this->info("$recourd_count Record Loaded");
             TourDetail::insert($tourDetails->toArray());
         }
 
@@ -881,6 +900,467 @@ class DataMigration extends Command
         }
 
         $this->info("Hotel Details Loaded");
+    }
+
+     /**
+     * Activity Module
+     */
+  public function activity_migrate()
+  {
+    $this->info("Activity Data Loading...");
+    $post_collections = DB::connection($this->wp_connection)->table("wp_st_activity")->select("post_id")->get();
+    $postIds = $post_collections->pluck('post_id')->toArray();
+
+    foreach (array_chunk($postIds, 200) as $pIds) {
+
+        $pQuery = DB::connection($this->wp_connection)->table('wp_posts as p')
+        ->select('p.*', 'pm.*', 'wp_st_activity.*')
+        ->leftJoin("wp_st_activity", "wp_st_activity.post_id", '=', 'p.ID')
+        ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+        ->whereIn('pm.meta_key', ["disable_children_name","hide_children_in_booking_form","discount_by_child","hide_adult_in_booking_form","discount_by_adult","discount_by_people_type","calculator_discount_by_people_type","disable_infant_name","hide_infant_in_booking_form","min_price","extra_price","st_activity_external_booking","st_activity_external_booking_link","deposit_payment_status","deposit_payment_amount","activity_booking_period","max_people","st_booking_option_type","logo","_thumbnail_id"
+        ])
+        ->where('p.post_type', 'st_activity')
+        ->where('p.post_status', 'publish')
+        ->whereIn('p.ID', $pIds)
+        ->orderBy('p.ID', 'desc');
+
+        $results = $pQuery->get();
+       
+        $nestedResults = [];
+        $serializer_fields = ['discount_by_child','discount_by_adult','extra_price'];
+        foreach ($results as $result) {
+            $postId = $result->ID;
+                unset($result->ID); // Remove the ID field from the main post data
+
+                if (!isset($nestedResults[$postId])) {
+                    $nestedResults[$postId] = (array) $result;
+                    $nestedResults[$postId]['postmeta'] = [];
+                }
+
+                $metaKey = $result->meta_key;
+                $metaValue = $result->meta_value;
+
+                unset($result->meta_key, $result->meta_value); // Remove meta_key and meta_value fields
+
+                if (in_array($metaKey, $serializer_fields)) {
+                    // Serialized Results
+                    $nestedResults[$postId]['postmeta'][$metaKey] = $this->unserialize_data_format_in_array($metaValue, $metaKey);
+                } else {
+                    $nestedResults[$postId]['postmeta'][$metaKey] = $metaValue;
+                }
+            }
+
+
+            // TODO: Can think better way
+            // One more iteration for Laravel Specific
+            $activities = collect([]);
+            if (!empty($nestedResults)) {
+                foreach ($nestedResults as $postId => $n_result) {
+                    $single_activity = [
+                        "wp_id" => $postId, 
+                        "name" => $n_result["post_title"],
+                        "slug" => $n_result["post_name"],
+                        "description" => $this->check_content($n_result["post_content"],$postId,'st_activity'),
+                        "excerpt" => $n_result["post_excerpt"],
+                        "external_link" => null,
+                        "address" => $n_result["address"],
+                        "price" => $n_result["price"],
+                        "sale_price" => $n_result["sale_price"],
+                        "child_price" =>  $n_result["child_price"],
+                        "disable_children_name" => $this->radio_value_modify($this->get_key_data($n_result["postmeta"], "disable_children_name")),
+                        "hide_children_in_booking_form" => $this->radio_value_modify($this->get_key_data($n_result["postmeta"], "hide_children_in_booking_form")),
+                        "discount_by_child" => $this->get_key_data($n_result["postmeta"], "discount_by_child"),
+                        "adult_price" => $n_result["adult_price"],
+                        "hide_adult_in_booking_form" => $this->radio_value_modify($this->get_key_data($n_result["postmeta"], "hide_adult_in_booking_form")),
+                        "discount_by_adult" => $this->get_key_data($n_result["postmeta"], "discount_by_adult"),
+                        "discount_by_people_type" => $this->get_key_data($n_result["postmeta"], "discount_by_people_type"),
+                        "calculator_discount_by_people_type" => $this->get_key_data($n_result["postmeta"], "calculator_discount_by_people_type"),
+                        "infant_price" => $n_result["infant_price"],
+                        "disable_infant_name" => $this->radio_value_modify($this->get_key_data($n_result["postmeta"], "disable_infant_name")),
+                        "hide_infant_in_booking_form" => $this->radio_value_modify($this->get_key_data($n_result["postmeta"], "hide_infant_in_booking_form")),
+                        "min_price" => $n_result["min_price"],
+                        "extra_price" => $this->get_key_data($n_result["postmeta"], "extra_price"),
+                        "st_activity_external_booking" => $this->radio_value_modify($this->get_key_data($n_result["postmeta"], "st_activity_external_booking")),
+                        "st_activity_external_booking_link" => $this->get_key_data($n_result["postmeta"], "st_activity_external_booking_link"),
+                        "deposit_payment_status" => $this->get_key_data($n_result["postmeta"], "deposit_payment_status"),
+                        "deposit_payment_amount" => $this->get_key_data($n_result["postmeta"], "deposit_payment_amount"),
+                        "type_activity" => $n_result["type_activity"],
+                        "rating" => $n_result["rate_review"],
+                        "activity_booking_period" => $this->get_key_data($n_result["postmeta"], "activity_booking_period"),
+                        "min_people" => $this->get_key_data($n_result["postmeta"], "min_people"),
+                        "max_people" => $n_result["max_people"],
+                        "duration" => $n_result["duration"],
+                        "is_sale_schedule" => $this->radio_value_modify($n_result["is_sale_schedule"]),
+                        "discount" => $n_result["discount"],
+                        "sale_price_from" => $n_result["sale_price_from"],
+                        "sale_price_to" => $n_result["sale_price_to"],
+                        "discount_type" => $this->get_key_data($n_result["postmeta"], "discount_type"),
+                        "is_featured" => $this->radio_value_modify($n_result["is_featured"]),
+                        "st_booking_option_type" => $this->get_key_data($n_result["postmeta"], "st_booking_option_type"),
+                        "logo" => $this->string_to_json($this->get_key_data($n_result["postmeta"], "logo"), 'image'),
+                        "featured_image" => $this->string_to_json($this->get_key_data($n_result["postmeta"], "_thumbnail_id"), 'image_id'),
+                        "status" => 1,
+                        "created_by" => $n_result["post_author"], 
+                        "created_at" => $n_result["post_date_gmt"],
+                        "updated_at" => $n_result["post_modified_gmt"],
+                    ];
+
+                    $activities->push($single_activity);
+                }
+
+                Activity::insert($activities->toArray());
+            }
+        }
+        // TODO: Activity Details
+        $this->info("Activity Data Loading Completed");
+    }
+    public function get_room_hotel($hotel_id)
+    {
+        $result = 0;
+        if (!empty($hotel_id)) {
+        
+        $hotel = Hotel::where('wp_id',$hotel_id)->first();
+        if (!empty($hotel)) {
+            $result = $hotel->id;
+        }
+        }
+        return $result;
+    }
+     /**
+     * Room Module
+     */
+     public function room_migrate()
+     {
+        $this->info("room Data Loading...");
+        $post_collections = DB::connection($this->wp_connection)->table("wp_hotel_room")->select("post_id")->get();
+        $postIds = $post_collections->pluck('post_id')->toArray();
+
+        foreach (array_chunk($postIds, 200) as $pIds) {
+
+            $pQuery = DB::connection($this->wp_connection)->table('wp_posts as p')
+            ->select('p.*', 'pm.*', 'wp_hotel_room.*')
+            ->join("wp_hotel_room", "wp_hotel_room.post_id", '=', 'p.ID')
+            ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+            ->whereIn('pm.meta_key', ["extra_price","extra_price_unit","_thumbnail_id"])
+            ->where('p.post_type', 'hotel_room')
+            ->where('p.post_status', 'publish')
+            ->whereIn('p.ID', $pIds)
+            ->orderBy('p.ID', 'desc');
+
+            $results = $pQuery->get();
+           
+            $nestedResults = [];
+            $serializer_fields = ['extra_price'];
+            foreach ($results as $result) {
+                $postId = $result->ID;
+                unset($result->ID); // Remove the ID field from the main post data
+
+                if (!isset($nestedResults[$postId])) {
+                    $nestedResults[$postId] = (array) $result;
+                    $nestedResults[$postId]['postmeta'] = [];
+                }
+
+                $metaKey = $result->meta_key;
+                $metaValue = $result->meta_value;
+
+                unset($result->meta_key, $result->meta_value); // Remove meta_key and meta_value fields
+
+                if (in_array($metaKey, $serializer_fields)) {
+                    // Serialized Results
+                    $nestedResults[$postId]['postmeta'][$metaKey] = $this->unserialize_data_format_in_array($metaValue, $metaKey);
+                } else {
+                    $nestedResults[$postId]['postmeta'][$metaKey] = $metaValue;
+                }
+            }
+          
+
+            // TODO: Can think better way
+            // One more iteration for Laravel Specific
+            $rooms = collect([]);
+            if (!empty($nestedResults)) {
+                foreach ($nestedResults as $postId => $n_result) {
+                    $single_room = [
+                        "wp_id" => $postId, 
+                        "hotel_id" => $this->get_room_hotel($n_result["room_parent"]),
+                        "name" => $n_result["post_title"],
+                        "slug" => $n_result["post_name"],
+                        "description" => $n_result["post_content"],
+                        "excerpt" => $n_result["post_excerpt"],
+                        "address" => $n_result["address"],
+                        "price" => $n_result["price"],
+                        "number_room" => $n_result["number_room"],
+                        "adult_number" => $n_result["adult_number"],
+                        "children_number" => $n_result["child_number"],
+                        "adult_price" => $n_result["adult_price"],
+                        "child_price" => $n_result["child_price"],
+                        "extra_price" => $this->get_key_data($n_result["postmeta"], "extra_price"),
+                        "extra_price_unit" => $this->get_key_data($n_result["postmeta"], "extra_price_unit"),
+                        "featured_image" =>  $this->string_to_json($this->get_key_data($n_result["postmeta"], "_thumbnail_id"), 'image_id'),
+                        "featured_image_id" => null,
+                        "status" => 1,
+                        "created_by" => $n_result["post_author"], 
+                        "created_at" => $n_result["post_date_gmt"],
+                        "updated_at" => $n_result["post_modified_gmt"],
+                    ];
+
+                    $rooms->push($single_room);
+                }
+
+                Room::insert($rooms->toArray());
+
+               $this->info("200 record done");
+
+            }
+        }
+        // TODO: room Details
+        $this->info("room Data Loading Completed");
+    }
+
+
+
+    public function load_room_details() {
+    $this->info("room Details Loading...");
+    $post_collections = DB::connection($this->wp_connection)->table("wp_hotel_room")->select("post_id")->get();
+    $postIds = $post_collections->pluck('post_id')->toArray();
+
+    $roomIds = Room::whereIn("wp_id", $postIds)->select("wp_id", "id")->pluck('id', 'wp_id');
+    $recourd_count = 0;
+    foreach (array_chunk($postIds, 200) as $pIds) {
+
+            // Get Postmeta
+
+        $pQuery = DB::connection($this->wp_connection)->table('wp_posts as p')
+        ->select('p.*', 'pm.*')
+        ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+        ->whereIn('pm.meta_key', ["hotel_alone_room_layout","hotel_alone_room_sub_heading","price_by_per_person","st_booking_option_type","allow_full_day","discount_rate","discount_by_day","discount_type_no_day","discount_type","deposit_payment_status","deposit_payment_amount","gallery","video","room_facility_preview","disable_adult_name","disable_children_name","bed_number","bath_number","room_footage","st_room_external_booking","st_room_external_booking_link","add_new_facility","room_description","defaulte_status","calendar_check_in","calendar_check_out","calendar_price","calendar_status","st_allow_cancel","st_cancel_number_days","st_cancel_percent","ical_url","is_meta_payment_gateway_st_submit_form","facebook_custom_link","twitter_custom_link","instagram_custom_link","you_tube_custom_link"])
+        ->whereIn('p.ID', $pIds)
+        ->orderBy('p.ID', 'desc');
+        $results = $pQuery->get();
+        $nestedResults = [];
+        $serializer_fields = ["room_program","room_program_bgr","room_faq","room_zones","properties_near_by"];
+        foreach ($results as $result) {
+            $postId = $result->ID;
+                    unset($result->ID); // Remove the ID field from the main post data
+
+
+                    if (!isset($nestedResults[$postId])) {
+                        $nestedResults[$postId] = (array) $result;
+                        $nestedResults[$postId]['postmeta'] = [];
+                    }
+
+                    $metaKey = $result->meta_key;
+                    $metaValue = $result->meta_value;
+
+                unset($result->meta_key, $result->meta_value); // Remove meta_key and meta_value fields
+
+
+
+                if (in_array($metaKey, $serializer_fields)) {
+                    // Serialized Results
+                    $nestedResults[$postId]['postmeta'][$metaKey] = $this->unserialize_data_format_in_array($metaValue, $metaKey);
+                } else {
+                    $nestedResults[$postId]['postmeta'][$metaKey] = $metaValue;
+                }
+            }
+
+            $roomDetails = collect([]);
+            // Directly insert into $roomDetails
+
+
+            foreach($nestedResults as $postId => $n_result){
+
+                $roomId = $roomIds[$postId];
+
+
+                $latitude = $this->get_key_data($n_result['postmeta'], "map_lat");
+                $longitude = $this->get_key_data($n_result['postmeta'], "map_lng");
+
+
+                $roomDetail = [
+                    "room_id"  =>  $roomId,
+                    "hotel_alone_room_layout" =>$this->radio_value_modify($this->get_key_data($n_result['postmeta'], "hotel_alone_room_layout")) ,
+                    "hotel_alone_room_sub_heading" =>$this->get_key_data($n_result['postmeta'], "hotel_alone_room_sub_heading") ,
+                    "price_by_per_person" =>$this->radio_value_modify($this->get_key_data($n_result['postmeta'], "price_by_per_person")) ,
+                    "st_booking_option_type" =>$this->get_key_data($n_result['postmeta'], "st_booking_option_type") ,
+                    "allow_full_day" =>$this->radio_value_modify($this->get_key_data($n_result['postmeta'], "allow_full_day")) ,
+                    "discount_rate" =>$this->get_key_data($n_result['postmeta'], "discount_rate") ,
+                    "discount_by_day" =>$this->get_key_data($n_result['postmeta'], "discount_by_day") ,
+                    "discount_type_no_day" =>$this->get_key_data($n_result['postmeta'], "discount_type_no_day") ,
+                    "discount_type" =>$this->get_key_data($n_result['postmeta'], "discount_type") ,
+                    "deposit_payment_status" =>$this->get_key_data($n_result['postmeta'], "deposit_payment_status") ,
+                    "deposit_payment_amount" =>$this->get_key_data($n_result['postmeta'], "deposit_payment_amount") ,
+                    "gallery" =>$this->comma_saprated_to_array($this->get_key_data($n_result['postmeta'], "gallery"),'gallery') ,
+                    "video" =>$this->get_key_data($n_result['postmeta'], "video") ,
+                    "room_facility_preview" =>$this->get_key_data($n_result['postmeta'], "room_facility_preview") ,
+                    "disable_adult_name" =>$this->radio_value_modify($this->get_key_data($n_result['postmeta'], "disable_adult_name") ),
+                    "disable_children_name" =>$this->radio_value_modify($this->get_key_data($n_result['postmeta'], "disable_children_name")) ,
+                    "bed_number" =>$this->get_key_data($n_result['postmeta'], "bed_number") ,
+                    "bath_number" =>$this->get_key_data($n_result['postmeta'], "bath_number") ,
+                    "room_footage" =>$this->get_key_data($n_result['postmeta'], "room_footage") ,
+                    "st_room_external_booking" =>$this->radio_value_modify($this->get_key_data($n_result['postmeta'], "st_room_external_booking")) ,
+                    "st_room_external_booking_link" =>$this->get_key_data($n_result['postmeta'], "st_room_external_booking_link") ,
+                    "add_new_facility" =>$this->get_key_data($n_result['postmeta'], "add_new_facility") ,
+                    "room_description" =>$this->get_key_data($n_result['postmeta'], "room_description") ,
+                    "defaulte_status" =>$this->get_key_data($n_result['postmeta'], "defaulte_status") ,
+                    "calendar_check_in" =>$this->get_key_data($n_result['postmeta'], "calendar_check_in") ,
+                    "calendar_check_out" =>$this->get_key_data($n_result['postmeta'], "calendar_check_out") ,
+                    "calendar_price" =>$this->get_key_data($n_result['postmeta'], "calendar_price") ,
+                    "calendar_status" =>$this->get_key_data($n_result['postmeta'], "calendar_status") ,
+                    "st_allow_cancel" =>$this->radio_value_modify($this->get_key_data($n_result['postmeta'], "st_allow_cancel")) ,
+                    "st_cancel_number_days" =>$this->get_key_data($n_result['postmeta'], "st_cancel_number_days") ,
+                    "st_cancel_percent" =>$this->get_key_data($n_result['postmeta'], "st_cancel_percent") ,
+                    "ical_url" =>$this->get_key_data($n_result['postmeta'], "ical_url") ,
+                    "is_meta_payment_gateway_st_submit_form" =>$this->radio_value_modify($this->get_key_data($n_result['postmeta'], "is_meta_payment_gateway_st_submit_form")) ,
+                    "social_links" => json_encode( [
+                        "facebook_custom_link" => $this->get_key_data($n_result['postmeta'],'facebook_custom_link'),
+                        "twitter_custom_link" => $this->get_key_data($n_result['postmeta'],'twitter_custom_link'),
+                        "instagram_custom_link" => $this->get_key_data($n_result['postmeta'],'instagram_custom_link'),
+                        "you_tube_custom_link" => $this->get_key_data($n_result['postmeta'],'you_tube_custom_link')
+                    ]) ,
+                    "created_at" => $n_result["post_date_gmt"],
+                    "updated_at" => $n_result["post_modified_gmt"]
+                ];
+                $roomDetails->push($roomDetail);
+
+            }
+
+            RoomDetail::insert($roomDetails->toArray());
+            $recourd_count = $recourd_count+200;
+            $this->info("$recourd_count Record Loaded");
+
+        }
+
+        $this->info("room Details Loaded");
+    }
+
+    public function load_activity_details() {
+    $this->info("activity Details Loading...");
+    $post_collections = DB::connection($this->wp_connection)->table("wp_st_activity")->select("post_id")->get();
+    $postIds = $post_collections->pluck('post_id')->toArray();
+
+    $activityIds = Activity::whereIn("wp_id", $postIds)->select("wp_id", "id")->pluck('id', 'wp_id');
+    $recourd_count = 0;
+    foreach (array_chunk($postIds, 200) as $pIds) {
+
+            // Get Postmeta
+
+        $pQuery = DB::connection($this->wp_connection)->table('wp_posts as p')
+        ->select('p.*', 'pm.*')
+        ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+        ->whereIn('pm.meta_key', [
+            'map_type', 'st_google_map', "map_lat","map_lng","map_zoom","enable_street_views_google_map","gallery","video","email","phone","fax","website","venue_facilities","activity_include","activity_exclude","activity_highlight","activity_program_style","activity_program","activity_program_bgr","activity_faq","calendar_check_in","calendar_check_out","calendar_adult_price","calendar_child_price","calendar_infant_price","calendar_starttime_hour","calendar_starttime_minute","calendar_starttime_format","calendar_status","calendar_groupday","st_allow_cancel","st_cancel_number_days","st_cancel_percent","is_meta_payment_gateway_st_submit_form","child_policy","booking_policy","refund_and_cancellation_policy","st_activity_external_booking_link","activity_zones","st_activity_corporate_address","st_activity_short_address","facebook_custom_link","twitter_custom_link","instagram_custom_link","you_tube_custom_link","properties_near_by"
+        ])
+        ->whereIn('p.ID', $pIds)
+        ->orderBy('p.ID', 'desc');
+        $results = $pQuery->get();
+        $nestedResults = [];
+        $serializer_fields = ["activity_program","activity_program_bgr","activity_faq","activity_zones","properties_near_by"];
+        foreach ($results as $result) {
+            $postId = $result->ID;
+                    unset($result->ID); // Remove the ID field from the main post data
+
+
+                    if (!isset($nestedResults[$postId])) {
+                        $nestedResults[$postId] = (array) $result;
+                        $nestedResults[$postId]['postmeta'] = [];
+                    }
+
+                    $metaKey = $result->meta_key;
+                    $metaValue = $result->meta_value;
+
+                unset($result->meta_key, $result->meta_value); // Remove meta_key and meta_value fields
+
+
+
+                if (in_array($metaKey, $serializer_fields)) {
+                    // Serialized Results
+                    $nestedResults[$postId]['postmeta'][$metaKey] = $this->unserialize_data_format_in_array($metaValue, $metaKey);
+                } else {
+                    $nestedResults[$postId]['postmeta'][$metaKey] = $metaValue;
+                }
+            }
+
+            $tourDetails = collect([]);
+            // Directly insert into $tourDetails
+
+
+            foreach($nestedResults as $postId => $n_result){
+
+                $activityId = $activityIds[$postId];
+
+
+                $latitude = $this->get_key_data($n_result['postmeta'], "map_lat");
+                $longitude = $this->get_key_data($n_result['postmeta'], "map_lng");
+
+
+                $tourDetail = [
+                    "activity_id"  =>  $activityId,
+                    "map_address"  =>  $this->geolocationaddress($latitude,$longitude),
+                    "latitude" => $this->get_key_data($n_result['postmeta'], "map_lat"),
+                    "longitude" => $this->get_key_data($n_result['postmeta'], "map_lng"),
+                    "zoom_level" => $this->get_key_data($n_result['postmeta'], "map_zoom"),
+                    "enable_street_views_google_map"  =>  $this->get_key_data($n_result["postmeta"],"enable_street_views_google_map"),
+                    "gallery"  =>  $this->comma_saprated_to_array($this->get_key_data($n_result['postmeta'], "gallery"),'gallery'),
+                    "video"  =>  $this->get_key_data($n_result["postmeta"],"video"),
+                    "contact"  =>  json_encode([
+                        "email" =>$this->get_key_data($n_result["postmeta"], "email"),
+                        "phone" =>$this->get_key_data($n_result["postmeta"], "phone"),
+                        "fax" =>$this->get_key_data($n_result["postmeta"], "fax"),
+                        "website" =>$this->get_key_data($n_result["postmeta"], "website"),
+                        "show_agent_contact_info" =>$this->get_key_data($n_result["postmeta"], "show_agent_contact_info")
+                    ]),
+                    "venue_facilities"  =>  $this->get_key_data($n_result["postmeta"],"venue_facilities"),
+                    "activity_include"  =>  $this->get_key_data($n_result["postmeta"],"activity_include"),
+                    "activity_exclude"  =>  $this->get_key_data($n_result["postmeta"],"activity_exclude"),
+                    "activity_highlight"  =>  $this->get_key_data($n_result["postmeta"],"activity_highlight"),
+                    "activity_program_style"  =>  $this->get_key_data($n_result["postmeta"],"activity_program_style"),
+                    "activity_program"  =>  $this->get_key_data($n_result["postmeta"],"activity_program"),
+                    "activity_program_bgr"  =>  $this->get_key_data($n_result["postmeta"],"activity_program_bgr"),
+                    "activity_faq"  =>  $this->get_key_data($n_result["postmeta"],"activity_faq"),
+                    "calendar_check_in"  =>  $this->get_key_data($n_result["postmeta"],"calendar_check_in"),
+                    "calendar_check_out"  =>  $this->get_key_data($n_result["postmeta"],"calendar_check_out"),
+                    "calendar_adult_price"  =>  $this->get_key_data($n_result["postmeta"],"calendar_adult_price"),
+                    "calendar_child_price"  =>  $this->get_key_data($n_result["postmeta"],"calendar_child_price"),
+                    "calendar_infant_price"  =>  $this->get_key_data($n_result["postmeta"],"calendar_infant_price"),
+                    "calendar_starttime_hour"  =>  $this->get_key_data($n_result["postmeta"],"calendar_starttime_hour"),
+                    "calendar_starttime_minute"  =>  $this->get_key_data($n_result["postmeta"],"calendar_starttime_minute"),
+                    "calendar_starttime_format"  =>  $this->get_key_data($n_result["postmeta"],"calendar_starttime_format"),
+                    "calendar_status"  =>  $this->get_key_data($n_result["postmeta"],"calendar_status"),
+                    "calendar_groupday"  =>  $this->get_key_data($n_result["postmeta"],"calendar_groupday"),
+                    "st_allow_cancel"  =>  $this->get_key_data($n_result["postmeta"],"st_allow_cancel"),
+                    "st_cancel_number_days"  =>  $this->get_key_data($n_result["postmeta"],"st_cancel_number_days"),
+                    "st_cancel_percent"  =>  $this->get_key_data($n_result["postmeta"],"st_cancel_percent"),
+                    "ical_url"  =>  $this->get_key_data($n_result["postmeta"],"ical_url"),
+                    "is_meta_payment_gateway_st_submit_form"  =>  $this->get_key_data($n_result["postmeta"],"is_meta_payment_gateway_st_submit_form"),
+                    "child_policy"  =>  $this->get_key_data($n_result["postmeta"],"child_policy"),
+                    "booking_policy"  =>  $this->get_key_data($n_result["postmeta"],"booking_policy"),
+                    "refund_and_cancellation_policy"  =>  $this->get_key_data($n_result["postmeta"],"refund_and_cancellation_policy"),
+                    "country"  =>  $this->get_key_data($n_result["postmeta"],"country"),
+                    "st_activity_external_booking_link"  =>  $this->get_key_data($n_result["postmeta"],"st_activity_external_booking_link"),
+                    "activity_zones"  =>  $this->get_key_data($n_result["postmeta"],"activity_zones"),
+                    "st_activity_corporate_address"  =>  $this->get_key_data($n_result["postmeta"],"st_activity_corporate_address"),
+                    "st_activity_short_address"  =>  $this->get_key_data($n_result["postmeta"],"st_activity_short_address"),
+                    "social_links"  =>  json_encode( [
+                        "facebook_custom_link" => $this->get_key_data($n_result['postmeta'],'facebook_custom_link'),
+                        "twitter_custom_link" => $this->get_key_data($n_result['postmeta'],'twitter_custom_link'),
+                        "instagram_custom_link" => $this->get_key_data($n_result['postmeta'],'instagram_custom_link'),
+                        "you_tube_custom_link" => $this->get_key_data($n_result['postmeta'],'you_tube_custom_link')
+                    ]),
+                    "properties_near_by"  =>  $this->get_key_data($n_result["postmeta"],"properties_near_by"),
+                    "created_at" => $n_result["post_date_gmt"],
+                    "updated_at" => $n_result["post_modified_gmt"]
+                ];
+                $tourDetails->push($tourDetail);
+
+            }
+
+            ActivityDetail::insert($tourDetails->toArray());
+            $recourd_count = $recourd_count+200;
+            $this->info("$recourd_count Record Loaded");
+
+        }
+
+        $this->info("Activity Details Loaded");
     }
 
     /**
@@ -2590,7 +3070,9 @@ class DataMigration extends Command
             unset($result->meta_key, $result->meta_value); // Remove meta_key and meta_value fields
             if (!empty($metaKey)) {
 
+
                 $nestedResults[$termId]['termmeta'][$metaKey] = $metaValue;
+
             }
         }
         if (!empty($nestedResults)) {
@@ -2871,6 +3353,7 @@ class DataMigration extends Command
 
         // Truncating Tables
         if ($isFresh == "clean") {
+
             //  $tables = ['hotels', 'hotel_details'];
             // $tables = ['tours','tour_details'];
             // $tables = ['tours','tour_details','users','files','media'];
@@ -2880,7 +3363,7 @@ class DataMigration extends Command
             // $tables = ['locations','location_meta'];
             // $tables = ['location_meta'];
 
-            $tables = ['hotel_details'];
+           // $tables = ['hotel_details'];
             // $tables = ['hotels','hotel_details'];
 
             //$tables = ['tour_locations'];
@@ -2899,11 +3382,15 @@ class DataMigration extends Command
             //$term_table = ['location_states'];
             //$term_table = ['hotel_states'];
             //$term_table = ['activity_states'];
+
             //$tables = ['tour_details'];
             //$tables = ['country_zones'];
+            // $tables = ['activities'];
+            // $tables = ['activity_details'];
+            $tables = ['rooms','room_details','hotels','hotel_details'];
 
             $this->info("Truncating tables...");
-            // $this->truncate_tables($term_table);
+           // $this->truncate_tables($term_table);
 
             $this->truncate_tables($tables);
 
@@ -2912,10 +3399,12 @@ class DataMigration extends Command
         }
 
 
+
         // File Module
         //    $this->file_migrate();
         // Media Module
         //    $this->media_migrate();
+
 
         // File Module
         //$this->file_migrate();
@@ -2923,7 +3412,9 @@ class DataMigration extends Command
         //  $this->media_migrate();
 
         // User Module
+
         //   $this->user_migrate();
+
 
         // Tour Module
         //    $this->tour_migrate();
@@ -2940,8 +3431,11 @@ class DataMigration extends Command
 
         // Hotel Module
 
-        //    $this->hotel_migrate();
+        $this->hotel_migrate();
         $this->load_hotel_details();
+        $this->room_migrate();
+        $this->load_room_details();
+
 
         // Setup Types
 
@@ -2969,6 +3463,7 @@ class DataMigration extends Command
         // $tours = Tour::where('description','like','%[vc_row]%')->get();
 
         //$types = Type::where('type', 'Tour')->get();
+
         //$languages = Language::get();
         //$hotels = Hotel::get();
 
@@ -3011,6 +3506,7 @@ class DataMigration extends Command
         //$this->associate_tour_location_table($tours, $locations, TourLocation::class );
         //$this->associate_type_table($tours, $types, TourType::class);
 
+
         // Associate with Types
         // For Tour
 
@@ -3026,7 +3522,6 @@ class DataMigration extends Command
 
 
         //   //$this->chnage_content($tours,'st_tours');
-
 
         //$this->associate_term_parent_id(OtherPackage::class, 'other_package_type', 'Tour');
 
