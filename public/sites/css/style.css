@@ -8909,6 +8909,9 @@ img {
     margin-bottom: 0;
     display: inline-block;
 }
+
+
+
 .resultBar h2 span {
 	font-weight: 500;
 	color: #fba009;
@@ -8984,6 +8987,10 @@ img {
 }
 .paginationCommon .pagination li a span {
 	font-size: 17px;
+}
+.paginationCommon .pagination {
+    align-items: center;
+    justify-content: center;
 }
 .paginationCommon .pagination li a {
 	border-color: #e5e5e5;
@@ -15218,8 +15225,29 @@ body.destination-detail-page .destination-all-content #tab-packages-activities .
 }
 body #showMoreData #showMoreDataBody{
   overflow: auto;
-  height: 300px;  
+  height: 300px;
 }
 /*destination detail page tabs css end*/
 
 
+@media (min-width:320px) and (max-width:768px){
+
+    .resultBar h2 {
+        font-size: 15px;
+    }
+
+    .paginationCommon .pagination li a {
+        border-color: #e5e5e5;
+        float: none;
+        color: #222;
+        font-weight: 400;
+        padding: 0;
+        display: block;
+        text-align: center;
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+        font-size: 16px;
+    }
+
+}
