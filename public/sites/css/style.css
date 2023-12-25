@@ -8909,6 +8909,9 @@ img {
     margin-bottom: 0;
     display: inline-block;
 }
+
+
+
 .resultBar h2 span {
 	font-weight: 500;
 	color: #fba009;
@@ -8984,6 +8987,10 @@ img {
 }
 .paginationCommon .pagination li a span {
 	font-size: 17px;
+}
+.paginationCommon .pagination {
+    align-items: center;
+    justify-content: center;
 }
 .paginationCommon .pagination li a {
 	border-color: #e5e5e5;
@@ -10925,14 +10932,14 @@ body.tour-list-page .ui-autocomplete.ui-menu {
 }
 
 .hotel-list-page .st-report-info ul li {
-	display: inline-block;
-	padding: 1px 0px;
-	color: #000000c7;
-	font-weight: 600;
-	float: left;
-	margin-left: 0px!important;
-	font-size: 14px;
-	margin-right: 0px;
+    display: inline-block;
+    padding: 1px 0px;
+    color: #000000;
+    font-weight: 500;
+    float: left;
+    margin-left: 0px!important;
+    font-size: 14px;
+    margin-right: 0px;
 }
 .hotel-list-page .listroBox ul li:last-child {
 	margin: 0px 0 0 0;
@@ -11170,7 +11177,7 @@ body.hotel-list-page .search-form-mobile {
 		position: relative;
 		top: -155px;
 		bottom: 0px;
-		z-index: 99;
+		z-index: 1;
 		/* background: #fff; */
 	}
 
@@ -13109,14 +13116,14 @@ body.activity-list-page .ui-autocomplete.ui-menu {
 }
 
 .activity-list-page .st-report-info ul li {
-	display: inline-block;
-	padding: 1px 0px;
-	color: #000000c7;
-	font-weight: 600;
-	float: left;
-	margin-left: 0px!important;
-	font-size: 14px;
-	margin-right: 0px;
+    display: inline-block;
+    padding: 1px 0px;
+    color: #000000;
+    font-weight: 500;
+    float: left;
+    margin-left: 0px!important;
+    font-size: 14px;
+    margin-right: 0px;
 }
 .activity-list-page .listroBox ul li:last-child {
 	margin: 0px 0 0 0;
@@ -13133,7 +13140,7 @@ body.activity-list-page .ui-autocomplete.ui-menu {
 .activity-list-page .st-highlight-info a {
     color: #07509e;
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .activity-list-page .st-highlight-info ul li {
@@ -14373,8 +14380,16 @@ body.activity-detail-page .listingDetails .right .review-score.style-2 .st-link 
 	font-size: 14px;
 	color: #fba009;
 }
+
 body.activity-detail-page #activity-feature .section .st-activity-feature{
 	border-top: 1px solid #efeded;
+}
+body.activity-detail-page #activity-feature .section .st-activity-feature {
+    padding-top: 25px;
+    padding-bottom: 15px;
+    border-top: 1px solid #D7DCE3;
+    border-bottom: 1px solid #D7DCE3;
+    margin-bottom: 30px;
 }
 body.activity-detail-page #activity-feature .section .st-activity-feature .item{
 	align-items: flex-start;
@@ -14405,7 +14420,12 @@ body.activity-detail-page #st-program-section .card-header:not(.collapsed) .rota
 	transform: rotate(180deg);
 }
 
-
+body.activity-detail-page .activity-list .long-description .div-desc,
+body.activity-detail-page .activity-packages .long-description .div-desc {
+    border: none;
+    padding: 0px;
+    border-radius: 0px;
+}
 /*activity detail page end css*/
 
 
@@ -15218,8 +15238,29 @@ body.destination-detail-page .destination-all-content #tab-packages-activities .
 }
 body #showMoreData #showMoreDataBody{
   overflow: auto;
-  height: 300px;  
+  height: 300px;
 }
 /*destination detail page tabs css end*/
 
 
+@media (min-width:320px) and (max-width:768px){
+
+    .resultBar h2 {
+        font-size: 15px;
+    }
+
+    .paginationCommon .pagination li a {
+        border-color: #e5e5e5;
+        float: none;
+        color: #222;
+        font-weight: 400;
+        padding: 0;
+        display: block;
+        text-align: center;
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+        font-size: 16px;
+    }
+
+}

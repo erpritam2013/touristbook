@@ -656,8 +656,41 @@ function loadMap() {
 loadMap();
 
 
+function loadOtherMap() {
+
+    let mapElm = document.querySelectorAll('#map-location #map-street')[0]
+
+    if(mapElm){
+        map = new google.maps.Map(mapElm, {
+            center: {
+                lat: parseFloat(mapElm.getAttribute("lat")),
+                lng: parseFloat(mapElm.getAttribute("lng"))
+            },
+            zoom: (mapElm.getAttribute("zoom_level") > 1)?parseFloat(mapElm.getAttribute("zoom_level")):20,
+            panControl: true,
+            fullscreenControl: true,
+            animation: google.maps.Animation.BOUNCE,
+            gestureHandling: 'cooperative',
+            streetViewControl: false,
+
+        });
+
+        let panorama = map.getStreetView();
+        panorama.setPosition({
+            lat: parseFloat(mapElm.getAttribute("lat")),
+            lng: parseFloat(mapElm.getAttribute("lng"))
+        });
+
+    }
+
+
+}
+
+loadOtherMap()
+
+
 function loadStreetMap() {
-    let mapElm = document.getElementById('map-street')
+    let mapElm = document.querySelectorAll('.modal #map-street')[0]
     if(mapElm){
         map = new google.maps.Map(mapElm, {
             center: {

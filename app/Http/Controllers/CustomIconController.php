@@ -53,7 +53,7 @@ class CustomIconController extends Controller
 
 
                $basedir = storage_path();
-               $baseurl = asset('storage');
+               $baseurl = '/storage';
        //  dd(pathinfo($file->get('name'), PATHINFO_FILENAME));
                $folderName = 'icon-images/';
                $fileName = pathinfo($request->icon->getClientOriginalName(), PATHINFO_FILENAME);

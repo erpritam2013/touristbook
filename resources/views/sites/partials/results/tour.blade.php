@@ -15,5 +15,5 @@
 
 <div class="paginationCommon blogPagination categoryPagination">
 
-    {{$tours->onEachSide(1)->links('vendor/pagination/custom-pagination')}}
+    {{$tours->onEachSide(0)->links('vendor/pagination/custom-pagination')}}
 </div>

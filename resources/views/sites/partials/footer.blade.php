@@ -8,7 +8,7 @@
                 <div class="col-md-3 col-sm-6 order-sm-1">
                     <div class="widget address"> <a href="index-2.html" class="footer-logo mb-3 d-block">
                         <!-- SVG Logo Start -->
-                        <img src="http://touristbook.example.com/sites/images/tourist-book-logo-color.webp">
+                        <img src="/sites/images/tourist-book-logo-color.webp">
                         <!-- SVG Logo End -->
                     </a>
                     <p></p>

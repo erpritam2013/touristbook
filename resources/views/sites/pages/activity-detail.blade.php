@@ -312,13 +312,12 @@
 
 							@php
 							$st_activity_lists = $activity->activity_lists;
-							$count = count( $st_activity_lists );
+
+							$al_count = count( $st_activity_lists );
 
 							@endphp
 
 							<div class="activity-list" data-toggle-section="st-activity-list"
-							@if ( $count > 6 ){!!'data-show-all="st-activity-list"
-							data-height="1075"'!!}@endif
 							>
 							<h2 class="st-heading-section">Activity List</h2>
 							<div class="row">
@@ -326,7 +325,7 @@
 
 								@php $al_hidden_class = '';
 								@endphp
-								@if(count($st_activity_lists) > 3)
+								@if($al_count > 3)
 								@if($key <= 2)
 								@php $al_hidden_class = '';@endphp
 								@else
@@ -363,24 +362,25 @@
 													@if (!empty($long_description))
 													@php 
 
-													$desc_len = strlen($long_description);
+													$al_desc_len = strlen($long_description);
+
 													$style_desc = 'style="overflow:hidden;height:100%;"';
 													$show_attr = 'data-show_text="all"';
-													if($desc_len > 400){
+													if($al_desc_len > 700){
 														$style_desc = 'style="overflow:hidden;height:170px;"';
 														$show_attr = 'data-show_text="more"';
 													}
 
 													@endphp
 													<div class="st-activity-description">
-														<div class="long-description" id="long-description-{{$key}}" {!!$style_desc!!} {!!$show_attr!!}>
+														<div class="long-description mt-3" id="long-description-{{$key}}" {!!$style_desc!!} {!!$show_attr!!}>
 															{!!$long_description!!}
 														</div>
 													</div>
 													@endif
 													<div class="more-btn p-2" >
-														@if( $desc_len > 400 )
-														<a href="javascript:void(0);" class="btn btn-grad btn-sm" onclick="readMoreText(this)" id="readBtn" data-len="{{$desc_len}}" data-key="{{$key}}" data-desc_id="#long-description-{{$key}}">Read More</a>
+														@if( $al_desc_len > 700 )
+														<a href="javascript:void(0);" class="btn btn-grad btn-sm" onclick="readMoreText(this)" id="readBtn" data-len="{{$al_desc_len}}" data-key="{{$key}}" data-desc_id="#long-description-{{$key}}">Read More</a>
 														@endif
 
 													</div>
@@ -394,39 +394,30 @@
 								</div>
 								@endforeach
 							</div>
-							@if(count($st_activity_lists) > 3)
+							@if($al_count > 3)
 							<a href="javascript:void(0)" onclick="readMoreActivityList(this)" data-show_text="more" class="activity-read-more pt-2 pb-2">Show All...</a>
 							@endif
 						</div>
-
-
-						{{--@if ( $count > 6 )
-						<a href="#" style="padding: 9px 0px;font-size: 15px;" class="st-link block" data-show-target="st-activity-list"
-						data-text-less="Show Less"
-						data-text-more="Show All"><span
-						class="text">Show All</span>
-						<i
-						class="fa fa-caret-down ml3"></i></a>
-						@endif--}}
-
-						{{--activity package--}}
+						
 						@php
 						$st_activity_package = $activity->activity_packages;
+
 						$ap_count = count( $st_activity_package );
+
 
 						@endphp
 
 						<div class="activity-packages" data-toggle-section="activity-packages"
-						@if ( $ap_count > 6 ){!!'data-show-all="st-activity-package"
-						data-height="1075"'!!}@endif
 						>
 						<h2 class="st-heading-section">Activity Package</h2>
 						<div class="row">
+
+
 							@foreach( $st_activity_package as $ap_key => $activity_package__ )
 
 							@php $ap_hidden_class = '';
 							@endphp
-							@if(count($st_activity_package) > 3)
+							@if($ap_count > 3)
 							@if($ap_key <= 2)
 							@php $ap_hidden_class = '';@endphp
 							@else
@@ -466,20 +457,20 @@
 												$ap_desc_len = strlen($ap_long_description);
 												$ap_style_desc = 'style="overflow:hidden;height:100%;"';
 												$ap_show_attr = 'data-show_text="all"';
-												if($ap_desc_len > 400){
+												if($ap_desc_len > 700){
 													$ap_style_desc = 'style="overflow:hidden;height:170px;"';
 													$ap_show_attr = 'data-show_text="more"';
 												}
 
 												@endphp
 												<div class="activity-packages-description">
-													<div class="long-description" id="ap-long-description-{{$ap_key}}" {!!$ap_style_desc!!} {!!$ap_show_attr!!}>
+													<div class="long-description mt-3" id="ap-long-description-{{$ap_key}}" {!!$ap_style_desc!!} {!!$ap_show_attr!!}>
 														{!!$ap_long_description!!}
 													</div>
 												</div>
 												@endif
 												<div class="more-btn p-2" >
-													@if( $ap_desc_len > 400 )
+													@if( $ap_desc_len > 700 )
 													<a href="javascript:void(0);" class="btn btn-grad btn-sm" onclick="readMoreText(this)" id="readBtn" data-len="{{$ap_desc_len}}" data-key="{{$ap_key}}" data-desc_id="#ap-long-description-{{$ap_key}}">Read More</a>
 													@endif
 
@@ -494,19 +485,12 @@
 							</div>
 							@endforeach
 						</div>
-						@if(count($st_activity_lists) > 3)
+
+						@if($ap_count > 3)
 						<a href="javascript:void(0)" onclick="readMoreActivityPackage(this)" data-show_text="more" class="activity-read-more pt-2 pb-2">Show All...</a>
 						@endif
 					</div>
 
-					{{--@if ( $ap_count > 6 )
-					<a href="#" style="padding: 9px 0px;font-size: 15px;" class="st-link block" data-show-target="activity-packages"
-					data-text-less="Show Less"
-					data-text-more="Show All"><span
-					class="text">Show All</span>
-					<i
-					class="fa fa-caret-down ml3"></i></a>
-					@endif--}}
 
 					@if(!empty($activity_zone))
 					<div class="mt-5 bbpb text-justify" id="activity-zone-area">
@@ -538,7 +522,7 @@
 						</div>
 					</div>
 					@endif
-
+                    
 					{{-- tourism zone --}}
 					@if(!empty($tourismZone))
 					<div class="mt-5 bbpb text-justify" id="tourism-zone-area" >
@@ -649,7 +633,7 @@
 						@endif
 					</div>--}}
 
-					<div class="tab-pane text-justify p-3 border m-0" id="section-contact">
+					<div class="tab-pane text-justify p-3 border m-0 mt-3" id="section-contact">
 						@if(!empty($activity->detail->contact))
 						<div class="section mt-4">
 							<h2 class="st-heading-section">Contact Information</h2>
@@ -795,8 +779,8 @@
 					</div>
 					<!-- map location -->
 					<div id="map-location">
-						<div id="map-street" style="height: 100%; width:100%" lat="{{ $activity->detail->latitude ?? '' }}"
-							lng="{{ $activity->detail->longitude ?? ''}}" zoom_level="{{ $activity->detail->zoom_level ?? ''}}"></div>
+						{{-- <div id="map-street" style="height: 100%; width:100%" lat="{{ $activity->detail->latitude ?? '' }}"
+							lng="{{ $activity->detail->longitude ?? ''}}" zoom_level="{{ $activity->detail->zoom_level ?? ''}}"></div> --}}
 						</div>
 						<div class="tab-pane" id="reviews-tab">
 							<div class="text-block">
