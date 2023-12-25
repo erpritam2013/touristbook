@@ -10,3 +10,5 @@
 [22-Dec-2023 06:30:17 UTC] PHP Fatal error:  Out of memory (allocated 309952512 bytes) (tried to allocate 56395965 bytes) in /home1/atestimc/public_html/touristbook/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 545
 [22-Dec-2023 18:48:36 UTC] PHP Fatal error:  Out of memory (allocated 316669952 bytes) (tried to allocate 20480 bytes) in /home1/atestimc/public_html/touristbook/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 421
 [22-Dec-2023 18:48:36 UTC] PHP Fatal error:  Out of memory (allocated 316669952 bytes) (tried to allocate 65536 bytes) in /home1/atestimc/public_html/touristbook/vendor/laravel/framework/src/Illuminate/Auth/SessionGuard.php on line 919
+[23-Dec-2023 08:25:14 UTC] PHP Fatal error:  Out of memory (allocated 339738624 bytes) (tried to allocate 20480 bytes) in /home1/atestimc/public_html/touristbook/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 421
+[23-Dec-2023 08:25:14 UTC] PHP Fatal error:  Out of memory (allocated 339738624 bytes) (tried to allocate 40960 bytes) in /home1/atestimc/public_html/touristbook/vendor/nunomaduro/collision/src/Highlighter.php on line 155

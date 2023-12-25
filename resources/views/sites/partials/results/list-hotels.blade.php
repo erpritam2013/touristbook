@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="row listroBox" latitude="{{$hotel->latitude}}" longitude="{{$hotel->longitude}}">
-                    <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 Nopadding">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 Nopadding">
                         <figure> 
                             {{--<a href="hotel-detailed.html" class="wishlist_bt"></a>--}}
                             {!!is_featured($hotel->is_featured)!!}
@@ -24,10 +24,10 @@
                             @php
                             $address = (!empty($hotel->address ))?$hotel->address:$hotel->hotel_attributes['corporateAddress'];
                             @endphp
-                            <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{shortDescription($address,50)}}@if(strlen($address) > 50)
+                            <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{shortDescription($address,45)}}@if(strlen($address) > 45)
                                 &nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$address}}" data-more_data_label="Address" style="color:#fba009;"></i>
                             @endif</p>
-                            
+                           
                             <div class="row">
                                <div class="col-sm-12">
                                 @if($hotel->amenities->count())
@@ -77,8 +77,8 @@
                                 @endphp
                                 @endif
 
-                                @if(touristbook_sanitize_title($highlights['highlights-title']) == touristbook_sanitize_title('Tourism Zone') || touristbook_sanitize_title($highlights['highlights-title']) == touristbook_sanitize_title('Govt. Official Site (District)'))
-                                @if(touristbook_sanitize_title($highlights['highlights-title']) == touristbook_sanitize_title('Govt. Official Site (District)'))
+                                @if(touristbook_sanitize_title(trim($highlights['highlights-title'])) == touristbook_sanitize_title('Tourism Zone') || touristbook_sanitize_title(trim($highlights['highlights-title'])) == touristbook_sanitize_title('Govt. Official Site (District)'))
+                                @if(touristbook_sanitize_title(trim($highlights['highlights-title'])) == touristbook_sanitize_title('Govt. Official Site (District)'))
                                 <li><a href="{{$url_add}}" target="_blank">{{$highlights['highlights-title']}}</a></li>
                                 @else
                                 <li><a href="{{$url_add}}" target="_blank">{{$highlights['highlights-title']}}</a></li>
@@ -169,7 +169,7 @@
             </div>
 
         </div>
-        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 Nopadding section-footer">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 Nopadding section-footer">
            <div class="view-hotel-btn"><a href="{{route('hotel',$hotel->slug)}}" class="btn btn-sm btn-grad text-white mb-0 padding">VIEW HOTEL</a></div>
            <div class="hotel-service-price">
 
@@ -180,23 +180,23 @@
 
             {!!get_price($hotel)!!}
 
-            <span class="unit">/per night<span class="price-ex"><i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;position: absolute;top: -3px;"><span class="TravelGo-opt-tooltip min-w-500px-fs-14fpx">Price usually vary or subject to change please visit website to view the best deal.</span></i></span></span>
+            <span class="unit">per night<span class="price-ex"><i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;position: absolute;top: -3px;"><span class="TravelGo-opt-tooltip min-w-500px-fs-14fpx">Price usually vary or subject to change please visit website to view the best deal.</span></i></span></span>
 
 
         </div>
 
 
     </div>
-    <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 Nopadding st-more-information collapse" id="st-hotel-content-{{ $hotel->id }}">
+    <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 Nopadding st-more-information collapse p-4" id="st-hotel-content-{{ $hotel->id }}">
 
-     @if($hotel->facilities()->count())
+     @if($hotel->amenities()->count())
 
      <div class="st-report">
 
         <h3 class="st-section-title">Facilities</h3>
 
         <div class="row" >
-           @foreach($hotel->facilities()->get() as $key => $facility)
+           @foreach($hotel->amenities()->get() as $key => $facility)
 
            <div class="col-xs-6 col-sm-6" style="color:#000000;"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="font-size: 7px;color:transparent;"></i>&nbsp;{{ucwords($facility->name)}}</div>
 
@@ -207,7 +207,7 @@
    </div>
 
    @endif
-
+   
    @if(!empty($hotel->detail->highlights))
 
    <div class="st-highlight-info">
@@ -232,8 +232,8 @@
         @endphp
         @endif
 
-        @if(touristbook_sanitize_title($highlights['highlights-title']) == touristbook_sanitize_title('Tourism Zone') || touristbook_sanitize_title($highlights['highlights-title']) == touristbook_sanitize_title('Govt. Official Site (District)'))
-        @if(touristbook_sanitize_title($highlights['highlights-title']) == touristbook_sanitize_title('Govt. Official Site (District)'))
+        @if(touristbook_sanitize_title(trim($highlights['highlights-title'])) == touristbook_sanitize_title('Tourism Zone') || touristbook_sanitize_title(trim($highlights['highlights-title'])) == touristbook_sanitize_title('Govt. Official Site (District)'))
+        @if(touristbook_sanitize_title(trim($highlights['highlights-title'])) == touristbook_sanitize_title('Govt. Official Site (District)'))
         <div class="col-xs-6 col-sm-6" style="color:#5e6d77;"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="font-size: 7px;color: transparent;"></i>&nbsp;<a href="{{$url_add}}" target="_blank">{{$highlights['highlights-title']}}</a></div>
         @else
         <div class="col-xs-6 col-sm-6" style="color:#5e6d77;"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="font-size: 7px;color: transparent;"></i>&nbsp;<a href="{{$url_add}}" target="_blank">{{$highlights['highlights-title']}}</a></div>

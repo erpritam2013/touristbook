@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="row listroBox" latitude="{{$tour->latitude}}" longitude="{{$tour->longitude}}">
-                    <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 Nopadding">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 Nopadding">
                         <figure> 
                             {{--<a href="tour-detailed.html" class="wishlist_bt"></a>--}}
                             {!!is_featured($tour->is_featured,'Featured Tour')!!}
@@ -20,7 +20,7 @@
                     <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 Nopadding tour-content">
                         <div class="listroBoxmain">
 
-                            <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{shortDescription($tour->address,50) ?? ''}}@if(strlen($tour->address) > 50)
+                            <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{shortDescription($tour->address,45) ?? ''}}@if(strlen($tour->address) > 45)
                                 &nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$tour->address}}" data-more_data_label="Address" style="color:#fba009;"></i>
                             @endif</p>
                             <h4 class="service-title"><a href="{{route('tour',$tour->slug)}}">{{ $tour->name }}</a></h4>
@@ -202,7 +202,7 @@
             </div>
 
         </div>
-        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 Nopadding section-footer">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 Nopadding section-footer">
 
            <div class="tour-service-price" >
 
