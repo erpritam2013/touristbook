@@ -3385,9 +3385,9 @@ class DataMigration extends Command
 
             //$tables = ['tour_details'];
             //$tables = ['country_zones'];
-            // $tables = ['activities'];
-            // $tables = ['activity_details'];
-            $tables = ['rooms','room_details','hotels','hotel_details'];
+             $tables = ['activities'];
+             $tables = ['activity_details'];
+            //$tables = ['rooms','room_details','hotels','hotel_details'];
 
             $this->info("Truncating tables...");
            // $this->truncate_tables($term_table);
@@ -3431,10 +3431,10 @@ class DataMigration extends Command
 
         // Hotel Module
 
-        $this->hotel_migrate();
-        $this->load_hotel_details();
-        $this->room_migrate();
-        $this->load_room_details();
+        // $this->hotel_migrate();
+        // $this->load_hotel_details();
+        // $this->room_migrate();
+        // $this->load_room_details();
 
 
         // Setup Types
