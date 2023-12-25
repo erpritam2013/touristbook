@@ -9,10 +9,21 @@ use App\Models\Media;
 use App\Models\Location;
 use App\Models\CountryZone;
 use App\Models\Hotel;
+use App\Models\Post;
 use App\Models\HotelDetail;
 use App\Models\LocationMeta;
 use App\Models\Activity;
 use App\Models\ActivityDetail;
+use App\Models\ActivityAttraction;
+use App\Models\ActivityTermActivityList;
+use App\Models\ActivityLocation;
+use App\Models\TourismZone;
+use App\Models\ActivityZone;
+use App\Models\ActivityPackage;
+use App\Models\ActivityPackageActivity;
+use App\Models\ActivityActivityZone;
+use App\Models\ActivityLists;
+use App\Models\ActivityListsActivity;
 
 use App\Models\HotelFacility;
 use App\Models\HotelAmenities;
@@ -25,6 +36,8 @@ use App\Models\HotelActivity;
 use App\Models\HotelPropertyType;
 use App\Models\HotelMeetingEvent;
 
+use App\Models\Terms\Attraction;
+use App\Models\Terms\TermActivityList;
 use App\Models\Terms\Type;
 use App\Models\Terms\PackageType;
 use App\Models\Terms\OtherPackage;
@@ -60,6 +73,8 @@ use App\Models\ActivityState;
 use App\Models\RoomState;
 use App\Models\Room;
 use App\Models\RoomDetail;
+use App\Models\RoomType;
+use App\Models\RoomFacility;
 use App\Models\TourOtherPackage;
 
 use Illuminate\Console\Command;
@@ -116,7 +131,7 @@ class DataMigration extends Command
         ],
     ];
 
-      public function get_image_name($value,$type="")
+    public function get_image_name($value,$type="")
     {
         $result = "";
         if (!empty($type)) {
@@ -166,13 +181,13 @@ class DataMigration extends Command
         $this->info("User Data Loading...");
         // Fetch Wordpress Data
         $usersWithCapabilities = DB::connection($this->wp_connection)
-            ->table('wp_users')
-            ->join('wp_usermeta', function ($join) {
-                $join->on('wp_users.ID', '=', 'wp_usermeta.user_id')
-                    ->where('wp_usermeta.meta_key', '=', 'wp_capabilities');
-            })
-            ->select('wp_users.*', 'wp_usermeta.meta_value as capabilities')
-            ->get();
+        ->table('wp_users')
+        ->join('wp_usermeta', function ($join) {
+            $join->on('wp_users.ID', '=', 'wp_usermeta.user_id')
+            ->where('wp_usermeta.meta_key', '=', 'wp_capabilities');
+        })
+        ->select('wp_users.*', 'wp_usermeta.meta_value as capabilities')
+        ->get();
 
         $users = collect([]);
         if ($usersWithCapabilities->isNotEmpty()) {
@@ -253,23 +268,23 @@ class DataMigration extends Command
         $token = $data[0];
         switch ($token) {
             case 's':
-                if ($strict) {
-                    if ('"' !== substr($data, -2, 1)) {
-                        return false;
-                    }
-                } elseif (!str_contains($data, '"')) {
+            if ($strict) {
+                if ('"' !== substr($data, -2, 1)) {
                     return false;
                 }
+            } elseif (!str_contains($data, '"')) {
+                return false;
+            }
                 // Or else fall through.
             case 'a':
             case 'O':
             case 'E':
-                return (bool) preg_match("/^{$token}:[0-9]+:/s", $data);
+            return (bool) preg_match("/^{$token}:[0-9]+:/s", $data);
             case 'b':
             case 'i':
             case 'd':
-                $end = $strict ? '$' : '';
-                return (bool) preg_match("/^{$token}:[0-9.E+-]+;$end/", $data);
+            $end = $strict ? '$' : '';
+            return (bool) preg_match("/^{$token}:[0-9.E+-]+;$end/", $data);
         }
         return false;
     }
@@ -454,10 +469,10 @@ class DataMigration extends Command
                 $convert_string_2 = str_replace('https://test.thetouristbook.com/', '', $convert_string_1);
                 $convert_string_3 = str_replace('https://test-touristbook.com/', '', $convert_string_2);
                 $s3_image = DB::connection($this->wp_connection)->table('wp_as3cf_items as s3_image')
-                    ->select('source_id')
-                    ->where('path', 'like', $convert_string_3)
-                    ->select('s3_image.*')
-                    ->first();
+                ->select('source_id')
+                ->where('path', 'like', $convert_string_3)
+                ->select('s3_image.*')
+                ->first();
                 if (!empty($s3_image->source_id)) {
                     $file = File::where('wp_id', $s3_image->source_id)->first();
                     $media = $file->get_media;
@@ -560,13 +575,13 @@ class DataMigration extends Command
             // Get Postmeta
 
             $pQuery = DB::connection($this->wp_connection)->table('wp_posts as p')
-                ->select('p.*', 'pm.*')
-                ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
-                ->whereIn('pm.meta_key', [
-                    'map_type', 'st_google_map', 'map_lat', 'map_lng', 'map_zoom', 'enable_street_views_google_map', 'is_iframe', 'st_booking_option_type', 'gallery', 'video', 'show_agent_contact_info', 'email', 'phone', 'fax', 'website', 'st_tour_external_booking', 'st_tour_external_booking_link', 'tours_coupan', 'tours_include', 'tours_exclude', 'tours_highlight', 'tour_sponsored_by', 'tours_destinations', 'tour_helpful_facts', 'tours_program_style', 'tours_program', 'tours_program_bgr', 'tours_program_style4', 'tours_faq', 'st_tours_country', 'package_route', 'calendar_check_in', 'calendar_check_out', 'calendar_adult_price', 'calendar_child_price', 'calendar_infant_price', 'calendar_starttime_hour', 'calendar_starttime_minute', 'calendar_starttime_format', 'calendar_status', 'calendar_groupday', 'st_allow_cancel', 'st_cancel_percent', 'st_cancel_number_days', 'ical_url', 'is_meta_payment_gateway_st_submit_form', 'helpful_facts', 'sponsored_by', 'sponsored_description', 'sponsored_title'
-                ])
-                ->whereIn('p.ID', $pIds)
-                ->orderBy('p.ID', 'desc');
+            ->select('p.*', 'pm.*')
+            ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+            ->whereIn('pm.meta_key', [
+                'map_type', 'st_google_map', 'map_lat', 'map_lng', 'map_zoom', 'enable_street_views_google_map', 'is_iframe', 'st_booking_option_type', 'gallery', 'video', 'show_agent_contact_info', 'email', 'phone', 'fax', 'website', 'st_tour_external_booking', 'st_tour_external_booking_link', 'tours_coupan', 'tours_include', 'tours_exclude', 'tours_highlight', 'tour_sponsored_by', 'tours_destinations', 'tour_helpful_facts', 'tours_program_style', 'tours_program', 'tours_program_bgr', 'tours_program_style4', 'tours_faq', 'st_tours_country', 'package_route', 'calendar_check_in', 'calendar_check_out', 'calendar_adult_price', 'calendar_child_price', 'calendar_infant_price', 'calendar_starttime_hour', 'calendar_starttime_minute', 'calendar_starttime_format', 'calendar_status', 'calendar_groupday', 'st_allow_cancel', 'st_cancel_percent', 'st_cancel_number_days', 'ical_url', 'is_meta_payment_gateway_st_submit_form', 'helpful_facts', 'sponsored_by', 'sponsored_description', 'sponsored_title'
+            ])
+            ->whereIn('p.ID', $pIds)
+            ->orderBy('p.ID', 'desc');
             $results = $pQuery->get();
             $nestedResults = [];
 
@@ -667,8 +682,8 @@ class DataMigration extends Command
                 $tourDetails->push($tourDetail);
             }
 
-                $recourd_count = $recourd_count+200;
-                $this->info("$recourd_count Record Loaded");
+            $recourd_count = $recourd_count+200;
+            $this->info("$recourd_count Record Loaded");
             TourDetail::insert($tourDetails->toArray());
         }
 
@@ -689,16 +704,16 @@ class DataMigration extends Command
         foreach (array_chunk($postIds, 200) as $pIds) {
 
             $pQuery = DB::connection($this->wp_connection)->table('wp_posts as p')
-                ->select('p.*', 'pm.*', 'wp_st_hotel.*')
-                ->leftJoin("wp_st_hotel", "wp_st_hotel.post_id", '=', 'p.ID')
-                ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
-                ->whereIn('pm.meta_key', [
-                    'address', 'hotel_link', 'food_and_dining', 'is_featured', 'logo', '_thumbnail_id', 'email', 'phone', 'fax', 'website', 'show_agent_contact_info', 'allow_full_day', 'check_in_time', 'check_out_time', 'hotel_policy', 'important_notices_data', 'gallery', 'video', 'hotel_booking_period', 'min_book_room', 'st_hotel_corporate_address', 'price_avg', 'is_allowed_full_day'
-                ])
-                ->where('p.post_type', 'st_hotel')
-                ->where('p.post_status', 'publish')
-                ->whereIn('p.ID', $pIds)
-                ->orderBy('p.ID', 'desc');
+            ->select('p.*', 'pm.*', 'wp_st_hotel.*')
+            ->leftJoin("wp_st_hotel", "wp_st_hotel.post_id", '=', 'p.ID')
+            ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+            ->whereIn('pm.meta_key', [
+                'address', 'hotel_link', 'food_and_dining', 'is_featured', 'logo', '_thumbnail_id', 'email', 'phone', 'fax', 'website', 'show_agent_contact_info', 'allow_full_day', 'check_in_time', 'check_out_time', 'hotel_policy', 'important_notices_data', 'gallery', 'video', 'hotel_booking_period', 'min_book_room', 'st_hotel_corporate_address', 'price_avg', 'is_allowed_full_day'
+            ])
+            ->where('p.post_type', 'st_hotel')
+            ->where('p.post_status', 'publish')
+            ->whereIn('p.ID', $pIds)
+            ->orderBy('p.ID', 'desc');
 
             $results = $pQuery->get();
             $nestedResults = [];
@@ -813,11 +828,11 @@ class DataMigration extends Command
             $this->info("Trying to Loading 20 records...");
 
             $pQuery = DB::connection($this->wp_connection)->table('wp_posts as p')
-                ->select('p.*', 'pm.*')
-                ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
-                ->whereIn('pm.meta_key', ["map_lat", "map_lng", "map_zoom", "hotel_highlight", "hotel_report", "hotel_facilities_amenities", "hotel_food", "food_and_dining", "hotel_complimentary", "hotel_helpful_facts", "hotel_save_your_pocket", "save_your_pocket_pdf", "hotel_save_the_environment", "hotel_land_mark", "hotel_things_to_do", "hotel_offer_package", "hotel_things_to_do_video_link", "hotel_meetings_events", "hotel_tourism_zone", "hotel_tourism_zone_heading_desc", "tourism_zone_pdf", "hotel_activities", "hotel_rooms_amenities", "hotel_transport", "hotel_payment_mode", "hotel_id_proofs", "hotel_emergency_links", "facebook_custom_link", "twitter_custom_link", "instagram_custom_link", "you_tube_custom_link"])
-                ->whereIn('p.ID', $pIds)
-                ->orderBy('p.ID', 'desc');
+            ->select('p.*', 'pm.*')
+            ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+            ->whereIn('pm.meta_key', ["map_lat", "map_lng", "map_zoom", "hotel_highlight", "hotel_report", "hotel_facilities_amenities", "hotel_food", "food_and_dining", "hotel_complimentary", "hotel_helpful_facts", "hotel_save_your_pocket", "save_your_pocket_pdf", "hotel_save_the_environment", "hotel_land_mark", "hotel_things_to_do", "hotel_offer_package", "hotel_things_to_do_video_link", "hotel_meetings_events", "hotel_tourism_zone", "hotel_tourism_zone_heading_desc", "tourism_zone_pdf", "hotel_activities", "hotel_rooms_amenities", "hotel_transport", "hotel_payment_mode", "hotel_id_proofs", "hotel_emergency_links", "facebook_custom_link", "twitter_custom_link", "instagram_custom_link", "you_tube_custom_link"])
+            ->whereIn('p.ID', $pIds)
+            ->orderBy('p.ID', 'desc');
             $results = $pQuery->get();
             $nestedResults = [];
 
@@ -905,31 +920,31 @@ class DataMigration extends Command
      /**
      * Activity Module
      */
-  public function activity_migrate()
-  {
-    $this->info("Activity Data Loading...");
-    $post_collections = DB::connection($this->wp_connection)->table("wp_st_activity")->select("post_id")->get();
-    $postIds = $post_collections->pluck('post_id')->toArray();
+     public function activity_migrate()
+     {
+        $this->info("Activity Data Loading...");
+        $post_collections = DB::connection($this->wp_connection)->table("wp_st_activity")->select("post_id")->get();
+        $postIds = $post_collections->pluck('post_id')->toArray();
 
-    foreach (array_chunk($postIds, 200) as $pIds) {
+        foreach (array_chunk($postIds, 200) as $pIds) {
 
-        $pQuery = DB::connection($this->wp_connection)->table('wp_posts as p')
-        ->select('p.*', 'pm.*', 'wp_st_activity.*')
-        ->leftJoin("wp_st_activity", "wp_st_activity.post_id", '=', 'p.ID')
-        ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
-        ->whereIn('pm.meta_key', ["disable_children_name","hide_children_in_booking_form","discount_by_child","hide_adult_in_booking_form","discount_by_adult","discount_by_people_type","calculator_discount_by_people_type","disable_infant_name","hide_infant_in_booking_form","min_price","extra_price","st_activity_external_booking","st_activity_external_booking_link","deposit_payment_status","deposit_payment_amount","activity_booking_period","max_people","st_booking_option_type","logo","_thumbnail_id"
+            $pQuery = DB::connection($this->wp_connection)->table('wp_posts as p')
+            ->select('p.*', 'pm.*', 'wp_st_activity.*')
+            ->leftJoin("wp_st_activity", "wp_st_activity.post_id", '=', 'p.ID')
+            ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+            ->whereIn('pm.meta_key', ["disable_children_name","hide_children_in_booking_form","discount_by_child","hide_adult_in_booking_form","discount_by_adult","discount_by_people_type","calculator_discount_by_people_type","disable_infant_name","hide_infant_in_booking_form","min_price","extra_price","st_activity_external_booking","st_activity_external_booking_link","deposit_payment_status","deposit_payment_amount","activity_booking_period","max_people","st_booking_option_type","logo","_thumbnail_id"
         ])
-        ->where('p.post_type', 'st_activity')
-        ->where('p.post_status', 'publish')
-        ->whereIn('p.ID', $pIds)
-        ->orderBy('p.ID', 'desc');
+            ->where('p.post_type', 'st_activity')
+            ->where('p.post_status', 'publish')
+            ->whereIn('p.ID', $pIds)
+            ->orderBy('p.ID', 'desc');
 
-        $results = $pQuery->get();
-       
-        $nestedResults = [];
-        $serializer_fields = ['discount_by_child','discount_by_adult','extra_price'];
-        foreach ($results as $result) {
-            $postId = $result->ID;
+            $results = $pQuery->get();
+
+            $nestedResults = [];
+            $serializer_fields = ['discount_by_child','discount_by_adult','extra_price'];
+            foreach ($results as $result) {
+                $postId = $result->ID;
                 unset($result->ID); // Remove the ID field from the main post data
 
                 if (!isset($nestedResults[$postId])) {
@@ -1014,15 +1029,82 @@ class DataMigration extends Command
         // TODO: Activity Details
         $this->info("Activity Data Loading Completed");
     }
+
+
+     /**
+     * post Module
+     */
+    public function post_migrate()
+    {
+        $this->info("post Data Loading...");
+        $post_collections = DB::connection($this->wp_connection)->table("wp_posts")->select("ID")->get();
+        $postIds = $post_collections->pluck('ID')->toArray();
+
+            $pQuery = DB::connection($this->wp_connection)->table('wp_posts as p')
+            ->select('p.*', 'pm.*')
+            ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+            ->where('p.post_type', 'post')
+            ->where('p.post_status', 'publish')
+            ->whereIn('p.ID', $postIds)
+            ->orderBy('p.ID', 'desc');
+
+            $results = $pQuery->get();
+            $nestedResults = [];
+            foreach ($results as $result) {
+                $postId = $result->ID;
+                unset($result->ID); // Remove the ID field from the main post data
+
+                if (!isset($nestedResults[$postId])) {
+                    $nestedResults[$postId] = (array) $result;
+                    $nestedResults[$postId]['postmeta'] = [];
+                }
+
+                $metaKey = $result->meta_key;
+                $metaValue = $result->meta_value;
+
+                unset($result->meta_key, $result->meta_value); // Remove meta_key and meta_value fields
+
+                $nestedResults[$postId]['postmeta'][$metaKey] = $metaValue;
+                
+            }
+
+
+            // TODO: Can think better way
+            // One more iteration for Laravel Specific
+            $posts = collect([]);
+            if (!empty($nestedResults)) {
+                foreach ($nestedResults as $postId => $n_result) {
+                    $post = [
+                        // "wp_id" => $postId,
+                        "name" => $n_result["post_title"],
+                        "slug" => $n_result["post_name"],
+                        "description" => $this->check_content($n_result["post_content"],$postId,'post'),
+                        "excerpt" => $n_result["post_excerpt"],
+                        "created_by" => $n_result["post_author"],
+                        "created_at" => $n_result["post_date_gmt"],
+                        "updated_at" => $n_result["post_modified_gmt"],
+                        'status' => 1
+
+                    ];
+
+                    $posts->push($post);
+                }
+
+                Post::insert($posts->toArray());
+            }
+      
+        // TODO: post Details
+        $this->info("post Data Loading Completed");
+    }
     public function get_room_hotel($hotel_id)
     {
         $result = 0;
         if (!empty($hotel_id)) {
-        
-        $hotel = Hotel::where('wp_id',$hotel_id)->first();
-        if (!empty($hotel)) {
-            $result = $hotel->id;
-        }
+
+            $hotel = Hotel::where('wp_id',$hotel_id)->first();
+            if (!empty($hotel)) {
+                $result = $hotel->id;
+            }
         }
         return $result;
     }
@@ -1048,7 +1130,7 @@ class DataMigration extends Command
             ->orderBy('p.ID', 'desc');
 
             $results = $pQuery->get();
-           
+
             $nestedResults = [];
             $serializer_fields = ['extra_price'];
             foreach ($results as $result) {
@@ -1072,7 +1154,7 @@ class DataMigration extends Command
                     $nestedResults[$postId]['postmeta'][$metaKey] = $metaValue;
                 }
             }
-          
+
 
             // TODO: Can think better way
             // One more iteration for Laravel Specific
@@ -1108,7 +1190,7 @@ class DataMigration extends Command
 
                 Room::insert($rooms->toArray());
 
-               $this->info("200 record done");
+                $this->info("200 record done");
 
             }
         }
@@ -1119,27 +1201,27 @@ class DataMigration extends Command
 
 
     public function load_room_details() {
-    $this->info("room Details Loading...");
-    $post_collections = DB::connection($this->wp_connection)->table("wp_hotel_room")->select("post_id")->get();
-    $postIds = $post_collections->pluck('post_id')->toArray();
+        $this->info("room Details Loading...");
+        $post_collections = DB::connection($this->wp_connection)->table("wp_hotel_room")->select("post_id")->get();
+        $postIds = $post_collections->pluck('post_id')->toArray();
 
-    $roomIds = Room::whereIn("wp_id", $postIds)->select("wp_id", "id")->pluck('id', 'wp_id');
-    $recourd_count = 0;
-    foreach (array_chunk($postIds, 200) as $pIds) {
+        $roomIds = Room::whereIn("wp_id", $postIds)->select("wp_id", "id")->pluck('id', 'wp_id');
+        $recourd_count = 0;
+        foreach (array_chunk($postIds, 200) as $pIds) {
 
             // Get Postmeta
 
-        $pQuery = DB::connection($this->wp_connection)->table('wp_posts as p')
-        ->select('p.*', 'pm.*')
-        ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
-        ->whereIn('pm.meta_key', ["hotel_alone_room_layout","hotel_alone_room_sub_heading","price_by_per_person","st_booking_option_type","allow_full_day","discount_rate","discount_by_day","discount_type_no_day","discount_type","deposit_payment_status","deposit_payment_amount","gallery","video","room_facility_preview","disable_adult_name","disable_children_name","bed_number","bath_number","room_footage","st_room_external_booking","st_room_external_booking_link","add_new_facility","room_description","defaulte_status","calendar_check_in","calendar_check_out","calendar_price","calendar_status","st_allow_cancel","st_cancel_number_days","st_cancel_percent","ical_url","is_meta_payment_gateway_st_submit_form","facebook_custom_link","twitter_custom_link","instagram_custom_link","you_tube_custom_link"])
-        ->whereIn('p.ID', $pIds)
-        ->orderBy('p.ID', 'desc');
-        $results = $pQuery->get();
-        $nestedResults = [];
-        $serializer_fields = ["room_program","room_program_bgr","room_faq","room_zones","properties_near_by"];
-        foreach ($results as $result) {
-            $postId = $result->ID;
+            $pQuery = DB::connection($this->wp_connection)->table('wp_posts as p')
+            ->select('p.*', 'pm.*')
+            ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+            ->whereIn('pm.meta_key', ["hotel_alone_room_layout","hotel_alone_room_sub_heading","price_by_per_person","st_booking_option_type","allow_full_day","discount_rate","discount_by_day","discount_type_no_day","discount_type","deposit_payment_status","deposit_payment_amount","gallery","video","room_facility_preview","disable_adult_name","disable_children_name","bed_number","bath_number","room_footage","st_room_external_booking","st_room_external_booking_link","add_new_facility","room_description","defaulte_status","calendar_check_in","calendar_check_out","calendar_price","calendar_status","st_allow_cancel","st_cancel_number_days","st_cancel_percent","ical_url","is_meta_payment_gateway_st_submit_form","facebook_custom_link","twitter_custom_link","instagram_custom_link","you_tube_custom_link"])
+            ->whereIn('p.ID', $pIds)
+            ->orderBy('p.ID', 'desc');
+            $results = $pQuery->get();
+            $nestedResults = [];
+            $serializer_fields = ["room_program","room_program_bgr","room_faq","room_zones","properties_near_by"];
+            foreach ($results as $result) {
+                $postId = $result->ID;
                     unset($result->ID); // Remove the ID field from the main post data
 
 
@@ -1233,30 +1315,29 @@ class DataMigration extends Command
         $this->info("room Details Loaded");
     }
 
-    public function load_activity_details() {
-    $this->info("activity Details Loading...");
-    $post_collections = DB::connection($this->wp_connection)->table("wp_st_activity")->select("post_id")->get();
-    $postIds = $post_collections->pluck('post_id')->toArray();
+public function load_activity_details() {
+        $this->info("activity Details Loading...");
+        $post_collections = DB::connection($this->wp_connection)->table("wp_st_activity")->select("post_id")->get();
+        $postIds = $post_collections->pluck('post_id')->toArray();
 
-    $activityIds = Activity::whereIn("wp_id", $postIds)->select("wp_id", "id")->pluck('id', 'wp_id');
-    $recourd_count = 0;
-    foreach (array_chunk($postIds, 200) as $pIds) {
+        $activityIds = Activity::whereIn("wp_id", $postIds)->select("wp_id", "id")->pluck('id', 'wp_id');
+        $recourd_count = 0;
+        foreach (array_chunk($postIds, 200) as $pIds) {
 
             // Get Postmeta
-
-        $pQuery = DB::connection($this->wp_connection)->table('wp_posts as p')
-        ->select('p.*', 'pm.*')
-        ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
-        ->whereIn('pm.meta_key', [
-            'map_type', 'st_google_map', "map_lat","map_lng","map_zoom","enable_street_views_google_map","gallery","video","email","phone","fax","website","venue_facilities","activity_include","activity_exclude","activity_highlight","activity_program_style","activity_program","activity_program_bgr","activity_faq","calendar_check_in","calendar_check_out","calendar_adult_price","calendar_child_price","calendar_infant_price","calendar_starttime_hour","calendar_starttime_minute","calendar_starttime_format","calendar_status","calendar_groupday","st_allow_cancel","st_cancel_number_days","st_cancel_percent","is_meta_payment_gateway_st_submit_form","child_policy","booking_policy","refund_and_cancellation_policy","st_activity_external_booking_link","activity_zones","st_activity_corporate_address","st_activity_short_address","facebook_custom_link","twitter_custom_link","instagram_custom_link","you_tube_custom_link","properties_near_by"
-        ])
-        ->whereIn('p.ID', $pIds)
-        ->orderBy('p.ID', 'desc');
-        $results = $pQuery->get();
-        $nestedResults = [];
-        $serializer_fields = ["activity_program","activity_program_bgr","activity_faq","activity_zones","properties_near_by"];
-        foreach ($results as $result) {
-            $postId = $result->ID;
+            $pQuery = DB::connection($this->wp_connection)->table('wp_posts as p')
+            ->select('p.*', 'pm.*')
+            ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+            ->whereIn('pm.meta_key', [
+                'map_type', 'st_google_map', "map_lat","map_lng","map_zoom","enable_street_views_google_map","gallery","video","contact_email","contact_phone","contact_fax","contact_web","venue_facilities","activity_include","activity_exclude","activity_highlight","activity_program_style","activity_program","activity_program_bgr","activity_faq","calendar_check_in","calendar_check_out","calendar_adult_price","calendar_child_price","calendar_infant_price","calendar_starttime_hour","calendar_starttime_minute","calendar_starttime_format","calendar_status","calendar_groupday","st_allow_cancel","st_cancel_number_days","st_cancel_percent","is_meta_payment_gateway_st_submit_form","child_policy","booking_policy","refund_and_cancellation_policy","st_activity_external_booking_link","activity_zones","st_activity_corporate_address","st_activity_short_address","facebook_custom_link","twitter_custom_link","instagram_custom_link","you_tube_custom_link","properties_near_by"
+            ])
+            ->whereIn('p.ID', $pIds)
+            ->orderBy('p.ID', 'desc');
+            $results = $pQuery->get();
+            $nestedResults = [];
+            $serializer_fields = ["activity_program","activity_program_bgr","activity_faq","activity_zones","properties_near_by"];
+            foreach ($results as $result) {
+                $postId = $result->ID;
                     unset($result->ID); // Remove the ID field from the main post data
 
 
@@ -1303,10 +1384,10 @@ class DataMigration extends Command
                     "gallery"  =>  $this->comma_saprated_to_array($this->get_key_data($n_result['postmeta'], "gallery"),'gallery'),
                     "video"  =>  $this->get_key_data($n_result["postmeta"],"video"),
                     "contact"  =>  json_encode([
-                        "email" =>$this->get_key_data($n_result["postmeta"], "email"),
-                        "phone" =>$this->get_key_data($n_result["postmeta"], "phone"),
-                        "fax" =>$this->get_key_data($n_result["postmeta"], "fax"),
-                        "website" =>$this->get_key_data($n_result["postmeta"], "website"),
+                        "email" =>$this->get_key_data($n_result["postmeta"], "contact_email"),
+                        "phone" =>$this->get_key_data($n_result["postmeta"], "contact_phone"),
+                        "fax" =>$this->get_key_data($n_result["postmeta"], "contact_fax"),
+                        "website" =>$this->get_key_data($n_result["postmeta"], "contact_web"),
                         "show_agent_contact_info" =>$this->get_key_data($n_result["postmeta"], "show_agent_contact_info")
                     ]),
                     "venue_facilities"  =>  $this->get_key_data($n_result["postmeta"],"venue_facilities"),
@@ -1335,7 +1416,7 @@ class DataMigration extends Command
                     "child_policy"  =>  $this->get_key_data($n_result["postmeta"],"child_policy"),
                     "booking_policy"  =>  $this->get_key_data($n_result["postmeta"],"booking_policy"),
                     "refund_and_cancellation_policy"  =>  $this->get_key_data($n_result["postmeta"],"refund_and_cancellation_policy"),
-                    "country"  =>  $this->get_key_data($n_result["postmeta"],"country"),
+                    "country"  =>  $this->get_key_data($n_result["postmeta"],"st_activity_country"),
                     "st_activity_external_booking_link"  =>  $this->get_key_data($n_result["postmeta"],"st_activity_external_booking_link"),
                     "activity_zones"  =>  $this->get_key_data($n_result["postmeta"],"activity_zones"),
                     "st_activity_corporate_address"  =>  $this->get_key_data($n_result["postmeta"],"st_activity_corporate_address"),
@@ -1362,7 +1443,6 @@ class DataMigration extends Command
 
         $this->info("Activity Details Loaded");
     }
-
     /**
      * Tour Module
      */
@@ -1375,21 +1455,21 @@ class DataMigration extends Command
         foreach (array_chunk($postIds, 200) as $pIds) {
 
             $pQuery = DB::connection($this->wp_connection)->table('wp_posts as p')
-                ->select('p.*', 'pm.*', 'wp_st_tours.*')
-                ->leftJoin("wp_st_tours", "wp_st_tours.post_id", '=', 'p.ID')
-                ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
-                ->whereIn('pm.meta_key', [
-                    'st_tour_external_booking_link', 'tour_price_by', 'min_people',
-                    '_thumbnail_id', 'discount_type', 'discount_by_child', 'discount_by_adult',
-                    'discount_by_people_type', 'calculator_discount_by_people_type',
-                    'hide_adult_in_booking_form', 'hide_children_in_booking_form',
-                    'hide_infant_in_booking_form', 'disable_adult_name', 'disable_children_name',
-                    'disable_infant_name', 'extra_price', 'st_country_zone_id', 'tour_price_by'
-                ])
-                ->where('p.post_type', 'st_tours')
-                ->where('p.post_status', 'publish')
-                ->whereIn('p.ID', $pIds)
-                ->orderBy('p.ID', 'desc');
+            ->select('p.*', 'pm.*', 'wp_st_tours.*')
+            ->leftJoin("wp_st_tours", "wp_st_tours.post_id", '=', 'p.ID')
+            ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+            ->whereIn('pm.meta_key', [
+                'st_tour_external_booking_link', 'tour_price_by', 'min_people',
+                '_thumbnail_id', 'discount_type', 'discount_by_child', 'discount_by_adult',
+                'discount_by_people_type', 'calculator_discount_by_people_type',
+                'hide_adult_in_booking_form', 'hide_children_in_booking_form',
+                'hide_infant_in_booking_form', 'disable_adult_name', 'disable_children_name',
+                'disable_infant_name', 'extra_price', 'st_country_zone_id', 'tour_price_by'
+            ])
+            ->where('p.post_type', 'st_tours')
+            ->where('p.post_status', 'publish')
+            ->whereIn('p.ID', $pIds)
+            ->orderBy('p.ID', 'desc');
 
             $results = $pQuery->get();
             $nestedResults = [];
@@ -1495,11 +1575,11 @@ class DataMigration extends Command
         foreach (array_chunk($postIds, 200) as $pIds) {
 
             $pQuery = DB::connection($this->wp_connection)->table('wp_as3cf_items as wp_as3')
-                ->whereIn('wp_as3.source_id', $pIds)
-                ->select('wp_as3.source_id', 'wp_posts.*')
-                ->join("wp_posts", "wp_as3.source_id", '=', 'wp_posts.ID')
-                ->where('wp_posts.post_type', 'attachment')
-                ->orderBy('wp_posts.ID', 'desc');
+            ->whereIn('wp_as3.source_id', $pIds)
+            ->select('wp_as3.source_id', 'wp_posts.*')
+            ->join("wp_posts", "wp_as3.source_id", '=', 'wp_posts.ID')
+            ->where('wp_posts.post_type', 'attachment')
+            ->orderBy('wp_posts.ID', 'desc');
 
             $results = $pQuery->get();
 
@@ -1572,13 +1652,13 @@ class DataMigration extends Command
         foreach (array_chunk($postIds, 200) as $pIds) {
 
             $pQuery = DB::connection($this->wp_connection)->table('wp_posts as p')
-                ->select('p.*', 'pm.*', 'wp_as3cf_items.*')
-                ->leftJoin("wp_as3cf_items", "wp_as3cf_items.source_id", '=', 'p.ID')
-                ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
-                ->whereIn('pm.meta_key', ['as3cf_filesize_total', '_wp_attachment_metadata'])
-                ->where('p.post_type', 'attachment')
-                ->whereIn('p.ID', $pIds)
-                ->orderBy('p.ID', 'desc');
+            ->select('p.*', 'pm.*', 'wp_as3cf_items.*')
+            ->leftJoin("wp_as3cf_items", "wp_as3cf_items.source_id", '=', 'p.ID')
+            ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+            ->whereIn('pm.meta_key', ['as3cf_filesize_total', '_wp_attachment_metadata'])
+            ->where('p.post_type', 'attachment')
+            ->whereIn('p.ID', $pIds)
+            ->orderBy('p.ID', 'desc');
 
             $results = $pQuery->get();
 
@@ -1656,14 +1736,14 @@ class DataMigration extends Command
     {
         $this->info("Location Data Loading...");
         $results = DB::connection($this->wp_connection)->table('wp_posts as p')
-            ->select('p.*', 'pm.*')
-            ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
-            ->whereIn('pm.meta_key', ["color", "location_country", "zipcode", "map_lat", "map_lng", "map_zoom", "map_type", "is_featured", "_thumbnail_id"])
-            ->where('p.post_type', 'location')
-            ->where('p.post_status', 'publish')
-            ->orderBy('p.ID', 'desc')
+        ->select('p.*', 'pm.*')
+        ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+        ->whereIn('pm.meta_key', ["color", "location_country", "zipcode", "map_lat", "map_lng", "map_zoom", "map_type", "is_featured", "_thumbnail_id"])
+        ->where('p.post_type', 'location')
+        ->where('p.post_status', 'publish')
+        ->orderBy('p.ID', 'desc')
 
-            ->get();
+        ->get();
 
 
         // Build 500 Objects
@@ -1740,15 +1820,15 @@ class DataMigration extends Command
         $postIds = $post_collections->pluck('wp_id')->toArray();
         foreach (array_chunk($postIds, 5) as $pIds) {
             $results = DB::connection($this->wp_connection)->table('wp_posts as p')
-                ->select('p.ID as ID', 'p.post_date_gmt', 'p.post_modified_gmt', 'pm.*')
-                ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
-                ->where('pm.meta_value', '!=', '')
-                ->whereIn('pm.meta_key', ["helpful_facts", "place_to_visit", "place_to_visit_description", "best_time_to_visit", "best_time_to_visit_description", "how_to_reach", "how_to_reach_description", "fair_and_festivals", "fair_and_festivals_image", "fair_and_festivals_description", "culinary_retreat", "culinary_retreat_description", "shopaholics_anonymous", "shopaholics_anonymous_description", "weather", "location_map", "what_to_do", "get_to_know", "get_to_know_image", "save_your_pocket", "save_your_pocket_image", "save_your_environment", "save_your_environment_image", "faqs", "by_aggregators", "b_govt_subsidiaries", "by_hotels", "gallery", "location_video", "hotel_activities", "location_packages", "important_note", "sanstive_data", "hotel_locations", "color", "location_for_filter", "child_tabs"])
-                ->where('p.post_type', 'location')
-                ->where('p.post_status', 'publish')
-                ->whereIn('p.ID', $pIds)
-                ->orderBy('p.ID', 'desc')
-                ->get();
+            ->select('p.ID as ID', 'p.post_date_gmt', 'p.post_modified_gmt', 'pm.*')
+            ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+            ->where('pm.meta_value', '!=', '')
+            ->whereIn('pm.meta_key', ["helpful_facts", "place_to_visit", "place_to_visit_description", "best_time_to_visit", "best_time_to_visit_description", "how_to_reach", "how_to_reach_description", "fair_and_festivals", "fair_and_festivals_image", "fair_and_festivals_description", "culinary_retreat", "culinary_retreat_description", "shopaholics_anonymous", "shopaholics_anonymous_description", "weather", "location_map", "what_to_do", "get_to_know", "get_to_know_image", "save_your_pocket", "save_your_pocket_image", "save_your_environment", "save_your_environment_image", "faqs", "by_aggregators", "b_govt_subsidiaries", "by_hotels", "gallery", "location_video", "hotel_activities", "location_packages", "important_note", "sanstive_data", "hotel_locations", "color", "location_for_filter", "child_tabs"])
+            ->where('p.post_type', 'location')
+            ->where('p.post_status', 'publish')
+            ->whereIn('p.ID', $pIds)
+            ->orderBy('p.ID', 'desc')
+            ->get();
 
             $nestedResults = [];
             $serializer_fields =  [
@@ -1861,17 +1941,17 @@ class DataMigration extends Command
     {
         $this->info("Country zones Data Loading...");
         $results = DB::connection($this->wp_connection)->table('wp_posts as p')
-            ->select('p.*', 'pm.*')
-            ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
-            ->whereIn('pm.meta_key', [
-                "country_zone_title", "country", "country_zone_icon", "country_zone_image", "country_description", "country_zone_section", "country_zone_catering_title",
-                "custom_country_zone_catering_url"
-            ])
-            ->where('p.post_type', 'st_country_zones')
-            ->where('p.post_status', 'publish')
-            ->orderBy('p.ID', 'desc')
+        ->select('p.*', 'pm.*')
+        ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+        ->whereIn('pm.meta_key', [
+            "country_zone_title", "country", "country_zone_icon", "country_zone_image", "country_description", "country_zone_section", "country_zone_catering_title",
+            "custom_country_zone_catering_url"
+        ])
+        ->where('p.post_type', 'st_country_zones')
+        ->where('p.post_status', 'publish')
+        ->orderBy('p.ID', 'desc')
 
-            ->get();
+        ->get();
 
 
         // Build 500 Objects
@@ -1912,6 +1992,7 @@ class DataMigration extends Command
                     "url" => $this->get_key_data($n_result["postmeta"], "custom_country_zone_catering_url")
                 ];
                 $country_zone = [
+                    "wp_id" => $postId,
                     "title" => $n_result["post_title"],
                     "description" => $n_result["post_content"],
                     "excerpt" => $n_result["post_excerpt"],
@@ -1939,13 +2020,323 @@ class DataMigration extends Command
     }
 
 
+    /*tourism zone migration*/
+
+    public function st_tourism_zones_migration()
+    {
+        $this->info("tourism zones Data Loading...");
+        $get_tour = DB::connection($this->wp_connection)->table('wp_posts')->where('post_type', 'st_tourism_zones')->get('ID');
+        $postIds = $get_tour->pluck('ID')->toArray();
+        $results = DB::connection($this->wp_connection)->table('wp_posts as p')
+        ->select('p.*', 'pm.*')
+        ->where('p.post_type', 'st_tourism_zones')
+        ->where('p.post_status', 'publish')
+        ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+        ->whereIn('pm.meta_key', [
+            "tourism_zone_title","tourism_zone_image", "tourism_zone_description", "tourism_zone", "state",
+        ])->whereIn('p.ID', $postIds)
+        ->orderBy('p.ID', 'desc')->get()->unique('ID');
+   
+        // Build 500 Objects
+        $nestedResults = [];
+        $serializer_fields =  ["tourism_zone"];
+
+        foreach ($results as $result) {
+            $postId = $result->ID;
+            unset($result->ID); // Remove the ID field from the main post data
+
+            if (!isset($nestedResults[$postId])) {
+                $nestedResults[$postId] = (array) $result;
+                $nestedResults[$postId]['postmeta'] = [];
+            }
+
+            $metaKey = $result->meta_key;
+            $metaValue = $result->meta_value;
+
+            unset($result->meta_key, $result->meta_value); // Remove meta_key and meta_value fields
+
+            if (in_array($metaKey, $serializer_fields)) {
+                // Serialized Results
+                $nestedResults[$postId]['postmeta'][$metaKey] = $this->unserialize_data_format_in_array($metaValue, $metaKey);
+            } else {
+                $nestedResults[$postId]['postmeta'][$metaKey] = $metaValue;
+            }
+        }
+             
+
+        // TODO: Can think better way
+        // One more iteration for Laravel Specific
+        $tourism_zones = collect([]);
+        if (!empty($nestedResults)) {
+            foreach ($nestedResults as $postId => $n_result) {
+                $wp_state = $this->get_key_data($n_result["postmeta"], "state");
+                $state = State::where('wp_taxonomy_id',$wp_state)->first();
+                $tourism_zone = [
+                    "wp_id" => $postId,
+                    "title" => $n_result["post_title"],
+                    "description" => $this->check_content($n_result["post_content"], $postId, 'st_tourism_zones'),
+                    "excerpt" => $n_result["post_excerpt"],
+                    "slug" => $n_result["post_name"],
+                    "sub_title" => $this->get_key_data($n_result["postmeta"], "tourism_zone_title"),
+                    "state_id" => (!empty($state))?$state->id:0,
+                    "image" => $this->string_to_json($this->get_key_data($n_result["postmeta"], "tourism_zone_image"), 'image'),
+                    "tourism_zone_description" => $this->get_key_data($n_result["postmeta"], "tourism_description"),
+                    "tourism_zone" => $this->get_key_data($n_result["postmeta"], "tourism_zone"),
+                   
+                    "created_by" => $n_result["post_author"],
+                    "status" => 1,
+                    "created_at" => $n_result["post_date_gmt"],
+                    "updated_at" => $n_result["post_modified"]
+                ];
+
+                $tourism_zones->push($tourism_zone);
+            }
+            //dd($locations->toArray());
+            TourismZone::insert($tourism_zones->toArray());
+        }
+
+        $this->info("tourism Zone Data Loading Completed");
+    }
+
+    /*Activity Package module migration*/
+
+public function st_activity_package_migration()
+{
+    $this->info("Activity Package modules Data Loading...");
+
+     $post_collections = DB::connection($this->wp_connection)->table("wp_posts")->select("ID")->where('post_type', 'st_activity_packages')->get();
+        $postIds = $post_collections->pluck('ID')->toArray();
+     foreach (array_chunk($postIds, 200) as $pIds) {
+
+    $results = DB::connection($this->wp_connection)->table('wp_posts as p')
+    ->select('p.*', 'pm.*')
+    ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+    ->whereIn('pm.meta_key', ["duration","price","amenities","custom_icon"])
+    ->where('p.post_type', 'st_activity_packages')
+    ->where('p.post_status', 'publish')
+    ->whereIn('p.ID', $pIds)
+    ->orderBy('p.ID', 'desc')
+
+    ->get();
+
+        // Build 200 Objects
+    $nestedResults = [];
+        // $serializer_fields =  ["activity_package_section"];
+
+    foreach ($results as $result) {
+        $postId = $result->ID;
+            unset($result->ID); // Remove the ID field from the main post data
+
+            if (!isset($nestedResults[$postId])) {
+                $nestedResults[$postId] = (array) $result;
+                $nestedResults[$postId]['postmeta'] = [];
+            }
+
+            $metaKey = $result->meta_key;
+            $metaValue = $result->meta_value;
+
+            unset($result->meta_key, $result->meta_value); // Remove meta_key and meta_value fields
+
+          
+            $nestedResults[$postId]['postmeta'][$metaKey] = $metaValue;
+            
+        }
+
+        // TODO: Can think better way
+        // One more iteration for Laravel Specific
+        $activity_packages = collect([]);
+        if (!empty($nestedResults)) {
+            foreach ($nestedResults as $postId => $n_result) {
+
+                $activity_package = [
+                    "wp_id" => $postId,
+                    "title" => $n_result["post_title"],
+                    "description" => $this->check_content($n_result["post_content"], $postId, 'st_activity_packages'),
+                    "excerpt" => $n_result["post_excerpt"],
+                    "slug" => $n_result["post_name"],
+
+                    "duration" => $this->get_key_data($n_result["postmeta"], "duration"),
+                    "price" => $this->get_key_data($n_result["postmeta"], "price"),
+                    "amenities" => $this->get_key_data($n_result["postmeta"], "amenities"),
+                    "custom_icon" => $this->get_key_data($n_result["postmeta"], "custom_icon"),
+                    "created_by" => $n_result["post_author"],
+                    "status" => 1,
+                    "created_at" => $n_result["post_date_gmt"],
+                    "updated_at" => $n_result["post_modified"]
+                ];
+
+                $activity_packages->push($activity_package);
+            }
+            //dd($locations->toArray());
+            ActivityPackage::insert($activity_packages->toArray());
+             $this->info("Activity Package 200 done");
+        }
+
+    }
+
+        $this->info("Activity Package module Data Loading Completed");
+    }
+
+
+    /*activity zone migration*/
+
+    public function st_activity_zones_migration()
+    {
+        $this->info("activity zones Data Loading...");
+        $results = DB::connection($this->wp_connection)->table('wp_posts as p')
+        ->select('p.*', 'pm.*')
+        ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+        ->whereIn('pm.meta_key', [
+            "activity_zone_title", "activity_zone_image", "activity_description", "activity_zone_section","activity_zone_pdf"
+        ])
+        ->where('p.post_type', 'st_activity_zones')
+        ->where('p.post_status', 'publish')
+        ->orderBy('p.ID', 'desc')
+
+        ->get();
+
+        // Build 500 Objects
+        $nestedResults = [];
+        $serializer_fields =  ["activity_zone_section"];
+
+        foreach ($results as $result) {
+            $postId = $result->ID;
+            unset($result->ID); // Remove the ID field from the main post data
+
+            if (!isset($nestedResults[$postId])) {
+                $nestedResults[$postId] = (array) $result;
+                $nestedResults[$postId]['postmeta'] = [];
+            }
+
+            $metaKey = $result->meta_key;
+            $metaValue = $result->meta_value;
+
+            unset($result->meta_key, $result->meta_value); // Remove meta_key and meta_value fields
+
+            if (in_array($metaKey, $serializer_fields)) {
+                // Serialized Results
+                $nestedResults[$postId]['postmeta'][$metaKey] = $this->unserialize_data_format_in_array($metaValue, $metaKey);
+            } else {
+                $nestedResults[$postId]['postmeta'][$metaKey] = $metaValue;
+            }
+        }
+
+        // TODO: Can think better way
+        // One more iteration for Laravel Specific
+        $activity_zones = collect([]);
+        if (!empty($nestedResults)) {
+            foreach ($nestedResults as $postId => $n_result) {
+
+                $activity_zone = [
+                   "wp_id" => $postId,
+                    "title" => $n_result["post_title"],
+                    "description" => $n_result["post_content"],
+                    "excerpt" => $n_result["post_excerpt"],
+                    "slug" => $n_result["post_name"],
+                    "sub_title" => $this->get_key_data($n_result["postmeta"], "activity_zone_title"),
+                    "country" => $this->get_key_data($n_result["postmeta"], "country"),
+                    "image" => $this->string_to_json($this->get_key_data($n_result["postmeta"], "activity_zone_image"), 'image'),
+                    "activity_zone_description" => $this->get_key_data($n_result["postmeta"], "activity_description"),
+                    "activity_zone_section" => $this->get_key_data($n_result["postmeta"], "activity_zone_section"),
+                    "activity_zone_pdf" => $this->get_key_data($n_result["postmeta"], "activity_zone_pdf"),
+                   
+                    "created_by" => $n_result["post_author"],
+                    "status" => 1,
+                    "created_at" => $n_result["post_date_gmt"],
+                    "updated_at" => $n_result["post_modified"]
+                ];
+
+                $activity_zones->push($activity_zone);
+            }
+            //dd($locations->toArray());
+            ActivityZone::insert($activity_zones->toArray());
+        }
+
+        $this->info("activity Zone Data Loading Completed");
+    }
+
+    /*Activity Lists module migration*/
+
+public function st_activity_lists_migration()
+{
+    $this->info("Activity Lists modules Data Loading...");
+
+     $post_collections = DB::connection($this->wp_connection)->table("wp_posts")->select("ID")->where('post_type','st_activity_lists')->get();
+        $postIds = $post_collections->pluck('ID')->toArray();
+
+    foreach (array_chunk($postIds, 200) as $pIds) {
+    $results = DB::connection($this->wp_connection)->table('wp_posts as p')
+    ->select('p.*', 'pm.*')
+    ->join('wp_postmeta as pm', 'pm.post_id', '=', 'p.ID')
+    ->whereIn('pm.meta_key', ["custom_icon"])
+    ->where('p.post_type', 'st_activity_lists')
+    ->where('p.post_status', 'publish')
+    ->whereIn('p.ID', $pIds)
+    ->orderBy('p.ID', 'desc')
+
+    ->get();
+
+        // Build 200 Objects
+    $nestedResults = [];
+        // $serializer_fields =  ["activity_lists_section"];
+
+    foreach ($results as $result) {
+        $postId = $result->ID;
+            unset($result->ID); // Remove the ID field from the main post data
+
+            if (!isset($nestedResults[$postId])) {
+                $nestedResults[$postId] = (array) $result;
+                $nestedResults[$postId]['postmeta'] = [];
+            }
+
+            $metaKey = $result->meta_key;
+            $metaValue = $result->meta_value;
+
+            unset($result->meta_key, $result->meta_value); // Remove meta_key and meta_value fields
+
+          
+            $nestedResults[$postId]['postmeta'][$metaKey] = $metaValue;
+            
+        }
+
+        // TODO: Can think better way
+        // One more iteration for Laravel Specific
+        $activity_lists = collect([]);
+        if (!empty($nestedResults)) {
+            foreach ($nestedResults as $postId => $n_result) {
+
+                $activity_list = [
+                    "wp_id" => $postId,
+                    "title" => $n_result["post_title"],
+                    "description" => $this->check_content($n_result["post_content"], $postId, 'st_activity_lists'),
+                    "excerpt" => $n_result["post_excerpt"],
+                    "slug" => $n_result["post_name"],
+                    "custom_icon" => $this->get_key_data($n_result["postmeta"], "custom_icon"),
+                    "created_by" => $n_result["post_author"],
+                    "status" => 1,
+                    "created_at" => $n_result["post_date_gmt"],
+                    "updated_at" => $n_result["post_modified"]
+                ];
+
+                $activity_lists->push($activity_list);
+            }
+            //dd($locations->toArray());
+            ActivityLists::insert($activity_lists->toArray());
+            $this->info("Activity Lists module Data 200 done");
+        }
+    }
+
+        $this->info("Activity Lists module Data Loading Completed");
+    }
+
+
     public function wp_option_get_value($key)
     {
         $result = "";
         $wp_option = DB::connection($this->wp_connection)->table('wp_options')
-            ->select('*')
-            ->where('wp_options.option_name', '=', $key)
-            ->first();
+        ->select('*')
+        ->where('wp_options.option_name', '=', $key)
+        ->first();
 
         if (!empty($wp_option)) {
             $result = $wp_option->option_value;
@@ -1995,12 +2386,12 @@ class DataMigration extends Command
             $type_list = collect([]);
 
             $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
-                ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
+            ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
 
-                ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
-                ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
-                ->where('wtt.taxonomy', $term_values['column'])
-                ->orderBy('wt.term_id', 'asc')->get();
+            ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+            ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
+            ->where('wtt.taxonomy', $term_values['column'])
+            ->orderBy('wt.term_id', 'asc')->get();
 
 
             $nestedResults = [];
@@ -2060,12 +2451,12 @@ class DataMigration extends Command
             $package_type_list = collect([]);
 
             $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
-                ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
+            ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
 
-                ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
-                ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
-                ->where('wtt.taxonomy', $term_values['column'])
-                ->orderBy('wt.term_id', 'asc')->get();
+            ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+            ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
+            ->where('wtt.taxonomy', $term_values['column'])
+            ->orderBy('wt.term_id', 'asc')->get();
 
 
             $nestedResults = [];
@@ -2126,12 +2517,12 @@ class DataMigration extends Command
         $this->info("Terms Language Data Loading...");
         $language_list = collect([]);
         $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
-            ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
+        ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
 
-            ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
-            ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
-            ->where('wtt.taxonomy', 'languages')
-            ->orderBy('wt.term_id', 'asc')->get();
+        ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+        ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
+        ->where('wtt.taxonomy', 'languages')
+        ->orderBy('wt.term_id', 'asc')->get();
 
 
         $nestedResults = [];
@@ -2183,17 +2574,146 @@ class DataMigration extends Command
 
         $this->info("Terms Language Data Loading Completed");
     }
+
+      public function setup_attractions()
+    {
+        $this->info("Terms Attraction Data Loading...");
+        $attractions_list = collect([]);
+        $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
+        ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
+
+        ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+        ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
+        ->where('wtt.taxonomy', 'attractions')
+        ->orderBy('wt.term_id', 'asc')->get();
+
+
+        $nestedResults = [];
+        // $serializer_fields =  ["country_zone_section"];
+
+        foreach ($results as $result) {
+            $termId = $result->term_id;
+            //unset($result->term_id); // Remove the ID field from the main term data
+
+            if (!isset($nestedResults[$termId])) {
+                $nestedResults[$termId] = (array) $result;
+                $nestedResults[$termId]['termmeta'] = [];
+            }
+
+            $metaKey = $result->meta_key;
+            $metaValue = $result->meta_value;
+
+            unset($result->meta_key, $result->meta_value); // Remove meta_key and meta_value fields
+            if (!empty($metaKey)) {
+
+                $nestedResults[$termId]['termmeta'][$metaKey] = $metaValue;
+            }
+        }
+
+
+
+        if (!empty($nestedResults)) {
+            foreach ($nestedResults as $termId => $n_result) {
+                $tax_met_value = 'tax_meta_' . $n_result['term_taxonomy_id'];
+                $single_attraction = [
+                    "name" => $n_result['name'],
+                    "slug" => $n_result['slug'],
+                    "parent_id" => $n_result['parent'], // We will set it
+                    "description" => $n_result['description'],
+                    'attraction_type'=>'Activity',
+                    "wp_term_id" => $termId,
+                    "icon" => $this->wp_term_icon_refind($this->wp_option_get_value($tax_met_value)),
+                    "wp_taxonomy_id" => $n_result['term_taxonomy_id']
+                ];
+
+                $attractions_list->push($single_attraction);
+            }
+
+
+
+            Attraction::insert($attractions_list->toArray());
+        }
+
+
+
+        $this->info("Terms Attraction Data Loading Completed");
+    }
+
+
+
+      public function setup_term_activity_lists()
+    {
+        $this->info("Terms term activity list Data Loading...");
+        $term_activity_lists = collect([]);
+        $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
+        ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
+
+        ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+        ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
+        ->where('wtt.taxonomy', 'st-activities')
+        ->orderBy('wt.term_id', 'asc')->get();
+
+
+        $nestedResults = [];
+        // $serializer_fields =  ["country_zone_section"];
+
+        foreach ($results as $result) {
+            $termId = $result->term_id;
+            //unset($result->term_id); // Remove the ID field from the main term data
+
+            if (!isset($nestedResults[$termId])) {
+                $nestedResults[$termId] = (array) $result;
+                $nestedResults[$termId]['termmeta'] = [];
+            }
+
+            $metaKey = $result->meta_key;
+            $metaValue = $result->meta_value;
+
+            unset($result->meta_key, $result->meta_value); // Remove meta_key and meta_value fields
+            if (!empty($metaKey)) {
+
+                $nestedResults[$termId]['termmeta'][$metaKey] = $metaValue;
+            }
+        }
+
+
+
+        if (!empty($nestedResults)) {
+            foreach ($nestedResults as $termId => $n_result) {
+                $tax_met_value = 'tax_meta_' . $n_result['term_taxonomy_id'];
+                $single_term_activity_list = [
+                    "name" => $n_result['name'],
+                    "slug" => $n_result['slug'],
+                    "parent" => $this->get_key_data($n_result['termmeta'],'activity_parent'), // We will set it
+                    "description" => $n_result['description'],
+                    "wp_term_id" => $termId,
+                    "icon" => $this->wp_term_icon_refind($this->wp_option_get_value($tax_met_value)),
+                    "wp_taxonomy_id" => $n_result['term_taxonomy_id']
+                ];
+
+                $term_activity_lists->push($single_term_activity_list);
+            }
+
+
+
+            TermActivityList::insert($term_activity_lists->toArray());
+        }
+
+
+
+        $this->info("Terms term activity list Data Loading Completed");
+    }
     public function setup_places()
     {
         $this->info("Terms Place Data Loading...");
         $place_list = collect([]);
         $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
-            ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
+        ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
 
-            ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
-            ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
-            ->where('wtt.taxonomy', 'places')
-            ->orderBy('wt.term_id', 'asc')->get();
+        ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+        ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
+        ->where('wtt.taxonomy', 'places')
+        ->orderBy('wt.term_id', 'asc')->get();
 
 
         $nestedResults = [];
@@ -2247,10 +2767,10 @@ class DataMigration extends Command
 
         // Fetch association Records
         $related_records = DB::connection($this->wp_connection)->table('wp_term_relationships')
-            ->whereIn('object_id', $objects->pluck('wp_id')->toArray())
-            ->whereIn('term_taxonomy_id', $terms->pluck('wp_taxonomy_id')->toArray())
+        ->whereIn('object_id', $objects->pluck('wp_id')->toArray())
+        ->whereIn('term_taxonomy_id', $terms->pluck('wp_taxonomy_id')->toArray())
 
-            ->get();
+        ->get();
 
         //  $related_records = DB::connection($this->wp_connection)->table('wp_term_relationships')
         //  ->select('wp_term_relationships.object_id','wp_term_relationships.term_taxonomy_id')
@@ -2294,10 +2814,10 @@ class DataMigration extends Command
 
         // Fetch association Records
         $related_records = DB::connection($this->wp_connection)->table('wp_term_relationships')
-            ->whereIn('object_id', $objects->pluck('wp_id')->toArray())
-            ->whereIn('term_taxonomy_id', $languages->pluck('wp_taxonomy_id')->toArray())
+        ->whereIn('object_id', $objects->pluck('wp_id')->toArray())
+        ->whereIn('term_taxonomy_id', $languages->pluck('wp_taxonomy_id')->toArray())
 
-            ->get();
+        ->get();
 
 
         $final_list  = [];
@@ -2332,10 +2852,10 @@ class DataMigration extends Command
         // Fetch association Records
 
         $related_records = DB::connection($this->wp_connection)->table('wp_term_relationships')
-            ->whereIn('object_id', $objects->pluck('wp_id')->toArray())
-            ->whereIn('term_taxonomy_id', $package_types->pluck('wp_taxonomy_id')->toArray())
+        ->whereIn('object_id', $objects->pluck('wp_id')->toArray())
+        ->whereIn('term_taxonomy_id', $package_types->pluck('wp_taxonomy_id')->toArray())
 
-            ->get();
+        ->get();
 
 
         $final_list  = [];
@@ -2369,9 +2889,9 @@ class DataMigration extends Command
 
         // Fetch association Records
         $related_records = DB::connection($this->wp_connection)->table('wp_term_relationships')
-            ->whereIn('object_id', $objects->pluck('wp_id')->toArray())
-            ->whereIn('term_taxonomy_id', $types->pluck('wp_taxonomy_id')->toArray())
-            ->get();
+        ->whereIn('object_id', $objects->pluck('wp_id')->toArray())
+        ->whereIn('term_taxonomy_id', $types->pluck('wp_taxonomy_id')->toArray())
+        ->get();
 
 
         $final_list  = [];
@@ -2404,12 +2924,12 @@ class DataMigration extends Command
             $other_package_list = collect([]);
 
             $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
-                ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
+            ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
 
-                ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
-                ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
-                ->where('wtt.taxonomy', $term_values['column'])
-                ->orderBy('wt.term_id', 'asc')->get();
+            ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+            ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
+            ->where('wtt.taxonomy', $term_values['column'])
+            ->orderBy('wt.term_id', 'asc')->get();
 
 
             $nestedResults = [];
@@ -2478,9 +2998,9 @@ class DataMigration extends Command
         // Fetch association Records
         $related_records = DB::connection($this->wp_connection)->table('wp_term_relationships')
 
-            ->whereIn('object_id', $objects->pluck('wp_id')->toArray())
-            ->whereIn('term_taxonomy_id', $other_packages->pluck('wp_taxonomy_id')->toArray())
-            ->get();
+        ->whereIn('object_id', $objects->pluck('wp_id')->toArray())
+        ->whereIn('term_taxonomy_id', $other_packages->pluck('wp_taxonomy_id')->toArray())
+        ->get();
 
 
 
@@ -2506,56 +3026,62 @@ class DataMigration extends Command
         }
     }
 
-    public function associate_term_parent_id($other_package_class, $type, $post_type)
+    public function associate_term_parent_id($term_class, $type='', $post_type='')
     {
 
         $this->info("Terms Parent Updating......");
-        $terms_parent = $other_package_class::where($type, $post_type)
-            ->where('parent_id', '!=', 0)->get();
-        $terms = $other_package_class::where($type, $post_type)->get();
-        foreach ($terms as $key => $term) {
+        if (!empty($type) && !empty($post_type)) {
+          $terms_parent = $term_class::where($type, $post_type)
+          ->where('parent_id', '!=', 0)->get();
+          $terms = $term_class::where($type, $post_type)->get();
+      }else{
+          $terms_parent = $term_class::where('parent_id', '!=', 0)->get();
+          $terms = $term_class::get();
 
-            foreach ($terms_parent as $parent) {
-                if ($term->wp_taxonomy_id == $parent->parent_id) {
-                    $parent->parent_id = $term->id;
-                    $parent->update();
-                }
+      }
+      foreach ($terms as $key => $term) {
+
+        foreach ($terms_parent as $parent) {
+            if ($term->wp_taxonomy_id == $parent->parent_id) {
+                $parent->parent_id = $term->id;
+                $parent->update();
             }
         }
-
-        $this->info("Terms Parent Updated");
     }
 
+    $this->info("Terms Parent Updated");
+}
 
 
-    public function setup_states()
-    {
-        $this->info("Terms State Data Loading...");
 
-        $state_list = collect([]);
+public function setup_states()
+{
+    $this->info("Terms State Data Loading...");
 
-        $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
-            ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
+    $state_list = collect([]);
 
-            ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
-            ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
-            ->where('wtt.taxonomy', 'states')
-            ->orderBy('wt.term_id', 'asc')->get();
+    $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
+    ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
 
-        $nestedResults = [];
+    ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+    ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
+    ->where('wtt.taxonomy', 'states')
+    ->orderBy('wt.term_id', 'asc')->get();
+
+    $nestedResults = [];
         // $serializer_fields =  ["country_zone_section"];
 
-        foreach ($results as $result) {
-            $termId = $result->term_id;
+    foreach ($results as $result) {
+        $termId = $result->term_id;
             //unset($result->term_id); // Remove the ID field from the main term data
 
-            if (!isset($nestedResults[$termId])) {
-                $nestedResults[$termId] = (array) $result;
-                $nestedResults[$termId]['termmeta'] = [];
-            }
+        if (!isset($nestedResults[$termId])) {
+            $nestedResults[$termId] = (array) $result;
+            $nestedResults[$termId]['termmeta'] = [];
+        }
 
-            $metaKey = $result->meta_key;
-            $metaValue = $result->meta_value;
+        $metaKey = $result->meta_key;
+        $metaValue = $result->meta_value;
 
             unset($result->meta_key, $result->meta_value); // Remove meta_key and meta_value fields
             if (!empty($metaKey)) {
@@ -2606,9 +3132,9 @@ class DataMigration extends Command
 
         $related_records = DB::connection($this->wp_connection)->table('wp_term_relationships')
 
-            ->whereIn('object_id', $objects->pluck('wp_id')->toArray())
-            ->whereIn('term_taxonomy_id', $states->pluck('wp_taxonomy_id')->toArray())
-            ->get();
+        ->whereIn('object_id', $objects->pluck('wp_id')->toArray())
+        ->whereIn('term_taxonomy_id', $states->pluck('wp_taxonomy_id')->toArray())
+        ->get();
 
 
         $final_list  = [];
@@ -2672,7 +3198,7 @@ class DataMigration extends Command
 
         // Fetch association Records
         $related_records = DB::connection($this->wp_connection)->table('wp_st_hotel')
-            ->whereIn('post_id', $objects->pluck('wp_id')->toArray())->get();
+        ->whereIn('post_id', $objects->pluck('wp_id')->toArray())->get();
 
 
         $final_list  = [];
@@ -2707,7 +3233,7 @@ class DataMigration extends Command
 
         // Fetch association Records
         $related_records = DB::connection($this->wp_connection)->table('wp_st_tours')
-            ->whereIn('post_id', $objects->pluck('wp_id')->toArray())->get();
+        ->whereIn('post_id', $objects->pluck('wp_id')->toArray())->get();
 
 
         $final_list  = [];
@@ -2735,6 +3261,104 @@ class DataMigration extends Command
         }
     }
 
+    public function associate_activity_location_table($objects, $locations, $location_rel_class)
+    {
+
+        // dump($types->pluck('wp_taxonomy_id')->toArray());
+
+        // Fetch association Records
+        $related_records = DB::connection($this->wp_connection)->table('wp_st_tours')
+        ->whereIn('post_id', $objects->pluck('wp_id')->toArray())->get();
+
+
+        $final_list  = [];
+        $objectMapper = $objects->pluck('id', 'wp_id')->toArray();
+        $locationMapper = $locations->pluck('id', 'wp_id')->toArray();
+
+        foreach ($related_records as $record) {
+            if (isset($objectMapper[$record->post_id])) {
+                $this->info("Append");
+                $get_locations = $this->get_multi_locations($record->multi_location);
+                foreach ($get_locations as $key => $get_location) {
+                    $final_row = [
+                        // Need to dynamically tour_id, type_id column
+                        'actvity_id' => $objectMapper[$record->post_id],
+                        'location_id' => $locationMapper[$get_location]
+                    ];
+
+                    $final_list[] = $final_row;
+                }
+            }
+        }
+
+        if (!empty($final_list)) {
+            $location_rel_class::insert($final_list);
+        }
+    }
+    public function setup_room_facility()
+    {
+        $this->info("Terms facility Data Loading...");
+
+        $room_facility_list = collect([]);
+        $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
+        ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
+
+        ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+        ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
+        ->where('wtt.taxonomy', 'room_facilities')
+        ->orderBy('wt.term_id', 'asc')->get();
+
+
+        $nestedResults = [];
+        // $serializer_fields =  ["country_zone_section"];
+
+        foreach ($results as $result) {
+            $termId = $result->term_id;
+            //unset($result->term_id); // Remove the ID field from the main term data
+
+            if (!isset($nestedResults[$termId])) {
+                $nestedResults[$termId] = (array) $result;
+                $nestedResults[$termId]['termmeta'] = [];
+            }
+
+            $metaKey = $result->meta_key;
+            $metaValue = $result->meta_value;
+
+            unset($result->meta_key, $result->meta_value); // Remove meta_key and meta_value fields
+            if (!empty($metaKey)) {
+
+                $nestedResults[$termId]['termmeta'][$metaKey] = $metaValue;
+            }
+        }
+
+
+
+        if (!empty($nestedResults)) {
+            foreach ($nestedResults as $termId => $n_result) {
+                $tax_met_value = 'tax_meta_' . $n_result['term_taxonomy_id'];
+                $single_room_facility = [
+                    "name" => $n_result['name'],
+                    "slug" => $n_result['slug'],
+                    "parent_id" => $n_result['parent'], // We will set it
+                    "description" => $n_result['description'],
+                    "facility_type" => 'Room',
+                    "wp_term_id" => $termId,
+                    "icon" => $this->wp_term_icon_refind($this->wp_option_get_value($tax_met_value)),
+                    "wp_taxonomy_id" => $n_result['term_taxonomy_id']
+                ];
+
+                $room_facility_list->push($single_room_facility);
+            }
+
+
+
+            Facility::insert($room_facility_list->toArray());
+        }
+
+
+
+        $this->info("Terms facility Data Loading Completed");
+    }
 
     public function setup_hotel_facility()
     {
@@ -2742,12 +3366,12 @@ class DataMigration extends Command
 
         $hotel_facility_list = collect([]);
         $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
-            ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
+        ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
 
-            ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
-            ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
-            ->where('wtt.taxonomy', 'hotel_facilities')
-            ->orderBy('wt.term_id', 'asc')->get();
+        ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+        ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
+        ->where('wtt.taxonomy', 'hotel_facilities')
+        ->orderBy('wt.term_id', 'asc')->get();
 
 
         $nestedResults = [];
@@ -2806,12 +3430,12 @@ class DataMigration extends Command
         $this->info("Terms amenity Data Loading...");
         $hotel_amenity_list = collect([]);
         $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
-            ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
+        ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
 
-            ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
-            ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
-            ->where('wtt.taxonomy', 'amenities')
-            ->orderBy('wt.term_id', 'asc')->get();
+        ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+        ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
+        ->where('wtt.taxonomy', 'amenities')
+        ->orderBy('wt.term_id', 'asc')->get();
 
 
         $nestedResults = [];
@@ -2869,12 +3493,12 @@ class DataMigration extends Command
         $this->info("Terms medicare_assistance Data Loading...");
         $hotel_medicare_assistance_list = collect([]);
         $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
-            ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
+        ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
 
-            ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
-            ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
-            ->where('wtt.taxonomy', 'medicare-assistance')
-            ->orderBy('wt.term_id', 'asc')->get();
+        ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+        ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
+        ->where('wtt.taxonomy', 'medicare-assistance')
+        ->orderBy('wt.term_id', 'asc')->get();
 
 
         $nestedResults = [];
@@ -2926,12 +3550,12 @@ class DataMigration extends Command
         $this->info("Terms top_service Data Loading...");
         $hotel_top_service_list = collect([]);
         $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
-            ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
+        ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
 
-            ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
-            ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
-            ->where('wtt.taxonomy', 'hotel-top-services')
-            ->orderBy('wt.term_id', 'asc')->get();
+        ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+        ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
+        ->where('wtt.taxonomy', 'hotel-top-services')
+        ->orderBy('wt.term_id', 'asc')->get();
 
 
         $nestedResults = [];
@@ -2986,12 +3610,12 @@ class DataMigration extends Command
         $this->info("Terms accessible_type Data Loading...");
         $hotel_accessible_type_list = collect([]);
         $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
-            ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
+        ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
 
-            ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
-            ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
-            ->where('wtt.taxonomy', 'accessible')
-            ->orderBy('wt.term_id', 'asc')->get();
+        ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+        ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
+        ->where('wtt.taxonomy', 'accessible')
+        ->orderBy('wt.term_id', 'asc')->get();
 
 
         $nestedResults = [];
@@ -3044,12 +3668,12 @@ class DataMigration extends Command
         $this->info("Terms occupancy Data Loading...");
         $hotel_occupancy_list = collect([]);
         $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
-            ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
+        ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
 
-            ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
-            ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
-            ->where('wtt.taxonomy', 'occupancy')
-            ->orderBy('wt.term_id', 'asc')->get();
+        ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+        ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
+        ->where('wtt.taxonomy', 'occupancy')
+        ->orderBy('wt.term_id', 'asc')->get();
 
 
         $nestedResults = [];
@@ -3101,12 +3725,12 @@ class DataMigration extends Command
         $this->info("Terms deals_discount_type Data Loading...");
         $hotel_deals_discount_type_list = collect([]);
         $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
-            ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
+        ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
 
-            ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
-            ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
-            ->where('wtt.taxonomy', 'deals-discount')
-            ->orderBy('wt.term_id', 'asc')->get();
+        ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+        ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
+        ->where('wtt.taxonomy', 'deals-discount')
+        ->orderBy('wt.term_id', 'asc')->get();
 
 
         $nestedResults = [];
@@ -3159,12 +3783,12 @@ class DataMigration extends Command
         $this->info("Terms activities Data Loading...");
         $hotel_activities_list = collect([]);
         $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
-            ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
+        ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
 
-            ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
-            ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
-            ->where('wtt.taxonomy', 'activities')
-            ->orderBy('wt.term_id', 'asc')->get();
+        ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+        ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
+        ->where('wtt.taxonomy', 'activities')
+        ->orderBy('wt.term_id', 'asc')->get();
 
 
         $nestedResults = [];
@@ -3217,12 +3841,12 @@ class DataMigration extends Command
         $this->info("Terms property_type_type Data Loading...");
         $hotel_property_type_type_list = collect([]);
         $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
-            ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
+        ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
 
-            ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
-            ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
-            ->where('wtt.taxonomy', 'property-type')
-            ->orderBy('wt.term_id', 'asc')->get();
+        ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+        ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
+        ->where('wtt.taxonomy', 'property-type')
+        ->orderBy('wt.term_id', 'asc')->get();
 
 
         $nestedResults = [];
@@ -3281,12 +3905,12 @@ class DataMigration extends Command
         $meeting_and_event_type_list = collect([]);
 
         $results = DB::connection($this->wp_connection)->table('wp_terms as wt')
-            ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
+        ->select('wt.*', 'wtt.*', 'wtm.meta_key', 'wtm.meta_value')
 
-            ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
-            ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
-            ->where('wtt.taxonomy', 'meetings-and-events')
-            ->orderBy('wt.term_id', 'asc')->get();
+        ->join('wp_term_taxonomy as wtt', 'wt.term_id', '=', 'wtt.term_id')
+        ->leftJoin('wp_termmeta as wtm', 'wt.term_id', '=', 'wtm.term_id')
+        ->where('wtt.taxonomy', 'meetings-and-events')
+        ->orderBy('wt.term_id', 'asc')->get();
 
 
         $nestedResults = [];
@@ -3340,6 +3964,71 @@ class DataMigration extends Command
         $this->info("Terms meet and event Data Loading Completed");
     }
 
+    public function get_postmeta_field_value($id,$field)
+    {
+        $get_value = DB::connection($this->wp_connection)->table('wp_postmeta')
+        ->where('meta_key','=',$field)->where('post_id',$id)->first();
+        if (!empty($get_value)) {
+         return $get_value->meta_value;
+     }else{
+        return null;
+    }
+}
+
+public function check_in_and_check_out_change_in_hotel()
+{
+    $this->info("Start Update.....");
+
+    $hotels = Hotel::get(['id','check_in','check_out','wp_id']);
+
+    $hotels->each(function($item){
+
+        $item->check_in = $this->get_postmeta_field_value($item->wp_id,'check_in_time');
+        $item->check_out = $this->get_postmeta_field_value($item->wp_id,'check_out_time');
+        $item->update();
+
+    });
+    $this->info("Updated Data");
+}
+
+public function get_post_id_from_laravel($post_id,$posts,$col)
+{
+       $result = 0;
+       $get_post = $posts->where($col,$post_id)->first();
+
+       if (!empty( $get_post)) {
+          $result = $get_post->id;
+       }
+      return $result;
+}
+
+public function comman_post_relationship_fun($objects,$custom_posts,$custom_post_class,string $meta_key,string $field1,string $field2,string $field3)
+{
+
+    $this->info("Post relationship.....");
+    $postmeta = DB::connection($this->wp_connection)->table('wp_postmeta')
+        ->where('meta_key','like',$meta_key)->get();
+    $push_data = collect([]);
+    $postmeta->each(function($item)use ($field1,$field2,$field3,$objects,$custom_posts,&$push_data){
+                     
+                      $post_m_id = $this->get_post_id_from_laravel((int)$item->meta_value,$objects,$field3);
+                      $post_r_id = $this->get_post_id_from_laravel($item->post_id,$custom_posts,$field3);
+                      if ($post_m_id != 0) {
+                       $custom_set_post = [
+                        $field1 => $post_m_id, 
+                        $field2 => $post_r_id
+                      ];
+                      $push_data->push($custom_set_post);
+                      }
+
+
+               
+    });
+  
+    $custom_post_class::insert($push_data->toArray());
+    $this->info("Done.....");
+}
+
     /**
      * Execute the console command.
      *
@@ -3363,36 +4052,43 @@ class DataMigration extends Command
             // $tables = ['locations','location_meta'];
             // $tables = ['location_meta'];
 
-           // $tables = ['hotel_details'];
+          //   $tables = ['posts'];
             // $tables = ['hotels','hotel_details'];
-
+            
             //$tables = ['tour_locations'];
             // $term_table = ['languages','tour_languages'];
-            //$term_table = ['types','tour_types'];
+            // $term_table = ['room_facilities'];
+            // $term_table = ['activity_languages','activity_states'];
+            // $term_table = ['attractions','term_activity_lists','activity_attractions','activity_term_activity_lists'];
 
             // $tables = ['hotel_places','hotel_states','hotel_locations'];
-            //$tables = ['hotel_locations'];
-            //           $tables = ["hotel_accessibles","hotel_amenities","hotel_deals","hotel_facilities","hotel_medicare_assistances",
-            // "hotel_meeting_events","hotel_occupancies","hotel_property_types","hotel_top_services","hotel_activities",
-            // "accessibles","amenities","deals_discounts","facilities","medicare_assistances","meeting_and_events","occupancies","property_types","term_activities","top_services"];
+         //   $tables = ['activity_languages','activity_states','activity_locations','activity_attractions','activity_term_activity_lists'];
+     //    $tables = ['activity_lists_activities','activity_package_activities','activity_activity_zones'];
+           // $tables = ['hotel_locations'];
+           //  $tables = ["hotel_accessibles","hotel_amenities","hotel_deals","hotel_facilities","hotel_medicare_assistances",
+           // "hotel_meeting_events","hotel_occupancies","hotel_property_types","hotel_top_services","hotel_activities",
+           //  "accessibles","amenities","deals_discounts","facilities","medicare_assistances","meeting_and_events","occupancies","property_types","term_activities","top_services"];
             //$term_table = ['package_types','tour_package_types'];
             //  $term_table = ['other_packages','tour_other_packages'];
             // $term_table = ['states','tour_states'];
-            //$term_table = ['places','location_places'];
+        //    $term_table = ['hotel_places'];
+            // $term_table = ['places','location_places'];
             //$term_table = ['location_states'];
             //$term_table = ['hotel_states'];
             //$term_table = ['activity_states'];
 
             //$tables = ['tour_details'];
             //$tables = ['country_zones'];
+
              $tables = ['activities'];
              $tables = ['activity_details'];
             //$tables = ['rooms','room_details','hotels','hotel_details'];
 
-            $this->info("Truncating tables...");
-           // $this->truncate_tables($term_table);
 
-            $this->truncate_tables($tables);
+            $this->info("Truncating tables...");
+           //$this->truncate_tables($term_table);
+
+         //  $this->truncate_tables($tables);
 
 
             $this->info("Table Truncated...");
@@ -3427,7 +4123,7 @@ class DataMigration extends Command
         // Location Meta Module
         //    $this->location_meta_migrate();
 
-        //    $this->st_country_zones_migration();
+        // $this->st_country_zones_migration();
 
         // Hotel Module
 
@@ -3436,8 +4132,12 @@ class DataMigration extends Command
         // $this->room_migrate();
         // $this->load_room_details();
 
+        // $this->activity_migrate();
+         //$this->load_activity_details();
 
         // Setup Types
+
+        //$this->post_migrate();
 
         //$this->setup_types();
         //$this->setup_package_types();
@@ -3447,72 +4147,99 @@ class DataMigration extends Command
         // $this->setup_places();
         // Associate with Types
         // For Tour
-        //   $this->setup_hotel_facility();
-        //   $this->setup_hotel_amenity();
-        //   $this->setup_hotel_medicare_assistance();
-        //   $this->setup_hotel_top_service();
-        //   $this->setup_hotel_accessible_type();
-        //   $this->setup_hotel_occupancy();
-        //   $this->setup_hotel_deals_discount_type();
-        //   $this->setup_hotel_activities();
-        //   $this->setup_hotel_property_type_type();
-        //   $this->setup_meeting_and_event_types();
+          // $this->setup_hotel_facility();
+          // $this->setup_hotel_amenity();
+          // $this->setup_hotel_medicare_assistance();
+          // $this->setup_hotel_top_service();
+          // $this->setup_hotel_accessible_type();
+          // $this->setup_hotel_occupancy();
+          // $this->setup_hotel_deals_discount_type();
+          // $this->setup_hotel_activities();
+          // $this->setup_hotel_property_type_type();
+          // $this->setup_meeting_and_event_types();
         //$tours = Tour::get();
-        // $hotels = Hotel::get();
-        // $activities = Activity::get();
+      //  $hotels = Hotel::get();
+        //$activities = Activity::get();
         // $tours = Tour::where('description','like','%[vc_row]%')->get();
 
         //$types = Type::where('type', 'Tour')->get();
 
-        //$languages = Language::get();
+    //    $languages = Language::get();
         //$hotels = Hotel::get();
 
+        // $this->st_tourism_zones_migration();
+       //   $this->st_activity_package_migration();
+       //  $this->st_activity_lists_migration();
+       // // $this->st_activity_zones_migration();
+
+       // $st_activity_lists = ActivityLists::get();
+       // $st_activity_package = ActivityPackage::get();
+       // $st_activity_zone = ActivityZone::get();
+
+        // $this->comman_post_relationship_fun($activities,$st_activity_lists,ActivityListsActivity::class,'activity_id_for_activity_list','activity_id','activity_list_id','wp_id');
+        // $this->comman_post_relationship_fun($activities,$st_activity_package,ActivityPackageActivity::class,'activity_id_for_activity_package','activity_id','activity_package_id','wp_id');
+        //  $this->comman_post_relationship_fun($st_activity_zone,$activities,ActivityActivityZone::class,'st_activity_zones_id','activity_zone_id','activity_id','wp_id');
+        // $this->comman_post_relationship_fun();
+
+          // $facilities = Facility::where('facility_type','Hotel');
+          // $this->associate_comman_relationship_table($hotels, $facilities, HotelFacility::class,'hotel_id','facility_id');
+          // $amenities = Amenity::where('amenity_type','Hotel');
+          //   $this->associate_comman_relationship_table($hotels, $amenities, HotelAmenities::class,'hotel_id','amenity_id');
+          // $medicare_a = MedicareAssistance::where('medicare_assistance_type','Hotel');
+          //   $this->associate_comman_relationship_table($hotels, $medicare_a, HotelMedicareAssistance::class,'hotel_id','medicare_assistance_id');
+          // $top_services = TopService::where('top_service_type','Hotel');
+          //   $this->associate_comman_relationship_table($hotels, $top_services, HotelTopService::class,'hotel_id','top_service_id');
+          // $accessibles = Accessible::where('accessible_type','Hotel');
+          //   $this->associate_comman_relationship_table($hotels, $accessibles, HotelAccessible::class,'hotel_id','accessible_id');
+          // $occupances = Occupancy::where('occupancy_type','Hotel');
+          //   $this->associate_comman_relationship_table($hotels, $occupances, HotelOccupancy::class,'hotel_id','occupancies_id');
+          // $deals_discouts = DealsDiscount::where('deals_discount_type','Hotel');
+          //   $this->associate_comman_relationship_table($hotels, $deals_discouts, HotelDeal::class,'hotel_id','deal_id');
+          // $term_activities = TermActivity::where('term_activity_type','Hotel');
+          //   $this->associate_comman_relationship_table($hotels, $term_activities, HotelActivity::class,'hotel_id','activity_id');
+          // $property_types = PropertyType::where('property_type_type','Hotel');
+          //   $this->associate_comman_relationship_table($hotels, $property_types, HotelPropertyType::class,'hotel_id','property_type_id');
+          // $meeting_and_events = MeetingAndEvent::where('meeting_and_event_type','Hotel');
+          //   $this->associate_comman_relationship_table($hotels, $meeting_and_events, HotelMeetingEvent::class,'hotel_id','meeting_id');
 
 
-        //   $facilities = Facility::where('facility_type','Hotel');
-        //   $this->associate_comman_relationship_table($hotels, $facilities, HotelFacility::class,'hotel_id','facility_id');
-        //   $amenities = Amenity::where('amenity_type','Hotel');
-        //     $this->associate_comman_relationship_table($hotels, $amenities, HotelAmenities::class,'hotel_id','amenity_id');
-        //   $medicare_a = MedicareAssistance::where('medicare_assistance_type','Hotel');
-        //     $this->associate_comman_relationship_table($hotels, $medicare_a, HotelMedicareAssistance::class,'hotel_id','medicare_assistance_id');
-        //   $top_services = TopService::where('top_service_type','Hotel');
-        //     $this->associate_comman_relationship_table($hotels, $top_services, HotelTopService::class,'hotel_id','top_service_id');
-        //   $accessibles = Accessible::where('accessible_type','Hotel');
-        //     $this->associate_comman_relationship_table($hotels, $accessibles, HotelAccessible::class,'hotel_id','accessible_id');
-        //   $occupances = Occupancy::where('occupancy_type','Hotel');
-        //     $this->associate_comman_relationship_table($hotels, $occupances, HotelOccupancy::class,'hotel_id','occupancies_id');
-        //   $deals_discouts = DealsDiscount::where('deals_discount_type','Hotel');
-        //     $this->associate_comman_relationship_table($hotels, $deals_discouts, HotelDeal::class,'hotel_id','deal_id');
-        //   $term_activities = TermActivity::where('term_activity_type','Hotel');
-        //     $this->associate_comman_relationship_table($hotels, $term_activities, HotelActivity::class,'hotel_id','activity_id');
-        //   $property_types = PropertyType::where('property_type_type','Hotel');
-        //     $this->associate_comman_relationship_table($hotels, $property_types, HotelPropertyType::class,'hotel_id','property_type_id');
-        //   $meeting_and_events = MeetingAndEvent::where('meeting_and_event_type','Hotel');
-        //     $this->associate_comman_relationship_table($hotels, $meeting_and_events, HotelMeetingEvent::class,'hotel_id','meeting_id');
 
-
-
-        // $states = State::get();
+         //$states = State::get();
         // $this->associate_states_table($hotels, $states, HotelState::class,'hotel_id');
         // $places = Place::get();
 
-        //$locations = Location::get();
+         //$locations = Location::get();
         //$this->associate_states_table($locations, $states, LocationState::class,'location_id');
-        //$this->associate_states_table($activities, $states, ActivityState::class,'activity_id');
-        // $this->associate_states_table($hotels, $states, HotelState::class,'hotel_id');
+       // $this->associate_states_table($activities, $states, ActivityState::class,'activity_id');
+        //$this->associate_states_table($hotels, $states, HotelState::class,'hotel_id');
         //$this->associate_language_table($tours, $languages, TourLanguage::class);
 
         //$this->associate_hotel_location_table($hotels, $locations, HotelLocation::class );
-        //$this->associate_tour_location_table($tours, $locations, TourLocation::class );
+       
         //$this->associate_type_table($tours, $types, TourType::class);
-
+        // $this->setup_room_facility();
+         //$this->setup_attractions();
+        // $this->setup_term_activity_lists();
+          // $activities = Activity::get();
+          //$attractions_list = Attraction::get();
+          //$term_activity_lists = TermActivityList::get();
+         // $rooms = Room::get();
+         //$types = Type::where('type','Room')->get();
+         //$facilities = Facility::where('facility_type','Room')->get();
+         // $this->associate_comman_relationship_table($activities, $attractions_list, ActivityAttraction::class,'activity_id','attraction_id');
+         // $this->associate_comman_relationship_table($activities, $term_activity_lists, ActivityTermActivityList::class,'activity_id','term_activity_lists_id');
 
         // Associate with Types
         // For Tour
-
-        // $tours = Tour::get();
+  
+         // $tours = Tour::get();
         // $package_types = PackageType::where('package_type_type', 'Tour')->get();
-        //$places = Place::get();
+// $places = Place::get();
+        // $this->associate_comman_relationship_table($activities, $languages, ActivityLanguage::class,'activity_id','language_id');
+        // $this->associate_comman_relationship_table($activities, $states, ActivityState::class,'activity_id','state_id');
+        // $this->associate_activity_location_table($activities, $locations, ActivityLocation::class );
+       // $this->associate_comman_relationship_table($hotels, $locations, HotelPlace::class,'hotel_id','place_id');
+       // $this->associate_comman_relationship_table($hotels, $places, HotelPlace::class,'hotel_id','place_id');
         //$this->associate_comman_relationship_table($locations, $places, LocationPlace::class,'location_id','place_id');
         // $this->associate_comman_relationship_table($tours, $package_types, TourPackageType::class,'tour_id','package_type_id');
         // $this->associate_package_type_table($tours, $package_types, TourPackageType::class);
@@ -3523,12 +4250,15 @@ class DataMigration extends Command
 
         //   //$this->chnage_content($tours,'st_tours');
 
-        //$this->associate_term_parent_id(OtherPackage::class, 'other_package_type', 'Tour');
+       // $this->associate_term_parent_id(Place::class);
 
-
+       // $this->check_in_and_check_out_change_in_hotel();
         //         $temp = DB::connection($this->wp_connection)->table('wp_postmeta as wp')->select('wp.meta_value')->where('post_id',17559)->where('meta_key','like','save_your_pocket_pdf')->first();
         // dd($this->unserialize_data_format_in_array("$temp->meta_value","save_your_pocket_pdf"));
 
+     
+
+       
 
         return Command::SUCCESS;
     }
