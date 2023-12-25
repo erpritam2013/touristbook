@@ -495,8 +495,8 @@
 				<!-- map location -->
 
 				<div id="map-location">
-					<div id="map-street" style="height: 100%; width:100%" lat="{{ $tour->detail->latitude ?? ''}}"
-						lng="{{ $tour->detail->longitude ?? ''}}" zoom_level="{{ $tour->detail->zoom_level ?? 20}}"></div>
+					{{-- <div id="map-street" style="height: 100%; width:100%" lat="{{ $tour->detail->latitude ?? ''}}"
+						lng="{{ $tour->detail->longitude ?? ''}}" zoom_level="{{ $tour->detail->zoom_level ?? 20}}"></div> --}}
 
 					</div>
 

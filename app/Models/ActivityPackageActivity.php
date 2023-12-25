@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class ActivityPackageActivity extends Model
 {
     use HasFactory;
-    protected $table = "activity_packages_activities";
+    protected $table = "activity_package_activities";
 }
