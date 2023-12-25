@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="row listroBox" latitude="{{$activity->latitude}}" longitude="{{$activity->longitude}}">
-                    <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 Nopadding">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 Nopadding">
                         <figure> 
                             {{--<a href="activity-detailed.html" class="wishlist_bt"></a>--}}
                             {!!is_featured($activity->is_featured,'Featured')!!}
@@ -22,7 +22,7 @@
                     <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 Nopadding activity-content">
                         <div class="listroBoxmain">
                              
-                            <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{shortDescription($activity->address,50) ?? ''}}@if(strlen($activity->address) > 50)
+                            <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{shortDescription($activity->address,45) ?? ''}}@if(strlen($activity->address) > 45)
                                 &nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$activity->address}}" data-more_data_label="Address" style="color:#fba009;"></i>
                             @endif</p>
                             <h4 class="service-title"><a href="{{route('activity',$activity->slug)}}">{{ $activity->name }}</a></h4>
@@ -151,7 +151,7 @@
                 </div>
 
             </div>
-            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 Nopadding section-footer">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 Nopadding section-footer">
 
                <div class="activity-service-price">
 
@@ -199,7 +199,6 @@
         @php 
         $include = $activity->detail->activity_include ?? '';
         $exclude = $activity->detail->activity_exclude ?? '';
-
         @endphp
         @if(!empty($include) || !empty($exclude))
         <div class="row p-3" id="st-include-exclude">  
