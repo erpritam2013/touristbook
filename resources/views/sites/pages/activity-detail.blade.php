@@ -12,18 +12,18 @@
 			@if(!empty($activity->detail->gallery))
 			@foreach($activity->detail->gallery as $gallery)
 			<div class="swiper-slide"><a data-toggle="gallery-top" title="activity gallery" style="width: 452px;height:300px;" ><img
-				src="{{ $gallery['url'] }}" alt="Our street" class="img-fluid" style="width: 452px;height:300px;"></a>
+				src="{{ getConversionUrl($gallery['id'],'600x250') }}" alt="Our street" class="img-fluid" style="width: 452px;height:300px;"></a>
 			</div>
 			@endforeach
 			@else
 			<div class="swiper-slide"><a data-toggle="gallery-top" title="activity gallery"><img
-				src="{{ asset('sites/images/dummy/450x300.jpg') }}" alt="activity gallery" class="img-fluid"></a>
+				src="{{ asset('sites/images/dummy/600x450.jpg') }}" alt="activity gallery" class="img-fluid"></a>
 			</div>
 			<div class="swiper-slide"><a data-toggle="gallery-top" title="activity gallery"><img
-				src="{{ asset('sites/images/dummy/450x300.jpg') }}" alt="activity gallery" class="img-fluid"></a>
+				src="{{ asset('sites/images/dummy/600x450.jpg') }}" alt="activity gallery" class="img-fluid"></a>
 			</div>
 			<div class="swiper-slide"><a data-toggle="gallery-top" title="activity gallery"><img
-				src="{{ asset('sites/images/dummy/450x300.jpg') }}" alt="activity gallery" class="img-fluid"></a>
+				src="{{ asset('sites/images/dummy/600x450.jpg') }}" alt="activity gallery" class="img-fluid"></a>
 			</div>
 			@endif
 

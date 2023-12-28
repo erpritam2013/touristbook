@@ -14,6 +14,7 @@ use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use App\DataTables\PostDataTable;
 use Session;
+use Auth;
 
 class PostController extends Controller
 {
@@ -98,6 +99,7 @@ class PostController extends Controller
         'featured_image' => $request->featured_image,
         'featured_image_id' => (!empty($request->featured_image_id))?$request->featured_image_id:0,
         'status' => $request->status,
+        'created_by'=>Auth::user()->id
             // TODO: created_by pending as Authentication is not Yet Completed
     ];
 
@@ -107,7 +109,7 @@ class PostController extends Controller
 
 
         $post->categories()->attach($request->get('categories'));
-        $post->tags()->attach($request->get('tags'));
+        $post->tags()->attach($request->get('tag_id'));
 
     }
         // return $post;
@@ -151,6 +153,7 @@ class PostController extends Controller
         $data['title'] = 'Post';
         $data['post'] = $post;
         $data = array_merge_recursive($data, $this->_prepareBasicData());
+
         return view('admin.posts.edit', $data);
     }
 
@@ -174,7 +177,7 @@ class PostController extends Controller
      $postDetails = [
         'name' => $request->name,
         'description' => $request->description,
-        'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
+        //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
         'excerpt' => $request->excerpt,
         'gallery' => $request->gallery,
         'link' => $request->link,
@@ -192,7 +195,7 @@ class PostController extends Controller
 
 
         $post->categories()->sync($request->get('categories'));
-        $post->tags()->sync($request->get('tags'));
+        $post->tags()->sync($request->get('tag_id'));
 
     }
         // return $post;

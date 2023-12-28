@@ -9,9 +9,9 @@
 
 
             @include('admin.posts.partials.excerpt', ['post'=>$post ?? null])
-            @include('admin.posts.partials.social-link-section', ['post'=>$post ?? null])
+            {{-- @include('admin.posts.partials.social-link-section', ['post'=>$post ?? null])
 
-            {{--@include('admin.posts.partials.user', ['post'=>$post ?? null])--}}
+           @include('admin.posts.partials.user', ['post'=>$post ?? null])--}}
 
         </div>
         <div class="col-xl-4">

@@ -53,33 +53,29 @@ class TagRepository implements TagRepositoryInterface
     // Get all Active Tags or by Type
     public function getActiveTagsList($type = null) {
         $tagBuilder = Tag::where('status', Tag::ACTIVE);
-
         if($type)
             $tagBuilder->where('tag_type',$type);
 
-           $tags = $tagBuilder->get(['id','name']);
-
-        $nestedResult = $tags->toNested();
-
-        return  $nestedResult;
+        return $tagBuilder->get(['id','name']);
     }
 
     // Get Active Hotel Type Tags
     public function getActiveHotelTagsList() {
         $type = Tag::HOTEL_TYPE;
         // return $this->getActiveTagsList($type);
-        return $this->getActiveTagsList();
+        return $this->getActiveTagsList($type);
     }
     // Get Active Loction Type Tags
     public function getActiveLocationTagsList() {
         $type = Tag::LOCATION_TYPE;
         // return $this->getActiveTagsList($type);
-        return $this->getActiveTagsList();
+        return $this->getActiveTagsList($type);
     }
     // Get Active Post Type Tags
     public function getActivePostTagsList() {
         $type = Tag::POST_TYPE;
+
         // return $this->getActiveTagsList($type);
-        return $this->getActiveTagsList();
+        return $this->getActiveTagsList($type);
     }
 }
