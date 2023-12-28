@@ -3,11 +3,11 @@
     @foreach ($locations as $key => $location)
     <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 mb-4">
         <div class="card shadow border-0 h-100 grid-list-item destination-item">
-            @php $featured_image = (!empty($location->featured_image) && isset($location->featured_image[0]['id']))?getConversionUrl($location->featured_image[0]['id'],'270x200'):null;
+            @php $featured_image = (!empty($location->featured_image) && isset($location->featured_image[0]['id']))?getConversionUrl($location->featured_image[0]['id'],'450x417'):null;
             @endphp
             <div class="image">
                 <a class="st-link" href="{{route('location',$location->slug)}}">
-                    <img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-responsive">
+                    <img src="{{$featured_image ?? asset('sites/images/dummy/450x417.jpg')}}" class="img-responsive">
                 </a>
                 <div class="content">
                     <h4 class="title">

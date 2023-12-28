@@ -1,9 +1,46 @@
 <?php
 
 use App\Models\Conversion;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Session;
 
+if (!function_exists('get_settings_option_value')) {
+    function get_settings_option_value($field)
+    {
 
+        $set_value=Setting::get_setting($field);
+            return $set_value;
+    }
+}
+
+if (!function_exists('isJson')) {    
+function isJson($string) {
+    $obj = json_decode($string);
+    return json_last_error() === JSON_ERROR_NONE && gettype($obj ) == "object";
+}
+}
+if (!function_exists('get_single_value_of_col_in_setting')) {
+    function get_single_value_of_col_in_setting($data,$field)
+    {
+
+
+        $result = '';
+        if (!empty($data)) {
+        if (isJson($data)) {
+           $get_data = exploreJsonData($data);
+           $collection = collect($get_data);
+           $result = $collection->get($field);
+        }else{
+            
+            if (!empty($data)) {
+           $collection = collect($data);
+           $result = $collection->get($field);
+            }
+        }
+        }
+        return $result;
+    }
+}
 if (!function_exists('purify_html')) {
     function purify_html($html)
     {
@@ -14,12 +51,19 @@ if (!function_exists('purify_html')) {
     }
 }
 if (!function_exists('purify_string')) {
-    function purify_string($string)
+    function purify_string($string,$case="")
     {
         if (!empty($string)) {
             $string = preg_replace('/[^A-Za-z0-9\-]/', ' ', $string);
             $string = str_replace('-', " ", $string);
             $string = str_replace('_', " ", $string);
+            if (!empty($case)) {
+                if ($case == 'ucwords') {
+                     $string = ucwords($string);
+                }elseif ($case == 'upper') {
+                   $string = strtoupper($string);
+                }
+            }
         }
 
         return $string;
@@ -104,12 +148,12 @@ if (!function_exists('inputTemplate')) {
         if (!empty($fields_data) && is_array($fields_data)) {
            extract($fields_data);
 
-
            $hidden_class = (!empty($hidden_class))?$hidden_class:'';
            $value = (!empty($value))?$value:'';
            $class = (!empty($class))?$class:'';
            $control = (!empty($control))?$control:'text';
            $hidden_class = (!empty($hidden_class))?$hidden_class:'';
+           $label = (!empty($label))?purify_string($label,"ucwords"):'';
            $html .='<div class="form-group row '.$hidden_class.'">';
 
            if(empty($id)){

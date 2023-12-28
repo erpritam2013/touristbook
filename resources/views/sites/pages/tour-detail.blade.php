@@ -11,19 +11,25 @@
 			<!-- Slides-->
 			@if(!empty($tour->detail->gallery))
 			@foreach($tour->detail->gallery as $gallery)
+			@if(!empty($gallery))
 			<div class="swiper-slide"><a data-toggle="gallery-top" title="tour gallery" style="width: 452px;height:300px;" ><img
-				src="{{ getConversionUrl($gallery['id'],'600x450') }}" alt="Our street" class="img-fluid" style="width: 452px;height:300px;"></a>
+				src="{{ getConversionUrl($gallery['id'],'600x250') }}" alt="Our street" class="img-fluid" style="width: 452px;height:300px;"></a>
 			</div>
+			@else
+			<div class="swiper-slide"><a data-toggle="gallery-top" title="tour gallery"><img
+				src="{{ asset('sites/images/dummy/600x250.jpg') }}" alt="tour gallery" class="img-fluid"></a>
+			</div>
+			@endif
 			@endforeach
 			@else
 			<div class="swiper-slide"><a data-toggle="gallery-top" title="tour gallery"><img
-				src="{{ asset('sites/images/dummy/450x300.jpg') }}" alt="tour gallery" class="img-fluid"></a>
+				src="{{ asset('sites/images/dummy/600x250.jpg') }}" alt="tour gallery" class="img-fluid"></a>
 			</div>
 			<div class="swiper-slide"><a data-toggle="gallery-top" title="tour gallery"><img
-				src="{{ asset('sites/images/dummy/450x300.jpg') }}" alt="tour gallery" class="img-fluid"></a>
+				src="{{ asset('sites/images/dummy/600x250.jpg') }}" alt="tour gallery" class="img-fluid"></a>
 			</div>
 			<div class="swiper-slide"><a data-toggle="gallery-top" title="tour gallery"><img
-				src="{{ asset('sites/images/dummy/450x300.jpg') }}" alt="tour gallery" class="img-fluid"></a>
+				src="{{ asset('sites/images/dummy/600x250.jpg') }}" alt="tour gallery" class="img-fluid"></a>
 			</div>
 			@endif
 		</div>
@@ -139,7 +145,7 @@
 
 						@if (!empty($tour->duration_day) || !empty($tour->type_tour))
 						<div class="section mt-4">
-							<div class="st-tour-feature">
+							<div class="st-tour-feature border-top border-bottom pt-3 pb-3">
 								<div class="row">
 									@if(!empty($tour->duration_day))
 									<div class="col-xs-6 col-lg-6">
@@ -160,7 +166,7 @@
 									<div class="col-xs-6 col-lg-6">
 										<div class="item">
 											<div class="icon tour_type_single">
-												<i class="las la-shoe-prints"></i>
+												<i class="lar la-shoe-prints"></i>
 											</div>
 											<div class="info">
 												<h4 class="name">Tour Type</h4>
@@ -246,7 +252,8 @@
 										<span class="accicon"><i class="fas fa-angle-down rotate-icon"></i></span>
 									</div>
 									<div id="st-program-{{$key}}" class="collapse {{$key == 0?'show':''}}" data-parent="#accordionStProgram">
-										<div class="card-body">{!!$tours_program['tours_program-desc']!!}
+										<div class="card-body">
+											<div class="text-justify st-program-section-desc">{!!$tours_program['tours_program-desc']!!}</div>
 										</div>
 									</div>
 								</div>
@@ -690,8 +697,8 @@
 									@foreach($nearByTour as $near_tour)
 									<div class="col-md-3 col-sm-3  col-xs-12">
 										<div class="listroBox">
-											@php $featured_image = (!empty($near_tour->featured_image) && isset($near_tour->featured_image[0]['id']))?getConversionUrl($near_tour->featured_image[0]['id'],'300x300'):null;@endphp
-											<figure><a href="{{route('tour',$near_tour->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="tour image">
+											@php $featured_image = (!empty($near_tour->featured_image) && isset($near_tour->featured_image[0]['id']))?getConversionUrl($near_tour->featured_image[0]['id'],'600x250'):null;@endphp
+											<figure><a href="{{route('tour',$near_tour->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/600x250.jpg')}}" class="img-fluid" alt="tour image">
 												<div class="read_more"><span>{!!ucwords($near_tour->name ?? '')!!}</span></div>
 											</a> </figure>
 											<div class="listroBoxmain p-2">
@@ -736,8 +743,8 @@
 										@foreach($nearByLocation as $near_location)
 										<div class="col-md-3 col-sm-3  col-xs-12">
 											<div class="listroBox">
-												@php $featured_image = (!empty($near_location->featured_image) && isset($near_location->featured_image[0]['id']))?getConversionUrl($near_location->featured_image[0]['id'],'300x300'):null;@endphp
-												<figure><a href="{{route('location',$near_location->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="">
+												@php $featured_image = (!empty($near_location->featured_image) && isset($near_location->featured_image[0]['id']))?getConversionUrl($near_location->featured_image[0]['id'],'600x250'):null;@endphp
+												<figure><a href="{{route('location',$near_location->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/600x250.jpg')}}" class="img-fluid" alt="">
 													<div class="read_more"><span>{!!ucwords($near_location->name ?? '')!!}</span></div>
 												</a> </figure>
 												<div class="listroBoxmain p-2">
@@ -774,8 +781,8 @@
 										@foreach($nearByHotel as $near_hotel)
 										<div class="col-md-3 col-sm-3  col-xs-12">
 											<div class="listroBox">
-												@php $featured_image = (!empty($near_hotel->featured_image) && isset($near_hotel->featured_image[0]['id']))?getConversionUrl($near_hotel->featured_image[0]['id'],'300x300'):null;@endphp
-												<figure><a href="{{route('hotel',$near_hotel->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="location image">
+												@php $featured_image = (!empty($near_hotel->featured_image) && isset($near_hotel->featured_image[0]['id']))?getConversionUrl($near_hotel->featured_image[0]['id'],'600x250'):null;@endphp
+												<figure><a href="{{route('hotel',$near_hotel->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/600x250.jpg')}}" class="img-fluid" alt="location image">
 													<div class="read_more"><span>{!!ucwords($near_hotel->name ?? '')!!}</span></div>
 												</a> </figure>
 												<div class="listroBoxmain p-2">
@@ -825,8 +832,8 @@
 											@foreach($nearByActivity as $near_activity)
 											<div class="col-md-3 col-sm-3  col-xs-12">
 												<div class="listroBox">
-													@php $featured_image = (!empty($near_activity->featured_image) && isset($near_activity->featured_image[0]['id']))?getConversionUrl($near_activity->featured_image[0]['id'],'300x300'):null;@endphp
-													<figure><a href="{{route('activity',$near_activity->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="activity image">
+													@php $featured_image = (!empty($near_activity->featured_image) && isset($near_activity->featured_image[0]['id']))?getConversionUrl($near_activity->featured_image[0]['id'],'600x250'):null;@endphp
+													<figure><a href="{{route('activity',$near_activity->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/600x250.jpg')}}" class="img-fluid" alt="activity image">
 														<div class="read_more"><span>{!!ucwords($near_activity->name ?? '')!!}</span></div>
 													</a> </figure>
 													<div class="listroBoxmain p-2">

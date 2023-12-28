@@ -12,19 +12,19 @@
       @foreach($hotel->images as $gallery)
       @if(!empty($gallery))
       <div class="swiper-slide"><a data-toggle="gallery-top" title="hotel gallery" style="width: 452px;height: 300px;" ><img
-        src="{{ getConversionUrl($gallery['id'],'450x300') }}" alt="Our street" class="img-fluid" style="width: 452px;height: 300px;" ></a>
+        src="{{ getConversionUrl($gallery['id'],'600x250') }}" alt="Our street" class="img-fluid" style="width: 452px;height: 300px;" ></a>
       </div>
       @endif
       @endforeach
       @else
       <div class="swiper-slide"><a data-toggle="gallery-top" title="hotel gallery"><img
-        src="{{ asset('sites/images/dummy/450x300.jpg') }}" alt="hotel gallery" class="img-fluid"></a>
+        src="{{ asset('sites/images/dummy/600x250.jpg') }}" alt="hotel gallery" class="img-fluid"></a>
       </div>
       <div class="swiper-slide"><a data-toggle="gallery-top" title="hotel gallery"><img
-        src="{{ asset('sites/images/dummy/450x300.jpg') }}" alt="hotel gallery" class="img-fluid"></a>
+        src="{{ asset('sites/images/dummy/600x250.jpg') }}" alt="hotel gallery" class="img-fluid"></a>
       </div>
       <div class="swiper-slide"><a data-toggle="gallery-top" title="hotel gallery"><img
-        src="{{ asset('sites/images/dummy/450x300.jpg') }}" alt="hotel gallery" class="img-fluid"></a>
+        src="{{ asset('sites/images/dummy/600x250.jpg') }}" alt="hotel gallery" class="img-fluid"></a>
       </div>
       @endif
 
@@ -233,7 +233,7 @@
             $id_proofs_arr = explode("\n",trim($hotel->detail->id_proofs));
             @endphp
             @foreach($id_proofs_arr as $k_idp => $v_idp)
-            <div class="col-xs-6 col-sm-6" style="color:#000000"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="    font-size: 7px;color: transparent;"></i> 
+            <div class="col-xs-6 col-sm-6" style="color:#000000"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="font-size: 5px;color: transparent;"></i> 
               <span>{!!$v_idp!!}</span>
 
             </div>
@@ -274,7 +274,7 @@
                       $policy_description_arr = explode("\n",trim($policy['policies-policy_description']));
                       @endphp
                       @foreach($policy_description_arr as $k_ipd => $v_ipd)
-                      <div class="col-xs-12 col-sm-12" style="color:#000000"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="    font-size: 7px;color: transparent;"></i> 
+                      <div class="col-xs-12 col-sm-12" style="color:#000000"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="font-size: 5px;color: transparent;"></i> 
                         <span>{!!$v_ipd!!}</span>
 
                       </div>
@@ -309,7 +309,7 @@
             $payment_mode_arr = explode("\n",trim($hotel->detail->payment_mode));
             @endphp
             @foreach($payment_mode_arr as $k_ipm => $v_ipm)
-            <div class="col-xs-6 col-sm-6" style="color:#000000"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="    font-size: 7px;color: transparent;"></i> 
+            <div class="col-xs-6 col-sm-6" style="color:#000000"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="font-size: 5px;color: transparent;"></i> 
               <span>{!!$v_ipm!!}</span>
 
             </div>
@@ -330,7 +330,7 @@
             $save_environment_arr = explode("\n",trim($hotel->detail->save_environment));
             @endphp
             @foreach($save_environment_arr as $k_ise => $v_ise)
-            <div class="col-xs-6 col-sm-6" style="color:#000000"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="    font-size: 7px;color: transparent;"></i> 
+            <div class="col-xs-6 col-sm-6" style="color:#000000"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="font-size: 5px;color: transparent;"></i> 
               <span>{!!$v_ise!!}</span>
 
             </div>
@@ -350,7 +350,7 @@
            $save_pocket_arr = explode("\n",trim($hotel->detail->save_pocket));
            @endphp
            @foreach($save_pocket_arr as $k_isp => $v_isp)
-           <div class="col-xs-6 col-sm-6" style="color:#000000"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="    font-size: 7px;color: transparent;"></i> 
+           <div class="col-xs-6 col-sm-6" style="color:#000000"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="font-size: 5px;color: transparent;"></i> 
             <span>{!!$v_isp!!}</span>
 
           </div>
@@ -434,12 +434,12 @@
           <div class="row">
 
             <div class="col-lg-4 col-md-6 col-sm-12 image-div">
-              @php $featured_image = (!empty($room->featured_image) && isset($room->featured_image[0]['id']))?getConversionUrl($room->featured_image[0]['id'],'270x200'):null;
+              @php $featured_image = (!empty($room->featured_image) && isset($room->featured_image[0]['id']))?getConversionUrl($room->featured_image[0]['id'],'400x417'):null;
             @endphp
 
               <div class="TravelGo-category-img TravelGo-category-list-img"> <a
                 href="hotel-detailed.html"><img
-                src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}"
+                src="{{$featured_image ?? asset('sites/images/dummy/400x417.jpg')}}"
                 alt="{{strtolower($room->name)}} image" style="height: 200px;"></a>
                 {{--<div class="TravelGo-category-opt">
                   <div class="listing-rating card-popup-rainingvis"
@@ -705,9 +705,9 @@
       <div class="col-md-4 col-sm-4 col-xs-12">
         <h2 class="st-heading-section">Explore {!!ucwords($explore_location->name)!!}</h2>
         <div class="listroBox">
-            @php $featured_image = (!empty($explore_location->featured_image) && isset($explore_location->featured_image[0]['id']))?getConversionUrl($explore_location->featured_image[0]['id'],'270x200'):null;
+            @php $featured_image = (!empty($explore_location->featured_image) && isset($explore_location->featured_image[0]['id']))?getConversionUrl($explore_location->featured_image[0]['id'],'400x417'):null;
             @endphp
-          <figure><a href="{{route('location',$explore_location->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="{{strtolower($explore_location->name)}} image">
+          <figure><a href="{{route('location',$explore_location->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/400x417.jpg')}}" class="img-fluid" alt="{{strtolower($explore_location->name)}} image">
             <div class="read_more"><span>{{$explore_location->name}}</span></div>
           </a> </figure>
         </div>
@@ -992,8 +992,8 @@
         @foreach($nearByHotel as $near_hotel)
         <div class="col-md-3 col-sm-3  col-xs-12">
           <div class="listroBox">
-            @php $featured_image = (!empty($near_hotel->featured_image) && isset($near_hotel->featured_image[0]['id']))?getConversionUrl($near_hotel->featured_image[0]['id'],'270x200'):null;@endphp
-            <figure><a href="{{route('hotel',$near_hotel->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="{{strtolower($near_hotel->name)}} image">
+            @php $featured_image = (!empty($near_hotel->featured_image) && isset($near_hotel->featured_image[0]['id']))?getConversionUrl($near_hotel->featured_image[0]['id'],'400x417'):null;@endphp
+            <figure><a href="{{route('hotel',$near_hotel->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/400x417.jpg')}}" class="img-fluid" alt="{{strtolower($near_hotel->name)}} image">
               <div class="read_more"><span>{!!ucwords($near_hotel->name ?? '')!!}</span></div>
             </a> </figure>
             <div class="listroBoxmain p-2">
@@ -1043,8 +1043,8 @@
               @foreach($nearByLocation as $near_location)
               <div class="col-md-3 col-sm-3  col-xs-12">
                 <div class="listroBox">
-                 @php $featured_image = (!empty($near_location->featured_image) && isset($near_location->featured_image[0]['id']))?getConversionUrl($near_location->featured_image[0]['id'],'270x200'):null;@endphp
-                 <figure><a href="{{route('location',$near_location->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="{{strtolower($near_location->name)}} image">
+                 @php $featured_image = (!empty($near_location->featured_image) && isset($near_location->featured_image[0]['id']))?getConversionUrl($near_location->featured_image[0]['id'],'400x417'):null;@endphp
+                 <figure><a href="{{route('location',$near_location->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/400x417.jpg')}}" class="img-fluid" alt="{{strtolower($near_location->name)}} image">
                  <div class="read_more"><span>{!!ucwords($near_location->name ?? '')!!}</span></div>
                 </a> </figure>
                 <div class="listroBoxmain p-2">
@@ -1078,8 +1078,8 @@
               @foreach($nearByTour as $near_tour)
               <div class="col-md-3 col-sm-3  col-xs-12">
                 <div class="listroBox">
-                 @php $featured_image = (!empty($near_tour->featured_image) && isset($near_tour->featured_image[0]['id']))?getConversionUrl($near_tour->featured_image[0]['id'],'270x200'):null;@endphp
-                 <figure><a href="{{route('tour',$near_tour->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="{{strtolower($near_tour->name)}} image">
+                 @php $featured_image = (!empty($near_tour->featured_image) && isset($near_tour->featured_image[0]['id']))?getConversionUrl($near_tour->featured_image[0]['id'],'400x417'):null;@endphp
+                 <figure><a href="{{route('tour',$near_tour->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/400x417.jpg')}}" class="img-fluid" alt="{{strtolower($near_tour->name)}} image">
                   <div class="read_more"><span>{!!ucwords($near_tour->name ?? '')!!}</span></div>
                 </a> </figure>
                 <div class="listroBoxmain p-2">
@@ -1126,8 +1126,8 @@
            @foreach($nearByActivity as $near_activity)
            <div class="col-md-3 col-sm-3  col-xs-12">
             <div class="listroBox">
-             @php $featured_image = (!empty($near_activity->featured_image) && isset($near_activity->featured_image[0]['id']))?getConversionUrl($near_activity->featured_image[0]['id'],'270x200'):null;@endphp
-             <figure><a href="{{route('activity',$near_activity->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="{{strtolower($near_activity->name)}} image">
+             @php $featured_image = (!empty($near_activity->featured_image) && isset($near_activity->featured_image[0]['id']))?getConversionUrl($near_activity->featured_image[0]['id'],'400x417'):null;@endphp
+             <figure><a href="{{route('activity',$near_activity->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/400x417.jpg')}}" class="img-fluid" alt="{{strtolower($near_activity->name)}} image">
               <div class="read_more"><span>{!!ucwords($near_activity->name ?? '')!!}</span></div>
             </a> </figure>
             <div class="listroBoxmain p-2">

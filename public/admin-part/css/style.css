@@ -29394,3 +29394,11 @@ div#tb-image-prev {
     padding: 80px 40px;
     background: #ddd9;
 }
+
+#setting-form-header .image-increase .media-controls .media-preview img{
+    width: 200px;
+}
+
+#setting-form-footer .image-increase .media-controls .media-preview img{
+    width: 200px;
+}

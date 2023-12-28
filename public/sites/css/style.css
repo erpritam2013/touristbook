@@ -4879,6 +4879,12 @@ h5.mb-2 {
 	width: 60%;
 	margin: 10px auto;
 }
+
+.chqbox-show-hide-password{
+    position: relative;
+    top: -48px;
+
+}
 @media (max-width: 991.98px) {
 	.innerpage-banner.left .breadcrumb {
 		top: 100%;
@@ -4891,9 +4897,28 @@ h5.mb-2 {
 Blog List Home page
 =========================================
 */
+.goog-logo-link {
+   display:none !important;
+}
 
+.goog-te-gadget span {
+   display:none !important;
+}
+.goog-te-gadget {
+   color: transparent !important;
+}
+
+.goog-te-gadget .goog-te-combo {
+   color: blue !important;
+}
+
+#google_translate_element{
+    position: relative;
+    height: 30px;
+    top: -5px;
+}
 .Blog-list {
-	background: #f8f9fa !important;
+	background: #fff !important;
 	clear: both;
 }
 .card-body h5 a {
@@ -12331,6 +12356,61 @@ body.hotel-detail-page .listingDetails .booking-search > .row {
 
 /*tourism zone tour detail page css start*/
 
+/*itinerary descriptions css */
+
+body.tour-detail-page .st-tour-feature .item{
+	display: flex;
+}
+body.tour-detail-page .st-tour-feature .item .icon {
+    margin: 7px 15px 7px 7px;
+}
+body.tour-detail-page .st-tour-feature .item .icon i.la-shoe-prints{
+
+	filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=0.5);
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  transform: rotate(270deg);
+  display: inline-block;
+
+}
+body.tour-detail-page .st-tour-feature .item .icon i {
+    font-size: 28px;
+    color: #fba009;
+}
+body.tour-detail-page .st-tour-feature .item .info .name{
+	font-weight: 500;
+}
+body.tour-detail-page .st-tour-feature .item .info .value,
+body.tour-detail-page .st-tour-feature .item .info .name{
+    color: #07509e;
+}
+body.tour-detail-page .st-program-section-desc{
+	
+    white-space: pre-line
+}
+.lar {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 800;
+}
+
+.la,.lab,.lad,.lal,.lar,.las {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+}
+.la-shoe-prints:before {
+    content: "\f54b";
+}
+
+.la-clock:before {
+    content: "\f017";
+}
 body.tour-detail-page #tourism-zone-area .tab-content p{
 	color:#000!important;
 }
@@ -15264,3 +15344,87 @@ body #showMoreData #showMoreDataBody{
     }
 
 }
+
+/*post grid css start*/
+body.blog-page img.post-image {
+    height: 250px;
+}
+
+body.blog-page .post-item .card.shadow{
+border: 1px solid #07509e;
+}
+body.blog-page .post-title{
+    color: #07509e!important;
+}
+
+body.blog-page .post-item:nth-child(even) .post-read-more{
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    border: 2px solid #fba009;
+    margin: 0px 5px;
+    color: #fba009!important;
+    text-decoration: none;
+    width: 100%;
+}
+
+body.blog-page .post-item:nth-child(even) .post-read-more:hover{
+   background: #07509e;
+   border: 2px solid #07509e;
+   color: #fff!important;
+}
+body.blog-page .post-item:nth-child(odd) .post-read-more{
+    background: #fba009;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    border: 2px solid #fba009;
+    margin: 0px 5px;
+    color: #fff!important;
+    text-decoration: none;
+    width: 100%;
+}
+body.blog-page .post-item:nth-child(odd) .post-read-more:hover{
+    background: #07509e;
+   border: 2px solid #07509e;
+   color: #fff!important;
+  
+}
+
+
+body.blog-page .post-title {
+    text-transform: none;
+    font-size: 18px;
+    line-height: 24px;
+    color: #07509e!important;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.disabled-link {
+  pointer-events: none;
+}
+
+ @media (min-width:320px) and (max-width:768px){
+     
+body.blog-page img.post-image {
+    height: auto;
+}
+
+body.blog-page .post-item:nth-child(even) .post-read-more:hover{
+   background: #07509e;
+   border: 2px solid #07509e;
+   color: #fff!important;
+}
+
+body.blog-page .post-item:nth-child(odd) .post-read-more:hover{
+    background: #07509e;
+   border: 2px solid #07509e;
+   color: #fff!important;
+  
+}
+body.page-id-7979 .banner, body.category-blogs .banner {
+    height: 110px!important;
+}
+ }
+/*post grid css end*/

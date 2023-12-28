@@ -1396,6 +1396,25 @@ const processedPageTemplateHtml = function(data,id){
 }
 
 }
+const getData = function(ajaxurl,s_params) { 
+    return $.ajax({
+                type: "GET",
+                dataType: "html",
+                url: ajaxurl,
+                data:s_params,
+                beforeSend: showLoader,
+                complete: hideLoader,
+         });
+}
+
+async function fetchDataByajax(t_endpoint,t_params) {
+  try {
+    const res = await getData(t_endpoint,t_params)
+    processedPageTemplateHtml(res,'#page-extra-data');
+  } catch(err) {
+    console.log(err);
+  }
+}
 
 const fetchPageTemplate = function(ele){
 
@@ -1413,22 +1432,8 @@ const fetchPageTemplate = function(ele){
                 params.id = id;
             }
 
-
-            $.ajax({
-                type: "GET",
-                dataType: "html",
-                url: endpoint,
-                data:params,
-                beforeSend: showLoader,
-                complete: hideLoader,
-                success: function (response) {
-                    processedPageTemplateHtml(response,'#page-extra-data');
-
-                },
-                error:function(response) {
-                 alert('something went wrong!')
-             }
-         });
+            fetchDataByajax(endpoint,params);
+          
         }else{
             $(`body #page-extra-data`).children().remove();
         }
@@ -1446,7 +1451,6 @@ $(pageType).on('change',function(){
  fetchPageTemplate(this);
 
 });
-
 
 
 // if($(mediaSelector).length > 0) {
