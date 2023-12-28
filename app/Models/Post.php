@@ -3,6 +3,7 @@
 namespace App\Models;
 use App\Models\Terms\Category;
 use App\Models\Terms\Tag;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -29,12 +30,21 @@ class Post extends Model
         ];
     }
 
+     public function category() {
+        return $this->belongsTo(Category::class, 'post_categories', 'post_id', 'category_id');
+    }
+
      public function categories() {
         return $this->belongsToMany(Category::class, 'post_categories', 'post_id', 'category_id');
     }
 
     public function tags() {
         return $this->belongsToMany(Tag::class, 'post_tags', 'post_id', 'tag_id');
+    }
+
+    public function auther()
+    {
+        return $this->hasOne(User::class,'id','created_by');
     }
 
 

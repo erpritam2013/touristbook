@@ -5,9 +5,9 @@
                 <div class="listroBox" latitude="{{$hotel->latitude}}" longitude="{{$hotel->longitude}}">
                     <figure> {{--<a href="{{route('hotel',$hotel->slug)}}" class="wishlist_bt"></a>--}}
                     {!!is_featured($hotel->is_featured)!!}
-                      @php $featured_image = (!empty($hotel->featured_image) && isset($hotel->featured_image[0]['id']))?getConversionUrl($hotel->featured_image[0]['id'],'270x200'):null;@endphp
+                      @php $featured_image = (!empty($hotel->featured_image) && isset($hotel->featured_image[0]['id']))?getConversionUrl($hotel->featured_image[0]['id'],'450x417'):null;@endphp
                      <a href="{{route('hotel',$hotel->slug)}}"><img
-                                src="{{$featured_image ?? asset('sites/images/dummy/350x250.jpg')}}" class="img-fluid" alt="">
+                                src="{{$featured_image ?? asset('sites/images/dummy/450x417.jpg')}}" class="img-fluid" alt="">
                           <div class="read_more"><span>Read more</span></div>
                         </a> </figure>
                     <div class="listroBoxmain">

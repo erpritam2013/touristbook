@@ -39,9 +39,11 @@ use App\Http\Controllers\OtherPackageController;
 use App\Http\Controllers\TourController;
 
 use App\Http\Controllers\CustomIconController;
+use App\Http\Controllers\RegisterController;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VideoGalleryController;
+use App\Http\Controllers\SettingController;
 use App\Models\Conversion;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -76,6 +78,8 @@ Route::get('/', [PagesController::class, 'index'])->name('home');
 Route::get('/hotels', [PagesController::class, 'hotels'])->name('hotels');
 Route::get('/about', [PagesController::class, 'about'])->name('about');
 Route::get('/blogs', [PagesController::class, 'blogs'])->name('blogs');
+Route::get('/blogs/{term}/{category}', [PagesController::class, 'blogs'])->name('category-blogs');
+Route::get('/blogs/{term}/{tag}', [PagesController::class, 'blogs'])->name('tag-blogs');
 Route::post('/inquiry', [PagesController::class, 'inquiry'])->name('inquiry');
 Route::get('/destinations', [PagesController::class, 'destinations'])->name('destinations');
 Route::get('/activities', [PagesController::class, 'activities'])->name('activities');
@@ -85,12 +89,17 @@ Route::get('/connecting-partners', [PagesController::class, 'connecting_partners
 
 Route::get('/st_hotel/{slug}', [PagesController::class, 'hotelDetail'])->name('hotel');
 Route::get('/st_tour/{slug}', [PagesController::class, 'tourDetail'])->name('tour');
+Route::get('/blog/{slug}', [PagesController::class, 'postDetail'])->name('blog');
 Route::get('/st_activity/{slug}', [PagesController::class, 'activityDetail'])->name('activity');
 Route::get('/st_location/{slug}', [PagesController::class, 'locationDetail'])->name('location');
 Route::get('/location-detail-fetch/{view}', [PagesController::class, 'locationDetailFetch'])->name('locationDetailFetch');
 
 
+Route::get('/term-conditions', [PagesController::class, 'termConditions'])->name('term-conditions');
 Route::get('/get-hotels/{view}', [PagesController::class, 'getHotels'])->name('get-hotels');
+Route::get('/get-posts/{view}', [PagesController::class, 'getPosts'])->name('get-posts');
+Route::get('/get-posts/{term}/{tag}/{view}', [PagesController::class, 'getPosts'])->name('get-posts');
+Route::get('/get-posts/{term}/{category}/{view}', [PagesController::class, 'getPosts'])->name('get-posts');
 Route::get('/get-tours/{view}', [PagesController::class, 'getTours'])->name('get-tours');
 Route::get('/get-activities/{view}', [PagesController::class, 'getActivities'])->name('get-activities');
 Route::get('/get-locations/{view}', [PagesController::class, 'getLocations'])->name('get-locations');
@@ -101,7 +110,8 @@ Route::get('/get-location-states', [PagesController::class, 'getLocationState'])
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/login-post', [LoginController::class, 'authenticate'])->name('login-post');
 
-Route::get('/register', [LoginController::class, 'register'])->name('register');
+Route::get('/register', [RegisterController::class, 'register'])->name('register');
+Route::post('/register-post', [RegisterController::class, 'store'])->name('register-post');
 
 
 
@@ -243,6 +253,13 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
 
     // Route::resource('custom-icons', CustomIconController::class);
     Route::prefix('settings')->name('settings.')->group(function() {
+
+
+    /*theme-settings Routes*/
+    Route::get('theme-settings', [SettingController::class,'index'])->name('theme-settings.index');
+    Route::get('theme-settings/create', [SettingController::class,'create'])->name('theme-settings.create');
+    Route::post('theme-settings/{setting}', [SettingController::class,'store'])->name('theme-settings.store');
+    //Route::post('theme-settings', [SettingController::class,'store'])->name('store');
     /*video gallery Routes*/
     Route::resource('video-galleries', VideoGalleryController::class);
     Route::get('gallery-video', [VideoGalleryController::class,'gallery_videos'])->name('gallery-video');

@@ -5,7 +5,7 @@ namespace App\Models\Terms;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-
+use App\Models\Post;
 class Category extends Model
 {
      use HasFactory;
@@ -36,5 +36,11 @@ class Category extends Model
             'source' => 'name'
         ]
     ];
+}
+
+public function posts()
+{
+    return $this->belongsToMany(Post::class, 'post_categories', 'post_id', 'category_id');
+      
 }
 }

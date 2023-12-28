@@ -16,6 +16,7 @@ use App\View\Composers\PropertyTypeComposer;
 use App\View\Composers\PackageTypeComposer;
 use App\View\Composers\TypesComposer;
 use App\View\Composers\ReviewScoreComposer;
+use App\View\Composers\AllHotelTermsComposer;
 use App\View\Composers\TermActivityListComposer;
 use App\View\Composers\OtherPackageComposer;
 use Illuminate\Support\Facades;
@@ -103,6 +104,10 @@ class ViewServiceProvider extends ServiceProvider
         View::composer(
             ['sites.partials.filters.otherPackageFilter'],
             OtherPackageComposer::class
+        );
+        View::composer(
+            ['admin.pages.page_templates.hotel'],
+            AllHotelTermsComposer::class
         );
 
 

@@ -54,13 +54,14 @@ class AmenityRepository implements AmenityRepositoryInterface
     public function getActiveAmenitiesList($type = null) {
         $amenityBuilder = Amenity::orderBy('name','asc')->where('status', Amenity::ACTIVE);
 
+
         if($type)
             $amenityBuilder->where('amenity_type',$type);
 
-        $amenities = $amenityBuilder->latest()->get(['id','name', 'parent_id']);
-
+        $amenities = $amenityBuilder->get(['id','name', 'parent_id']);
+     
         $nestedResult = $amenities->toNested();
-
+      
         return  $nestedResult;
     }
 

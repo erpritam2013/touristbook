@@ -30,6 +30,6 @@
       @isset($post_d)
        @php $post = $post_d;@endphp
       @endisset
-      @include('admin.partials.utils.add_term', ['terms' => $categories, 'field_name'=> 'categories', 'term_id'=> 'category', 'term_type'=> '', 'term' => 'Category','post_type'=> $post ?? ""])
+      @include('admin.partials.utils.add_term', ['terms' => $categories, 'field_name'=> 'categories', 'term_id'=> 'category', 'term_type'=> 'category_type', 'term' => 'Category','post_type'=> $post ?? ""])
         </div>
 </div>
