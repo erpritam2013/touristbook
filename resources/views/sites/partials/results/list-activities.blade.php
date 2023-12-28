@@ -12,9 +12,9 @@
                             {{--<a href="activity-detailed.html" class="wishlist_bt"></a>--}}
                             {!!is_featured($activity->is_featured,'Featured')!!}
 
-                           @php $featured_image = (!empty($activity->featured_image) && isset($activity->featured_image[0]['id']))?getConversionUrl($activity->featured_image[0]['id'],'270x200'):null;@endphp
+                           @php $featured_image = (!empty($activity->featured_image) && isset($activity->featured_image[0]['id']))?getConversionUrl($activity->featured_image[0]['id'],'450x417'):null;@endphp
                             <a
-                            href="{{route('activity',$activity->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/350x250.jpg')}}"
+                            href="{{route('activity',$activity->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/450x417.jpg')}}"
                             class="img-fluid" alt="">
                             {{--<div class="read_more"><span>Read more</span></div>--}}
                         </a> </figure>

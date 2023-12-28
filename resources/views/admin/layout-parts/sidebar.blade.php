@@ -164,6 +164,7 @@
                             <ul aria-expanded="false" class="{{matchRouteGroupName('settings','child')}}">
                                 <li><a href="{{route('admin.settings.custom-icons.index')}}" class="{{matchRouteName('admin.settings.custom-icons.index')}}">Custom Icon Upload</a></li>
                                 <li><a href="{{route('admin.settings.video-galleries.index')}}" class="{{matchRouteName('admin.settings.video-galleries.index')}}">Video Gallery</a></li>
+                                <li><a href="{{route('admin.settings.theme-settings.index')}}" class="{{matchRouteName('admin.settings.theme-settings.index')}}">Theme Settings</a></li>
                                 {{--<li><a href="./app-profile.html">Profile</a></li>
                                 <li><a href="./app-profile.html">Profile</a></li>
                                 <li><a href="./app-profile.html">Profile</a></li>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class SettingController extends Controller
 {
@@ -14,7 +15,7 @@ class SettingController extends Controller
      */
     public function index()
     {
-        //
+          return redirect()->route('admin.settings.theme-settings.create');
     }
 
     /**
@@ -24,7 +25,12 @@ class SettingController extends Controller
      */
     public function create()
     {
-        //
+           $data['title'] = 'Theme Settings';
+           $settings = Setting::all();
+           $data['settings'] =$settings;
+
+           
+           return view('admin.settings.theme-settings.create',$data);
     }
 
     /**
@@ -33,9 +39,29 @@ class SettingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$setting)
     {
-        //
+
+   
+        $all_fields = $request->all();
+       
+        if (!empty($all_fields)) {
+            unset($all_fields['_method']);
+            unset($all_fields['_token']);
+            
+            foreach ($all_fields as $key => $value) {
+
+               if (is_array($value)) {
+                   $json_encode = json_encode($value);
+                   Setting::save_setting($key,$json_encode);
+               }else{
+                  Setting::save_setting($key,$value);
+               }
+            }
+        }
+        Session::flash('success','Seting Saved Successfully');
+        return redirect()->route('admin.settings.theme-settings.create');
+        
     }
 
     /**
@@ -57,7 +83,9 @@ class SettingController extends Controller
      */
     public function edit(Setting $setting)
     {
-        //
+        $data['title'] = 'Theme Settings';
+         $data['settings'] = Setting::all();
+         return view('admin.settings.theme-settings.edit',$data);
     }
 
     /**

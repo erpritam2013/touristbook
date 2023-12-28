@@ -9,13 +9,17 @@ use App\Interfaces\MeetingAndEventRepositoryInterface;
 use App\Interfaces\PropertyTypeRepositoryInterface;
 use App\Interfaces\TermActivityRepositoryInterface;
 use App\Interfaces\PageRepositoryInterface;
+use App\Interfaces\PostRepositoryInterface;
 use App\Models\Hotel;
 use App\Models\Page;
 use App\Models\Tour;
+use App\Models\Post;
 use App\Models\VideoGallery;
 use App\Models\Location;
 use App\Models\CustomIcon;
 use App\Models\Activity;
+use App\Models\Terms\Category;
+use App\Models\Terms\Tag;
 use App\Models\Terms\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -27,56 +31,27 @@ use Auth;
 class PagesController extends Controller
 {
 
-   private PageRepositoryInterface $pageRepository;
+ private PageRepositoryInterface $pageRepository;
+ private PostRepositoryInterface $postRepository;
 
 
-   public function __construct(
+ public function __construct(
     PageRepositoryInterface $pageRepository,
-    AmenityRepositoryInterface $amenityRepository,
-    MedicareAssistanceRepositoryInterface $medicareAssistanceRepository,
+    PostRepositoryInterface $postRepository,
 
-    PropertyTypeRepositoryInterface $propertyTypeRepository,
-
-    MeetingAndEventRepositoryInterface $meetingAndEventRepository,
-
-    DealsDiscountRepositoryInterface $dealDiscountRepository,
-    TermActivityRepositoryInterface $activityRepository
 )
-   {
+ {
     $this->pageRepository = $pageRepository;
-
-        $this->amenityRepository = $amenityRepository;
-        $this->medicareAssistanceRepository = $medicareAssistanceRepository;
-       
-        $this->propertyTypeRepository = $propertyTypeRepository;
-       
-        $this->meetingAndEventRepository = $meetingAndEventRepository;
-        
-        $this->dealDiscountRepository = $dealDiscountRepository;
-        $this->activityRepository = $activityRepository;
-
+    $this->postRepository = $postRepository;
 }
 public function index() {
-   $data['post_type'] = 'Home';
-   $data['title'] = 'Home';
-   $data['body_class'] = 'home-page';
-   return view('sites.pages.home',$data);
+ $data['post_type'] = 'Home';
+ $data['title'] = 'Home';
+ $data['body_class'] = 'home-page';
+ return view('sites.pages.home',$data);
 }
 
-private function _prepareBasicData() {
 
-        // TODO: Need to Improve here (Fetch from Cache)
-        $data['amenities'] = $this->amenityRepository->getActiveHotelAmenitiesList();
-        $data['medicare_assistance'] = $this->medicareAssistanceRepository->getActiveHotelMedicareAssistancesList();
-        $data['proparty_types'] = $this->propertyTypeRepository->getActiveHotelPropertyTypesList();
-        $data['meetings_and_events'] = $this->meetingAndEventRepository->getActiveHotelMeetingAndEventsList();
-
-        $data['deals_discount'] = $this->dealDiscountRepository->getActiveHotelDealsDiscountsList();
-        $data['activities'] = $this->activityRepository->getActiveHotelTermActivitiesList();
-
-        return $data;
-
-    }
 
 public function pages(PageDataTable $dataTable)
 {
@@ -119,11 +94,18 @@ public function connecting_partners() {
     return view('sites.pages.connecting-partners',$data);
 }
 
-public function blogs() {
-
+public function blogs(Request $request,$term='',$slug='') {
+    
     $data['post_type'] = 'Blog';
     $data['title'] = 'Blogs';
     $data['body_class'] = 'blog-page';
+    if ($term == 'category') {
+    $data['category'] = $slug;
+    }
+    if ($term == 'tag') {
+    $data['tag'] = $slug;
+    }
+    $data['sourceType'] = $request->get('source_type');
     return view('sites.pages.blogs',$data);
 }
 public function destinations(Request $request) {
@@ -158,11 +140,6 @@ public function page_templates(Request $request,$view)
             $data['page'] = $page;
         }
     }
-
-    if ($view == 'hotel') {
-      $data = array_merge_recursive($data, $this->_prepareBasicData());
-    }
-    dd($data);
     return View::make('admin.pages.page_templates.'.$view,$data);
 }
 public function our_packages(Request $request) {
@@ -303,6 +280,32 @@ return view('sites.pages.tour-detail', $data);
         //return view('sites.pages.tour-detail', compact('hotel', 'tourismZone'));
 
 }
+public function postDetail(Request $request, $slug) {
+
+
+
+    $post = Post::with(['category'])->where('slug', $slug)->first();
+    if(!$post) {
+        abort(404);
+    }
+  
+    $data['post'] = $post;
+    $data['title'] = ucwords($post->name).' :: '.ucwords($post->name);
+    $data['body_class'] = 'post-detail-page';
+    $postQuery = Post::query();
+    $postQuery->leftJoin('post_categories','post_categories.post_id', '=', 'posts.id');
+    $postQuery->where('status',1);
+    $postQuery->inRandomOrder();
+    $postQuery->limit(4);
+    $data['related_posts'] = $postQuery->get();
+    $data['related_tags'] = Tag::latest()->limit(12)->get();
+    
+     $data['previous'] = Post::where('id', '<', $post->id)->max('slug');
+     $data['next'] = Post::where('id', '>', $post->id)->min('slug');
+
+    return view('sites.pages.post-detail', $data);
+
+}
 
 public function activityDetail(Request $request, $slug) {
 
@@ -329,17 +332,17 @@ public function activityDetail(Request $request, $slug) {
   $data['nearByLocation'] = collect([]);
   $data['activity_zone'] = null;
   if (!empty($activity->detail->activity_zones)) {
-   $data['activity_zone'] = $activity->activity_zone->first();
-}
+     $data['activity_zone'] = $activity->activity_zone->first();
+ }
 
-$data['custom_icons'] = null;
-$custom_icons = CustomIcon::get(['id','slug','path','uri']);
-if (!empty($custom_icons)) {
-   $data['custom_icons'] = $custom_icons;
-}
-$data['tourismZone'] = null;
+ $data['custom_icons'] = null;
+ $custom_icons = CustomIcon::get(['id','slug','path','uri']);
+ if (!empty($custom_icons)) {
+     $data['custom_icons'] = $custom_icons;
+ }
+ $data['tourismZone'] = null;
 
-if($state) {
+ if($state) {
     $data['tourismZone'] =  $state->tourism_zones->first();
 }
 
@@ -387,6 +390,65 @@ public function locationDetail(Request $request, $slug) {
   return view('sites.pages.location-detail', $data);
 
         //return view('sites.pages.tour-detail', compact('hotel', 'tourismZone'));
+
+}
+
+public function getposts(Request $request, $term = "",$slug = "",$view = "grid") {
+
+
+    $view = "grid";
+    $title = 'Blogs';
+    if (!empty($slug)) {
+     $title = purify_string($slug,'ucwords');
+    }
+    
+    $postQuery = Post::query();
+    $postQuery->selectRaw(' posts.*');
+
+    
+    if (!empty($term) && $term == 'category') {
+
+       $category = Category::where('slug',$slug)->first();
+       $category_id = !empty($category)?$category->id:0;
+       $postQuery->join('post_categories','posts.id','=','post_categories.post_id');
+       $postQuery->where('post_categories.category_id',$category_id);
+    }elseif (!empty($term) && $term == 'tag') {
+       $tag = Tag::where('slug',$slug)->first();
+       $tag_id = !empty($tag)?$tag->id:0;
+       $postQuery->join('post_tags','posts.id','=','post_tags.post_id');
+       $postQuery->where('post_tags.tag_id',$tag_id);
+    }
+        // category
+    if($request->has('category') && !empty($request->get('category'))) {
+        $categoryValue = $request->get('category');
+        $category = $categoryValue;
+        $postQuery->where('post_categories.category_id', $category);
+    }
+
+   
+
+        // Search Params
+    if($request->has('sourceType') && !empty($request->get('sourceType'))) {
+            //search in address
+        $sourceType = $request->get('sourceType');
+            // TODO: JSON Treatment is Pending
+            // TODO: title
+        $postQuery->where('posts.name', 'LIKE', '%'.$sourceType.'%');
+    }
+
+
+    $pageNumber = 1;
+    if($request->has('pageNo') && !empty($request->get('pageNo'))) {
+        $pageNumber = $request->get('pageNo');
+    }
+
+
+    $posts = $postQuery->groupBy('posts.id')->paginate(12, ['*'], 'page', $pageNumber);
+    
+        // TODO: Include Status Check
+        // $postQuery->where('status', post::)
+    
+    return View::make('sites.partials.results.blog', ['posts' => $posts, 'view' => $view,'title'=>$title]);
 
 }
 public function getHotels(Request $request, $view = "list") {
@@ -750,11 +812,11 @@ public function locationDetailFetch(Request $request,$view)
   $id = $request->location_id;
   $location = Location::findOrFail($id);
   if ($view == 'tourism-zone') {
-     $state = $location->states()->first();
-     if($state) {
-        $tourismZone =  $state->tourism_zones->first();
-    }
-    return View::make('sites.partials.location-details.'.$view,['tourismZone'=>$tourismZone]);
+   $state = $location->states()->first();
+   if($state) {
+    $tourismZone =  $state->tourism_zones->first();
+}
+return View::make('sites.partials.location-details.'.$view,['tourismZone'=>$tourismZone]);
 }else{
   return View::make('sites.partials.location-details.'.$view, ['location' => $location]);
 }   
@@ -817,12 +879,12 @@ return $extra_data;
 function store(Request $request,)
 {
 
-   $request->merge([
+ $request->merge([
     'extra_data' => $this->set_extra_data_of_page($request),
 ]);
 
 
-   $pageDetails = [
+ $pageDetails = [
     'name' => $request->name,
     'slug' => SlugService::createSlug(Page::class, 'slug', $request->name),
     'description' => $request->description,
@@ -862,15 +924,15 @@ function update(Request $request,Page $page)
 {
 
   if (empty($page)) {
-   abort(404);
-}
+     abort(404);
+ }
 
-$request->merge([
+ $request->merge([
     'extra_data' => $this->set_extra_data_of_page($request),
 ]);
 
 
-$pageDetails = [
+ $pageDetails = [
     'name' => $request->name,
     //'slug' => SlugService::createSlug(Page::class, 'slug', $request->name),
     'description' => $request->description,
@@ -902,10 +964,10 @@ public function changeStatus(Request $request)
 }
 function destroy(Page $page)
 {
-   $pageId = $page->id;
-   $this->pageRepository->deletePage($pageId);
-   Session::flash('success','Page Deleted Successfully');
-   return back();
+ $pageId = $page->id;
+ $this->pageRepository->deletePage($pageId);
+ Session::flash('success','Page Deleted Successfully');
+ return back();
 }
 
   /**
@@ -918,14 +980,14 @@ function destroy(Page $page)
   public function bulk_delete(Request $request)
   {
 
-   if (!empty($request->ids)) {
+     if (!empty($request->ids)) {
 
-    $pageIds = get_array_mapping(json_decode($request->ids));
+        $pageIds = get_array_mapping(json_decode($request->ids));
 
-    $this->pageRepository->deleteBulkPage($pageIds);
-    Session::flash('success','Page Bulk Deleted Successfully');
-}
-return back();
+        $this->pageRepository->deleteBulkPage($pageIds);
+        Session::flash('success','Page Bulk Deleted Successfully');
+    }
+    return back();
 }
 
 }
