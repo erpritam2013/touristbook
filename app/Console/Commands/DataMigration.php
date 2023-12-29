@@ -1080,6 +1080,7 @@ class DataMigration extends Command
                         "slug" => $n_result["post_name"],
                         "description" => $this->check_content($n_result["post_content"],$postId,'post'),
                         "excerpt" => $n_result["post_excerpt"],
+                        "featured_image" => $this->string_to_json($this->get_key_data($n_result["postmeta"],'_thumbnail_id'),'image_id'),
                         "created_by" => $n_result["post_author"],
                         "created_at" => $n_result["post_date_gmt"],
                         "updated_at" => $n_result["post_modified_gmt"],
@@ -4077,7 +4078,7 @@ public function comman_post_relationship_fun($objects,$custom_posts,$custom_post
             //$term_table = ['hotel_states'];
             //$term_table = ['activity_states'];
 
-            //$tables = ['tour_details'];
+            $tables = ['posts'];
             //$tables = ['country_zones'];
              //$tables = ['activities'];
           // $tables = ['activities','activity_details'];
@@ -4086,7 +4087,7 @@ public function comman_post_relationship_fun($objects,$custom_posts,$custom_post
             $this->info("Truncating tables...");
            //$this->truncate_tables($term_table);
 
-         //  $this->truncate_tables($tables);
+           $this->truncate_tables($tables);
 
 
             $this->info("Table Truncated...");
@@ -4133,7 +4134,7 @@ public function comman_post_relationship_fun($objects,$custom_posts,$custom_post
          //$this->load_activity_details();
         // Setup Types
 
-        //$this->post_migrate();
+        $this->post_migrate();
 
         //$this->setup_types();
         //$this->setup_package_types();
