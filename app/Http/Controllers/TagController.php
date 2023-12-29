@@ -69,7 +69,7 @@ class TagController extends Controller
     public function store(StoreTagRequest $request)
     {
          $tagDetails = [
-            'name' => $request->name,
+            'name' => ucwords($request->name),
             'slug' => SlugService::createSlug(Tag::class, 'slug', $request->name),
              'tag_type' => $request->tag_type,
             'description' => $request->description,
@@ -130,7 +130,7 @@ class TagController extends Controller
          $tagId = $tag->id;
          
          $tagDetails = [
-            'name' => $request->name,
+            'name' => ucwords($request->name),
              'slug' => (!empty($request->slug) && $Tag->slug != $request->slug)?SlugService::createSlug(Tag::class, 'slug', $request->slug):$Tag->slug,
             'icon' => (!empty($request->icon))?$request->icon:"",
              'tag_type' => $request->tag_type,

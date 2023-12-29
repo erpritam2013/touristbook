@@ -35,9 +35,9 @@ class PostRepository implements PostRepositoryInterface
 
     public function getActivePostList()
     {
-        $typeBuilder = Post::where('status', Post::ACTIVE)->get(['id','name']);
+        $postBuilder = Post::where('status', Post::ACTIVE)->get(['id','name']);
 
-        return  $typeBuilder;
+        return  $postBuilder;
     }
 
 }

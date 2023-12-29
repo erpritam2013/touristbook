@@ -5,9 +5,9 @@
         <div class="listroBox" latitude="{{$tour->latitude}}" longitude="{{$tour->longitude}}">
             <figure> {{--<a href="{{route('tour',$tour->slug)}}" class="wishlist_bt"></a>--}}
                 {!!is_featured($tour->is_featured)!!}
-                @php $featured_image = (!empty($tour->featured_image) && isset($tour->featured_image[0]['id']))?getConversionUrl($tour->featured_image[0]['id'],'270x200'):null;@endphp
+                @php $featured_image = (!empty($tour->featured_image) && isset($tour->featured_image[0]['id']))?getConversionUrl($tour->featured_image[0]['id'],'450x417'):null;@endphp
                 <a href="{{route('tour',$tour->slug)}}"><img
-                    src="{{$featured_image ?? asset('sites/images/dummy/350x250.jpg')}}" class="img-fluid" alt="">
+                    src="{{$featured_image ?? asset('sites/images/dummy/450x417.jpg')}}" class="img-fluid" alt="">
                     {{--<div class="read_more"><span>Read more</span></div>--}}
                 </a> </figure>
                 <div class="listroBoxmain">
