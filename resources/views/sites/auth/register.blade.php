@@ -13,29 +13,37 @@
                         @csrf
 
                         <div class="row">
-                            <div class="col-md-6 name">
-                                <label>Name</label>
-                                <input type="text" name="name" placeholder="Enter your name here">
+                            <div class="col-md-12 name">
+                                <label>Full Name</label>
+                                <input type="text" name="name" placeholder="Enter your Full Name here">
+                                {!! get_form_error_msg($errors, 'name') !!}
                             </div>
-                            <div class="col-md-6 srname">
+                            {{--<div class="col-md-6 srname">
                                 <label>Surname</label>
                                 <input type="text" name="srname" placeholder="Enter Surname here">
-                            </div>
+                            </div>--}}
                             <div class="col-md-12 email">
                                 <label>Email</label>
-                                <input type="text" name="email" placeholder="Enter Email here">
+                                <input type="email" name="email" placeholder="Enter Email here">
+                                {!! get_form_error_msg($errors, 'email') !!}
                             </div>
                             <div class="col-md-12 password">
                                 <label>Password</label>
-                                <input type="text" name="password" placeholder="Enter your password here">
+                                <input type="password" name="password" placeholder="Enter your password here" id="rg-password"><br>
+                                {!! get_form_error_msg($errors, 'password') !!}
                             </div>
-                            <div class="col-md-12 chqbox">
+                           <div class="col-md-12 chqbox chqbox-show-hide-password">
+                                <input type="checkbox" onclick="ShowHidePassword()" id="show-hide-password">
+                                <label for="show-hide-password">Show Password</label>
+                            </div>
+                           {{--<div class="col-md-12 chqbox">
                                 <input type="checkbox" name="terms" id="rc-email">
                                 <label for="rc-email">Yes, I want to receive emails.</label>
-                            </div>
+                            </div>--}}
                             <div class="col-md-12 chqbox chqbox2">
-                                <input type="checkbox" name="terms" id="term">
-                                <label for="term">I have read &amp; agree with <span>Terms &amp; Conditions</span>.</label>
+                                <input type="checkbox" name="terms_condition" id="term">
+                                <label for="term">I have read &amp; agree with <span><a href="{{route('term-conditions')}}">Terms &amp; Conditions</a></span>.</label>
+                                {!! get_form_error_msg($errors, 'terms_condition') !!}
                             </div>
                             <div class="col-md-12">
                                 <button type="submit" name="button">Create Account</button>
@@ -43,7 +51,7 @@
                         </div>
                     </form>
                     <div class="login-btm text-center">
-                        <p>Already have an account ?<a href="#">Sign in</a></p>
+                        <p>Already have an account ?<a href="{{route('login')}}">Sign in</a></p>
                     </div>
                 </div>
             </div>

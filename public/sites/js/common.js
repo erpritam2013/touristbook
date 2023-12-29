@@ -884,7 +884,14 @@ function getCurrencyIcon(currencyCode) {
 
 
 
-
+window.ShowHidePassword = () => {
+  var x = document.getElementById("rg-password");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
 
 
 

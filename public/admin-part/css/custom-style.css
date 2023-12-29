@@ -393,29 +393,30 @@ background: #fff!important; }
 
 
 body .amenity-card .card-body .amenity-list,
-body .proparty-types-card .card-body .amenity-list,
-body .medicare-assistance-card .card-body .amenity-list,
-body .meetings-and-event-card .card-body .amenity-list,
-body .deals-discount-card .card-body .amenity-list,
-body .activities-card .card-body .amenity-list{
-overflow: auto;
-height: 300px;
-margin-top: 10px;
+body .property-types-card .card-body .property-type-list,
+body .medicare-assistance-card .card-body .medicare-assistance-list,
+body .meetings-and-event-card .card-body .meetings-and-event-list,
+body .deals-discount-card .card-body .deals-discount-list,
+body .activities-card .card-body .activities-list{
+    overflow: auto;
+    height: 200px;
+    margin-top: 10px;
+    padding: 15px 15px;
 }
 
 
 body .amenity-card-padding .card-body .amenity-list,
-body .proparty-types-card-padding .card-body .amenity-list,
-body .medicare-assistance-card-padding .card-body .amenity-list,
-body .meetings-and-event-card-padding .card-body .amenity-list,
-body .deals-discount-card-padding .card-body .amenity-list,
-body .activities-card-padding .card-body .amenity-list{
+body .property-types-card-padding .card-body .property-type-list,
+body .medicare-assistance-card-padding .card-body .medicare-assistance-list,
+body .meetings-and-event-card-padding .card-body .meetings-and-event-list,
+body .deals-discount-card-padding .card-body .deals-discount-list,
+body .activities-card-padding .card-body .activities-list{
     margin-top: 10px;
 }
 
 
 body .amenity-card-padding,
-body .proparty-types-card-padding,
+body .property-types-card-padding,
 body .medicare-assistance-card-padding,
 body .meetings-and-event-card-padding,
 body .deals-discount-card-padding,

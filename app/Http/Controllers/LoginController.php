@@ -37,12 +37,6 @@ class LoginController extends Controller
         return view('sites.auth.login',$data);
     }
 
-    public function register()
-    {
-        $data['body_class'] = 'register-page';
-        return view('sites.auth.register',$data);
-    }
-
     public function logout(Request $request): RedirectResponse
     {
         Auth::logout();
