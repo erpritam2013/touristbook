@@ -3,6 +3,7 @@
     const moreLi = $(".more-li");
     const resultInfo = $("#result-info");
     var map;
+    let infoWindow;
     var markerIcon = {
         anchor: new google.maps.Point(22, 16),
         url: 'https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2019/05/ico_mapker-2.webp',
@@ -552,11 +553,37 @@ const processedResultInfo = (html) => {
         $('.listroBox').each(function() {
             let longitude = $(this).attr("longitude");
             let latitude = $(this).attr("latitude");
+
+            let resultTitle = $(this).find('.service-title').text()
+            let resultAddress = $(this).find('.service-location i.fas').attr("data-more_data")
+            let resultImage = $(this).find('img').attr('src')
+            let resultPrice = $(this).find('.hotel-service-price').html()
+
+
             if(longitude && latitude){
                 var marker = new google.maps.Marker({
                     position: new google.maps.LatLng(latitude, longitude),
                     map: map,
                     icon:markerIcon
+                });
+
+                marker.addListener('click', function() {
+                    if (infoWindow) {
+                        infoWindow.close(); // Close previous info window if open
+                    }
+                    let contentString = `
+                        <div class="outer-environment">
+                            <img src="${resultImage}" class="img-fluid" />
+                            <h3>${resultTitle}</h3>
+                            <p>${resultAddress}</p>
+                            <div class="price-data">
+                                ${resultPrice}
+                            </div>
+                        </div>
+                    `
+
+                    infoWindow.setContent(contentString);
+                    infoWindow.open(map, marker); // Open info window at the marker
                 });
 
                 markers.push(marker);
@@ -649,6 +676,9 @@ function loadMap() {
             animation: google.maps.Animation.BOUNCE,
             gestureHandling: 'cooperative',
         });
+
+        // Initialize an info window
+        infoWindow = new google.maps.InfoWindow();
     }
 
 }
@@ -674,6 +704,8 @@ function loadOtherMap() {
             streetViewControl: false,
 
         });
+        // Initialize an info window
+        infoWindow = new google.maps.InfoWindow();
 
         let panorama = map.getStreetView();
         panorama.setPosition({
@@ -712,11 +744,21 @@ function loadStreetMap() {
                 lng: parseFloat(mapElm.getAttribute("lng"))
             });
             // panorama.setVisible(true);
+            // Initialize an info window
+            infoWindow = new google.maps.InfoWindow();
 
             var marker = new google.maps.Marker({
                 position: new google.maps.LatLng(mapElm.getAttribute("lat"), mapElm.getAttribute("lng")),
                 map: map,
                 icon:markerIcon
+            });
+
+            marker.addListener('click', function() {
+                if (infoWindow) {
+                    infoWindow.close(); // Close previous info window if open
+                }
+                infoWindow.setContent('Marker position: ' + marker.getPosition().toUrlValue(6));
+                infoWindow.open(map, marker); // Open info window at the marker
             });
 
             markers.push(marker);
