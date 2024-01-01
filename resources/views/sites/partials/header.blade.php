@@ -53,9 +53,20 @@
                   <div class="dropdown"> <a class="dropdown-toggle" href="#" role="button" id="dropdownAccount"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
                     class="far fa-user mr-2"></i>Account </a>
-                    <div class="dropdown-menu mt-2 shadow" aria-labelledby="dropdownAccount"> <a
-                      class="dropdown-item" href="sign-in.html">Log In</a> <a class="dropdown-item"
-                      href="sign-up.html">Register</a> <a class="dropdown-item" href="#">Settings</a>
+                    <div class="dropdown-menu mt-2 shadow" aria-labelledby="dropdownAccount">
+                        @guest
+                            <a class="dropdown-item" href="{{route('login')}}">Log In</a>
+                            <a class="dropdown-item" href="{{route('register')}}">Register</a>
+                        @endguest
+                        @auth
+                            <a class="dropdown-item" href="{{route('profile')}}">Profile</a>
+                            <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+
+                        @endauth
+                        <a class="dropdown-item" href="#">Settings</a>
                     </div>
                   </div>
 
@@ -88,9 +99,9 @@
                         class="dropdown-item-text">Select language</span>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#" data-lang="English"><img class="dropdown-item-icon"
-                          src="{{asset('sites/images/flag/uk.svg')}}" alt="">English</a> 
+                          src="{{asset('sites/images/flag/uk.svg')}}" alt="">English</a>
                         <a class="dropdown-item" href="#" data-lang="France"><img class="dropdown-item-icon" src="{{asset('sites/images/flag/fr.svg')}}" alt="">
-                        Franch</a> 
+                        Franch</a>
                         <a class="dropdown-item" href="#" data-lang="Hindi"><img class="dropdown-item-icon"
                           src="{{asset('sites/images/flag/hi.svg')}}" alt=""> Hindi</a>
                         </div>

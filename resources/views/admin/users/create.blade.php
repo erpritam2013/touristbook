@@ -66,6 +66,7 @@
                                     <option value="">Select Role</option>
                                     <option value="editor" @if(old('role', $user->role ?? '') == 'editor') selected @endif>Editor</option>
                                     <option value="admin"  @if(old('role', $user->role ?? '') == 'admin') selected @endif>Admin</option>
+                                    <option value="subscriber"  @if(old('role', $user->role ?? '') == 'subscriber') selected @endif>Subscriber</option>
                                 </select>
                                 {!! get_form_error_msg($errors, 'role') !!}
 
