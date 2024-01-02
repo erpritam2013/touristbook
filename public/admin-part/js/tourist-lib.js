@@ -64,17 +64,17 @@ var base_admin_url = $("#base-admin-url").val();
 
 const addressTextboxSingle = document.getElementById("address");
 
-const addressTextbox = document.getElementById("map_address");
+var addressTextbox = document.getElementById("map_address");
 
-const latitudeTextbox = document.getElementById("latitude");
+var latitudeTextbox = document.getElementById("latitude");
 
-const longitudeTextbox = document.getElementById("longitude");
+var longitudeTextbox = document.getElementById("longitude");
 
-const zoomTextbox = document.getElementById("zoom_level");
+var zoomTextbox = document.getElementById("zoom_level");
 
 
 
-const mapElem = document.getElementById("map");
+var mapElem = document.getElementById("map");
 
 
 
@@ -595,7 +595,9 @@ const onPlaceChanged = () => {
 
 };
 
-
+$(zoomTextbox).on('input',function(){
+    onPlaceChanged();
+});
 
 if(addressTextbox){
 
@@ -603,7 +605,7 @@ if(addressTextbox){
 
         // Autocompletion Addres Bar
 
-    const autocomplete = new google.maps.places.Autocomplete(addressTextbox, {
+    var autocomplete = new google.maps.places.Autocomplete(addressTextbox, {
 
         types: ["geocode"],
 
@@ -850,76 +852,76 @@ $('.file-list').on("click", ".file", function() {
     if(!$(this).hasClass('active')) {
 
             // adding
-         tb_image_prev_data.title = fileName;
-         tb_image_prev_data.imageUrl = fileUrl;
-         tb_image_prev_data.url = fileUrl;
+     tb_image_prev_data.title = fileName;
+     tb_image_prev_data.imageUrl = fileUrl;
+     tb_image_prev_data.url = fileUrl;
 
-         $('#tb-image-prev').html(showImagePrevHtml(tb_image_prev_data));
+     $('#tb-image-prev').html(showImagePrevHtml(tb_image_prev_data));
 
-        if(mediaMode == "single") {
+     if(mediaMode == "single") {
 
                 // Remove active class from All
 
-            $(this).parent().find('.file').removeClass('active');
+        $(this).parent().find('.file').removeClass('active');
 
-            $(this).addClass('active')
+        $(this).addClass('active')
 
-            selectedImages = [{
+        selectedImages = [{
 
-                'id': fileId,
+            'id': fileId,
 
-                'url': fileUrl,
+            'url': fileUrl,
 
-            }];
-
-        }else {
-
-                // Multiple Selection
-            console.log('select',typeof selectedImages);
-            $(this).addClass('active')
-
-            selectedImages.push({
-
-                'id': fileId,
-
-                'url': fileUrl,
-
-            })
-
-        }
-
-
+        }];
 
     }else {
 
+                // Multiple Selection
+        console.log('select',typeof selectedImages);
+        $(this).addClass('active')
+
+        selectedImages.push({
+
+            'id': fileId,
+
+            'url': fileUrl,
+
+        })
+
+    }
+
+
+
+}else {
+
             // removing
-         $('#tb-image-prev').html(showImagePrevHtml(tb_image_prev_data));
-        if(mediaMode == "single") {
+ $('#tb-image-prev').html(showImagePrevHtml(tb_image_prev_data));
+ if(mediaMode == "single") {
 
                 // Remove active class from All
 
-            $(this).parent().find('.file').removeClass('active');
+    $(this).parent().find('.file').removeClass('active');
 
-            selectedImages = [];
+    selectedImages = [];
 
-        }else {
+}else {
 
                 // Multiple Selection
 
-            $(this).removeClass('active')
+    $(this).removeClass('active')
 
-            if(selectedImages.length > 0){
+    if(selectedImages.length > 0){
 
-                selectedImages = selectedImages.filter((selectedImg, idx) => {
+        selectedImages = selectedImages.filter((selectedImg, idx) => {
 
-                    return selectedImg.id != fileId
+            return selectedImg.id != fileId
 
-                })
-            }
-
-        }
-
+        })
     }
+
+}
+
+}
 
 
 
@@ -1383,14 +1385,79 @@ const processedPageTemplateHtml = function(data,id){
 
         }); // On Click Event Block Ends
 
-       setTimeout(function() {
+     setTimeout(function() {
 
         $(`body ${id}`).find(".tourist-editor").each((idx, te) => {
 
             if (!$(te).next().hasClass("cke")) CKEDITOR.replace(te);
 
         });
+
+        mapElem = document.getElementById("map");
+        if (mapElem) {
+
+            initMap();
+        }
+        addressTextbox = document.getElementById("map_address");
+        latitudeTextbox = document.getElementById("latitude");
+        longitudeTextbox = document.getElementById("longitude");
+        zoomTextbox = document.getElementById("zoom_level");
+        if(addressTextbox){
+
+
+
+        // Autocompletion Addres Bar
+
+            var autocomplete = new google.maps.places.Autocomplete(addressTextbox, {
+
+                types: ["geocode"],
+
+            });
+
+
+        // Event listener for the autocomplete object.
+
+            autocomplete.addListener("place_changed", function () {
+
+            // Get the selected place.
+
+                var place = autocomplete.getPlace();
+              
+
+            // Set the address textbox to the selected place's address.
+                addressTextbox.value = place.formatted_address;
+
+
+
+                let latitude = place.geometry.location.lat();
+              
+
+                let longitude = place.geometry.location.lng();
+
+
+
+                latitudeTextbox.value = latitude;
+
+                longitudeTextbox.value = longitude;
+
+
+
+                onPlaceChanged();
+
+            });
+            if (latitudeTextbox != "" && longitudeTextbox != "") {
+                 onPlaceChanged();
+            }
+            $(zoomTextbox).on('input',function(){
+                    onPlaceChanged();
+            });
+
+        }
+        
     }, 1000);
+
+
+
  }else{
     $(`body ${id}`).children().remove();
 }
@@ -1398,22 +1465,22 @@ const processedPageTemplateHtml = function(data,id){
 }
 const getData = function(ajaxurl,s_params) { 
     return $.ajax({
-                type: "GET",
-                dataType: "html",
-                url: ajaxurl,
-                data:s_params,
-                beforeSend: showLoader,
-                complete: hideLoader,
-         });
+        type: "GET",
+        dataType: "html",
+        url: ajaxurl,
+        data:s_params,
+        beforeSend: showLoader,
+        complete: hideLoader,
+    });
 }
 
 async function fetchDataByajax(t_endpoint,t_params) {
   try {
     const res = await getData(t_endpoint,t_params)
     processedPageTemplateHtml(res,'#page-extra-data');
-  } catch(err) {
+} catch(err) {
     console.log(err);
-  }
+}
 }
 
 const fetchPageTemplate = function(ele){
@@ -1433,7 +1500,7 @@ const fetchPageTemplate = function(ele){
             }
 
             fetchDataByajax(endpoint,params);
-          
+
         }else{
             $(`body #page-extra-data`).children().remove();
         }
