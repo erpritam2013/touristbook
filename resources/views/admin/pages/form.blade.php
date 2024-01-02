@@ -6,7 +6,7 @@
              <input type="hidden" id="base-url" value="{{route('admin.pages.pageIndex')}}" />
             @include('admin.pages.partials.basic-card', ['page'=>$page ?? null])
 
-            @include('admin.pages.partials.page-info-card', ['page'=>$page ?? null])
+            {{--@include('admin.pages.partials.page-info-card', ['page'=>$page ?? null])--}}
 
             @include('admin.pages.partials.extra-data', ['page'=>$page ?? null])
 

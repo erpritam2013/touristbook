@@ -15428,3 +15428,136 @@ body.page-id-7979 .banner, body.category-blogs .banner {
 }
  }
 /*post grid css end*/
+
+/*about page css start*/
+
+.about-heading-div h2 {
+    padding: 0 0 20px;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 24px;
+    color: #07509e;
+}
+.left-cp-image,
+.left-about-image {
+    border-radius: 10px;
+	overflow: hidden;
+	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+	margin-right: 40px;
+}
+.right-cp-image,
+.right-about-image {
+    border-radius: 10px;
+	overflow: hidden;
+	-webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+	margin-right: 40px;
+}
+
+.team-avatar-touristbook {
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+.team-desc-touristbook .team-name {
+    /* font-weight: 500; */
+    font-size: 15px;
+    color: #07509e;
+    font-weight: 500;
+    margin-bottom: 0px;
+}
+
+
+.team-desc-touristbook .team-position{
+	  font-size: 14px;
+    color: #000;
+    font-style: italic;
+}
+
+.team-main-heading{
+	margin-bottom: 20px;
+    font-size: 24px;
+    color: #07509e;
+    font-weight: 500;
+    border-bottom: 2px solid #ebebeb;
+    padding-bottom: 10px;
+}
+
+/*about page css end*/
+
+/*contact us page css start*/
+
+.contact-form-div{
+    position: relative;
+    top: -60px;
+}
+
+.contact-header h3,.contact-header p{
+	color: #07509e;
+	font-weight: 500;
+}
+.contact-form .btn.btn-default {
+    border-radius: 3px;
+    color: #fba009;
+    border: 1px solid #D7DCE3;
+}
+.contact-form .form-group {
+    margin-bottom: 20px;
+}
+.contact-form{
+	padding: 10px 0px;
+}
+.st-contact-info {
+    position: relative;
+    font-size: 15px;
+    color: #000000;
+}
+.st-contact-info .info-content {
+    background: #07509e;
+}
+
+.st-contact-info .info-content {
+    position: absolute;
+    top: 50%;
+    margin-top: -185px;
+    margin-left: -130px;
+    padding: 30px;
+    min-width: 385px;
+    min-height: 370px;
+}
+
+.st-contact-info .info-content h3 {
+    font-size: 24px;
+    color: #FFFFFF;
+    margin: 0;
+}
+.st-contact-info .info-content .sub {
+    bottom: 36px;
+}
+.st-contact-info .info-content .sub {
+    position: absolute;
+    bottom: 110px;
+    padding-right: 30px;
+}
+
+.tb-mob {
+    font-size: 16px;
+    color: #fba009;
+    line-height: 34px;
+    padding-left: 30px;
+}
+
+.tb-email, .address {
+    color: #fff;
+    font-size: 16px;
+    line-height: 34px;
+    padding-left: 30px;
+}
+/*contact us page css end*/
