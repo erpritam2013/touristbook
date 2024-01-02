@@ -4114,7 +4114,7 @@ public function comman_post_relationship_fun($objects,$custom_posts,$custom_post
         if ($isFresh == "clean") {
 
             //  $tables = ['hotels', 'hotel_details'];
-            // $tables = ['tours','tour_details'];
+           //  $tables = ['tours','tour_details'];
             // $tables = ['tours','tour_details','users','files','media'];
             //$term_table = ['types','tour_types'];
 
@@ -4123,7 +4123,7 @@ public function comman_post_relationship_fun($objects,$custom_posts,$custom_post
             // $tables = ['location_meta'];
 
           //   $tables = ['posts'];
-             $tables = ['hotel_details'];
+            // $tables = ['hotel_details'];
 
             //$tables = ['tour_locations'];
             // $term_table = ['languages','tour_languages'];
@@ -4170,7 +4170,7 @@ public function comman_post_relationship_fun($objects,$custom_posts,$custom_post
             //$term_table = ['hotel_states'];
             //$term_table = ['activity_states'];
 
-            $tables = ['posts'];
+            //$tables = ['posts'];
             //$tables = ['country_zones'];
 
              //$tables = ['activities'];
@@ -4181,7 +4181,7 @@ public function comman_post_relationship_fun($objects,$custom_posts,$custom_post
             $this->info("Truncating tables...");
            //$this->truncate_tables($term_table);
 
-           $this->truncate_tables($tables);
+           //$this->truncate_tables($tables);
 
 
             $this->info("Table Truncated...");
@@ -4221,7 +4221,7 @@ public function comman_post_relationship_fun($objects,$custom_posts,$custom_post
         // Hotel Module
 
         // $this->hotel_migrate();
-         $this->load_hotel_details();
+        // $this->load_hotel_details();
         // $this->room_migrate();
         // $this->load_room_details();
 
@@ -4230,7 +4230,7 @@ public function comman_post_relationship_fun($objects,$custom_posts,$custom_post
 
         // Setup Types
 
-        $this->post_migrate();
+       // $this->post_migrate();
 
         //$this->setup_types();
         //$this->setup_package_types();
