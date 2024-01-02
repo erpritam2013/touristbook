@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Tour;
 use App\Models\User;
 use App\Models\File;
+use App\Models\Page;
 use App\Models\Media;
 use App\Models\Location;
 use App\Models\CountryZone;
@@ -4099,6 +4100,25 @@ public function comman_post_relationship_fun($objects,$custom_posts,$custom_post
     $this->info("Done.....");
 }
 
+public function update_page_extra_data($id,$data)
+{
+    $page = Page::find($id);
+
+    if (!empty($page)) {
+
+   $extra_data["hotel_commen_amenities"] = $data['hotel_commen_amenities'];
+   $extra_data["hotel_common_property_type"] = null; 
+   $extra_data["hotel_common_medicare_assistance"] = $data['hotel_common_medicare_assistance']; 
+   $extra_data["hotel_common_meetings_and_events"] = $data['hotel_common_meetings_and_events']; 
+   $extra_data["hotel_common_deals_discount"] = $data['hotel_common_deals_discount'];
+   $extra_data["hotel_common_activities"] = $data['hotel_common_activities'];
+     $page->extra_data = $extra_data;
+        $page->update();
+    }
+    $this->info("Done");
+
+}
+
     /**
      * Execute the console command.
      *
@@ -4123,7 +4143,7 @@ public function comman_post_relationship_fun($objects,$custom_posts,$custom_post
             // $tables = ['location_meta'];
 
           //   $tables = ['posts'];
-             $tables = ['hotel_details'];
+        //     $tables = ['hotel_details'];
 
             //$tables = ['tour_locations'];
             // $term_table = ['languages','tour_languages'];
@@ -4181,7 +4201,7 @@ public function comman_post_relationship_fun($objects,$custom_posts,$custom_post
             $this->info("Truncating tables...");
            //$this->truncate_tables($term_table);
 
-           $this->truncate_tables($tables);
+       //    $this->truncate_tables($tables);
 
 
             $this->info("Table Truncated...");
@@ -4221,7 +4241,7 @@ public function comman_post_relationship_fun($objects,$custom_posts,$custom_post
         // Hotel Module
 
         // $this->hotel_migrate();
-         $this->load_hotel_details();
+        // $this->load_hotel_details();
         // $this->room_migrate();
         // $this->load_room_details();
 
@@ -4349,8 +4369,24 @@ public function comman_post_relationship_fun($objects,$custom_posts,$custom_post
         //         $temp = DB::connection($this->wp_connection)->table('wp_postmeta as wp')->select('wp.meta_value')->where('post_id',17559)->where('meta_key','like','save_your_pocket_pdf')->first();
         // dd($this->unserialize_data_format_in_array("$temp->meta_value","save_your_pocket_pdf"));
 
+    $amenities = Amenity::whereIn('wp_taxonomy_id',[2372,1077,2409,2415,2419,881,2427,2429,2408,874, 2437, 867, 2439, 2514, 857, 2449, 1074, 934, 2403, 1076, 1092, 856,2484])->get('id')->pluck('id')->toArray();
+   // $property_type = PropertyType::whereIn('wp_taxonomy_id',[])->get('id')->pluck('id')->toArray();
 
+$medicare_assistance = MedicareAssistance::whereIn('wp_taxonomy_id',[341,342,343])->get('id')->pluck('id')->toArray();
+$meetings_and_events = MeetingAndEvent::whereIn('wp_taxonomy_id',[476,475,2129])->get('id')->pluck('id')->toArray();
+$deals_discount = DealsDiscount::whereIn('wp_taxonomy_id',[473,472,2000,474,471])->get('id')->pluck('id')->toArray();
+$activities = TermActivity::whereIn('wp_taxonomy_id',[1794,2015, 1154, 1908, 462, 1581, 1055, 764, 457, 576, 2624, 751, 458, 1843,  757,  1083,  1575,  1286,  1821,  614,  1608,  758,  836,  999,  453,  1579,  769,  762])->get('id')->pluck('id')->toArray();
+        
+     $set_data['hotel_commen_amenities'] = $amenities;
+    // $set_data['hotel_common_property_type'] = 
+     $set_data['hotel_common_medicare_assistance'] =$medicare_assistance; 
+     $set_data['hotel_common_meetings_and_events'] = $meetings_and_events;
+     $set_data['hotel_common_deals_discount'] =$deals_discount;
+     $set_data['hotel_common_activities'] = $activities;
 
+     
+
+        $this->update_page_extra_data(1,$set_data);
 
 
         return Command::SUCCESS;

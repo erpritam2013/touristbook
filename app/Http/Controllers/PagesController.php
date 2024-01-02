@@ -14,6 +14,7 @@ use App\Models\Hotel;
 use App\Models\Page;
 use App\Models\Tour;
 use App\Models\Post;
+use App\Models\Setting;
 use App\Models\VideoGallery;
 use App\Models\Location;
 use App\Models\CustomIcon;
@@ -84,13 +85,27 @@ public function hotels(Request $request) {
 public function about() {
     $data['post_type'] = 'About';
     $data['title'] = 'About';
+    $page_id = Setting::get_setting('about_page');
+    
+    $page = Page::find($page_id);
+    if ($page) {
+        $data['page'] = $page;
+    }
     $data['body_class'] = 'about-page';
+
     return view('sites.pages.about',$data);
 }
 public function connecting_partners() {
     $data['post_type'] = 'connecting_partners';
     $data['title'] = 'Connecting Partners';
     $data['body_class'] = 'connecting-partners-page';
+
+     $page_id = Setting::get_setting('connecting_partner_page');
+    
+    $page = Page::find($page_id);
+    if ($page) {
+        $data['page'] = $page;
+    }
     return view('sites.pages.connecting-partners',$data);
 }
 
@@ -135,11 +150,14 @@ public function page_templates(Request $request,$view)
     $data = [];
     if (isset($request->id)) {
         $id = $request->id;
-        $page = $this->pageRepository->getPageByType($id,$view);
+        $view_purify = purify_string($view,'ucwords');
+        $page = $this->pageRepository->getPageByType($id,$view_purify);
+
         if (!empty($page)) {
             $data['page'] = $page;
         }
     }
+
     return View::make('admin.pages.page_templates.'.$view,$data);
 }
 public function our_packages(Request $request) {
@@ -158,7 +176,19 @@ public function contact() {
     $data['post_type'] = 'Contact';
     $data['title'] = 'Contact Us';
     $data['body_class'] = 'contact-us-page';
+    $page_id = Setting::get_setting('contact_page');
+    
+    $page = Page::find($page_id);
+    if ($page) {
+        $data['page'] = $page;
+    }
     return view('sites.pages.contact',$data);
+}
+
+public function send_contact(Request $request)
+{
+     Session::flash('success','Contact Form Send Successfully');
+     redirect()->back();
 }
 
 
@@ -859,6 +889,9 @@ public function getLocationState(Request $request) {
 public function set_extra_data_of_page($request)
 {
     $extra_data = [];
+    if (isset($request->extra_data)) {
+        $extra_data = $request->extra_data;
+    }
     if (isset($request->type) && !empty($request->type)) {
         if ($request->type == 'About') {
 
@@ -867,6 +900,9 @@ public function set_extra_data_of_page($request)
       }
       if ($request->type == 'Tour') {
         $extra_data = $request->extra_data;
+    }
+    if ($request->type == 'Connecting Partner') {
+       $extra_data['connecting_partners'] = $request->connecting_partners;
     }
 
 }
@@ -885,7 +921,7 @@ function store(Request $request,)
 
 
  $pageDetails = [
-    'name' => $request->name,
+    'name' =>  ucwords($request->name),
     'slug' => SlugService::createSlug(Page::class, 'slug', $request->name),
     'description' => $request->description,
     "gallery" => $request->gallery,
@@ -933,7 +969,7 @@ function update(Request $request,Page $page)
 
 
  $pageDetails = [
-    'name' => $request->name,
+    'name' => ucwords($request->name),
     //'slug' => SlugService::createSlug(Page::class, 'slug', $request->name),
     'description' => $request->description,
     "gallery" => $request->gallery,

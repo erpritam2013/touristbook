@@ -151,7 +151,7 @@
 									<div class="col-xs-6 col-lg-6">
 										<div class="item">
 											<div class="icon">
-												<i class="lar la-clock"></i>
+												<i class="far fa-clock"></i>
 											</div>
 											<div class="info">
 												<h4 class="name">Duration</h4>
