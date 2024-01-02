@@ -35,7 +35,11 @@ class PageRepository implements PageRepositoryInterface
 
     public function getPageByType($pageId,$type)
     {
+        if (!empty($pageId)) {
         return Page::whereId($pageId)->where('type',$type)->first();
+        }else{
+           return Page::where('type',$type)->get(['id','name']);
+        }
     }
 
 }
