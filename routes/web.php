@@ -85,6 +85,7 @@ Route::get('/destinations', [PagesController::class, 'destinations'])->name('des
 Route::get('/activities', [PagesController::class, 'activities'])->name('activities');
 Route::get('/our-packages', [PagesController::class, 'our_packages'])->name('our-packages');
 Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
+Route::post('/contact', [PagesController::class, 'send_contact'])->name('send-contact');
 Route::get('/connecting-partners', [PagesController::class, 'connecting_partners'])->name('connecting-partners');
 
 Route::get('/st_hotel/{slug}', [PagesController::class, 'hotelDetail'])->name('hotel');

@@ -3,7 +3,9 @@
 use App\Models\Conversion;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
+// boolean (true)
 if (!function_exists('get_settings_option_value')) {
     function get_settings_option_value($field)
     {
@@ -15,14 +17,13 @@ if (!function_exists('get_settings_option_value')) {
 
 if (!function_exists('isJson')) {    
 function isJson($string) {
-    $obj = json_decode($string);
-    return json_last_error() === JSON_ERROR_NONE && gettype($obj ) == "object";
+    
+    return Str::isJson($string);
 }
 }
 if (!function_exists('get_single_value_of_col_in_setting')) {
     function get_single_value_of_col_in_setting($data,$field)
     {
-
 
         $result = '';
         if (!empty($data)) {
@@ -30,8 +31,8 @@ if (!function_exists('get_single_value_of_col_in_setting')) {
            $get_data = exploreJsonData($data);
            $collection = collect($get_data);
            $result = $collection->get($field);
+    
         }else{
-            
             if (!empty($data)) {
            $collection = collect($data);
            $result = $collection->get($field);

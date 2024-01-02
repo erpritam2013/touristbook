@@ -52,10 +52,18 @@
                   <!-- Top Account -->
                   <div class="dropdown"> <a class="dropdown-toggle" href="#" role="button" id="dropdownAccount"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
-                    class="far fa-user mr-2"></i>Account </a>
-                    <div class="dropdown-menu mt-2 shadow" aria-labelledby="dropdownAccount"> <a
-                      class="dropdown-item" href="sign-in.html">Log In</a> <a class="dropdown-item"
-                      href="sign-up.html">Register</a> <a class="dropdown-item" href="#">Settings</a>
+                    class="far fa-user mr-2"></i>@if(auth()->check()){{ucwords(auth()->user()->name)}} @else Account @endif</a>
+                    <div class="dropdown-menu mt-2 shadow" aria-labelledby="dropdownAccount"> 
+                      @if(!auth()->check())
+                      <a class="dropdown-item" href="{{route('login')}}">Log In</a> 
+                      <a class="dropdown-item" href="{{route('register')}}">Register</a> 
+                      @else
+                       @if(auth()->user()->isAdmin() || auth()->user()->isEditor())
+                      <a class="dropdown-item" href="{{route('admin.dashboard')}}">Dashboard</a>
+                       @else
+                      <a class="dropdown-item" href="#">Settings</a>
+                       @endif
+                      @endif
                     </div>
                   </div>
 
