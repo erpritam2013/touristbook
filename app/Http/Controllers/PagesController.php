@@ -617,13 +617,17 @@ public function getTours(Request $request, $view = "list") {
     }
 
     if($request->has('duration_day') && !empty($request->get('duration_day'))) {
-        $duration_day = explode(";", $request->get('duration_day'));
+        $duration_day = $request->get('duration_day');
             // TODO: Need Proper Validation
+  
             // $minimum = $duration_day[0];
             // $maximum = $duration_day[1];
-
-        $tourQuery->whereIn("duration_day",$duration_day);
+            $tourQuery->where("duration_day","like",'%'.$duration_day.'%');
+          
+        
+        
     }
+  
 
 
         // Package Types
@@ -634,13 +638,24 @@ public function getTours(Request $request, $view = "list") {
         $tourQuery->leftJoin('tour_package_types', 'tour_package_types.tour_id', '=', 'tours.id');
         $tourQuery->whereIn('tour_package_types.package_type_id', $package_types);
     }
+     
 
+      //$tourQuery->toSql();
         // other_packages
+  
+
     if($request->has('other_packages') && !empty($request->get('other_packages'))) {
         $other_packagesValue = $request->get('other_packages');
         $other_packages = explode(",", $other_packagesValue);
         $tourQuery->leftJoin('tour_other_packages', 'tour_other_packages.tour_id', '=', 'tours.id');
         $tourQuery->whereIn('tour_other_packages.other_package_id', $other_packages);
+    }else{
+          if($request->has('other_package_parent') && !empty($request->get('other_package_parent'))) {
+        $other_package_parentValue = $request->get('other_package_parent');
+        //$other_packages = explode(",", $other_packagesValue);
+        $tourQuery->leftJoin('tour_other_packages', 'tour_other_packages.tour_id', '=', 'tours.id');
+        $tourQuery->where('tour_other_packages.other_package_id', $other_package_parentValue);
+    } 
     }
 
         // types
@@ -687,7 +702,6 @@ public function getTours(Request $request, $view = "list") {
     if($request->has('pageNo') && !empty($request->get('pageNo'))) {
         $pageNumber = $request->get('pageNo');
     }
-
 
     $tours = $tourQuery->groupBy('tours.id')->paginate(12, ['*'], 'page', $pageNumber);
         // TODO: Include Status Check
