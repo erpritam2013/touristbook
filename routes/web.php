@@ -119,6 +119,8 @@ Route::post('/register-post', [RegisterController::class, 'store'])->name('regis
 
 Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () {
 
+    Route::get('profile',[AdminController::class,'profile'])->name('profile');
+
     Route::post('ajax-term-store',[UtilityController::class,'ajax_term_store'])->name('ajax-term-store');
 
     Route::get('template/{type}', [UtilityController::class, 'get_template_by_type'])->name('template');

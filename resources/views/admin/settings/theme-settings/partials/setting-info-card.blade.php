@@ -17,6 +17,7 @@
                    <a href="#v-pills-post" data-toggle="pill" class="nav-link">Post</a>
                    <a href="#v-pills-google-setting" data-toggle="pill" class="nav-link">Google-Setting</a>
                    <a href="#v-pills-booking" data-toggle="pill" class="nav-link">Booking</a>
+                   <a href="#v-pills-profile" data-toggle="pill" class="nav-link">Admin Profile</a>
                    <a href="#v-pills-payment" data-toggle="pill" class="nav-link">Payment</a>
                </div>
            </div>
@@ -51,6 +52,9 @@
              </div>
              <div id="v-pills-booking" class="tab-pane fade ">
                 @include('admin.settings.theme-settings.tabs.booking', ["settings" => $settings])
+             </div>
+             <div id="v-pills-profile" class="tab-pane fade ">
+                @include('admin.settings.theme-settings.tabs.profile', ["settings" => $settings])
              </div>
              <div id="v-pills-payment" class="tab-pane fade ">
                 @include('admin.settings.theme-settings.tabs.payment', ["settings" => $settings])

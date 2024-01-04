@@ -186,6 +186,24 @@
 
 
 					</div>
+					
+				@if(!empty($tour->detail->tours_highlight))
+
+				<div class="st-highlight p-3">
+					<h2 class="mb-4 st-heading-section">Highlights</h2>
+					<div class="st-highlight-info">
+						<ul> 
+							@php  $arr_highlight = explode("\n", trim($tour->detail->tours_highlight)); @endphp
+							@foreach($arr_highlight as $k => $v)
+
+							<li>{{$v}}</li>
+
+							@endforeach
+						</ul>
+
+					</div>
+				</div>
+				@endif
 					<div class="tab-pane" id="st-include-exclude">
 
 						@php 
@@ -335,23 +353,6 @@
 
 				</div>
 
-				@if(!empty($tour->detail->tours_highlight))
-
-				<div class="st-highlight p-3">
-					<h2 class="mb-4 st-heading-section">Highlights</h2>
-					<div class="st-highlight-info">
-						<ul> 
-							@php  $arr_highlight = explode("\n", trim($tour->detail->tours_highlight)); @endphp
-							@foreach($arr_highlight as $k => $v)
-
-							<li>{{$v}}</li>
-
-							@endforeach
-						</ul>
-
-					</div>
-				</div>
-				@endif
 
 				<div class="tab-pane text-justify p-3 border mt-3" id="section-contact">
 					@if(!empty($tour->detail->contact))
