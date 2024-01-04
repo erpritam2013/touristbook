@@ -4138,7 +4138,7 @@ public function update_page_extra_data($id,$data)
         if ($isFresh == "clean") {
 
             //  $tables = ['hotels', 'hotel_details'];
-            // $tables = ['tours','tour_details'];
+           //  $tables = ['tours','tour_details'];
             // $tables = ['tours','tour_details','users','files','media'];
             //$term_table = ['types','tour_types'];
 
@@ -4147,7 +4147,9 @@ public function update_page_extra_data($id,$data)
             // $tables = ['location_meta'];
 
           //   $tables = ['posts'];
+
         //     $tables = ['hotel_details'];
+
 
             //$tables = ['tour_locations'];
        //      $tables = ['languages','tour_languages','tour_locations','package_types','tour_package_types','other_packages','tour_other_packages','types','tour_types','tour_states'];
@@ -4194,8 +4196,8 @@ public function update_page_extra_data($id,$data)
             //$term_table = ['hotel_states'];
             //$term_table = ['activity_states'];
 
-            //$tables = ['tour_details'];
-           // $tables = ['posts'];
+            //$tables = ['posts'];
+            //$tables = ['country_zones'];
 
              //$tables = ['activities'];
              $tables = ['tourism_zones'];
@@ -4205,7 +4207,7 @@ public function update_page_extra_data($id,$data)
             $this->info("Truncating tables...");
            //$this->truncate_tables($term_table);
 
-           $this->truncate_tables($tables);
+       //    $this->truncate_tables($tables);
 
 
             $this->info("Table Truncated...");
@@ -4254,7 +4256,7 @@ public function update_page_extra_data($id,$data)
 
         // Setup Types
 
-        //$this->post_migrate();
+       // $this->post_migrate();
 
 //$this->setup_types();
      //   $this->setup_package_types();
@@ -4373,6 +4375,7 @@ public function update_page_extra_data($id,$data)
        // $this->check_in_and_check_out_change_in_hotel();
         //         $temp = DB::connection($this->wp_connection)->table('wp_postmeta as wp')->select('wp.meta_value')->where('post_id',17559)->where('meta_key','like','save_your_pocket_pdf')->first();
         // dd($this->unserialize_data_format_in_array("$temp->meta_value","save_your_pocket_pdf"));
+
 
 //     $amenities = Amenity::whereIn('wp_taxonomy_id',[2372,1077,2409,2415,2419,881,2427,2429,2408,874, 2437, 867, 2439, 2514, 857, 2449, 1074, 934, 2403, 1076, 1092, 856,2484])->get('id')->pluck('id')->toArray();
 //    // $property_type = PropertyType::whereIn('wp_taxonomy_id',[])->get('id')->pluck('id')->toArray();

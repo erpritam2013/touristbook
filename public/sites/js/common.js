@@ -411,7 +411,8 @@ const compiledCheckboxes = (selector) => {
     $(selector + ":checked").each(function () {
         checkedValues.push($(this).val());
     });
-        // Join the checked values into a comma-separated string
+
+    // Join the checked values into a comma-separated string
     return checkedValues.join(",");
 };
 
@@ -500,6 +501,12 @@ const fetchParameters = () => {
     let selectedOtherPackage = compiledCheckboxes(".filter-other-package");
     if (selectedOtherPackage) {
         params.other_packages = selectedOtherPackage;
+    }
+
+     // Fetch other package If any
+    let selectedOtherPackageParent = compiledCheckboxes(".filter-other-package-parent");
+    if (selectedOtherPackageParent) {
+        params.other_package_parent = selectedOtherPackageParent;
     }
 
         // Location or State Search
@@ -743,7 +750,7 @@ function loadStreetMap() {
     // Filter Checkbox Change
     $(".filter-option").on("change", function () {
         let view = $(".view-changer").attr("view-id");
-        if ($(this).hasClass('filter-other-package')) {
+        if ($(this).hasClass('filter-other-package-parent')) {
             // console.log($(this).data('parent'))
             if (typeof $(this).data('parent') != 'undefined') {
 
