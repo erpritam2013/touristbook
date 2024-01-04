@@ -34,6 +34,7 @@ class LoginController extends Controller
     public function login()
     {
         $data['body_class'] = 'login-page';
+        $data['title'] = 'Login';
         return view('sites.auth.login',$data);
     }
 

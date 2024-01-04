@@ -20,9 +20,7 @@
                     <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 Nopadding tour-content">
                         <div class="listroBoxmain">
 
-                            <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{shortDescription($tour->address,45) ?? ''}}@if(strlen($tour->address) > 45)
-                                &nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$tour->address}}" data-more_data_label="Address" style="color:#fba009;"></i>
-                            @endif</p>
+                            <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{$tour->address ?? ''}}</p>
                             <h4 class="service-title"><a href="{{route('tour',$tour->slug)}}">{{ $tour->name }}</a></h4>
 
                             <div class="row">
@@ -32,12 +30,12 @@
 
                                 <ul>
                                   <li>
+                                  
                                       @php 
 
-                                      $package_route = (!empty($tour->detail->package_route))?implode('-',array_column($tour->detail->package_route,'package_route-title')):'';
+                                      $package_route = (!empty($tour->detail->package_route))?current($tour->detail->package_route):'';
                                       @endphp
-                                      <span class="tour-route-span">{{shortDescription(touristbook_sanitize_title($package_route.$package_route.$package_route),40) ?? ''}}</span>
-                                      &nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{touristbook_sanitize_title($package_route)}}" data-more_data_label="Package Route" style="color:#fba009;"></i>
+                                      <span class="tour-route-span">{{$package_route['package_route-title'] ?? ''}}</span>
 
                                   </li>
 
