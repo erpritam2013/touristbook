@@ -1,3 +1,4 @@
+@section('title',$title ?? '')
 <!doctype html>
 <html lang="en">
 
