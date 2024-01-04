@@ -4134,7 +4134,7 @@ public function update_page_extra_data($id,$data)
         if ($isFresh == "clean") {
 
             //  $tables = ['hotels', 'hotel_details'];
-            // $tables = ['tours','tour_details'];
+           //  $tables = ['tours','tour_details'];
             // $tables = ['tours','tour_details','users','files','media'];
             //$term_table = ['types','tour_types'];
 
@@ -4143,7 +4143,9 @@ public function update_page_extra_data($id,$data)
             // $tables = ['location_meta'];
 
           //   $tables = ['posts'];
-        //     $tables = ['hotel_details'];
+
+            // $tables = ['hotel_details'];
+
 
             //$tables = ['tour_locations'];
             // $term_table = ['languages','tour_languages'];
@@ -4190,8 +4192,8 @@ public function update_page_extra_data($id,$data)
             //$term_table = ['hotel_states'];
             //$term_table = ['activity_states'];
 
-            //$tables = ['tour_details'];
-           // $tables = ['posts'];
+            //$tables = ['posts'];
+            //$tables = ['country_zones'];
 
              //$tables = ['activities'];
              //$tables = ['activity_details'];
@@ -4250,7 +4252,7 @@ public function update_page_extra_data($id,$data)
 
         // Setup Types
 
-        //$this->post_migrate();
+       // $this->post_migrate();
 
         //$this->setup_types();
         //$this->setup_package_types();
