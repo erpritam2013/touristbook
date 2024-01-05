@@ -80,6 +80,12 @@ public function hotels(Request $request) {
     $data['searchTerm'] = $request->get('search');
     $data['sourceType'] = $request->get('source_type');
     $data['sourceId'] = $request->get('source_id');
+     $page_id = Setting::get_setting('hotel_list_page');
+    
+    $page = Page::find($page_id);
+    if ($page) {
+        $data['page'] = $page;
+    }
     return view('sites.pages.hotels',$data);
 }
 public function about() {
@@ -131,6 +137,12 @@ public function destinations(Request $request) {
     $data['searchTerm'] = $request->get('search');
     $data['sourceType'] = $request->get('source_type');
     $data['sourceId'] = $request->get('source_id');
+    $page_id = Setting::get_setting('location_list_page');
+    
+    $page = Page::find($page_id);
+    if ($page) {
+        $data['page'] = $page;
+    }
     return view('sites.pages.destinations',$data);
 }
 public function activities(Request $request) {
@@ -168,6 +180,12 @@ public function our_packages(Request $request) {
     $data['searchTerm'] = $request->get('search');
     $data['sourceType'] = $request->get('source_type');
     $data['sourceId'] = $request->get('source_id');
+     $page_id = Setting::get_setting('tour_list_page');
+    
+    $page = Page::find($page_id);
+    if ($page) {
+        $data['page'] = $page;
+    }
 
     return view('sites.pages.our-packages', $data);
 }
@@ -215,6 +233,12 @@ public function hotelDetail(Request $request, $slug) {
     $data['tourismZone'] =  $state->tourism_zones()->first();
 }
         // dd($hotel);
+ $page_id = Setting::get_setting('hotel_detail_list_page');
+    $page = Page::find($page_id);
+    if ($page) {
+        $data['page'] = $page;
+    }
+    
 
 return view('sites.pages.hotel-detail', $data);
 }
@@ -933,6 +957,10 @@ function store(Request $request,)
     'extra_data' => $this->set_extra_data_of_page($request),
 ]);
 
+ $request->merge([
+    'featured_image' => json_decode($request->featured_image,true),
+]);
+ 
 
  $pageDetails = [
     'name' =>  ucwords($request->name),
@@ -948,7 +976,7 @@ function store(Request $request,)
     "type" => $request->type,
     "created_by"=> Auth::user()->id,
 ];
-
+ 
 $this->pageRepository->createPage($pageDetails);
 Session::flash('success','Page Created Successfully');
 return redirect()->Route('admin.pages.pageIndex');

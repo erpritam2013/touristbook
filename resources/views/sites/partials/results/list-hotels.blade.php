@@ -24,9 +24,7 @@
                             @php
                             $address = (!empty($hotel->address ))?$hotel->address:$hotel->hotel_attributes['corporateAddress'];
                             @endphp
-                            <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{shortDescription($address,45)}}@if(strlen($address) > 45)
-                                &nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$address}}" data-more_data_label="Address" style="color:#fba009;"></i>
-                            @endif</p>
+                            <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{$address}}</p>
                            
                             <div class="row">
                                <div class="col-sm-12">

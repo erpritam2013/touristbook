@@ -4,9 +4,23 @@ namespace App\Repositories;
 
 use App\Interfaces\TermActivityRepositoryInterface;
 use App\Models\Terms\TermActivity;
-
+use App\Models\Setting;
+use App\Models\Page;
 class TermActivityRepository implements TermActivityRepositoryInterface 
 {
+
+      private $commanTermActivity = null;
+    public function __construct()
+    {
+        $page_id = Setting::get_setting('hotel_list_page');
+        if (!empty($page_id)) {   
+        $page = Page::find($page_id);
+          if (isset($page->extra_data['hotel_common_activities'])) {
+              $this->commanTermActivity = $page->extra_data['hotel_common_activities'];
+          }
+        }
+
+    }
     public function getAllTermActivities() 
     {
         return TermActivity::orderBy('id','desc')->get();
@@ -51,7 +65,14 @@ class TermActivityRepository implements TermActivityRepositoryInterface
 
     // Get all Active Top Services or by Type
     public function getActiveTermActivitiesList($type = null) {
+        
+        if (!empty($this->commanTermActivity)) {
+           
+        $termActivityBuilder = TermActivity::orderBy('name','asc')->where('status', TermActivity::ACTIVE)->whereIn('id',$this->commanTermActivity);
+        }else{
         $termActivityBuilder = TermActivity::orderBy('name','asc')->where('status', TermActivity::ACTIVE);
+
+        }
 
         if($type)
             $termActivityBuilder->where('term_activity_type',$type);

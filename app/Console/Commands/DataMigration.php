@@ -4207,7 +4207,7 @@ public function update_page_extra_data($id,$data)
             $this->info("Truncating tables...");
            //$this->truncate_tables($term_table);
 
-       //    $this->truncate_tables($tables);
+           $this->truncate_tables($tables);
 
 
             $this->info("Table Truncated...");

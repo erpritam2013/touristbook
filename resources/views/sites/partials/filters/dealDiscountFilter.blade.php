@@ -11,7 +11,7 @@
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" id="dealdiscount_{{$key}}" name="deals[]"
                         class="custom-control-input filter-option filter-deal" value="{{$deal['id']}}">
-                    <label for="dealdiscount_{{$key}}" class="custom-control-label">{{$deal['name']}}</label>
+                    <label for="dealdiscount_{{$key}}" class="custom-control-label">{!!$deal['name']!!}</label>
                 </div>
             </li>
             @endforeach

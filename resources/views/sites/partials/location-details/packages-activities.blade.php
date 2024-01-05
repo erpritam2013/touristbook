@@ -7,8 +7,8 @@
 			<div class="listroBox">
 				<figure> {{--<a href="hotel-detailed.html" class="wishlist_bt"></a>--}}
 					{!!is_featured($location_tour->is_featured)!!}
-					@php $featured_image = (!empty($location_tour->featured_image) && isset($location_tour->featured_image[0]['id']))?getConversionUrl($location_tour->featured_image[0]['id'],'270x200'):null;@endphp
-					<a href="{{route('tour',$location_tour->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="" >
+					@php $featured_image = (!empty($location_tour->featured_image) && isset($location_tour->featured_image[0]['id']))?getConversionUrl($location_tour->featured_image[0]['id'],'450x417'):null;@endphp
+					<a href="{{route('tour',$location_tour->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/450x417.jpg')}}" class="img-fluid" alt="" >
 						{{--<div class="read_more"><span>Read more</span></div>--}}
 					</a> </figure>
 					<div class="listroBoxmain p-2">
@@ -41,9 +41,9 @@
 
 					<div class="listroBox">
 						<figure> {{--<a href="hotel-detailed.html" class="wishlist_bt"></a>--}} {!!is_featured($location_activity->is_featured)!!}
-							@php $featured_image = (!empty($location_activity->featured_image) && isset($location_activity->featured_image[0]['id']))?getConversionUrl($location_activity->featured_image[0]['id'],'270x200'):null;@endphp
+							@php $featured_image = (!empty($location_activity->featured_image) && isset($location_activity->featured_image[0]['id']))?getConversionUrl($location_activity->featured_image[0]['id'],'450x417'):null;@endphp
 							<a href="{{route('activity',$location_activity->slug)}}"><img
-								src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="activity-image">
+								src="{{$featured_image ?? asset('sites/images/dummy/450x417.jpg')}}" class="img-fluid" alt="activity-image">
 								{{--<div class="read_more"><span>Read more</span></div>--}}
 							</a> </figure>
 							<div class="listroBoxmain p-2">
