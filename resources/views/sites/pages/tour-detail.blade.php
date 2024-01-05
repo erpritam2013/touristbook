@@ -107,7 +107,7 @@
 						</div>
 						@endif
 
-						@if ($tour->package_types->isNotEmpty())
+						{{--@if ($tour->package_types->isNotEmpty())
 						<div class="section mt-4 terms-section" id="package-type-section">
 							<h2 class="st-heading-section">Package Types</h2>
 							<div class="row mt-3">
@@ -121,7 +121,7 @@
 								@endforeach
 							</div>
 						</div>
-						@endif
+						@endif--}}
 
 						@if ($tour->languages->isNotEmpty())
 						<div class="section mt-4 terms-section" id="longuages">
@@ -204,14 +204,14 @@
 					</div>
 				</div>
 				@endif
-					<div class="tab-pane" id="st-include-exclude">
-
 						@php 
 						$include = $tour->detail->tours_include ?? '';
 						$exclude = $tour->detail->tours_exclude ?? '';
 
 						@endphp
 						@if(!empty($include) || !empty($exclude))
+					<div class="tab-pane" id="st-include-exclude">
+
 						<div class="row">  
 							<div class="col-xs-6 col-sm-6">
 								@if(!empty($include))
@@ -254,9 +254,9 @@
 							</div>
 						</div>
 
-						@endif
 
 					</div>
+						@endif
 					<div class="tab-pane" id="st-program-section">
 						@if (!empty($tour->detail->tours_program))
 						<div class="section mt-4">
@@ -264,13 +264,13 @@
 							<div class="accordion" id="accordionStProgram">
 								@foreach($tour->detail->tours_program as $key => $tours_program)
 								<div class="card">
-									<div class="card-header {{($key != 0)?'collapsed':''}}" data-toggle="collapse" data-target="#st-program-{{$key}}" aria-expanded="true"> 
+									<div class="card-header {{($key != 0)?'collapsed':''}} itinerary-card-header" data-toggle="collapse" data-target="#st-program-{{$key}}" aria-expanded="true"> 
 										<img src="https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2019/05/ico_mapker-2.webp" alt="marker">    
 										<span class="title">{{ucwords($tours_program['tours_program-title'])}}</span>
 										<span class="accicon"><i class="fas fa-angle-down rotate-icon"></i></span>
 									</div>
 									<div id="st-program-{{$key}}" class="collapse {{$key == 0?'show':''}}" data-parent="#accordionStProgram">
-										<div class="card-body">
+										<div class="card-body pt-0">
 											<div class="text-justify st-program-section-desc">{!!$tours_program['tours_program-desc']!!}</div>
 										</div>
 									</div>
