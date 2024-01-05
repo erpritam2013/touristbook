@@ -4148,7 +4148,7 @@ public function update_page_extra_data($id,$data)
 
           //   $tables = ['posts'];
 
-        //     $tables = ['hotel_details'];
+             $tables = ['hotel_states'];
 
 
             //$tables = ['tour_locations'];
@@ -4200,14 +4200,14 @@ public function update_page_extra_data($id,$data)
             //$tables = ['country_zones'];
 
              //$tables = ['activities'];
-             $tables = ['tourism_zones'];
+            // $tables = ['tourism_zones'];
             //$tables = ['rooms','room_details','hotels','hotel_details'];
 
 
             $this->info("Truncating tables...");
            //$this->truncate_tables($term_table);
 
-       //    $this->truncate_tables($tables);
+          $this->truncate_tables($tables);
 
 
             $this->info("Table Truncated...");
@@ -4284,9 +4284,9 @@ public function update_page_extra_data($id,$data)
      //  $types = Type::where('type', 'Tour')->get();
 
       //  $languages = Language::get();
-        //$hotels = Hotel::get();
+        $hotels = Hotel::get();
 
-         $this->st_tourism_zones_migration();
+        // $this->st_tourism_zones_migration();
        //   $this->st_activity_package_migration();
        //  $this->st_activity_lists_migration();
        // // $this->st_activity_zones_migration();
@@ -4323,14 +4323,14 @@ public function update_page_extra_data($id,$data)
 
 
 
-     //    $states = State::get();
+         $states = State::get();
         // $this->associate_states_table($hotels, $states, HotelState::class,'hotel_id');
         // $places = Place::get();
 
       // $locations = Location::get();
         //$this->associate_states_table($locations, $states, LocationState::class,'location_id');
        // $this->associate_states_table($activities, $states, ActivityState::class,'activity_id');
- //       $this->associate_states_table($tours, $states, TourState::class,'tour_id');
+      $this->associate_states_table($hotels, $states, HotelState::class,'hotel_id');
       //  $this->associate_language_table($tours, $languages, TourLanguage::class);
 
        // $this->associate_hotel_location_table($hotels, $locations, HotelLocation::class );
