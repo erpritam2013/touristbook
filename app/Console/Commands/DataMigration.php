@@ -4148,7 +4148,7 @@ public function update_page_extra_data($id,$data)
 
           //   $tables = ['posts'];
 
-            // $tables = ['hotel_details'];
+        //     $tables = ['hotel_details'];
 
 
             //$tables = ['tour_locations'];
@@ -4207,7 +4207,7 @@ public function update_page_extra_data($id,$data)
             $this->info("Truncating tables...");
            //$this->truncate_tables($term_table);
 
-           $this->truncate_tables($tables);
+       //    $this->truncate_tables($tables);
 
 
             $this->info("Table Truncated...");
@@ -4375,6 +4375,7 @@ public function update_page_extra_data($id,$data)
        // $this->check_in_and_check_out_change_in_hotel();
         //         $temp = DB::connection($this->wp_connection)->table('wp_postmeta as wp')->select('wp.meta_value')->where('post_id',17559)->where('meta_key','like','save_your_pocket_pdf')->first();
         // dd($this->unserialize_data_format_in_array("$temp->meta_value","save_your_pocket_pdf"));
+
 
 //     $amenities = Amenity::whereIn('wp_taxonomy_id',[2372,1077,2409,2415,2419,881,2427,2429,2408,874, 2437, 867, 2439, 2514, 857, 2449, 1074, 934, 2403, 1076, 1092, 856,2484])->get('id')->pluck('id')->toArray();
 //    // $property_type = PropertyType::whereIn('wp_taxonomy_id',[])->get('id')->pluck('id')->toArray();
