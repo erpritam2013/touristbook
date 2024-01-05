@@ -3,12 +3,15 @@
 @section('content')
 
 @php
-
+    $banner_image = null;
+if(isset($page)) {
 if(isJson($page->featured_image)){
-	$page->featured_image = json_decode($page->featured_image,true);
+    $page->featured_image = json_decode($page->featured_image,true);
+}
+$banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]['id']))?getConversionUrl($page->featured_image[0]['id']):null;
 }
 
-$banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]['id']))?getConversionUrl($page->featured_image[0]['id']):null;@endphp
+@endphp
 
 @include('sites.partials.banner', [
 'bannerUrl' => $banner_image ?? asset('sites/images/dummy/1200x400.jpg'),

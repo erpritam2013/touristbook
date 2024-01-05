@@ -43,4 +43,6 @@ public function posts()
     return $this->belongsToMany(Post::class, 'post_categories', 'post_id', 'category_id');
       
 }
+
+
 }
