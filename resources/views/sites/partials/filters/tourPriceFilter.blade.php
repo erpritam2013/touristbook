@@ -11,7 +11,7 @@
                 <div class="custom-control custom-checkbox">
                     <input type="radio" id="price_{{$key}}" name="price"
                         class="custom-control-input" value="{{$priceRange['value']}}">
-                    <label for="price_{{$key}}" class="custom-control-label">{{$priceRange['label']}}</label>
+                    <label for="price_{{$key}}" class="custom-control-label">{!!$priceRange['label']!!}</label>
                 </div>
             </li>
             @endforeach

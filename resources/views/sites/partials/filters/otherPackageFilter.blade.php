@@ -27,7 +27,7 @@
 				<div class="custom-checkbox">
 					<input type="checkbox" id="parent_other_packages_{{$tal_count}}" name="other_package_parent"
 					class="custom-control-input filter-option filter-other-package-parent" value="{{$key}}" data-parent="{{$parent_name_l}}">
-					<label class="btn btn-grad card-title w-100" for="parent_other_packages_{{$tal_count}}" class="custom-control-label">{{str_replace('-',' ',$parent_data->name)}}</label>
+					<label class="btn btn-grad card-title w-100" for="parent_other_packages_{{$tal_count}}" class="custom-control-label">{!!str_replace('-',' ',$parent_data->name)!!}</label>
 				</div>   
 			</div>
 			<div id="{{$parent_name_l}}" class="collapse" data-parent="#accordionOtherPackage" style="">
@@ -40,7 +40,7 @@
 								<div class="custom-control custom-checkbox">
 									<input type="checkbox" id="other_packages_{{$tal_child_count}}" name="other_packages[]"
 									class="custom-control-input filter-option filter-other-package" value="{{$op_list['id']}}">
-									<label for="other_packages_{{$tal_child_count}}" class="custom-control-label">{{$op_list['name']}}</label>
+									<label for="other_packages_{{$tal_child_count}}" class="custom-control-label">{!!$op_list['name']!!}</label>
 								</div>
 							</li>
 							@php $tal_child_count++; @endphp

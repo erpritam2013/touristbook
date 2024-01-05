@@ -1074,6 +1074,15 @@ if (!function_exists('getPostData')) {
         return $getPostData;
     }
 }
+if (!function_exists('footer_destinations')) {
+function footer_destinations()
+{
+    $NamespacedModel = 'App\\Models\\Location';
+
+    $locations = $NamespacedModel::latest()->limit(5)->get(['id','slug','name']);
+    return $locations;
+}
+}
 
 
 

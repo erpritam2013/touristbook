@@ -4,9 +4,24 @@ namespace App\Repositories;
 
 use App\Interfaces\AmenityRepositoryInterface;
 use App\Models\Terms\Amenity;
+use App\Models\Setting;
+use App\Models\Page;
 
 class AmenityRepository implements AmenityRepositoryInterface 
 {
+
+    private $commanAmenities = null;
+    public function __construct()
+    {
+        $page_id = Setting::get_setting('hotel_list_page');
+        if (!empty($page_id)) {   
+        $page = Page::find($page_id);
+          if (isset($page->extra_data['hotel_commen_amenities'])) {
+              $this->commanAmenities = $page->extra_data['hotel_commen_amenities'];
+          }
+        }
+
+    }
     public function getAllAmenities()
     {
         return Amenity::orderBy('id','desc')->get();
@@ -52,7 +67,13 @@ class AmenityRepository implements AmenityRepositoryInterface
 
     // Get all Active Amenities or by Type
     public function getActiveAmenitiesList($type = null) {
+        
+        if (!empty($this->commanAmenities)) {
+        $amenityBuilder = Amenity::orderBy('name','asc')->where('status', Amenity::ACTIVE)->whereIn('id',$this->commanAmenities);
+        }else{
+
         $amenityBuilder = Amenity::orderBy('name','asc')->where('status', Amenity::ACTIVE);
+        }
 
 
         if($type)

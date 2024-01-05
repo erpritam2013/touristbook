@@ -27,10 +27,10 @@ $fair_and_festivals_banner = (!empty($location->locationMeta->fair_and_festivals
 						if(!empty($fair_and_festivals['fair_and_festivals-image'])){
 
 						$fair_and_festivals_image_arr = json_decode($fair_and_festivals['fair_and_festivals-image'],true);
-						$fair_and_festivals_image = (!empty($fair_and_festivals_image_arr) && isset($fair_and_festivals_image_arr[0]['id']))?getConversionUrl($fair_and_festivals_image_arr[0]['id'],'270x200'):null;
+						$fair_and_festivals_image = (!empty($fair_and_festivals_image_arr) && isset($fair_and_festivals_image_arr[0]['id']))?getConversionUrl($fair_and_festivals_image_arr[0]['id'],'450x417'):null;
 						}
 						@endphp
-						<img class="" src="{{$fair_and_festivals_image ?? asset('sites/images/dummy/270x200.jpg')}}" alt="{{strtolower($fair_and_festivals['fair_and_festivals-title'])}} image">
+						<img class="" src="{{$fair_and_festivals_image ?? asset('sites/images/dummy/450x417.jpg')}}" alt="{{strtolower($fair_and_festivals['fair_and_festivals-title'])}} image">
 					</div>
 				</div>
 			</div>

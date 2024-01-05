@@ -2,9 +2,9 @@
 
  @if(!empty($location->locationMeta->best_time_to_visit_description))
  <div id="best-time-to-visit-description" class="st_location_extra_desc">
- 	<div class="div-desc">
+ 
  		{!!$location->locationMeta->best_time_to_visit_description!!}
- 	</div>
+ 	
  </div>
  @endif
 
