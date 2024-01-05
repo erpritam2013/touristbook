@@ -1,16 +1,26 @@
 @extends('sites.layouts.main')
 @section('title',$title)
 @section('content')
+@if(!isMobileDevice())
+@include('sites.partials.banner-2', [
+'bannerUrl' =>'https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2023/04/Screenshot-2023-04-02-202920.jpg',
+'bannerTitle' => 'Activities',
+'bannerSubTitle' => '',
+])
+@else
 @include('sites.partials.banner', [
 'bannerUrl' =>'https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2023/04/Screenshot-2023-04-02-202920.jpg',
 'bannerTitle' => 'Activities',
 'bannerSubTitle' => '',
 ])
+@endif
 @if(!isMobileDevice())
 <div class="search-form-wrapper hidden-xs hidden-sm">
     <div class="container">
         <div class="search-form hotel-service">
-
+ <div class="map-content-loading-search-input">
+            <div class="st-loader"></div>
+        </div>
             <!--Address-->
 
             <form action="" class="form" method="get">
@@ -38,6 +48,9 @@
 @else
 <div class="container"> 
 <div class="search-form-mobile">
+     <div class="map-content-loading-search-input">
+            <div class="st-loader"></div>
+        </div>
 <form action="" class="form" method="get">
     <div class="form-group">
         <div class="dropdown">

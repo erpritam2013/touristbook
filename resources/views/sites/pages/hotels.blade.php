@@ -1,16 +1,38 @@
 @extends('sites.layouts.main')
 @section('title',$title)
 @section('content')
-@include('sites.partials.banner', [
-'bannerUrl' => asset('sites/images/banner/hotel.jpg'),
+
+@php
+$banner_image = null;
+if(isset($page)) {
+if(isJson($page->featured_image)){
+    $page->featured_image = json_decode($page->featured_image,true);
+}
+$banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]['id']))?getConversionUrl($page->featured_image[0]['id']):null;
+}
+
+@endphp
+
+@if(!isMobileDevice())
+@include('sites.partials.banner-2', [
+'bannerUrl' => $banner_image ?? asset('sites/images/dummy/1200x400.jpg'),
 'bannerTitle' => 'Hotels',
 'bannerSubTitle' => '',
 ])
+@else
+@include('sites.partials.banner', [
+'bannerUrl' => $banner_image ?? asset('sites/images/dummy/1200x400.jpg'),
+'bannerTitle' => 'Hotels',
+'bannerSubTitle' => '',
+])
+@endif
 @if(!isMobileDevice())
 <div class="search-form-wrapper hidden-xs hidden-sm">
     <div class="container">
         <div class="search-form hotel-service">
-
+            <div class="map-content-loading-search-input">
+            <div class="st-loader"></div>
+        </div>
             <!--Address-->
 
             <form action="" class="form" method="get">
@@ -40,6 +62,9 @@
 @else
 <div class="container"> 
 <div class="search-form-mobile">
+     <div class="map-content-loading-search-input">
+            <div class="st-loader"></div>
+        </div>
 <form action="" class="form" method="get">
     <div class="form-group">
         <div class="dropdown">

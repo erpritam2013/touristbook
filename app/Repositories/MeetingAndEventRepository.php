@@ -4,9 +4,23 @@ namespace App\Repositories;
 
 use App\Interfaces\MeetingAndEventRepositoryInterface;
 use App\Models\Terms\MeetingAndEvent;
-
+use App\Models\Setting;
+use App\Models\Page;
 class MeetingAndEventRepository implements MeetingAndEventRepositoryInterface 
 {
+
+     private $commanMeetingAndEvent = null;
+    public function __construct()
+    {
+        $page_id = Setting::get_setting('hotel_list_page');
+        if (!empty($page_id)) {   
+        $page = Page::find($page_id);
+          if (isset($page->extra_data['hotel_common_meetings_and_events'])) {
+              $this->commanMeetingAndEvent = $page->extra_data['hotel_common_meetings_and_events'];
+          }
+        }
+
+    }
     public function getAllMeetingAndEvents()
     {
         return MeetingAndEvent::get();
@@ -52,7 +66,12 @@ class MeetingAndEventRepository implements MeetingAndEventRepositoryInterface
 
     // Get all Active Meeting And Events or by Type
     public function getActiveMeetingAndEventsList($type = null) {
+        if (!empty($this->commanMeetingAndEvent)) {
+        $meetingAndEventBuilder = MeetingAndEvent::orderBy('name','asc')->where('status', MeetingAndEvent::ACTIVE)->whereIn('id',$this->commanMeetingAndEvent);
+        }else{
+
         $meetingAndEventBuilder = MeetingAndEvent::orderBy('name','asc')->where('status', MeetingAndEvent::ACTIVE);
+        }
 
         if($type)
             $meetingAndEventBuilder->where('meeting_and_event_type',$type);

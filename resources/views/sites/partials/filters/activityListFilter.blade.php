@@ -13,7 +13,7 @@
 		@foreach($filterTermActivityList as $key => $activity_list)
 		<div class="card">
 			<div class="card-header {{($tal_count != 0)?'collapsed':''}} main-title-tal" data-toggle="collapse" data-target="#{{$key}}" aria-expanded="true">     
-				<span class="btn btn-grad card-title pt-1 pb-1 px-5 mb-0 w-100">{{str_replace('-',' ',$key)}}</span>
+				<span class="btn btn-grad card-title pt-1 pb-1 px-5 mb-0 w-100">{!!str_replace('-',' ',$key)!!}</span>
 			</div>
 			<div id="{{$key}}" class="collapse {{$tal_count == 0?'show':''}}" data-parent="#accordionTermActivityList" style="">
 				<div class="card-body">
@@ -25,7 +25,7 @@
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" id="term_activity_lists_{{$tal_child_count}}" name="term_activity_lists[]"
 								class="custom-control-input filter-option filter-term-activity-lists" value="{{$ac_list['id']}}">
-								<label for="term_activity_lists_{{$tal_child_count}}" class="custom-control-label">{{$ac_list['name']}}</label>
+								<label for="term_activity_lists_{{$tal_child_count}}" class="custom-control-label">{!!$ac_list['name']!!}</label>
 							</div>
 						</li>
 						@php $tal_child_count++; @endphp

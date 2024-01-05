@@ -22,9 +22,7 @@
                     <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 Nopadding activity-content">
                         <div class="listroBoxmain">
                              
-                            <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{shortDescription($activity->address,45) ?? ''}}@if(strlen($activity->address) > 45)
-                                &nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$activity->address}}" data-more_data_label="Address" style="color:#fba009;"></i>
-                            @endif</p>
+                            <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{$activity->address ?? ''}}</p>
                             <h4 class="service-title"><a href="{{route('activity',$activity->slug)}}">{{ $activity->name }}</a></h4>
                           
                             <div class="row">

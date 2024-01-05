@@ -11,7 +11,7 @@
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" id="_{{$key}}" name="types[]"
                         class="custom-control-input filter-option filter--types" value="{{$type['id']}}">
-                    <label for="_{{$key}}" class="custom-control-label">{{$type['name']}}</label>
+                    <label for="_{{$key}}" class="custom-control-label">{!!$type['name']!!}</label>
                 </div>
             </li>
             @endforeach

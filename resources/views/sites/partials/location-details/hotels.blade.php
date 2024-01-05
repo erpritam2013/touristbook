@@ -7,8 +7,8 @@
 			<div class="listroBox">
 				<figure> {{--<a href="hotel-detailed.html" class="wishlist_bt"></a>--}}
 					{!!is_featured($location_hotel->is_featured)!!}
-					@php $featured_image = (!empty($location_hotel->featured_image) && isset($location_hotel->featured_image[0]['id']))?getConversionUrl($location_hotel->featured_image[0]['id'],'270x200'):null;@endphp
-					<a href="{{route('hotel',$location_hotel->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="" >
+					@php $featured_image = (!empty($location_hotel->featured_image) && isset($location_hotel->featured_image[0]['id']))?getConversionUrl($location_hotel->featured_image[0]['id'],'450x417'):null;@endphp
+					<a href="{{route('hotel',$location_hotel->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/450x417.jpg')}}" class="img-fluid" alt="" >
 						{{--<div class="read_more"><span>Read more</span></div>--}}
 					</a> </figure>
 					<div class="listroBoxmain p-2">
