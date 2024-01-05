@@ -48,6 +48,13 @@
      
     </div>
 
+    <div class="copy-rights">
+        {!!inputTemplate(['name'=>'footer_copyrights','label'=>"Copy Rights Text",'value'=>get_settings_option_value('footer_copyrights') ?? '','id'=>"copy-rights"])!!}
+    </div>
+    <div class="jobs-links">
+        {!!inputTemplate(['name'=>'footer_jobs_link','label'=>"Jobs Site Link",'value'=>get_settings_option_value('footer_jobs_link') ?? '','id'=>"jobs-link",'control'=>'url'])!!}
+    </div>
+
 </div>
 
 </div>

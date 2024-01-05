@@ -17,10 +17,10 @@
 						if(!empty($culinary_retreat['culinary_retreat-image'])){
 
 						$culinary_retreat_image_arr = json_decode($culinary_retreat['culinary_retreat-image'],true);
-						$culinary_retreat_image = (!empty($culinary_retreat_image_arr) && isset($culinary_retreat_image_arr[0]['id']))?getConversionUrl($culinary_retreat_image_arr[0]['id'],'270x200'):null;
+						$culinary_retreat_image = (!empty($culinary_retreat_image_arr) && isset($culinary_retreat_image_arr[0]['id']))?getConversionUrl($culinary_retreat_image_arr[0]['id'],'450x417'):null;
 						}
 						@endphp
-						<img class="" src="{{$culinary_retreat_image ?? asset('sites/images/dummy/270x200.jpg')}}" alt="{{strtolower($culinary_retreat['culinary_retreat-title'])}} image">
+						<img class="" src="{{$culinary_retreat_image ?? asset('sites/images/dummy/450x417.jpg')}}" alt="{{strtolower($culinary_retreat['culinary_retreat-title'])}} image">
 					</div>
 				</div>
 			</div>

@@ -23,7 +23,7 @@
                 @php $active_c = 'active';@endphp
               @endif
               @php $post_title_sm = touristbook_sanitize_title($post_1['activity_zone_section-title']); @endphp
-              <li class="activity-zone-li {{$active_c}} nav-item w-100 mb-1 rounded-0 " role="{{$post_title_sm;}}"><a class="nav-link p-2" href="#{{$post_title_sm}}" aria-controls="{{$post_title_sm;}}" role="tab" data-toggle="tab">{{$post_1['activity_zone_section-title']}}</a></li>
+              <li class="activity-zone-li {{$active_c}} nav-item w-100 mb-1 rounded-0 " role="{{$post_title_sm;}}"><a class="nav-link p-2" href="#{{$post_title_sm}}" aria-controls="{{$post_title_sm;}}" role="tab" data-toggle="tab">{!!$post_1['activity_zone_section-title']!!}</a></li>
 
             @endforeach
           </ul>
