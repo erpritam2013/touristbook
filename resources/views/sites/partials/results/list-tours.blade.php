@@ -21,7 +21,7 @@
                         <div class="listroBoxmain">
 
                             <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{$tour->address ?? ''}}</p>
-                            <h4 class="service-title"><a href="{{route('tour',$tour->slug)}}">{{ $tour->name }}</a></h4>
+                            <h4 class="service-title pb-1"><a href="{{route('tour',$tour->slug)}}">{{ $tour->name }}</a></h4>
 
                             <div class="row">
 
@@ -35,7 +35,7 @@
 
                                       $package_route = (!empty($tour->detail->package_route))?current($tour->detail->package_route):'';
                                       @endphp
-                                      <span class="tour-route-span">{{$package_route['package_route-title'] ?? ''}}</span>
+                                      <span class="tour-route-span">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{$package_route['package_route-title'] ?? ''}}</span>
 
                                   </li>
 
@@ -211,7 +211,7 @@
 
             {!!get_price($tour)!!}
 
-            <span class="unit"><span class="price-ex"><i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;position: absolute;top: -3px;"><span class="TravelGo-opt-tooltip min-w-500px-fs-14fpx">Price usually vary or subject to change please visit website to view the best deal.</span></i></span></span>
+            <span class="unit"><span class="price-ex"><i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;position: absolute;top: -3px;"><span class="TravelGo-opt-tooltip min-w-690px-fs-15fpx">Price usually vary or subject to change please visit website to view the best deal.</span></i></span></span>
 
 
         </div>
