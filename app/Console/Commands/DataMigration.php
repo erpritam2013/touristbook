@@ -4210,6 +4210,7 @@ public function update_page_extra_data($id,$data)
           $this->truncate_tables($tables);
 
 
+
             $this->info("Table Truncated...");
         }
 
