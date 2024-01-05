@@ -17,7 +17,7 @@
                     <label for="package_{{$key}}" class="custom-control-label">{{$packageType['name']}}</label>
                     @else
                     <label for="package_{{$key}}" class="custom-control-label">
-                        <span class="btn btn-default feature-btn">{{$packageType['name']}}</span>
+                        <span class="btn btn-default feature-btn">{!!$packageType['name']!!}</span>
 
                     </label>
                     <i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;position: absolute;top: 7px;left: 215px;"><span class="TravelGo-opt-tooltip min-w-280px-fs-15fpx">{{$packageType['extra_data']['important_note']}}</span></i>

@@ -2,15 +2,24 @@
 @section('title',$title)
 @section('content')
 
-  @php $banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]['id']))?getConversionUrl($page->featured_image[0]['id']):null;@endphp
+@php
+    $banner_image = null;
+if(isset($page)) {
+if(isJson($page->featured_image)){
+    $page->featured_image = json_decode($page->featured_image,true);
+}
+$banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]['id']))?getConversionUrl($page->featured_image[0]['id']):null;
+}
 
-@include('sites.partials.banner', [
+@endphp
+
+@include('sites.partials.banner-2', [
 'bannerUrl' => $banner_image ?? asset('sites/images/dummy/1200x400.jpg'),
 'bannerTitle' => 'Connecting Partners',
 'bannerSubTitle' => '',
 ])
 
-<div class="section pt-4">
+<div class="section">
     <div class="container">
         <div class="row">
             <!-- blog item-->
