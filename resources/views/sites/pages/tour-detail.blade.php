@@ -162,7 +162,7 @@
 										</div>
 									</div>
 									@endif
-									@if(!empty($tour->type_tour))
+									@if(!empty($tour->package_types))
 									<div class="col-xs-6 col-lg-6">
 										<div class="item">
 											<div class="icon tour_type_single">
@@ -171,7 +171,7 @@
 											<div class="info">
 												<h4 class="name">Tour Type</h4>
 												<p class="value">
-													{{ucwords(str_replace('_',' ',$tour->type_tour))}}
+													{{purify_string($tour->package_types()->first()->name ?? '')}}
 												</p>
 											</div>
 										</div>
