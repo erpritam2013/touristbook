@@ -47,7 +47,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         // Note: It is adding gallery key to every request
-        if (isset(request()->gallery) && (request()->gallery == '' || empty(request()->gallery) || request()->gallery == '"[]"')) {
+        if (isset(request()->gallery) && (request()->gallery == '' || empty(request()->gallery) || request()->gallery == '"[]"' || request()->gallery == '""')) {
             request()->merge([
                 'gallery' => "[]",
             ]);
