@@ -78,16 +78,7 @@
 
            </div>
            <!-- places end -->
-           <!--stay start -->
-           <div class="tab-pane" id="tab-stay">
-
-           </div>
-           <!-- stay end -->
-           <!-- package and activity start -->
-           <div class="tab-pane" id="tab-packages-activities">
-
-           </div>
-           <!-- package and activity end -->
+         
            <!-- best time to visit start -->
            <div class="tab-pane" id="best_time_to_visit">
 
@@ -129,8 +120,19 @@
 
       </div>
       <!-- place to visit end -->
+
+        <!--stay start -->
+           <div class="tab-pane" id="tab-stay">
+
+           </div>
+           <!-- stay end -->
+           <!-- package and activity start -->
+           <div class="tab-pane" id="tab-packages-activities">
+
+           </div>
+           <!-- package and activity end -->
       <!-- need_to_know start -->
-      <div class="tab-pane " id="tab-need_to_know">
+      <div class="tab-pane" id="tab-need_to_know">
         <ul class="nav nav-tabs" id="need_to_know_child_tab">
           <li  class="nav-item"><a class="nav-link" href="#tab-get_to_know" data-toggle="tab" onclick="fetchDestinaitonDetail(this)" data-target_element="get-to-know">Get To Know </a></li>
           <li class="nav-item"><a class="nav-link" href="#tab-tourism_zone" data-toggle="tab" onclick="fetchDestinaitonDetail(this)" data-target_element="tourism-zone">Tourism Zone</a></li>
