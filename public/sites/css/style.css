@@ -7995,7 +7995,7 @@ border-top: 1px dotted #ccc;
 	font-size: 11px;
 	visibility: hidden;
 	border-radius: 4px;
-	background: #fba009;
+	background: #07509e;
 	text-align: center;
 	z-index: 99;
 }
@@ -10574,7 +10574,10 @@ h2.title {
 .dropdown-menu li:not(:last-child) a {
 	border-bottom: 1px solid #EEEEEE;
 }
-
+.btn:hover{
+	color: #fff;
+	background: #07509e;
+}
 .btn.btn-grad:hover {
 	color: #fff;
 	text-decoration: none;
@@ -11936,7 +11939,7 @@ body.hotel-detail-page .listingDetails .nav-tabs.custom-tabs .nav-item .nav-link
 	background-color: #07509e;
 	color: #fff;
 	border-color: #07509e;
-	padding: 7px 30px;
+	padding: 7px 20px;
 	border-radius: 3px 3px 0 0;
 	font-size: 14px;
 	margin-right: 1px;
@@ -15441,7 +15444,17 @@ overflow: auto;
 		font-size: 20px;
 	}
 }
-body #showMoreData #showMoreDataBody{
+a{
+	cursor: pointer;
+}
+body #showMoreData h4.service-title {
+        color: #07509e;
+}
+body #showMoreData #showMoreDataBody {
+    border: 1px solid #ddd;
+    margin: 10px;
+}
+/*body #showMoreData #showMoreDataBody{
 	overflow: auto;
 	height: 300px;
 }

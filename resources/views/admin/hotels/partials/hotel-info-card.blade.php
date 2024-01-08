@@ -39,8 +39,9 @@
                     <div id="v-pills-otheroptions" class="tab-pane fade">
                         @include('admin.hotels.tabs.other-options', ["hotel" => $hotel])
                     </div>
+                   
                     <div id="v-pills-policy" class="tab-pane fade">
-                        @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotel->policies ?? null, 'type' => 'policy', 'btnTitle' => 'Add Policy'])
+                        @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotel->policies ?? null, 'type' => 'policies', 'btnTitle' => 'Add Policy'])
                     </div>
                     <div id="v-pills-notices" class="tab-pane fade">
                         @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotel->notices ?? null, 'type' => 'notices', 'btnTitle' => 'Add New'])

@@ -9,7 +9,8 @@
 
             @foreach($filterpackageTypes as $key => $packageType)
             
-            <li class="{{ $key > 2 ? 'li-hide' : '' }}">
+            {{--<li class="{{ $key > 2 ? 'li-hide' : '' }}">--}}
+            <li>
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" id="package_{{$key}}" name="package_types[]"
                         class="custom-control-input filter-option filter-package-types" value="{{$packageType['id']}}">
@@ -24,11 +25,12 @@
                     @endif
                 </div>
             </li>
+            {{--</li>--}}
             @endforeach
         </ul>
-        @if($filterpackageTypes->count() > 3)
+       {{-- @if($filterpackageTypes->count() > 3)
         <a href="javascript:void(0)" class="more-li">More <i class="fa fa-caret-down"></i></a>
-        @endif
+        @endif--}}
         @endif
 
 

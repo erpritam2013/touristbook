@@ -39,7 +39,7 @@
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="countryname" name="countryname" value="{{$country->countryname ?? ''}}" placeholder="Enter a countryname..">
+                                        <input type="text" class="form-control" id="countryname" name="countryname" value="{!!$country->countryname ?? ''!!}" placeholder="Enter a countryname..">
 
                                         {!! get_form_error_msg($errors, 'countryname') !!}
                                     </div>

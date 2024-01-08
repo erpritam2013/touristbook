@@ -56,12 +56,12 @@
         <ul class="nav nav-tabs custom-tabs sticky-top" id="custom-tabs" style="top:120px;z-index:99;">
           <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#tab-about"> About </a>
           </li>
+          <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-accomodation"> Accomodation
+        </a>
+      </li>
           <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-facilities"> Facilities
           </a>
         </li>
-        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-accomodation"> Accomodation
-        </a>
-      </li>
       <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-offers"> Offer &
         Packages
       </a> </li>
@@ -533,9 +533,9 @@
 
 <div class="notices listingDetails booking-search mt-4 ">
   <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    {{--<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <h5 class="mb-4 st-heading-section">ft Notice</h5>
-    </div>
+    </div>--}}
 
     @if ($hotel->notices)
     @foreach ($hotel->notices as $notice)
@@ -589,10 +589,11 @@
 
         <div class="row">
           <div class="col-md-4">
-            <a href="#" class="btn btn-grad w-100 font-weight-bold">Booking on Call</a>
+             @php $website = touristbook_string_explode($hotel->contact['website']); @endphp
+              <button type="button" class="btn btn-grad w-100 font-weight-bold" onclick="window.open('{{$website}}', '_blank');" {{(empty($website))?'disabled':''}}><span class="st-hotel-website">{{(!empty($website))?"Hotel Website":"Booking On Call"}}</span></button>
           </div>
           <div class="col-md-4">
-            <a href="#" class="btn btn-grad w-100 font-weight-bold">Compare Prices</a>
+            <a href="{{$hotel->external_link ?? '#'}}" class="btn btn-grad w-100 font-weight-bold" target="_blank">Compare Prices</a>
           </div>
           <div class="col-md-4">
             <a href="javascript:void(0);" class="btn btn-grad w-100 font-weight-bold" id="tourism-zone-link">Tourism Zone</a>

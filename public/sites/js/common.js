@@ -798,7 +798,12 @@ function loadStreetMap() {
                 term: request.term,
             },
             success: function (data) {
-                response(data);
+
+                response($.map(data, function(item) {
+                   item.value =  $('<span></span>').html(item.value).text();
+                return item;
+            }));
+            
             },
         });
     },
