@@ -45,7 +45,7 @@ class TourPriceComposer
                 'label' => get_price(10000).'-'.get_price(20000)
             ],
             [
-                'value' => '30000;39999',
+                'value' => '20000;29999',
                 'symbol' => $currency,
                 'min' => 20000,
                 'max' => 29999,
