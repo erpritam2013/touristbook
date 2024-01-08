@@ -19,11 +19,12 @@
             <div class="col-lg-10">
     @endif
     <div class="gallery-controls">
+   
         <input type="hidden" class="form-control gallery-input {{ $class ?? '' }}" name="{{ $name ?? '' }}"
-            value="{{ json_encode($value) ?? json_encode([]) }}" id="{{ $id ?? '' }}" placeholder="Enter {{ $label ?? '' }}..." />
+            value="{{ (!empty($value) && !isJson($value))?json_encode($value):json_encode([]) }}" id="{{ $id ?? '' }}" placeholder="Enter {{ $label ?? '' }}..." />
 
         <button type="button" class="btn btn-primary mt-2 add-gallery-btn" smode="{{ $smode ?? 'single' }}"
-            selectedImages="{{ json_encode($value) ?? json_encode([]) }}">+</button>
+            selectedImages="{{ (!empty($value) && !isJson($value))?json_encode($value):json_encode([]) }}">+</button>
         <div class="media-preview">
          
             @if(!empty($value) && isset($value) && is_array($value))
