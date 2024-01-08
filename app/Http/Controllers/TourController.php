@@ -430,7 +430,7 @@ public function changeStatus(Request $request): JsonResponse
         'st_tour_external_booking_link' => null,
     ]);
   }
-
+  
   $this->tourRepository->updateTour($tour->id,$tourDetails);
 
   if ($tour) {
