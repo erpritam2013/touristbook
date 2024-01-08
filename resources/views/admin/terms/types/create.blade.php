@@ -31,7 +31,7 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="name" name="name" value="{{$type->name ?? ''}}" placeholder="Enter a name..">
+                                    <input type="text" class="form-control" id="name" name="name" value="{!!$type->name ?? ''!!}" placeholder="Enter a name..">
 
                                     {!! get_form_error_msg($errors, 'name') !!}
                                 </div>

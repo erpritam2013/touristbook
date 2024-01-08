@@ -79,9 +79,9 @@
 
     <button onclick="topScrollSite()" id="topScrollSite" title="Go to top"><i class="fa fa-arrow-up"></i></button>
 
-    <div class="modal fade bd-example-modal-xl" id="showMoreData" tabindex="-1" role="dialog" aria-labelledby="streetLabel"
+    <div class="modal fade" id="showMoreData" tabindex="-1" role="dialog" aria-labelledby="streetLabel"
     aria-hidden="true" style="z-index: 999999;top: 100px;">
-    <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title service-title" id="showMoreDataLabel"></h4>
