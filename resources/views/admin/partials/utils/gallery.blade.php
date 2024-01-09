@@ -31,13 +31,17 @@
                 <div class="row">
 
                 @foreach($value as $image)
+                @if(!empty($image))
                 <div class="col-xl-3">
                     @if(is_array($image))
                     
                     <img src="{{$image['url'] ?? ''}}" class="img" height="100" width="100" id="image-path-{{$image['id']}}" />
+
                     @endif
                 </div>
+                @endif
                 @endforeach
+                <button type="button" class="sortable-gallery" data-input_target="{{ $name ?? '' }}" onclick="sortable_gallery(this)">Sort Item</button>
                 </div>
             @endif
         </div>
