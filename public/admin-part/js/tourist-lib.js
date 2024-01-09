@@ -1157,6 +1157,24 @@ const changeTabToFileList = () => {
 
 }
 
+const sortable_gallery_fun = () => {
+let cardListElm = $(".image-list");
+
+if (cardListElm.length > 0) {
+
+    cardListElm.sortable({
+
+        update: function (event, ui) {
+
+            //changeSubformOrder($(this));
+
+        },
+
+    });
+
+}
+}
+
 
 
 function uploadFile(file, i) {
@@ -1227,10 +1245,6 @@ function uploadFile(file, i) {
 
 }
 
-
-
-
-
 $(".submit-media").on("click", function() {
 
     let targetElem = $(this)[0].targetElem
@@ -1264,7 +1278,7 @@ $(".submit-media").on("click", function() {
 
 
     let imageHtml = '';
-
+   
     imageHtml +='<div class="row">';
 
     console.log("Selected Images", selectedImages)
@@ -1279,7 +1293,9 @@ $(".submit-media").on("click", function() {
 
         })
     }
-
+    if (targetElem.attr('smode') == "multiple") {
+     imageHtml +='<button type="button" class="sortable-gallery" data-input_target="'+targetElem.parent().find('.gallery-input').first().attr('name')+'" onclick="sortable_gallery(this)">Sort Item</button>';
+    }
     imageHtml +='</div>';
 
     targetElem.parent().find(".media-preview").first().html(imageHtml)
@@ -1292,7 +1308,106 @@ $(".submit-media").on("click", function() {
 
 })
 
+//let sortable_gallery = $('.sortable-gallery');
+let sortable_gallery_done = $('.done-sort-gallery');
+window.remove_image = function(ele){
+    if (confirm('are you sure remove this image')) {
+        $(ele).parent().remove();
+        let cardListElm = $(".image-list");
+        cardListElm.sortable("refresh")
+    }
+}
 
+window.sortable_gallery = function(ele){
+     $("#sort-gallery-modal").modal("show");
+
+    let parent = $(ele).closest('.gallery-controls');
+    let input_value = parent.find('.gallery-input').first().val();
+    if (isJSON(input_value) && (input_value != '' || input_value != null)) {
+
+
+    
+    let inputImages = $.parseJSON(input_value);
+    let imageHtml = "";
+    imageHtml +='<div class="row image-list">';
+     if(inputImages.length > 0){
+        inputImages.forEach((imageObj, idx) => {
+            if (imageObj != null) {
+
+            imageHtml +=`<div class="col-xl-3 image-list-item" data-id="${imageObj.id}" data-url="${imageObj.url}">`;
+
+            imageHtml += `<img src="${imageObj.url}" class="img" height="100" width="100" id="image-path-${imageObj.id}" />`
+
+            imageHtml +='<i class="fa fa-remove remove-image" onclick="remove_image(this)"></i>';
+            imageHtml +='</div>';
+            }
+
+
+        })
+    }
+
+     imageHtml +='</div>';
+     $("#sort-gallery-modal").find(".sort-gallery").first().html(imageHtml);
+     $("#sort-gallery-modal").find(".done-sort-gallery").first().attr('data-input_target',parent.find('.gallery-input').first().attr('id'));
+
+
+     sortable_gallery_fun();
+    }
+}
+
+
+sortable_gallery_done.on('click',function(){
+let image_list_item = $('#sort-gallery-modal .sort-gallery .image-list .image-list-item');
+
+let image_list = [];
+$(image_list_item).each((idx,imageObj ) => {
+   
+
+ image_list.push({'id':$(imageObj).data('id'),'url':$(imageObj).data('url')});
+    
+});
+
+let jsonStringify = JSON.stringify(image_list);
+
+    let target_element = $(`#${$(this).data('input_target')}`);
+
+  
+    target_element.val(jsonStringify);
+
+    $(target_element).closest('.gallery-controls').find('.add-gallery-btn').first().attr("selectedImages", jsonStringify);
+
+    let imageHtml_2 = '';
+   
+    imageHtml_2 +='<div class="row">';
+
+
+    if(image_list.length > 0){
+        image_list.forEach((imageObj_2, idx_2) => {
+
+           
+            imageHtml_2 +='<div class="col-xl-3">';
+
+            imageHtml_2 += `<img src="${imageObj_2.url}" class="img" height="100" width="100" id="image-path-${imageObj_2.id}" />`
+
+            imageHtml_2 +='</div>';
+
+        })
+    }
+    
+     imageHtml_2 +='<button type="button" class="sortable-gallery" data-input_target="'+$(this).data('input_target')+'" onclick="sortable_gallery(this)">Sort Item</button>';
+    
+    imageHtml_2 +='</div>';
+
+    $(target_element).closest('.gallery-controls').find(".media-preview").first().html(imageHtml_2)
+
+   
+    $("#sort-gallery-modal").find(".sort-gallery").first().html("");
+    $("#sort-gallery-modal").modal("hide");
+    
+
+
+   
+});
 
 let mediaSelector = ".add-media-btn, .add-gallery-btn"
 let mediaRemove = '.remove-media-btn';
@@ -1313,6 +1428,7 @@ $("body").on("click", mediaSelector, function(){
 
         // Model Open
 
+    
     $("#file-modal").modal("show");
 
         // Store Element
