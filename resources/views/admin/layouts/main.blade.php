@@ -51,6 +51,7 @@
            Include Modals
            ***********************************-->
            @include('admin.partials.modals.file')
+           @include('admin.partials.modals.gallery_sort')
 
         <!--**********************************
            Support ticket button end

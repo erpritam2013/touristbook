@@ -11,6 +11,9 @@
                 <div class="card-header">
                     <h4 class="card-title">{{$title}}</h4>
                     <div align="right">
+                        @if(isset($tour) && !empty($tour))
+                        <a href="{{route('tour',$tour->slug)}}" class="btn btn-info" target="_blank"><i class="fa fa-file"></i> view</a>
+                        @endif
                         <a href="{{route('admin.tours.index')}}" class="btn btn-dark"><i class="fa fa-arrow-right"></i> Back</a>
                     </div>
                 </div>
