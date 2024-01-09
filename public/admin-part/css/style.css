@@ -29402,3 +29402,13 @@ div#tb-image-prev {
 #setting-form-footer .image-increase .media-controls .media-preview img{
     width: 200px;
 }
+
+.remove-image{
+    
+    background: red;
+    color: #fff;
+    padding: 5px;
+    position: relative;
+    top: -100px;
+    left: 79px;
+}
