@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Tour;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -33,6 +34,11 @@ class TourDataTable extends DataTable
                     return date('d-m-Y',strtotime($row->created_at));
                 })->editColumn('updated_at', function($row) {
                     return date('d-m-Y',strtotime($row->updated_at));
+                })->editColumn('name', function($row) {
+                    $nameHtml = '<p>'.$row->name.'</p>';
+                    $editHtml = $row->isEditing() ? '<p class="edit-context">Editing</p>' : '';
+                    $editor_name = (!empty($row->editor_name())) ? '<p class="edit-name">( '.$row->editor_name().' )</p>' : '';
+                    return $nameHtml.$editHtml.$editor_name;
                 })->addColumn('status', function($row) {
                     $checked = "";
                     if ($row->status == 1) {
@@ -44,7 +50,7 @@ class TourDataTable extends DataTable
                     return ($row->address) ? $row->address : '';
                 })->addColumn('del',function($row){
                  return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'">';
-            })->rawColumns(['status','action','del','address']);
+            })->rawColumns(['status','action','del','address','name']);
     }
 
     /**
@@ -70,7 +76,8 @@ class TourDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(3)
+
+                    ->orderBy(2,'asc')
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -80,6 +87,7 @@ class TourDataTable extends DataTable
                         Button::make('reset'),
                         Button::make('reload')
                     ])->parameters($this->getParameters());
+
     }
 
     /**
@@ -131,7 +139,7 @@ class TourDataTable extends DataTable
             'fnDrawCallback'=> 'function(){$(".toggle-class").bootstrapToggle()}',
             'paging' => true,
             'searching' => true,
-            'info' => false,
+            'info' => true,
         ];
     }
 
