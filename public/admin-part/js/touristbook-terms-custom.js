@@ -607,5 +607,17 @@ $('body').on('change','.toggle-class',function() {
     callAjax(ajaxurl,data);
 })
         /*change status js end*/
+// window.addTag = () =>{
+//     let a_tag = '<a class="paginate_button d-none custom_paginate_button" aria-controls="touristbook-datatable" tabindex="0" data-dt-idx="8"></a>';
+//     $('body .dataTables_paginate').find('.paginate_button').last().after(a_tag);
+// }
 
+// $('.proceed_page').on('click',function(){
+//     let custom_page_no = $('#custom_page_no').val();
+//     if (custom_page_no != "") {
+//        let custom_paginate_button = $('body .dataTables_paginate').find('.custom_paginate_button').first();
+//        $(custom_paginate_button).text(custom_page_no);
+//        $(custom_paginate_button).trigger('click');
+//     }
+// })
 });
