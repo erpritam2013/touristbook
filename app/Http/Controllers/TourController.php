@@ -105,10 +105,14 @@ class TourController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(TourDataTable $dataTable)
+    public function index(TourDataTable $dataTable,Request $request)
     {
+        
         $data['tours'] = Tour::count();
         $data['title'] = 'Tour List';
+             // if (isset($request->draw) && !empty($request->draw)) {
+        //    $dataTable->page(56)->draw('page');
+        // }
         return $dataTable->render('admin.tours.index', $data);
     }
 
@@ -134,9 +138,9 @@ class TourController extends Controller
      */
     public function store(StoreTourRequest $request)
     {
-        
+
      //   if (isset($request->featured_image)) {
-       
+
      //     $request->merge([
      //        'featured_image' => json_decode($request->featured_image,true),
      //    ]);
@@ -271,9 +275,11 @@ class TourController extends Controller
          // "properties_near_by",
        "check_editing",
 
+
    ];
 
    $tour->detail()->create($request->only($tourMetaData));
+
 
 
    $tour->package_types()->attach($request->get('package_types'));
@@ -281,7 +287,9 @@ class TourController extends Controller
    $tour->types()->attach($request->get('types'));
    $tour->languages()->attach($request->get('language'));
    $tour->states()->attach($request->get('state_id'));
-   
+
+
+
    $tour->locations()->attach($request->get('location_id'));
 
 
