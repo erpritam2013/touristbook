@@ -70,7 +70,7 @@ class TourDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(3)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -100,6 +100,7 @@ class TourDataTable extends DataTable
             ->exportable(false)
             ->printable(false)->width(10)
             ->addClass('text-center'),
+            Column::make('id'),
             Column::make('name'),
             Column::make('slug')->searchable(false)
             ->orderable(false)
