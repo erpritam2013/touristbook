@@ -29363,6 +29363,43 @@ div#paginationList {
     border: 1px solid orange;
     border-radius: 5px;
 }
+.edit-name {
+    padding: 2px;
+    margin: 0;
+    line-height: 1;
+    font-size: 12px;
+    width: 100%;
+    text-align: center;
+    background-color: #50e3c2;
+    color: #000;
+    border: 1px solid #50e3c2;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.edit-context{
+    animation-duration: 1200ms;
+    animation-name: blink;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    -webkit-animation:blink 1200ms infinite; /* Safari and Chrome */
+}
+@keyframes blink {
+    from {
+        color:#000;
+    }
+    to {
+        color:white;
+    }
+}
+@-webkit-keyframes blink {
+    from {
+        color:#000;
+    }
+    to {
+        color:white;
+    }
+}
 
 #preloader-file {
     position: absolute;

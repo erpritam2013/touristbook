@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Location;
 use App\Models\TourDetail;
+use App\Models\User;
 use App\Models\CountryZone;
 use App\Models\Terms\Type;
 use App\Models\Terms\OtherPackage;
@@ -62,6 +63,14 @@ class Tour extends Model
             'editing_expiry_time' => Carbon::now()->addMinutes(5)
         ]);
         $this->save();
+    }
+    public function editor_name()
+    {
+        if ($this->is_editing && $this->editor_id && !$this->editing_expiry_time->isPast()) {
+            return User::find($this->editor_id)->name;
+        }
+
+
     }
 
     public function freeEditing() {
