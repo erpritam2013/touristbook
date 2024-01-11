@@ -76,6 +76,7 @@ class TourDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
+
                     ->orderBy(2,'asc')
                     ->selectStyleSingle()
                     ->buttons([
