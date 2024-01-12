@@ -5,9 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\File;
 use App\Models\Media;
 use Illuminate\Http\Request;
-
+use App\DataTables\MediaDataTable;
+use Session;
 class FileController extends Controller
 {
+
+
+      public function index(MediaDataTable $dataTable)
+    {
+        $data['media'] = Media::count();
+        $data['title'] = 'Media List';
+        return $dataTable->render('admin.settings.media-object.index', $data);
+    }
     public function loadImages(Request $request) {
         $pageNumber = 1;
         if($request->has('page')) {
@@ -18,7 +27,7 @@ class FileController extends Controller
 
         if($request->has('searchTxt') && !empty($request->get('searchTxt'))) {
             $searchTxt = $request->get('searchTxt');
-            $mediaQuery->where('file_name', 'LIKE', '%'.$searchTxt.'%')->orWhere('name', 'LIKE', '%'.$searchTxt.'%');
+            $mediaQuery->where('name', 'LIKE', '%'.$searchTxt.'%')->orWhere('file_name', 'LIKE', '%'.$searchTxt.'%');
         }
         // $mediaQuery->get('id')
          //$item->responsive_images = getConversionUrl($item->id,'thumbnail');
@@ -49,5 +58,19 @@ class FileController extends Controller
             'name' => $media->name,
             'thumbnail' => $file->getFirstMediaUrl('images','thumbnail')
         ];
+    }
+
+      public function destroy(Request $request,$id)
+    {
+     
+        $media = Media::find($id);
+   
+        if (!$media) {
+           abort(404);
+        }
+
+        $media->delete();
+        Session::flash('success','Media Deleted Successfully');
+        return back();
     }
 }
