@@ -2,6 +2,7 @@ $(document).ready(function ($) {
     var base_url = $("#base-url").val();
 
     var preloader = $('body div#preloader');
+    var no_modal = false;
 
 
     const showLoader = function() {
@@ -23,62 +24,62 @@ $(document).ready(function ($) {
         let html = '';
         if (Object.keys(tb_data).length != 0) {
 
-         html +='<div class="form-group row">';
-         html +='<img src="'+tb_data.imageUrl+'" width="250" height="250">';
-         html +='</div>';
-         html +='<div class="form-group row">';
-         html +='<label>Title</label>';
-         html +='<input class="form-control" id="tb-image-name-prev" readonly value="'+tb_data.title+'">';
-         html +='</div>';
-         html +='<div class="form-group row">';
-         html +='<label>Image Url</label>';
-         html +='<textarea class="form-control" id="tb-image-url-prev" readonly rows="5" title="'+tb_data.url+'">'+tb_data.url+'</textarea>';
-         html +='</div>';
-         html +='<div class="form-group row">';
-         html +=`<button onclick="CopyToClipboard(document.getElementById('tb-image-url-prev'))" class="btn btn-sm btn-info">Copy Url to Clipboard</button>`;
-         html +='<span class="prev-success d-none" aria-hidden="true" style="padding: 5px;color: green;">Copied!</span>';
-         html +='</div>';
-     }else{
-      html += '<div class="show-prev-image-data">Show Image Preview!</div>';
+           html +='<div class="form-group row">';
+           html +='<img src="'+tb_data.imageUrl+'" width="250" height="250">';
+           html +='</div>';
+           html +='<div class="form-group row">';
+           html +='<label>Title</label>';
+           html +='<input class="form-control" id="tb-image-name-prev" readonly value="'+tb_data.title+'">';
+           html +='</div>';
+           html +='<div class="form-group row">';
+           html +='<label>Image Url</label>';
+           html +='<textarea class="form-control" id="tb-image-url-prev" readonly rows="5" title="'+tb_data.url+'">'+tb_data.url+'</textarea>';
+           html +='</div>';
+           html +='<div class="form-group row">';
+           html +=`<button onclick="CopyToClipboard(document.getElementById('tb-image-url-prev'))" class="btn btn-sm btn-info">Copy Url to Clipboard</button>`;
+           html +='<span class="prev-success d-none" aria-hidden="true" style="padding: 5px;color: green;">Copied!</span>';
+           html +='</div>';
+       }else{
+          html += '<div class="show-prev-image-data">Show Image Preview!</div>';
+      }
+      return html;
   }
-  return html;
-}
 
-$('.nav-link').on('click',function(){
+  $('.nav-link').on('click',function(){
 
     if ($(this).attr('href') == '#upload-media') {
         let obj_image = new Object();
         $('#tb-image-prev').html(showImagePrevHtml(obj_image));
     }
 })
-$("#file-modal").on("hidden.bs.modal", function () {
+  $("#file-modal").on("hidden.bs.modal", function () {
     let obj_image = new Object();
     $('#tb-image-prev').html(showImagePrevHtml(obj_image));
 });
 
-var base_admin_url = $("#base-admin-url").val();
+  var base_admin_url = $("#base-admin-url").val();
 
 
 
     // Map Variable
 
-const addressTextboxSingle = document.getElementById("address");
+  const addressTextboxSingle = document.getElementById("address");
 
-var addressTextbox = document.getElementById("map_address");
+  var addressTextbox = document.getElementById("map_address");
 
-var latitudeTextbox = document.getElementById("latitude");
+  var latitudeTextbox = document.getElementById("latitude");
 
-var longitudeTextbox = document.getElementById("longitude");
+  var longitudeTextbox = document.getElementById("longitude");
 
-var zoomTextbox = document.getElementById("zoom_level");
-
-
-
-var mapElem = document.getElementById("map");
+  var zoomTextbox = document.getElementById("zoom_level");
 
 
 
-let touristEditorsElems = $(".tourist-editor");
+  var mapElem = document.getElementById("map");
+
+
+
+  let touristEditorsElems = $(".tourist-editor");
 
 
 
@@ -122,11 +123,11 @@ let touristEditorsElems = $(".tourist-editor");
 
         if (typeof something != 'string')
 
-           something = JSON.stringify(something);
+         something = JSON.stringify(something);
 
 
 
-       try {
+     try {
 
         JSON.parse(something);
 
@@ -852,13 +853,13 @@ $('.file-list').on("click", ".file", function() {
     if(!$(this).hasClass('active')) {
 
             // adding
-     tb_image_prev_data.title = fileName;
-     tb_image_prev_data.imageUrl = fileUrl;
-     tb_image_prev_data.url = fileUrl;
+       tb_image_prev_data.title = fileName;
+       tb_image_prev_data.imageUrl = fileUrl;
+       tb_image_prev_data.url = fileUrl;
 
-     $('#tb-image-prev').html(showImagePrevHtml(tb_image_prev_data));
+       $('#tb-image-prev').html(showImagePrevHtml(tb_image_prev_data));
 
-     if(mediaMode == "single") {
+       if(mediaMode == "single") {
 
                 // Remove active class from All
 
@@ -895,8 +896,8 @@ $('.file-list').on("click", ".file", function() {
 }else {
 
             // removing
- $('#tb-image-prev').html(showImagePrevHtml(tb_image_prev_data));
- if(mediaMode == "single") {
+   $('#tb-image-prev').html(showImagePrevHtml(tb_image_prev_data));
+   if(mediaMode == "single") {
 
                 // Remove active class from All
 
@@ -969,6 +970,16 @@ $("#fileElem").on("change", function(e) {
 
     handleFiles(e.currentTarget.files);
 
+})
+
+$("#fileElemAdd").on("change", function(e) {
+    no_modal = true;
+    handleFiles(e.currentTarget.files);
+
+});
+
+$('#add-new-media').on('click',function(){
+    $('#drop-area').toggle();
 })
 
 
@@ -1158,21 +1169,21 @@ const changeTabToFileList = () => {
 }
 
 const sortable_gallery_fun = () => {
-let cardListElm = $(".image-list");
+    let cardListElm = $(".image-list");
 
-if (cardListElm.length > 0) {
+    if (cardListElm.length > 0) {
 
-    cardListElm.sortable({
+        cardListElm.sortable({
 
-        update: function (event, ui) {
+            update: function (event, ui) {
 
             //changeSubformOrder($(this));
 
-        },
+            },
 
-    });
+        });
 
-}
+    }
 }
 
 
@@ -1201,8 +1212,6 @@ function uploadFile(file, i) {
 
     })
 
-
-
     xhr.addEventListener('readystatechange', function(e) {
 
         if (xhr.readyState == 4 && xhr.status == 200) {
@@ -1210,18 +1219,24 @@ function uploadFile(file, i) {
                 updateProgress(i, 100) // <- Add this
 
                 // Refresh the Listing
+                if (!no_modal) {
 
-                loadImages()
+                    loadImages()
 
                 // Tab Change
 
-                changeTabToFileList()
+                    changeTabToFileList()
+                }
 
                 // Reset Progressbar
+                
 
                 updateProgress(i, 0)
 
-
+                                //without modal upload media
+                if (no_modal) {
+                    window.location.reload();
+                }
 
 
 
@@ -1278,7 +1293,7 @@ $(".submit-media").on("click", function() {
 
 
     let imageHtml = '';
-   
+    
     imageHtml +='<div class="row">';
 
     console.log("Selected Images", selectedImages)
@@ -1294,15 +1309,15 @@ $(".submit-media").on("click", function() {
         })
     }
     if (targetElem.attr('smode') == "multiple") {
-     imageHtml +='<button type="button" class="sortable-gallery" data-input_target="'+targetElem.parent().find('.gallery-input').first().attr('name')+'" onclick="sortable_gallery(this)">Sort Item</button>';
-    }
-    imageHtml +='</div>';
+       imageHtml +='<button type="button" class="sortable-gallery" data-input_target="'+targetElem.parent().find('.gallery-input').first().attr('name')+'" onclick="sortable_gallery(this)">Sort Item</button>';
+   }
+   imageHtml +='</div>';
 
-    targetElem.parent().find(".media-preview").first().html(imageHtml)
+   targetElem.parent().find(".media-preview").first().html(imageHtml)
 
 
 
-    $("#file-modal").modal("hide");
+   $("#file-modal").modal("hide");
 
 
 
@@ -1319,72 +1334,72 @@ window.remove_image = function(ele){
 }
 
 window.sortable_gallery = function(ele){
-     $("#sort-gallery-modal").modal("show");
+   $("#sort-gallery-modal").modal("show");
 
-    let parent = $(ele).closest('.gallery-controls');
-    let input_value = parent.find('.gallery-input').first().val();
-    if (isJSON(input_value) && (input_value != '' || input_value != null)) {
+   let parent = $(ele).closest('.gallery-controls');
+   let input_value = parent.find('.gallery-input').first().val();
+   if (isJSON(input_value) && (input_value != '' || input_value != null)) {
 
 
     
     let inputImages = $.parseJSON(input_value);
     let imageHtml = "";
     imageHtml +='<div class="row image-list">';
-     if(inputImages.length > 0){
+    if(inputImages.length > 0){
         inputImages.forEach((imageObj, idx) => {
             if (imageObj != null) {
 
-            imageHtml +=`<div class="col-xl-3 image-list-item" data-id="${imageObj.id}" data-url="${imageObj.url}">`;
+                imageHtml +=`<div class="col-xl-3 image-list-item" data-id="${imageObj.id}" data-url="${imageObj.url}">`;
 
-            imageHtml += `<img src="${imageObj.url}" class="img" height="100" width="100" id="image-path-${imageObj.id}" />`
+                imageHtml += `<img src="${imageObj.url}" class="img" height="100" width="100" id="image-path-${imageObj.id}" />`
 
-            imageHtml +='<i class="fa fa-remove remove-image" onclick="remove_image(this)"></i>';
-            imageHtml +='</div>';
+                imageHtml +='<i class="fa fa-remove remove-image" onclick="remove_image(this)"></i>';
+                imageHtml +='</div>';
             }
 
 
         })
     }
 
-     imageHtml +='</div>';
-     $("#sort-gallery-modal").find(".sort-gallery").first().html(imageHtml);
-     $("#sort-gallery-modal").find(".done-sort-gallery").first().attr('data-input_target',parent.find('.gallery-input').first().attr('id'));
+    imageHtml +='</div>';
+    $("#sort-gallery-modal").find(".sort-gallery").first().html(imageHtml);
+    $("#sort-gallery-modal").find(".done-sort-gallery").first().attr('data-input_target',parent.find('.gallery-input').first().attr('id'));
 
 
-     sortable_gallery_fun();
-    }
+    sortable_gallery_fun();
+}
 }
 
 
 sortable_gallery_done.on('click',function(){
-let image_list_item = $('#sort-gallery-modal .sort-gallery .image-list .image-list-item');
+    let image_list_item = $('#sort-gallery-modal .sort-gallery .image-list .image-list-item');
 
-let image_list = [];
-$(image_list_item).each((idx,imageObj ) => {
-   
+    let image_list = [];
+    $(image_list_item).each((idx,imageObj ) => {
+     
 
- image_list.push({'id':$(imageObj).data('id'),'url':$(imageObj).data('url')});
-    
-});
+       image_list.push({'id':$(imageObj).data('id'),'url':$(imageObj).data('url')});
+       
+   });
 
-let jsonStringify = JSON.stringify(image_list);
+    let jsonStringify = JSON.stringify(image_list);
 
     let target_element = $(`#${$(this).data('input_target')}`);
 
-  
+    
     target_element.val(jsonStringify);
 
     $(target_element).closest('.gallery-controls').find('.add-gallery-btn').first().attr("selectedImages", jsonStringify);
 
     let imageHtml_2 = '';
-   
+    
     imageHtml_2 +='<div class="row">';
 
 
     if(image_list.length > 0){
         image_list.forEach((imageObj_2, idx_2) => {
 
-           
+         
             imageHtml_2 +='<div class="col-xl-3">';
 
             imageHtml_2 += `<img src="${imageObj_2.url}" class="img" height="100" width="100" id="image-path-${imageObj_2.id}" />`
@@ -1394,19 +1409,19 @@ let jsonStringify = JSON.stringify(image_list);
         })
     }
     
-     imageHtml_2 +='<button type="button" class="sortable-gallery" data-input_target="'+$(this).data('input_target')+'" onclick="sortable_gallery(this)">Sort Item</button>';
+    imageHtml_2 +='<button type="button" class="sortable-gallery" data-input_target="'+$(this).data('input_target')+'" onclick="sortable_gallery(this)">Sort Item</button>';
     
     imageHtml_2 +='</div>';
 
     $(target_element).closest('.gallery-controls').find(".media-preview").first().html(imageHtml_2)
 
-   
+    
     $("#sort-gallery-modal").find(".sort-gallery").first().html("");
     $("#sort-gallery-modal").modal("hide");
     
 
 
-   
+    
 });
 
 let mediaSelector = ".add-media-btn, .add-gallery-btn"
@@ -1480,8 +1495,8 @@ const convertToSlug = function(Text) {
 
 const processedPageTemplateHtml = function(data,id){
     if (data != '') {
-     $(`body ${id}`).html(data);
-     $('#page-extra-data').on("click",'.btn-add-subform', function () {
+       $(`body ${id}`).html(data);
+       $('#page-extra-data').on("click",'.btn-add-subform', function () {
 
         elemRef = $(this);
 
@@ -1501,7 +1516,7 @@ const processedPageTemplateHtml = function(data,id){
 
         }); // On Click Event Block Ends
 
-     setTimeout(function() {
+       setTimeout(function() {
 
         $(`body ${id}`).find(".tourist-editor").each((idx, te) => {
 
@@ -1538,7 +1553,7 @@ const processedPageTemplateHtml = function(data,id){
             // Get the selected place.
 
                 var place = autocomplete.getPlace();
-              
+                
 
             // Set the address textbox to the selected place's address.
                 addressTextbox.value = place.formatted_address;
@@ -1546,7 +1561,7 @@ const processedPageTemplateHtml = function(data,id){
 
 
                 let latitude = place.geometry.location.lat();
-              
+                
 
                 let longitude = place.geometry.location.lng();
 
@@ -1562,19 +1577,19 @@ const processedPageTemplateHtml = function(data,id){
 
             });
             if (latitudeTextbox != "" && longitudeTextbox != "") {
-                 onPlaceChanged();
-            }
-            $(zoomTextbox).on('input',function(){
-                    onPlaceChanged();
-            });
+               onPlaceChanged();
+           }
+           $(zoomTextbox).on('input',function(){
+            onPlaceChanged();
+        });
 
-        }
-        
-    }, 1000);
+       }
+       
+   }, 1000);
 
 
 
- }else{
+   }else{
     $(`body ${id}`).children().remove();
 }
 
@@ -1631,7 +1646,7 @@ if (pageType.children('option:selected').val() != "") {
     fetchPageTemplate(pageType);
 }
 $(pageType).on('change',function(){
- fetchPageTemplate(this);
+   fetchPageTemplate(this);
 
 });
 
