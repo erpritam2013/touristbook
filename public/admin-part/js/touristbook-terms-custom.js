@@ -606,6 +606,17 @@ $('body').on('change','.toggle-class',function() {
     let data = {'status': status, id};
     callAjax(ajaxurl,data);
 })
+
+window.dialogResizeCentered =function(d,w,h){ //d-dialog, w,h-width, height
+    alert('here')
+  var sw,sh; //screenwidth, screenheight
+  var rx,ry; //null atm, for resize x, resize y
+  get sw, sh from window. object
+  rx = parseInt(sw/2-w/2);
+  ry = parseInt(sh/2-h/2);
+  d.call resize (w,h);
+  d.call reposition(rx,ry);
+}
         /*change status js end*/
 // window.addTag = () =>{
 //     let a_tag = '<a class="paginate_button d-none custom_paginate_button" aria-controls="touristbook-datatable" tabindex="0" data-dt-idx="8"></a>';

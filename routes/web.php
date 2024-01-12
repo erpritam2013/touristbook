@@ -257,6 +257,9 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
     // Route::resource('custom-icons', CustomIconController::class);
     Route::prefix('settings')->name('settings.')->group(function() {
 
+      // Media Resource
+    Route::get('media-object', [FileController::class,'index'])->name('media-object.index');
+    Route::delete('media-object/{id}', [FileController::class,'destroy'])->name('media-object.destroy');
 
     /*theme-settings Routes*/
     Route::get('theme-settings', [SettingController::class,'index'])->name('theme-settings.index');
@@ -287,6 +290,8 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
     Route::prefix('hotels')->name('hotels.')->group(function() {
 
     });
+
+
 
     Route::delete('hotel/bulk-delete', [HotelController::class,'bulk_delete'])->name('hotel.bulk-delete');
      Route::get('hotel/changeStatus', [HotelController::class,'changeStatus'])->name('changeStatusHotel');

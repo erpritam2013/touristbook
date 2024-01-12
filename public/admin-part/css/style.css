@@ -11892,7 +11892,7 @@ p {
 }
 
 #main-wrapper {
-    opacity: 0;
+    opacity: 1;
     transition: all 0.25s ease-in;
     overflow: hidden;
     position: relative;
@@ -21163,7 +21163,6 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
     text-align: center;
     color: #fff;
 }
-
 .step-form-horizontal .wizard .steps li.current a:hover,
 .step-form-horizontal .wizard .steps li.current a:active,
 .step-form-horizontal .wizard .steps li.disabled a:hover,
