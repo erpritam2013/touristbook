@@ -275,9 +275,11 @@ class TourController extends Controller
          // "properties_near_by",
        "check_editing",
 
+
    ];
 
    $tour->detail()->create($request->only($tourMetaData));
+
 
 
    $tour->package_types()->attach($request->get('package_types'));
@@ -285,6 +287,8 @@ class TourController extends Controller
    $tour->types()->attach($request->get('types'));
    $tour->languages()->attach($request->get('language'));
    $tour->states()->attach($request->get('state_id'));
+
+
 
    $tour->locations()->attach($request->get('location_id'));
 

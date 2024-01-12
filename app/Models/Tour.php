@@ -64,6 +64,7 @@ class Tour extends Model
         ]);
         $this->save();
     }
+
     public function editor_name()
     {
         if ($this->is_editing && $this->editor_id && !$this->editing_expiry_time->isPast()) {
@@ -72,6 +73,7 @@ class Tour extends Model
 
 
     }
+
 
     public function freeEditing() {
         $this->is_editing = false;
