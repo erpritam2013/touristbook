@@ -11,6 +11,7 @@
                 <div class="card-header">
                     <h4 class="card-title">{{$title}}</h4>
                     <div align="right">
+                        
                         <a href="{{route('admin.hotels.index')}}" class="btn btn-dark"><i class="fa fa-arrow-right"></i> Back</a>
                     </div>
                 </div>
