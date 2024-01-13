@@ -83,7 +83,7 @@ private function _prepareBasicData() {
     {
         $tourismZoneDetails = [
         'title' => $request->title,
-        'sub_title' => $request->sub_title,
+        'sub_title' => (!empty($request->sub_title))?$request->sub_title:'',
         'slug' => SlugService::createSlug(TourismZone::class, 'slug', $request->title),
 
         'state_id' => $request->state_id,
