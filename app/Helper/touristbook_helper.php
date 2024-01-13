@@ -854,6 +854,39 @@ if (!function_exists('getCountries')) {
     }
 }
 
+
+if (!function_exists('getImageUrl')) {
+    function getImageUrl($id,$conversion_type='')
+    {
+         $NamespacedModel = 'App\\Models\\File';
+        $NamespacedModelMedia = 'App\\Models\\Media';
+       
+        $media = $NamespacedModelMedia::find($id);
+        if (!empty($media)) {
+            $file = $NamespacedModel::find($media->model_id);
+            if (!empty($file)) {
+                if ($conversion_type == 'thumbnail') {
+                    $width = 100;
+                    $height = 100;
+                    $quality = 90;
+                }else{
+                    $explode_type = explode('x', $conversion_type);
+                    $width = $explode_type[0];
+                    $height = $explode_type[1];
+                    $quality = 100;
+                }
+                $file->addMediaConversion($conversion_type)
+                ->width($width)
+              ->height($height)
+              ->quality($quality)
+              ->keepOriginalImageFormat();
+                return $file->getFirstMediaUrl('images',$conversion_type);
+            }
+        }
+        return null;
+    }
+}
+
 if (!function_exists('getConversionUrl')) {
     function getConversionUrl($id,$conversion_type=''){
 
