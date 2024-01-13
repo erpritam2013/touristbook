@@ -86,18 +86,16 @@ private function _prepareBasicData() {
         'sub_title' => (!empty($request->sub_title))?$request->sub_title:'',
         'slug' => SlugService::createSlug(TourismZone::class, 'slug', $request->title),
 
-        'state_id' => $request->state_id,
+        'state_id' => !empty($request->state_id)?$request->state_id:null,
             // 'icon' => $request->icon, //s3 integration pending
             // 'image' => $request->image, //s3 integration pending
         'tourism_zone_description' => $request->tourism_zone_description,
-        //'tourism_zone' => $request->tourism_zone,
+        'tourism_zone' => $request->tourism_zone,
         'status' => $request->status,
             // TODO: created_by pending as Authentication is not Yet Completed
     ];
 
-    if (isset($request->tourism_zone)) {
-       $tourismZoneDetails['tourism_zone'] = $request->tourism_zone;
-    }
+   
 
     $tourism_zone = $this->tourismZoneRepository->createTourismZone($tourismZoneDetails);
     Session::flash('success','Tourism Zone Created Successfully');
@@ -155,20 +153,29 @@ private function _prepareBasicData() {
         'sub_title' => $request->sub_title,
         'slug' => (!empty($request->slug) && $tourismZone->slug != $request->slug)?SlugService::createSlug(TourismZone::class, 'slug', $request->slug):$tourismZone->slug,
 
-       'state_id' => $request->state_id,
+      'state_id' => !empty($request->state_id)?$request->state_id:null,
             // 'icon' => $request->icon, //s3 integration pending
             // 'image' => $request->image, //s3 integration pending
         'tourism_zone_description' => $request->tourism_zone_description,
-       // 'tourism_zone' => $request->tourism_zone,
+         'tourism_zone' => $request->tourism_zone,
         'status' => $request->status,
             // TODO: created_by pending as Authentication is not Yet Completed
     ];
-     if (isset($request->tourism_zone)) {
-       $tourismZoneDetails['tourism_zone'] = $request->tourism_zone;
-    }
+   
     $tourism_zone = $this->tourismZoneRepository->updateTourismZone($tourismZone->id,$tourismZoneDetails);
     Session::flash('success','Tourism Zone Updated Successfully');
     return redirect()->Route('admin.tourism-zones.edit',$tourismZone->id);
+    }
+
+      public function bulk_delete(Request $request)
+    {
+        if (!empty($request->ids)) {
+
+            $tourismZoneIds = get_array_mapping(json_decode($request->ids));
+            $this->tourismZoneRepository->deleteBulkTourismZone($tourismZoneIds);
+            Session::flash('success', 'Tourism Zone Bulk Deleted Successfully');
+        }
+        return back();
     }
 
     /**
@@ -179,6 +186,13 @@ private function _prepareBasicData() {
      */
     public function destroy(TourismZone $tourismZone)
     {
-        //
+        if (!$tourismZone) {
+           abort(404);
+
+        }
+
+        $this->tourismZoneRepository->deleteTourismZone($tourismZone->id);
+        Session::flash('success','Tourism Zone Deleted Successfully');
+        return redirect()->back();
     }
 }
