@@ -90,11 +90,11 @@ private function _prepareBasicData() {
             // 'icon' => $request->icon, //s3 integration pending
             // 'image' => $request->image, //s3 integration pending
         'tourism_zone_description' => $request->tourism_zone_description,
-        //'tourism_zone' => $request->tourism_zone,
+        'tourism_zone' => $request->tourism_zone,
         'status' => $request->status,
             // TODO: created_by pending as Authentication is not Yet Completed
     ];
-
+    
     if (isset($request->tourism_zone)) {
        $tourismZoneDetails['tourism_zone'] = $request->tourism_zone;
     }
