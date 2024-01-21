@@ -75,6 +75,7 @@ Route::post('/updateCurrency', function (\Illuminate\Http\Request $request) {
 
 
 Route::get('/', [PagesController::class, 'index'])->name('home');
+
 Route::get('/hotels', [PagesController::class, 'hotels'])->name('hotels');
 Route::get('/about', [PagesController::class, 'about'])->name('about');
 Route::get('/blogs', [PagesController::class, 'blogs'])->name('blogs');
@@ -108,6 +109,8 @@ Route::get('/get-location-states', [PagesController::class, 'getLocationState'])
 
 
 
+
+Route::get('/ajax/login-status', [LoginController::class, 'getLoginStatus'])->name('login-status');
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/login-post', [LoginController::class, 'authenticate'])->name('login-post');
 
@@ -260,6 +263,7 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
       // Media Resource
     Route::get('media-object', [FileController::class,'index'])->name('media-object.index');
     Route::delete('media-object/{id}', [FileController::class,'destroy'])->name('media-object.destroy');
+    Route::get('media-used-object/{id}', [FileController::class,'media_used_objects'])->name('media-used-object');
 
     /*theme-settings Routes*/
     Route::get('theme-settings', [SettingController::class,'index'])->name('theme-settings.index');

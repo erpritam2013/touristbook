@@ -4,7 +4,7 @@ $fair_and_festivals_banner = (!empty($location->locationMeta->fair_and_festivals
 @if(!empty($location->locationMeta->fair_and_festivals_image) && isset($location->locationMeta->fair_and_festivals_image[0]['id']))
 <div class="row mb-4">
 	<div class="col-md-12 p-2">
-		<img class="banner-image-lt" src="{{$fair_and_festivals_banner ?? asset('sites/images/dummy/1250x500.jpg')}}" style="width: 100%;height: 500px;" />
+		<img class="banner-image-lt img-fluid" src="{{$fair_and_festivals_banner ?? asset('sites/images/dummy/1250x500.jpg')}}" style="width: 100%;height: 500px;" />
 	</div>
 </div>
 @endif
@@ -30,7 +30,7 @@ $fair_and_festivals_banner = (!empty($location->locationMeta->fair_and_festivals
 						$fair_and_festivals_image = (!empty($fair_and_festivals_image_arr) && isset($fair_and_festivals_image_arr[0]['id']))?getConversionUrl($fair_and_festivals_image_arr[0]['id'],'450x417'):null;
 						}
 						@endphp
-						<img class="" src="{{$fair_and_festivals_image ?? asset('sites/images/dummy/450x417.jpg')}}" alt="{{strtolower($fair_and_festivals['fair_and_festivals-title'])}} image">
+						<img class="rounded" src="{{$fair_and_festivals_image ?? asset('sites/images/dummy/450x417.jpg')}}" alt="{{strtolower($fair_and_festivals['fair_and_festivals-title'])}} image">
 					</div>
 				</div>
 			</div>
