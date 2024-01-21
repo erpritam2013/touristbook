@@ -57,11 +57,11 @@
           <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#tab-about"> About </a>
           </li>
           <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-accomodation"> Accomodation
-        </a>
-      </li>
-          <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-facilities"> Facilities
           </a>
         </li>
+        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-facilities"> Facilities
+        </a>
+      </li>
       <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-offers"> Offer &
         Packages
       </a> </li>
@@ -377,35 +377,50 @@
             <th>Hotel Policies</th>
             <td>
               @if (!empty($hotel->policies))
-              @foreach ($hotel->policies as $policy)
-              <strong>{{ $policy['policies-title'] }}</strong>
+              @php 
+              $hotel_policies = nested_policies($hotel->policies);
+              @endphp
+              @foreach ($hotel_policies as $policy)
+              <h4 class="f18">{{ $policy['policies-title'] }}</h4>
+               @if($policy['children']->isNotEmpty())
 
-              <div class="row">
-
-                @php 
-                $policy_description_arr = explode("\n",trim($policy['policies-policy_description']));
-                @endphp
-                @foreach($policy_description_arr as $k_ipd => $v_ipd)
-                <div class="col-xs-12 col-sm-12" style="color:#000000"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="font-size: 5px;color: transparent;"></i> 
-                  <span>{!!$v_ipd!!}</span>
-
-                </div>
+              <i class="fa fa-exclamation-circle icon-4x important-note-icon" aria-hidden="true" style="color:#07509E;font-size: 30px;" data-parent_title="cancellation"></i>
+              <div class="important-note-hotel cancellation">
+                
+              @foreach($policy['children'] as $p_children)
+                <h4 class="f18">{{$p_children['policies-title']}}</h4>
+                <pre>{!!$p_children['policies-policy_description']!!}</pre>
                 @endforeach
+              </div>
+
+              @endif
+              <div class="row">
+               @if(empty($policy['policies-policy_parent']))
+               @php 
+               $policy_description_arr = explode("\n",trim($policy['policies-policy_description']));
+               @endphp
+               @foreach($policy_description_arr as $k_ipd => $v_ipd)
+               <div class="col-xs-12 col-sm-12" style="color:#000000"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="font-size: 5px;color: transparent;"></i> 
+                <span>{!!$v_ipd!!}</span>
 
               </div>
               @endforeach
-              @endif
+
+            </div>
+            @endif
+            @endforeach
+            @endif
 
 
-            </td>
-          </tr>
-        </table>
-
-      </div>
-
+          </td>
+        </tr>
+      </table>
 
     </div>
+
+
   </div>
+</div>
 
 
 
@@ -589,67 +604,67 @@
 
         <div class="row">
           <div class="col-md-4">
-             @php $website = touristbook_string_explode($hotel->contact['website']); @endphp
-              <button type="button" class="btn btn-grad w-100 font-weight-bold" onclick="window.open('{{$website}}', '_blank');" {{(empty($website))?'disabled':''}}><span class="st-hotel-website">{{(!empty($website))?"Hotel Website":"Booking On Call"}}</span></button>
-          </div>
-          <div class="col-md-4">
-            <a href="{{$hotel->external_link ?? '#'}}" class="btn btn-grad w-100 font-weight-bold" target="_blank">Compare Prices</a>
-          </div>
-          <div class="col-md-4">
-            <a href="javascript:void(0);" class="btn btn-grad w-100 font-weight-bold" id="tourism-zone-link">Tourism Zone</a>
-          </div>
-        </div>
-
-      </div>
-      <div class="tab-pane fade" id="inquiry" role="tabpanel"
-      aria-labelledby="inquiry-tab">
-      <div class="row">
-        <div class="col-md-12">
-         <form method="post" action="{{route('inquiry')}}" class="form-inquiry">
-          {{ csrf_field() }}
-
-
-          <!-- Name -->
-          <div class="form-group row">
-            <input type="hidden" name="hotel_id" value="{{$hotel->id}}">
-            <div class="col-lg-6 {{(isMobileDevice())?'mb-4':''}}">
-              <input class="form-control" name="name" type="text" placeholder="Name....">
-
-            </div>
-            <div class="col-lg-6">
-             <input class="form-control" name="email" type="email" placeholder="Email....">
-
-           </div>
+           @php $website = touristbook_string_explode($hotel->contact['website']); @endphp
+           <button type="button" class="btn btn-grad w-100 font-weight-bold" onclick="window.open('{{$website}}', '_blank');" {{(empty($website))?'disabled':''}}><span class="st-hotel-website">{{(!empty($website))?"Hotel Website":"Booking On Call"}}</span></button>
          </div>
-         <!-- Phone -->
-         <div class="form-group">
+         <div class="col-md-4">
+          <a href="{{$hotel->external_link ?? '#'}}" class="btn btn-grad w-100 font-weight-bold" target="_blank">Compare Prices</a>
+        </div>
+        <div class="col-md-4">
+          <a href="javascript:void(0);" class="btn btn-grad w-100 font-weight-bold" id="tourism-zone-link">Tourism Zone</a>
+        </div>
+      </div>
 
-          <input class="form-control" name="phone" type="number" placeholder="Phone....">
-        </div>
-
-        <!-- Textarea -->
-        <div class="form-group">
-
-          <textarea class="form-control" name="message" rows="5" placeholder="Message...."></textarea>
-        </div>
-        <div class="alert alert-success fade show form-success" role="alert" style="display:none;">
-          <strong>Success : </strong> <span class="msg"></span>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          </button>
-        </div>
-        <div class="alert alert-danger fade show form-error" role="alert" style="display:none;">
-          <strong>Error : </strong> <span class="msg"></span>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          </button>
-        </div>
-
-        <div class="form-group">
-          <button type="submit" class="btn btn-grad">Submit</button>
-        </div>
-      </form>
     </div>
+    <div class="tab-pane fade" id="inquiry" role="tabpanel"
+    aria-labelledby="inquiry-tab">
+    <div class="row">
+      <div class="col-md-12">
+       <form method="post" action="{{route('inquiry')}}" class="form-inquiry">
+        {{ csrf_field() }}
 
+
+        <!-- Name -->
+        <div class="form-group row">
+          <input type="hidden" name="hotel_id" value="{{$hotel->id}}">
+          <div class="col-lg-6 {{(isMobileDevice())?'mb-4':''}}">
+            <input class="form-control" name="name" type="text" placeholder="Name....">
+
+          </div>
+          <div class="col-lg-6">
+           <input class="form-control" name="email" type="email" placeholder="Email....">
+
+         </div>
+       </div>
+       <!-- Phone -->
+       <div class="form-group">
+
+        <input class="form-control" name="phone" type="number" placeholder="Phone....">
+      </div>
+
+      <!-- Textarea -->
+      <div class="form-group">
+
+        <textarea class="form-control" name="message" rows="5" placeholder="Message...."></textarea>
+      </div>
+      <div class="alert alert-success fade show form-success" role="alert" style="display:none;">
+        <strong>Success : </strong> <span class="msg"></span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        </button>
+      </div>
+      <div class="alert alert-danger fade show form-error" role="alert" style="display:none;">
+        <strong>Error : </strong> <span class="msg"></span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        </button>
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-grad">Submit</button>
+      </div>
+    </form>
   </div>
+
+</div>
 </div>
 
 
@@ -961,31 +976,31 @@
   @endif
   <div class="ml-lg-4 sticky-top" style="top: 100px;">
     <div class="view-on-map widget-box rounded mb-lg-4 border-solid-d7dce3">
-@php
-    $map_image = null;
-if(isset($page)) {
-   $map_image_arr = [];
-if(isJson($page->extra_data['map_image'])){
-    $map_image_arr = json_decode($page->extra_data['map_image'],true);
-}else{
-  $map_image_arr = $page->extra_data['map_image'];
-}
-$map_image = (!empty($map_image_arr) && isset($map_image_arr[0]['id']))?getConversionUrl($map_image_arr[0]['id'],'450x417'):null;
-}
+      @php
+      $map_image = null;
+      if(isset($page)) {
+       $map_image_arr = [];
+       if(isJson($page->extra_data['map_image'])){
+        $map_image_arr = json_decode($page->extra_data['map_image'],true);
+      }else{
+        $map_image_arr = $page->extra_data['map_image'];
+      }
+      $map_image = (!empty($map_image_arr) && isset($map_image_arr[0]['id']))?getConversionUrl($map_image_arr[0]['id'],'450x417'):null;
+    }
 
-@endphp
+    @endphp
 
-      <img src="{{$map_image ?? asset('sites/images/dummy/450x417.jpg')}}" height="200">
-      <a href="" class="st-link font-medium view-street-map" id="view-map-hotel" data-toggle="modal" data-target="#streetModal"> View map</a>
-    </div>
-
-
-    <div class="view-important-note p-4 rounded border-solid-d7dce3" style="color: #000000;">
-      <strong>IMPORTANT NOTES:-&nbsp;</strong><br>
-      {!!$page->extra_data['important_note'] ?? ''!!}
-    </div>
-
+    <img src="{{$map_image ?? asset('sites/images/dummy/450x417.jpg')}}" height="200">
+    <a href="" class="st-link font-medium view-street-map" id="view-map-hotel" data-toggle="modal" data-target="#streetModal"> View map</a>
   </div>
+
+
+  <div class="view-important-note p-4 rounded border-solid-d7dce3" style="color: #000000;">
+    <strong>IMPORTANT NOTES:-&nbsp;</strong><br>
+    {!!$page->extra_data['important_note'] ?? ''!!}
+  </div>
+
+</div>
 </div>
 
 <div class="col-lg-12 col-md-12 col-sm-12">

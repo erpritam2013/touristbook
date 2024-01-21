@@ -779,7 +779,60 @@ function loadStreetMap() {
         fetchRecords(view, params);
     });
 
+    const home_page_search_input_add = (current_t) => {
+    let home_page_search_tabs = $('.tab_container').data('tabs');
+    let html = '<input type="hidden" name="source_type"  />';
+         html += '<input type="hidden" name="source_id"  />';
+         
+   for (var i = 1; i <= parseInt(home_page_search_tabs); i++) {
+        if ($(`#content${i}`).length != 0) {
+        $(`#content${i}`).find('[name="search"]').first().val('');
+        $(`#home-extra-input-field-${i}`).html("");
+        }
+   }
+    $(`#content${current_t}`).find('[name="search"]').first().val('');
+    $(`#home-extra-input-field-${current_t}`).html(html);
+
+    }
+    $('.tab_container').on('change','[id^="tab"]',function(){
+       home_page_search_input_add($(this).data('index'));
+    })
+
     $("#input-search-box").autocomplete({
+
+
+       search: function(event, ui) { 
+         $('.map-content-loading-search-input').show();
+     },
+     response: function(event, ui) {
+         $('.map-content-loading-search-input').hide();
+     },
+     source: function (request, response) {
+        $("input[name=source_type]").val("");
+        $("input[name=source_id]").val("");
+        $.ajax({
+            url: "/get-location-states",
+            dataType: "json",
+            data: {
+                term: request.term,
+            },
+            success: function (data) {
+
+                response($.map(data, function(item) {
+                   item.value =  $('<span></span>').html(item.value).text();
+                return item;
+            }));
+            
+            },
+        });
+    },
+    minLength: 2,
+    select: function (event, ui) {
+        $("input[name=source_type]").val(ui.item.sourceType);
+        $("input[name=source_id]").val(ui.item.id);
+    },
+});
+    $(".input-search-box").autocomplete({
 
 
        search: function(event, ui) { 

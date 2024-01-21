@@ -4,8 +4,29 @@ use App\Models\Conversion;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Collection;
 // boolean (true)
+
+if (!function_exists('nested_policies')) {
+    function nested_policies($policy_data)
+    {
+        $parentKey = "policies-policy_parent";
+            $grouped = collect($policy_data)->groupBy($parentKey);
+            $nestedCollection = function ($title) use ($grouped, &$nestedCollection) {
+                $groupedArr = $grouped->get($title, []);
+                return collect($groupedArr)->map(function ($resource) use ($nestedCollection) {
+                    return [
+                        'policies-title' => $resource['policies-title'],
+                        'policies-policy_description' => $resource['policies-policy_description'],
+                        'children' => $nestedCollection($resource['policies-title']),
+                    ];
+                });
+            };
+
+            $nestedResult = $nestedCollection("");
+            return $nestedResult;
+    }
+}
 if (!function_exists('get_settings_option_value')) {
     function get_settings_option_value($field)
     {
@@ -198,7 +219,24 @@ if (!function_exists('inputTemplate')) {
  }
 
 }
+if(!function_exists('touristbook_array_filter')){
+    function touristbook_array_filter($arr){
+        $filteredArray = "";
+        if(!empty($arr)){
+            $arr_collection = collect($arr);
+              $filteredArray = $arr_collection->filter(function($item,$key) {
+                  return !is_null($item);
+    
+});
+if(!empty($filteredArray)){
+  $filteredArray = array_values($filteredArray->toArray()); 
+}
 
+        }
+      return $filteredArray;
+    }
+    
+}
 if (!function_exists('parseVideos')) {
   function parseVideos($videoString = null){
     
@@ -375,6 +413,7 @@ if (!function_exists('galleryTemplate')) {
         $html .='<div class="col-lg-10">';
     }
     $html .=' <div class="gallery-controls">';
+     $value = touristbook_array_filter($value);
     $json_decode__ = (!empty($value) && isset($value) && is_array($value))?json_encode($value):json_encode([]);
     $html .='<input type="hidden" class="form-control gallery-input '. $class .'" name="'. $name.'" value="'. htmlspecialchars($json_decode__,ENT_QUOTES) .'" id="'. $id .'" placeholder="Enter '. $label.'..." />';
     $html .='<button type="button" class="btn btn-primary mt-2 add-gallery-btn" smode="'.$smode.'" selectedImages="'. htmlspecialchars($json_decode__,ENT_QUOTES) .'">+</button>';

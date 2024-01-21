@@ -24,7 +24,7 @@
  						}
 
  						@endphp
- 						<img class="" src="{{$place_to_visit_image ?? asset('sites/images/dummy/450x417.jpg')}}" alt="{{strtolower($place_to_visit['place_to_visit-title'])}} image">
+ 						<img class="rounded" src="{{$place_to_visit_image ?? asset('sites/images/dummy/450x417.jpg')}}" alt="{{strtolower($place_to_visit['place_to_visit-title'])}} image" >
  					</div>
  				</div>
  			</div>

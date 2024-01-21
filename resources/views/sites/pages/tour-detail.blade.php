@@ -259,6 +259,7 @@
 						@endif
 					<div class="tab-pane" id="st-program-section">
 						@if (!empty($tour->detail->tours_program))
+						
 						<div class="section mt-4">
 							<h2 class="st-heading-section">Itinerary</h2>
 							<div class="accordion" id="accordionStProgram">
@@ -266,12 +267,12 @@
 								<div class="card">
 									<div class="card-header {{($key != 0)?'collapsed':''}} itinerary-card-header" data-toggle="collapse" data-target="#st-program-{{$key}}" aria-expanded="true"> 
 										<img src="https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2019/05/ico_mapker-2.webp" alt="marker">    
-										<span class="title">{{ucwords($tours_program['tours_program-title'])}}</span>
+										<span class="title">{{ucwords($tours_program['tours_program-title'] ?? "")}}</span>
 										<span class="accicon"><i class="fas fa-angle-down rotate-icon"></i></span>
 									</div>
 									<div id="st-program-{{$key}}" class="collapse {{$key == 0?'show':''}}" data-parent="#accordionStProgram">
 										<div class="card-body pt-0">
-											<div class="text-justify st-program-section-desc">{!!$tours_program['tours_program-desc']!!}</div>
+											<div class="text-justify st-program-section-desc">{!!$tours_program['tours_program-desc'] ?? ""!!}</div>
 										</div>
 									</div>
 								</div>

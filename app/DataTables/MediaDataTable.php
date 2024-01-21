@@ -28,17 +28,18 @@ class MediaDataTable extends DataTable
                     $html = '<a href="javascript:void(0);" class="btn btn-danger del_entity_form" title="Permanent Delete" item_id="'.$row->id.'" data-text="media"><i class="fa fa-trash"></i></a>';
                     return $html;
                 })->addColumn('media', function ($row) {
-                   $html = '<img src="'.getConversionUrl($row->id,'thumbnail').'" width="100" height="100">';
+                   $html = '<img src="'.getConversionUrl($row->id,'thumbnail').'" width="70" height="70">';
                    return $html;
                 })->addColumn('used-media', function ($row) {
-                  
+                  $html = '<a href="'.route("admin.settings.media-used-object",$row->id).'" class="btn btn-info" title="Used Media"target="_blank">Used Media</a>';
+                  return $html;
                 })->editColumn('created_at', function($row) {
                     return date('d-m-Y',strtotime($row->created_at));
                 })->editColumn('updated_at', function($row) {
                     return date('d-m-Y',strtotime($row->updated_at));
                 })->addColumn('del',function($row){
                  return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'">';
-            })->rawColumns(['action','del','media']);
+            })->rawColumns(['action','del','media','used-media']);
     }
 
     /**
@@ -92,21 +93,18 @@ class MediaDataTable extends DataTable
             Column::make('loopIndex')->title('S.No.')->searchable(false)
             ->orderable(false)
             ->exportable(false)
-            ->printable(false)->width(10)
+            ->printable(false)->width(5)
             ->addClass('text-center'),
             Column::make('name'),
-            Column::make('file_name')->searchable(false)
-            ->orderable(false)
-            ->exportable(false)
-            ->printable(false),
+            Column::make('file_name'),
             Column::make('media'),
-            Column::make('used-media'),
+            Column::make('used-media')->title('Used Media'),
             Column::make('created_at')->title('Created'),
             Column::make('updated_at')->title('Updated'),
             Column::make('action')
             ->exportable(false)
             ->printable(false)
-            ->width(120)
+            ->width(5)
             ->addClass('text-center'),
         ];
     }

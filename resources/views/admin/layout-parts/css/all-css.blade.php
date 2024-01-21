@@ -36,11 +36,13 @@
 <link href="{!! asset('admin-part/css/custom-style.css') !!}" rel="stylesheet">
 @endpush
 <!-- For List or Index page css -->
-@if(Route::getRoutes()->match(request())->methods[0] == 'GET' && (matchRouteNameMatch('index') || matchRouteNameMatch('pageIndex')))
+@if(Route::getRoutes()->match(request())->methods[0] == 'GET' && (matchRouteNameMatch('index') || matchRouteNameMatch('pageIndex') || matchRouteNameMatch('media-used-object')))
 @push('dataTable_css')
 <!-- Datatable -->
 <link href="{!! asset('admin-part/vendor/datatables/css/jquery.dataTables.min.css') !!}" rel="stylesheet">
 {{--<link href="https://cdn.datatables.net/searchbuilder/1.5.0/css/searchBuilder.dataTables.min.css" rel="stylesheet">--}}
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+
+
 @endpush
 @endif

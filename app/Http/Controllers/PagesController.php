@@ -49,6 +49,14 @@ public function index() {
  $data['post_type'] = 'Home';
  $data['title'] = 'Home';
  $data['body_class'] = 'home-page';
+ $data['home_destinations'] = Location::latest()->limit(5)->get(['id','name','slug','featured_image']);
+ 
+  $page_id = Setting::get_setting('home_page');
+    
+    $page = Page::find($page_id);
+    if ($page) {
+        $data['page'] = $page;
+    }
  return view('sites.pages.home',$data);
 }
 

@@ -66,7 +66,7 @@
 
             <li class="nav-item"><a class="nav-link" href="#shopaholics_anonymous" data-toggle="tab" onclick="fetchDestinaitonDetail(this)" data-target_element="shopaholics-anonymous">Shopaholic Anonymous</a></li>
 
-            <li class="nav-item"><a class="nav-link" href="#weather"  data-toggle="tab" onclick="fetchWeather(this)" data-lat="{{$location->latitude ?? ''}}" data-long="{{$location->longitude ?? ''}}" data-address="{{$location->name ?? ''}}" data-name="{{$location->map_address ?? ''}}">Weather</a></li>
+            <li class="nav-item"><a class="nav-link" href="#weather"  data-toggle="tab" onclick="fetchWeather(this)" data-lat="{{$location->latitude ?? ''}}" data-long="{{$location->longitude ?? ''}}" data-address="{{$location->map_address ?? ''}}" data-name="{{$location->name ?? ''}}">Weather</a></li>
 
             <li  class="nav-item"><a class="nav-link" data-toggle="tab" href="#location" >Location</a></li>
 
@@ -373,6 +373,7 @@
 </div>
 </div>
 </div>
+
 </section>
 
 @endsection
