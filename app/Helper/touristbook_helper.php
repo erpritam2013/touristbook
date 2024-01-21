@@ -919,6 +919,8 @@ if (!function_exists('getImageUrl')) {
               ->height($height)
               ->quality($quality)
               ->keepOriginalImageFormat();
+
+               
                 return $file->getFirstMediaUrl('images',$conversion_type);
             }
         }

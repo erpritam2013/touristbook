@@ -95,8 +95,6 @@ private function _prepareBasicData() {
             // TODO: created_by pending as Authentication is not Yet Completed
     ];
 
-   
-
     $tourism_zone = $this->tourismZoneRepository->createTourismZone($tourismZoneDetails);
     Session::flash('success','Tourism Zone Created Successfully');
     return redirect()->Route('admin.tourism-zones.index');
