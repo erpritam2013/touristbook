@@ -29271,7 +29271,7 @@ body .sidebar-icon-touristbook {
     font-size: 30px;
     border-width: 3px;
     border-style: solid;
-    border-radius: 100px;
+    border-radius: 100%;
     padding: 15px;
     font-weight: 900;
     display: inline-block;
@@ -29448,3 +29448,22 @@ div#tb-image-prev {
     top: -100px;
     left: 79px;
 }
+.forget-btn{
+    float: right;
+}
+.forget-btn a {
+    color: #07509e;
+}
+}
+.forget-btn a:hover{
+    color: #fba009;
+}
+.used-media-list .table tbody tr td{
+    color: #000!important;
+}
+.used-media-list .card-header .card-title{
+    padding: 10px 40px;
+    background: #ddd;
+    border-radius: 3px;
+}
+    

@@ -20,7 +20,7 @@
 						$culinary_retreat_image = (!empty($culinary_retreat_image_arr) && isset($culinary_retreat_image_arr[0]['id']))?getConversionUrl($culinary_retreat_image_arr[0]['id'],'450x417'):null;
 						}
 						@endphp
-						<img class="" src="{{$culinary_retreat_image ?? asset('sites/images/dummy/450x417.jpg')}}" alt="{{strtolower($culinary_retreat['culinary_retreat-title'])}} image">
+						<img class="rounded" src="{{$culinary_retreat_image ?? asset('sites/images/dummy/450x417.jpg')}}" alt="{{strtolower($culinary_retreat['culinary_retreat-title'])}} image">
 					</div>
 				</div>
 			</div>

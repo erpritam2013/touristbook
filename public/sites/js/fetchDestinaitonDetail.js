@@ -5,6 +5,23 @@
             if (data != '') {
              $(id).html(data);
             }
+
+            setTimeout(function() {
+                
+                $('body.destination-detail-page #tab-tourism_zone #tourism-zone-div .tab-content td,body.destination-detail-page #tab-tourism_zone #tourism-zone-div .tab-content th').removeAttr('style')
+                let btgrid_row_col = $('body .btgrid .row .col');
+                $.each(btgrid_row_col,function(indx,item){
+                    if ($(item).find('.content').length == 0) {
+                    $(item).remove();
+                    console.log({'empty-text':$(item).find('.content').text()});
+                console.log(item);
+                    }else if($(item).find('.content').length != 0 && $(item).find('.content').text() == ""){
+                        $(item).remove();
+                    console.log({'empty-text':$(item).find('.content').text()});
+                    console.log(item);
+                    }
+                })
+            }, 1000);
 	}
 
 	   // Function to show the loader
@@ -56,6 +73,7 @@ const hideLoader = function() {
     //let target_element = $(ele).data('target_element');
    // let location_id = $('.destination-all-content').data('location_id');
      let params = new Object();
+    
     let lat = $(ele).data('lat');
     let long = $(ele).data('long');
 
@@ -69,16 +87,21 @@ const hideLoader = function() {
     // params.exclude = 'daily';
 
     // params.exclude = 'alerts';
-
+   if (lat != '' && long != '') {
     params.lat = lat;
     params.lon = long;
-    params.name = $(ele).data('address');
-    params.address = $(ele).data('long');
+   }else if($(ele).data('address') != "") {
+
+    params.address = $(ele).data('address');
+}else{
+    params.name = $(ele).data('name');
+    
+}
     params.apikey = 'f4127c3b16b99a5ebebcb2180ea42f51';
     params.mode = 'html';
 
 
-    if (lat != '' && long != '') {
+    
         //let endpoint = base_url + "/location-detail-fetch/"+target_element;
      
         $.ajax({
@@ -97,8 +120,9 @@ const hideLoader = function() {
                   alert(final_result.message)
             }
         });
-    }
+   
     }
 
 	
+
 })(jQuery);
