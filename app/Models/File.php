@@ -35,10 +35,10 @@ class File extends Model implements HasMedia
               ->keepOriginalImageFormat();
     }
 
-  
+
  public function get_media()
 {
     return $this->belongsTo(tourist_Media::class, 'id', 'model_id');
 }
-     
+
 }
