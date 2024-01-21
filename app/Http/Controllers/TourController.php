@@ -92,23 +92,27 @@ class TourController extends Controller
             $tour = tour::findOrFail($tourId);
             if (!empty($tour)) {
                 if (!empty($tour->country_zone)) {
-                   $existed_value = $tour->country_zone->id;
-               }
-           }
-       }
-       $countryZone = $this->countryZoneRepository->getCountryZoneByCountry($country)->toArray();
+                 $existed_value = $tour->country_zone->id;
+             }
+         }
+     }
+     $countryZone = $this->countryZoneRepository->getCountryZoneByCountry($country)->toArray();
 
-       return response()->json(['data' => $countryZone,'existed_value'=>$existed_value]);
-   }
+     return response()->json(['data' => $countryZone,'existed_value'=>$existed_value]);
+ }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(TourDataTable $dataTable)
+    public function index(TourDataTable $dataTable,Request $request)
     {
+        
         $data['tours'] = Tour::count();
         $data['title'] = 'Tour List';
+             // if (isset($request->draw) && !empty($request->draw)) {
+        //    $dataTable->page(56)->draw('page');
+        // }
         return $dataTable->render('admin.tours.index', $data);
     }
 
@@ -134,9 +138,9 @@ class TourController extends Controller
      */
     public function store(StoreTourRequest $request)
     {
-        
+
      //   if (isset($request->featured_image)) {
-     
+
      //     $request->merge([
      //        'featured_image' => json_decode($request->featured_image,true),
      //    ]);
@@ -196,58 +200,58 @@ class TourController extends Controller
         ];
 
         if (isset($request->tours_program_style)) {
-           if ($request->tours_program_style == 'style1' || $request->tours_program_style == 'style3') {
-               $request->merge([
+         if ($request->tours_program_style == 'style1' || $request->tours_program_style == 'style3') {
+             $request->merge([
                 'tours_program_bgr' => [],
             ]);
-           }elseif ($request->tours_program_style == 'style2') {
-               $request->merge([
+         }elseif ($request->tours_program_style == 'style2') {
+             $request->merge([
                 'tours_program' => [],
             ]);
-           }elseif ($request->tours_program_style == 'style4') {
-               $request->merge([
+         }elseif ($request->tours_program_style == 'style4') {
+             $request->merge([
                 'tours_program_style4' => [],
             ]);
-           }
-       }
+         }
+     }
 
 
-       if ($request->has('st_tour_external_booking') && $request->st_tour_external_booking == 0) {
-          $request->merge([
-            'st_tour_external_booking_link' => null,
-        ]);
-      }
+     if ($request->has('st_tour_external_booking') && $request->st_tour_external_booking == 0) {
+      $request->merge([
+        'st_tour_external_booking_link' => null,
+    ]);
+  }
 
-      $tour = $this->tourRepository->createTour($tourDetails);
+  $tour = $this->tourRepository->createTour($tourDetails);
 
-      if ($tour) {
+  if ($tour) {
             // TODO: Move this to Repository
-        $tourMetaData = [
+    $tourMetaData = [
 
-         "map_address" , 
-         "latitude" , 
-         "longitude" , 
-         "zoom_level" , 
+       "map_address" , 
+       "latitude" , 
+       "longitude" , 
+       "zoom_level" , 
           // 'enable_street_views_google_map',
           //'is_iframe',
-         "st_booking_option_type" , 
-         "gallery" , 
-         "video" , 
-         "contact" ,
-         "st_tour_external_booking" , 
-         "st_tour_external_booking_link" ,
-         "tours_coupan" , 
-         "tours_include" , 
-         "tours_exclude" , 
-         "tours_highlight" , 
-         "tour_sponsored_by" ,
-         "tours_destinations" , 
-         "tour_helpful_facts" , 
-         "tour_program_style" , 
-         "tours_program" , 
-         "tours_program_bgr",
-         "tours_program_style4",
-         "tours_faq" , 
+       "st_booking_option_type" , 
+       "gallery" , 
+       "video" , 
+       "contact" ,
+       "st_tour_external_booking" , 
+       "st_tour_external_booking_link" ,
+       "tours_coupan" , 
+       "tours_include" , 
+       "tours_exclude" , 
+       "tours_highlight" , 
+       "tour_sponsored_by" ,
+       "tours_destinations" , 
+       "tour_helpful_facts" , 
+       "tour_program_style" , 
+       "tours_program" , 
+       "tours_program_bgr",
+       "tours_program_style4",
+       "tours_faq" , 
            // 'calendar_check_in',
           // 'calendar_check_out',
           // 'calendar_adult_price',
@@ -263,35 +267,39 @@ class TourController extends Controller
           // 'st_cancel_percent',
           // 'ical_url',
           // 'is_meta_payment_gateway_st_submit_form',
-         "package_route" , 
-         "st_tours_country" ,
-         "helpful_facts" , 
-         "social_links",
-         "sponsored",
+       "package_route" , 
+       "st_tours_country" ,
+       "helpful_facts" , 
+       "social_links",
+       "sponsored",
          // "properties_near_by",
-         "check_editing",
-
-     ];
-
-     $tour->detail()->create($request->only($tourMetaData));
+       "check_editing",
 
 
-     $tour->package_types()->attach($request->get('package_types'));
-     $tour->other_packages()->attach($request->get('other_packages'));
-     $tour->types()->attach($request->get('types'));
-     $tour->languages()->attach($request->get('language'));
-     $tour->states()->attach($request->get('state_id'));
-     
-     $tour->locations()->attach($request->get('location_id'));
+   ];
+
+   $tour->detail()->create($request->only($tourMetaData));
+
+
+
+   $tour->package_types()->attach($request->get('package_types'));
+   $tour->other_packages()->attach($request->get('other_packages'));
+   $tour->types()->attach($request->get('types'));
+   $tour->languages()->attach($request->get('language'));
+   $tour->states()->attach($request->get('state_id'));
+
+
+
+   $tour->locations()->attach($request->get('location_id'));
 
 
             // 
- }
+}
 
 
         // return $tour;
- Session::flash('success','Tour Created Successfully');
- return redirect()->Route('admin.tours.index');
+Session::flash('success','Tour Created Successfully');
+return redirect()->Route('admin.tours.index');
 }
 
 public function changeStatus(Request $request): JsonResponse
@@ -324,12 +332,20 @@ public function changeStatus(Request $request): JsonResponse
      */
     public function edit(Tour $tour)
     {
-       $tour->with([
+     $tour->with([
         'types', 'package_types', 'other_packages', 'states', 'languages','locations']);
 
-       if (empty($tour)) {
+     if (empty($tour)) {
         return back();
     }
+
+    if($tour->isEditing()) {
+        Session::flash('error','Tour is being Edited. Please wait till its fully edited!');
+        return redirect()->Route('admin.tours.index');
+    }
+
+        // Set Editing Status
+    $tour->edited();
 
     $data['title'] = 'Tour Edit';
     $data['tour'] = $tour;
@@ -355,7 +371,7 @@ public function changeStatus(Request $request): JsonResponse
      //        'featured_image' => json_decode($request->featured_image,true),
      //    ]);
      // }
-       $tourDetails = [
+     $tourDetails = [
 
         'name' => $request->name,
             //'slug' => SlugService::createSlug(Tour::class, 'slug', $request->name),
@@ -409,59 +425,59 @@ public function changeStatus(Request $request): JsonResponse
     ];
 
     if (isset($request->tours_program_style)) {
-       if ($request->tours_program_style == 'style1' || $request->tours_program_style == 'style3') {
-           $request->merge([
+     if ($request->tours_program_style == 'style1' || $request->tours_program_style == 'style3') {
+         $request->merge([
             'tours_program_bgr' => [],
         ]);
-       }elseif ($request->tours_program_style == 'style2') {
-           $request->merge([
+     }elseif ($request->tours_program_style == 'style2') {
+         $request->merge([
             'tours_program' => [],
         ]);
-       }elseif ($request->tours_program_style == 'style4') {
-           $request->merge([
+     }elseif ($request->tours_program_style == 'style4') {
+         $request->merge([
             'tours_program_style4' => [],
         ]);
-       }
-   }
+     }
+ }
 
 
-   if ($request->has('st_tour_external_booking') && $request->st_tour_external_booking == 0) {
-      $request->merge([
-        'st_tour_external_booking_link' => null,
-    ]);
-  }
+ if ($request->has('st_tour_external_booking') && $request->st_tour_external_booking == 0) {
+  $request->merge([
+    'st_tour_external_booking_link' => null,
+]);
+}
 
-  $this->tourRepository->updateTour($tour->id,$tourDetails);
+$this->tourRepository->updateTour($tour->id,$tourDetails);
 
-  if ($tour) {
+if ($tour) {
             // TODO: Move this to Repository
 
     $tourMetaData = [
 
-     "map_address" , 
-     "latitude" , 
-     "longitude" , 
-     "zoom_level" , 
+       "map_address" , 
+       "latitude" , 
+       "longitude" , 
+       "zoom_level" , 
           // 'enable_street_views_google_map',
           //'is_iframe',
-     "st_booking_option_type" , 
-     "gallery" , 
-     "video" , 
-     "contact" ,
-     "st_tour_external_booking" , 
-     "st_tour_external_booking_link" ,
-     "tours_coupan" , 
-     "tours_include" , 
-     "tours_exclude" , 
-     "tours_highlight" , 
-     "tour_sponsored_by" ,
-     "tours_destinations" , 
-     "tour_helpful_facts" , 
-     "tour_program_style" , 
-     "tours_program" , 
-     "tours_program_bgr",
-     "tours_program_style4",
-     "tours_faq" , 
+       "st_booking_option_type" , 
+       "gallery" , 
+       "video" , 
+       "contact" ,
+       "st_tour_external_booking" , 
+       "st_tour_external_booking_link" ,
+       "tours_coupan" , 
+       "tours_include" , 
+       "tours_exclude" , 
+       "tours_highlight" , 
+       "tour_sponsored_by" ,
+       "tours_destinations" , 
+       "tour_helpful_facts" , 
+       "tour_program_style" , 
+       "tours_program" , 
+       "tours_program_bgr",
+       "tours_program_style4",
+       "tours_faq" , 
            // 'calendar_check_in',
           // 'calendar_check_out',
           // 'calendar_adult_price',
@@ -477,32 +493,37 @@ public function changeStatus(Request $request): JsonResponse
           // 'st_cancel_percent',
           // 'ical_url',
           // 'is_meta_payment_gateway_st_submit_form',
-     "package_route" , 
-     "st_tours_country" ,
-     "helpful_facts" , 
-     "social_links",
-     "sponsored",
+       "package_route" , 
+       "st_tours_country" ,
+       "helpful_facts" , 
+       "social_links",
+       "sponsored",
          // "properties_near_by",
-     "check_editing",
+       "check_editing",
 
- ];
+   ];
 
- $tour->detail()->update($request->only($tourMetaData));
+   $tour->detail()->update($request->only($tourMetaData));
      // if (!empty($tour->detail())) {
      // }else{
      //     $tour->detail()->create($request->only($tourMetaData));
      // }
 
 
- $tour->package_types()->sync($request->get('package_types'));
- $tour->other_packages()->sync($request->get('other_packages'));
- $tour->types()->sync($request->get('type'));
- $tour->languages()->sync($request->get('language'));
- $tour->states()->sync($request->get('state_id'));
- $tour->locations()->sync($request->get('location_id'));
+   $tour->package_types()->sync($request->get('package_types'));
+   $tour->other_packages()->sync($request->get('other_packages'));
+   $tour->types()->sync($request->get('type'));
+   $tour->languages()->sync($request->get('language'));
+   $tour->states()->sync($request->get('state_id'));
+   $tour->locations()->sync($request->get('location_id'));
 }
             // return $tour;
 Session::flash('success','Tour Updated Successfully');
+
+if(!is_null($request->iscompleted)) {
+    $tour->freeEditing();
+    return redirect()->Route('admin.tours.index');
+}
 return redirect()->Route('admin.tours.edit',$tour->id);
 }
 
@@ -514,15 +535,15 @@ return redirect()->Route('admin.tours.edit',$tour->id);
      */
     public function destroy(Tour $tour)
     {
-       $tourId = $tour->id;
-       $this->tourRepository->deleteTour($tourId);
-       Session::flash('success','Tour Deleted Successfully');
-       return back();
-   }
+     $tourId = $tour->id;
+     $this->tourRepository->deleteTour($tourId);
+     Session::flash('success','Tour Deleted Successfully');
+     return back();
+ }
 
 
-   public function bulk_delete(Request $request)
-   {
+ public function bulk_delete(Request $request)
+ {
     if (!empty($request->ids)) {
 
         $tourIds = get_array_mapping(json_decode($request->ids));

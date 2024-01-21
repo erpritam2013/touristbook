@@ -76,6 +76,7 @@ Route::post('/updateCurrency', function (\Illuminate\Http\Request $request) {
 
 
 Route::get('/', [PagesController::class, 'index'])->name('home');
+
 Route::get('/hotels', [PagesController::class, 'hotels'])->name('hotels');
 Route::get('/about', [PagesController::class, 'about'])->name('about');
 Route::get('/blogs', [PagesController::class, 'blogs'])->name('blogs');
@@ -86,6 +87,7 @@ Route::get('/destinations', [PagesController::class, 'destinations'])->name('des
 Route::get('/activities', [PagesController::class, 'activities'])->name('activities');
 Route::get('/our-packages', [PagesController::class, 'our_packages'])->name('our-packages');
 Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
+Route::post('/contact', [PagesController::class, 'send_contact'])->name('send-contact');
 Route::get('/connecting-partners', [PagesController::class, 'connecting_partners'])->name('connecting-partners');
 
 Route::get('/st_hotel/{slug}', [PagesController::class, 'hotelDetail'])->name('hotel');
@@ -108,6 +110,8 @@ Route::get('/get-location-states', [PagesController::class, 'getLocationState'])
 
 
 
+
+Route::get('/ajax/login-status', [LoginController::class, 'getLoginStatus'])->name('login-status');
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/login-post', [LoginController::class, 'authenticate'])->name('login-post');
 
@@ -119,7 +123,15 @@ Route::get('/profile', [PagesController::class, 'profile'])->name('profile')->mi
 
 Route::name('admin.')->prefix('admin')->middleware(['auth', 'admin-panel'])->group(function () {
 
+<<<<<<< HEAD
     Route::post('ajax-term-store', [UtilityController::class, 'ajax_term_store'])->name('ajax-term-store');
+=======
+Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () {
+
+    Route::get('profile',[AdminController::class,'profile'])->name('profile');
+
+    Route::post('ajax-term-store',[UtilityController::class,'ajax_term_store'])->name('ajax-term-store');
+>>>>>>> e9559252ae148638c9f3c655968d09286328fdf7
 
     Route::get('template/{type}', [UtilityController::class, 'get_template_by_type'])->name('template');
 
@@ -254,6 +266,10 @@ Route::name('admin.')->prefix('admin')->middleware(['auth', 'admin-panel'])->gro
     // Route::resource('custom-icons', CustomIconController::class);
     Route::prefix('settings')->name('settings.')->group(function () {
 
+      // Media Resource
+    Route::get('media-object', [FileController::class,'index'])->name('media-object.index');
+    Route::delete('media-object/{id}', [FileController::class,'destroy'])->name('media-object.destroy');
+    Route::get('media-used-object/{id}', [FileController::class,'media_used_objects'])->name('media-used-object');
 
         /*theme-settings Routes*/
         Route::get('theme-settings', [SettingController::class, 'index'])->name('theme-settings.index');
@@ -283,8 +299,15 @@ Route::name('admin.')->prefix('admin')->middleware(['auth', 'admin-panel'])->gro
     Route::prefix('hotels')->name('hotels.')->group(function () {
     });
 
+<<<<<<< HEAD
     Route::delete('hotel/bulk-delete', [HotelController::class, 'bulk_delete'])->name('hotel.bulk-delete');
     Route::get('hotel/changeStatus', [HotelController::class, 'changeStatus'])->name('changeStatusHotel');
+=======
+
+
+    Route::delete('hotel/bulk-delete', [HotelController::class,'bulk_delete'])->name('hotel.bulk-delete');
+     Route::get('hotel/changeStatus', [HotelController::class,'changeStatus'])->name('changeStatusHotel');
+>>>>>>> e9559252ae148638c9f3c655968d09286328fdf7
 
     // Tour Resource
     Route::resource('tours', TourController::class);

@@ -73,6 +73,8 @@
                             </div>
                         </div>
 
+                        {!!mediaTemplate(['name'=>'image','label'=>'Image','value'=>$user->image ?? [],'col'=>true])!!}
+
 
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label" for="is_active">Status

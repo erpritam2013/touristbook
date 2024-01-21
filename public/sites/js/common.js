@@ -11,19 +11,19 @@
     var markers = [];
 
     function isMobile() {
-     if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-       return true;
-   }
-   return false;
-}
+       if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+         return true;
+     }
+     return false;
+ }
 
  // Get the button:
-let mybutton = document.getElementById("topScrollSite");
+ let mybutton = document.getElementById("topScrollSite");
 
 // When the user scrolls down 20px from the top of the document, show the button
-window.onscroll = function() {scrollWindow()};
+ window.onscroll = function() {scrollWindow()};
 
-function scrollWindow() {
+ function scrollWindow() {
   if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
     mybutton.style.display = "block";
 } else {
@@ -33,9 +33,9 @@ function scrollWindow() {
 
 function isJSON(something) {
     if (typeof something != 'string')
-       something = JSON.stringify(something);
+     something = JSON.stringify(something);
 
-   try {
+ try {
     JSON.parse(something);
     return true;
 } catch (e) {
@@ -69,24 +69,24 @@ window.showMoreData = function(data){
             let get_html = showAmenities(result);
             $('body #showMoreDataBody').html(get_html);
         }else if (label == 'Activity List') {
-           let get_html = showAmenities(result);
-           $('body #showMoreDataBody').html(get_html);
-       }
+         let get_html = showAmenities(result);
+         $('body #showMoreDataBody').html(get_html);
+     }
        // console.log(result);
-   }else{
+ }else{
     let html = '';
     if (label == 'Address') {
 
       html = `<p class="service-location"><i class="fa fa-map-marker" aria-hidden="true" style="color:#fba009;"></i>&nbsp;${showMoreData}</p>`;
   }else if(label == 'Package Route'){
-     html += '<div class="tour-routes">';
-     html += '<ul>';
-     html += '<li>';
-     html += `<span class="tour-route-span">${showMoreData}</span>`;
-     html += '</li>';
-     html += '</ul>';
-     html += '</div>';
- }else{
+   html += '<div class="tour-routes">';
+   html += '<ul>';
+   html += '<li>';
+   html += `<span class="tour-route-span">${showMoreData}</span>`;
+   html += '</li>';
+   html += '</ul>';
+   html += '</div>';
+}else{
     html = `<p class="service-location">${showMoreData}</p>`;
 }
 $('body #showMoreDataBody').html(html);
@@ -117,8 +117,8 @@ $('#custom-tabs').on('click','a.nav-link',function(e){
     }
 });
 window.showActivityZoneTab = function(ele){
- let zone_tabs_div_section = $('#zone-tabs-div-section');
- if (zone_tabs_div_section.hasClass('d-none')) {
+   let zone_tabs_div_section = $('#zone-tabs-div-section');
+   if (zone_tabs_div_section.hasClass('d-none')) {
     zone_tabs_div_section.removeClass('d-none');
 }else{
     zone_tabs_div_section.addClass('d-none');
@@ -132,14 +132,14 @@ window.readMoreText = function(ele) {
   let desc = '';
   if (typeof desc_id != 'undefined') {
     desc = $(`${desc_id}`);
-  }else{
+}else{
     desc = $(`#long-description-${key}`);
-  }
+}
 
-  let show_text = '';
-  show_text = $(desc).data('show_text');
+let show_text = '';
+show_text = $(desc).data('show_text');
   //console.log(show_text)
-  if (show_text === "more") {
+if (show_text === "more") {
     desc.css({'height':'100%'});
     btn.innerHTML = "Read Less";
     $(desc).data('show_text','less').attr('data-show_text','less');
@@ -174,11 +174,11 @@ if (terms.length != 0) {
           }
       }else{
         if (show_text === 'more') {
-           $(value).removeClass('d-none');
-       }else{
-           $(value).addClass('d-none');
-       }
-   }
+         $(value).removeClass('d-none');
+     }else{
+         $(value).addClass('d-none');
+     }
+ }
 })
 }
 }
@@ -206,11 +206,11 @@ if (activity_list_item.length != 0) {
           }
       }else{
         if (show_text === 'more') {
-           $(value).removeClass('d-none');
-       }else{
-           $(value).addClass('d-none');
-       }
-   }
+         $(value).removeClass('d-none');
+     }else{
+         $(value).addClass('d-none');
+     }
+ }
 })
 }
 }
@@ -240,11 +240,11 @@ if (activity_package_item.length != 0) {
           }
       }else{
         if (show_text === 'more') {
-           $(value).removeClass('d-none');
-       }else{
-           $(value).addClass('d-none');
-       }
-   }
+         $(value).removeClass('d-none');
+     }else{
+         $(value).addClass('d-none');
+     }
+ }
 })
 }
 }
@@ -380,30 +380,30 @@ $('.form-inquiry').on('submit',function(e){
         complete: hideLoader,
         success: function (data,status,response) {
             if (response.status == 200) {
-             $('.form-success').show();
-             $('.form-success').find('.msg').text(data.msg);
-             console.log(data.msg);
-             $(form)[0].reset();
-         }else{
-             $('.form-error').show();
-             $('.form-error').find('.msg').text(data.msg);
-         }
+               $('.form-success').show();
+               $('.form-success').find('.msg').text(data.msg);
+               console.log(data.msg);
+               $(form)[0].reset();
+           }else{
+               $('.form-error').show();
+               $('.form-error').find('.msg').text(data.msg);
+           }
 
-         setTimeout(function() {
-             $('.form-success').hide();
-             $('.form-error').hide();
-         }, 3000);
+           setTimeout(function() {
+               $('.form-success').hide();
+               $('.form-error').hide();
+           }, 3000);
 
 
-     },
-     error:function(data){
-      $('.form-error').show();
-      $('.form-error').show().find('.msg').text(data.msg);
-      setTimeout(function() {
-         $('.form-error').hide();
-     }, 3000);
-  },
-});
+       },
+       error:function(data){
+          $('.form-error').show();
+          $('.form-error').show().find('.msg').text(data.msg);
+          setTimeout(function() {
+           $('.form-error').hide();
+       }, 3000);
+      },
+  });
 });
 
 const compiledCheckboxes = (selector) => {
@@ -412,7 +412,8 @@ const compiledCheckboxes = (selector) => {
     $(selector + ":checked").each(function () {
         checkedValues.push($(this).val());
     });
-        // Join the checked values into a comma-separated string
+
+    // Join the checked values into a comma-separated string
     return checkedValues.join(",");
 };
 
@@ -501,6 +502,12 @@ const fetchParameters = () => {
     let selectedOtherPackage = compiledCheckboxes(".filter-other-package");
     if (selectedOtherPackage) {
         params.other_packages = selectedOtherPackage;
+    }
+
+     // Fetch other package If any
+    let selectedOtherPackageParent = compiledCheckboxes(".filter-other-package-parent");
+    if (selectedOtherPackageParent) {
+        params.other_package_parent = selectedOtherPackageParent;
     }
 
         // Location or State Search
@@ -785,7 +792,7 @@ function loadStreetMap() {
     // Filter Checkbox Change
     $(".filter-option").on("change", function () {
         let view = $(".view-changer").attr("view-id");
-        if ($(this).hasClass('filter-other-package')) {
+        if ($(this).hasClass('filter-other-package-parent')) {
             // console.log($(this).data('parent'))
             if (typeof $(this).data('parent') != 'undefined') {
 
@@ -794,17 +801,17 @@ function loadStreetMap() {
             // console.log(parent);
                 if ($(parent).hasClass('collapsed')) {
 
-                 $(".filter-other-package:checked").each(function () {
+                   $(".filter-other-package:checked").each(function () {
                     $(this).prop('checked', false).trigger('change');
                 });
 
-             }
-         }
+               }
+           }
 
 
-     }
-     fetchRecords(view, fetchParameters());
- });
+       }
+       fetchRecords(view, fetchParameters());
+   });
 
     resultInfo.on("click", ".page-link", function () {
         let view = $(".view-changer").attr("view-id");
@@ -814,27 +821,93 @@ function loadStreetMap() {
         fetchRecords(view, params);
     });
 
+    const home_page_search_input_add = (current_t) => {
+    let home_page_search_tabs = $('.tab_container').data('tabs');
+    let html = '<input type="hidden" name="source_type"  />';
+         html += '<input type="hidden" name="source_id"  />';
+         
+   for (var i = 1; i <= parseInt(home_page_search_tabs); i++) {
+        if ($(`#content${i}`).length != 0) {
+        $(`#content${i}`).find('[name="search"]').first().val('');
+        $(`#home-extra-input-field-${i}`).html("");
+        }
+   }
+    $(`#content${current_t}`).find('[name="search"]').first().val('');
+    $(`#home-extra-input-field-${current_t}`).html(html);
+
+    }
+    $('.tab_container').on('change','[id^="tab"]',function(){
+       home_page_search_input_add($(this).data('index'));
+    })
+
     $("#input-search-box").autocomplete({
-        source: function (request, response) {
-            $("input[name=source_type]").val("");
-            $("input[name=source_id]").val("");
-            $.ajax({
-                url: "/get-location-states",
-                dataType: "json",
-                data: {
-                    term: request.term,
-                },
-                success: function (data) {
-                    response(data);
-                },
-            });
-        },
-        minLength: 2,
-        select: function (event, ui) {
-            $("input[name=source_type]").val(ui.item.sourceType);
-            $("input[name=source_id]").val(ui.item.id);
-        },
-    });
+
+
+       search: function(event, ui) { 
+         $('.map-content-loading-search-input').show();
+     },
+     response: function(event, ui) {
+         $('.map-content-loading-search-input').hide();
+     },
+     source: function (request, response) {
+        $("input[name=source_type]").val("");
+        $("input[name=source_id]").val("");
+        $.ajax({
+            url: "/get-location-states",
+            dataType: "json",
+            data: {
+                term: request.term,
+            },
+            success: function (data) {
+
+                response($.map(data, function(item) {
+                   item.value =  $('<span></span>').html(item.value).text();
+                return item;
+            }));
+            
+            },
+        });
+    },
+    minLength: 2,
+    select: function (event, ui) {
+        $("input[name=source_type]").val(ui.item.sourceType);
+        $("input[name=source_id]").val(ui.item.id);
+    },
+});
+    $(".input-search-box").autocomplete({
+
+
+       search: function(event, ui) { 
+         $('.map-content-loading-search-input').show();
+     },
+     response: function(event, ui) {
+         $('.map-content-loading-search-input').hide();
+     },
+     source: function (request, response) {
+        $("input[name=source_type]").val("");
+        $("input[name=source_id]").val("");
+        $.ajax({
+            url: "/get-location-states",
+            dataType: "json",
+            data: {
+                term: request.term,
+            },
+            success: function (data) {
+
+                response($.map(data, function(item) {
+                   item.value =  $('<span></span>').html(item.value).text();
+                return item;
+            }));
+            
+            },
+        });
+    },
+    minLength: 2,
+    select: function (event, ui) {
+        $("input[name=source_type]").val(ui.item.sourceType);
+        $("input[name=source_id]").val(ui.item.id);
+    },
+});
 
     $(".Filter-left").on("click", ".mb-left-title", function () {
         $(this).closest(".mb-left").find(".form-group").first().toggle("1000");
@@ -884,7 +957,7 @@ function loadStreetMap() {
 
 
 // Function to get currency icon based on currency code
-function getCurrencyIcon(currencyCode) {
+    function getCurrencyIcon(currencyCode) {
     // TODO: Write Code
         return '<i class="fa fa-money mr-2"></i>'
 
@@ -926,13 +999,13 @@ function getCurrencyIcon(currencyCode) {
 
 
 
-window.ShowHidePassword = () => {
-  var x = document.getElementById("rg-password");
-  if (x.type === "password") {
-    x.type = "text";
-  } else {
-    x.type = "password";
-  }
+    window.ShowHidePassword = () => {
+      var x = document.getElementById("rg-password");
+      if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
 }
 
 

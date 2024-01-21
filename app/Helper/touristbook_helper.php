@@ -3,7 +3,30 @@
 use App\Models\Conversion;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
+// boolean (true)
 
+if (!function_exists('nested_policies')) {
+    function nested_policies($policy_data)
+    {
+        $parentKey = "policies-policy_parent";
+            $grouped = collect($policy_data)->groupBy($parentKey);
+            $nestedCollection = function ($title) use ($grouped, &$nestedCollection) {
+                $groupedArr = $grouped->get($title, []);
+                return collect($groupedArr)->map(function ($resource) use ($nestedCollection) {
+                    return [
+                        'policies-title' => $resource['policies-title'],
+                        'policies-policy_description' => $resource['policies-policy_description'],
+                        'children' => $nestedCollection($resource['policies-title']),
+                    ];
+                });
+            };
+
+            $nestedResult = $nestedCollection("");
+            return $nestedResult;
+    }
+}
 if (!function_exists('get_settings_option_value')) {
     function get_settings_option_value($field)
     {
@@ -15,14 +38,13 @@ if (!function_exists('get_settings_option_value')) {
 
 if (!function_exists('isJson')) {    
 function isJson($string) {
-    $obj = json_decode($string);
-    return json_last_error() === JSON_ERROR_NONE && gettype($obj ) == "object";
+    
+    return Str::isJson($string);
 }
 }
 if (!function_exists('get_single_value_of_col_in_setting')) {
     function get_single_value_of_col_in_setting($data,$field)
     {
-
 
         $result = '';
         if (!empty($data)) {
@@ -30,8 +52,8 @@ if (!function_exists('get_single_value_of_col_in_setting')) {
            $get_data = exploreJsonData($data);
            $collection = collect($get_data);
            $result = $collection->get($field);
+    
         }else{
-            
             if (!empty($data)) {
            $collection = collect($data);
            $result = $collection->get($field);
@@ -197,7 +219,24 @@ if (!function_exists('inputTemplate')) {
  }
 
 }
+if(!function_exists('touristbook_array_filter')){
+    function touristbook_array_filter($arr){
+        $filteredArray = "";
+        if(!empty($arr)){
+            $arr_collection = collect($arr);
+              $filteredArray = $arr_collection->filter(function($item,$key) {
+                  return !is_null($item);
+    
+});
+if(!empty($filteredArray)){
+  $filteredArray = array_values($filteredArray->toArray()); 
+}
 
+        }
+      return $filteredArray;
+    }
+    
+}
 if (!function_exists('parseVideos')) {
   function parseVideos($videoString = null){
     
@@ -374,6 +413,7 @@ if (!function_exists('galleryTemplate')) {
         $html .='<div class="col-lg-10">';
     }
     $html .=' <div class="gallery-controls">';
+     $value = touristbook_array_filter($value);
     $json_decode__ = (!empty($value) && isset($value) && is_array($value))?json_encode($value):json_encode([]);
     $html .='<input type="hidden" class="form-control gallery-input '. $class .'" name="'. $name.'" value="'. htmlspecialchars($json_decode__,ENT_QUOTES) .'" id="'. $id .'" placeholder="Enter '. $label.'..." />';
     $html .='<button type="button" class="btn btn-primary mt-2 add-gallery-btn" smode="'.$smode.'" selectedImages="'. htmlspecialchars($json_decode__,ENT_QUOTES) .'">+</button>';
@@ -853,6 +893,41 @@ if (!function_exists('getCountries')) {
     }
 }
 
+
+if (!function_exists('getImageUrl')) {
+    function getImageUrl($id,$conversion_type='')
+    {
+         $NamespacedModel = 'App\\Models\\File';
+        $NamespacedModelMedia = 'App\\Models\\Media';
+       
+        $media = $NamespacedModelMedia::find($id);
+        if (!empty($media)) {
+            $file = $NamespacedModel::find($media->model_id);
+            if (!empty($file)) {
+                if ($conversion_type == 'thumbnail') {
+                    $width = 100;
+                    $height = 100;
+                    $quality = 90;
+                }else{
+                    $explode_type = explode('x', $conversion_type);
+                    $width = $explode_type[0];
+                    $height = $explode_type[1];
+                    $quality = 100;
+                }
+                $file->addMediaConversion($conversion_type)
+                ->width($width)
+              ->height($height)
+              ->quality($quality)
+              ->keepOriginalImageFormat();
+
+               
+                return $file->getFirstMediaUrl('images',$conversion_type);
+            }
+        }
+        return null;
+    }
+}
+
 if (!function_exists('getConversionUrl')) {
     function getConversionUrl($id,$conversion_type=''){
 
@@ -1072,6 +1147,15 @@ if (!function_exists('getPostData')) {
 
         return $getPostData;
     }
+}
+if (!function_exists('footer_destinations')) {
+function footer_destinations()
+{
+    $NamespacedModel = 'App\\Models\\Location';
+
+    $locations = $NamespacedModel::latest()->limit(5)->get(['id','slug','name']);
+    return $locations;
+}
 }
 
 

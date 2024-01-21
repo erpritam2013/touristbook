@@ -4,10 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use App\Interfaces\PageRepositoryInterface;
+use App\Interfaces\PostRepositoryInterface;
 use Illuminate\Support\Facades\Session;
 
 class SettingController extends Controller
 {
+
+
+     private PageRepositoryInterface $pageRepository;
+ private PostRepositoryInterface $postRepository;
+
+
+ public function __construct(
+    PageRepositoryInterface $pageRepository,
+    PostRepositoryInterface $postRepository,
+
+)
+ {
+    $this->pageRepository = $pageRepository;
+    $this->postRepository = $postRepository;
+}
     /**
      * Display a listing of the resource.
      *
@@ -28,8 +45,19 @@ class SettingController extends Controller
            $data['title'] = 'Theme Settings';
            $settings = Setting::all();
            $data['settings'] =$settings;
-
-           
+           $data['hotels'] =$this->pageRepository->getPageByType('','Hotel');
+           $data['homes'] =$this->pageRepository->getPageByType('','Home');
+           $data['abouts'] =$this->pageRepository->getPageByType('','About');
+           $data['connecting_partners'] =$this->pageRepository->getPageByType('','Connecting Partner');
+           $data['hotel_details'] =$this->pageRepository->getPageByType('','hotelDetail');
+           $data['blogs'] =$this->pageRepository->getPageByType('','Blog');
+           $data['rooms'] =$this->pageRepository->getPageByType('','Room');
+           $data['room_details'] =$this->pageRepository->getPageByType('','roomDetail');
+           $data['locations'] =$this->pageRepository->getPageByType('','Location');
+           $data['location_details'] =$this->pageRepository->getPageByType('','locationDetail');
+           $data['tours'] =$this->pageRepository->getPageByType('','Tour');
+           $data['contact_pages'] =$this->pageRepository->getPageByType('','Contact Us');
+           $data['tour_details'] =$this->pageRepository->getPageByType('','tourDetail');
            return view('admin.settings.theme-settings.create',$data);
     }
 

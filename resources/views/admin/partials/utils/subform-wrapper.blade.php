@@ -21,7 +21,8 @@ $first_element = reset($typeData);
     <div class="card-header border-bottom">
       <h4 class="card-title">
         <span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
-        <span class="card-title-text">{{ $first_element }}</span>
+        <span class="card-title-text">{!!$typeData[$type.'-title'] ?? strip_tags(shortDescription($first_element,50))!!}</span>
+        {{--<span class="card-title-text">{!! strip_tags(shortDescription($first_element,50)) !!}</span>--}}
       </h4>
       <div class="float-left">
         <a href="javascript:void(0);" class="edit-card"><i class="fa fa-edit"></i></a>

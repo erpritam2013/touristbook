@@ -6,12 +6,12 @@
                 <div class="quixnav-scroll">
                     <ul class="metismenu" id="menu">
                         <li class="nav-label first">Main Menu</li>
-                        <li class="{{matchRouteGroupName('dashboard','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                        <li class="{{matchRouteGroupName('dashboard','parent')}}"><a class="" href="{{route('admin.dashboard')}}" aria-expanded="false"><i
                             class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>
-                            <ul aria-expanded="false" class="{{matchRouteGroupName('dashboard','child')}}">
+                            {{--<ul aria-expanded="false" class="{{matchRouteGroupName('dashboard','child')}}">
                                 <li class="{{matchRouteName('admin.dashboard')}}"><a href="{{route('admin.dashboard')}}">Dashboard</a></li>
-                                {{--<li><a href="./index2.html">Dashboard 2</a></li>--}}
-                            </ul>
+                               <li><a href="./index2.html">Dashboard 2</a></li>
+                            </ul>--}}
                         </li>
 
                            <li class="{{matchRouteGroupName('posts','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
@@ -165,6 +165,7 @@
                                 <li><a href="{{route('admin.settings.custom-icons.index')}}" class="{{matchRouteName('admin.settings.custom-icons.index')}}">Custom Icon Upload</a></li>
                                 <li><a href="{{route('admin.settings.video-galleries.index')}}" class="{{matchRouteName('admin.settings.video-galleries.index')}}">Video Gallery</a></li>
                                 <li><a href="{{route('admin.settings.theme-settings.index')}}" class="{{matchRouteName('admin.settings.theme-settings.index')}}">Theme Settings</a></li>
+                                <li><a href="{{route('admin.settings.media-object.index')}}" class="{{matchRouteName('admin.settings.media-object.index')}}">Media List</a></li>
                                 {{--<li><a href="./app-profile.html">Profile</a></li>
                                 <li><a href="./app-profile.html">Profile</a></li>
                                 <li><a href="./app-profile.html">Profile</a></li>

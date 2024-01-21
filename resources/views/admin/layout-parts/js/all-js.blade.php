@@ -57,12 +57,17 @@
 
         @endpush
         <!-- For list or index page js -->
-        @if(Route::getRoutes()->match(request())->methods[0] == 'GET' && (matchRouteNameMatch('index') || matchRouteNameMatch('pageIndex')))
+        @if(Route::getRoutes()->match(request())->methods[0] == 'GET' && (matchRouteNameMatch('index') || matchRouteNameMatch('pageIndex') || matchRouteNameMatch('media-used-object')))
         @push('dataTable_js')
         <!-- Datatable -->
         <script src="{!! asset('admin-part/vendor/datatables/js/jquery.dataTables.min.js') !!}"></script>
         <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-        {!! $dataTable->scripts() !!}
+        @if(matchRouteNameMatch('media-used-object'))
+        <script src="{!! asset('admin-part/js/plugins-init/datatables.init.js') !!}"></script>
+        @else
+        
+        {!! $dataTable->scripts() ?? ''!!}
+        @endif
         @endpush
         @if(matchRouteNameMatch('custom-icons'))
         @push('custom-icon-upload')

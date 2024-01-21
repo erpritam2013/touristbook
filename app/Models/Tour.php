@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Location;
 use App\Models\TourDetail;
+use App\Models\User;
 use App\Models\CountryZone;
 use App\Models\Terms\Type;
 use App\Models\Terms\OtherPackage;
@@ -13,10 +14,13 @@ use App\Models\Terms\State;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 class Tour extends Model
 {
     use HasFactory, Sluggable;
+    const ACTIVE = 1;
+    const INACTIVE = 0;
 
     protected $guarded = [];
 
@@ -40,6 +44,7 @@ class Tour extends Model
         'min_price'=>'float',
         'rate_review'=>'float',
         'deposit_payment_amount'=>'float',
+        'editing_expiry_time' => 'datetime'
     ];
 
     public function sluggable(): Array
@@ -49,6 +54,34 @@ class Tour extends Model
                 'source' => 'name'
             ]
         ];
+    }
+
+     public function edited() {
+        $this->fill([
+            'editor_id' => Auth::user()->id,
+            'is_editing' => true,
+            'editing_expiry_time' => Carbon::now()->addMinutes(5)
+        ]);
+        $this->save();
+    }
+
+    public function editor_name()
+    {
+        if ($this->is_editing && $this->editor_id && !$this->editing_expiry_time->isPast()) {
+            return User::find($this->editor_id)->name;
+        }
+
+
+    }
+
+
+    public function freeEditing() {
+        $this->is_editing = false;
+        $this->save();
+    }
+
+    public function isEditing() {
+        return $this->is_editing && !$this->editing_expiry_time->isPast() && $this->editor_id != Auth::user()->id;
     }
 
     public function types() {

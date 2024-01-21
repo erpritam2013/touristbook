@@ -16,10 +16,10 @@
 						@php 
 						if(!empty($shopaholics_anonymous['shopaholics_anonymous-image'])){
 						$shopaholics_anonymous_image_arr = json_decode($shopaholics_anonymous['shopaholics_anonymous-image'],true);
-						$shopaholics_anonymous_image = (!empty($shopaholics_anonymous_image_arr) && isset($shopaholics_anonymous_image_arr[0]['id']))?getConversionUrl($shopaholics_anonymous_image_arr[0]['id'],'270x200'):null;
+						$shopaholics_anonymous_image = (!empty($shopaholics_anonymous_image_arr) && isset($shopaholics_anonymous_image_arr[0]['id']))?getConversionUrl($shopaholics_anonymous_image_arr[0]['id'],'450x417'):null;
 						}
 						@endphp
-						<img class="" src="{{$shopaholics_anonymous_image ?? asset('sites/images/dummy/270x200.jpg')}}" alt="{{strtolower($shopaholics_anonymous['shopaholics_anonymous-title'])}} image">
+						<img class="rounded" src="{{$shopaholics_anonymous_image ?? asset('sites/images/dummy/450x417.jpg')}}" alt="{{strtolower($shopaholics_anonymous['shopaholics_anonymous-title'])}} image">
 					</div>
 				</div>
 			</div>

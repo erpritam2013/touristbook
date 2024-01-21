@@ -21163,7 +21163,6 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
     text-align: center;
     color: #fff;
 }
-
 .step-form-horizontal .wizard .steps li.current a:hover,
 .step-form-horizontal .wizard .steps li.current a:active,
 .step-form-horizontal .wizard .steps li.disabled a:hover,
@@ -29272,7 +29271,7 @@ body .sidebar-icon-touristbook {
     font-size: 30px;
     border-width: 3px;
     border-style: solid;
-    border-radius: 100px;
+    border-radius: 100%;
     padding: 15px;
     font-weight: 900;
     display: inline-block;
@@ -29363,6 +29362,43 @@ div#paginationList {
     border: 1px solid orange;
     border-radius: 5px;
 }
+.edit-name {
+    padding: 2px;
+    margin: 0;
+    line-height: 1;
+    font-size: 12px;
+    width: 100%;
+    text-align: center;
+    background-color: #50e3c2;
+    color: #000;
+    border: 1px solid #50e3c2;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.edit-context{
+    animation-duration: 1200ms;
+    animation-name: blink;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    -webkit-animation:blink 1200ms infinite; /* Safari and Chrome */
+}
+@keyframes blink {
+    from {
+        color:#000;
+    }
+    to {
+        color:white;
+    }
+}
+@-webkit-keyframes blink {
+    from {
+        color:#000;
+    }
+    to {
+        color:white;
+    }
+}
 
 #preloader-file {
     position: absolute;
@@ -29402,3 +29438,32 @@ div#tb-image-prev {
 #setting-form-footer .image-increase .media-controls .media-preview img{
     width: 200px;
 }
+
+.remove-image{
+    
+    background: red;
+    color: #fff;
+    padding: 5px;
+    position: relative;
+    top: -100px;
+    left: 79px;
+}
+.forget-btn{
+    float: right;
+}
+.forget-btn a {
+    color: #07509e;
+}
+}
+.forget-btn a:hover{
+    color: #fba009;
+}
+.used-media-list .table tbody tr td{
+    color: #000!important;
+}
+.used-media-list .card-header .card-title{
+    padding: 10px 40px;
+    background: #ddd;
+    border-radius: 3px;
+}
+    

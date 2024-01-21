@@ -11,6 +11,11 @@
                 <div class="card-header">
                     <h4 class="card-title">{{$title}}</h4>
                     <div align="right">
+                         @if(isset($activity) && !empty($activity))
+                         @if(!empty($activity->slug))
+                        <a href="{{route('activity',$activity->slug)}}" class="btn btn-info" target="_blank"><i class="fa fa-file"></i> view</a>
+                        @endif
+                        @endif
                         <a href="{{route('admin.activities.index')}}" class="btn btn-dark"><i class="fa fa-arrow-right"></i> Back</a>
                     </div>
                 </div>

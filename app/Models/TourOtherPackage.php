@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class TourOtherPackage extends Model
 {
     use HasFactory;
+
+    
 }

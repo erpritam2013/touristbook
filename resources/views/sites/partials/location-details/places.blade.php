@@ -1,8 +1,8 @@
  @if(!empty($location->locationMeta->place_to_visit_description))
  <div id="places-description" class="st_location_extra_desc">
- 	<div class="div-desc">
+ 
  		{!!$location->locationMeta->place_to_visit_description!!}
- 	</div>
+ 	
  </div>
  @endif
 
@@ -20,11 +20,11 @@
  						if(!empty($place_to_visit['place_to_visit-image'])){
 
  						$place_to_visit_image_arr = json_decode($place_to_visit['place_to_visit-image'],true);
- 						$place_to_visit_image = (!empty($place_to_visit_image_arr) && isset($place_to_visit_image_arr[0]['id']))?getConversionUrl($place_to_visit_image_arr[0]['id'],'270x200'):null;
+ 						$place_to_visit_image = (!empty($place_to_visit_image_arr) && isset($place_to_visit_image_arr[0]['id']))?getConversionUrl($place_to_visit_image_arr[0]['id'],'450x417'):null;
  						}
 
  						@endphp
- 						<img class="" src="{{$place_to_visit_image ?? asset('sites/images/dummy/270x200.jpg')}}" alt="{{strtolower($place_to_visit['place_to_visit-title'])}} image">
+ 						<img class="rounded" src="{{$place_to_visit_image ?? asset('sites/images/dummy/450x417.jpg')}}" alt="{{strtolower($place_to_visit['place_to_visit-title'])}} image" >
  					</div>
  				</div>
  			</div>

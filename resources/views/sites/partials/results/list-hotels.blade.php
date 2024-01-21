@@ -24,9 +24,7 @@
                             @php
                             $address = (!empty($hotel->address ))?$hotel->address:$hotel->hotel_attributes['corporateAddress'];
                             @endphp
-                            <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{shortDescription($address,45)}}@if(strlen($address) > 45)
-                                &nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$address}}" data-more_data_label="Address" style="color:#fba009;"></i>
-                            @endif</p>
+                            <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{$address}}</p>
                            
                             <div class="row">
                                <div class="col-sm-12">
@@ -180,7 +178,7 @@
 
             {!!get_price($hotel)!!}
 
-            <span class="unit">per night<span class="price-ex"><i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;position: absolute;top: -3px;"><span class="TravelGo-opt-tooltip min-w-500px-fs-14fpx">Price usually vary or subject to change please visit website to view the best deal.</span></i></span></span>
+            <span class="unit">per night<span class="price-ex"><i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;position: absolute;top: -3px;"><span class="TravelGo-opt-tooltip min-w-690px-fs-15fpx">Price usually vary or subject to change please visit website to view the best deal.</span></i></span></span>
 
 
         </div>

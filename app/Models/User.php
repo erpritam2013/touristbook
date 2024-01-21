@@ -47,11 +47,13 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'image' => 'array',
     ];
 
     public function isAdmin() {
         return $this->role == "admin";
     }
+<<<<<<< HEAD
 
     public function isEditor() {
         return $this->role == "editor";
@@ -60,4 +62,9 @@ class User extends Authenticatable
     public function isSubscriber() {
         return $this->role == "subscriber";
     }
+=======
+    public function isEditor() {
+        return $this->role == "editor";
+    }
+>>>>>>> e9559252ae148638c9f3c655968d09286328fdf7
 }

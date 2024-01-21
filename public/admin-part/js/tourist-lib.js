@@ -2,6 +2,7 @@ $(document).ready(function ($) {
     var base_url = $("#base-url").val();
 
     var preloader = $('body div#preloader');
+    var no_modal = false;
 
     $.ajaxSetup({
         error : function(jqXHR, textStatus, errorThrown) {
@@ -31,6 +32,7 @@ $(document).ready(function ($) {
         let html = '';
         if (Object.keys(tb_data).length != 0) {
 
+<<<<<<< HEAD
             html += '<div class="form-group row">';
             html += '<img src="' + tb_data.imageUrl + '" width="250" height="250">';
             html += '</div>';
@@ -53,6 +55,30 @@ $(document).ready(function ($) {
     }
 
     $('.nav-link').on('click', function () {
+=======
+           html +='<div class="form-group row">';
+           html +='<img src="'+tb_data.imageUrl+'" width="250" height="250">';
+           html +='</div>';
+           html +='<div class="form-group row">';
+           html +='<label>Title</label>';
+           html +='<input class="form-control" id="tb-image-name-prev" readonly value="'+tb_data.title+'">';
+           html +='</div>';
+           html +='<div class="form-group row">';
+           html +='<label>Image Url</label>';
+           html +='<textarea class="form-control" id="tb-image-url-prev" readonly rows="5" title="'+tb_data.url+'">'+tb_data.url+'</textarea>';
+           html +='</div>';
+           html +='<div class="form-group row">';
+           html +=`<button onclick="CopyToClipboard(document.getElementById('tb-image-url-prev'))" class="btn btn-sm btn-info">Copy Url to Clipboard</button>`;
+           html +='<span class="prev-success d-none" aria-hidden="true" style="padding: 5px;color: green;">Copied!</span>';
+           html +='</div>';
+       }else{
+          html += '<div class="show-prev-image-data">Show Image Preview!</div>';
+      }
+      return html;
+  }
+
+  $('.nav-link').on('click',function(){
+>>>>>>> e9559252ae148638c9f3c655968d09286328fdf7
 
         if ($(this).attr('href') == '#upload-media') {
             let obj_image = new Object();
@@ -62,14 +88,26 @@ $(document).ready(function ($) {
     $("#file-modal").on("hidden.bs.modal", function () {
         let obj_image = new Object();
         $('#tb-image-prev').html(showImagePrevHtml(obj_image));
+<<<<<<< HEAD
     });
 
     var base_admin_url = $("#base-admin-url").val();
+=======
+    }
+})
+  $("#file-modal").on("hidden.bs.modal", function () {
+    let obj_image = new Object();
+    $('#tb-image-prev').html(showImagePrevHtml(obj_image));
+});
+
+  var base_admin_url = $("#base-admin-url").val();
+>>>>>>> e9559252ae148638c9f3c655968d09286328fdf7
 
 
 
     // Map Variable
 
+<<<<<<< HEAD
     const addressTextboxSingle = document.getElementById("address");
 
     const addressTextbox = document.getElementById("map_address");
@@ -87,6 +125,25 @@ $(document).ready(function ($) {
 
 
     let touristEditorsElems = $(".tourist-editor");
+=======
+  const addressTextboxSingle = document.getElementById("address");
+
+  var addressTextbox = document.getElementById("map_address");
+
+  var latitudeTextbox = document.getElementById("latitude");
+
+  var longitudeTextbox = document.getElementById("longitude");
+
+  var zoomTextbox = document.getElementById("zoom_level");
+
+
+
+  var mapElem = document.getElementById("map");
+
+
+
+  let touristEditorsElems = $(".tourist-editor");
+>>>>>>> e9559252ae148638c9f3c655968d09286328fdf7
 
 
 
@@ -130,11 +187,19 @@ $(document).ready(function ($) {
 
         if (typeof something != 'string')
 
+<<<<<<< HEAD
             something = JSON.stringify(something);
 
 
 
         try {
+=======
+         something = JSON.stringify(something);
+
+
+
+     try {
+>>>>>>> e9559252ae148638c9f3c655968d09286328fdf7
 
             JSON.parse(something);
 
@@ -603,7 +668,9 @@ $(document).ready(function ($) {
 
     };
 
-
+$(zoomTextbox).on('input',function(){
+    onPlaceChanged();
+});
 
     if (addressTextbox) {
 
@@ -611,7 +678,11 @@ $(document).ready(function ($) {
 
         // Autocompletion Addres Bar
 
+<<<<<<< HEAD
         const autocomplete = new google.maps.places.Autocomplete(addressTextbox, {
+=======
+    var autocomplete = new google.maps.places.Autocomplete(addressTextbox, {
+>>>>>>> e9559252ae148638c9f3c655968d09286328fdf7
 
             types: ["geocode"],
 
@@ -858,6 +929,7 @@ $(document).ready(function ($) {
         if (!$(this).hasClass('active')) {
 
             // adding
+<<<<<<< HEAD
             tb_image_prev_data.title = fileName;
             tb_image_prev_data.imageUrl = fileUrl;
             tb_image_prev_data.url = fileUrl;
@@ -929,6 +1001,79 @@ $(document).ready(function ($) {
 
         }
 
+=======
+       tb_image_prev_data.title = fileName;
+       tb_image_prev_data.imageUrl = fileUrl;
+       tb_image_prev_data.url = fileUrl;
+
+       $('#tb-image-prev').html(showImagePrevHtml(tb_image_prev_data));
+
+       if(mediaMode == "single") {
+
+                // Remove active class from All
+
+        $(this).parent().find('.file').removeClass('active');
+
+        $(this).addClass('active')
+
+        selectedImages = [{
+
+            'id': fileId,
+
+            'url': fileUrl,
+
+        }];
+
+    }else {
+
+                // Multiple Selection
+        console.log('select',typeof selectedImages);
+        $(this).addClass('active')
+
+        selectedImages.push({
+
+            'id': fileId,
+
+            'url': fileUrl,
+
+        })
+
+    }
+
+
+
+}else {
+
+            // removing
+   $('#tb-image-prev').html(showImagePrevHtml(tb_image_prev_data));
+   if(mediaMode == "single") {
+
+                // Remove active class from All
+
+    $(this).parent().find('.file').removeClass('active');
+
+    selectedImages = [];
+
+}else {
+
+                // Multiple Selection
+
+    $(this).removeClass('active')
+
+    if(selectedImages.length > 0){
+
+        selectedImages = selectedImages.filter((selectedImg, idx) => {
+
+            return selectedImg.id != fileId
+
+        })
+    }
+
+}
+
+}
+
+>>>>>>> e9559252ae148638c9f3c655968d09286328fdf7
 
 
         // TODO: Assign selectedImages to target Element
@@ -976,6 +1121,16 @@ $(document).ready(function ($) {
         handleFiles(e.currentTarget.files);
 
     })
+
+$("#fileElemAdd").on("change", function(e) {
+    no_modal = true;
+    handleFiles(e.currentTarget.files);
+
+});
+
+$('#add-new-media').on('click',function(){
+    $('#drop-area').toggle();
+})
 
 
 
@@ -1163,6 +1318,24 @@ $(document).ready(function ($) {
 
     }
 
+const sortable_gallery_fun = () => {
+    let cardListElm = $(".image-list");
+
+    if (cardListElm.length > 0) {
+
+        cardListElm.sortable({
+
+            update: function (event, ui) {
+
+            //changeSubformOrder($(this));
+
+            },
+
+        });
+
+    }
+}
+
 
 
     function uploadFile(file, i) {
@@ -1189,27 +1362,37 @@ $(document).ready(function ($) {
 
         })
 
+<<<<<<< HEAD
 
 
         xhr.addEventListener('readystatechange', function (e) {
+=======
+    xhr.addEventListener('readystatechange', function(e) {
+>>>>>>> e9559252ae148638c9f3c655968d09286328fdf7
 
             if (xhr.readyState == 4 && xhr.status == 200) {
 
                 updateProgress(i, 100) // <- Add this
 
                 // Refresh the Listing
+                if (!no_modal) {
 
-                loadImages()
+                    loadImages()
 
                 // Tab Change
 
-                changeTabToFileList()
+                    changeTabToFileList()
+                }
 
                 // Reset Progressbar
+                
 
                 updateProgress(i, 0)
 
-
+                                //without modal upload media
+                if (no_modal) {
+                    window.location.reload();
+                }
 
 
 
@@ -1233,11 +1416,15 @@ $(document).ready(function ($) {
 
     }
 
+<<<<<<< HEAD
 
 
 
 
     $(".submit-media").on("click", function () {
+=======
+$(".submit-media").on("click", function() {
+>>>>>>> e9559252ae148638c9f3c655968d09286328fdf7
 
         let targetElem = $(this)[0].targetElem
 
@@ -1292,19 +1479,150 @@ $(document).ready(function ($) {
 
 
 
+<<<<<<< HEAD
         $("#file-modal").modal("hide");
 
 
 
     })
+=======
+    let imageHtml = '';
+    
+    imageHtml +='<div class="row">';
+
+    console.log("Selected Images", selectedImages)
+    if(selectedImages.length > 0){
+        selectedImages.forEach((imageObj, idx) => {
+
+            imageHtml +='<div class="col-xl-3">';
+
+            imageHtml += `<img src="${imageObj.url}" class="img" height="100" width="100" id="image-path-${imageObj.id}" />`
+
+            imageHtml +='</div>';
+
+        })
+    }
+    if (targetElem.attr('smode') == "multiple") {
+       imageHtml +='<button type="button" class="sortable-gallery" data-input_target="'+targetElem.parent().find('.gallery-input').first().attr('name')+'" onclick="sortable_gallery(this)">Sort Item</button>';
+   }
+   imageHtml +='</div>';
+
+   targetElem.parent().find(".media-preview").first().html(imageHtml)
+
+
+
+   $("#file-modal").modal("hide");
+>>>>>>> e9559252ae148638c9f3c655968d09286328fdf7
 
 
 
     let mediaSelector = ".add-media-btn, .add-gallery-btn"
     let mediaRemove = '.remove-media-btn';
 
+//let sortable_gallery = $('.sortable-gallery');
+let sortable_gallery_done = $('.done-sort-gallery');
+window.remove_image = function(ele){
+    if (confirm('are you sure remove this image')) {
+        $(ele).parent().remove();
+        let cardListElm = $(".image-list");
+        cardListElm.sortable("refresh")
+    }
+}
 
+<<<<<<< HEAD
     // $("body").on("click", mediaRemove, function(){
+=======
+window.sortable_gallery = function(ele){
+   $("#sort-gallery-modal").modal("show");
+
+   let parent = $(ele).closest('.gallery-controls');
+   let input_value = parent.find('.gallery-input').first().val();
+   if (isJSON(input_value) && (input_value != '' || input_value != null)) {
+
+
+    
+    let inputImages = $.parseJSON(input_value);
+    let imageHtml = "";
+    imageHtml +='<div class="row image-list">';
+    if(inputImages.length > 0){
+        inputImages.forEach((imageObj, idx) => {
+            if (imageObj != null) {
+
+                imageHtml +=`<div class="col-xl-3 image-list-item" data-id="${imageObj.id}" data-url="${imageObj.url}">`;
+
+                imageHtml += `<img src="${imageObj.url}" class="img" height="100" width="100" id="image-path-${imageObj.id}" />`
+
+                imageHtml +='<i class="fa fa-remove remove-image" onclick="remove_image(this)"></i>';
+                imageHtml +='</div>';
+            }
+
+
+        })
+    }
+
+    imageHtml +='</div>';
+    $("#sort-gallery-modal").find(".sort-gallery").first().html(imageHtml);
+    $("#sort-gallery-modal").find(".done-sort-gallery").first().attr('data-input_target',parent.find('.gallery-input').first().attr('id'));
+
+
+    sortable_gallery_fun();
+}
+}
+
+
+sortable_gallery_done.on('click',function(){
+    let image_list_item = $('#sort-gallery-modal .sort-gallery .image-list .image-list-item');
+
+    let image_list = [];
+    $(image_list_item).each((idx,imageObj ) => {
+     
+
+       image_list.push({'id':$(imageObj).data('id'),'url':$(imageObj).data('url')});
+       
+   });
+
+    let jsonStringify = JSON.stringify(image_list);
+
+    let target_element = $(`#${$(this).data('input_target')}`);
+
+    
+    target_element.val(jsonStringify);
+
+    $(target_element).closest('.gallery-controls').find('.add-gallery-btn').first().attr("selectedImages", jsonStringify);
+
+    let imageHtml_2 = '';
+    
+    imageHtml_2 +='<div class="row">';
+
+
+    if(image_list.length > 0){
+        image_list.forEach((imageObj_2, idx_2) => {
+
+         
+            imageHtml_2 +='<div class="col-xl-3">';
+
+            imageHtml_2 += `<img src="${imageObj_2.url}" class="img" height="100" width="100" id="image-path-${imageObj_2.id}" />`
+
+            imageHtml_2 +='</div>';
+
+        })
+    }
+    
+    imageHtml_2 +='<button type="button" class="sortable-gallery" data-input_target="'+$(this).data('input_target')+'" onclick="sortable_gallery(this)">Sort Item</button>';
+    
+    imageHtml_2 +='</div>';
+
+    $(target_element).closest('.gallery-controls').find(".media-preview").first().html(imageHtml_2)
+
+    
+    $("#sort-gallery-modal").find(".sort-gallery").first().html("");
+    $("#sort-gallery-modal").modal("hide");
+    
+
+
+    
+});
+>>>>>>> e9559252ae148638c9f3c655968d09286328fdf7
 
     //     alert('remove');
     // });
@@ -1319,7 +1637,12 @@ $(document).ready(function ($) {
 
         // Model Open
 
+<<<<<<< HEAD
         $("#file-modal").modal("show");
+=======
+    
+    $("#file-modal").modal("show");
+>>>>>>> e9559252ae148638c9f3c655968d09286328fdf7
 
         // Store Element
 
@@ -1368,10 +1691,17 @@ $(document).ready(function ($) {
     }
 
 
+<<<<<<< HEAD
     const processedPageTemplateHtml = function (data, id) {
         if (data != '') {
             $(`body ${id}`).html(data);
             $('#page-extra-data').on("click", '.btn-add-subform', function () {
+=======
+const processedPageTemplateHtml = function(data,id){
+    if (data != '') {
+       $(`body ${id}`).html(data);
+       $('#page-extra-data').on("click",'.btn-add-subform', function () {
+>>>>>>> e9559252ae148638c9f3c655968d09286328fdf7
 
                 elemRef = $(this);
 
@@ -1413,6 +1743,7 @@ $(document).ready(function ($) {
             beforeSend: showLoader,
             complete: hideLoader,
         });
+<<<<<<< HEAD
     }
 
     async function fetchDataByajax(t_endpoint, t_params) {
@@ -1425,6 +1756,98 @@ $(document).ready(function ($) {
     }
 
     const fetchPageTemplate = function (ele) {
+=======
+
+        mapElem = document.getElementById("map");
+        if (mapElem) {
+
+            initMap();
+        }
+        addressTextbox = document.getElementById("map_address");
+        latitudeTextbox = document.getElementById("latitude");
+        longitudeTextbox = document.getElementById("longitude");
+        zoomTextbox = document.getElementById("zoom_level");
+        if(addressTextbox){
+
+
+
+        // Autocompletion Addres Bar
+
+            var autocomplete = new google.maps.places.Autocomplete(addressTextbox, {
+
+                types: ["geocode"],
+
+            });
+
+
+        // Event listener for the autocomplete object.
+
+            autocomplete.addListener("place_changed", function () {
+
+            // Get the selected place.
+
+                var place = autocomplete.getPlace();
+                
+
+            // Set the address textbox to the selected place's address.
+                addressTextbox.value = place.formatted_address;
+
+
+
+                let latitude = place.geometry.location.lat();
+                
+
+                let longitude = place.geometry.location.lng();
+
+
+
+                latitudeTextbox.value = latitude;
+
+                longitudeTextbox.value = longitude;
+
+
+
+                onPlaceChanged();
+
+            });
+            if (latitudeTextbox != "" && longitudeTextbox != "") {
+               onPlaceChanged();
+           }
+           $(zoomTextbox).on('input',function(){
+            onPlaceChanged();
+        });
+
+       }
+       
+   }, 1000);
+
+
+
+   }else{
+    $(`body ${id}`).children().remove();
+}
+
+}
+const getData = function(ajaxurl,s_params) { 
+    return $.ajax({
+        type: "GET",
+        dataType: "html",
+        url: ajaxurl,
+        data:s_params,
+        beforeSend: showLoader,
+        complete: hideLoader,
+    });
+}
+
+async function fetchDataByajax(t_endpoint,t_params) {
+  try {
+    const res = await getData(t_endpoint,t_params)
+    processedPageTemplateHtml(res,'#page-extra-data');
+} catch(err) {
+    console.log(err);
+}
+}
+>>>>>>> e9559252ae148638c9f3c655968d09286328fdf7
 
         let target_element = $(ele).children('option:selected').val();
         //let target_element = $(ele).data('target_element');
@@ -1445,18 +1868,33 @@ $(document).ready(function ($) {
             } else {
                 $(`body #page-extra-data`).children().remove();
             }
+<<<<<<< HEAD
         } else {
+=======
+
+            fetchDataByajax(endpoint,params);
+
+        }else{
+>>>>>>> e9559252ae148638c9f3c655968d09286328fdf7
             $(`body #page-extra-data`).children().remove();
         }
     }
 
     let pageType = $('body #page-type');
 
+<<<<<<< HEAD
     if (pageType.children('option:selected').val() != "") {
         fetchPageTemplate(pageType);
     }
     $(pageType).on('change', function () {
         fetchPageTemplate(this);
+=======
+if (pageType.children('option:selected').val() != "") {
+    fetchPageTemplate(pageType);
+}
+$(pageType).on('change',function(){
+   fetchPageTemplate(this);
+>>>>>>> e9559252ae148638c9f3c655968d09286328fdf7
 
     });
 

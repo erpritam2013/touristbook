@@ -64,11 +64,25 @@ return [
         ],
     'about_info' => [
             "fields" => [
-                "about_info-title" => [
-                    'label' => "Title",
-                    'control' => 'text'
-                ],
+                // "about_info-title" => [
+                //     'label' => "Title",
+                //     'control' => 'text',
+                // ],
                 "about_info-description" => [
+                    'label' => "Description",
+                    'control' => 'textarea',
+                    'class' => 'tourist-editor'
+                ]
+            ]
+
+        ],
+    'connecting_partners' => [
+            "fields" => [
+                // "connecting_partners-title" => [
+                //     'label' => "Title",
+                //     'control' => 'text',
+                // ],
+                "connecting_partners-description" => [
                     'label' => "Description",
                     'control' => 'textarea',
                     'class' => 'tourist-editor'
