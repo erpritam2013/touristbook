@@ -1,18 +1,96 @@
    $(document).ready(function () {
 
-    var bulk_ids = [];
+    const alert_html = (msg,status) => {
+       let alr_html = "";
+       if (status == 'success') {
+
+          alr_html += `<div class="alert alert-success alert-dismissible alert-alt solid fade show login-success">`;
+      }else{
+
+       alr_html += `<div class="alert alert-danger alert-dismissible alert-alt solid fade show login-error">`;
+   }
+
+   alr_html += `<button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>`;
+   if (status == 'success') {
+    alr_html += `</button><strong>Success!</strong>&nbsp;${msg}</div>`;
+}else{
+    alr_html += `</button><strong>Error!</strong>&nbsp;${msg}</div>`;
+
+}
+return alr_html;
+}
+
+let loginForm = $("#ajax-login-form");
+let login_action = $("#ajax-login-form").attr('action');
+loginForm.submit(function(e){
+
+    e.preventDefault();
+
+    var formData = loginForm.serialize();
+    $.ajax({
+        type:'POST',
+        url:login_action,
+        dataType: 'json',
+        headers: {'X-CSRF-TOKEN': $("#login-modal").attr('data-csrf')},
+        data:formData,
+        success:function(data){
+                $('.login-success').remove();
+                $('.login-error').remove();
+               
+            data.auth == false ? $("#login-modal").modal("show"): $(loginForm).before(alert_html('Successfully Logged','success'));
+            $("#login-modal").modal("hide");
+            
+            
+            
+            
+        },
+        error: function (data) {
+             $('.login-success').remove();
+             $('.login-error').remove();
+        
+             if (data.status == 302) {
+               
+                $(loginForm).before(alert_html(data.responseJSON.email,'error'));
+            }else{
+                $(loginForm).before(alert_html('something went wrong!','error'));
+                window.location.reload();
+            }
+        
+        }
+    });
+});
+
+const timer = function()
+{
+    console.log('here');
+    $.get( "/ajax/login-status",function( data )
+    {
+        if (data.auth == false) {
+          $('.login-success').remove();
+          $('.login-error').remove();
+          $("#login-modal").modal("show");
+          $("#login-modal").attr('data-csrf',data.token);
+      }else{
+          $("#login-modal").modal("hide");
+      }
+  });
+}
+
+setInterval(function() {timer();}, 60000);
+
+var bulk_ids = [];
      // $('#icon').iconpicker();
        /* When input amenity type */
-    var preloader = $('body div#preloader');
-    if ($('#get_image').length != 0) {
+var preloader = $('body div#preloader');
+if ($('#get_image').length != 0) {
 
-        get_image.onchange = evt => {
-          const [file] = get_image.files
+    get_image.onchange = evt => {
+      const [file] = get_image.files
 
-          if (file) {
-            show_image.src = URL.createObjectURL(file)
-        }
+      if (file) {
+        show_image.src = URL.createObjectURL(file)
     }
+}
 }
 
 $('body .dataTables_paginate .paginate_button').on('click',function(){
@@ -443,6 +521,7 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
     }
 });
+
     // console.log(term_form_data);return false;
 $.ajax({
     type: "POST",
@@ -606,15 +685,16 @@ $('body').on('change','.toggle-class',function() {
     let data = {'status': status, id};
     callAjax(ajaxurl,data);
 })
-
-CKEDITOR.on('instanceReady',
- function( evt )
- {
-    var editor = evt.editor;
-    editor.on('maximize',function(){
-        $('#main-wrapper').addClass('show');
+if (typeof(CKEDITOR) != 'undefined') {    
+    CKEDITOR.on('instanceReady',
+     function( evt )
+     {
+        var editor = evt.editor;
+        editor.on('maximize',function(){
+            $('#main-wrapper').addClass('show');
+        });
     });
-});
+}
         /*change status js end*/
 // window.addTag = () =>{
 //     let a_tag = '<a class="paginate_button d-none custom_paginate_button" aria-controls="touristbook-datatable" tabindex="0" data-dt-idx="8"></a>';

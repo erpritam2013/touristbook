@@ -16,7 +16,7 @@
         <option value="">Select Home Page</option>
         @isset($homes)
         @foreach($homes as $home)
-        <option value="{{$home->id}}" {!!get_edit_select_post_types_old_value($home->id,get_settings_option_value('home_page'),'select')!!} >{{$page->name}} ( #{{$home->id}})</option>
+        <option value="{{$home->id}}" {!!get_edit_select_post_types_old_value($home->id,get_settings_option_value('home_page'),'select')!!} >{{$home->name}} ( #{{$home->id}})</option>
         @endforeach
         @endisset
       </select>

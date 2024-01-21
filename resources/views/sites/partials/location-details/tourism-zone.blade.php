@@ -23,9 +23,9 @@
 
 		<div class="tab-content text-justify">
 			@foreach($tourismZone->tourism_zone as $key2 => $tzone)
-			<div class="tab-pane {{($key2 == 0)?'active':''}}" id="{{touristbook_sanitize_title($tzone['tourism_zone-title'])}}">
+			<div class="tab-pane {{($key2 == 0)?'active':''}} table-responsive" id="{{touristbook_sanitize_title($tzone['tourism_zone-title'])}}">
 
-				{!!$tzone['tourism_zone-description']!!}
+				{!!purify_html($tzone['tourism_zone-description'])!!}
 
 			</div>
 			@endforeach
