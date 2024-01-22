@@ -85,7 +85,7 @@ public function destroy(Request $request,$id)
        abort(404);
    }
 
-   $path  = $media->getPath();
+   //$path  = $media->getPath();
    
 //    $file_arr = explode('.', $path);
 //    if (!empty($media->generated_conversions) && is_array($media->generated_conversions)) {
@@ -117,11 +117,12 @@ $file_delete_history->disk = $media->disk;
 $file_delete_history->status = 1;
 $file_delete_history->save();
 $file = File::find($media->model_id);
-// if ($file) {
-//   $file->delete();  
-// }
+if ($file) {
+  $file->getMedia('images')->first()->delete();
+  $file->deletePreservingMedia();
+}
 
-$media->delete();
+//$media->delete();
 Session::flash('success','Media Deleted Successfully');
 return back();
 }
