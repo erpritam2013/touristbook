@@ -38,7 +38,7 @@ class MediaDataTable extends DataTable
                 })->editColumn('updated_at', function($row) {
                     return date('d-m-Y',strtotime($row->updated_at));
                 })->addColumn('del',function($row){
-                 return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'">';
+                 return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'" disabled>';
             })->rawColumns(['action','del','media','used-media']);
     }
 
@@ -85,7 +85,7 @@ class MediaDataTable extends DataTable
     public function getColumns(): array
     {
          return [
-            Column::make('del')->title('<input type="checkbox" class="css-control-input mr-2 select-all text-center" onchange="CustomSelectCheckboxAll(this);" '.$this->disabledInput().'>')->searchable(false)
+            Column::make('del')->title('<input type="checkbox" class="css-control-input mr-2 select-all text-center" onchange="CustomSelectCheckboxAll(this);" '.$this->disabledInput().'disabled >')->searchable(false)
             ->orderable(false)
             ->exportable(false)
             ->printable(false)->width(5)
