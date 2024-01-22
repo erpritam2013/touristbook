@@ -34,7 +34,7 @@ return [
     /*
      * The fully qualified class name of the media model.
      */
-    'media_model' => App\Models\Media::class,
+    'media_model' => App\Models\Demo::class,
 
     /*
      * When enabled, media collections will be serialised using the default
