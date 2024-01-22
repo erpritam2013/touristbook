@@ -69,12 +69,14 @@ class FileController extends Controller
 
         $media = $file->getMedia('images')->first();
 
+
         return [
             'url' => $media->getUrl(),
             'id' => $media->id,
             'name' => $media->name,
             'thumbnail' => $file->getFirstMediaUrl('images', 'thumbnail')
         ];
+
     }
 
     public function destroy(Request $request, $id)
