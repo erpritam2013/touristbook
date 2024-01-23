@@ -53,6 +53,7 @@ class FileController extends Controller
             $item->thumbnail = getConversionUrl($item->id, 'thumbnail');
             return $item;
         });
+        
         return response()->json($media_list);
     }
 

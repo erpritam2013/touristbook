@@ -1460,21 +1460,21 @@ class DataMigration extends Command
     public function update_tour_migrate()
     {
 
-       $this->info("Tour Data update...");
-       $post_collections = Tour::get(['id','wp_id']);
-       $wp_ids = $post_collections->pluck('wp_id')->toArray();
+     $this->info("Tour Data update...");
+     $post_collections = Tour::get(['id','wp_id']);
+     $wp_ids = $post_collections->pluck('wp_id')->toArray();
 
 
 
-       $pQuery = DB::connection($this->wp_connection)->table('wp_postmeta')
-       ->select('*')
-       ->whereIn('meta_key', ["show_agent_contact_info","email","phone","fax","website"])
-       ->whereIn('post_id', $wp_ids)
-       ->orderBy('meta_id', 'desc');
+     $pQuery = DB::connection($this->wp_connection)->table('wp_postmeta')
+     ->select('*')
+     ->whereIn('meta_key', ["show_agent_contact_info","email","phone","fax","website"])
+     ->whereIn('post_id', $wp_ids)
+     ->orderBy('meta_id', 'desc');
 
-       $results = $pQuery->get();
-       $nestedResults = [];
-       foreach ($results as $result) {
+     $results = $pQuery->get();
+     $nestedResults = [];
+     foreach ($results as $result) {
         $postId = $result->post_id;
                 unset($result->post_id); // Remove the ID field from the main post data
 
@@ -1494,13 +1494,13 @@ class DataMigration extends Command
 
             if (!empty($nestedResults)) {
                 foreach ($nestedResults as $postId => $n_result) {
-                   $tourSingle = Tour::where('wp_id',$postId)->first();
+                 $tourSingle = Tour::where('wp_id',$postId)->first();
 
 
 
-                   $tour = [
+                 $tour = [
 
-                       "contact" => json_encode([
+                     "contact" => json_encode([
                         "info" => $this->get_key_data($n_result['postmeta'], "show_agent_contact_info"),
                         "email" => $this->get_key_data($n_result['postmeta'], "email"),
                         "phone" => $this->get_key_data($n_result['postmeta'], "phone"),
@@ -1508,18 +1508,18 @@ class DataMigration extends Command
                         "website" => $this->get_key_data($n_result['postmeta'], "website")
                     ]),
 
-                   ];
+                 ];
 
-                   $tourSingle->detail()->update($tour);
+                 $tourSingle->detail()->update($tour);
 
-               }
-           }
-
-
-           $this->info("Tour Data updated");
+             }
+         }
 
 
-       }
+         $this->info("Tour Data updated");
+
+
+     }
     /**
      * Tour Module
      */
@@ -2309,37 +2309,37 @@ public function st_activity_zones_migration()
             foreach ($nestedResults as $postId => $n_result) {
 
                 $activity_zone = [
-                 "wp_id" => $postId,
-                 "title" => $n_result["post_title"],
-                 "description" => $n_result["post_content"],
-                 "excerpt" => $n_result["post_excerpt"],
-                 "slug" => $n_result["post_name"],
-                 "sub_title" => $this->get_key_data($n_result["postmeta"], "activity_zone_title"),
-                 "country" => $this->get_key_data($n_result["postmeta"], "country"),
-                 "image" => $this->string_to_json($this->get_key_data($n_result["postmeta"], "activity_zone_image"), 'image'),
-                 "activity_zone_description" => $this->get_key_data($n_result["postmeta"], "activity_description"),
-                 "activity_zone_section" => $this->get_key_data($n_result["postmeta"], "activity_zone_section"),
-                 "activity_zone_pdf" => $this->get_key_data($n_result["postmeta"], "activity_zone_pdf"),
+                   "wp_id" => $postId,
+                   "title" => $n_result["post_title"],
+                   "description" => $n_result["post_content"],
+                   "excerpt" => $n_result["post_excerpt"],
+                   "slug" => $n_result["post_name"],
+                   "sub_title" => $this->get_key_data($n_result["postmeta"], "activity_zone_title"),
+                   "country" => $this->get_key_data($n_result["postmeta"], "country"),
+                   "image" => $this->string_to_json($this->get_key_data($n_result["postmeta"], "activity_zone_image"), 'image'),
+                   "activity_zone_description" => $this->get_key_data($n_result["postmeta"], "activity_description"),
+                   "activity_zone_section" => $this->get_key_data($n_result["postmeta"], "activity_zone_section"),
+                   "activity_zone_pdf" => $this->get_key_data($n_result["postmeta"], "activity_zone_pdf"),
 
-                 "created_by" => $n_result["post_author"],
-                 "status" => 1,
-                 "created_at" => $n_result["post_date_gmt"],
-                 "updated_at" => $n_result["post_modified"]
-             ];
+                   "created_by" => $n_result["post_author"],
+                   "status" => 1,
+                   "created_at" => $n_result["post_date_gmt"],
+                   "updated_at" => $n_result["post_modified"]
+               ];
 
-             $activity_zones->push($activity_zone);
-         }
+               $activity_zones->push($activity_zone);
+           }
             //dd($locations->toArray());
-         ActivityZone::insert($activity_zones->toArray());
-     }
+           ActivityZone::insert($activity_zones->toArray());
+       }
 
-     $this->info("activity Zone Data Loading Completed");
- }
+       $this->info("activity Zone Data Loading Completed");
+   }
 
- /*Activity Lists module migration*/
+   /*Activity Lists module migration*/
 
- public function st_activity_lists_migration()
- {
+   public function st_activity_lists_migration()
+   {
     $this->info("Activity Lists modules Data Loading...");
 
     $post_collections = DB::connection($this->wp_connection)->table("wp_posts")->select("ID")->where('post_type','st_activity_lists')->get();
@@ -4050,8 +4050,8 @@ public function setup_states()
         $get_value = DB::connection($this->wp_connection)->table('wp_postmeta')
         ->where('meta_key','=',$field)->where('post_id',$id)->first();
         if (!empty($get_value)) {
-           return $get_value->meta_value;
-       }else{
+         return $get_value->meta_value;
+     }else{
         return null;
     }
 }
@@ -4074,13 +4074,13 @@ public function check_in_and_check_out_change_in_hotel()
 
 public function get_post_id_from_laravel($post_id,$posts,$col)
 {
- $result = 0;
- $get_post = $posts->where($col,$post_id)->first();
+   $result = 0;
+   $get_post = $posts->where($col,$post_id)->first();
 
- if (!empty( $get_post)) {
-  $result = $get_post->id;
-}
-return $result;
+   if (!empty( $get_post)) {
+      $result = $get_post->id;
+  }
+  return $result;
 }
 
 public function comman_post_relationship_fun($objects,$custom_posts,$custom_post_class,string $meta_key,string $field1,string $field2,string $field3)
@@ -4095,12 +4095,12 @@ public function comman_post_relationship_fun($objects,$custom_posts,$custom_post
       $post_m_id = $this->get_post_id_from_laravel((int)$item->meta_value,$objects,$field3);
       $post_r_id = $this->get_post_id_from_laravel($item->post_id,$custom_posts,$field3);
       if ($post_m_id != 0) {
-         $custom_set_post = [
-            $field1 => $post_m_id, 
-            $field2 => $post_r_id
-        ];
-        $push_data->push($custom_set_post);
-    }
+       $custom_set_post = [
+        $field1 => $post_m_id, 
+        $field2 => $post_r_id
+    ];
+    $push_data->push($custom_set_post);
+}
 
 
 
@@ -4116,26 +4116,26 @@ public function update_page_extra_data($id,$data)
 
     if (!empty($page)) {
 
-     $extra_data["hotel_commen_amenities"] = $data['hotel_commen_amenities'];
-     $extra_data["hotel_common_property_type"] = null; 
-     $extra_data["hotel_common_medicare_assistance"] = $data['hotel_common_medicare_assistance']; 
-     $extra_data["hotel_common_meetings_and_events"] = $data['hotel_common_meetings_and_events']; 
-     $extra_data["hotel_common_deals_discount"] = $data['hotel_common_deals_discount'];
-     $extra_data["hotel_common_activities"] = $data['hotel_common_activities'];
-     $page->extra_data = $extra_data;
-     $page->update();
- }
- $this->info("Done");
+       $extra_data["hotel_commen_amenities"] = $data['hotel_commen_amenities'];
+       $extra_data["hotel_common_property_type"] = null; 
+       $extra_data["hotel_common_medicare_assistance"] = $data['hotel_common_medicare_assistance']; 
+       $extra_data["hotel_common_meetings_and_events"] = $data['hotel_common_meetings_and_events']; 
+       $extra_data["hotel_common_deals_discount"] = $data['hotel_common_deals_discount'];
+       $extra_data["hotel_common_activities"] = $data['hotel_common_activities'];
+       $page->extra_data = $extra_data;
+       $page->update();
+   }
+   $this->info("Done");
 
 }
 
 public function file_upload_by_url($url,$name)
 {
-    
 
-$file = file_get_contents($url);
 
-if ($file != NULL) {
+    $file = file_get_contents($url);
+
+    if ($file != NULL) {
 
     // $pathToFolder = 'C:\\Users\\hp\\Downloads\\s3mising-image'; 
     $pathToFolder = 'C:\\xampp\\htdocs\\touristbook\\storage\\app\\public\\remaining-images';        // just an example folder location
@@ -4149,45 +4149,49 @@ if ($file != NULL) {
 
 public function get_image($dir,&$files = array(),$status = false)
 {
-   
-   if ($tmp = opendir($dir)) {
+
+ if ($tmp = opendir($dir)) {
     while (($file = readdir($tmp)) !== false) {
       $path = $dir.'\\'.$file;
       
       if (!is_dir($path)) {
-       
+
         //$image = basename($path);
          //$file_arr = explode('.', $image);
         $files[] = $path;
-      }else if ($file != '.' && $file != '..') {
+    }else if ($file != '.' && $file != '..') {
         $this->get_image($path, $files);
         //$files[] = basename($path);
-      }
     }
-  }
+}
+}
   // else{
   //   return false;
   // }
-  return $files;
-  
+return $files;
+
+}
+
+function url_exists($url) {
+    if (!$fp = curl_init($url)) return false;
+    return true;
 }
 
 public function get_images_from_folder()
 {
- $this->info("File upload Started......");
+   $this->info("File upload Started......");
 // $path = "C:\\Users\\hp\\Downloads\\pritm-create-images";
-$path = "C:\\xampp\\htdocs\\touristbook\\storage\\app\\public\\remaining-images";
-$baseurl = asset('/storage/remaining-images/');
-
-$files = $this->get_image($path);
-$file_names = [];
-$media = [];
-foreach ($files as $key => $value) {
+   $path = "C:\\xampp\\htdocs\\touristbook\\storage\\app\\public\\pritm-create-images";
+   $baseurl = asset('/storage/pritm-create-images/');
+   $files = $this->get_image($path);
+   $file_names = [];
+   $media = [];
+   foreach ($files as $key => $value) {
    //$file_names[] = basename($value);
-    $get_media = Media::where('file_name', 'like','%'.basename($value).'%')->whereNotBetween('created_at', ['2024-01-01', '2024-01-22'])->first();
+    $get_media = Media::where('file_name', 'like','%'.basename($value).'%')->whereBetween('created_at', ['2024-01-01', '2024-01-21'])->first();
     if (!empty($get_media)) {  
-     $media[] = $get_media;
-    }
+       $media[] = $get_media;
+   }
 }
 
 // $media = Media::whereBetween('created_at', ['2024-01-01', '2024-01-21'])->get();
@@ -4203,26 +4207,37 @@ foreach ($files as $key => $value) {
 //          $mediafiles[] = $fl;
 //       }
 //     }
- 
+$this->info("medias count=".count($media));
 
- $count = 0;
+$count = 0;
 foreach ($media as $key => $md) {
         // $fln = basename($fl);
         // if ($md->file_name == $fln) {
 
          //$mediafiles[] = $fl;
-         $file_media = File::find($md->model_id);
-         $url_d = $baseurl.'/'.$md->file_name;
-         if (Storage::disk('public')->exists('remaining-images/'.$md->file_name)) {
-            
-         $file_media->addMediaFromUrl($url_d)->toMediaCollection('images');
-         $count++;
-         }
+   $file_media = File::find($md->model_id);
+   if (!empty($file_media)) { 
+    if (!empty($md->file_name)) {
+       $url_d = $baseurl.'/'.$md->file_name;
+       if (Storage::disk('public')->exists('pritm-create-images/'.$md->file_name)) {
+        if ($this->url_exists($url_d)) {
+
+           $file_media->addMediaFromUrl($url_d)->toMediaCollection('images');
+           $count++;
+           $this->info("uploaded id=".$md->id);
+       }
+   }   
+}
+}else{
+
+  $this->info("not uploaded id=".$md->id." file=".$url_d);
+}
+
         // }
 }
 
 // foreach ($mediafiles as $file) {
-   
+
 //     // $file_arr = pathinfo($file);
 //     // $file_name = Str::slug($file_arr['filename']);
 //     // $ext = $file_arr['extension'];
@@ -4231,7 +4246,7 @@ foreach ($media as $key => $md) {
 //     $this->file_upload_by_url($file,$final_name);
 //     $count++;
 // }
- $this->info("File upload done ".$count);
+$this->info("File upload done ".$count);
 }
 
     /**
@@ -4508,7 +4523,7 @@ foreach ($media as $key => $md) {
 
        // $this->update_page_extra_data(1,$set_data);
 
-       //$this->get_images_from_folder();
+        $this->get_images_from_folder();
         return Command::SUCCESS;
     }
 }
