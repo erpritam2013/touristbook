@@ -46,3 +46,4 @@
 
 @endpush
 @endif
+<link rel="stylesheet" type="text/css" href="{{asset('vendor/cookie-consent/css/cookie-consent.css')}}">
