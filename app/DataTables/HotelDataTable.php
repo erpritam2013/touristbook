@@ -57,7 +57,7 @@ class HotelDataTable extends DataTable
      */
     public function query(Hotel $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->select(['id','name','slug','status','address','created_at','updated_at']);
     }
 
     /**
