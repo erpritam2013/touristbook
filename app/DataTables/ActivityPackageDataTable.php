@@ -50,7 +50,7 @@ class ActivityPackageDataTable extends DataTable
      */
     public function query(ActivityPackage $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->select(['id','title','slug','status','created_at','updated_at']);
     }
 
     /**

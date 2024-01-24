@@ -61,7 +61,7 @@ class TourDataTable extends DataTable
      */
     public function query(Tour $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->select(['id','name','slug','status','address','created_at','updated_at']);
     }
 
     /**
