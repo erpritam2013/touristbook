@@ -263,7 +263,7 @@ if(isset($page)) {
     <!-- =======================
       Main banner -->
 
-    <section class="Categories pt80 pb60">
+    <section class="Categories pt30 pb10">
         <div class="container">
           <div class="row mb-5">
             <div class="col-md-8">
@@ -320,7 +320,7 @@ if(isset($page)) {
             </div>
           </div>
         </section>
-        <section class="grayBG pt80 pb80">
+        <section class="grayBG pt20 pb10">
           <div class="container ">
             <div class="row">
               <div class="col-md-8 mx-auto text-center mb-5">
@@ -362,179 +362,58 @@ if(isset($page)) {
           </section>
 
 
-          <section class="Categories pt80 pb60 ">
+          <section class="Categories pt20 pb10 home-hotels">
             <div class="container">
               <div class="row mb-5">
                 <div class="col-md-8">
-                  <p class="subtitle text-secondary nopadding">Stay and eat like a local</p>
-                  <h1 class="paddtop1 font-weight lspace-sm">Popular Hotels</h1>
+                  <p class="subtitle text-secondary nopadding">Stay and Hotel</p>
+                  <h1 class="paddtop1 font-weight lspace-sm">Hotels</h1>
                 </div>
-                <div class="col-md-4 d-lg-flex align-items-center justify-content-end"><a href="#"
+                <div class="col-md-4 d-lg-flex align-items-center justify-content-end"><a href="{{route('hotels')}}"
                   class="blist text-sm ml-2"> See all Hotels<i class="fas fa-angle-double-right ml-2"></i></a></div>
                 </div>
                 <div class="row">
+                  @if($home_hotels->isNotEmpty())
+                  @foreach($home_hotels as $home_hotel)
+                      @php 
+              $home_hotel_image = null;
+              if(isJson($home_hotel->featured_image)){
+                $home_hotel->featured_image = json_decode($home_hotel->featured_image,true);
+              }
+              $home_hotel_image = (!empty($home_hotel->featured_image) && isset($home_hotel->featured_image[0]['id']))?getConversionUrl($home_hotel->featured_image[0]['id']):null;
+              @endphp
                   <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                     <div class="listroBox">
-                      <figure> <a href="hotel-detailed.html" class="wishlist_bt"></a> <a
-                        href="hotel-detailed.html"><img src="{{asset('sites/images/hotels/room5.jpg')}}" class="img-fluid"
+                      <figure> {{--<a href="{{route('hotel',$home_hotel->slug ?? '')}}" class="wishlist_bt"></a>--}} <a
+                        href="{{route('hotel',$home_hotel->slug ?? '')}}"><img src="{{$home_hotel_image ?? asset('sites/images/dummy/450x417.jpg')}}" class="img-fluid"
                         alt="">
-                        <div class="read_more"><span>Read more</span></div>
+                        <div class="read_more"><span>Hotel Detail</span></div>
                       </a> </figure>
                       <div class="listroBoxmain">
-                        <h3><a href="hotel-detailed.html">Modern, Well-Appointed Room</a></h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do</p>
-                        <a class="address" href="#">Get directions</a>
+                        <h3><a href="{{route('hotel',$home_hotel->slug ?? '')}}">{{$home_hotel->name ?? ''}}</a></h3>
+                        <p>{{$home_hotel->address ?? ''}}</p>
+                        {{--<a class="address" href="#">Get directions</a>--}}
                       </div>
                       <ul>
                         <li>
-                          <p class="card-text text-muted"><span class="h4 text-primary">$80</span> / night</p>
+
+                          <p class="card-text text-muted"><span class="hotel-avg">
+                    {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
+                    Avg
+                </span>
+
+                 {!!get_price($home_hotel)!!}
+
+                <span class="unit">/per night</span></p>
                         </li>
-                        <li>
-                          <div class="R_retings">
-                            <div class="list-rat-ch list-room-rati"> <i class="fa fa-star"
-                              aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i
-                              class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star"
-                              aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> </div>
-                            </div>
+                        <li class="mt-0">
+                          <a href="{{route('hotel',$home_hotel->slug ?? '')}}" class="btn btn-grad btn-sm">Hotel Detail</a>
                           </li>
                         </ul>
                       </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                      <div class="listroBox">
-                        <figure> <a href="hotel-detailed.html" class="wishlist_bt"></a> <a
-                          href="hotel-detailed.html"><img src="{{asset('sites/images/hotels/room1.jpg')}}" class="img-fluid"
-                          alt="">
-                          <div class="read_more"><span>Read more</span></div>
-                        </a> </figure>
-                        <div class="listroBoxmain">
-                          <h3><a href="hotel-detailed.html">Modern, Well-Appointed Room</a></h3>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do</p>
-                          <a class="address" href="#">Get directions</a>
-                        </div>
-                        <ul>
-                          <li>
-                            <p class="card-text text-muted"><span class="h4 text-primary">$80</span> / night</p>
-                          </li>
-                          <li>
-                            <div class="R_retings">
-                              <div class="list-rat-ch list-room-rati"> <i class="fa fa-star"
-                                aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i
-                                class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star"
-                                aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> </div>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                        <div class="listroBox">
-                          <figure> <a href="hotel-detailed.html" class="wishlist_bt"></a> <a
-                            href="hotel-detailed.html"><img src="{{asset('sites/images/hotels/room2.jpg')}}" class="img-fluid"
-                            alt="">
-                            <div class="read_more"><span>Read more</span></div>
-                          </a> </figure>
-                          <div class="listroBoxmain">
-                            <h3><a href="hotel-detailed.html">Modern, Well-Appointed Room</a></h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do</p>
-                            <a class="address" href="#">Get directions</a>
-                          </div>
-                          <ul>
-                            <li>
-                              <p class="card-text text-muted"><span class="h4 text-primary">$80</span> / night</p>
-                            </li>
-                            <li>
-                              <div class="R_retings">
-                                <div class="list-rat-ch list-room-rati"> <i class="fa fa-star"
-                                  aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i
-                                  class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star"
-                                  aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> </div>
-                                </div>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                          <div class="listroBox">
-                            <figure> <a href="hotel-detailed.html" class="wishlist_bt"></a> <a
-                              href="hotel-detailed.html"><img src="{{asset('sites/images/hotels/room7.jpg')}}" class="img-fluid"
-                              alt="">
-                              <div class="read_more"><span>Read more</span></div>
-                            </a> </figure>
-                            <div class="listroBoxmain">
-                              <h3><a href="hotel-detailed.html">Modern, Well-Appointed Room</a></h3>
-                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do</p>
-                              <a class="address" href="#">Get directions</a>
-                            </div>
-                            <ul>
-                              <li>
-                                <p class="card-text text-muted"><span class="h4 text-primary">$80</span> / night</p>
-                              </li>
-                              <li>
-                                <div class="R_retings">
-                                  <div class="list-rat-ch list-room-rati"> <i class="fa fa-star"
-                                    aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i
-                                    class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star"
-                                    aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> </div>
-                                  </div>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                            <div class="listroBox">
-                              <figure> <a href="hotel-detailed.html" class="wishlist_bt"></a> <a
-                                href="hotel-detailed.html"><img src="{{asset('sites/images/hotels/room8.jpg')}}" class="img-fluid"
-                                alt="">
-                                <div class="read_more"><span>Read more</span></div>
-                              </a> </figure>
-                              <div class="listroBoxmain">
-                                <h3><a href="hotel-detailed.html">Modern, Well-Appointed Room</a></h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do</p>
-                                <a class="address" href="#">Get directions</a>
-                              </div>
-                              <ul>
-                                <li>
-                                  <p class="card-text text-muted"><span class="h4 text-primary">$80</span> / night</p>
-                                </li>
-                                <li>
-                                  <div class="R_retings">
-                                    <div class="list-rat-ch list-room-rati"> <i class="fa fa-star"
-                                      aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i
-                                      class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star"
-                                      aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> </div>
-                                    </div>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                              <div class="listroBox">
-                                <figure> <a href="hotel-detailed.html" class="wishlist_bt"></a> <a
-                                  href="hotel-detailed.html"><img src="{{asset('sites/images/hotels/room6.jpg')}}" class="img-fluid"
-                                  alt="">
-                                  <div class="read_more"><span>Read more</span></div>
-                                </a> </figure>
-                                <div class="listroBoxmain">
-                                  <h3><a href="hotel-detailed.html">Modern, Well-Appointed Room</a></h3>
-                                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do</p>
-                                  <a class="address" href="#">Get directions</a>
-                                </div>
-                                <ul>
-                                  <li>
-                                    <p class="card-text text-muted"><span class="h4 text-primary">$80</span> / night</p>
-                                  </li>
-                                  <li>
-                                    <div class="R_retings">
-                                      <div class="list-rat-ch list-room-rati"> <i class="fa fa-star"
-                                        aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i
-                                        class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star"
-                                        aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> </div>
-                                      </div>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
+                    @endforeach
+                   @endif
                             </div>
                           </div>
                         </section>
