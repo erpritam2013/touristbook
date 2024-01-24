@@ -50,7 +50,7 @@ class ActivityListsDataTable extends DataTable
      */
     public function query(ActivityLists $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->select(['id','title','slug','status','created_at','updated_at']);
     }
 
     /**
