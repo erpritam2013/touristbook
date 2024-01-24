@@ -149,13 +149,13 @@ private function _prepareBasicData() {
          $tourismZoneDetails = [
         'title' => $request->title,
         'sub_title' => $request->sub_title,
-        'slug' => (!empty($request->slug) && $tourismZone->slug != $request->slug)?SlugService::createSlug(TourismZone::class, 'slug', $request->slug):$tourismZone->slug,
+        //'slug' => (!empty($request->slug) && $tourismZone->slug != $request->slug)?SlugService::createSlug(TourismZone::class, 'slug', $request->slug):$tourismZone->slug,
 
       'state_id' => !empty($request->state_id)?$request->state_id:null,
             // 'icon' => $request->icon, //s3 integration pending
             // 'image' => $request->image, //s3 integration pending
         'tourism_zone_description' => $request->tourism_zone_description,
-         'tourism_zone' => $request->tourism_zone,
+         'tourism_zone' => (is_array($request->tourism_zone))?$request->tourism_zone:null,
         'status' => $request->status,
             // TODO: created_by pending as Authentication is not Yet Completed
     ];
