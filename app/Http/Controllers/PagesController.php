@@ -50,6 +50,7 @@ public function index() {
  $data['title'] = 'Home';
  $data['body_class'] = 'home-page';
  $data['home_destinations'] = Location::latest()->limit(5)->get(['id','name','slug','featured_image']);
+ $data['home_hotels'] = Hotel::latest()->limit(6)->get(['id','name','slug','featured_image']);
  
   $page_id = Setting::get_setting('home_page');
     

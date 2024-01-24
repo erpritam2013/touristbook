@@ -8,19 +8,22 @@
 
             setTimeout(function() {
                 
-                $('body.destination-detail-page #tab-tourism_zone #tourism-zone-div .tab-content td,body.destination-detail-page #tab-tourism_zone #tourism-zone-div .tab-content th').removeAttr('style')
+                $('body.destination-detail-page #tab-tourism_zone #tourism-zone-div .tab-content td *,body.destination-detail-page #tab-tourism_zone #tourism-zone-div .tab-content th *').removeAttr('style')
                 let btgrid_row_col = $('body .btgrid .row .col');
                 $.each(btgrid_row_col,function(indx,item){
                     if ($(item).find('.content').length == 0) {
                     $(item).remove();
-                    console.log({'empty-text':$(item).find('.content').text()});
-                console.log(item);
+                //     console.log({'empty-text':$(item).find('.content').text()});
+                // console.log(item);
                     }else if($(item).find('.content').length != 0 && $(item).find('.content').text() == ""){
                         $(item).remove();
-                    console.log({'empty-text':$(item).find('.content').text()});
-                    console.log(item);
+                    // console.log({'empty-text':$(item).find('.content').text()});
+                    // console.log(item);
                     }
                 })
+
+                $('body .btgrid .row .col .content *').removeAttr('style');
+                $('#places-description .div-desc *,#best-time-to-visit-description .div-desc *,#tab-get_to_know .st-overview .st-description *,#how_to_reach .st-how-to-reach-description .long-description *,#tourism-zone-div .div-desc *').removeAttr('style');
             }, 1000);
 	}
 
