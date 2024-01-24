@@ -50,7 +50,7 @@ class ActivityZoneDataTable extends DataTable
      */
     public function query(ActivityZone $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->select(['id','title','slug','status','created_at','updated_at']);
     }
 
     /**
