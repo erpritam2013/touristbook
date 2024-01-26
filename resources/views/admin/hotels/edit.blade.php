@@ -2,6 +2,13 @@
 @section('hotel_action', route('admin.hotels.update', $hotel->id))
 @section('hotel_form_method', method_field('PUT'))
 @section('title',$title)
+@if(auth()->check())
+@if(auth()->user()->isAdmin() || auth()->user()->isEditor())
+@section('get_a_link')
+{!!get_a_link($title,route('hotel',$hotel->slug),'view')!!}
+@endsection
+@endif 
+@endif
 @section('admin_head_css')
 <link rel="stylesheet" href="{!! asset('admin-part/vendor/select2/css/select2.min.css') !!}">
 @parent

@@ -1,6 +1,6 @@
 <!-- =======================
  header Start-->
- <header class="header-static navbar-sticky navbar-light shadow">
+ <header class="header-static navbar-sticky navbar-light shadow" {!!(!isMobileDevice() && auth()->check() && (auth()->user()->isAdmin() || auth()->user()->isEditor()))?"style='top:32px;'":""!!}>
   <!-- Search -->
   <div class="top-search collapse bg-light" id="search-open" data-parent="#search">
     <div class="container">
@@ -13,7 +13,7 @@
               <button type="button" class="btn btn-grad border-radius-left-0 mb-0">Search</button>
             </div>
           </form>
-          <p class="small mt-2 mb-0"><strong>e.g.</strong>Template, Tourist Book, WordPress </p>
+          <p class="small mt-2 mb-0"><strong>e.g.</strong>Template, Tourist Book</p>
         </div>
         <a class="position-absolute top-0 right-0 mt-3 mr-3" data-toggle="collapse" href="#search-open"><i
           class="fas fa-window-close"></i></a>
@@ -50,7 +50,7 @@
                 <!-- navbar top Right-->
                 <div class="d-flex align-items-center">
                   <!-- Top Account -->
-                  <div class="dropdown"> <a class="dropdown-toggle" href="#" role="button" id="dropdownAccount"
+                 <div class="dropdown"> <a class="dropdown-toggle" href="#" role="button" id="dropdownAccount"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
                     class="far fa-user mr-2"></i>@if(auth()->check()){{ucwords(auth()->user()->name)}} @else Account @endif</a>
                     <div class="dropdown-menu mt-2 shadow" aria-labelledby="dropdownAccount"> 
@@ -65,7 +65,7 @@
                        @endif
                       @endif
                     </div>
-                  </div>
+                  </div> 
 
                   <!-- Currency -->
                   <div class="dropdown">

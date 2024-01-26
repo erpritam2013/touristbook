@@ -1,4 +1,3 @@
-
 @extends('admin.layouts.main')
 @section('title','Dashboard')
 @section('admin_head_css')

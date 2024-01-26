@@ -4,3 +4,10 @@
 {{method_field('PUT')}}
 <input type="hidden" name="id" data-id="{{$activity->id}}" id="activity-id" value="{{$activity->id}}">
 @endsection
+@if(auth()->check())
+@if(auth()->user()->isAdmin() || auth()->user()->isEditor())
+@section('get_a_link')
+{!!get_a_link($title,route('activity',$activity->slug),'view')!!}
+@endsection
+@endif 
+@endif

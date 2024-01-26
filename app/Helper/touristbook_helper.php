@@ -7,6 +7,22 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 // boolean (true)
 
+if (!function_exists('get_a_link')) {
+    function get_a_link($title,$href,$i_tag_status='edit')
+    {
+        $link_html = "";
+       if (isset($title)  && isset($href)) {
+       $i_tag = '<i class="fa fa-edit"></i>&nbsp;&nbsp;Edit';
+       if ($i_tag_status == 'view') {
+       $i_tag = '<i class="fa fa-file"></i>&nbsp;&nbsp;View';
+       }
+       $link_html = '<a href="'.$href.'" class="dropdown-toggle">'.$i_tag.'</a>';
+       }
+       return $link_html;
+    }
+}
+
+
 if (!function_exists('nested_policies')) {
     function nested_policies($policy_data)
     {

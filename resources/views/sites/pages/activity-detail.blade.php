@@ -1,8 +1,20 @@
 @extends('sites.layouts.main')
 @section('title',$title)
 @section('content')
+@if(auth()->check())
+@if(auth()->user()->isAdmin() || auth()->user()->isEditor())
+@section('get_a_link')
+@if(!isMobileDevice())
+@php 
+$top = 'top:32px;position:relative;';
+@endphp
+@endif
+{!!get_a_link($title,route('admin.activities.edit',$activity->id ?? ''))!!}
+@endsection
+@endif 
+@endif
 
-<section>
+<section style="{{$top ??''}}">
 	<!-- Slider main container-->
 	<div class="swiper-container detail-slider slider-gallery" style="height: 300;">
 		<!-- Additional required wrapper-->
@@ -35,7 +47,7 @@
 </section>
 
 
-<section class="pt40 pb80 listingDetails Campaigns">
+<section class="pt40 pb80 listingDetails Campaigns" style="{{$top ??''}}">
 	<div class="container">
 		<div class="row">
 
