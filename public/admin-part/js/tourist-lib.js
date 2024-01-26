@@ -103,15 +103,15 @@ $(document).ready(function ($) {
 
         let intentionPattern = /\-tsign-(\d+)\-tsign-/g;
 
-
-
-        let updatedText = text
+       
+         
+        let updatedText = (typeof text != 'undefined')?text
 
         .replace(pattern, `[${idx}]`)
 
-        .replace(intentionPattern, `-tsign-${idx}-tsign-`);
+        .replace(intentionPattern, `-tsign-${idx}-tsign-`):'';
 
-
+   
 
         return updatedText;
 
@@ -150,7 +150,7 @@ const changeSubformOrder = (parentElem) => {
     let liElements = parentElem.find("li");
 
     liElements.each((idx, liElem) => {
-
+       
         $(liElem)
 
         .find("input, textarea")
