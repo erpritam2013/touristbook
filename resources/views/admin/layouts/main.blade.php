@@ -21,13 +21,23 @@
     <!--*******************
         Preloader end
         ********************-->
-
+        @if(!isMobileDevice())
+     @if(auth()->check())
+    @if(auth()->user()->isAdmin() || auth()->user()->isEditor())
+    @php
+     $top_32_p_r = 'top:32px;position:relative;';
+     $top_32 = 'top:32px;';
+     @endphp
+    @include('admin.adminbar')
+    @endif 
+    @endif
+    @endif
 
     <!--**********************************
         Main wrapper start
         ***********************************-->
-        <div id="main-wrapper">
-
+        <div id="main-wrapper" style="{{$top_32 ?? ''}}">
+        
             @include('admin.layout-parts.nav')
             @include('admin.layout-parts.header')
             @include('admin.layout-parts.sidebar')

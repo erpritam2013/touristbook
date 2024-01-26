@@ -11,6 +11,18 @@ $banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]
 
 @endphp
 @section('content')
+@if(auth()->check())
+@if(auth()->user()->isAdmin() || auth()->user()->isEditor())
+@section('get_a_link')
+@if(!isMobileDevice())
+@php 
+$top = 'top:32px;position:relative;';
+@endphp
+@endif
+{!!get_a_link($title,route('admin.pages.edit',$page->id ?? ''))!!}
+@endsection
+@endif 
+@endif
    @if(!isMobileDevice())
     @include('sites.partials.banner-2', [
         'bannerUrl' => $banner_image ?? asset('sites/images/dummy/1200x400.jpg'),
