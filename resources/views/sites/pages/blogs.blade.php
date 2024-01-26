@@ -1,6 +1,7 @@
 @extends('sites.layouts.main')
 @section('title',$title)
 @section('content')
+
 @include('sites.partials.banner', [
 'bannerUrl' => 'https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2023/02/Blog-image-1.jpeg',
 'bannerTitle' => 'Blogs',

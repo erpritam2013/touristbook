@@ -21,9 +21,9 @@
 @stack('font-awesome-picker-css')
 @stack('dataTable_css')
 @stack('custom_style')
+
 @endif
 @show
-
 
 
 

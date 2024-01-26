@@ -29467,3 +29467,51 @@ div#tb-image-prev {
     border-radius: 3px;
 }
     
+/*admin to bar css start*/
+div#touristbook-adminbar {
+    direction: ltr;
+    color: #c3c4c7;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: "Poppins", sans-serif !important;
+    line-height: 2.46153846;
+    height: 32px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-width: 600px;
+    z-index: 99999;
+    background: #1d2327;
+}
+div#touristbook-adminbar .left-top-navbar{
+   padding-left: 10px;
+   width: 190px;
+}
+div#touristbook-adminbar .left-top-navbar li{
+    height: 32px;
+    padding: 0px 15px;
+}
+div#touristbook-adminbar .right-navbar .dropdown-toggle:after,
+div#touristbook-adminbar .left-top-navbar .dropdown-toggle:after {
+    content: unset;   
+}
+/*div#touristbook-adminbar .left-top-navbar.navbar-nav li.dropdown{
+    height: 32px;
+    width: 110px;
+}*/
+div#touristbook-adminbar .right-navbar li ul.dropdown-menu{
+    left: -85px!important;
+}
+div#touristbook-adminbar .navbar-nav li a{
+    color: #c3c4c7;
+    text-decoration: none!important;
+    border-bottom: none;
+}
+/*div#touristbook-adminbar .left-top-navbar li ul{
+    top: 10px;
+}*/
+div#touristbook-adminbar .navbar-nav li ul.dropdown-menu {
+    background: #1d2327; 
+}
+/*admin to bar css end*/
