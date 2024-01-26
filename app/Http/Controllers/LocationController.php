@@ -239,7 +239,6 @@ public function changeStatus(Request $request): JsonResponse
     public function update(UpdateLocationRequest $request, Location $location)
     {
 
-     
        $locationDetails = [
         "name" => $request->name,
         "description" => $request->description,
