@@ -4,7 +4,7 @@
 
             <div class="quixnav sidebar-touristbook">
                 <div class="quixnav-scroll">
-                    <ul class="metismenu" id="menu">
+                    <ul class="metismenu" id="menu" style="{{$top_32_p_r ?? ''}}">
                         <li class="nav-label first">Main Menu</li>
                         <li class="{{matchRouteGroupName('dashboard','parent')}}"><a class="" href="{{route('admin.dashboard')}}" aria-expanded="false"><i
                             class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>

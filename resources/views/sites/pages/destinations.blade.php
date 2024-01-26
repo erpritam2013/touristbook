@@ -1,7 +1,19 @@
 @extends('sites.layouts.main')
 @section('title',$title)
 @section('content')
-
+@if(auth()->check())
+@if(auth()->user()->isAdmin() || auth()->user()->isEditor())
+@section('get_a_link')
+@if(!isMobileDevice())
+@php 
+$top = 'top:32px;position:relative;';
+$top2 = 'top: -168px;';
+@endphp
+@endif
+{!!get_a_link($title,route('admin.pages.edit',$page->slug ?? ''))!!}
+@endsection
+@endif 
+@endif
 @php
 $banner_image = null;
 if(isset($page)) {
@@ -19,7 +31,7 @@ $banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]
     ])
 
 @if(!isMobileDevice())
-<div class="search-form-wrapper hidden-xs hidden-sm">
+<div class="search-form-wrapper hidden-xs hidden-sm" style="{{$top2 ?? ''}}">
     <div class="container">
         <div class="search-form location-service">
 <div class="map-content-loading-search-input">
@@ -75,8 +87,7 @@ $banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]
 </div>
 </div>
 @endif
-
-    <section class="pb20 destination-grid-view">
+    <section class="pb20 destination-grid-view" style="{{$top ?? ''}}">
         <div class="map-content-loading">
             <div class="st-loader"></div>
         </div>

@@ -1,7 +1,18 @@
 @extends('sites.layouts.main')
 @section('title',$title)
 @section('content')
-
+@if(auth()->check())
+@if(auth()->user()->isAdmin() || auth()->user()->isEditor())
+@section('get_a_link')
+@if(!isMobileDevice())
+@php 
+$top = 'top:32px;position:relative;';
+@endphp
+@endif
+{!!get_a_link($title,route('admin.pages.edit',$page->id ?? ''))!!}
+@endsection
+@endif 
+@endif
 @php
 $banner_image = null;
 if(isset($page)) {

@@ -1,6 +1,16 @@
 @extends('sites.layouts.main')
 @section('title',$title)
 @section('content')
+@if(auth()->check())
+@if(auth()->user()->isAdmin() || auth()->user()->isEditor())
+@section('get_a_link')
+@if(!isMobileDevice())
+@php $top = 'top:32px;position:relative;';@endphp
+@endif
+{!!get_a_link($title,route('admin.pages.edit',$page->id ?? ''))!!}
+@endsection
+@endif 
+@endif
 @if(!isMobileDevice())
 @include('sites.partials.banner-2', [
 'bannerUrl' =>'https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2023/04/Screenshot-2023-04-02-202920.jpg',
