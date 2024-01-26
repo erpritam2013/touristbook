@@ -38,7 +38,13 @@
 <body class="{{touristbook_sanitize_title($body_class ?? '') ?? ''}}">
 
     <input type="hidden" id="base-url" value="{{route('home')}}" />
-
+    @if(!isMobileDevice())
+    @if(auth()->check())
+    @if(auth()->user()->isAdmin() || auth()->user()->isEditor())
+    @include('sites.partials.adminbar')
+    @endif 
+    @endif
+    @endif
     @include('sites.partials.header')
 
     @yield('content')
@@ -66,8 +72,7 @@
 
     <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCF8MnYK1Ft-lPa3_B6rirg2IJzptB4m1Y&v=weekly&libraries=places"
-    defer
-    ></script>
+    defer></script>
     <script src="{{asset('sites/js/common.js')}}" type="text/javascript" defer></script>
     @if(isset($body_class) && $body_class == 'destination-detail-page')
     <script src="{{asset('sites/js/fetchDestinaitonDetail.js')}}" type="text/javascript" defer></script>

@@ -1,9 +1,20 @@
 @extends('sites.layouts.main')
 @section('title',$title)
 @section('content')
+@if(auth()->check())
+@if(auth()->user()->isAdmin() || auth()->user()->isEditor())
+@section('get_a_link')
+@if(!isMobileDevice())
+@php 
+$top = 'top:32px;position:relative;';
+@endphp
+@endif
+{!!get_a_link($title,route('admin.posts.edit',$post->id ?? ''))!!}
+@endsection
+@endif 
+@endif
 
-
-<section class="Blog-list pt80 pb80 blog-single-section">
+<section class="Blog-list pt80 pb80 blog-single-section" style="{{$top ??''}}">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8 col-md-12 col-xs-12">
