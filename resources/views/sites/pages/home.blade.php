@@ -1,6 +1,16 @@
 @extends('sites.layouts.main')
 @section('title',$title)
 @section('content')
+@if(auth()->check())
+@if(auth()->user()->isAdmin() || auth()->user()->isEditor())
+@section('get_a_link')
+@if(!isMobileDevice())
+@php $top = 'top:32px;position:relative;';@endphp
+@endif
+{!!get_a_link($title,route('admin.pages.edit',$page->id ?? ''))!!}
+@endsection
+@endif 
+@endif
 @php
 $banner_image = null;
 if(isset($page)) {
@@ -9,12 +19,12 @@ if(isset($page)) {
   }
   $banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]['id']))?getConversionUrl($page->featured_image[0]['id']):null;
 }
-
+ 
 @endphp
     <!-- =======================
      Main Banner -->
      <section class="p-0 height-475 parallax-bg"
-     style="background:url({{$banner_image ?? asset('sites/images/dummy/1200x400.jpg')}}) no-repeat 65% 0%; background-size:110% 125%;">
+     style="background:url({{$banner_image ?? asset('sites/images/dummy/1200x400.jpg')}}) no-repeat 65% 0%; background-size:110% 125%;{!! $top ?? ''!!}">
      <div class="container h-100">
       <div class="row justify-content-between align-items-center h-100">
         <div class="col-md-8 mb-7">
@@ -263,7 +273,11 @@ if(isset($page)) {
     <!-- =======================
       Main banner -->
 
-    <section class="Categories pt30 pb10">
+@php
+$pt = (!isMobileDevice() && auth()->check() && (auth()->user()->isAdmin() || auth()->user()->isEditor()))?"pt60":"pt30";
+ @endphp
+
+    <section class="Categories {{$pt}} pb10">
         <div class="container">
           <div class="row mb-5">
             <div class="col-md-8">
@@ -372,7 +386,8 @@ if(isset($page)) {
                 <div class="col-md-4 d-lg-flex align-items-center justify-content-end"><a href="{{route('hotels')}}"
                   class="blist text-sm ml-2"> See all Hotels<i class="fas fa-angle-double-right ml-2"></i></a></div>
                 </div>
-                <div class="row">
+                <div class="swiper-container guides-slider-popular swiper-container-horizontal">
+                  <div class="swiper-wrapper">
                   @if($home_hotels->isNotEmpty())
                   @foreach($home_hotels as $home_hotel)
                       @php 
@@ -382,7 +397,7 @@ if(isset($page)) {
               }
               $home_hotel_image = (!empty($home_hotel->featured_image) && isset($home_hotel->featured_image[0]['id']))?getConversionUrl($home_hotel->featured_image[0]['id']):null;
               @endphp
-                  <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                  <div class="swiper-slide h-auto px-2">
                     <div class="listroBox">
                       <figure> {{--<a href="{{route('hotel',$home_hotel->slug ?? '')}}" class="wishlist_bt"></a>--}} <a
                         href="{{route('hotel',$home_hotel->slug ?? '')}}"><img src="{{$home_hotel_image ?? asset('sites/images/dummy/450x417.jpg')}}" class="img-fluid"
@@ -390,8 +405,10 @@ if(isset($page)) {
                         <div class="read_more"><span>Hotel Detail</span></div>
                       </a> </figure>
                       <div class="listroBoxmain">
-                        <h3><a href="{{route('hotel',$home_hotel->slug ?? '')}}">{{$home_hotel->name ?? ''}}</a></h3>
-                        <p>{{$home_hotel->address ?? ''}}</p>
+                        <h3 class="home-hotel-title"><a href="{{route('hotel',$home_hotel->slug ?? '')}}">{{$home_hotel->name ?? ''}}</a></h3>
+                        @if(!empty($home_hotel->ad))
+                        <p>{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!} {{$home_hotel->address ?? ''}}</p>
+                        @endif
                         {{--<a class="address" href="#">Get directions</a>--}}
                       </div>
                       <ul>
@@ -414,6 +431,8 @@ if(isset($page)) {
                     </div>
                     @endforeach
                    @endif
+                            </div>
+                            </div>
                             </div>
                           </div>
                         </section>

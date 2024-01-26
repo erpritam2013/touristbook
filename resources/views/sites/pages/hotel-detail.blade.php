@@ -1,7 +1,20 @@
 @extends('sites.layouts.main')
 @section('title',$title)
 @section('content')
-<section>
+@if(auth()->check())
+@if(auth()->user()->isAdmin() || auth()->user()->isEditor())
+@section('get_a_link')
+@if(!isMobileDevice())
+@php 
+$top = 'top:32px;position:relative;';
+$top2 = 'top:152px;z-index:99;';
+@endphp
+@endif
+{!!get_a_link($title,route('admin.hotels.edit',$hotel->id ?? ''))!!}
+@endsection
+@endif 
+@endif
+<section style="{{$top ??''}}">
   <!-- Slider main container-->
   <div class="swiper-container detail-slider slider-gallery" style="height: 300px;">
     <!-- Additional required wrapper-->
@@ -36,7 +49,7 @@
 </section>
 
 
-<section class="pt40 pb80 listingDetails Campaigns">
+<section class="pt40 pb80 listingDetails Campaigns" style="{{$top ??''}}">
   <div class="container">
     <div class="row">
 
@@ -53,7 +66,7 @@
             data-target="#streetModal">View on map</a>
           </p>
         </div>
-        <ul class="nav nav-tabs custom-tabs sticky-top" id="custom-tabs" style="top:120px;z-index:99;">
+        <ul class="nav nav-tabs custom-tabs sticky-top" id="custom-tabs" style="{{$top2 ?? 'top:120px;z-index:99;'}}">
           <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#tab-about"> About </a>
           </li>
           <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab-accomodation"> Accomodation

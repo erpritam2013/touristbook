@@ -1,7 +1,10 @@
 <!-- =======================
  Banner innerpage -->
+ @php 
+ $top = (!isMobileDevice() && auth()->check() && (auth()->user()->isAdmin() || auth()->user()->isEditor()))?"top: 32px;position:relative;":"";
+ @endphp
 <div class="innerpage-banner left bg-overlay-dark-7 py-7"
-    style="background:url({{$bannerUrl}}) repeat; background-size:cover;">
+    style="background:url({{$bannerUrl}}) repeat; background-size:cover;{!!$top!!}">
     <div class="container">
         <div class="row all-text-white">
             <div class="col-md-12 align-self-center">

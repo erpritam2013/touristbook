@@ -2,9 +2,9 @@
 <div class="collapse show row" id="tourism-zone-div">
 
 	<div class="col-md-12">
-		<h2 class="st-heading-section">Tourism Zone</h2>
 
-		<div class="border {{(isMobileDevice())?'p-3':'p-5'}} mt-3">
+		<div class="border {{(isMobileDevice())?'p-3':'p-3'}} mt-3">
+		<h2 class="st-heading-section">Tourism Zone</h2>
 			{!! $tourismZone->tourism_zone_description !!}
 		</div>
 	</div>

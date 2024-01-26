@@ -1,7 +1,18 @@
 @extends('sites.layouts.main')
 @section('title',$title)
 @section('content')
-
+@if(auth()->check())
+@if(auth()->user()->isAdmin() || auth()->user()->isEditor())
+@section('get_a_link')
+@if(!isMobileDevice())
+@php 
+$top = 'top:32px;position:relative;';
+@endphp
+@endif
+{!!get_a_link($title,route('admin.locations.edit',$location->id ?? ''))!!}
+@endsection
+@endif 
+@endif
 @php $featured_image = (!empty($location->featured_image) && isset($location->featured_image[0]['id']))?getConversionUrl($location->featured_image[0]['id'],'450x350'):null;@endphp
 @if(empty($featured_image))
 @php $featured_image = asset('sites/images/dummy/1350x500.jpg'); @endphp
@@ -14,7 +25,7 @@
 ])
 
 
-<section class="pt20 pb80 listingDetails Campaigns">
+<section class="pt20 pb80 listingDetails Campaigns" style="{{$top ??''}}">
   <div class="container">
     <div class="map-content-loading">
       <div class="st-loader"></div>
@@ -111,9 +122,11 @@
            <!-- weather end -->
            <!-- location start -->
            <div class="tab-pane" id="location">
+            <div id="map-location">
             <div id="map-street" style="height: 600px; width:100%" lat="{{ $location->latitude }}"
               lng="{{ $location->longitude }}" zoom_level="{{ $location->zoom_level }}">
             </div>
+          </div>
           </div>
           <!-- location end -->
         </div>

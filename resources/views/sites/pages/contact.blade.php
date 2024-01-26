@@ -1,7 +1,16 @@
 @extends('sites.layouts.main')
 @section('title',$title)
 @section('content')
-
+@if(auth()->check())
+@if(auth()->user()->isAdmin() || auth()->user()->isEditor())
+@section('get_a_link')
+@if(!isMobileDevice())
+@php $top = 'top:32px;position:relative;';@endphp
+@endif
+{!!get_a_link($title,route('admin.pages.edit',$page->id ?? ''))!!}
+@endsection
+@endif 
+@endif
 @php
     $banner_image = null;
 if(isset($page)) {
@@ -19,7 +28,7 @@ $banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]
 'bannerSubTitle' => '',
 ])
 
-<div class="section pt-4">
+<div class="section pt-4" style="{{$top ?? ''}}">
 	<div class="container">
 		<div class="row">
 

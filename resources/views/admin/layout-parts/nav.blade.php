@@ -1,7 +1,7 @@
   <!--**********************************
             Nav header start
         ***********************************-->
-        <div class="nav-header">
+        <div class="nav-header" style="{{$top_32 ?? ''}}">
             <a href="{{url('/')}}" class="brand-logo">
                 <img class="logo-abbr" src="{!! asset('admin-part/images/t-b-logo.png') !!}" alt="">
                 <img class="logo-compact" src="{!! asset('admin-part/images/t-b-logo-text.png') !!}" alt="">
