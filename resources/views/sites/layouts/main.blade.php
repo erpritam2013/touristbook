@@ -8,6 +8,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="map-hotel-marker" content="{{ get_image_url(get_settings_option_value('hotel_map_marker_image'),0) ?? ''}}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" id="google-font-css-css" href="https://fonts.googleapis.com/css?family=Poppins:400,500,600&#038;ver=6.3" type="text/css" media="all" />
     <!-- Bootstrap CSS -->
