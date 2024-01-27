@@ -6,7 +6,28 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 // boolean (true)
-
+if (!function_exists('get_image_url')) {
+   function get_image_url($value,$key)
+   {
+      $url = "";
+       if (!empty($value)) {
+      $arr = [];
+          if (is_array($value)) {
+              $arr = $value;
+          }else{
+            if (isJson($value)) {
+               $arr = json_decode($value,true);
+            }
+          }
+          if (!empty($arr)) {
+              if (isset($arr[$key]['url'])) {
+                  $url = $arr[$key]['url'];
+              }
+          }
+       }
+       return $url;
+   }
+}
 if (!function_exists('get_a_link')) {
     function get_a_link($title,$href,$i_tag_status='edit')
     {

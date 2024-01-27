@@ -5,7 +5,7 @@
     var map;
     var markerIcon = {
         anchor: new google.maps.Point(22, 16),
-        url: 'https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2019/05/ico_mapker-2.webp',
+        url: $('meta[name="map-hotel-marker"]').attr('content'),
     }
     var markers = [];
 
@@ -687,6 +687,13 @@ function loadOtherMap() {
             lat: parseFloat(mapElm.getAttribute("lat")),
             lng: parseFloat(mapElm.getAttribute("lng"))
         });
+        var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(mapElm.getAttribute("lat"), mapElm.getAttribute("lng")),
+                map: map,
+                icon:markerIcon
+            });
+
+            markers.push(marker);
 
     }
 
