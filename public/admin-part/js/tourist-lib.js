@@ -105,11 +105,11 @@ $(document).ready(function ($) {
 
 
 
-        let updatedText = text
+         let updatedText = (typeof text != 'undefined')?text
 
         .replace(pattern, `[${idx}]`)
 
-        .replace(intentionPattern, `-tsign-${idx}-tsign-`);
+        .replace(intentionPattern, `-tsign-${idx}-tsign-`):'';
 
 
 
