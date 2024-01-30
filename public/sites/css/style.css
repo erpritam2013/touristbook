@@ -14954,6 +14954,9 @@ body.destinations-page .destination-item .image .desc.multi a:last-child:after {
 	    /* overflow: auto; */
     overflow-wrap: break-word;
 }
+div#tab-tourism_zone * {
+    font-family: Arial, Helvetica, sans-serif;
+}
 
 body.destination-detail-page #tab-tourism_zone div.div-desc{
 	margin-top: 20px;
@@ -15015,8 +15018,10 @@ body.destination-detail-page #tab-tourism_zone #tourism-zone-div .btgrid .row di
 	padding-top: 5px;
 	padding-left: 15px;
 }
+
 body.destination-detail-page #tab-tourism_zone #tourism-zone-div .btgrid .row div:nth-child(even) *{
 	background-color: #D7DCE3!important;
+    font-style: normal;
 }
 .bt1pxe9ecef{
 	border-top: 1px solid #e9ecef;
