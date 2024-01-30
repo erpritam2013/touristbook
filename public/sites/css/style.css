@@ -14950,6 +14950,10 @@ body.destinations-page .destination-item .image .desc.multi a:last-child:after {
 
 /*tourism zone destination detail page css start*/
 
+.btgrid .content{
+	overflow: auto;
+}
+
 body.destination-detail-page #tab-tourism_zone div.div-desc{
 	margin-top: 20px;
 }
