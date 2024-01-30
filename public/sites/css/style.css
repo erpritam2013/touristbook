@@ -14951,7 +14951,8 @@ body.destinations-page .destination-item .image .desc.multi a:last-child:after {
 /*tourism zone destination detail page css start*/
 
 .btgrid .content{
-	overflow: auto;
+	    /* overflow: auto; */
+    overflow-wrap: break-word;
 }
 
 body.destination-detail-page #tab-tourism_zone div.div-desc{
