@@ -3,15 +3,24 @@
     @if ($hotels->isNotEmpty())
 
     @foreach ($hotels as $key => $hotel)
+     @php $featured_image = (!empty($hotel->featured_image) && isset($hotel->featured_image[0]['id']))?getConversionUrl($hotel->featured_image[0]['id'],'450x417'):null;
+
+
+     $single_hotel = [
+     'name'=>$hotel->name,
+      'url'=>route('hotel',$hotel->slug),
+      'featured_image' => (!empty($featured_image))?$featured_image:asset('sites/images/dummy/450x417.jpg')
+     ];
+    @endphp
     <div class="col-lg-12 col-md-12 col-sm-12 hotel-list-page">
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="row listroBox" latitude="{{$hotel->latitude}}" longitude="{{$hotel->longitude}}">
+                <div class="row listroBox" latitude="{{$hotel->latitude}}" longitude="{{$hotel->longitude}}" hotel="{{json_encode($single_hotel)}}" name="{{$hotel->name}}">
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 Nopadding">
                         <figure> 
                             {{--<a href="hotel-detailed.html" class="wishlist_bt"></a>--}}
                             {!!is_featured($hotel->is_featured)!!}
-                           @php $featured_image = (!empty($hotel->featured_image) && isset($hotel->featured_image[0]['id']))?getConversionUrl($hotel->featured_image[0]['id'],'450x417'):null;@endphp
+                          
                             <a
                             href="{{route('hotel',$hotel->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/450x417.jpg')}}"
                             class="img-fluid" alt="">
