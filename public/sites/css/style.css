@@ -15940,3 +15940,20 @@ div#touristbook-adminbar .navbar-nav li ul.dropdown-menu {
     overflow: auto;
 }
 /*admin to bar css end*/
+
+/*extra css locations start*/
+
+.heading-div-desc * {
+    font-size: 18px!important;
+}
+body.destination-detail-page .div-desc *{
+ font-size: 15px;
+}
+.heading-div-desc * {
+    font-size: 18px!important;
+}
+.about-div-desc * {
+    font-size: 12pt;
+}
+/*extra css locations end*/
+
