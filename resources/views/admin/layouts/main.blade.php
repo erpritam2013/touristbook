@@ -79,7 +79,7 @@
         @include('admin.layout-parts.foot')
 
         @include('admin.partials.modals.video')
-<a href="javascript:void(0)" class="js-lcc-settings-toggle">@lang('cookie-consent::texts.alert_settings')</a>
+
 </body>
 
 </html>
