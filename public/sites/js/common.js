@@ -546,6 +546,23 @@ function calculateAndSetZoomLevel() {
 
 }
 
+
+
+const buildContent = (hotel) => {
+  const content = document.createElement("div");
+ console.log(hotel);
+  content.classList.add("hotel");
+  content.innerHTML = `
+     <div class="card shadow border-0 h-100"><a href="post.html"><img src="${hotel.featured_image}" alt="..." class="img-fluid card-img-top"></a>
+          <div class="card-body">
+            <h5 class="my-2"><a href="${hotel.url}" class="text-dark">${hotel.name} </a></h5>
+            
+            <a href="${hotel.url}" class="btn btn-link pl-0">Hotel Detail<i class="fa fa-long-arrow-alt-right ml-2"></i></a> </div>
+        </div>
+    `;
+  return content;
+}
+
     // Process the Result
 const processedResultInfo = (html) => {
     resultInfo.html(html);
@@ -557,13 +574,22 @@ const processedResultInfo = (html) => {
     markers = []
     setTimeout(()=>{
         $('.listroBox').each(function() {
+
             let longitude = $(this).attr("longitude");
             let latitude = $(this).attr("latitude");
+            let hotel__ = $(this).attr("hotel");
+            let name = $(this).attr("name");
+            let hotel = [];
+            if (isJSON(hotel__)) {
+              hotel = $.parseJSON(hotel__);
+            }
             if(longitude && latitude){
                 var marker = new google.maps.Marker({
+                    content: buildContent(hotel),
                     position: new google.maps.LatLng(latitude, longitude),
                     map: map,
-                    icon:markerIcon
+                    icon:markerIcon,
+                    title:name
                 });
 
                 markers.push(marker);
@@ -866,6 +892,11 @@ function loadStreetMap() {
             
             },
         });
+    },
+     open: function() {
+        $(this).autocomplete("widget")
+               .appendTo("#search-form-result")
+               .css("position", "relative");
     },
     minLength: 2,
     select: function (event, ui) {

@@ -12,7 +12,7 @@
 ])
 
 
-<div class="paginationCommon blogPagination categoryPagination">
+<div class="paginationCommon blogPagination categoryPagination mb-4">
 
-    {{$locations->onEachSide(0)->links('vendor/pagination/custom-pagination')}}
+    {{$locations->onEachSide(1)->links('vendor/pagination/custom-pagination')}}
 </div>

@@ -39,12 +39,12 @@ $banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]
         </div>
             <!--Address-->
 
-            <form action="" class="form" method="get">
+            <form action="" class="form" method="get" id="search-form-result">
              <div class="row">
                 <div class="col-md-8 border-right">
-                    <div class="form-group form-extra-field  clearfix field-detination has-icon open">
+                    <div class="form-group form-extra-field  clearfix field-detination has-icon open ui-widget">
                       {!!getNewIcon('ico_maps_search_box', '#666666', '24px', '24px', true)!!}
-
+                      
                       <label for="input-search-box" class="lbl-search-box">Destination</label>
              
                       <input type="text" class="main-search-box" placeholder="Where are your going?" id="input-search-box" name="search" value="{{$searchTerm}}" />

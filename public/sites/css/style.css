@@ -14728,17 +14728,18 @@ body.connecting-partners-page .innerpage-banner.left {
 	-o-transform: translateY(0);
 	transform: translateY(0);
 }*/
-body.destinations-page .ui-autocomplete.ui-menu {
+/*body.destinations-page .ui-autocomplete.ui-menu {
 	position: relative;
 	top: -1811.88px!important;
 	z-index: 99 !important;
 	list-style: none;
 	width: 32.2% !important;
-	margin-top: 45px;
+	margin-top: 22px;
 	margin-left: 5px;
 	left: 349px!important;
 	border-top: 1px solid #ddd;
-}
+}*/
+
 body.destinations-page .destination-grid-view{
 	margin-top: -70px;
 }
@@ -15539,7 +15540,7 @@ body.destination-detail-page #weather a:hover{
 		font-size: 15px;
 	}
 
-	.paginationCommon .pagination li a {
+/*	.paginationCommon .pagination li a {
 		border-color: #e5e5e5;
 		float: none;
 		color: #222;
@@ -15551,7 +15552,21 @@ body.destination-detail-page #weather a:hover{
 		height: 35px;
 		line-height: 35px;
 		font-size: 16px;
-	}
+	}*/
+
+	.paginationCommon .pagination li a {
+    border-color: #e5e5e5;
+    float: none;
+    color: #222;
+    font-weight: 400;
+    padding: 0;
+    display: block;
+    text-align: center;
+    width: 20px;
+    height: 25px;
+    line-height: 24px;
+    font-size: 16px;
+}
 
 }
 
@@ -15941,6 +15956,13 @@ div#touristbook-adminbar .navbar-nav li ul.dropdown-menu {
 }
 /*admin to bar css end*/
 
+
+/* market purpose css start */
+h2.service-title {
+    font-size: 16px;
+}
+/* market purpose css end */
+
 /*extra css locations start*/
 
 .heading-div-desc * {
@@ -15956,4 +15978,5 @@ body.destination-detail-page .div-desc *{
     font-size: 12pt;
 }
 /*extra css locations end*/
+
 

@@ -3,7 +3,7 @@
     'posts' => $posts
 ])
 
-<div class="paginationCommon blogPagination categoryPagination">
+<div class="paginationCommon blogPagination categoryPagination mb-4">
 
-    {{$posts->onEachSide(0)->links('vendor/pagination/custom-pagination')}}
+    {{$posts->onEachSide(1)->links('vendor/pagination/custom-pagination')}}
 </div>
