@@ -52,7 +52,7 @@ class LocationDataTable extends DataTable
      */
     public function query(Location $model): QueryBuilder
     {
-        return $model->newQuery()->select(['id','name','slug','status','created_at','updated_at']);
+        return $model->newQuery()->select(['id','name','slug','map_address','status','created_at','updated_at']);
     }
 
     /**
