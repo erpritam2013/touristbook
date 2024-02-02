@@ -16,7 +16,7 @@
 ])
 
 
-<div class="paginationCommon blogPagination categoryPagination">
+<div class="paginationCommon blogPagination categoryPagination mb-4">
 
-    {{$hotels->onEachSide(0)->links('vendor/pagination/custom-pagination')}}
+    {{$hotels->onEachSide(1)->links('vendor/pagination/custom-pagination')}}
 </div>
