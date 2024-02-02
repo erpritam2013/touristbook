@@ -714,7 +714,7 @@ return [
                 "fair_and_festivals-description" => [
                     'label' => "Description",
                     'control' => 'textarea',
-                    // 'class'   => 'tourist-editor'
+                    'class'   => 'tourist-editor'
                 ],
                 "fair_and_festivals-image" => [
                     'label' => "Image",
@@ -779,7 +779,7 @@ return [
                 "culinary_retreat-description" => [
                     'label' => "Description",
                     'control' => 'textarea',
-                    // 'class'   => 'tourist-editor'
+                     'class'   => 'tourist-editor'
                 ],
                 "culinary_retreat-image" => [
                     'label' => "Image",
@@ -797,7 +797,7 @@ return [
                 "shopaholics_anonymous-description" => [
                     'label' => "Description",
                     'control' => 'textarea',
-                    // 'class'   => 'tourist-editor'
+                    'class'   => 'tourist-editor'
                 ],
                 "shopaholics_anonymous-image" => [
                     'label' => "Image",
