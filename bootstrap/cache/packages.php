@@ -100,13 +100,6 @@
       0 => 'Spatie\\MediaLibrary\\MediaLibraryServiceProvider',
     ),
   ),
-  'statikbe/laravel-cookie-consent' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Statikbe\\CookieConsent\\CookieConsentServiceProvider',
-    ),
-  ),
   'tehwave/laravel-shortcodes' => 
   array (
     'providers' => 
