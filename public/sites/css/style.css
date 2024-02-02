@@ -15956,8 +15956,26 @@ div#touristbook-adminbar .navbar-nav li ul.dropdown-menu {
 }
 /*admin to bar css end*/
 
+
 /* market purpose css start */
 h2.service-title {
     font-size: 16px;
 }
 /* market purpose css end */
+
+/*extra css locations start*/
+
+.heading-div-desc * {
+    font-size: 18px!important;
+}
+body.destination-detail-page .div-desc *{
+ font-size: 15px;
+}
+.heading-div-desc * {
+    font-size: 18px!important;
+}
+.about-div-desc * {
+    font-size: 12pt;
+}
+/*extra css locations end*/
+

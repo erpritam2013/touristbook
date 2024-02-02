@@ -33,7 +33,7 @@
     @if($body_class == 'activity-detail-page')
     <link rel="stylesheet" type="text/css" href="{{ asset('sites/css/activity-list.css')}}">
     @endif
-    <link rel="stylesheet" type="text/css" href="{{asset('vendor/cookie-consent/css/cookie-consent.css')}}">
+   
 </head>
 
 <body class="{{touristbook_sanitize_title($body_class ?? '') ?? ''}}">
@@ -103,7 +103,7 @@
 </div>
 </div>
 </div>
- <a href="javascript:void(0)" class="js-lcc-settings-toggle">@lang('cookie-consent::texts.alert_settings')</a>
+ 
 </body>
 
 
