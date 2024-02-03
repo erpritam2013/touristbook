@@ -37,8 +37,17 @@ $fair_and_festivals_banner = (!empty($location->locationMeta->fair_and_festivals
 			<h4 class="service-title">{!!$fair_and_festivals['fair_and_festivals-title']!!}
 			</h4>
 			<div class="tab-item-description">{!!shortDescription(strip_tags($fair_and_festivals['fair_and_festivals-description']),30)!!}</div>
+			@php 
+
+                $trim = strip_tags($fair_and_festivals['fair_and_festivals-description']);
+                $trim=str_replace([" ","\n","\t","&ndash;","&rsquo;","&#39;","&quot;","&nbsp;"], '', $trim);
+
+                $totalCharacter = strlen(utf8_decode($trim));
+
+
+ 				@endphp
 			<div class="read_more">
-				<a data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$fair_and_festivals['fair_and_festivals-description']}}" data-more_data_label="{{$fair_and_festivals['fair_and_festivals-title']}}" style="color:#fba009;" style="cursor: pointer;">Read More....</a>    
+				<a data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$fair_and_festivals['fair_and_festivals-description']}}" data-more_data_label="{{$fair_and_festivals['fair_and_festivals-title']}}" data-total_chr="{{$totalCharacter}}" style="color:#fba009;" style="cursor: pointer;">Read More....</a>    
 			</div>
 		</div>
 	</div>
