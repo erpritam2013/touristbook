@@ -88,7 +88,7 @@ private function _prepareBasicData() {
 
         'state_id' => !empty($request->state_id)?$request->state_id:null,
             // 'icon' => $request->icon, //s3 integration pending
-            // 'image' => $request->image, //s3 integration pending
+        'image' => $request->image, //s3 integration pending
         'tourism_zone_description' => $request->tourism_zone_description,
         'tourism_zone' => $request->tourism_zone,
         'status' => $request->status,
@@ -153,7 +153,7 @@ private function _prepareBasicData() {
 
       'state_id' => !empty($request->state_id)?$request->state_id:null,
             // 'icon' => $request->icon, //s3 integration pending
-            // 'image' => $request->image, //s3 integration pending
+       'image' => $request->image, //s3 integration pending
         'tourism_zone_description' => $request->tourism_zone_description,
          'tourism_zone' => (is_array($request->tourism_zone))?$request->tourism_zone:null,
         'status' => $request->status,
