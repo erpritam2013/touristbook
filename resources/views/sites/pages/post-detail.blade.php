@@ -27,7 +27,10 @@ $top = 'top:32px;position:relative;';
 							{{--<li><a href="#"><i class="fas fa-funnel-dollar"></i>Consulting</a></li>--}}
 							<li><a href="#"><i class="fas fa-comments"></i>3</a></li>
 						</ul>
-						<h2>{{purify_string($post->name)}}</h2>{{purify_string($post->description)}}
+						<h2 class="post-title">{{purify_string($post->name)}}</h2>
+						<div class="post-content">
+							{!!$post->description!!}
+						</div>
 					</div>
 
 					<div class="tag-share">

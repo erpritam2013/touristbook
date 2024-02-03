@@ -27,8 +27,17 @@
 			<h4 class="service-title">{!!$culinary_retreat['culinary_retreat-title']!!}
 			</h4>
 			<div class="tab-item-description">{!!shortDescription(strip_tags($culinary_retreat['culinary_retreat-description']),30)!!}</div>
+			@php 
+
+                $trim = strip_tags($culinary_retreat['culinary_retreat-description']);
+                $trim=str_replace([" ","\n","\t","&ndash;","&rsquo;","&#39;","&quot;","&nbsp;"], '', $trim);
+
+                $totalCharacter = strlen(utf8_decode($trim));
+
+
+ 				@endphp
 			<div class="read_more">
-				<a data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$culinary_retreat['culinary_retreat-description']}}" data-more_data_label="{{$culinary_retreat['culinary_retreat-title']}}" style="color:#fba009;" style="cursor: pointer;">Read More....</a>    
+				<a data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$culinary_retreat['culinary_retreat-description']}}" data-more_data_label="{{$culinary_retreat['culinary_retreat-title']}}" style="color:#fba009;" style="cursor: pointer;" data-total_chr="{{$totalCharacter}}">Read More....</a>    
 			</div>
 		</div>
 	</div>

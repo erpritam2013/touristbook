@@ -32,7 +32,16 @@
  			</h4>
  			<div class="tab-item-description">{!!shortDescription(strip_tags($place_to_visit['place_to_visit-description']),30)!!}</div>
  			<div class="read_more">
- 				<a data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$place_to_visit['place_to_visit-description']}}" data-more_data_label="{{$place_to_visit['place_to_visit-title']}}" style="color:#fba009;" style="cursor: pointer;">Read More....</a>    
+ 				@php 
+
+                $trim = strip_tags($place_to_visit['place_to_visit-description']);
+                $trim=str_replace([" ","\n","\t","&ndash;","&rsquo;","&#39;","&quot;","&nbsp;"], '', $trim);
+
+                $totalCharacter = strlen(utf8_decode($trim));
+
+
+ 				@endphp
+ 				<a data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$place_to_visit['place_to_visit-description']}}" data-more_data_label="{{$place_to_visit['place_to_visit-title']}}" style="color:#fba009;" style="cursor: pointer;" data-total_chr="{{$totalCharacter}}">Read More....</a>    
  			</div>
  		</div>
  	</div>

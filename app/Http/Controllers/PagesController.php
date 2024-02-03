@@ -135,6 +135,14 @@ public function blogs(Request $request,$term='',$slug='') {
     if ($term == 'tag') {
     $data['tag'] = $slug;
     }
+
+    $page_id = Setting::get_setting('post_list_page');
+    
+    $page = Page::find($page_id);
+    if ($page) {
+        $data['page'] = $page;
+    }
+
     $data['sourceType'] = $request->get('source_type');
     return view('sites.pages.blogs',$data);
 }
