@@ -46,7 +46,7 @@ $top = 'top:32px;position:relative;';
         </div>
             <!--Address-->
 
-                <form action="" class="form" method="get">
+                <form action="" class="form" method="get" id="search-form-result">
                <div class="row">
             <div class="col-md-9 border-right">
                 <div class="form-group form-extra-field  clearfix field-detination has-icon open">
@@ -73,7 +73,7 @@ $top = 'top:32px;position:relative;';
      <div class="map-content-loading-search-input">
             <div class="st-loader"></div>
         </div>
-<form action="" class="form" method="get">
+<form action="" class="form" method="get" id="search-form-result">
     <div class="form-group">
         <div class="dropdown">
             <div class="icon-field">
