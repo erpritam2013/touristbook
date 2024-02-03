@@ -538,7 +538,7 @@ $top = 'top:32px;position:relative;';
 					{{-- tourism zone --}}
 					@if(!empty($tourismZone))
 					<div class="mt-5 bbpb text-justify" id="tourism-zone-area" >
-						<div align="center"><a data-toggle="collapse" href="#tourism-zone-area-pdf" role="button" aria-expanded="true" aria-controls="tourism-zone-area-pdf" style="text-decoration: none;" class="btn btn-grad"  onclick="tourism_zone_area_pdf(this)">Tourism Zone...
+						<div align="center"><a data-toggle="collapse" href="#tourism-zone-area-pdf" role="button" aria-expanded="true" aria-controls="tourism-zone-area-pdf" style="text-decoration: none;" class="btn btn-grad">Tourism Zone...
 						</a></div>
 						<div class="collapse row" id="tourism-zone-area-pdf">
 							<div class="col-md-12 ">
@@ -554,7 +554,7 @@ $top = 'top:32px;position:relative;';
 							<div class="col-md-12 mt-3">
 								<ul class="nav nav-tabs custom-tabs-detail" id="tourism-zone-area-pdf">
 									@foreach($tourismZone->tourism_zone as $key => $tzone)
-									<li class="nav-item"> <a class="nav-link {{($key == 0)?'active':''}}" data-toggle="tab" href="#{{touristbook_sanitize_title($tzone['tourism_zone-title'])}}"> {!!$tzone['tourism_zone-title']!!} </a> </li>
+									<li class="nav-item"> <a class="nav-link {{($key == 0)?'active':''}}" data-toggle="tab" href="#{{touristbook_sanitize_title($tzone['tourism_zone-title'])}}" onclick="tourism_zone_area_pdf(this)"> {!!$tzone['tourism_zone-title']!!} </a> </li>
 									@endforeach
 								</ul>
 								<div class="tab-content text-justify">

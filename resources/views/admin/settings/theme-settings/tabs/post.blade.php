@@ -14,9 +14,9 @@
        </label>
        <select class="form-control single-select-placeholder-touristbook" id="post-list-page" name="post_list_page" >
         <option value="">Select Post List Page</option>
-        @isset($posts)
-        @foreach($posts as $post)
-        <option value="{{$post->id}}" {!!get_edit_select_post_types_old_value($post->id,get_settings_option_value('post_list_page'),'select')!!} >{{$post->name}} ( #{{$post->id}})</option>
+        @isset($blogs)
+        @foreach($blogs as $blog)
+        <option value="{{$blog->id}}" {!!get_edit_select_post_types_old_value($blog->id,get_settings_option_value('post_list_page'),'select')!!} >{{$blog->name}} ( #{{$blog->id}})</option>
         @endforeach
         @endisset
       </select>
