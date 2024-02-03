@@ -51,6 +51,7 @@ $banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]
                       <input type="hidden" name="source_type" value="{{$sourceType}}" />
                       <input type="hidden" name="source_id" value="{{$sourceId}}" />
                   </div>
+
               </div>
               <div class="col-md-4">
                 <div class="btn-wrapper">
@@ -61,6 +62,7 @@ $banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]
     </form>
 
 </div>
+ <div id="search-result-info"></div>
 </div>
 </div>
 @else
