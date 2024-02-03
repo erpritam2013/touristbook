@@ -564,7 +564,7 @@ function calculateAndSetZoomLevel() {
 
 const buildContent = (hotel) => {
   const content = document.createElement("div");
- console.log(hotel);
+
   content.classList.add("hotel");
   content.innerHTML = `
      <div class="card shadow border-0 h-100"><a href="post.html"><img src="${hotel.featured_image}" alt="..." class="img-fluid card-img-top"></a>
@@ -857,48 +857,59 @@ function loadStreetMap() {
     $('.tab_container').on('change','[id^="tab"]',function(){
        home_page_search_input_add($(this).data('index'));
     })
+              
+    $("#input-search-box").autocomplete({
 
-//     $("#input-search-box").autocomplete({
 
+       search: function(event, ui) { 
+         $('.map-content-loading-search-input').show();
+     },
+     response: function(event, ui) {
+         $('.map-content-loading-search-input').hide();
+     },
+     source: function (request, response) {
+        $("input[name=source_type]").val("");
+        $("input[name=source_id]").val("");
+        
+        $.ajax({
+            url: "/get-location-states",
+            dataType: "json",
+            data: {
+                term: request.term,
+            },
+            success: function (data) {
 
-//        search: function(event, ui) { 
-//          $('.map-content-loading-search-input').show();
-//      },
-//      response: function(event, ui) {
-//          $('.map-content-loading-search-input').hide();
-//      },
-//      source: function (request, response) {
-//         $("input[name=source_type]").val("");
-//         $("input[name=source_id]").val("");
-//         $.ajax({
-//             url: "/get-location-states",
-//             dataType: "json",
-//             data: {
-//                 term: request.term,
-//             },
-//             success: function (data) {
-
-//                 response($.map(data, function(item) {
-//                    item.value =  $('<span></span>').html(item.value).text();
-//                 return item;
-//             }));
+                response($.map(data, function(item) {
+                   item.value =  $(`<span></span>`).html(item.value).text();
+                return item;
+            }));
             
-//             },
-//         });
-//     },
-//     minLength: 2,
-//     select: function (event, ui) {
-//         $("input[name=source_type]").val(ui.item.sourceType);
-//         $("input[name=source_id]").val(ui.item.id);
-//         $('.map-content-loading-search-input').show();
-//         setTimeout(function(){
-//             $('#search-form-result').submit();
-//             $('.map-content-loading-search-input').hide();
-//         },1000);
-//     },
-// });
+            },
+        });
+    },
+    open: function() {
+        $(this).autocomplete("widget")
+               .appendTo("#search-result-info")
+               .css({position: 'relative',top: '0px',left: '0px',width:'67%!important',marginTop:'0px',marginLeft:'0px',border: '1px solid #ddd'});
+    },
+    minLength: 2,
+    select: function (event, ui) {
+        $("input[name=source_type]").val(ui.item.sourceType);
+        $("input[name=source_id]").val(ui.item.id);
+        $('.map-content-loading-search-input').show();
+        setTimeout(function(){
+            $('#search-form-result').submit();
+            $('.map-content-loading-search-input').hide();
+        },1000);
+    },
+}).autocomplete("instance")._renderItem = function(ul, item) {
+           let icon = $('.map-icon').text();
+            return $("<li>")
+            .append(`<div>${item.label}<span style='float: left'>${icon}</span></div>`)
+            .appendTo(ul);
+        };
     $(".input-search-box").autocomplete({
-
+       
 
        search: function(event, ui) { 
          $('.map-content-loading-search-input').show();
@@ -925,22 +936,29 @@ function loadStreetMap() {
             },
         });
     },
+
+      
+    /* display: none; */
      open: function() {
         $(this).autocomplete("widget")
-               .appendTo("#search-form-result")
-               .css("position", "relative");
+               .appendTo((!isMobile())?"#search-result-info":$(this).parent())
+               .css({position: 'relative',top: '0px',left: '0px',marginTop:'0px',marginLeft:'0px'});
     },
     minLength: 2,
     select: function (event, ui) {
         $("input[name=source_type]").val(ui.item.sourceType);
         $("input[name=source_id]").val(ui.item.id);
-         $('.map-content-loading-search-input').show();
+         let form_id = $(this).data('form_id');
         setTimeout(function(){
-            $('#search-form-result').submit();
-            $('.map-content-loading-search-input').hide();
+            $(form_id).submit();      
         },1000);
     },
-});
+}).autocomplete("instance")._renderItem = function(ul, item) {
+           
+            return $("<li>")
+            .append("<div>" + item.label + `<span style='float: left;margin-right:5px;'><span class="fas fa-map-marker-alt"></span></span></div>`)
+            .appendTo(ul);
+        };
 
     $(".Filter-left").on("click", ".mb-left-title", function () {
         $(this).closest(".mb-left").find(".form-group").first().toggle("1000");

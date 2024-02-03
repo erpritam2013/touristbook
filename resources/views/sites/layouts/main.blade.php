@@ -38,6 +38,10 @@
 
 <body class="{{touristbook_sanitize_title($body_class ?? '') ?? ''}}">
 
+    <div class="map-icon d-none">
+      {{getNewIcon('ico_maps_search_box', '#666666', '20px', '20px', true)}}
+    </div>
+
     <input type="hidden" id="base-url" value="{{route('home')}}" />
     @if(!isMobileDevice())
     @if(auth()->check())
