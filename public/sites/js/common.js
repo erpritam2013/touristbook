@@ -55,21 +55,35 @@ const showAmenities = (amenities) => {
     return html;
 }
 
+const showMoreDataBody = (get_html_,chr_count) => {
+   if(typeof(chr_count) != "undefined" && parseInt(chr_count) > 700){   
+    $('body #showMoreDataBody').css('overflow','auto').css('height','350px').html(get_html_);
+    }else{
+    $('body #showMoreDataBody').removeAttr('style').html(get_html_);
+    }
+
+}
+
 window.showMoreData = function(data){
 
     let label = $(data).data('more_data_label');
     let showMoreData = $(data).data('more_data');
+    let total_chr = $(data).data('total_chr');
     $('body #showMoreDataLabel').text(label);
+    
     if (isJSON(showMoreData)) {
         showMoreData = JSON.stringify(showMoreData);
         let result = JSON.parse(showMoreData);
         /*show amenities*/
+
         if (label == 'Amenities') {
             let get_html = showAmenities(result);
-            $('body #showMoreDataBody').html(get_html);
+            
+           showMoreDataBody(get_html,total_chr);
+            
         }else if (label == 'Activity List') {
          let get_html = showAmenities(result);
-         $('body #showMoreDataBody').html(get_html);
+         showMoreDataBody(get_html,total_chr);
      }
        // console.log(result);
  }else{
@@ -88,7 +102,7 @@ window.showMoreData = function(data){
 }else{
     html = `<p class="service-location">${showMoreData}</p>`;
 }
-$('body #showMoreDataBody').html(html);
+showMoreDataBody(html,total_chr);
 }
 }
 
@@ -573,7 +587,11 @@ const processedResultInfo = (html) => {
     }
     markers = []
     setTimeout(()=>{
+            if ($('body').hasClass('hotel-list-page')) {
         $('.listroBox').each(function() {
+
+
+
 
             let longitude = $(this).attr("longitude");
             let latitude = $(this).attr("latitude");
@@ -605,7 +623,7 @@ const processedResultInfo = (html) => {
                 // Refresh Map
             google.maps.event.trigger(map, 'resize');
         }
-
+  }
     },0)
 };
 
@@ -694,6 +712,11 @@ function loadOtherMap() {
     let mapElm = document.querySelectorAll('#map-location #map-street')[0]
 
     if(mapElm){
+        let latitude = parseFloat(mapElm.getAttribute("lat"));
+        let longitude = parseFloat(mapElm.getAttribute("lng"));
+   
+        if (!isNaN(latitude) && !isNaN(longitude)) {
+        $(mapElm).html('');
         map = new google.maps.Map(mapElm, {
             center: {
                 lat: parseFloat(mapElm.getAttribute("lat")),
@@ -716,10 +739,14 @@ function loadOtherMap() {
         var marker = new google.maps.Marker({
                 position: new google.maps.LatLng(mapElm.getAttribute("lat"), mapElm.getAttribute("lng")),
                 map: map,
+                animation: google.maps.Animation.DROP,
                 icon:markerIcon
             });
 
             markers.push(marker);
+        }else{
+            $(mapElm).html('<div class="map-error-div"><img src="/sites/images/map-error/map-error-img.png" width="100" height="100" alt="map-error"><br/><span class="map-error">Map Not Founded!</span></div>');
+        }
 
     }
 
@@ -863,6 +890,11 @@ function loadStreetMap() {
     select: function (event, ui) {
         $("input[name=source_type]").val(ui.item.sourceType);
         $("input[name=source_id]").val(ui.item.id);
+        $('.map-content-loading-search-input').show();
+        setTimeout(function(){
+            $('#search-form-result').submit();
+            $('.map-content-loading-search-input').hide();
+        },1000);
     },
 });
     $(".input-search-box").autocomplete({
