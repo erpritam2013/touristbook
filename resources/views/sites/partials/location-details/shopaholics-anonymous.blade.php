@@ -26,8 +26,17 @@
 			<h4 class="service-title">{!!$shopaholics_anonymous['shopaholics_anonymous-title']!!}
 			</h4>
 			<div class="tab-item-description">{!!shortDescription(strip_tags($shopaholics_anonymous['shopaholics_anonymous-description']),30)!!}</div>
+			@php 
+
+                $trim = strip_tags($shopaholics_anonymous['shopaholics_anonymous-description']);
+                $trim=str_replace([" ","\n","\t","&ndash;","&rsquo;","&#39;","&quot;","&nbsp;"], '', $trim);
+
+                $totalCharacter = strlen(utf8_decode($trim));
+
+
+ 				@endphp
 			<div class="read_more">
-				<a data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$shopaholics_anonymous['shopaholics_anonymous-description']}}" data-more_data_label="{{$shopaholics_anonymous['shopaholics_anonymous-title']}}" style="color:#fba009;" style="cursor: pointer;">Read More....</a>    
+				<a data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$shopaholics_anonymous['shopaholics_anonymous-description']}}" data-more_data_label="{{$shopaholics_anonymous['shopaholics_anonymous-title']}}" style="color:#fba009;" style="cursor: pointer;" data-total_chr="{{$totalCharacter}}">Read More....</a>    
 			</div>
 		</div>
 	</div>

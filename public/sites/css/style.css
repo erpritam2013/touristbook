@@ -72,11 +72,15 @@ Header 1 Area CSS
 ======================================
 */
 body *{
-	font-family: Arial, Helvetica, sans-serif;
+/*	font-family: Arial, Helvetica, sans-serif;*/
+	font-family: "Poppins", sans-serif ;
 }
 .navbar-top {
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	padding: .2rem 0;
+}
+.navbar-top a {
+    font-family: "Poppins", sans-serif !important;
 }
 @media (min-width: 992px) {
 	.d-lg-block {
@@ -637,10 +641,16 @@ body *{
            HEADER
 =================================*/
 /*TOP BAR*/
-.navbar-top {
+/*.navbar-top {
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	padding: .5rem 0;
 	background-color: #07509e;
+}*/
+
+.navbar-top {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #07509e;
+    padding: 9px 10px;
 }
 .navbar-top span {
 	font-size: 0.8125rem;
@@ -5607,7 +5617,7 @@ blog-single-section
 	background: transparent;
 	font-size: 20px;
 	font-size: 1.25rem;
-	color: #ED1C24;
+	color: #fba009;
 	border: 0;
 	outline: 0;
 	position: absolute;
@@ -12403,12 +12413,12 @@ body.hotel-detail-page .listingDetails .booking-search > .row {
     	overflow: auto;
     }
 
-    .navbar-top .social-icons{
+   /* .navbar-top .social-icons{
     	border-right: 1px solid #D1D4DA!important;
     	padding-left: 18px;
     	padding-right: 18px;
     	color: #D1D4DA;
-    }
+    }*/
     .st-contact-info,.st-contact-info a{
     	color: #07509e;
     }
@@ -15571,6 +15581,14 @@ body.destination-detail-page #weather a:hover{
 }
 
 /*post grid css start*/
+
+body.blog-page .banner{
+	height: 400px!important;
+}
+body.blog-page .innerpage-title{
+	display: none;
+}
+
 body.blog-page img.post-image {
 	height: 250px;
 }
@@ -15651,8 +15669,47 @@ body.blog-page .post-title {
 	body.page-id-7979 .banner, body.category-blogs .banner {
 		height: 110px!important;
 	}
+	body.blog-page .banner{
+	height: 160px!important;
+}
 }
 /*post grid css end*/
+
+/*post detail css start*/
+body.post-detail-page .post-content{
+	border: 1px solid #dddddd;
+    padding: 10px;
+    box-shadow: 0px 9px 32.8px 7.2px rgba(0, 0, 0, 0.03);
+}
+body.post-detail-page .div-desc{
+	adding: unset;
+    border: unset;
+    margin-bottom: unset;
+    box-shadow: unset;
+    border-radius: 25px;
+    color: unset;
+}
+body.post-detail-page .blog-sidebar .tag-widget ul li a:hover{
+	color: #fff;
+	background-color: #fba009;
+}
+body.post-detail-page .blog-sidebar .recent-post-widget .post h4 a{
+	color: #07509e;
+}
+body.post-detail-page .blog-sidebar .recent-post-widget .post h4 a:hover {
+    color: #fba009;
+}
+body.post-detail-page .blog-sidebar .category-widget ul li:hover * {
+    color: #fba009!important;
+}
+body.post-detail-page .entry-meta a,
+body.post-detail-page .post-title{
+	 color: #07509e;
+}
+body.post-detail-page .entry-media img {
+    border: 1px solid #dddddd;
+}
+/*post detail css end*/
 
 /*about page css start*/
 
@@ -15885,6 +15942,7 @@ opacity: 0.2;
 background-position: -24px -53px;
 }  */ 
 
+
 @media (min-width:320px) and (max-width:768px){
 body.home-page .ui-autocomplete.ui-menu {
     width: 100% !important;
@@ -15976,6 +16034,88 @@ body.destination-detail-page .div-desc *{
 }
 .about-div-desc * {
     font-size: 12pt;
+}
+
+.map-error-div {
+    position: relative;
+    left: 225px;
+    right: 0px;
+    top: 15px;
+    width: 50%;
+    padding: 70px 172px;
+    background: #dddddd30;
+}
+.map-error-div img {
+    margin: 0px 50px;
+}
+.map-error {
+    color: #c31222;
+    padding: 0px 0px;
+    font-size: 25px;
+}
+
+img.weather-error {
+    position: relative;
+    top: 1px;
+    left: 287px;
+    border: 1px solid #419eb8;
+    padding: 16px;
+    width: 350px;
+    background: #419eb8;
+}
+
+/*.left-top-border{
+    padding-left: 15px;
+    color: #D1D4DA;
+}*/
+
+/*.right-top-border{
+	border-left: 1px solid #D1D4DA!important;
+    padding-right: 5px;
+    color: #D1D4DA;
+}*/
+.vl{
+	    border-left: 1px solid #D1D4DA;
+    height: 20px;
+    margin-right: 10px;
+}
+.vl-2 {
+    border-left: 1px solid #D1D4DA;
+    height: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.vl-3 {
+    border-left: 1px solid #D1D4DA;
+    height: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.vl-4{
+	border-left: 1px solid #D1D4DA;
+    height: 20px;
+    margin-left: 10px;
+}
+
+@media (min-width:320px) and (max-width:768px){
+	.map-error-div {
+    padding: 0px 40px;
+    background: #dddddd30;
+}
+
+img.weather-error {
+     position: unset; 
+     top: 0; 
+     left: 0; 
+    border: 1px solid #419eb8;
+    padding: 16px;
+     width: 100%; 
+    background: #419eb8;
+}
+
+body a.navbar-brand img.web-logo{
+   width: 210px;
+}
 }
 /*extra css locations end*/
 

@@ -32,41 +32,58 @@
             <!-- top social -->
             <ul class="social-icons">
               <li class="social-icons-item social-facebook m-0"> <a class="social-icons-link w-auto px-2"
-                href="#"><i class="fab fa-facebook-f"></i></a> </li>
-                <li class="social-icons-item social-instagram m-0"> <a class="social-icons-link w-auto px-2"
-                  href="#"><i class="fab fa-twitter"></i></a> </li>
+                href="{{get_single_value_of_col_in_setting(get_settings_option_value('topbar_social_link'),'topbar_facebook')}}"><i class="fab fa-facebook-f"></i></a> </li>
                   <li class="social-icons-item social-twitter m-0"> <a class="social-icons-link w-auto pl-2"
-                    href="#"><i class="fab fa-instagram"></i></a> </li>
+                    href="{{get_single_value_of_col_in_setting(get_settings_option_value('topbar_social_link'),'topbar_twitter')}}"><i class="fab fa-twitter"></i></a> </li>
+                <li class="social-icons-item social-instagram m-0"> <a class="social-icons-link w-auto px-2"
+                  href="{{get_single_value_of_col_in_setting(get_settings_option_value('topbar_social_link'),'topbar_instagram')}}"><i class="fab fa-instagram"></i></a> </li>
                   </ul>
+                  <div class="vl-3"></div>
 
                   <!-- Top info -->
-                  <ul class="nav list-unstyled ml-3">
-                    <li class="nav-item mr-3"> <a class="navbar-link" href="javascript:void(0)"><i class="fas fa-phone"></i>&nbsp;+91 98177-02160, 61, 62, 63</a> </li>
+                  <ul class="nav list-unstyled">
                     <li class="nav-item mr-3"> <a class="navbar-link" href="mail:to"><i class="fas fa-envelope"></i>&nbsp;
-                    touristbook77@gmail.com</a> </li>
+                    {{get_settings_option_value('topbar_email')}}</a> </li>
                   </ul>
                 </div>
 
                 <!-- navbar top Right-->
                 <div class="d-flex align-items-center">
+
+                    <!-- top link -->
+                    <ul class="nav">
+                      <li class="nav-item"> <a class="nav-link" href="{{route('contact')}}">Contact us</a> </li>
+                    </ul>
+                      <div class="vl"></div>
+                    <ul class="nav ">
+                      <li class="nav-item"> <a class="navbar-link" href="javascript:void(0)"><i class="fas fa-phone mr-2"></i>{{get_settings_option_value('topbar_phone')}}</a></li>
+                    </ul>
+                    <div class="vl-2"></div>
                   <!-- Top Account -->
+                      @if(auth()->check())
                  <div class="dropdown"> <a class="dropdown-toggle" href="#" role="button" id="dropdownAccount"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
-                    class="far fa-user mr-2"></i>@if(auth()->check()){{ucwords(auth()->user()->name)}} @else Account @endif</a>
+                    class="far fa-user mr-2"></i>{{ucwords(auth()->user()->name)}}</a>
                     <div class="dropdown-menu mt-2 shadow" aria-labelledby="dropdownAccount"> 
-                      @if(!auth()->check())
-                      <a class="dropdown-item" href="{{route('login')}}">Log In</a> 
-                      <a class="dropdown-item" href="{{route('register')}}">Register</a> 
-                      @else
                        @if(auth()->user()->isAdmin() || auth()->user()->isEditor())
                       <a class="dropdown-item" href="{{route('admin.dashboard')}}">Dashboard</a>
                        @else
                       <a class="dropdown-item" href="#">Settings</a>
                        @endif
-                      @endif
                     </div>
                   </div> 
-
+                  <div class="vl-2"></div>
+                      @endif
+                     @if(!auth()->check())
+                    <ul class="nav">
+                      <li class="nav-item"> <a class="navbar-link" href="{{route('login')}}">Login</a> </li>
+                    </ul>
+                      <div class="vl-2"></div>
+                    <ul class="nav ">
+                      <li class="nav-item"> <a class="navbar-link" href="{{route('register')}}">Sign Up</a> </li>
+                    </ul>
+                    <div class="vl-2"></div>
+                    @endif
                   <!-- Currency -->
                   <div class="dropdown">
                     <a class="dropdown-toggle" href="#" role="button" id="dropdownCurrency" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -81,13 +98,14 @@
 
                       </div>
                     </div>
-
-                    <!-- top link -->
+                   <div class="vl-4"></div>
                     <ul class="nav">
-                      <li class="nav-item"> <a class="nav-link" href="#">Contact</a> </li>
+                      <li class="nav-item"> <a class="nav-link" href="{{route('blogs')}}">Blogs</a> </li>
                     </ul>
 
+                  
 
+                      <div class="vl"></div>
                     <!-- Language -->
                     <div class="dropdown top-language"> <a class="dropdown-toggle" href="#" role="button"
                       id="dropdownLanguage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -115,7 +133,7 @@
               <nav class="navbar navbar-expand-lg">
                 <div class="container">
                   <!-- Logo -->
-                  <a class="navbar-brand" href="/"> <img src="{{asset('sites/images/tourist-book-logo-color.webp')}}" alt="Tourist Book"> </a>
+                  <a class="navbar-brand" href="/"> <img src="{{get_image_url(get_settings_option_value('web_logo'),0) ?? ''}}" alt="Tourist Book" class="web-logo"> </a>
                   <!-- Menu opener button -->
                   <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
                   data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
