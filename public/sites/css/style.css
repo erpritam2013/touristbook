@@ -16098,6 +16098,12 @@ img.weather-error {
     padding-right: 5px;
     color: #D1D4DA;
 }*/
+
+.top-language .translation-links,
+div#currency-dropdown {
+    overflow: auto;
+    height: 250px;
+}
 .vl{
 	    border-left: 1px solid #D1D4DA;
     height: 20px;
