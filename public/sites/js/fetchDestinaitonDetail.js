@@ -114,6 +114,7 @@ window.fetchWeather = (ele) => {
 
     
         //let endpoint = base_url + "/location-detail-fetch/"+target_element;
+    if (lat != '' && long != '') {
 
     $.ajax({
         type: "GET",
@@ -129,8 +130,14 @@ window.fetchWeather = (ele) => {
 
             let final_result = jQuery.parseJSON( response.responseText );
             alert(final_result.message)
+            let image_html = '<img class="weather-error" src="/sites/images/map-error/weather-not-founded.jpg"  alt="weather-error">'
+            processedLocationDetailHtml(image_html,get_id);
         }
     });
+}else{
+    let image_html = '<img class="weather-error" src="/sites/images/map-error/weather-not-founded.jpg"  alt="weather-error">'
+        processedLocationDetailHtml(image_html,get_id);
+}
 
 }
 
