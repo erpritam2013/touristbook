@@ -9,6 +9,7 @@ use App\Models\Page;
 use App\Models\Media;
 use App\Models\Location;
 use App\Models\CountryZone;
+use App\Models\Conversion;
 use App\Models\Hotel;
 use App\Models\Post;
 use App\Models\HotelDetail;
@@ -4177,6 +4178,26 @@ function url_exists($url) {
     return true;
 }
 
+public function add_data_conversion()
+{
+    $this->info("Starting.....");
+    $conversion_migration =  config('settings_test.booking_currency');
+    foreach ($conversion_migration as $key => $conversion_) {
+        $conversion_detail = new Conversion();
+        $conversion_detail->currency_name = $conversion_['name'];
+        $conversion_detail->conversion_rate = $conversion_['rate'];
+        $conversion_detail->status = 1;
+        $conversion_detail->currency_symbol = $conversion_['symbol'];
+        $conversion_detail->country_code = $conversion_['country'];
+        $conversion_detail->is_rtl = $conversion_['currency_rtl_support'];
+        $conversion_detail->currency_pos = $conversion_['booking_currency_pos'];
+        
+
+        $conversion_detail->save();
+    }
+    $this->info("Done");
+}
+
 public function get_images_from_folder()
 {
    $this->info("File upload Started......");
@@ -4235,6 +4256,8 @@ foreach ($media as $key => $md) {
 
         // }
 }
+
+
 
 // foreach ($mediafiles as $file) {
 
@@ -4325,20 +4348,20 @@ $this->info("File upload done ".$count);
             //$tables = ['posts'];
             //$tables = ['country_zones'];
 
-             //$tables = ['activities'];
+           $tables = ['conversions'];
             // $tables = ['tourism_zones'];
             //$tables = ['rooms','room_details','hotels','hotel_details'];
 
 
-            $this->info("Truncating tables...");
+           $this->info("Truncating tables...");
            //$this->truncate_tables($term_table);
 
-          //$this->truncate_tables($tables);
+           $this->truncate_tables($tables);
 
 
 
-            $this->info("Table Truncated...");
-        }
+           $this->info("Table Truncated...");
+       }
 
        // $this->update_tour_migrate();
 
@@ -4511,7 +4534,7 @@ $this->info("File upload done ".$count);
 // $meetings_and_events = MeetingAndEvent::whereIn('wp_taxonomy_id',[476,475,2129])->get('id')->pluck('id')->toArray();
 // $deals_discount = DealsDiscount::whereIn('wp_taxonomy_id',[473,472,2000,474,471])->get('id')->pluck('id')->toArray();
 // $activities = TermActivity::whereIn('wp_taxonomy_id',[1794,2015, 1154, 1908, 462, 1581, 1055, 764, 457, 576, 2624, 751, 458, 1843,  757,  1083,  1575,  1286,  1821,  614,  1608,  758,  836,  999,  453,  1579,  769,  762])->get('id')->pluck('id')->toArray();
-        
+
     //  $set_data['hotel_commen_amenities'] = $amenities;
     // // $set_data['hotel_common_property_type'] = 
     //  $set_data['hotel_common_medicare_assistance'] =$medicare_assistance; 
@@ -4519,11 +4542,11 @@ $this->info("File upload done ".$count);
     //  $set_data['hotel_common_deals_discount'] =$deals_discount;
     //  $set_data['hotel_common_activities'] = $activities;
 
-
+       $this->add_data_conversion();
 
        // $this->update_page_extra_data(1,$set_data);
 
-        $this->get_images_from_folder();
-        return Command::SUCCESS;
-    }
+       // $this->get_images_from_folder();
+       return Command::SUCCESS;
+   }
 }
