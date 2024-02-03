@@ -80,6 +80,12 @@ class Tour extends Model
         $this->save();
     }
 
+
+    public function user()
+    {
+        return $this->belongsTo(User::class,'created_by','id');
+    }
+
     public function isEditing() {
         return $this->is_editing && !$this->editing_expiry_time->isPast() && $this->editor_id != Auth::user()->id;
     }
