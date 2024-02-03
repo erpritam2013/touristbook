@@ -10839,7 +10839,7 @@ label.lbl-search-box {
 .ui-autocomplete.ui-menu {
 	z-index: 99 !important;
 	list-style: none;
-	width: 32% !important;
+	width: 32%;
 	margin-top: 45px;
 	margin-left: 5px;
 	left: 349px;
@@ -10848,10 +10848,10 @@ label.lbl-search-box {
 
 
 body.tour-list-page .ui-autocomplete.ui-menu {
-    width: 36.5% !important;
-    margin-top: 111px;
+    width: 76.3%!important;
+  /*  margin-top: 111px;
     top: -5143.83px!important;
-    left: 349px!important;
+    left: 349px!important;*/
 }
 
 
@@ -10878,15 +10878,17 @@ body.tour-list-page .ui-autocomplete.ui-menu {
 }
 
 /*extra css hotel start*/
-
+#search-result-info{
+	height: 0px;
+}
 
 body.hotel-list-page .banner {
     height: 300px;
 }
-.hotel-list-page .ui-autocomplete.ui-menu {
+/*.hotel-list-page .ui-autocomplete.ui-menu {
     top: -5174.89px!important;
     left: 349px!important;
-}
+}*/
 .hotel-list-page .TravelGo-opt-list a {
 	float: right;
 	width: 36px;
@@ -13178,10 +13180,10 @@ body.activity-list-page input.main-search-box {
 	font-size: 16px;
 }
 body.activity-list-page .ui-autocomplete.ui-menu {
-    width: 32.2% !important;
-    margin-top: 111px;
-    top: -4912.31px!important;
-    left: 349px!important;
+    width: 67.3% !important;
+    /* margin-top: 111px; */
+    /* top: -4912.31px!important; */
+    /* left: 349px!important; */
 }
 
 
@@ -14738,17 +14740,17 @@ body.connecting-partners-page .innerpage-banner.left {
 	-o-transform: translateY(0);
 	transform: translateY(0);
 }*/
-/*body.destinations-page .ui-autocomplete.ui-menu {
-	position: relative;
+body.destinations-page .ui-autocomplete.ui-menu {
+/*	position: relative;
 	top: -1811.88px!important;
 	z-index: 99 !important;
 	list-style: none;
-	width: 32.2% !important;
-	margin-top: 22px;
+*/	width: 67.4%;!important;
+	/*margin-top: 22px;
 	margin-left: 5px;
 	left: 349px!important;
-	border-top: 1px solid #ddd;
-}*/
+	border-top: 1px solid #ddd;*/
+}
 
 body.destinations-page .destination-grid-view{
 	margin-top: -70px;
@@ -15879,8 +15881,17 @@ body.activity-list-page .map-content-loading-search-input {
 /*search input loader css end*/
 
 /*home page css start*/
-body.home-page .ui-autocomplete.ui-menu {
+/*body.home-page .ui-autocomplete.ui-menu {
     width: 45.4% !important;
+}*/
+body.home-page .ui-autocomplete.ui-menu {
+   width: inherit!important;
+}
+.ui-autocomplete.ui-menu .ui-menu-item{
+   border-radius: unset!important;
+}
+.ui-autocomplete.ui-menu .ui-menu-item:hover{
+   background: #f2f2f2!important;
 }
 
 body.home-page #home-destination-image{
@@ -15944,10 +15955,20 @@ background-position: -24px -53px;
 
 
 @media (min-width:320px) and (max-width:768px){
-body.home-page .ui-autocomplete.ui-menu {
+/*body.home-page .ui-autocomplete.ui-menu {
     width: 100% !important;
+}*/
+body.home-page .ui-autocomplete.ui-menu {
+    width: inherit!important;
+    border: 1px solid #ddd;
+    border-top: unset;
 }
-
+.ui-autocomplete.ui-menu .ui-menu-item{
+   border-radius: unset!important;
+}
+.ui-autocomplete.ui-menu li:hover{
+   background-color: #f2f2f2!important;
+}
 /*body.home-page #home-destination-image{
   width:100%;
   height:auto;
