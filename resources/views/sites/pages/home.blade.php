@@ -48,13 +48,16 @@ if(isset($page)) {
                       <input id="tab5" type="radio" name="tabs" data-index="5">
                       <label for="tab5"><i class="fas fa-route"></i><span>Tour Packages</span></label>
                       <section id="content1" class="tab-content">
-                        <form action="{{route('hotels')}}" class="form" method="get">
+                        <form action="{{route('hotels')}}" class="form" method="get" id="home-hotels-form">
                           <div class="row">
                             <div class="col-lg-10 col-md-6 col-sm-6 col-xs-12 padding8">
                               <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
                                 <input class="form-control input-search-box" type="text"
-                                placeholder="Where are you going?" name="search" >
+                                placeholder="Where are you going?" name="search" data-form_id="#home-hotels-form">
                                 <div id="home-extra-input-field-1">
+
+                                   <input type="hidden" name="source_type" value="" />
+                                   <input type="hidden" name="source_id" value="" />
 
                                 </div>
                               </div>
@@ -104,12 +107,12 @@ if(isset($page)) {
                         </form>
                       </section>
                       <section id="content2" class="tab-content">
-                        <form action="{{route('destinations')}}" class="form" method="get">
+                        <form action="{{route('destinations')}}" class="form" method="get" id="home-destinations-form">
                           <div class="row">
                             <div class="col-lg-10 col-md-6 col-sm-6 col-xs-12 padding8">
                               <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
                                 <input class="form-control input-search-box" type="text"
-                                placeholder="Search Destination By Location...." name="search" >
+                                placeholder="Search Destination By Location...." name="search" data-form_id="#home-destinations-form">
                                 <div id="home-extra-input-field-2">
 
                                 </div>
@@ -142,11 +145,11 @@ if(isset($page)) {
                         </form>
                       </section>
                       <section id="content3" class="tab-content">
-                        <form action="{{route('activities')}}" class="form" method="get">
+                        <form action="{{route('activities')}}" class="form" method="get" id="home-activities-form">
                           <div class="row">
                             <div class="col-lg-10 col-md-6 col-sm-6 col-xs-12 padding8">
                               <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
-                                <input class="form-control input-search-box" type="text" placeholder="Search Activity By Location...." name="search" >
+                                <input class="form-control input-search-box" type="text" placeholder="Search Activity By Location...." name="search" data-form_id="#home-activities-form">
                                 <div id="home-extra-input-field-3">
 
                                 </div>
@@ -221,12 +224,12 @@ if(isset($page)) {
                         </div>
                       </section>--}}
                       <section id="content5" class="tab-content">
-                        <form action="{{route('our-packages')}}" class="form" method="get">
+                        <form action="{{route('our-packages')}}" class="form" method="get" id="#home-our-packages-form">
                           <div class="row">
                             <div class="col-lg-10 col-md-6 col-sm-6 col-xs-12 padding8">
                               <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
                                 <input class="form-control input-search-box" type="text"
-                                placeholder="Search Package By Location...." name="search" >
+                                placeholder="Search Package By Location...." name="search" data-form_id="#home-our-packages-form">
                                 <div id="home-extra-input-field-5">
 
                                 </div>
@@ -263,6 +266,7 @@ if(isset($page)) {
                 </div>
               </div>
             </div>
+            <div id="search-result-info"></div>
           </section>
 
 
