@@ -53,6 +53,7 @@
     </form>
 
 </div>
+<div id="search-result-info"></div>
 </div>
 </div>
 @else

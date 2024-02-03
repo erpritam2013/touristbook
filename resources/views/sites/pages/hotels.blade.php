@@ -68,6 +68,7 @@ $banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]
     </form>
 
 </div>
+<div id="search-result-info"></div>
 </div>
 </div>
 @else
