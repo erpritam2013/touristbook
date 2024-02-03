@@ -12,7 +12,6 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
-
 class TourDataTable extends DataTable
 {
     /**
@@ -39,6 +38,9 @@ class TourDataTable extends DataTable
                     $editHtml = $row->isEditing() ? '<p class="edit-context">Editing</p>' : '';
                     $editor_name = (!empty($row->editor_name())) ? '<p class="edit-name">( '.$row->editor_name().' )</p>' : '';
                     return $nameHtml.$editHtml.$editor_name;
+                })->addColumn('user', function($row) {
+                   
+                    return (!empty($row->user))?'<a href="'.route('admin.users.edit',$row->user->id).'" target="_blank" style="color:#07509e">'.'#'.$row->user->id.' '.$row->user->name.'</a> : ':null;
                 })->addColumn('status', function($row) {
                     $checked = "";
                     if ($row->status == 1) {
@@ -50,7 +52,7 @@ class TourDataTable extends DataTable
                     return ($row->address) ? $row->address : '';
                 })->addColumn('del',function($row){
                  return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'">';
-            })->rawColumns(['status','action','del','address','name']);
+            })->rawColumns(['status','action','del','address','name','user']);
     }
 
     /**
@@ -61,7 +63,7 @@ class TourDataTable extends DataTable
      */
     public function query(Tour $model): QueryBuilder
     {
-        return $model->newQuery()->select(['id','name','slug','status','address','created_at','updated_at']);
+        return $model->newQuery()->select(['id','name','slug','status','address','created_at','updated_at','created_by']);
     }
 
     /**
@@ -110,6 +112,7 @@ class TourDataTable extends DataTable
             ->addClass('text-center'),
             Column::make('id'),
             Column::make('name'),
+            Column::make('user')->title('Created & Updated By'),
             Column::make('slug')->searchable(false)
             ->orderable(false)
             ->exportable(false)
