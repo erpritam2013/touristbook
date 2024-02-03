@@ -69,7 +69,7 @@ $banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]
      <div class="map-content-loading-search-input">
             <div class="st-loader"></div>
         </div>
-<form action="" class="form" method="get">
+<form action="" class="form" method="get" id="search-form-result">
     <div class="form-group">
         <div class="dropdown">
             <div class="icon-field">

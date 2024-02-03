@@ -33,7 +33,7 @@
         </div>
             <!--Address-->
 
-            <form action="" class="form" method="get">
+            <form action="" class="form" method="get" id="search-form-result">
              <div class="row">
                 <div class="col-md-8 border-right">
                     <div class="form-group form-extra-field  clearfix field-detination has-icon open">
@@ -61,7 +61,7 @@
      <div class="map-content-loading-search-input">
             <div class="st-loader"></div>
         </div>
-<form action="" class="form" method="get">
+<form action="" class="form" method="get" id="search-form-result">
     <div class="form-group">
         <div class="dropdown">
             <div class="icon-field">
