@@ -22,7 +22,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\DataTables\TourDataTable;
 use Session;
-
+use Illuminate\Support\Facades\Auth;
 class TourController extends Controller
 {
 
@@ -178,6 +178,7 @@ class TourController extends Controller
             'is_featured' => $request->is_featured,
             // 'logo'=>$request->logo,
             'featured_image' => $request->featured_image,
+            'created_by' => (Auth::check())?Auth::user()->id:null,
             // 'discount_type' =>$request->discount_type,
             // 'discount_by_child' =>$request->discount_by_child,
             // 'discount_by_adult' =>$request->discount_by_adult,
@@ -371,6 +372,7 @@ public function changeStatus(Request $request): JsonResponse
      //        'featured_image' => json_decode($request->featured_image,true),
      //    ]);
      // }
+
      $tourDetails = [
 
         'name' => $request->name,
@@ -403,6 +405,7 @@ public function changeStatus(Request $request): JsonResponse
         'is_featured' => $request->is_featured,
             // 'logo'=>$request->logo,
         'featured_image' => $request->featured_image,
+        'created_by' => (Auth::check())?Auth::user()->id:null,
             // 'discount_type' =>$request->discount_type,
             // 'discount_by_child' =>$request->discount_by_child,
             // 'discount_by_adult' =>$request->discount_by_adult,
