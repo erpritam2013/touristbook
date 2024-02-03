@@ -15288,7 +15288,10 @@ body.destination-detail-page #tab-get_to_know .st-description {
 /*    border-radius: 25px;*/
 overflow: auto;
 }
-
+div#tab-faqs .accordion-content * {
+    font-size: 14px;
+}
+body.destination-detail-page #tab-tourism_zone .banner-image-lt,
 body.destination-detail-page #tab-save_the_environment .banner-image-lt,
 body.destination-detail-page #tab-save_your_pocket .banner-image-lt,
 body.destination-detail-page #tab-get_to_know .banner-image-lt,
