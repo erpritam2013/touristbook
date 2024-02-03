@@ -14,6 +14,7 @@ class TourismZone extends Model
     protected $guarded = [];
     protected $casts = [
         'tourism_zone'=>'array',
+        'image'=>'array',
     ];
 
        public function sluggable(): Array
