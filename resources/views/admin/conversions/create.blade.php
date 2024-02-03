@@ -79,7 +79,19 @@
                                 {!! get_form_error_msg($errors, 'currency_symbol') !!}
                             </div>
                         </div>
+                          <div class="form-group row">
+                            <label class="col-lg-2 col-form-label" for="currency_pos">Currency Position</label>
+                            <div class="col-lg-10">
+                                <select class="form-control" name="currency_pos" id="currency_pos">
+                                    <option value="">Select Currency Position</option>
+                                    <option value="left"  {{ (old('currency_pos', $conversion->currency_pos ?? '') == 'left') ? 'selected' : ''  }}>Left (₹99.99)</option>
+                                    <option value="right"  {{ (old('currency_pos', $conversion->currency_pos ?? '') == 'right') ? 'selected' : ''  }}>Right (99.99₹)</option>
+                                    <option value="left_space" {{ (old('currency_pos', $conversion->currency_pos ?? '') == 'left_space') ? 'selected' : ''  }}>Left with space (₹ 99.99)</option>
+                                    <option value="right_space" {{ (old('currency_pos', $conversion->currency_pos ?? '') == 'right_space') ? 'selected' : ''  }}>Right with space (99.99 ₹)</option>
+                                </select>
 
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label" for="status">Status
@@ -95,6 +107,8 @@
                             </div>
                         </div>
 
+
+                      
 
                         <div class="form-group row">
                             <label class="col-lg-2 col-form-label" for="is_rtl">Is RTL</label>
