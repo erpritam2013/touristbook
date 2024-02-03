@@ -65,6 +65,7 @@ $top = 'top:32px;position:relative;';
                 </form>
 
         </div>
+        <div id="search-result-info"></div>
     </div>
 </div>
 @else
