@@ -1,6 +1,18 @@
 @if(!empty($tourismZone))
 <div class="collapse show row" id="tourism-zone-div">
 
+@php 
+$tourismZone_banner = (!empty($tourismZone->image) && isset($tourismZone->image[0]['id']))?getConversionUrl($tourismZone->image[0]['id']):null;
+@endphp
+
+
+
+<div class="row mb-4">
+	<div class="col-md-12 p-2">
+		<img class="banner-image-lt" src="{{$tourismZone_banner ?? asset('sites/images/dummy/1250x500.jpg')}}">
+	</div>
+</div>
+
 	<div class="col-md-12">
 
 		<div class="border {{(isMobileDevice())?'p-3':'p-3'}} mt-3">
