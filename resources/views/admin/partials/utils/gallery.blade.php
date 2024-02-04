@@ -45,7 +45,10 @@
                 </div>
                 @endif
                 @endforeach
-                <button type="button" class="sortable-gallery" data-input_target="{{ $name ?? '' }}" onclick="sortable_gallery(this)">Sort Item</button>
+                <div class="col-xl-12">
+                <button type="button" class="btn btn-info sortable-gallery" data-input_target="{{ $name ?? '' }}" onclick="sortable_gallery(this)">Sort Item</button>
+                    
+                </div>
                 </div>
             @endif
         </div>

@@ -65,6 +65,7 @@ Route::post('/updateCurrency', function (\Illuminate\Http\Request $request) {
 
     $conversion = Conversion::where('currency_name', $currency)->first();
     if($conversion){
+        Session::put('country_code', $conversion->country_code);
         Session::put('currency', $currency);
         Session::put('currency_symbol', $conversion->currency_symbol);
     }
