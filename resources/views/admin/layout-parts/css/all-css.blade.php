@@ -24,7 +24,7 @@
 <link href="{!! asset('admin-part/css/style.css') !!}" rel="stylesheet">
 @endpush
 @push('font-awesome-css')
- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet"> 
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"> 
 
 @endpush
 @push('font-awesome-picker-css')
@@ -40,8 +40,9 @@
 @push('dataTable_css')
 <!-- Datatable -->
 <link href="{!! asset('admin-part/vendor/datatables/css/jquery.dataTables.min.css') !!}" rel="stylesheet">
-{{--<link href="https://cdn.datatables.net/searchbuilder/1.5.0/css/searchBuilder.dataTables.min.css" rel="stylesheet">--}}
-<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+{{--<link href="https://cdn.datatables.net/searchbuilder/1.5.0/css/searchBuilder.dataTables.min.css" rel="stylesheet">--}}<!-- 
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet"> -->
+<link href="{!! asset('admin-part/vendor/bootstrap-toggle/css/bootstrap-toggle.min.css') !!}" rel="stylesheet">
 
 
 @endpush
