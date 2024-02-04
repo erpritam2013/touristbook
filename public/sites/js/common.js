@@ -10,19 +10,19 @@
     var markers = [];
 
     function isMobile() {
-       if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-         return true;
-     }
-     return false;
- }
+     if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+       return true;
+   }
+   return false;
+}
 
  // Get the button:
- let mybutton = document.getElementById("topScrollSite");
+let mybutton = document.getElementById("topScrollSite");
 
 // When the user scrolls down 20px from the top of the document, show the button
- window.onscroll = function() {scrollWindow()};
+window.onscroll = function() {scrollWindow()};
 
- function scrollWindow() {
+function scrollWindow() {
   if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
     mybutton.style.display = "block";
 } else {
@@ -32,9 +32,9 @@
 
 function isJSON(something) {
     if (typeof something != 'string')
-     something = JSON.stringify(something);
+       something = JSON.stringify(something);
 
- try {
+   try {
     JSON.parse(something);
     return true;
 } catch (e) {
@@ -56,11 +56,11 @@ const showAmenities = (amenities) => {
 }
 
 const showMoreDataBody = (get_html_,chr_count) => {
-   if(typeof(chr_count) != "undefined" && parseInt(chr_count) > 700){   
+ if(typeof(chr_count) != "undefined" && parseInt(chr_count) > 700){   
     $('body #showMoreDataBody').css('overflow','auto').css('height','350px').html(get_html_);
-    }else{
+}else{
     $('body #showMoreDataBody').removeAttr('style').html(get_html_);
-    }
+}
 
 }
 
@@ -79,27 +79,27 @@ window.showMoreData = function(data){
         if (label == 'Amenities') {
             let get_html = showAmenities(result);
             
-           showMoreDataBody(get_html,total_chr);
+            showMoreDataBody(get_html,total_chr);
             
         }else if (label == 'Activity List') {
-         let get_html = showAmenities(result);
-         showMoreDataBody(get_html,total_chr);
-     }
+           let get_html = showAmenities(result);
+           showMoreDataBody(get_html,total_chr);
+       }
        // console.log(result);
- }else{
+   }else{
     let html = '';
     if (label == 'Address') {
 
       html = `<p class="service-location"><i class="fa fa-map-marker" aria-hidden="true" style="color:#fba009;"></i>&nbsp;${showMoreData}</p>`;
   }else if(label == 'Package Route'){
-   html += '<div class="tour-routes">';
-   html += '<ul>';
-   html += '<li>';
-   html += `<span class="tour-route-span">${showMoreData}</span>`;
-   html += '</li>';
-   html += '</ul>';
-   html += '</div>';
-}else{
+     html += '<div class="tour-routes">';
+     html += '<ul>';
+     html += '<li>';
+     html += `<span class="tour-route-span">${showMoreData}</span>`;
+     html += '</li>';
+     html += '</ul>';
+     html += '</div>';
+ }else{
     html = `<p class="service-location">${showMoreData}</p>`;
 }
 showMoreDataBody(html,total_chr);
@@ -130,8 +130,8 @@ $('#custom-tabs').on('click','a.nav-link',function(e){
     }
 });
 window.showActivityZoneTab = function(ele){
-   let zone_tabs_div_section = $('#zone-tabs-div-section');
-   if (zone_tabs_div_section.hasClass('d-none')) {
+ let zone_tabs_div_section = $('#zone-tabs-div-section');
+ if (zone_tabs_div_section.hasClass('d-none')) {
     zone_tabs_div_section.removeClass('d-none');
 }else{
     zone_tabs_div_section.addClass('d-none');
@@ -187,11 +187,11 @@ if (terms.length != 0) {
           }
       }else{
         if (show_text === 'more') {
-         $(value).removeClass('d-none');
-     }else{
-         $(value).addClass('d-none');
-     }
- }
+           $(value).removeClass('d-none');
+       }else{
+           $(value).addClass('d-none');
+       }
+   }
 })
 }
 }
@@ -219,11 +219,11 @@ if (activity_list_item.length != 0) {
           }
       }else{
         if (show_text === 'more') {
-         $(value).removeClass('d-none');
-     }else{
-         $(value).addClass('d-none');
-     }
- }
+           $(value).removeClass('d-none');
+       }else{
+           $(value).addClass('d-none');
+       }
+   }
 })
 }
 }
@@ -253,11 +253,11 @@ if (activity_package_item.length != 0) {
           }
       }else{
         if (show_text === 'more') {
-         $(value).removeClass('d-none');
-     }else{
-         $(value).addClass('d-none');
-     }
- }
+           $(value).removeClass('d-none');
+       }else{
+           $(value).addClass('d-none');
+       }
+   }
 })
 }
 }
@@ -393,30 +393,30 @@ $('.form-inquiry').on('submit',function(e){
         complete: hideLoader,
         success: function (data,status,response) {
             if (response.status == 200) {
-               $('.form-success').show();
-               $('.form-success').find('.msg').text(data.msg);
-               console.log(data.msg);
-               $(form)[0].reset();
-           }else{
-               $('.form-error').show();
-               $('.form-error').find('.msg').text(data.msg);
-           }
+             $('.form-success').show();
+             $('.form-success').find('.msg').text(data.msg);
+             console.log(data.msg);
+             $(form)[0].reset();
+         }else{
+             $('.form-error').show();
+             $('.form-error').find('.msg').text(data.msg);
+         }
 
-           setTimeout(function() {
-               $('.form-success').hide();
-               $('.form-error').hide();
-           }, 3000);
+         setTimeout(function() {
+             $('.form-success').hide();
+             $('.form-error').hide();
+         }, 3000);
 
 
-       },
-       error:function(data){
-          $('.form-error').show();
-          $('.form-error').show().find('.msg').text(data.msg);
-          setTimeout(function() {
-           $('.form-error').hide();
-       }, 3000);
-      },
-  });
+     },
+     error:function(data){
+      $('.form-error').show();
+      $('.form-error').show().find('.msg').text(data.msg);
+      setTimeout(function() {
+         $('.form-error').hide();
+     }, 3000);
+  },
+});
 });
 
 const compiledCheckboxes = (selector) => {
@@ -567,14 +567,25 @@ const buildContent = (hotel) => {
 
   content.classList.add("hotel");
   content.innerHTML = `
-     <div class="card shadow border-0 h-100"><a href="post.html"><img src="${hotel.featured_image}" alt="..." class="img-fluid card-img-top"></a>
-          <div class="card-body">
-            <h5 class="my-2"><a href="${hotel.url}" class="text-dark">${hotel.name} </a></h5>
-            
-            <a href="${hotel.url}" class="btn btn-link pl-0">Hotel Detail<i class="fa fa-long-arrow-alt-right ml-2"></i></a> </div>
-        </div>
-    `;
+  <div class="card shadow border-0 h-100"><a href="post.html"><img src="${hotel.featured_image}" alt="..." class="img-fluid card-img-top"></a>
+  <div class="card-body">
+  <h5 class="my-2"><a href="${hotel.url}" class="text-dark">${hotel.name} </a></h5>
+
+  <a href="${hotel.url}" class="btn btn-link pl-0">Hotel Detail<i class="fa fa-long-arrow-alt-right ml-2"></i></a> </div>
+  </div>
+  `;
   return content;
+}
+
+const toggleHighlight = (markerView, property) => {
+    console.log(markerView.content)
+  if (markerView.content.classList.contains("highlight")) {
+    markerView.content.classList.remove("highlight");
+    markerView.zIndex = null;
+} else {
+    markerView.content.classList.add("highlight");
+    markerView.zIndex = 1;
+}
 }
 
     // Process the Result
@@ -587,21 +598,17 @@ const processedResultInfo = (html) => {
     }
     markers = []
     setTimeout(()=>{
-            if ($('body').hasClass('hotel-list-page')) {
-        $('.listroBox').each(function() {
-
-
-
-
-            let longitude = $(this).attr("longitude");
-            let latitude = $(this).attr("latitude");
-            let hotel__ = $(this).attr("hotel");
-            let name = $(this).attr("name");
-            let hotel = [];
-            if (isJSON(hotel__)) {
-              hotel = $.parseJSON(hotel__);
-            }
-            if(longitude && latitude){
+        if ($('body').hasClass('hotel-list-page')) {
+            $('.listroBox').each(function() {
+                let longitude = $(this).attr("longitude");
+                let latitude = $(this).attr("latitude");
+                let hotel__ = $(this).attr("hotel");
+                let name = $(this).attr("name");
+                let hotel = [];
+                if (isJSON(hotel__)) {
+                  hotel = $.parseJSON(hotel__);
+              }
+              if(longitude && latitude){
                 var marker = new google.maps.Marker({
                     content: buildContent(hotel),
                     position: new google.maps.LatLng(latitude, longitude),
@@ -609,21 +616,25 @@ const processedResultInfo = (html) => {
                     icon:markerIcon,
                     title:name
                 });
-
+                 marker.addListener("click", () => {
+                  toggleHighlight(marker);
+              });
                 markers.push(marker);
             }
         });
-        if(markers.length > 0) {
-            let firstMarker = markers[0];
-            map.setCenter(firstMarker.getPosition())
-            calculateAndSetZoomLevel();
 
-            map.panTo(firstMarker.getPosition());
+            if(markers.length > 0) {
+
+                let firstMarker = markers[0];
+                map.setCenter(firstMarker.getPosition())
+                calculateAndSetZoomLevel();
+
+                map.panTo(firstMarker.getPosition());
 
                 // Refresh Map
-            google.maps.event.trigger(map, 'resize');
+                google.maps.event.trigger(map, 'resize');
+            }
         }
-  }
     },0)
 };
 
@@ -714,29 +725,29 @@ function loadOtherMap() {
     if(mapElm){
         let latitude = parseFloat(mapElm.getAttribute("lat"));
         let longitude = parseFloat(mapElm.getAttribute("lng"));
-   
+
         if (!isNaN(latitude) && !isNaN(longitude)) {
-        $(mapElm).html('');
-        map = new google.maps.Map(mapElm, {
-            center: {
+            $(mapElm).html('');
+            map = new google.maps.Map(mapElm, {
+                center: {
+                    lat: parseFloat(mapElm.getAttribute("lat")),
+                    lng: parseFloat(mapElm.getAttribute("lng"))
+                },
+                zoom: (mapElm.getAttribute("zoom_level") > 1)?parseFloat(mapElm.getAttribute("zoom_level")):20,
+                panControl: true,
+                fullscreenControl: true,
+                animation: google.maps.Animation.BOUNCE,
+                gestureHandling: 'cooperative',
+                streetViewControl: false,
+
+            });
+
+            let panorama = map.getStreetView();
+            panorama.setPosition({
                 lat: parseFloat(mapElm.getAttribute("lat")),
                 lng: parseFloat(mapElm.getAttribute("lng"))
-            },
-            zoom: (mapElm.getAttribute("zoom_level") > 1)?parseFloat(mapElm.getAttribute("zoom_level")):20,
-            panControl: true,
-            fullscreenControl: true,
-            animation: google.maps.Animation.BOUNCE,
-            gestureHandling: 'cooperative',
-            streetViewControl: false,
-
-        });
-
-        let panorama = map.getStreetView();
-        panorama.setPosition({
-            lat: parseFloat(mapElm.getAttribute("lat")),
-            lng: parseFloat(mapElm.getAttribute("lng"))
-        });
-        var marker = new google.maps.Marker({
+            });
+            var marker = new google.maps.Marker({
                 position: new google.maps.LatLng(mapElm.getAttribute("lat"), mapElm.getAttribute("lng")),
                 map: map,
                 animation: google.maps.Animation.DROP,
@@ -819,17 +830,17 @@ function loadStreetMap() {
             // console.log(parent);
                 if ($(parent).hasClass('collapsed')) {
 
-                   $(".filter-other-package:checked").each(function () {
+                 $(".filter-other-package:checked").each(function () {
                     $(this).prop('checked', false).trigger('change');
                 });
 
-               }
-           }
+             }
+         }
 
 
-       }
-       fetchRecords(view, fetchParameters());
-   });
+     }
+     fetchRecords(view, fetchParameters());
+ });
 
     resultInfo.on("click", ".page-link", function () {
         let view = $(".view-changer").attr("view-id");
@@ -840,166 +851,166 @@ function loadStreetMap() {
     });
 
     const home_page_search_input_add = (current_t) => {
-    let home_page_search_tabs = $('.tab_container').data('tabs');
-    let html = '<input type="hidden" name="source_type"  />';
-         html += '<input type="hidden" name="source_id"  />';
-         
-   for (var i = 1; i <= parseInt(home_page_search_tabs); i++) {
-        if ($(`#content${i}`).length != 0) {
-        $(`#content${i}`).find('[name="search"]').first().val('');
-        $(`#home-extra-input-field-${i}`).html("");
+        let home_page_search_tabs = $('.tab_container').data('tabs');
+        let html = '<input type="hidden" name="source_type"  />';
+        html += '<input type="hidden" name="source_id"  />';
+
+        for (var i = 1; i <= parseInt(home_page_search_tabs); i++) {
+            if ($(`#content${i}`).length != 0) {
+                $(`#content${i}`).find('[name="search"]').first().val('');
+                $(`#home-extra-input-field-${i}`).html("");
+            }
         }
-   }
-    $(`#content${current_t}`).find('[name="search"]').first().val('');
-    $(`#home-extra-input-field-${current_t}`).html(html);
+        $(`#content${current_t}`).find('[name="search"]').first().val('');
+        $(`#home-extra-input-field-${current_t}`).html(html);
 
     }
     $('.tab_container').on('change','[id^="tab"]',function(){
-       home_page_search_input_add($(this).data('index'));
-    })
-              
+     home_page_search_input_add($(this).data('index'));
+ })
+
     $("#input-search-box").autocomplete({
 
 
-       search: function(event, ui) { 
-         $('.map-content-loading-search-input').show();
-     },
-     response: function(event, ui) {
-         $('.map-content-loading-search-input').hide();
-     },
-     source: function (request, response) {
-        $("input[name=source_type]").val("");
-        $("input[name=source_id]").val("");
-        
-        $.ajax({
-            url: "/get-location-states",
-            dataType: "json",
-            data: {
-                term: request.term,
-            },
-            success: function (data) {
+     search: function(event, ui) { 
+       $('.map-content-loading-search-input').show();
+   },
+   response: function(event, ui) {
+       $('.map-content-loading-search-input').hide();
+   },
+   source: function (request, response) {
+    $("input[name=source_type]").val("");
+    $("input[name=source_id]").val("");
 
-                response($.map(data, function(item) {
-                   item.value =  $(`<span></span>`).html(item.value).text();
-                return item;
-            }));
+    $.ajax({
+        url: "/get-location-states",
+        dataType: "json",
+        data: {
+            term: request.term,
+        },
+        success: function (data) {
+
+            response($.map(data, function(item) {
+             item.value =  $(`<span></span>`).html(item.value).text();
+             return item;
+         }));
             
-            },
-        });
-    },
-    open: function() {
-        $(this).autocomplete("widget")
-               .appendTo("#search-result-info")
-               .css({position: 'relative',top: '0px',left: '0px',width:'67%!important',marginTop:'0px',marginLeft:'0px',border: '1px solid #ddd'});
-    },
-    minLength: 2,
-    select: function (event, ui) {
-        $("input[name=source_type]").val(ui.item.sourceType);
-        $("input[name=source_id]").val(ui.item.id);
-        $('.map-content-loading-search-input').show();
-        setTimeout(function(){
-            $('#search-form-result').submit();
-            $('.map-content-loading-search-input').hide();
-        },1000);
-    },
-}).autocomplete("instance")._renderItem = function(ul, item) {
-           let icon = $('.map-icon').text();
-            return $("<li>")
-            .append(`<div>${item.label}<span style='float: left'>${icon}</span></div>`)
-            .appendTo(ul);
-        };
-    $(".input-search-box").autocomplete({
-       
-
-       search: function(event, ui) { 
-         $('.map-content-loading-search-input').show();
-     },
-     response: function(event, ui) {
-         $('.map-content-loading-search-input').hide();
-     },
-     source: function (request, response) {
-        $("input[name=source_type]").val("");
-        $("input[name=source_id]").val("");
-        $.ajax({
-            url: "/get-location-states",
-            dataType: "json",
-            data: {
-                term: request.term,
-            },
-            success: function (data) {
-
-                response($.map(data, function(item) {
-                   item.value =  $('<span></span>').html(item.value).text();
-                return item;
-            }));
-            
-            },
-        });
-    },
-
-      
-    /* display: none; */
-     open: function() {
-        $(this).autocomplete("widget")
-               .appendTo((!isMobile())?"#search-result-info":$(this).parent())
-               .css({position: 'relative',top: '0px',left: '0px',marginTop:'0px',marginLeft:'0px'});
-    },
-    minLength: 2,
-    select: function (event, ui) {
-        $("input[name=source_type]").val(ui.item.sourceType);
-        $("input[name=source_id]").val(ui.item.id);
-         let form_id = $(this).data('form_id');
-        setTimeout(function(){
-            $(form_id).submit();      
-        },1000);
-    },
-}).autocomplete("instance")._renderItem = function(ul, item) {
-           
-            return $("<li>")
-            .append("<div>" + item.label + `<span style='float: left;margin-right:5px;'><span class="fas fa-map-marker-alt"></span></span></div>`)
-            .appendTo(ul);
-        };
-
-    $(".Filter-left").on("click", ".mb-left-title", function () {
-        $(this).closest(".mb-left").find(".form-group").first().toggle("1000");
-
-        let mb_left_title_i = $(this).find("i");
-        if (mb_left_title_i.hasClass("fa-angle-up")) {
-            mb_left_title_i.removeClass("fa-angle-up");
-            mb_left_title_i.addClass("fa-angle-down");
-        } else if (mb_left_title_i.hasClass("fa-angle-down")) {
-            mb_left_title_i.removeClass("fa-angle-down");
-            mb_left_title_i.addClass("fa-angle-up");
-        }
+        },
     });
+},
+open: function() {
+    $(this).autocomplete("widget")
+    .appendTo("#search-result-info")
+    .css({position: 'relative',top: '0px',left: '0px',width:'67%!important',marginTop:'0px',marginLeft:'0px',border: '1px solid #ddd'});
+},
+minLength: 2,
+select: function (event, ui) {
+    $("input[name=source_type]").val(ui.item.sourceType);
+    $("input[name=source_id]").val(ui.item.id);
+    $('.map-content-loading-search-input').show();
+    setTimeout(function(){
+        $('#search-form-result').submit();
+        $('.map-content-loading-search-input').hide();
+    },0);
+},
+}).autocomplete("instance")._renderItem = function(ul, item) {
+     let icon = $('.map-icon').text();
+     return $("<li>")
+     .append(`<div>${item.label}<span style='float: left'>${icon}</span></div>`)
+     .appendTo(ul);
+ };
+ $(".input-search-box").autocomplete({
 
 
-    let tourism_link_elm = document.getElementById('tourism-zone-link')
-    if(tourism_link_elm) {
-        tourism_link_elm.onclick = function() {
-            $('#tourism-zone-area').toggle()
-        }
+     search: function(event, ui) { 
+       $('.map-content-loading-search-input').show();
+   },
+   response: function(event, ui) {
+       $('.map-content-loading-search-input').hide();
+   },
+   source: function (request, response) {
+    $("input[name=source_type]").val("");
+    $("input[name=source_id]").val("");
+    $.ajax({
+        url: "/get-location-states",
+        dataType: "json",
+        data: {
+            term: request.term,
+        },
+        success: function (data) {
+
+            response($.map(data, function(item) {
+             item.value =  $('<span></span>').html(item.value).text();
+             return item;
+         }));
+            
+        },
+    });
+},
+
+
+    /* display: none; */
+open: function() {
+    $(this).autocomplete("widget")
+    .appendTo((!isMobile())?"#search-result-info":$(this).parent())
+    .css({position: 'relative',top: '0px',left: '0px',marginTop:'0px',marginLeft:'0px'});
+},
+minLength: 2,
+select: function (event, ui) {
+    $("input[name=source_type]").val(ui.item.sourceType);
+    $("input[name=source_id]").val(ui.item.id);
+    let form_id = $(this).data('form_id');
+    setTimeout(function(){
+        $(form_id).submit();      
+    },0);
+},
+}).autocomplete("instance")._renderItem = function(ul, item) {
+
+    return $("<li>")
+    .append("<div>" + item.label + `<span style='float: left;margin-right:5px;'><span class="fas fa-map-marker-alt"></span></span></div>`)
+    .appendTo(ul);
+};
+
+$(".Filter-left").on("click", ".mb-left-title", function () {
+    $(this).closest(".mb-left").find(".form-group").first().toggle("1000");
+
+    let mb_left_title_i = $(this).find("i");
+    if (mb_left_title_i.hasClass("fa-angle-up")) {
+        mb_left_title_i.removeClass("fa-angle-up");
+        mb_left_title_i.addClass("fa-angle-down");
+    } else if (mb_left_title_i.hasClass("fa-angle-down")) {
+        mb_left_title_i.removeClass("fa-angle-down");
+        mb_left_title_i.addClass("fa-angle-up");
+    }
+});
+
+
+let tourism_link_elm = document.getElementById('tourism-zone-link')
+if(tourism_link_elm) {
+    tourism_link_elm.onclick = function() {
+        $('#tourism-zone-area').toggle()
+    }
+}
+
+$('.tzone-link').on("click", function() {
+    let targetDivId = $(this).attr('targetdiv')
+    if($(targetDivId).is(':visible')) {
+        $(targetDivId).show();
+    }else {
+        $('.zone-data').hide();
+        $(targetDivId).show();
     }
 
-    $('.tzone-link').on("click", function() {
-        let targetDivId = $(this).attr('targetdiv')
-        if($(targetDivId).is(':visible')) {
-            $(targetDivId).show();
-        }else {
-            $('.zone-data').hide();
-            $(targetDivId).show();
-        }
-
-    })
+})
 
 
-    $('body.tour-detail-page #st-program-section .panel-collapse').on('show.bs.collapse', function () {
-        $(this).siblings('body.tour-detail-page #st-program-section .panel-heading').addClass('active');
-    });
+$('body.tour-detail-page #st-program-section .panel-collapse').on('show.bs.collapse', function () {
+    $(this).siblings('body.tour-detail-page #st-program-section .panel-heading').addClass('active');
+});
 
-    $('body.tour-detail-page #st-program-section .panel-collapse').on('hide.bs.collapse', function () {
-        $(this).siblings('body.tour-detail-page #st-program-section .panel-heading').removeClass('active');
-    });
+$('body.tour-detail-page #st-program-section .panel-collapse').on('hide.bs.collapse', function () {
+    $(this).siblings('body.tour-detail-page #st-program-section .panel-heading').removeClass('active');
+});
  // var firstTabEl = document.querySelector('#policies-activity li:last-child a')
  //  var firstTab = new bootstrap.Tab(firstTabEl)
 
@@ -1008,55 +1019,55 @@ function loadStreetMap() {
 
 
 // Function to get currency icon based on currency code
-    function getCurrencyIcon(currencyCode) {
+function getCurrencyIcon(currencyCode) {
     // TODO: Write Code
-        return '<i class="fa fa-money mr-2"></i>'
+    return '<i class="fa fa-money mr-2"></i>'
 
-    }
+}
 
 // Function to update session with selected currency
-    function updateSession(currency) {
-        fetch('/updateCurrency', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify({ currency: currency })
-        })
-        .then(response => {
-            if (response.ok) {
-                console.log('Session updated successfully.');
-                window.location.reload();
-            } else {
-                console.error('Failed to update session.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
+function updateSession(currency) {
+    fetch('/updateCurrency', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({ currency: currency })
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Session updated successfully.');
+            window.location.reload();
+        } else {
+            console.error('Failed to update session.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
 
 // Currency Changer
-    $("#currency-dropdown .dropdown-item").on("click", function() {
-        let selectedCurrency = $(this).attr('data-value');
-        let currencyIcon = getCurrencyIcon(selectedCurrency);
+$("#currency-dropdown .dropdown-item").on("click", function() {
+    let selectedCurrency = $(this).attr('data-value');
+    let currencyIcon = getCurrencyIcon(selectedCurrency);
 
-        document.getElementById('dropdownCurrency').innerHTML = currencyIcon + selectedCurrency
+    document.getElementById('dropdownCurrency').innerHTML = currencyIcon + selectedCurrency
 
     // Send AJAX request to update session
-        updateSession(selectedCurrency);
-    });
+    updateSession(selectedCurrency);
+});
 
 
 
-    window.ShowHidePassword = () => {
-      var x = document.getElementById("rg-password");
-      if (x.type === "password") {
-        x.type = "text";
-    } else {
-        x.type = "password";
-    }
+window.ShowHidePassword = () => {
+  var x = document.getElementById("rg-password");
+  if (x.type === "password") {
+    x.type = "text";
+} else {
+    x.type = "password";
+}
 }
 
 

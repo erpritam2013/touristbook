@@ -61,7 +61,8 @@
         @push('dataTable_js')
         <!-- Datatable -->
         <script src="{!! asset('admin-part/vendor/datatables/js/jquery.dataTables.min.js') !!}"></script>
-        <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+        <!-- <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> -->
+        <script src="{!! asset('admin-part/vendor/bootstrap-toggle/js/bootstrap-toggle.min.js') !!}"></script>
         @if(matchRouteNameMatch('media-used-object'))
         <script src="{!! asset('admin-part/js/plugins-init/datatables.init.js') !!}"></script>
         @else

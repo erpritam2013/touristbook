@@ -338,7 +338,7 @@ body *{
 	flex-wrap: wrap;
 	align-items: center;
 	justify-content: space-between;
-	padding: 0 1rem;
+	padding: 0 1.5rem;
 }
 .navbar > .container, .navbar > .container-fluid {
 	display: flex;
@@ -10885,10 +10885,11 @@ body.tour-list-page .ui-autocomplete.ui-menu {
 body.hotel-list-page .banner {
     height: 300px;
 }
-/*.hotel-list-page .ui-autocomplete.ui-menu {
-    top: -5174.89px!important;
-    left: 349px!important;
-}*/
+.hotel-list-page .ui-autocomplete.ui-menu {
+	width: 67.4%!important;
+    /*top: -5174.89px!important;
+    left: 349px!important;*/
+}
 .hotel-list-page .TravelGo-opt-list a {
 	float: right;
 	width: 36px;
@@ -15578,7 +15579,7 @@ body.destination-detail-page #weather a:hover{
     display: block;
     text-align: center;
     width: 20px;
-    height: 25px;
+    height: 28px;
     line-height: 24px;
     font-size: 16px;
 }

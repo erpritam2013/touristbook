@@ -86,13 +86,15 @@
                     @endif
                   <!-- Currency -->
                   <div class="dropdown">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownCurrency" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fa fa-money mr-2"></i>{{session('currency', 'INR')}}</a>
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownCurrency" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="dropdown-item-icon" src="https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/currency/flags/{{strtolower(Session::get('country_code'))}}.png" alt="currency-flag">{{session('currency', 'INR')}}</a>
                       <div class="dropdown-menu shadow" aria-labelledby="dropdownAccount" id="currency-dropdown">
 
                         @if($currency_list)
                         @foreach($currency_list as $currencyItem)
-                        <a class="dropdown-item" href="#" data-value="{{$currencyItem->currency_name}}">{{$currencyItem->currency_name}}</a>
+                        <a class="dropdown-item" href="#" data-value="{{$currencyItem->currency_name}}">
+                          <img class="dropdown-item-icon" src="https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/currency/flags/{{strtolower($currencyItem->country_code)}}.png" alt="currency-flag">
+                          {{$currencyItem->currency_name}}
+                        </a>
                         @endforeach
                         @endif
 
