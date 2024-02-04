@@ -215,7 +215,7 @@ $top2 = 'top:152px;z-index:99;';
 
           <div class="col-lg-3 col-md-6 col-sm-12">
             <span class="hotel-price-avg" title="(i)price usually vary in nature and subject to change
-            ">Average price per night INR ₹{!! $room->price !!}<i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;margin-left: 3px;"></i></span> <br>
+            ">Average price per night INR {!!get_price($room)!!}<i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;margin-left: 3px;"></i></span> <br>
 
 
             <a href="#" class="btn btn-grad room-view-btn" onclick="window.open('{{$hotel->contact["website"]}}', '_blank');">View Details</a>
@@ -245,7 +245,7 @@ $top2 = 'top:152px;z-index:99;';
       @foreach ($hotel->amenities as $amenity)
       <div class="col-xs-6 col-sm-4 f-15">
         <div class="item-term">
-          <i class="fa fa-cogs mr-3"></i>
+          <i class="fa {{(isset($amenity->icon) && !empty($amenity->icon))?$amenity->icon:'fa-cogs'}} mr-3"></i>
           <span>{{ $amenity->name }}</span>
         </div>
       </div>
@@ -259,9 +259,10 @@ $top2 = 'top:152px;z-index:99;';
     <h2 class="st-heading-section">Medicare Assistance</h2>
     <div class="row mt-3">
       @foreach ($hotel->medicare_assistances as $medicare)
+
       <div class="col-xs-6 col-sm-4 f-15">
         <div class="item-term">
-          <i class="fa fa-cogs mr-3"></i>
+          <i class="fa {{(isset($medicare->icon) && !empty($medicare->icon))?$medicare->icon:'fa-cogs'}} mr-3"></i>
           <span>{{ $medicare->name }}</span>
         </div>
       </div>
@@ -275,9 +276,10 @@ $top2 = 'top:152px;z-index:99;';
     <h2 class="st-heading-section">Property Type</h2>
     <div class="row mt-3">
       @foreach ($hotel->propertyTypes as $propertyType)
+
       <div class="col-xs-6 col-sm-4 f-15">
         <div class="item-term">
-          <i class="fa fa-cogs mr-3"></i>
+          <i class="fa {{(isset($propertyType->icon) && !empty($propertyType->icon))?$propertyType->icon:'fa-cogs'}} mr-3"></i>
           <span>{{ $propertyType->name }}</span>
 
         </div>
@@ -315,9 +317,10 @@ $top2 = 'top:152px;z-index:99;';
     <h2 class="st-heading-section">Food</h2>
     <div class="row mt-3">
       @foreach ($hotel->detail->foods as $food)
+
       <div class="col-md-4 f-15">
         <div class="item-term">
-          <i class="fa {{ $food['foods-icon'] ?? 'fa-cogs'}} mr-3"></i>
+          <i class="fa {{ (isset($food['foods-icon']) && !empty($food['foods-icon']))?$food['foods-icon']:'fa-cogs'}} mr-3"></i>
           <span>{{ $food['foods-title'] }}</span>
         </div>
       </div>

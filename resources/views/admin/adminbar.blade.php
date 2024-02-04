@@ -60,9 +60,7 @@
               <i class="icon-key"></i>
               <span class="ml-2">Logout </span>
             </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-              @csrf
-            </form></li>
+            </li>
 
           </ul>
         </li>
