@@ -86,13 +86,15 @@
                     @endif
                   <!-- Currency -->
                   <div class="dropdown">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownCurrency" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fa fa-money mr-2"></i>{{session('currency', 'INR')}}</a>
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownCurrency" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="dropdown-item-icon" src="https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/currency/flags/{{strtolower(session('country_code', 'in'))}}.png" alt="currency-flag">{{session('currency', 'INR')}}</a>
                       <div class="dropdown-menu shadow" aria-labelledby="dropdownAccount" id="currency-dropdown">
 
                         @if($currency_list)
                         @foreach($currency_list as $currencyItem)
-                        <a class="dropdown-item" href="#" data-value="{{$currencyItem->currency_name}}">{{$currencyItem->currency_name}}</a>
+                        <a class="dropdown-item" href="#" data-value="{{$currencyItem->currency_name}}">
+                          <img class="dropdown-item-icon" src="https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/currency/flags/{{strtolower($currencyItem->country_code)}}.png" alt="currency-flag">
+                          {{$currencyItem->currency_name}}
+                        </a>
                         @endforeach
                         @endif
 
@@ -102,26 +104,25 @@
                     <ul class="nav">
                       <li class="nav-item"> <a class="nav-link" href="{{route('blogs')}}">Blogs</a> </li>
                     </ul>
-
-                  
+ 
 
                       <div class="vl"></div>
                     <!-- Language -->
                     <div class="dropdown top-language"> <a class="dropdown-toggle" href="#" role="button"
                       id="dropdownLanguage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <img class="dropdown-item-icon" src="{{asset('sites/images/flag/uk.svg')}}" alt=""> English </a>
-                      <div class="dropdown-menu mt-2 shadow translation-links" aria-labelledby="dropdownLanguage"> <span
+                      <img class="dropdown-item-icon" src="{{session('img_src',asset('sites/images/flag/uk.svg'))}}" alt=""> {{session('languageText', 'English')}} </a>
+                      <div class="dropdown-menu mt-2 shadow translation-links" aria-labelledby="dropdownLanguage" id="languageChange"> <span
                         class="dropdown-item-text">Select language</span>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#" data-lang="English"><img class="dropdown-item-icon"
+                        <a class="dropdown-item" href="#" data-lang="en"><img class="dropdown-item-icon"
                           src="{{asset('sites/images/flag/uk.svg')}}" alt="">English</a> 
-                        <a class="dropdown-item" href="#" data-lang="France"><img class="dropdown-item-icon" src="{{asset('sites/images/flag/fr.svg')}}" alt="">
+                        <a class="dropdown-item" href="#" data-lang="fr"><img class="dropdown-item-icon" src="{{asset('sites/images/flag/fr.svg')}}" alt="">
                         Franch</a> 
-                        <a class="dropdown-item" href="#" data-lang="Hindi"><img class="dropdown-item-icon"
+                        <a class="dropdown-item" href="#" data-lang="hi"><img class="dropdown-item-icon"
                           src="{{asset('sites/images/flag/hi.svg')}}" alt=""> Hindi</a>
                         </div>
                       </div>
-                       <div id="google_translate_element"></div>
+                       <!-- <div id="google_translate_element"></div> -->
 
                     </div>
                   </div>
