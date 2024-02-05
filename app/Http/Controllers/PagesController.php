@@ -29,6 +29,7 @@ use App\DataTables\PageDataTable;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use DB;
 use Auth;
+use App;
 class PagesController extends Controller
 {
 
@@ -122,6 +123,16 @@ public function connecting_partners() {
         $data['page'] = $page;
     }
     return view('sites.pages.connecting-partners',$data);
+}
+
+public function language_update(Request $request)
+{
+        App::setLocale($request->lang);
+        Session::put('locale',$request->lang);
+        Session::put('languageText',$request->languageText);
+        Session::put('img_src',$request->img_src);
+
+return response()->json(['message' => 'Change Language successfully', 'success' => true]);
 }
 
 public function blogs(Request $request,$term='',$slug='') {
