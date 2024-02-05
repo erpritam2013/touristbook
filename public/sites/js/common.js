@@ -564,29 +564,44 @@ function calculateAndSetZoomLevel() {
 
 const buildContent = (hotel) => {
   const content = document.createElement("div");
-
-  content.classList.add("hotel");
-  content.innerHTML = `
-  <div class="card shadow border-0 h-100"><a href="post.html"><img src="${hotel.featured_image}" alt="..." class="img-fluid card-img-top"></a>
-  <div class="card-body">
-  <h5 class="my-2"><a href="${hotel.url}" class="text-dark">${hotel.name} </a></h5>
-
-  <a href="${hotel.url}" class="btn btn-link pl-0">Hotel Detail<i class="fa fa-long-arrow-alt-right ml-2"></i></a> </div>
+  content.classList.add("right-box");
+  content.classList.add("infoBox");
+  content.innerHTML = `<div class="listroBox">
+  <figure><a href="${hotel.url}"><img src="${hotel.featured_image}" class="img-fluid" alt="hotel image">
+  </a> </figure>
+  <div class="listroBoxmain p-2">
+  <h2 class="service-title"><a href="${hotel.url}">${hotel.name}</a></h2>
+  ${hotel.is_featured}
+  <p class="service-location">${hotel.map_icon}${hotel.address}</p>
+  <ul class="near-price-block">
+  <li class="mt-0 mb-0 near-price-block-1">
+  <p class="card-text text-muted ">
+  <span class="h6 text-primary">
+  <span class="hotel-avg">
+  ${hotel.price_icon}
+  Avg
+  </span>${hotel.price}</span> / per night</p>
+  </li>
+  </ul>
+  </div>
   </div>
   `;
+
   return content;
 }
 
-const toggleHighlight = (markerView, property) => {
-    console.log(markerView.content)
-  if (markerView.content.classList.contains("highlight")) {
-    markerView.content.classList.remove("highlight");
-    markerView.zIndex = null;
-} else {
-    markerView.content.classList.add("highlight");
-    markerView.zIndex = 1;
-}
-}
+// const toggleHighlight = (content) => {
+//     console.log(markerView.content)
+//     if (content.classList.contains("highlight")) {
+//         content.classList.remove("highlight");
+//         content.classList.remove("right-box")
+       
+//     } else {
+//         content.classList.add("highlight");
+//         content.classList.add("right-box")
+        
+//     }
+// }
 
     // Process the Result
 const processedResultInfo = (html) => {
@@ -610,15 +625,34 @@ const processedResultInfo = (html) => {
               }
               if(longitude && latitude){
                 var marker = new google.maps.Marker({
-                    content: buildContent(hotel),
+
                     position: new google.maps.LatLng(latitude, longitude),
                     map: map,
                     icon:markerIcon,
                     title:name
                 });
-                 marker.addListener("click", () => {
-                  toggleHighlight(marker);
-              });
+
+                var infowindow = new google.maps.InfoWindow({
+
+                    content:buildContent(hotel),
+                });
+
+        // show info window when marker is clicked
+                google.maps.event.addListener(marker, 'click', function() {
+                    infowindow.open( map, marker );
+
+                });
+
+        // google.maps.event.addListener(marker, 'mouseout', function() {
+
+        //     infowindow.close();
+
+        // });
+              //    marker.addListener("click", () => {
+              //     
+              // });
+
+
                 markers.push(marker);
             }
         });
@@ -894,7 +928,7 @@ function loadStreetMap() {
              item.value =  $(`<span></span>`).html(item.value).text();
              return item;
          }));
-            
+
         },
     });
 },
@@ -943,7 +977,7 @@ select: function (event, ui) {
              item.value =  $('<span></span>').html(item.value).text();
              return item;
          }));
-            
+
         },
     });
 },
@@ -1046,6 +1080,27 @@ function updateSession(currency) {
     .catch(error => {
         console.error('Error:', error);
     });
+}// Function to update session with selected language
+function updateLanguageSession(language,langText,img_src) {
+    fetch('/updateLanguage', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({ lang:language,languageText:langText,img_src })
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Session updated successfully.');
+            window.location.reload();
+        } else {
+            console.error('Failed to update session.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
 
 // Currency Changer
@@ -1057,6 +1112,19 @@ $("#currency-dropdown .dropdown-item").on("click", function() {
 
     // Send AJAX request to update session
     updateSession(selectedCurrency);
+});
+// language Changer
+$("#languageChange .dropdown-item").on("click", function() {
+    let selectedLanguage = $(this).attr('data-lang');
+    let selectedLanguageText = $(this).text();
+    let selectedLanguageImage = $(this).find('.dropdown-item-icon').first().attr('src');
+    // let currencyIcon = getCurrencyIcon(selectedCurrency);
+    let image_lang = `<img class="dropdown-item-icon"
+                          src="${selectedLanguageImage}" alt="">${selectedLanguageText}`;
+    document.getElementById('dropdownLanguage').innerHTML = image_lang
+
+    // Send AJAX request to update session
+    updateLanguageSession(selectedLanguage,selectedLanguageText,selectedLanguageImage);
 });
 
 

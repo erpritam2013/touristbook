@@ -3,12 +3,20 @@
     @if ($hotels->isNotEmpty())
 
     @foreach ($hotels as $key => $hotel)
-     @php $featured_image = (!empty($hotel->featured_image) && isset($hotel->featured_image[0]['id']))?getConversionUrl($hotel->featured_image[0]['id'],'450x417'):null;
+     @php 
 
+     $featured_image = (!empty($hotel->featured_image) && isset($hotel->featured_image[0]['id']))?getConversionUrl($hotel->featured_image[0]['id'],'450x417'):null;
+
+    $address = (!empty($hotel->address ))?$hotel->address:$hotel->hotel_attributes['corporateAddress'];
 
      $single_hotel = [
      'name'=>$hotel->name,
       'url'=>route('hotel',$hotel->slug),
+      'price'=>get_price($hotel),
+      'price_icon'=>getNewIcon('thunder', '#ffab53', '10px', '16px'),
+      'is_featured'=>is_featured($hotel->is_featured),
+      'map_icon'=>getNewIcon('Ico_maps', '#666666', '15px', '15px', true),
+      'address'=>$address,
       'featured_image' => (!empty($featured_image))?$featured_image:asset('sites/images/dummy/450x417.jpg')
      ];
     @endphp
@@ -30,9 +38,7 @@
                     <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 Nopadding hotel-content">
                         <div class="listroBoxmain">
                             <h4 class="service-title"><a href="{{route('hotel',$hotel->slug)}}">{{ $hotel->name }}</a></h4>
-                            @php
-                            $address = (!empty($hotel->address ))?$hotel->address:$hotel->hotel_attributes['corporateAddress'];
-                            @endphp
+                           
                             <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{$address}}</p>
                            
                             <div class="row">
