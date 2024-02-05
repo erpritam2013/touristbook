@@ -10844,6 +10844,7 @@ label.lbl-search-box {
 	margin-left: 5px;
 	left: 349px;
 	border-top: 1px solid #ddd;
+	overflow: hidden;
 }
 
 
@@ -10882,6 +10883,31 @@ body.tour-list-page .ui-autocomplete.ui-menu {
 	height: 0px;
 }
 
+.hotel-list-page .infoBox{
+	width: 250px;
+}
+
+.hotel-list-page .infoBox h2.service-title {
+   font-size: 14px;
+}
+.hotel-list-page .infoBox h2.service-title a {
+    
+    color: #fba009;
+}
+.hotel-list-page .infoBox .listroBox .listroBoxmain p {
+    font-size: 12px;
+    line-height: 20px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    padding-bottom: 0px;
+}
+.hotel-list-page .infoBox .listroBox ul {
+    padding: 0px;
+    border-top: 1px solid #ededed;
+}
+.hotel-list-page .infoBox .listroBox figure {
+    height: 110px;
+}
 body.hotel-list-page .banner {
     height: 300px;
 }
@@ -14746,7 +14772,7 @@ body.destinations-page .ui-autocomplete.ui-menu {
 	top: -1811.88px!important;
 	z-index: 99 !important;
 	list-style: none;
-*/	width: 67.4%;!important;
+*/	width: 67.4%!important;
 	/*margin-top: 22px;
 	margin-left: 5px;
 	left: 349px!important;
