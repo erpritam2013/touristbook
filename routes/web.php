@@ -47,7 +47,6 @@ use App\Http\Controllers\SettingController;
 use App\Models\Conversion;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -72,6 +71,8 @@ Route::post('/updateCurrency', function (\Illuminate\Http\Request $request) {
 
     return response()->json(['message' => 'Session updated successfully', 'success' => true]);
 });
+
+Route::post('/updateLanguage',[PagesController::class, 'language_update'])->name('updateLanguage');
 
 
 
