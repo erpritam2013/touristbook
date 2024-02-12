@@ -20,15 +20,16 @@
     @endif
     <div class="gallery-controls">
      @if(!empty($value))
-  
+        
        @php $value = touristbook_array_filter($value);@endphp
           
         @endif
+        
         <input type="hidden" class="form-control gallery-input {{ $class ?? '' }}" name="{{ $name ?? '' }}"
-            value="{{ (!empty($value) && !isJson($value))?json_encode($value):json_encode([]) }}" id="{{ $id ?? '' }}" placeholder="Enter {{ $label ?? '' }}..." />
+            value="{{ (!empty($value) && isJson($value))?$value:json_encode($value) }}" id="{{ $id ?? '' }}" placeholder="Enter {{ $label ?? '' }}..." />
 
         <button type="button" class="btn btn-primary mt-2 add-gallery-btn" smode="{{ $smode ?? 'single' }}"
-            selectedImages="{{ (!empty($value) && !isJson($value))?json_encode($value):json_encode([]) }}">+</button>
+            selectedImages="{{(!empty($value) && isJson($value))?$value:json_encode($value) }}">+</button>
         <div class="media-preview">
          
             @if(!empty($value) && isset($value) && is_array($value))

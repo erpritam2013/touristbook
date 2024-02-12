@@ -6,9 +6,9 @@
 <!-- website -->
 @include('admin.partials.utils.input', ['name'=> 'contact[website]','label'=>'Activity Website','desc'=>'Enter activity website','value'=>$activity->detail->contact['website'] ?? '','id' => "contact-website",'control'=>'url'])
 <!-- phone number -->
-@include('admin.partials.utils.input', ['name'=> 'contact[phone]','label'=>'Activity Phone Number','desc'=>'Enter activity phone number','value'=>$activity->detail->contact['phone'] ?? '','id' => "contact-phone",'control'=>'number'])
+@include('admin.partials.utils.input', ['name'=> 'contact[phone]','label'=>'Activity Phone Number','desc'=>'Enter activity phone number','value'=>$activity->detail->contact['phone'] ?? '','id' => "contact-phone",'control'=>'text'])
 <!-- fax number -->
-@include('admin.partials.utils.input', ['name'=> 'contact[fax]','label'=>'Activity Fax Number','desc'=>'Enter activity fax number','value'=>$activity->detail->contact['fax'] ?? '','id' => "contact-fax",'control'=>'number'])
+@include('admin.partials.utils.input', ['name'=> 'contact[fax]','label'=>'Activity Fax Number','desc'=>'Enter activity fax number','value'=>$activity->detail->contact['fax'] ?? '','id' => "contact-fax",'control'=>'text'])
 
 
 

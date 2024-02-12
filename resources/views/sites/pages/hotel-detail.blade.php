@@ -21,23 +21,27 @@ $top2 = 'top:152px;z-index:99;';
     <div class="swiper-wrapper">
       <!-- Slides-->
 
-      @if(!empty($hotel->images))
-      @foreach($hotel->images as $gallery)
-      @if(!empty($gallery))
-      <div class="swiper-slide"><a data-toggle="gallery-top" title="hotel gallery" style="width: 452px;height: 300px;" ><img
-        src="{{ getConversionUrl($gallery['id'],'600x250') }}" alt="Our street" class="img-fluid" style="width: 452px;height: 300px;" ></a>
+   @if(!empty($hotel->detail->gallery) && (is_array($hotel->detail->gallery) || is_object($hotel->detail->gallery)))
+      @foreach($hotel->detail->gallery as $gallery)
+      @if(!empty($gallery) && isset($gallery['id']))
+      <div class="swiper-slide"><a data-toggle="gallery-top" title="hotel gallery" style="width: 452px;height:300px;" ><img
+        src="{{ getConversionUrl($gallery['id'],'600x450') }}" alt="Our street" class="img-fluid" style="width: 452px;height:300px;"></a>
+      </div>
+      @else
+      <div class="swiper-slide"><a data-toggle="gallery-top" title="tour gallery"><img
+        src="{{ asset('sites/images/dummy/600x450.jpg') }}" alt="tour gallery" class="img-fluid"></a>
       </div>
       @endif
       @endforeach
       @else
       <div class="swiper-slide"><a data-toggle="gallery-top" title="hotel gallery"><img
-        src="{{ asset('sites/images/dummy/600x250.jpg') }}" alt="hotel gallery" class="img-fluid"></a>
+        src="{{ asset('sites/images/dummy/600x450.jpg') }}" alt="hotel gallery" class="img-fluid"></a>
       </div>
       <div class="swiper-slide"><a data-toggle="gallery-top" title="hotel gallery"><img
-        src="{{ asset('sites/images/dummy/600x250.jpg') }}" alt="hotel gallery" class="img-fluid"></a>
+        src="{{ asset('sites/images/dummy/600x450.jpg') }}" alt="hotel gallery" class="img-fluid"></a>
       </div>
       <div class="swiper-slide"><a data-toggle="gallery-top" title="hotel gallery"><img
-        src="{{ asset('sites/images/dummy/600x250.jpg') }}" alt="hotel gallery" class="img-fluid"></a>
+        src="{{ asset('sites/images/dummy/600x450.jpg') }}" alt="hotel gallery" class="img-fluid"></a>
       </div>
       @endif
 
@@ -55,8 +59,12 @@ $top2 = 'top:152px;z-index:99;';
 
       <!-- Tab line -->
       <div class="col-lg-9 col-md-12 col-sm-12 ">
-        @php 
-        $l_route = route('hotels').'?search='.$hotel->locations[0]->name.'&source_type=location&source_id='.$hotel->locations[0]->id
+        @php
+        $l_route = "";
+        if(isset($hotel->locations[0])) {
+        $l_route = route('hotels').'?search='.$hotel->locations[0]->name.'&source_type=location&source_id='.$hotel->locations[0]->id;
+
+        }
         @endphp
         @include('sites.partials.breadcrumb',['location_route'=>$l_route,'location_name'=>$hotel->locations[0]->name ?? '','post_name'=>ucwords($hotel->name)])
         <h1 class="st-heading">{{ $hotel->name }}</h1>
@@ -151,7 +159,7 @@ $top2 = 'top:152px;z-index:99;';
                   @endphp
 
                   <div class="TravelGo-category-img TravelGo-category-list-img"> <a
-                    href="hotel-detailed.html"><img
+                    href="#"><img
                     src="{{$featured_image ?? asset('sites/images/dummy/400x417.jpg')}}"
                     alt="{{strtolower($room->name)}} image" style="height: 200px;"></a>
                     {{--<div class="TravelGo-category-opt">
