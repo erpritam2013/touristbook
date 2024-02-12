@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
-
+use Illuminate\Support\Facades\Storage;
 class MediaDataTable extends DataTable
 {
     /**
@@ -33,13 +33,16 @@ class MediaDataTable extends DataTable
                 })->addColumn('used-media', function ($row) {
                   $html = '<a href="'.route("admin.settings.media-used-object",$row->id).'" class="btn btn-info" title="Used Media"target="_blank">Used Media</a>';
                   return $html;
+                })->addColumn('aws-media', function ($row) {
+                    $path  = $row->getPath();
+                    return (!Storage::disk('s3')->exists($path))?'image not existed on aws ':'';
                 })->editColumn('created_at', function($row) {
                     return date('d-m-Y',strtotime($row->created_at));
                 })->editColumn('updated_at', function($row) {
                     return date('d-m-Y',strtotime($row->updated_at));
                 })->addColumn('del',function($row){
                  return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'" disabled>';
-            })->rawColumns(['action','del','media','used-media']);
+            })->rawColumns(['action','del','media','used-media','aws-media']);
     }
 
     /**
@@ -99,6 +102,7 @@ class MediaDataTable extends DataTable
             Column::make('file_name'),
             Column::make('media'),
             Column::make('used-media')->title('Used Media'),
+            Column::make('aws-media')->title('AWS Media'),
             Column::make('created_at')->title('Created'),
             Column::make('updated_at')->title('Updated'),
             Column::make('action')

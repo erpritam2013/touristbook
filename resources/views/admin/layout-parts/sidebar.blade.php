@@ -84,6 +84,22 @@
                             <ul aria-expanded="false" class="{{matchRouteGroupName('activities','child')}}">
                                 <li class="{{matchRouteName('admin.activities.index')}}"><a href="{{route('admin.activities.index')}}">List</a></li>
                                 <li class="{{matchRouteName('admin.activities.create')}}"><a href="{{route('admin.activities.create')}}">Add New</a></li>
+                                   <li class="{{matchRouteGroupName('activity-lists','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                            class="icon icon-marker-3"></i><span class="nav-text">Activity List</span></a>
+                            <ul aria-expanded="false" class="{{matchRouteGroupName('activity-lists','child')}}">
+                                <li class="{{matchRouteName('admin.activity-lists.index')}}"><a href="{{route('admin.activity-lists.index')}}">List</a></li>
+                                <li class="{{matchRouteName('admin.activity-lists.create')}}"><a href="{{route('admin.activity-lists.create')}}">Add New</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="{{matchRouteGroupName('activity-packages','parent')}}"><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                            class="icon icon-marker-3"></i><span class="nav-text">Activity Packages</span></a>
+                            <ul aria-expanded="false" class="{{matchRouteGroupName('activity-packages','child')}}">
+                                <li class="{{matchRouteName('admin.activity-packages.index')}}"><a href="{{route('admin.activity-packages.index')}}">List</a></li>
+                                <li class="{{matchRouteName('admin.activity-packages.create')}}"><a href="{{route('admin.activity-packages.create')}}">Add New</a></li>
+                            </ul>
+                        </li>
+                                
                             </ul>
                         </li>
 
