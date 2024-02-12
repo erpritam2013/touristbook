@@ -1095,7 +1095,7 @@ function updateLanguageSession(language,langText,img_src) {
     .then(response => {
         if (response.ok) {
             console.log('Session updated successfully.');
-            window.location.reload();
+           // window.location.reload();
         } else {
             console.error('Failed to update session.');
         }
@@ -1115,16 +1115,39 @@ $("#currency-dropdown .dropdown-item").on("click", function() {
     // Send AJAX request to update session
     updateSession(selectedCurrency);
 });
+
+
+const triggerEvent = (element,eventName) =>{
+    const event = new Event(eventName);
+    element.dispatchEvent(event);
+};
+
+
+// triggers onchange event on <select>
+
 // language Changer
 $("#languageChange .dropdown-item").on("click", function() {
     let selectedLanguage = $(this).attr('data-lang');
-    let selectedLanguageText = $(this).text();
+    let selectedLanguageText = $(this).data('text');
     let selectedLanguageImage = $(this).find('.dropdown-item-icon').first().attr('src');
     // let currencyIcon = getCurrencyIcon(selectedCurrency);
     let image_lang = `<img class="dropdown-item-icon"
                           src="${selectedLanguageImage}" alt="">${selectedLanguageText}`;
     document.getElementById('dropdownLanguage').innerHTML = image_lang
 
+    // console.log(selectedLanguage)
+
+    $('.goog-te-combo').change(function(){
+        var data= $(this).val();
+        console.log(data);            
+    });
+    // $('.goog-te-combo')
+    //     .val(selectedLanguage)
+    //     .trigger('change');
+    let select = document.querySelector('.goog-te-combo');
+    select.value = selectedLanguage
+     triggerEvent(select,'change');
+    // $('#google_translate_element .goog-te-combo').val(selectedLanguage).trigger('onChange')
     // Send AJAX request to update session
     updateLanguageSession(selectedLanguage,selectedLanguageText,selectedLanguageImage);
 });
@@ -1140,6 +1163,13 @@ window.ShowHidePassword = () => {
 }
 }
 
-
+$('.hotel-detail-page .important-note-icon').mouseenter(function(){
+    let parent_class = $(this).data('parent_title');
+    $(`body .${parent_class}`).css({visibility:'visible',opacity:1});
+})
+$('.hotel-detail-page .important-note-icon').mouseleave(function(){
+    let parent_class = $(this).data('parent_title');
+    $(`body .${parent_class}`).css({visibility:'hidden',opacity:0});
+}).mouseleave();
 
 })();

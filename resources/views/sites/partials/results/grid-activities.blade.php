@@ -21,9 +21,7 @@
                             {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
                             Avg
                         </span>
-                        {!!get_price($activity)!!}
-
-                        <span class="unit">/per night</span></p>
+                        {!!get_price($activity)!!}</p>
                     </li>
                     <li>
                        <div class="social-link-list"> 

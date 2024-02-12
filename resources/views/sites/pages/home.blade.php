@@ -19,7 +19,7 @@ if(isset($page)) {
   }
   $banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]['id']))?getConversionUrl($page->featured_image[0]['id']):null;
 }
- 
+
 @endphp
     <!-- =======================
      Main Banner -->
@@ -56,232 +56,232 @@ if(isset($page)) {
                                 placeholder="Where are you going?" name="search" data-form_id="#home-hotels-form">
                                 <div id="home-extra-input-field-1">
 
-                                   <input type="hidden" name="source_type" value="" />
-                                   <input type="hidden" name="source_id" value="" />
+                                 <input type="hidden" name="source_type" value="" />
+                                 <input type="hidden" name="source_id" value="" />
 
-                                </div>
-                              </div>
-                            </div>
-                            {{--<div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
-                              <div class="form-group"> <span class="far fa-calendar-alt"></span>
-                                <input class="form-control" type="text" id="datepicker" autocomplete="off"
-                                placeholder="Check-in">
-                              </div>
-                            </div>
-                            <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
-                              <div class="form-group"> <span class="far fa-calendar-alt"></span>
-                                <input class="form-control" type="text" id="datepicker-out"
-                                autocomplete="off" placeholder="Check-out">
-                              </div>
-                            </div>
-                            <div class="col-lg-1 col-md-6 col-sm-6 col-xs-12 padding8">
-                              <div class="form-group">
-                                <select class="custom-select select-big">
-                                  <option selected="">Rooms</option>
-                                  <option value="location1">01</option>
-                                  <option value="location2">02</option>
-                                  <option value="location3">03</option>
-                                  <option value="location4">04</option>
-                                  <option value="location5">05</option>
-                                </select>
-                              </div>
-                            </div>
-                            <div class="col-lg-1 col-md-6 col-sm-6 col-xs-12 padding8">
-                              <div class="form-group">
-                                <select class="custom-select select-big">
-                                  <option selected="">Guests</option>
-                                  <option value="location1">01</option>
-                                  <option value="location2">02</option>
-                                  <option value="location3">03</option>
-                                  <option value="location4">04</option>
-                                  <option value="location5">05</option>
-                                </select>
-                              </div>
-                            </div>--}}
-                            <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
-                              <div class="form-group">
-                                <button class="btn btn-primary btn-lg btn-grad" type="submit">Search</button>
-                              </div>
-                            </div>
-                          </div>
-                        </form>
-                      </section>
-                      <section id="content2" class="tab-content">
-                        <form action="{{route('destinations')}}" class="form" method="get" id="home-destinations-form">
-                          <div class="row">
-                            <div class="col-lg-10 col-md-6 col-sm-6 col-xs-12 padding8">
-                              <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
-                                <input class="form-control input-search-box" type="text"
-                                placeholder="Search Destination By Location...." name="search" data-form_id="#home-destinations-form">
-                                <div id="home-extra-input-field-2">
-
-                                </div>
-                              </div>
-                            </div>
-                            {{--<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 padding8">
-                              <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
-                                <input class="form-control" type="text"
-                                placeholder="To : City, Airport, U.S. Zip">
-                              </div>
-                            </div>
-                            <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
-                              <div class="form-group"> <span class="far fa-calendar-alt"></span>
-                                <input class="form-control" type="text" id="datepicker-1"
-                                autocomplete="off" placeholder="Departing">
-                              </div>
-                            </div>
-                            <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
-                              <div class="form-group"> <span class="far fa-calendar-alt"></span>
-                                <input class="form-control" type="text" id="datepicker-2"
-                                autocomplete="off" placeholder="Returning">
-                              </div>
-                            </div>--}}
-                            <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
-                              <div class="form-group">
-                                <button class="btn btn-primary btn-lg btn-grad" type="submit">Search</button>
-                              </div>
-                            </div>
-                          </div>
-                        </form>
-                      </section>
-                      <section id="content3" class="tab-content">
-                        <form action="{{route('activities')}}" class="form" method="get" id="home-activities-form">
-                          <div class="row">
-                            <div class="col-lg-10 col-md-6 col-sm-6 col-xs-12 padding8">
-                              <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
-                                <input class="form-control input-search-box" type="text" placeholder="Search Activity By Location...." name="search" data-form_id="#home-activities-form">
-                                <div id="home-extra-input-field-3">
-
-                                </div>
-                              </div>
-                            </div>
-                            {{--<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 padding8">
-                              <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
-                                <input class="form-control" type="text" placeholder="Drop-off Location">
-                              </div>
-                            </div>
-                            <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
-                              <div class="form-group"> <span class="far fa-calendar-alt"></span>
-                                <input class="form-control" type="text" id="datepicker-3"
-                                autocomplete="off" placeholder="Pick-up Date">
-                              </div>
-                            </div>
-                            <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
-                              <div class="form-group"> <span class="far fa-calendar-alt"></span>
-                                <input class="form-control" type="text" id="datepicker-4"
-                                autocomplete="off" placeholder="Drop-ff Date">
-                              </div>
-                            </div>--}}
-                            <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
-                              <div class="form-group">
-                                <button class="btn btn-primary btn-lg btn-grad" type="submit">Search</button>
-                              </div>
-                            </div>
-                          </div>
-                        </form>
-                      </section>
-                      {{--<section id="content4" class="tab-content">
-                        <div class="row">
-                          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 padding8">
-                            <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
-                              <input class="form-control" type="text"
-                              placeholder="enter a destination or hotel name">
+                               </div>
+                             </div>
+                           </div>
+                           {{--<div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
+                            <div class="form-group"> <span class="far fa-calendar-alt"></span>
+                              <input class="form-control" type="text" id="datepicker" autocomplete="off"
+                              placeholder="Check-in">
                             </div>
                           </div>
                           <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
                             <div class="form-group"> <span class="far fa-calendar-alt"></span>
-                              <input class="form-control" type="text" id="datepicker-5"
-                              autocomplete="off" placeholder="Departure Date">
+                              <input class="form-control" type="text" id="datepicker-out"
+                              autocomplete="off" placeholder="Check-out">
                             </div>
                           </div>
-                          <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
+                          <div class="col-lg-1 col-md-6 col-sm-6 col-xs-12 padding8">
                             <div class="form-group">
                               <select class="custom-select select-big">
-                                <option selected="">Cruise Length</option>
-                                <option value="location1">1-2 Night</option>
-                                <option value="location2">2-3 Night</option>
-                                <option value="location3">3-4 Night</option>
+                                <option selected="">Rooms</option>
+                                <option value="location1">01</option>
+                                <option value="location2">02</option>
+                                <option value="location3">03</option>
+                                <option value="location4">04</option>
+                                <option value="location5">05</option>
                               </select>
                             </div>
                           </div>
-                          <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
+                          <div class="col-lg-1 col-md-6 col-sm-6 col-xs-12 padding8">
                             <div class="form-group">
                               <select class="custom-select select-big">
-                                <option selected="">Cruise Line</option>
-                                <option value="location1">Azamara Club Cruises</option>
-                                <option value="location2">Celebrity Cruises</option>
-                                <option value="location3">Cruise & Maritime</option>
-                                <option value="location4">Oceania Cruises</option>
-                                <option value="location5">Peter Deilmann Cruises</option>
+                                <option selected="">Guests</option>
+                                <option value="location1">01</option>
+                                <option value="location2">02</option>
+                                <option value="location3">03</option>
+                                <option value="location4">04</option>
+                                <option value="location5">05</option>
                               </select>
                             </div>
-                          </div>
+                          </div>--}}
                           <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
                             <div class="form-group">
                               <button class="btn btn-primary btn-lg btn-grad" type="submit">Search</button>
                             </div>
                           </div>
                         </div>
-                      </section>--}}
-                      <section id="content5" class="tab-content">
-                        <form action="{{route('our-packages')}}" class="form" method="get" id="#home-our-packages-form">
-                          <div class="row">
-                            <div class="col-lg-10 col-md-6 col-sm-6 col-xs-12 padding8">
-                              <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
-                                <input class="form-control input-search-box" type="text"
-                                placeholder="Search Package By Location...." name="search" data-form_id="#home-our-packages-form">
-                                <div id="home-extra-input-field-5">
+                      </form>
+                    </section>
+                    <section id="content2" class="tab-content">
+                      <form action="{{route('destinations')}}" class="form" method="get" id="home-destinations-form">
+                        <div class="row">
+                          <div class="col-lg-10 col-md-6 col-sm-6 col-xs-12 padding8">
+                            <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
+                              <input class="form-control input-search-box" type="text"
+                              placeholder="Search Destination By Location...." name="search" data-form_id="#home-destinations-form">
+                              <div id="home-extra-input-field-2">
 
-                                </div>
-                              </div>
-                            </div>
-                            {{--<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 padding8">
-                              <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
-                                <input class="form-control" type="text"
-                                placeholder="To : City, Airport, U.S. Zip">
-                              </div>
-                            </div>
-                            <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
-                              <div class="form-group"> <span class="far fa-calendar-alt"></span>
-                                <input class="form-control" type="text" id="datepicker-6"
-                                autocomplete="off" placeholder="Departing">
-                              </div>
-                            </div>
-                            <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
-                              <div class="form-group"> <span class="far fa-calendar-alt"></span>
-                                <input class="form-control" type="text" id="datepicker-7"
-                                autocomplete="off" placeholder="Returning">
-                              </div>
-                            </div>--}}
-                            <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
-                              <div class="form-group">
-                                <button class="btn btn-primary btn-lg btn-grad" type="submit">Search</button>
                               </div>
                             </div>
                           </div>
-                        </p>
-                      </section>
-                    </div>
+                          {{--<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 padding8">
+                            <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
+                              <input class="form-control" type="text"
+                              placeholder="To : City, Airport, U.S. Zip">
+                            </div>
+                          </div>
+                          <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
+                            <div class="form-group"> <span class="far fa-calendar-alt"></span>
+                              <input class="form-control" type="text" id="datepicker-1"
+                              autocomplete="off" placeholder="Departing">
+                            </div>
+                          </div>
+                          <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
+                            <div class="form-group"> <span class="far fa-calendar-alt"></span>
+                              <input class="form-control" type="text" id="datepicker-2"
+                              autocomplete="off" placeholder="Returning">
+                            </div>
+                          </div>--}}
+                          <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
+                            <div class="form-group">
+                              <button class="btn btn-primary btn-lg btn-grad" type="submit">Search</button>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </section>
+                    <section id="content3" class="tab-content">
+                      <form action="{{route('activities')}}" class="form" method="get" id="home-activities-form">
+                        <div class="row">
+                          <div class="col-lg-10 col-md-6 col-sm-6 col-xs-12 padding8">
+                            <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
+                              <input class="form-control input-search-box" type="text" placeholder="Search Activity By Location...." name="search" data-form_id="#home-activities-form">
+                              <div id="home-extra-input-field-3">
+
+                              </div>
+                            </div>
+                          </div>
+                          {{--<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 padding8">
+                            <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
+                              <input class="form-control" type="text" placeholder="Drop-off Location">
+                            </div>
+                          </div>
+                          <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
+                            <div class="form-group"> <span class="far fa-calendar-alt"></span>
+                              <input class="form-control" type="text" id="datepicker-3"
+                              autocomplete="off" placeholder="Pick-up Date">
+                            </div>
+                          </div>
+                          <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
+                            <div class="form-group"> <span class="far fa-calendar-alt"></span>
+                              <input class="form-control" type="text" id="datepicker-4"
+                              autocomplete="off" placeholder="Drop-ff Date">
+                            </div>
+                          </div>--}}
+                          <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
+                            <div class="form-group">
+                              <button class="btn btn-primary btn-lg btn-grad" type="submit">Search</button>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </section>
+                    {{--<section id="content4" class="tab-content">
+                      <div class="row">
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 padding8">
+                          <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
+                            <input class="form-control" type="text"
+                            placeholder="enter a destination or hotel name">
+                          </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
+                          <div class="form-group"> <span class="far fa-calendar-alt"></span>
+                            <input class="form-control" type="text" id="datepicker-5"
+                            autocomplete="off" placeholder="Departure Date">
+                          </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
+                          <div class="form-group">
+                            <select class="custom-select select-big">
+                              <option selected="">Cruise Length</option>
+                              <option value="location1">1-2 Night</option>
+                              <option value="location2">2-3 Night</option>
+                              <option value="location3">3-4 Night</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
+                          <div class="form-group">
+                            <select class="custom-select select-big">
+                              <option selected="">Cruise Line</option>
+                              <option value="location1">Azamara Club Cruises</option>
+                              <option value="location2">Celebrity Cruises</option>
+                              <option value="location3">Cruise & Maritime</option>
+                              <option value="location4">Oceania Cruises</option>
+                              <option value="location5">Peter Deilmann Cruises</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
+                          <div class="form-group">
+                            <button class="btn btn-primary btn-lg btn-grad" type="submit">Search</button>
+                          </div>
+                        </div>
+                      </div>
+                    </section>--}}
+                    <section id="content5" class="tab-content">
+                      <form action="{{route('our-packages')}}" class="form" method="get" id="#home-our-packages-form">
+                        <div class="row">
+                          <div class="col-lg-10 col-md-6 col-sm-6 col-xs-12 padding8">
+                            <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
+                              <input class="form-control input-search-box" type="text"
+                              placeholder="Search Package By Location...." name="search" data-form_id="#home-our-packages-form">
+                              <div id="home-extra-input-field-5">
+
+                              </div>
+                            </div>
+                          </div>
+                          {{--<div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 padding8">
+                            <div class="form-group"> <span class="fas fa-map-marker-alt"></span>
+                              <input class="form-control" type="text"
+                              placeholder="To : City, Airport, U.S. Zip">
+                            </div>
+                          </div>
+                          <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
+                            <div class="form-group"> <span class="far fa-calendar-alt"></span>
+                              <input class="form-control" type="text" id="datepicker-6"
+                              autocomplete="off" placeholder="Departing">
+                            </div>
+                          </div>
+                          <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
+                            <div class="form-group"> <span class="far fa-calendar-alt"></span>
+                              <input class="form-control" type="text" id="datepicker-7"
+                              autocomplete="off" placeholder="Returning">
+                            </div>
+                          </div>--}}
+                          <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 padding8">
+                            <div class="form-group">
+                              <button class="btn btn-primary btn-lg btn-grad" type="submit">Search</button>
+                            </div>
+                          </div>
+                        </div>
+                      </p>
+                    </section>
                   </div>
                 </div>
               </div>
             </div>
-            <div id="search-result-info"></div>
-          </section>
+          </div>
+          <div id="search-result-info"></div>
+        </section>
 
 
-        </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
     <!-- =======================
       Main banner -->
 
-@php
-$pt = (!isMobileDevice() && auth()->check() && (auth()->user()->isAdmin() || auth()->user()->isEditor()))?"pt60":"pt30";
- @endphp
+      @php
+      $pt = (!isMobileDevice() && auth()->check() && (auth()->user()->isAdmin() || auth()->user()->isEditor()))?"pt60":"pt30";
+      @endphp
 
-    <section class="Categories {{$pt}} pb10">
+      <section class="Categories {{$pt}} pb10">
         <div class="container">
           <div class="row mb-5">
             <div class="col-md-8">
@@ -314,13 +314,13 @@ $pt = (!isMobileDevice() && auth()->check() && (auth()->user()->isAdmin() || aut
                 <div class="row">
                   @foreach($home_destinations as $d_key => $destination)
                   @if($d_key != 0)
-                   @php 
-              $destination_image = null;
-              if(isJson($destination->featured_image)){
-                $destination->featured_image = json_decode($destination->featured_image,true);
-              }
-              $destination_image = (!empty($destination->featured_image) && isset($destination->featured_image[0]['id']))?getConversionUrl($destination->featured_image[0]['id']):null;
-              @endphp
+                  @php 
+                  $destination_image = null;
+                  if(isJson($destination->featured_image)){
+                    $destination->featured_image = json_decode($destination->featured_image,true);
+                  }
+                  $destination_image = (!empty($destination->featured_image) && isset($destination->featured_image[0]['id']))?getConversionUrl($destination->featured_image[0]['id']):null;
+                  @endphp
                   <div class="col-md-6"> <a href="{{route('location',$destination->slug ?? '')}}">
                     <div class="list-mig-like-com">
                       <div class="list-mig-lc-img"> <img src="{{$destination_image ?? asset('sites/images/dummy/450x417.jpg')}}" alt="{{touristbook_sanitize_title($destination->name ?? "")}}-image"  class="home-destination-image"> </div>
@@ -338,7 +338,7 @@ $pt = (!isMobileDevice() && auth()->check() && (auth()->user()->isAdmin() || aut
             </div>
           </div>
         </section>
-        <section class="grayBG pt20 pb10">
+        {{--<section class="grayBG pt20 pb10">
           <div class="container ">
             <div class="row">
               <div class="col-md-8 mx-auto text-center mb-5">
@@ -377,7 +377,7 @@ $pt = (!isMobileDevice() && auth()->check() && (auth()->user()->isAdmin() || aut
                 </div>
               </div>
             </div>
-          </section>
+          </section>--}}
 
 
           <section class="Categories pt20 pb10 home-hotels">
@@ -392,58 +392,211 @@ $pt = (!isMobileDevice() && auth()->check() && (auth()->user()->isAdmin() || aut
                 </div>
                 <div class="swiper-container guides-slider-popular swiper-container-horizontal">
                   <div class="swiper-wrapper">
-                  @if($home_hotels->isNotEmpty())
-                  @foreach($home_hotels as $home_hotel)
-                      @php 
-              $home_hotel_image = null;
-              if(isJson($home_hotel->featured_image)){
-                $home_hotel->featured_image = json_decode($home_hotel->featured_image,true);
-              }
-              $home_hotel_image = (!empty($home_hotel->featured_image) && isset($home_hotel->featured_image[0]['id']))?getConversionUrl($home_hotel->featured_image[0]['id']):null;
-              @endphp
-                  <div class="swiper-slide h-auto px-2">
-                    <div class="listroBox">
-                      <figure> {{--<a href="{{route('hotel',$home_hotel->slug ?? '')}}" class="wishlist_bt"></a>--}} <a
-                        href="{{route('hotel',$home_hotel->slug ?? '')}}"><img src="{{$home_hotel_image ?? asset('sites/images/dummy/450x417.jpg')}}" class="img-fluid"
-                        alt="">
-                        <div class="read_more"><span>Hotel Detail</span></div>
-                      </a> </figure>
-                      <div class="listroBoxmain">
-                        <h3 class="home-hotel-title"><a href="{{route('hotel',$home_hotel->slug ?? '')}}">{{$home_hotel->name ?? ''}}</a></h3>
-                        @if(!empty($home_hotel->ad))
-                        <p>{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!} {{$home_hotel->address ?? ''}}</p>
-                        @endif
-                        {{--<a class="address" href="#">Get directions</a>--}}
-                      </div>
-                      <ul>
-                        <li>
+                    @if($home_hotels->isNotEmpty())
+                    @foreach($home_hotels as $home_hotel)
+                    @php 
+                    $home_hotel_image = null;
+                    if(isJson($home_hotel->featured_image)){
+                      $home_hotel->featured_image = json_decode($home_hotel->featured_image,true);
+                    }
+                    $home_hotel_image = (!empty($home_hotel->featured_image) && isset($home_hotel->featured_image[0]['id']))?getConversionUrl($home_hotel->featured_image[0]['id']):null;
+                    @endphp
+                    <div class="swiper-slide h-auto px-2">
+                      <div class="listroBox">
+                        <figure> {{--<a href="{{route('hotel',$home_hotel->slug ?? '')}}" class="wishlist_bt"></a>--}} <a
+                          href="{{route('hotel',$home_hotel->slug ?? '')}}"><img src="{{$home_hotel_image ?? asset('sites/images/dummy/450x417.jpg')}}" class="img-fluid"
+                          alt="">
+                          <div class="read_more"><span>Hotel Detail</span></div>
+                        </a> </figure>
+                        <div class="listroBoxmain">
+                          <h3 class="home-hotel-title"><a href="{{route('hotel',$home_hotel->slug ?? '')}}">{{$home_hotel->name ?? ''}}</a></h3>
+                          @if(!empty($home_hotel->address))
+                          <p>{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!} {{$home_hotel->address ?? ''}}</p>
+                          @endif
+                          {{--<a class="address" href="#">Get directions</a>--}}
+                        </div>
+                        <ul>
+                          <li>
 
-                          <p class="card-text text-muted"><span class="hotel-avg">
-                    {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
-                    Avg
-                </span>
+                            <p class="card-text text-muted"><span class="hotel-avg">
+                              {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
+                              Avg
+                            </span>
 
-                 {!!get_price($home_hotel)!!}
+                            {!!get_price($home_hotel)!!}
 
-                <span class="unit">/per night</span></p>
-                        </li>
-                        <li class="mt-0">
-                          <a href="{{route('hotel',$home_hotel->slug ?? '')}}" class="btn btn-grad btn-sm">Hotel Detail</a>
+                            <span class="unit">/per night</span></p>
+                          </li>
+                          <li class="mt-0">
+                            <a href="{{route('hotel',$home_hotel->slug ?? '')}}" class="btn btn-grad btn-sm">Hotel Detail</a>
                           </li>
                         </ul>
                       </div>
                     </div>
                     @endforeach
-                   @endif
-                            </div>
-                            </div>
-                            </div>
-                          </div>
-                        </section>
+                    @endif
+                  </div>
+                </div>
+              </div>
 
+            </section>
+
+
+            
+            <section class="Categories pt20 pb10 home-tours">
+              <div class="container">
+                <div class="row mb-5">
+                  <div class="col-md-8">
+                    <p class="subtitle text-secondary nopadding">Our Packages</p>
+                    <h1 class="paddtop1 font-weight lspace-sm">Packages</h1>
+                  </div>
+                  <div class="col-md-4 d-lg-flex align-items-center justify-content-end"><a href="{{route('our-packages')}}"
+                    class="blist text-sm ml-2"> See all Tours<i class="fas fa-angle-double-right ml-2"></i></a></div>
+                  </div>
+                  <div class="swiper-container guides-slider-popular swiper-container-horizontal">
+                    <div class="swiper-wrapper">
+                      @if($home_tours->isNotEmpty())
+                      @foreach($home_tours as $home_tour)
+                      @php 
+                      $home_tour_image = null;
+                      if(isJson($home_tour->featured_image)){
+                        $home_tour->featured_image = json_decode($home_tour->featured_image,true);
+                      }
+                      $home_tour_image = (!empty($home_tour->featured_image) && isset($home_tour->featured_image[0]['id']))?getConversionUrl($home_tour->featured_image[0]['id']):null;
+                      @endphp
+                      <div class="swiper-slide h-auto px-2">
+                        <div class="listroBox">
+                          <figure> {{--<a href="{{route('tour',$home_tour->slug ?? '')}}" class="wishlist_bt"></a>--}} <a
+                            href="{{route('tour',$home_tour->slug ?? '')}}"><img src="{{$home_tour_image ?? asset('sites/images/dummy/450x417.jpg')}}" class="img-fluid"
+                            alt="">
+                            <div class="read_more"><span>Tour Detail</span></div>
+                          </a> </figure>
+                          <div class="listroBoxmain">
+                            <h3 class="home-tour-title"><a href="{{route('tour',$home_tour->slug ?? '')}}">{{$home_tour->name ?? ''}}</a></h3>
+                            @if(!empty($home_tour->address))
+                            <p>{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!} {{$home_tour->address ?? $home_tour->detail->map_location}}</p>
+                            @endif
+                            {{--<a class="address" href="#">Get directions</a>--}}
+                          </div>
+                          <ul>
+                            <li>
+                              <p class="card-text text-muted"><span class="tour-avg">
+                                {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
+                                Avg
+                              </span>
+                              {!!get_price($home_tour)!!}
+                              <span class="unit">/per night</span></p>
+                            </li>
+                            <li class="mt-0">
+                              <a href="{{route('tour',$home_tour->slug ?? '')}}" class="btn btn-grad btn-sm">Tour Detail</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      @endforeach
+                      @endif
+                    </div>
+                  </div>
+                </div>
+
+              </section>
+        
+            
+             <section class="Categories pt20 pb10 home-activities">
+                <div class="container">
+                  <div class="row mb-5">
+                    <div class="col-md-8">
+                      <p class="subtitle text-secondary nopadding">Activities</p>
+                      <h1 class="paddtop1 font-weight lspace-sm">Activities</h1>
+                    </div>
+                    <div class="col-md-4 d-lg-flex align-items-center justify-content-end"><a href="{{route('activities')}}"
+                      class="blist text-sm ml-2"> See all Activities<i class="fas fa-angle-double-right ml-2"></i></a></div>
+                    </div>
+                    <div class="swiper-container guides-slider-popular swiper-container-horizontal">
+                      <div class="swiper-wrapper">
+                        @if($home_activities->isNotEmpty())
+                        @foreach($home_activities as $home_activity)
+                        @php 
+                        $home_activity_image = null;
+                        if(isJson($home_activity->featured_image)){
+                          $home_activity->featured_image = json_decode($home_activity->featured_image,true);
+                        }
+                        $home_activity_image = (!empty($home_activity->featured_image) && isset($home_activity->featured_image[0]['id']))?getConversionUrl($home_activity->featured_image[0]['id']):null;
+                        @endphp
+                        <div class="swiper-slide h-auto px-2">
+                          <div class="listroBox">
+                            <figure> {{--<a href="{{route('activity',$home_activity->slug ?? '')}}" class="wishlist_bt"></a>--}} <a
+                              href="{{route('activity',$home_activity->slug ?? '')}}"><img src="{{$home_activity_image ?? asset('sites/images/dummy/450x417.jpg')}}" class="img-fluid"
+                              alt="">
+                              <div class="read_more"><span>Activity Detail</span></div>
+                            </a> </figure>
+                            <div class="listroBoxmain">
+                              <h3 class="home-activity-title"><a href="{{route('activity',$home_activity->slug ?? '')}}">{{$home_activity->name ?? ''}}</a></h3>
+                              @if(!empty($home_activity->address))
+                              <p>{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!} {{$home_activity->address ?? $home_activity->detail->map_location}}</p>
+                              @endif
+                              {{--<a class="address" href="#">Get directions</a>--}}
+                            </div>
+                            <ul>
+                              <li>
+                                <p class="card-text text-muted"><span class="activity-avg">
+                                  {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
+                                  Avg
+                                </span>
+                                {!!get_price($home_activity)!!}</p>
+                              </li>
+                              <li class="mt-0">
+                                <a href="{{route('activity',$home_activity->slug ?? '')}}" class="btn btn-grad btn-sm">Activity Detail</a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                        @endforeach
+                        @endif
+                      </div>
+                    </div>
+                  </div>
+
+                </section>
+
+                 <section class="Categories pt20 pb10 home-blogs">
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-md-8">
+        <p class="subtitle text-secondary nopadding">Blogs</p>
+        <h1 class="paddtop1 font-weight lspace-sm">Blogs</h1>
+      </div>
+      <div class="col-md-4 d-lg-flex align-items-center justify-content-end"><a href="{{route('blogs')}}"
+        class="blist text-sm ml-2"> See all Blogs<i class="fas fa-angle-double-right ml-2"></i></a></div>
+      </div>
+
+      <div class="row post-lists"> 
+
+        @if($home_posts->isNotEmpty())
+        <!-- blog item-->
+        @foreach($home_posts as $home_post)
+        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mb-4 post-item">
+          <div class="card shadow  h-100"><a href="{{route('blog',$home_post->slug)}}">
+           @php $featured_image = (!empty($home_post->featured_image) && isset($home_post->featured_image[0]['id']))?getConversionUrl($home_post->featured_image[0]['id'],'600x250'):null;@endphp
+           <img src="{{$featured_image ?? asset('sites/images/dummy/600x250.jpg')}}" alt="post-image" class="post-image" width="768" height="368">               
+         </a>
+         <div class="card-body">
+          <h5 class="my-2"><a href="{{route('blog',$home_post->slug)}}" class="post-title text-dark">{{shortDescription($home_post->name ?? '',35)}}</a></h5>
+          <p class="text-gray-500 text-sm my-3 post-desc"><i class="far fa-clock mr-2"></i>{{date('M d, Y',strtotime($home_post->created_at))}}</p>
+          {{--<p class="my-2 text-muted text-sm">{{shortDescription($home_post->excerpt ?? '',45)}}</p>--}}
+          <a href="{{route('blog',$home_post->slug)}}" class="btn btn-link pl-0 post-read-more">Read more</a> </div>
+        </div>
+      </div>
+      @endforeach
+      @endif
+      
+    </div>
+  </div>
+
+</section>
     <!-- =======================
       service -->
-      <section class="service pt80 pb80 service-home">
+      {{--<section class="service pt80 pb80 service-home">
         <div class="container">
           <div class="row">
             <div class="col-12 col-lg-8 mx-auto">
@@ -485,7 +638,7 @@ $pt = (!isMobileDevice() && auth()->check() && (auth()->user()->isAdmin() || aut
             </div>
           </div>
         </div>
-      </section>
+      </section>--}}
     <!-- =======================
       service -->
 
@@ -816,7 +969,7 @@ $pt = (!isMobileDevice() && auth()->check() && (auth()->user()->isAdmin() || aut
 
 
 
-                              <section class="bg-light pt80 pb60 solutions" style="background-color: #fff!important;">
+                              {{--<section class="bg-light pt80 pb60 solutions" style="background-color: #fff!important;">
                                 <div class="container">
                                   <div class="row">
                                     <div class="col-md-8 mx-auto text-center mb-5">
@@ -852,7 +1005,7 @@ $pt = (!isMobileDevice() && auth()->check() && (auth()->user()->isAdmin() || aut
                                             </div>
                                           </div>
                                         </div>
-                                      </section>
+                                      </section>--}}
 
 
 
