@@ -31,26 +31,33 @@ class LoginController extends Controller
                     'intended' => url()->previous()
                 ]);
             } else {
+                if ($request->has('redirect_to')) {   
+                    return redirect()->to($request->get('redirect_to'));
+                }
                 return redirect()->intended('admin');
             }
 
             
         }
 
-         if ($request->ajax()) {
+        if ($request->ajax()) {
 
             return response()->json([ 'email' => 'The provided credentials do not match our records.'],302);
         }else{
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+            return back()->withErrors([
+                'email' => 'The provided credentials do not match our records.',
+            ])->onlyInput('email');
         }
     }
 
     public function getLoginStatus()
     {
-        return response()->json(['auth' => auth()->check(),'token'=>csrf_token()]);
+        $data['auth'] = auth()->check();
+        if (!auth()->check()) {
+            $data['token'] =csrf_token();
+        }
+        return response()->json($data);
     }
 
     public function login()

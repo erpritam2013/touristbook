@@ -9,7 +9,7 @@
         @endpush
         @push('map_js')
         <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCF8MnYK1Ft-lPa3_B6rirg2IJzptB4m1Y&v=weekly&libraries=places&callback=Function.prototype"
+        src="https://maps.googleapis.com/maps/api/js?key={{get_settings_option_value('google_map_api_key') ?? 'AIzaSyCF8MnYK1Ft-lPa3_B6rirg2IJzptB4m1Y'}}&v=weekly&libraries=places&callback=Function.prototype"
         defer
         ></script>
         @endpush
@@ -17,7 +17,7 @@
 
         @if(Route::getRoutes()->match(request())->methods[0] == 'GET' && (matchRouteNameMatch('create') || matchRouteNameMatch('edit')))
         @push('ckeditor_js')<!-- ckediter -->
-        <script src="{!! asset('admin-part/vendor/ckeditor/ckeditor.js') !!}"></script>
+        <script src="{!! asset('admin-part/vendor/ckeditor/ckeditor.js') !!}" crossorigin="anonymous"></script>
         <script src="{!! asset('admin-part/vendor/ckeditor/config.js') !!}"></script>
         @endpush
         @push('sortable_js')

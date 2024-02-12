@@ -397,10 +397,15 @@ $top2 = 'top:152px;z-index:99;';
               $hotel_policies = nested_policies($hotel->policies);
               @endphp
               @foreach ($hotel_policies as $policy)
-              <h4 class="f18">{{ $policy['policies-title'] }}</h4>
+              <h4 class="f18">{{ $policy['policies-title'] }}
+               @if($policy['children']->isNotEmpty())
+                &nbsp;<i class="fa fa-exclamation-circle icon-4x important-note-icon" aria-hidden="true" style="color:#07509E;font-size: 20px;" data-parent_title="cancellation"></i>
+
+                @endif
+              </h4>
                @if($policy['children']->isNotEmpty())
 
-              <i class="fa fa-exclamation-circle icon-4x important-note-icon" aria-hidden="true" style="color:#07509E;font-size: 30px;" data-parent_title="cancellation"></i>
+              
               <div class="important-note-hotel cancellation">
                 
               @foreach($policy['children'] as $p_children)

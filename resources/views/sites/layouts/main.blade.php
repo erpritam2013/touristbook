@@ -74,9 +74,10 @@
 
 
     <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCF8MnYK1Ft-lPa3_B6rirg2IJzptB4m1Y&v=weekly&libraries=places"
+    src="https://maps.googleapis.com/maps/api/js?key={{get_settings_option_value('google_map_api_key') ?? 'AIzaSyCF8MnYK1Ft-lPa3_B6rirg2IJzptB4m1Y'}}&v=weekly&libraries=places"
     defer></script>
     <script src="{{asset('sites/js/common.js')}}" type="text/javascript" defer></script>
+    <script src="{{asset('sites/js/comment.js')}}" type="text/javascript" defer></script>
     @if(isset($body_class) && $body_class == 'destination-detail-page')
     <script src="{{asset('sites/js/fetchDestinaitonDetail.js')}}" type="text/javascript" defer></script>
     
@@ -85,7 +86,13 @@
     {{-- <script src="{{asset('sites/js/map_infobox.js')}}" type="text/javascript" defer></script>
     <script src="{{asset('sites/js/markerclusterer.js')}}" type="text/javascript" defer></script>
     <script src="{{asset('sites/js/maps.js')}}" type="text/javascript" defer></script> --}}
+ <script src="https://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
+ <script type="text/javascript">
+   function loadGoogleTranslate() {
+     new google.translate.TranslateElement({pageLanguage:'en'},'google_translate_element');
+   }
 
+ </script>
     <button onclick="topScrollSite()" id="topScrollSite" title="Go to top"><i class="fa fa-arrow-up"></i></button>
 
     <div class="modal fade" id="showMoreData" tabindex="-1" role="dialog" aria-labelledby="streetLabel"

@@ -29466,6 +29466,13 @@ div#tb-image-prev {
     background: #ddd;
     border-radius: 3px;
 }
+
+#v-pills-gt-translate .gt-translate-form .form-row {
+    padding: 10px;
+    height: 300px;
+    overflow: auto;
+    margin-bottom: 15px;
+}
     
 /*admin to bar css start*/
 div#touristbook-adminbar {
