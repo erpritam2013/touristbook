@@ -23,11 +23,11 @@
             <div class="media-controls">
                 <input type="hidden" class="form-control media-input {{ $class ?? '' }} gallery-input " name="{{ $name ?? '' }}"
                 value="{{ $value ? json_encode($value) : '' }}" />
-
-                {{--
+                
+                
+            
                 @if(is_array($value))
-                @dd($value)
-                @endif --}}
+                @endif
 
                 <input type="url" class="form-control media-txt-only" readonly="true"  id="{{ $id ?? '' }}" placeholder="Enter {{ $label ?? '' }}..." value="@if(is_array($value) && isset($value[0]) && isset($value[0]['url'])  ){{$value[0]['url']}}@endif"   />
 

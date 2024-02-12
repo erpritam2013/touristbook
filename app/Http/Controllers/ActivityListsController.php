@@ -6,6 +6,7 @@ use App\Interfaces\ActivityListsRepositoryInterface;
 use App\Interfaces\ActivityRepositoryInterface;
 use App\Models\ActivityLists;
 use App\Models\Activity;
+use App\Models\CustomIcon;
 use App\Http\Requests\StoreActivityListsRequest;
 use App\Http\Requests\UpdateActivityListsRequest;
 use Illuminate\Http\JsonResponse;
@@ -31,7 +32,8 @@ class ActivityListsController extends Controller
 private function _prepareBasicData() {
 
         // TODO: Need to Improve here (Fetch from Cache)
-   $data['custom_icons'] = getPostData('CustomIcon',['id','title']);
+    
+   $data['custom_icons'] = CustomIcon::get(['id','title','slug']);
    $data['activities'] = getPostData('Activity',['id','name']);
   
  
@@ -149,7 +151,7 @@ private function _prepareBasicData() {
      */
     public function update(UpdateActivityListsRequest $request,$id)
     {
-  
+      
        $activityLists = ActivityLists::find($id);
        $activityListsDetails = [
         'title' => $request->title,
