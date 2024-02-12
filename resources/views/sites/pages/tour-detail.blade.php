@@ -618,13 +618,15 @@ $top = 'top:32px;position:relative;';
 					@endif
 
 
-
+                    
 					<div class="tab-pane" id="reviews-tab">
 						<div class="text-block">
 							<p class="st-heading-section">Reviews </p>
 							<h5 class="mb-4 st-heading-section-short">Listing Reviews </h5>
+								<div id="reviews-list">
+									
 							<div class="media d-block d-sm-flex review">
-								<div class="text-md-center mr-4 mr-xl-5"><img src="{{asset('sites/images/dummy-user.jpeg')}}" alt="Padmé Amidala" class="avatar avatar-xl p-2 mb-2"></div>
+								
 								<div class="media-body">
 									<h6 class="mt-2 mb-1">Monu yadav</h6>
 									<div class="mb-2"><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i> </div>
@@ -632,17 +634,27 @@ $top = 'top:32px;position:relative;';
 								</div>
 							</div>
 							<div class="media d-block d-sm-flex review">
-								<div class="text-md-center mr-4 mr-xl-5"><img src="{{asset('sites/images/dummy-user.jpeg')}}" alt="Jabba Hut" class="avatar avatar-xl p-2 mb-2"></div>
+								
 								<div class="media-body">
 									<h6 class="mt-2 mb-1">Kumar Sivaramakrishna</h6>
 									<div class="mb-2"><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i> </div>
 									<p class="text-muted text-sm">Delighted with the service we got at the venue.. The workers were very responsive and we got a good service and good food too...cumulatively it was a good quality resort that too in budget price.</p>
 								</div>
 							</div>
-							<div class="rebiew_section">
+								</div>
+							<div class="load-more-btn mt-3 mb-3">
+								
+							<button id="load_more_button" data-page=""
+                            class="btn btn-grad">Load More</button>
+							</div>
+							<div class="review_section">
 								<div id="leaveReview" class="mt-4 collapse show" style="">
 									<h5 class="mb-4">Leave a review</h5>
-									<form id="contact-form" method="get" action="#" class="form">
+									@if(auth()->check())
+									<form id="comment-form" method="post" action="{{route('review-store')}}" class="form">
+                                        <input type="hidden" name="model_id" value="{{$tour->id}}">
+                                        <input type="hidden" name="comment_ip" value="{{$_SERVER['REMOTE_ADDR']}}">
+                                        <input type="hidden" name="comment_agent" value="{{$_SERVER['HTTP_USER_AGENT']}}">
 										<div class="row">
 											<div class="col-sm-6">
 												<div class="form-group">
@@ -669,6 +681,17 @@ $top = 'top:32px;position:relative;';
 										</div>
 										<button type="submit" class="btn btn-grad">Submit Review</button>
 									</form>
+									@else
+
+									 <div class="login-btn">
+									 	
+									 	<div class="row">
+									 		<div class="col-lg-6"><a href="{{route('login')}}?redirect_to={{route('tour',$tour->slug)}}" class="btn btn-grad w-50">LogIn</a></div>
+									 		<div class="col-lg-6"><a href="{{route('register')}}?redirect_to={{route('tour',$tour->slug)}}" class="btn btn-grad w-50 ">Sign Up</a></div>
+									 	</div>
+									 </div>
+
+									@endif
 								</div>
 							</div>
 						</div>

@@ -11,7 +11,9 @@
                     </div>
                     <form class="reg-form" action="{{ route('register-post') }}" method="post">
                         @csrf
-
+                          @if(request()->has('redirect_to'))
+                           <input type="hidden" name="redirect_to" value="{{request()->get('redirect_to')}}">
+                           @endif
                         <div class="row">
                             <div class="col-md-12 name">
                                 <label>Full Name</label>

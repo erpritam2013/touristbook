@@ -1584,6 +1584,14 @@ const processedPageTemplateHtml = function(data,id){
         });
 
        }
+
+        $(".multi-select-placeholder").select2({
+     placeholder: {
+          id: '-1', // the value of the option
+          text: '---Select---'
+        },
+      allowClear: true
+  });
        
    }, 1000);
 

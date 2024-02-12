@@ -50,8 +50,7 @@ public function index() {
  $data['post_type'] = 'Home';
  $data['title'] = 'Home';
  $data['body_class'] = 'home-page';
- $data['home_destinations'] = Location::latest()->limit(5)->get(['id','name','slug','featured_image']);
- $data['home_hotels'] = Hotel::latest()->limit(6)->get(['id','name','slug','featured_image']);
+
  
   $page_id = Setting::get_setting('home_page');
     
@@ -59,9 +58,63 @@ public function index() {
     if ($page) {
         $data['page'] = $page;
     }
+
+    $data = $this->home_page_content($data,$page);
  return view('sites.pages.home',$data);
 }
+public function home_page_content($data,$page_data)
+{     
+      if(!empty($page_data)){
+      $existed_hotels = $page_data->extra_data['hotels'] ?? [];
+      $existed_tours = $page_data->extra_data['tours'] ?? [];
+      $existed_locations = $page_data->extra_data['locations'] ?? [];
+      $existed_activities = $page_data->extra_data['activities'] ?? [];
+      $existed_blogs = $page_data->extra_data['blogs'] ?? [];
 
+      }
+
+      $locations = Location::query();
+      $hotels = Hotel::query();
+      $activities = Activity::query();
+      $tours = Tour::query();
+      $posts = Post::query();
+
+      if (isset($existed_hotels) && !empty($existed_hotels)) {
+           $hotels->whereIn('id',$existed_hotels);
+      }else{
+           $hotels->latest();
+      }
+
+      if (isset($existed_tours) && !empty($existed_tours)) {
+          $tours->whereIn('id',$existed_tours);
+      }else{
+           $tours->latest();
+      }
+      if (isset($existed_locations) && !empty($existed_locations)) {
+             $locations->whereIn('id',$existed_locations);
+      }else{
+           $locations->latest();
+      }
+      if (isset($existed_blogs) && !empty($existed_blogs)) {
+           $posts->whereIn('id',$existed_blogs);
+      }else{
+           $posts->latest();
+      }
+
+      if (isset($existed_activities) && !empty($existed_activities)) {
+           $activities->whereIn('id',$existed_activities);
+      }else{
+           $activities->latest();
+      }
+
+      $data['home_hotels'] = $hotels->limit(6)->get(['id','name','slug','featured_image','avg_price','address']);
+      $data['home_activities'] = $activities->limit(6)->get(['id','name','slug','featured_image','price']);
+      $data['home_tours'] = $tours->limit(6)->get(['id','name','slug','featured_image','price']);
+      $data['home_posts'] = $posts->limit(6)->get(['id','name','slug','featured_image','excerpt','description']);
+      $data['home_destinations'] =$locations->latest()->limit(5)->get(['id','name','slug','featured_image']);
+
+      return $data;
+}
 
 
 public function pages(PageDataTable $dataTable)
@@ -196,6 +249,46 @@ public function page_templates(Request $request,$view)
         if (!empty($page)) {
             $data['page'] = $page;
         }
+    }
+
+
+    if ($view == 'home') {
+        $category = Category::where('slug','blog')->first();
+        $data['hotels'] = Hotel::where('status',1)->get(['id','name'])->map(function($item, $key){
+
+               return (object)[
+                    'id' => $item->id,
+                    'value' => $item->name,
+                ];
+        });
+        $data['blogs'] = $category->posts()->get()->map(function($item, $key){
+
+               return (object)[
+                    'id' => $item->id,
+                    'value' => $item->name,
+                ];
+        });
+        $data['tours'] = Tour::where('status',1)->get(['id','name'])->map(function($item, $key){
+
+               return (object)[
+                    'id' => $item->id,
+                    'value' => $item->name,
+                ];
+        });
+        $data['locations'] = Location::where('status',1)->get(['id','name'])->map(function($item, $key){
+
+               return (object)[
+                    'id' => $item->id,
+                    'value' => $item->name,
+                ];
+        });
+        $data['activities'] = Activity::where('status',1)->get(['id','name'])->map(function($item, $key){
+
+               return (object)[
+                    'id' => $item->id,
+                    'value' => $item->name,
+                ];
+        });
     }
 
     return View::make('admin.pages.page_templates.'.$view,$data);

@@ -82,6 +82,17 @@
       0 => 'Termwind\\Laravel\\TermwindServiceProvider',
     ),
   ),
+  'ryangjchandler/laravel-cloudflare-turnstile' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'RyanChandler\\LaravelCloudflareTurnstile\\LaravelCloudflareTurnstileServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'LaravelCloudflareTurnstile' => 'RyanChandler\\LaravelCloudflareTurnstile\\Facades\\LaravelCloudflareTurnstile',
+    ),
+  ),
   'spatie/laravel-ignition' => 
   array (
     'providers' => 

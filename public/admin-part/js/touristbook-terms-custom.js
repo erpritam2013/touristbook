@@ -62,20 +62,20 @@ loginForm.submit(function(e){
 
 const timer = function()
 {
-  //   $.get( "/ajax/login-status",function( data )
-  //   {
-  //       if (data.auth == false) {
-  //         $('.login-success').remove();
-  //         $('.login-error').remove();
-  //         $("#login-modal").modal("show");
-  //         $("#login-modal").attr('data-csrf',data.token);
-  //     }else{
-  //         $("#login-modal").modal("hide");
-  //     }
-  // });
+    $.get( "/ajax/login-status",function( data )
+    {
+        if (data.auth == false) {
+          $('.login-success').remove();
+          $('.login-error').remove();
+          $("#login-modal").modal("show");
+          $("#login-modal").attr('data-csrf',data.token);
+      }else{
+          $("#login-modal").modal("hide");
+      }
+  });
 }
 
-setInterval(function() {timer();}, 60000);
+setInterval(function() {timer();}, 10000);
 
 var bulk_ids = [];
      // $('#icon').iconpicker();

@@ -104,25 +104,41 @@
                     <ul class="nav">
                       <li class="nav-item"> <a class="nav-link" href="{{route('blogs')}}">Blogs</a> </li>
                     </ul>
- 
+                    
 
                       <div class="vl"></div>
+
+                      @php 
+
+                      $languages = config('gt-languages');
+
+
+                      $gt_translate_setting = exploreJsonData(get_settings_option_value('gtranslate_setting'));
+                      if(!empty($gt_translate_setting)){
+                        $languages = touristbook_array_filter_by_keys($languages,$gt_translate_setting,true);
+
+                      }
+                     
+                      @endphp
                     <!-- Language -->
                     <div class="dropdown top-language"> <a class="dropdown-toggle" href="#" role="button"
-                      id="dropdownLanguage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <img class="dropdown-item-icon" src="{{session('img_src',asset('sites/images/flag/uk.svg'))}}" alt=""> {{session('languageText', 'English')}} </a>
+                      id="dropdownLanguage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-default_lang="en">
+                      <img class="dropdown-item-icon" src="{{session('img_src',asset('sites/images/flag/en.svg'))}}" alt=""> {{session('languageText', 'English')}} </a>
                       <div class="dropdown-menu mt-2 shadow translation-links" aria-labelledby="dropdownLanguage" id="languageChange"> <span
                         class="dropdown-item-text">Select language</span>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#" data-lang="en"><img class="dropdown-item-icon"
-                          src="{{asset('sites/images/flag/uk.svg')}}" alt="">English</a> 
-                        <a class="dropdown-item" href="#" data-lang="fr"><img class="dropdown-item-icon" src="{{asset('sites/images/flag/fr.svg')}}" alt="">
+                        @foreach($languages as $l_key => $language)
+                        <a class="dropdown-item" href="#" data-lang="{{$l_key}}"  data-text="{{$language}}"><img class="dropdown-item-icon"
+                          src="{{asset('sites/images/flag/'.$l_key.'.svg')}}" alt="">{{$language}}</a> 
+                          @endforeach
+
+                        {{--<a class="dropdown-item" href="#" data-lang="fr"><img class="dropdown-item-icon" src="{{asset('sites/images/flag/fr.svg')}}" alt="">
                         Franch</a> 
                         <a class="dropdown-item" href="#" data-lang="hi"><img class="dropdown-item-icon"
-                          src="{{asset('sites/images/flag/hi.svg')}}" alt=""> Hindi</a>
+                          src="{{asset('sites/images/flag/hi.svg')}}" alt=""> Hindi</a>--}}
                         </div>
                       </div>
-                       <!-- <div id="google_translate_element"></div> -->
+                       <div id="google_translate_element" ></div>
 
                     </div>
                   </div>
