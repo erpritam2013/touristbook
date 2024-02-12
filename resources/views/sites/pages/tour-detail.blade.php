@@ -20,27 +20,29 @@ $top = 'top:32px;position:relative;';
 		<!-- Additional required wrapper-->
 		<div class="swiper-wrapper">
 			<!-- Slides-->
-			@if(!empty($tour->detail->gallery))
+       
+			@if(!empty($tour->detail->gallery) && (is_array($tour->detail->gallery) || is_object($tour->detail->gallery)))
 			@foreach($tour->detail->gallery as $gallery)
-			@if(!empty($gallery))
+			@if(!empty($gallery) && isset($gallery['id']))
+
 			<div class="swiper-slide"><a data-toggle="gallery-top" title="tour gallery" style="width: 452px;height:300px;" ><img
-				src="{{ getConversionUrl($gallery['id'],'600x250') }}" alt="Our street" class="img-fluid" style="width: 452px;height:300px;"></a>
+				src="{{ getConversionUrl($gallery['id'],'600x450') }}" alt="Our street" class="img-fluid" style="width: 452px;height:300px;"></a>
 			</div>
 			@else
 			<div class="swiper-slide"><a data-toggle="gallery-top" title="tour gallery"><img
-				src="{{ asset('sites/images/dummy/600x250.jpg') }}" alt="tour gallery" class="img-fluid"></a>
+				src="{{ asset('sites/images/dummy/600x450.jpg') }}" alt="tour gallery" class="img-fluid"></a>
 			</div>
 			@endif
 			@endforeach
 			@else
 			<div class="swiper-slide"><a data-toggle="gallery-top" title="tour gallery"><img
-				src="{{ asset('sites/images/dummy/600x250.jpg') }}" alt="tour gallery" class="img-fluid"></a>
+				src="{{ asset('sites/images/dummy/600x450.jpg') }}" alt="tour gallery" class="img-fluid"></a>
 			</div>
 			<div class="swiper-slide"><a data-toggle="gallery-top" title="tour gallery"><img
-				src="{{ asset('sites/images/dummy/600x250.jpg') }}" alt="tour gallery" class="img-fluid"></a>
+				src="{{ asset('sites/images/dummy/600x450.jpg') }}" alt="tour gallery" class="img-fluid"></a>
 			</div>
 			<div class="swiper-slide"><a data-toggle="gallery-top" title="tour gallery"><img
-				src="{{ asset('sites/images/dummy/600x250.jpg') }}" alt="tour gallery" class="img-fluid"></a>
+				src="{{ asset('sites/images/dummy/600x450.jpg') }}" alt="tour gallery" class="img-fluid"></a>
 			</div>
 			@endif
 		</div>
@@ -174,6 +176,7 @@ $top = 'top:32px;position:relative;';
 									</div>
 									@endif
 									@if(!empty($tour->package_types))
+
 									<div class="col-xs-6 col-lg-6">
 										<div class="item">
 											<div class="icon tour_type_single">
@@ -182,7 +185,7 @@ $top = 'top:32px;position:relative;';
 											<div class="info">
 												<h4 class="name">Tour Type</h4>
 												<p class="value">
-													{{purify_string($tour->package_types()->first()->name ?? '')}}
+													{{comma_seprated_value($tour->package_types) ?? ''}}
 												</p>
 											</div>
 										</div>
