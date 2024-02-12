@@ -16,6 +16,8 @@
    return false;
 }
 
+$('body .div-desc *').removeAttr('style');
+
  // Get the button:
 let mybutton = document.getElementById("topScrollSite");
 

@@ -20,7 +20,13 @@
                                 <option value="">Select {{$term}} Parent</option>
                             
                                 @isset($terms)
-                                @include('admin.partials.utils.options', ['items' => $terms])
+                                @if($term == 'TermActivityList')
+                                 @foreach($term_activity_list_parent as $parent)
+                                    <option value="{{$parent}}" >{{customStringReplaceWithStrCase('-'," ",$parent,'ucwords')}}</option>
+                                    @endforeach
+                                @else
+                                {!!getOptionsTemplate(['items' => $terms])!!}
+                                @endif
                                 @endisset
                             </select>
 
