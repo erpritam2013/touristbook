@@ -13,7 +13,7 @@
                     @foreach($gt_languages as $key => $gt_language)
                     <div class="form-group col-md-3">
                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="gtranslate_setting[]" value="{{$key}}" {{in_array($key,exploreJsonData(get_settings_option_value('gtranslate_setting')))?'checked':''}}>
+                        <input class="form-check-input" type="checkbox" name="gtranslate_setting[]" value="{{$key}}"{{!empty(get_settings_option_value('gtranslate_setting')) && in_array($key,exploreJsonData(get_settings_option_value('gtranslate_setting')))?'checked':''}}>
                         <label class="form-check-label">
                             {{$gt_language}}
                         </label>
