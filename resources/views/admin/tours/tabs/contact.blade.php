@@ -6,9 +6,9 @@
 <!-- website -->
 @include('admin.partials.utils.input', ['name'=> 'contact[website]','label'=>'tour Website','desc'=>'Enter tour website','value'=>$tour->detail->contact['website'] ?? '','id' => "contact-website",'control'=>'url'])
 <!-- phone number -->
-@include('admin.partials.utils.input', ['name'=> 'contact[phone]','label'=>'tour Phone Number','desc'=>'Enter tour phone number','value'=>$tour->detail->contact['phone'] ?? '','id' => "contact-phone",'control'=>'number'])
+@include('admin.partials.utils.input', ['name'=> 'contact[phone]','label'=>'tour Phone Number','desc'=>'Enter tour phone number','value'=>$tour->detail->contact['phone'] ?? '','id' => "contact-phone",'control'=>'text'])
 <!-- fax number -->
-@include('admin.partials.utils.input', ['name'=> 'contact[fax]','label'=>'tour Fax Number','desc'=>'Enter tour fax number','value'=>$tour->detail->contact['fax'] ?? '','id' => "contact-fax",'control'=>'number'])
+@include('admin.partials.utils.input', ['name'=> 'contact[fax]','label'=>'tour Fax Number','desc'=>'Enter tour fax number','value'=>$tour->detail->contact['fax'] ?? '','id' => "contact-fax",'control'=>'text'])
 
 
 

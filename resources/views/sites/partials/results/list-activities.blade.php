@@ -32,7 +32,7 @@
                                     <ul>
                                         @foreach($activity->term_activity_lists as $key => $term_activity_lists)
                                         @if($key <=4)
-                                        <li>{{$term_activity_lists->name}}
+                                        <li>{!!$term_activity_lists->name!!}
                                           @if($key == 4 && $activity->term_activity_lists->count() > 4)
                                           &nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{json_encode($activity->term_activity_lists)}}" data-more_data_label="Activity List" style="color:#fba009;"></i>
                                           @endif

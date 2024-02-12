@@ -259,20 +259,34 @@ if (!function_exists('inputTemplate')) {
 if(!function_exists('touristbook_array_filter')){
     function touristbook_array_filter($arr){
         $filteredArray = "";
-        if(!empty($arr)){
+        if(!empty($arr) && is_array($arr)){
             $arr_collection = collect($arr);
-              $filteredArray = $arr_collection->filter(function($item,$key) {
-                  return !is_null($item);
-    
-});
-if(!empty($filteredArray)){
-  $filteredArray = array_values($filteredArray->toArray()); 
+            $filteredArray = $arr_collection->filter(function($item,$key) {
+              return !is_null($item);
+              
+          });
+            if(!empty($filteredArray)){
+              $filteredArray = array_values($filteredArray->toArray()); 
+          }
+
+      }else{
+        if (isJson($arr)) {
+            
+            $json_decode = json_decode($arr,true);
+            $arr_collection = collect($json_decode);
+            $filteredArray = $arr_collection->filter(function($item,$key) {
+              return !is_null($item);
+              
+          });
+            if(!empty($filteredArray)){
+              $filteredArray = array_values($filteredArray->toArray()); 
+          }
+      }
+
+  }
+  return $filteredArray;
 }
 
-        }
-      return $filteredArray;
-    }
-    
 }
 if (!function_exists('parseVideos')) {
   function parseVideos($videoString = null){
@@ -355,6 +369,24 @@ if (!function_exists('parseVideos')) {
 }
 }
 
+function getOptionsTemplate($fields_data)
+{
+     $html = "";
+     if (!empty($fields_data) && is_array($fields_data)) {
+        extract($fields_data);
+        foreach($items as $item){
+        
+        $html .= '<option value="'.$item['id'].'">'.$item['name'].'</option>';
+        if(!empty($item['children'])){
+            getOptionsTemplate($item['children']);
+        }
+
+        }
+
+    }
+    return $html;
+}
+
 if (!function_exists('mediaTemplate')) {
 
     function mediaTemplate($fields_data)
@@ -372,6 +404,8 @@ if (!function_exists('mediaTemplate')) {
        $label = (!empty($label))?$label:'';
        $smode = (!empty($smode))?$smode:'single';
        $id = (!empty($id))?$id:'';
+
+
        if(!isset($col)){
            $html .='<div class="col-lg-12">';
            if(isset($label) && !empty($label)){
@@ -387,8 +421,18 @@ if (!function_exists('mediaTemplate')) {
           $html .='<div class="col-lg-10">';
       }
       $html .='<div class="media-controls">';
-      
-      $value_e = $value ? json_encode($value) : '';
+      if (isJson($value)) {
+          $value_e = $value;
+          $value = json_decode($value,true);
+      }elseif(is_array($value)){
+        $value_e = json_encode($value);
+      }else{
+        if ($value == '' || empty($value) || $value == '"[]"' || $value == '""') {
+          $value_e = "";
+        }
+      }
+      //$value_e = $value ? json_encode($value) : '';
+     
       $html .='<input type="hidden" class="form-control media-input '.$class.' gallery-input " name="'.$name.'"
       value="'.htmlspecialchars($value_e,ENT_QUOTES).'" />';
       if($smode == 'single'){
@@ -399,9 +443,9 @@ if (!function_exists('mediaTemplate')) {
         }
         $html .='<input type="url" class="form-control media-txt-only" value="'.$value_url.'" id="'.$id.'" placeholder="Enter '.$label.'..."/>';
     }
-    $json_encode = is_array($value) ? json_encode($value) : "";
+    //$json_encode = is_array($value) ? json_encode($value) : "";
 
-    $html .='<button type="button" class="btn btn-primary mt-2 add-media-btn" smode="'.$smode.'" selectedImages="'.htmlspecialchars($json_encode,ENT_QUOTES).'"  >+</button>';
+    $html .='<button type="button" class="btn btn-primary mt-2 add-media-btn" smode="'.$smode.'" selectedImages="'.htmlspecialchars($value_e,ENT_QUOTES).'"  >+</button>';
     $html .='<button type="button" class="btn btn-danger mt-2 remove-media-btn">-</button>';
     $html .='<div class="media-preview">';
     if(is_array($value) && isset($value[0])){
@@ -1118,18 +1162,14 @@ if (!function_exists('getSingleCustomIcon')) {
     function getSingleCustomIcon($id)
     {
 
-
         $icon = '';
         if (!empty($id)) {
             $NamespacedModel = 'App\\Models\\CustomIcon';
-            if (is_int($id)) {
-            $result = $NamespacedModel::findOrFail($id);
+           
+            $result = $NamespacedModel::where('id',$id)->orWhere('slug',$id)->first();
             if ($result) {
               $icon = $result->slug;
              }
-            }else{
-                $icon = $id;
-            }
       }
       return $icon;
   }
@@ -1390,6 +1430,20 @@ if(!function_exists('print_error_message')){
 
         return  $errMsg;
     }
+}
+
+function comma_seprated_value($data)
+{
+    $result = "";
+      
+    if (!empty($data)) {
+        $map_arr = $data->map(function($item){
+            return $item->name;
+        })->toArray();
+        $result = implode('/',array_unique($map_arr));
+
+    }
+    return $result;
 }
 
 if(!function_exists('get_edit_select_check_pvr_old_value')){

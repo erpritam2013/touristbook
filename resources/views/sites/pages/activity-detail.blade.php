@@ -21,11 +21,17 @@ $top = 'top:32px;position:relative;';
 		<div class="swiper-wrapper">
 			<!-- Slides-->
 
-			@if(!empty($activity->detail->gallery))
+			@if(!empty($activity->detail->gallery) && (is_array($activity->detail->gallery) || is_object($activity->detail->gallery)))
 			@foreach($activity->detail->gallery as $gallery)
+			@if(!empty($gallery) && isset($gallery['id']))
 			<div class="swiper-slide"><a data-toggle="gallery-top" title="activity gallery" style="width: 452px;height:300px;" ><img
 				src="{{ getConversionUrl($gallery['id'],'600x250') }}" alt="Our street" class="img-fluid" style="width: 452px;height:300px;"></a>
 			</div>
+			@else
+			<div class="swiper-slide"><a data-toggle="gallery-top" title="tour gallery"><img
+				src="{{ asset('sites/images/dummy/600x450.jpg') }}" alt="tour gallery" class="img-fluid"></a>
+			</div>
+			@endif
 			@endforeach
 			@else
 			<div class="swiper-slide"><a data-toggle="gallery-top" title="activity gallery"><img
@@ -345,7 +351,7 @@ $top = 'top:32px;position:relative;';
 								@endif
 								@endif
 								@php
-								$custom_icon = getSingleCustomIcon($activity__->custom_icon);
+								$custom_icon = $activity__->custom_icon;
 								$long_description = $activity__->description;
 
 								@endphp
@@ -437,7 +443,7 @@ $top = 'top:32px;position:relative;';
 							@endif
 							@endif
 							@php
-							$ap_custom_icon = getSingleCustomIcon($activity_package__->custom_icon);
+							$ap_custom_icon = $activity_package__->custom_icon;
 							$ap_long_description = $activity_package__->description;
 
 							@endphp
@@ -475,6 +481,15 @@ $top = 'top:32px;position:relative;';
 												}
 
 												@endphp
+												<div class="row duration-price-sec">
+            <div class="col-xs-6 col-sm-6">
+              <div class="duration"><strong>Duration : {{$activity_package__->duration}}</strong></div>
+            </div>
+            <div class="col-xs-6 col-sm-6">
+              
+              <div class="price"><strong>Price : {!!get_price($activity_package__)!!}</strong></div><strong>
+            </strong></div><strong>
+          </strong></div>
 												<div class="activity-packages-description">
 													<div class="long-description mt-3" id="ap-long-description-{{$ap_key}}" {!!$ap_style_desc!!} {!!$ap_show_attr!!}>
 														{!!$ap_long_description!!}
