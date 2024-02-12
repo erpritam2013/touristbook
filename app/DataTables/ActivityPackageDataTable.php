@@ -31,6 +31,12 @@ class ActivityPackageDataTable extends DataTable
                     return date('d-m-Y',strtotime($row->created_at));
                 })->editColumn('updated_at', function($row) {
                     return date('d-m-Y',strtotime($row->updated_at));
+                })->addColumn('activity', function($row) {
+                    $a_html = ''; 
+                    if (!empty($row->activity_list)) {
+                        $a_html .= '<a href="'.route('admin.activities.edit',$row->activity_list[0]->id).'" class="btn btn-info" title="'.$row->activity_list[0]->name.'" target="_blank">'.$row->activity_list[0]->name.'</a>';
+                    }
+                    return $a_html;
                 })->addColumn('status', function($row) {
                     $checked = "";
                     if ($row->status == 1) {
@@ -39,7 +45,7 @@ class ActivityPackageDataTable extends DataTable
                     return '<input data-id="'.$row->id.'" class="toggle-class" type="checkbox" data-size="sm" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url="'.route("admin.changeStatusActivityPackage").'" data-on="Active" data-off="InActive" '.$checked.'>';
                 })->addColumn('del',function($row){
                  return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'">';
-            })->rawColumns(['status','action','del']);
+            })->rawColumns(['status','action','del','activity']);
     }
 
     /**
@@ -101,6 +107,7 @@ class ActivityPackageDataTable extends DataTable
             ->exportable(false)
             ->printable(false),
             Column::make('status'),
+            Column::make('activity'),
             Column::make('created_at')->title('Created'),
             Column::make('updated_at')->title('Updated'),
             Column::make('action')

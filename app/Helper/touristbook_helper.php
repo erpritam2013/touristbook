@@ -285,24 +285,7 @@ if(!function_exists('touristbook_array_filter')){
 
   }
   return $filteredArray;
-}
 
-}
-
-if(!function_exists('touristbook_array_filter_by_keys')){
-    function touristbook_array_filter_by_keys($arr,$existed,$filter_staus){
-        $filteredArray = [];
-        if ($filter_staus && !empty($existed)) {
-            if(!empty($arr)){
-                
-             foreach ($existed as $key => $value) {
-              $filteredArray[$value] = $arr[$value];
-          }
-      }
-  }else{
-    $filteredArray = $arr;
-}
-return $filteredArray;
 }
 
 }
@@ -387,6 +370,24 @@ if (!function_exists('parseVideos')) {
 }
 }
 
+function getOptionsTemplate($fields_data)
+{
+     $html = "";
+     if (!empty($fields_data) && is_array($fields_data)) {
+        extract($fields_data);
+        foreach($items as $item){
+        
+        $html .= '<option value="'.$item['id'].'">'.$item['name'].'</option>';
+        if(!empty($item['children'])){
+            getOptionsTemplate($item['children']);
+        }
+
+        }
+
+    }
+    return $html;
+}
+
 if (!function_exists('mediaTemplate')) {
 
     function mediaTemplate($fields_data)
@@ -397,46 +398,61 @@ if (!function_exists('mediaTemplate')) {
         $html .='<div class="form-group row">';
 
         if(empty($id)){
-         $id = (isset($name))? str_replace('[]', '',str_replace('_', '-', $name)):$name;
-     }
-     $class = (!empty($class))?$class:'';
-     $value = (!empty($value))?$value:'';
-     $label = (!empty($label))?$label:'';
-     $smode = (!empty($smode))?$smode:'single';
-     $id = (!empty($id))?$id:'';
-     if(!isset($col)){
-         $html .='<div class="col-lg-12">';
-         if(isset($label) && !empty($label)){
-          $html .='<label class="subform-card-label" for="'.$id.'">'.$label.'</label>';
-          if(isset($desc) && !empty($desc)){
-              $html .='<p>'.$desc.'</p>';
+
+           $id = (isset($name))? str_replace('[]', '',str_replace('_', '-', $name)):$name;
+       }
+       $class = (!empty($class))?$class:'';
+       $value = (!empty($value))?$value:'';
+       $label = (!empty($label))?$label:'';
+       $smode = (!empty($smode))?$smode:'single';
+       $id = (!empty($id))?$id:'';
+
+
+       if(!isset($col)){
+           $html .='<div class="col-lg-12">';
+           if(isset($label) && !empty($label)){
+              $html .='<label class="subform-card-label" for="'.$id.'">'.$label.'</label>';
+              if(isset($desc) && !empty($desc)){
+                  $html .='<p>'.$desc.'</p>';
+              }
+          }
+      }else{
+          if(isset($label) && !empty($label)){
+              $html .='<label class="col-lg-2 col-form-label" for="'.$id.'">'.$label.'</label>';
+
           }
       }
-  }else{
-      if(isset($label) && !empty($label)){
-          $html .='<label class="col-lg-2 col-form-label" for="'.$id.'">'.$label.'</label>';
-      }
-      $html .='<div class="col-lg-10">';
-  }
-  $html .='<div class="media-controls">';
-  
-  $value_e = $value ? json_encode($value) : '';
-  $html .='<input type="hidden" class="form-control media-input '.$class.' gallery-input " name="'.$name.'"
-  value="'.htmlspecialchars($value_e,ENT_QUOTES).'" />';
-  if($smode == 'single'){
-    $value_url = '';
-    
-    if(is_array($value) && isset($value[0])){
-        $value_url = $value[0]['url'];
-    }
-    $html .='<input type="url" class="form-control media-txt-only" value="'.$value_url.'" id="'.$id.'" placeholder="Enter '.$label.'..."/>';
-}
-$json_encode = is_array($value) ? json_encode($value) : "";
 
-$html .='<button type="button" class="btn btn-primary mt-2 add-media-btn" smode="'.$smode.'" selectedImages="'.htmlspecialchars($json_encode,ENT_QUOTES).'"  >+</button>';
-$html .='<button type="button" class="btn btn-danger mt-2 remove-media-btn">-</button>';
-$html .='<div class="media-preview">';
-if(is_array($value) && isset($value[0])){
+      $html .='<div class="media-controls">';
+      if (isJson($value)) {
+          $value_e = $value;
+          $value = json_decode($value,true);
+      }elseif(is_array($value)){
+        $value_e = json_encode($value);
+      }else{
+        if ($value == '' || empty($value) || $value == '"[]"' || $value == '""') {
+          $value_e = "";
+        }
+      }
+      //$value_e = $value ? json_encode($value) : '';
+     
+      $html .='<input type="hidden" class="form-control media-input '.$class.' gallery-input " name="'.$name.'"
+      value="'.htmlspecialchars($value_e,ENT_QUOTES).'" />';
+      if($smode == 'single'){
+        $value_url = '';
+        
+        if(is_array($value) && isset($value[0])){
+            $value_url = $value[0]['url'];
+        }
+        $html .='<input type="url" class="form-control media-txt-only" value="'.$value_url.'" id="'.$id.'" placeholder="Enter '.$label.'..."/>';
+    }
+    //$json_encode = is_array($value) ? json_encode($value) : "";
+
+    $html .='<button type="button" class="btn btn-primary mt-2 add-media-btn" smode="'.$smode.'" selectedImages="'.htmlspecialchars($value_e,ENT_QUOTES).'"  >+</button>';
+    $html .='<button type="button" class="btn btn-danger mt-2 remove-media-btn">-</button>';
+    $html .='<div class="media-preview">';
+    if(is_array($value) && isset($value[0])){
+
 
     $html .='<img src="'.$value[0]['url'].'"  class="img" height="100" width="100" />';
 }
@@ -1153,21 +1169,18 @@ if (!function_exists('getSingleCustomIcon')) {
     function getSingleCustomIcon($id)
     {
 
-
         $icon = '';
         if (!empty($id)) {
             $NamespacedModel = 'App\\Models\\CustomIcon';
-            if (is_int($id)) {
-                $result = $NamespacedModel::findOrFail($id);
-                if ($result) {
-                  $icon = $result->slug;
-              }
-          }else{
-            $icon = $id;
-        }
-    }
-    return $icon;
-}
+
+       
+            $result = $NamespacedModel::where('id',$id)->orWhere('slug',$id)->first();
+            if ($result) {
+              $icon = $result->slug;
+             }
+      }
+      return $icon;
+  }
 }
 if (!function_exists('getSingleRecord')) {
     function getSingleRecord($id,$model,$term=false)
@@ -1425,6 +1438,20 @@ if(!function_exists('print_error_message')){
 
         return  $errMsg;
     }
+}
+
+function comma_seprated_value($data)
+{
+    $result = "";
+      
+    if (!empty($data)) {
+        $map_arr = $data->map(function($item){
+            return $item->name;
+        })->toArray();
+        $result = implode('/',array_unique($map_arr));
+
+    }
+    return $result;
 }
 
 if(!function_exists('get_edit_select_check_pvr_old_value')){

@@ -4,8 +4,15 @@
     </div>
     <div class="card-body">
 
-     @include('admin.partials.utils.select_box', ['items' => $custom_icons, 'name'=> 'custom_icon','selected'=>$activity_list->custom_icon,'lebal'=>'Custom Icon'])
-
+     
+     <select class="form-control single-select-placeholder-touristbook" id="custom-icon" name="custom_icon" >
+        <option value="">Custom Icon</option>
+        @isset($custom_icons)
+        @foreach($custom_icons as $custom_icon)
+        <option value="{{$custom_icon->slug}}" {{ ($custom_icon->slug == $activity_list->custom_icon) ? 'selected' : ''  }}>{{$custom_icon->title}}</option>
+        @endforeach
+        @endisset
+      </select>
 
     </div>
 </div>
