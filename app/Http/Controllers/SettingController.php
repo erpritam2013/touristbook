@@ -58,6 +58,8 @@ class SettingController extends Controller
            $data['tours'] =$this->pageRepository->getPageByType('','Tour');
            $data['contact_pages'] =$this->pageRepository->getPageByType('','Contact Us');
            $data['tour_details'] =$this->pageRepository->getPageByType('','tourDetail');
+           $gt_languages = config('gt-languages');
+           $data['gt_languages'] = $gt_languages;
            return view('admin.settings.theme-settings.create',$data);
     }
 
@@ -72,7 +74,7 @@ class SettingController extends Controller
 
    
         $all_fields = $request->all();
-       
+        
         if (!empty($all_fields)) {
             unset($all_fields['_method']);
             unset($all_fields['_token']);
@@ -80,6 +82,7 @@ class SettingController extends Controller
             foreach ($all_fields as $key => $value) {
 
                if (is_array($value)) {
+
                    $json_encode = json_encode($value);
                    Setting::save_setting($key,$json_encode);
                }else{
@@ -115,6 +118,7 @@ class SettingController extends Controller
          $data['settings'] = Setting::all();
          return view('admin.settings.theme-settings.edit',$data);
     }
+
 
     /**
      * Update the specified resource in storage.

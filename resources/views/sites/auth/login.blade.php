@@ -13,7 +13,9 @@
                         </div> --}}
                         <form class="login-form" action="{{ route('login-post') }}" method="post">
                             @csrf
-
+                           @if(request()->has('redirect_to'))
+                           <input type="hidden" name="redirect_to" value="{{request()->get('redirect_to')}}">
+                           @endif
                             <div class="row">
                                 <div class="col-md-12 email">
                                     <label>Email</label>

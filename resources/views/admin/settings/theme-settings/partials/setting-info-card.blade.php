@@ -15,6 +15,7 @@
                    <a href="#v-pills-location" data-toggle="pill" class="nav-link">Location</a>
                    <a href="#v-pills-activity" data-toggle="pill" class="nav-link">Activity</a>
                    <a href="#v-pills-post" data-toggle="pill" class="nav-link">Post</a>
+                   <a href="#v-pills-gt-translate" data-toggle="pill" class="nav-link">GT Language</a>
                    <a href="#v-pills-google-setting" data-toggle="pill" class="nav-link">Google-Setting</a>
                    <a href="#v-pills-booking" data-toggle="pill" class="nav-link">Booking</a>
                    <a href="#v-pills-profile" data-toggle="pill" class="nav-link">Admin Profile</a>
@@ -49,6 +50,9 @@
              </div>
              <div id="v-pills-google-setting" class="tab-pane fade ">
                 @include('admin.settings.theme-settings.tabs.google-setting', ["settings" => $settings])
+             </div>
+             <div id="v-pills-gt-translate" class="tab-pane fade ">
+                @include('admin.settings.theme-settings.tabs.gt-translate', ["settings" => $settings])
              </div>
              <div id="v-pills-booking" class="tab-pane fade ">
                 @include('admin.settings.theme-settings.tabs.booking', ["settings" => $settings])

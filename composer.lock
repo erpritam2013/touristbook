@@ -5,6 +5,7 @@
         "This file is @generated automatically"
     ],
     "content-hash": "8384a0a57c78248fdbb3ed440fe354af",
+
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -4427,6 +4428,80 @@
             "time": "2023-11-08T05:53:05+00:00"
         },
         {
+            "name": "ryangjchandler/laravel-cloudflare-turnstile",
+            "version": "v0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ryangjchandler/laravel-cloudflare-turnstile.git",
+                "reference": "4e7c67e30ead74d5bd1cb4ca39c9d64ad3ea1c66"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ryangjchandler/laravel-cloudflare-turnstile/zipball/4e7c67e30ead74d5bd1cb4ca39c9d64ad3ea1c66",
+                "reference": "4e7c67e30ead74d5bd1cb4ca39c9d64ad3ea1c66",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^9.0",
+                "php": "^8.1",
+                "spatie/laravel-package-tools": "^1.13.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.0",
+                "nunomaduro/collision": "^6.0",
+                "nunomaduro/larastan": "^2.0.1",
+                "orchestra/testbench": "^7.0",
+                "pestphp/pest": "^1.21",
+                "pestphp/pest-plugin-laravel": "^1.1",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpunit/phpunit": "^9.5",
+                "spatie/laravel-ray": "^1.26",
+                "spatie/pest-plugin-snapshots": "^1.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RyanChandler\\LaravelCloudflareTurnstile\\LaravelCloudflareTurnstileServiceProvider"
+                    ],
+                    "aliases": {
+                        "LaravelCloudflareTurnstile": "RyanChandler\\LaravelCloudflareTurnstile\\Facades\\LaravelCloudflareTurnstile"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RyanChandler\\LaravelCloudflareTurnstile\\": "src",
+                    "RyanChandler\\LaravelCloudflareTurnstile\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ryan Chandler",
+                    "email": "support@ryangjchandler.co.uk",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple package to help integrate Cloudflare Turnstile.",
+            "homepage": "https://github.com/ryangjchandler/laravel-cloudflare-turnstile",
+            "keywords": [
+                "laravel",
+                "laravel-cloudflare-turnstile",
+                "ryangjchandler"
+            ],
+            "support": {
+                "issues": "https://github.com/ryangjchandler/laravel-cloudflare-turnstile/issues",
+                "source": "https://github.com/ryangjchandler/laravel-cloudflare-turnstile/tree/v0.2.0"
+            },
+            "time": "2022-12-13T13:40:49+00:00"
+        },
+        {
             "name": "spatie/image",
             "version": "2.2.7",
             "source": {
@@ -4659,29 +4734,34 @@
             "time": "2023-11-03T13:09:19+00:00"
         },
         {
-            "name": "spatie/temporary-directory",
-            "version": "2.2.1",
+            "name": "spatie/laravel-package-tools",
+            "version": "1.16.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/spatie/temporary-directory.git",
-                "reference": "76949fa18f8e1a7f663fd2eaa1d00e0bcea0752a"
+                "url": "https://github.com/spatie/laravel-package-tools.git",
+                "reference": "e62eeb1fe8a8a0b2e83227a6c279c8c59f7d3a15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/temporary-directory/zipball/76949fa18f8e1a7f663fd2eaa1d00e0bcea0752a",
-                "reference": "76949fa18f8e1a7f663fd2eaa1d00e0bcea0752a",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/e62eeb1fe8a8a0b2e83227a6c279c8c59f7d3a15",
+                "reference": "e62eeb1fe8a8a0b2e83227a6c279c8c59f7d3a15",
                 "shasum": ""
             },
             "require": {
+                "illuminate/contracts": "^9.28|^10.0|^11.0",
                 "php": "^8.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^9.5"
+                "mockery/mockery": "^1.5",
+                "orchestra/testbench": "^7.7|^8.0",
+                "pestphp/pest": "^1.22",
+                "phpunit/phpunit": "^9.5.24",
+                "spatie/pest-plugin-test-time": "^1.1"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Spatie\\TemporaryDirectory\\": "src"
+                    "Spatie\\LaravelPackageTools\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -4690,36 +4770,31 @@
             ],
             "authors": [
                 {
-                    "name": "Alex Vanderbist",
-                    "email": "alex@spatie.be",
-                    "homepage": "https://spatie.be",
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
                     "role": "Developer"
                 }
             ],
-            "description": "Easily create, use and destroy temporary directories",
-            "homepage": "https://github.com/spatie/temporary-directory",
+            "description": "Tools for creating Laravel packages",
+            "homepage": "https://github.com/spatie/laravel-package-tools",
             "keywords": [
-                "php",
-                "spatie",
-                "temporary-directory"
+                "laravel-package-tools",
+                "spatie"
             ],
             "support": {
-                "issues": "https://github.com/spatie/temporary-directory/issues",
-                "source": "https://github.com/spatie/temporary-directory/tree/2.2.1"
+                "issues": "https://github.com/spatie/laravel-package-tools/issues",
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.16.2"
             },
             "funding": [
-                {
-                    "url": "https://spatie.be/open-source/support-us",
-                    "type": "custom"
-                },
                 {
                     "url": "https://github.com/spatie",
                     "type": "github"
                 }
             ],
-            "time": "2023-12-25T11:46:58+00:00"
+            "time": "2024-01-11T08:43:00+00:00"
         },
         {
+
             "name": "symfony/console",
             "version": "v6.4.3",
             "source": {

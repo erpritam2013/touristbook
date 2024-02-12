@@ -219,7 +219,6 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
      'Datatables' => yajra\Datatables\Datatables::class,
      'Image' => Intervention\Image\Facades\Image::class,
-     'GoogleTranslate' => Stichoza\GoogleTranslate\GoogleTranslate::class,
     ])->toArray(),
 
 ];

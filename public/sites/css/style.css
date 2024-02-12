@@ -11845,7 +11845,10 @@ i.important-note-icon:hover .important-note-hotel {
 	opacity:1;
 	visibility:visible;
 }
-
+body.hotel-detail-page .important-note-hotel * {
+    white-space: pre-line;
+    color:#fff;
+}
 body.hotel-detail-page .important-note-hotel {
     opacity: 0;
     width: 100%;
@@ -11855,7 +11858,8 @@ body.hotel-detail-page .important-note-hotel {
     padding: 15px;
     visibility: hidden;
     position: absolute;
-    z-index: 1;
+    z-index: 999;
+
 }
 
 body.hotel-detail-page .view-important-note{
@@ -14786,7 +14790,6 @@ body.destinations-page .ui-autocomplete.ui-menu {
 	left: 349px!important;
 	border-top: 1px solid #ddd;*/
 }
-
 body.destinations-page .destination-grid-view{
 	margin-top: -70px;
 }
@@ -15922,6 +15925,107 @@ body.activity-list-page .map-content-loading-search-input {
 /*body.home-page .ui-autocomplete.ui-menu {
     width: 45.4% !important;
 }*/
+
+body.home-page section.home-hotels {
+    background: #f7f8f9;
+}
+
+body.home-page section.home-activities {
+    background: #f7f8f9;
+}
+body.home-page .home-blogs .banner{
+	height: 400px!important;
+}
+body.home-page .home-blogs .innerpage-title{
+	display: none;
+}
+
+body.home-page .home-blogs img.post-image {
+	height: 250px;
+}
+
+body.home-page .home-blogs .post-item .card.shadow{
+	border: 1px solid #07509e;
+}
+body.home-page .home-blogs .post-title{
+	color: #07509e!important;
+}
+
+body.home-page .home-blogs .post-item:nth-child(even) .post-read-more{
+	padding: 10px;
+	text-align: center;
+	border-radius: 5px;
+	border: 2px solid #fba009;
+	margin: 0px 5px;
+	color: #fba009!important;
+	text-decoration: none;
+	width: 100%;
+}
+
+body.home-page .home-blogs .post-item:nth-child(even) .post-read-more:hover{
+	background: #07509e;
+	border: 2px solid #07509e;
+	color: #fff!important;
+}
+body.home-page .home-blogs .post-item:nth-child(odd) .post-read-more{
+	background: #fba009;
+	padding: 10px;
+	text-align: center;
+	border-radius: 5px;
+	border: 2px solid #fba009;
+	margin: 0px 5px;
+	color: #fff!important;
+	text-decoration: none;
+	width: 100%;
+}
+body.home-page .home-blogs .post-item:nth-child(odd) .post-read-more:hover{
+	background: #07509e;
+	border: 2px solid #07509e;
+	color: #fff!important;
+
+}
+
+
+body.home-page .home-blogs .post-title {
+	text-transform: none;
+	font-size: 18px;
+	line-height: 24px;
+	color: #07509e!important;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.disabled-link {
+	pointer-events: none;
+}
+
+@media (min-width:320px) and (max-width:768px){
+
+	body.home-page .home-blogs img.post-image {
+		height: auto;
+	}
+
+	body.home-page .home-blogs .post-item:nth-child(even) .post-read-more:hover{
+		background: #07509e;
+		border: 2px solid #07509e;
+		color: #fff!important;
+	}
+
+	body.home-page .home-blogs .post-item:nth-child(odd) .post-read-more:hover{
+		background: #07509e;
+		border: 2px solid #07509e;
+		color: #fff!important;
+
+	}
+	body.page-id-7979 .banner, body.category-blogs .banner {
+		height: 110px!important;
+	}
+	body.home-page .home-blogs .banner{
+	height: 160px!important;
+}
+}
+
+
 body.home-page .ui-autocomplete.ui-menu {
    width: inherit!important;
 }
@@ -15950,6 +16054,8 @@ body.home-page a.blist {
 body.home-page .paddtop1.font-weight.lspace-sm{
     color: #fba009;
 }
+body.home-page .home-activity-title a,
+body.home-page .home-tour-title a,
 body.home-page .home-hotel-title a{
 	color: #fba009;
 }
@@ -15957,6 +16063,12 @@ body.home-page .home-hotel-title a:hover{
 	color: #07509e;
 }
 body.home-page .home-hotels .listroBox figure{
+	height: 200px;
+}
+body.home-page .home-activities .listroBox figure{
+	height: 200px;
+}
+body.home-page .home-tours .listroBox figure{
 	height: 200px;
 }
 /*body.home-page .home-hotels .listroBox{
@@ -16015,7 +16127,13 @@ body.home-page .home-destination-image{
   width:100%;
   height:200px;
 }
+body.home-page .home-activities .listroBox{
+	height:100%;
+}
 body.home-page .home-hotels .listroBox{
+	height:100%;
+}
+body.home-page .home-tours .listroBox{
 	height:100%;
 }
 }
@@ -16160,6 +16278,13 @@ div#currency-dropdown {
 	border-left: 1px solid #D1D4DA;
     height: 20px;
     margin-left: 10px;
+}
+
+div.skiptranslate, #google_translate_element{
+    display: none!important;
+}
+body{
+	top: 0px!important;
 }
 
 @media (min-width:320px) and (max-width:768px){

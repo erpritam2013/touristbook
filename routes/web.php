@@ -39,6 +39,7 @@ use App\Http\Controllers\OtherPackageController;
 use App\Http\Controllers\TourController;
 
 use App\Http\Controllers\CustomIconController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\RegisterController;
 
 use App\Http\Controllers\UserController;
@@ -72,7 +73,14 @@ Route::post('/updateCurrency', function (\Illuminate\Http\Request $request) {
     return response()->json(['message' => 'Session updated successfully', 'success' => true]);
 });
 
-Route::post('/updateLanguage',[PagesController::class, 'language_update'])->name('updateLanguage');
+Route::post('/updateLanguage', function (\Illuminate\Http\Request $request) {
+
+        Session::put('locale',$request->lang);
+        Session::put('languageText',$request->languageText);
+        Session::put('img_src',$request->img_src);
+
+    return response()->json(['message' => 'Change Language successfully', 'success' => true]);
+})->name('updateLanguage');
 
 
 
@@ -109,7 +117,7 @@ Route::get('/get-activities/{view}', [PagesController::class, 'getActivities'])-
 Route::get('/get-locations/{view}', [PagesController::class, 'getLocations'])->name('get-locations');
 Route::get('/get-location-states', [PagesController::class, 'getLocationState'])->name('get-location-state');
 
-
+ 
 
 
 Route::get('/ajax/login-status', [LoginController::class, 'getLoginStatus'])->name('login-status');
@@ -120,6 +128,8 @@ Route::get('/register', [RegisterController::class, 'register'])->name('register
 Route::post('/register-post', [RegisterController::class, 'store'])->name('register-post');
 
 
+Route::get('review-list',[CommentController::class,'index'])->name('review-list');
+Route::post('review-store',[CommentController::class,'commentStore'])->name('review-store');
 
 
 Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () {
