@@ -1163,13 +1163,23 @@ window.ShowHidePassword = () => {
 }
 }
 
-$('.hotel-detail-page .important-note-icon').mouseenter(function(){
+
+$('.hotel-detail-page .important-note-icon').on('click',function(){
     let parent_class = $(this).data('parent_title');
-    $(`body .${parent_class}`).css({visibility:'visible',opacity:1});
+    if (!$(`body .${parent_class}`).hasClass('policy-child')) {
+    $(`body .${parent_class}`).addClass('policy-child');
+    }else{
+    $(`body .${parent_class}`).removeClass('policy-child');
+
+    }
 })
-$('.hotel-detail-page .important-note-icon').mouseleave(function(){
-    let parent_class = $(this).data('parent_title');
-    $(`body .${parent_class}`).css({visibility:'hidden',opacity:0});
-}).mouseleave();
+// $('.hotel-detail-page .important-note-icon').mouseenter(function(){
+//     let parent_class = $(this).data('parent_title');
+//     $(`body .${parent_class}`).css({visibility:'visible',opacity:1});
+// })
+// $('.hotel-detail-page .important-note-icon').mouseleave(function(){
+//     let parent_class = $(this).data('parent_title');
+//     $(`body .${parent_class}`).css({visibility:'hidden',opacity:0});
+// }).mouseleave();
 
 })();
