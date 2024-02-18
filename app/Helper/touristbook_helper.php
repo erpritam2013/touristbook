@@ -306,6 +306,23 @@ return $filteredArray;
 }
 
 }
+if(!function_exists('touristbook_array_filter_by_keys')){
+    function touristbook_array_filter_by_keys($arr,$existed,$filter_staus){
+        $filteredArray = [];
+        if ($filter_staus && !empty($existed)) {
+            if(!empty($arr)){
+                
+             foreach ($existed as $key => $value) {
+              $filteredArray[$value] = $arr[$value];
+          }
+      }
+  }else{
+    $filteredArray = $arr;
+}
+return $filteredArray;
+}
+
+}
 if (!function_exists('parseVideos')) {
   function parseVideos($videoString = null){
     
