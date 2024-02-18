@@ -15,6 +15,6 @@ class MedicareAssistanceComposer
      */
     public function compose(View $view): void
     {
-        $view->with('filterMedicare', $this->medicareRepository->getActiveMedicareAssistancesList(MedicareAssistance::HOTEL_TYPE));
+        $view->with('filterMedicare', $this->medicareRepository->getActiveHotelMedicareAssistancesListFilter(MedicareAssistance::HOTEL_TYPE));
     }
 }

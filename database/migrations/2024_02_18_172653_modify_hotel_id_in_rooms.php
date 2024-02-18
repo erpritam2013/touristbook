@@ -13,9 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
+        if (!Schema::hasColumn('rooms', 'hotel_id')) {
+            
         Schema::table('rooms', function (Blueprint $table) {
-            //
+
+            $table->unsignedBigInteger('hotel_id')->nullable();
+            $table->foreign('hotel_id')->references('id')->on('hotels')->onDelete('cascade');
         });
+        }
     }
 
     /**

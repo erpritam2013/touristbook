@@ -15,6 +15,6 @@ class MeetingAndEventsComposer
      */
     public function compose(View $view): void
     {
-        $view->with('filterMeetingEvents', $this->meetingAndEventsRepository->getActiveMeetingAndEventsList(MeetingAndEvent::HOTEL_TYPE));
+        $view->with('filterMeetingEvents', $this->meetingAndEventsRepository->getActiveHotelMeetingAndEventsListFilter(MeetingAndEvent::HOTEL_TYPE));
     }
 }

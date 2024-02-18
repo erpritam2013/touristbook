@@ -14,5 +14,6 @@ interface MeetingAndEventRepositoryInterface
 
     public function getActiveMeetingAndEventsList($type);
     public function getActiveHotelMeetingAndEventsList();
+    public function getActiveHotelMeetingAndEventsListFilter();
     
 }

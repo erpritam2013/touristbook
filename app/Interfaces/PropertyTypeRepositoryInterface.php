@@ -14,5 +14,6 @@ interface PropertyTypeRepositoryInterface
 
     public function getActivePropertyTypesList($type);
     public function getActiveHotelPropertyTypesList();
+    public function getActiveHotelPropertyTypesListFilter();
     
 }

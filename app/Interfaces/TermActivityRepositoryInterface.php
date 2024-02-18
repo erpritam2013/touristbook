@@ -14,4 +14,5 @@ interface TermActivityRepositoryInterface
 
     public function getActiveTermActivitiesList($type);
     public function getActiveHotelTermActivitiesList();
+    public function getActiveHotelTermActivitiesListFilter();
 }

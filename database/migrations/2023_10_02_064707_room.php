@@ -16,8 +16,7 @@ return new class extends Migration
         Schema::create('rooms', function (Blueprint $table) {
            $table->id();
            // Hotel id 
-            $table->unsignedBigInteger('hotel_id')->nullable();
-            $table->foreign('hotel_id')->references('id')->on('hotels');
+           
             $table->string('name');
             $table->string('slug')->unique();
 

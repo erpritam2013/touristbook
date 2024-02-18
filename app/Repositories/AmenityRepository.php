@@ -68,6 +68,22 @@ class AmenityRepository implements AmenityRepositoryInterface
     // Get all Active Amenities or by Type
     public function getActiveAmenitiesList($type = null) {
         
+       
+
+        $amenityBuilder = Amenity::orderBy('name','asc')->where('status', Amenity::ACTIVE);
+        
+        if($type)
+            $amenityBuilder->where('amenity_type',$type);
+
+        $amenities = $amenityBuilder->get(['id','name', 'parent_id']);
+     
+        $nestedResult = $amenities->toNested();
+      
+        return  $nestedResult;
+    }
+
+    public function getActiveHotelAmenitiesListFilter($type = null)
+    {
         if (!empty($this->commanAmenities)) {
         $amenityBuilder = Amenity::orderBy('name','asc')->where('status', Amenity::ACTIVE)->whereIn('id',$this->commanAmenities);
         }else{
