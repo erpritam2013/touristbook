@@ -66,6 +66,21 @@ class DealsDiscountRepository implements DealsDiscountRepositoryInterface
     // Get all Active Top Services or by Type
     public function getActiveDealsDiscountsList($type = null) {
 
+       
+
+        $dealsDiscountBuilder = DealsDiscount::orderBy('name','asc')->where('status', DealsDiscount::ACTIVE);
+
+        if($type)
+            $dealsDiscountBuilder->where('deals_discount_type',$type);
+
+         $dealsDiscounts = $dealsDiscountBuilder->get(['id','name', 'parent_id']);
+
+        $nestedResult = $dealsDiscounts->toNested();
+
+        return  $nestedResult;
+    }
+    public function getActiveHotelDealsDiscountsListFilter($type = null) {
+
         if(!empty($this->commanDealsDiscount)){
 
         $dealsDiscountBuilder = DealsDiscount::orderBy('name','asc')->where('status', DealsDiscount::ACTIVE)->whereIn('id',$this->commanDealsDiscount);

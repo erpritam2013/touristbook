@@ -68,6 +68,19 @@ class PropertyTypeRepository implements PropertyTypeRepositoryInterface
     // Get all Active PropertyTypes or by Type
     public function getActivePropertyTypesList($type = null) {
 
+        $propertyTypeBuilder = PropertyType::orderBy('name','asc')->where('status', PropertyType::ACTIVE);
+
+        if($type)
+            $propertyTypeBuilder->where('property_type_type',$type);
+
+         $property_types = $propertyTypeBuilder->get(['id','name', 'parent_id']);
+
+        $nestedResult = $property_types->toNested();
+
+        return  $nestedResult;
+    }
+    public function getActiveHotelPropertyTypesListFilter($type = null) {
+
         if (!empty($this->commanPropertyType)) {
             
         $propertyTypeBuilder = PropertyType::orderBy('name','asc')->where('status', PropertyType::ACTIVE)->whereIn('id',$this->commanPropertyType);

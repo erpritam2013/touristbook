@@ -15,6 +15,6 @@ class DealDiscountComposer
      */
     public function compose(View $view): void
     {
-        $view->with('filterDealDiscount', $this->dealDiscountRepository->getActiveDealsDiscountsList(DealsDiscount::HOTEL_TYPE));
+        $view->with('filterDealDiscount', $this->dealDiscountRepository->getActiveHotelDealsDiscountsListFilter(DealsDiscount::HOTEL_TYPE));
     }
 }

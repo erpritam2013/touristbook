@@ -72,7 +72,7 @@ function displayPopup() {
 }
 
 $('#vg-location-id').on('change',function(){
-    let location = $(this).children('option:selected').text();
+    let location = $(this).children('option:selected').attr('l_s_name');
     $('#vg-name').val(location);
 })
 
