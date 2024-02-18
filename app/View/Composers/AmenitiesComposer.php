@@ -15,6 +15,6 @@ class AmenitiesComposer
      */
     public function compose(View $view): void
     {
-        $view->with('filterAmenities', $this->amenityRepository->getActiveAmenitiesList(Amenity::HOTEL_TYPE));
+        $view->with('filterAmenities', $this->amenityRepository->getActiveHotelAmenitiesListFilter(Amenity::HOTEL_TYPE));
     }
 }

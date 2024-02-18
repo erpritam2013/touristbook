@@ -66,6 +66,19 @@ class MedicareAssistanceRepository implements MedicareAssistanceRepositoryInterf
 
     // Get all Active Medicare Assistances or by Type
     public function getActiveMedicareAssistancesList($type = null) {
+      
+        $medicareBuilder = MedicareAssistance::orderBy('name','asc')->where('status', MedicareAssistance::ACTIVE);
+
+        if($type)
+            $medicareBuilder->where('medicare_assistance_type',$type);
+        
+        $medicare_assistances = $medicareBuilder->get(['id','name', 'parent_id']);
+
+        $nestedResult = $medicare_assistances->toNested();
+
+        return  $nestedResult;
+    }
+    public function getActiveHotelMedicareAssistancesListFilter($type = null) {
         if (!empty($this->commanMedicareAssistance)) {
         $medicareBuilder = MedicareAssistance::orderBy('name','asc')->where('status', MedicareAssistance::ACTIVE)->whereIn('id',$this->commanMedicareAssistance);
         }else{

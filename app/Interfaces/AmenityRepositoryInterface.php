@@ -14,5 +14,6 @@ interface AmenityRepositoryInterface
 
     public function getActiveAmenitiesList($type);
     public function getActiveHotelAmenitiesList();
+    public function getActiveHotelAmenitiesListFilter();
     
 }

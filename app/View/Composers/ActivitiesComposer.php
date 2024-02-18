@@ -15,6 +15,6 @@ class ActivitiesComposer
      */
     public function compose(View $view): void
     {
-        $view->with('filterTermActivity', $this->termActivityRepository->getActiveTermActivitiesList(TermActivity::HOTEL_TYPE));
+        $view->with('filterTermActivity', $this->termActivityRepository->getActiveHotelTermActivitiesListFilter(TermActivity::HOTEL_TYPE));
     }
 }

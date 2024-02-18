@@ -66,6 +66,21 @@ class MeetingAndEventRepository implements MeetingAndEventRepositoryInterface
 
     // Get all Active Meeting And Events or by Type
     public function getActiveMeetingAndEventsList($type = null) {
+       
+
+        $meetingAndEventBuilder = MeetingAndEvent::orderBy('name','asc')->where('status', MeetingAndEvent::ACTIVE);
+        
+
+        if($type)
+            $meetingAndEventBuilder->where('meeting_and_event_type',$type);
+
+        $meeting_and_events = $meetingAndEventBuilder->get(['id','name', 'parent_id']);
+
+        $nestedResult = $meeting_and_events->toNested();
+
+        return  $nestedResult;
+    }
+    public function getActiveHotelMeetingAndEventsListFilter($type = null) {
         if (!empty($this->commanMeetingAndEvent)) {
         $meetingAndEventBuilder = MeetingAndEvent::orderBy('name','asc')->where('status', MeetingAndEvent::ACTIVE)->whereIn('id',$this->commanMeetingAndEvent);
         }else{

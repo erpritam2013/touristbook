@@ -14,4 +14,5 @@ interface DealsDiscountRepositoryInterface
 
     public function getActiveDealsDiscountsList($type);
     public function getActiveHotelDealsDiscountsList();
+    public function getActiveHotelDealsDiscountsListFilter();
 }

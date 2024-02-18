@@ -1219,9 +1219,20 @@ if (!function_exists('getSingleRecord')) {
 if (!function_exists('GetVideoGallery')) {
     function GetVideoGallery($location)
     {
+        $state_id = 0; 
+        $state_name = ''; 
+        $state = $location->states()->first();
+        if (!empty($state)) {
+            $state_id = $state->id;
+            $state_name = $state->name;
+        }
+       
         $NamespacedModel = 'App\\Models\\VideoGallery';
 
         $GetVideoGallery = $NamespacedModel::where('name',ucwords($location->name))->orWhere('location_id',$location->id)->first();
+        if (empty($GetVideoGallery)) {
+         $GetVideoGallery = $NamespacedModel::where('name',ucwords($state_name))->orWhere('location_id',$state_id)->first();
+        }
         return $GetVideoGallery;
     }
 }

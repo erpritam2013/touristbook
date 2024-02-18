@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\VideoGallery;
 use App\Models\GalleryVideo;
+use App\Models\Location;
+use App\Models\Terms\State;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -39,6 +41,30 @@ class VideoGalleryController extends Controller
 
 }
 
+
+public function locationState()
+{
+    $locationQ = Location::selectRaw('id, name, "location" as source_type ')
+    ->where('status', 1);
+    $stateQ = State::selectRaw('id, name, "state" as source_type ')
+    ->where('status', 1)
+    ->union($locationQ)
+    ->get();
+
+    $results = [];
+    if($stateQ->isNotEmpty()) {
+        foreach($stateQ as $stateLocation) {
+            array_push($results, [
+                "id" => $stateLocation->id,
+                "label" => $stateLocation->name,
+                "value" => $stateLocation->name,
+                "sourceType" => $stateLocation->source_type
+            ]);
+        }
+    }
+    return $results;
+}
+
     /**
      * Show the form for creating a new resource.
      *
@@ -48,8 +74,9 @@ class VideoGalleryController extends Controller
     {
         $data['title'] = 'Video Gallery';
         $data['video_gallery'] = new VideoGallery();
-        $data['locations'] = getPostData('Location',['id','name']);
 
+        $data['locations'] = $this->locationState();
+    
         return view('admin.settings.video-galleries.create', $data);
     }
 
@@ -155,7 +182,7 @@ class VideoGalleryController extends Controller
     {
         $data['title'] = 'Video Gallery';
         $data['video_gallery'] = VideoGallery::find($id);
-        $data['locations'] = getPostData('Location',['id','name']);
+        $data['locations'] = $this->locationState();
         return view('admin.settings.video-galleries.edit', $data);
     }
 
