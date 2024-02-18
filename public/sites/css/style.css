@@ -11841,10 +11841,11 @@ h1.st-heading-section {
 }
 
 /*hotel detail page start css*/
-i.important-note-icon:hover .important-note-hotel {
+
+/*i.important-note-icon:hover .important-note-hotel {
 	opacity:1;
 	visibility:visible;
-}
+}*/
 body.hotel-detail-page .important-note-hotel * {
     white-space: pre-line;
     color:#fff;
@@ -11861,6 +11862,11 @@ body.hotel-detail-page .important-note-hotel {
     z-index: 999;
 
 }
+body .important-note-hotel.policy-child{
+	visibility:visible!important;
+	opacity:1!important;
+}
+
 
 body.hotel-detail-page .view-important-note{
 	overflow: auto;
@@ -12170,7 +12176,6 @@ body.hotel-detail-page .listingDetails .booking-search > .row {
     	border-color: #07509e;
     	color:#fff;
     }
-
     @media (min-width:320px) and (max-width:768px){
 
     	body.hotel-detail-page .view-important-note{

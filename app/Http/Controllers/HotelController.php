@@ -190,7 +190,7 @@ class HotelController extends Controller
             'check_out' => $request->check_out,
             'book_before_day' => $request->book_before_day,
             'book_before_arrival' => $request->book_before_arrival,
-            'policies' => $request->policy,
+            'policies' => $request->policies,
             'notices' => $request->notices,
             'status' => $request->status,
             'images' => !empty($request->images)?$request->images:Null
@@ -317,7 +317,7 @@ class HotelController extends Controller
             'check_out' => $request->check_out,
             'book_before_day' => $request->book_before_day,
             'book_before_arrival' => $request->book_before_arrival,
-            'policies' => $request->policy,
+            'policies' => $request->policies,
             'notices' => $request->notices,
             'status' => $request->status,
             'images' => !empty($request->images)?$request->images:Null
