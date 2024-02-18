@@ -21,8 +21,11 @@ $top2 = 'top:152px;z-index:99;';
     <div class="swiper-wrapper">
       <!-- Slides-->
 
-   @if(!empty($hotel->detail->gallery) && (is_array($hotel->detail->gallery) || is_object($hotel->detail->gallery)))
-      @foreach($hotel->detail->gallery as $gallery)
+
+
+   @if(!empty($hotel->images) && (is_array($hotel->images) || is_object($hotel->images)))
+     @php $hotel->images = touristbook_array_filter($hotel->images);@endphp
+      @foreach($hotel->images as $gallery)
       @if(!empty($gallery) && isset($gallery['id']))
       <div class="swiper-slide"><a data-toggle="gallery-top" title="hotel gallery" style="width: 452px;height:300px;" ><img
         src="{{ getConversionUrl($gallery['id'],'600x450') }}" alt="Our street" class="img-fluid" style="width: 452px;height:300px;"></a>
@@ -185,8 +188,7 @@ $top2 = 'top:152px;z-index:99;';
                         href="hotel-detailed.html">{{ $room->name }}</a>
                       </h3>
                       <div class="TravelGo-category-location fl-wrap"><a
-                        href="javascript:void(0);" class="map-item"><i
-                        class="fas fa-map-marker-alt"></i>
+                        href="javascript:void(0);" class="map-item">{!!getNewIcon('Ico_maps', '#666666', '16px', '16px', true)!!}
                         {{ $room->address ?? ""}} </a>
                       </div>
                     </div>
