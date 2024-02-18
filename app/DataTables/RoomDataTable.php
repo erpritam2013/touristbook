@@ -30,7 +30,12 @@ class RoomDataTable extends DataTable
                 })->editColumn('created_at', function($row) {
                     return date('d-m-Y',strtotime($row->created_at));
                 })->editColumn('hotel_id', function($row) {
-                    return $row->hotels->name;
+                   // return (!empty($row->hotels))?$row->hotels->name:'';
+                    $a_html = 'Hotel Not Selected'; 
+                    if (!empty($row->hotels)) {
+                        $a_html = '<a href="'.route('admin.hotels.edit',$row->hotels->id).'" class="btn btn-info" title="'.$row->hotels->name.'" target="_blank">'.$row->hotels->name.'</a>';
+                    }
+                    return $a_html;
                 })->editColumn('updated_at', function($row) {
                     return date('d-m-Y',strtotime($row->updated_at));
                 })->addColumn('status', function($row) {
@@ -44,7 +49,7 @@ class RoomDataTable extends DataTable
                     return ($hotelDetail) ? $hotelDetail->map_address : '';
                 })->addColumn('del',function($row){
                  return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'">';
-            })->rawColumns(['status','action','del','address']);
+            })->rawColumns(['status','action','del','address','hotel_id']);
     }
 
     /**
