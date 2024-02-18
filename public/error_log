@@ -25,3 +25,4 @@
 [10-Feb-2024 11:38:08 UTC] PHP Parse error:  Unclosed '{' on line 1143 in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 1586
 [10-Feb-2024 11:38:10 UTC] PHP Parse error:  Unclosed '{' on line 1143 in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 1586
 [12-Feb-2024 12:21:12 UTC] PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /home1/atestimc/public_html/touristbook/storage/framework/views/0807a765d70c0aeee36c95a1bf4ebb5ec0b576e0.php on line 18
+[18-Feb-2024 19:40:47 UTC] PHP Parse error:  Unclosed '{' on line 489 in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 496

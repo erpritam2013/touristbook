@@ -16,6 +16,6 @@ class PropertyTypeComposer
     public function compose(View $view): void
     {
         
-        $view->with('filterPropertyTypes', $this->propertyTypeRepository->getActivePropertyTypesList(PropertyType::HOTEL_TYPE));
+        $view->with('filterPropertyTypes', $this->propertyTypeRepository->getActiveHotelPropertyTypesListFilter(PropertyType::HOTEL_TYPE));
     }
 }
