@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('rooms', function (Blueprint $table) {
-            //
+            $table->bigInteger('ref_id');
         });
     }
 
