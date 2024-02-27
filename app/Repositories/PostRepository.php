@@ -15,6 +15,11 @@ class PostRepository implements PostRepositoryInterface
     {
         return Post::findOrFail($postId);
     }
+    public function forceDeletePost($postId)
+    {
+     
+        Post::onlyTrashed()->find($postId)->forceDelete();
+    }
     public function deletePost($postId)
     {
         Post::destroy($postId);
@@ -23,6 +28,10 @@ class PostRepository implements PostRepositoryInterface
     public function deleteBulkPost($postId)
     {
          Post::whereIn('id', $postId)->delete();
+    }
+    public function forceBulkDeletePost($postId)
+    {
+         Post::onlyTrashed()->whereIn('id', $postId)->forceDelete();
     }
     public function createPost(array $postDetails)
     {

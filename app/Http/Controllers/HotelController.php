@@ -23,6 +23,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\DataTables\HotelDataTable;
+use App\DataTables\TrashedHotelDataTable;
 use Session;
 
 class HotelController extends Controller
@@ -109,8 +110,10 @@ class HotelController extends Controller
 
     public function index(HotelDataTable $dataTable)
     {
+
         $data['hotels'] = Hotel::count();
         $data['title'] = 'Hotel List';
+        $data['trashed'] = Hotel::onlyTrashed()->count();
         return $dataTable->render('admin.hotels.index', $data);
     }
 
@@ -168,117 +171,117 @@ class HotelController extends Controller
         ]);
        }
         // $images = json_decode($request->images);
-        $hotelDetails = [
-            'name' => $request->name,
-            'description' => $request->description,
-            'slug' => SlugService::createSlug(Hotel::class, 'slug', $request->name),
-            'external_link' => $request->external_link,
-            'food_dining' => $request->food_dining,
-            'is_featured' => $request->is_featured,
+       $hotelDetails = [
+        'name' => $request->name,
+        'description' => $request->description,
+        'slug' => SlugService::createSlug(Hotel::class, 'slug', $request->name),
+        'external_link' => $request->external_link,
+        'food_dining' => $request->food_dining,
+        'is_featured' => $request->is_featured,
             // TODO: logo and featured_image ----> S3 Integration
-            'featured_image' => $request->featured_image,
-            'hotel_video' => $request->hotel_video,
-            'rating' => !empty($request->rating)?$request->rating:0,
-            'coupon_code' => $request->coupon_code,
-            'hotel_attributes' => $request->hotel_attributes,
-            'contact' => $request->contact,
-            'address' => $request->address,
-            'avg_price' => !empty($request->avg_price)?$request->avg_price:0,
-            'is_allowed_full_day' => $request->is_allowed_full_day,
+        'featured_image' => $request->featured_image,
+        'hotel_video' => $request->hotel_video,
+        'rating' => !empty($request->rating)?$request->rating:0,
+        'coupon_code' => $request->coupon_code,
+        'hotel_attributes' => $request->hotel_attributes,
+        'contact' => $request->contact,
+        'address' => $request->address,
+        'avg_price' => !empty($request->avg_price)?$request->avg_price:0,
+        'is_allowed_full_day' => $request->is_allowed_full_day,
             // TODO: check_in, check_out jquery plugin for time setup
-            'check_in' => $request->check_in,
-            'check_out' => $request->check_out,
-            'book_before_day' => $request->book_before_day,
-            'book_before_arrival' => $request->book_before_arrival,
-            'policies' => $request->policies,
-            'notices' => $request->notices,
-            'status' => $request->status,
-            'images' => !empty($request->images)?$request->images:Null
+        'check_in' => $request->check_in,
+        'check_out' => $request->check_out,
+        'book_before_day' => $request->book_before_day,
+        'book_before_arrival' => $request->book_before_arrival,
+        'policies' => $request->policies,
+        'notices' => $request->notices,
+        'status' => $request->status,
+        'images' => !empty($request->images)?$request->images:Null
             // TODO: created_by pending as Authentication is not Yet Completed
-        ];
+    ];
 
-        $hotel = $this->hotelRepository->createHotel($hotelDetails);
+    $hotel = $this->hotelRepository->createHotel($hotelDetails);
 
-        if ($hotel) {
+    if ($hotel) {
             // TODO: Move this to Repository
 
-            $hotel->detail()->create($request->only([
-                'map_address',
-                'latitude',
-                'longitude',
-                'zoom_level',
-                'highlights',
-                'facilityAmenities',
-                'foods',
-                'drinks',
-                'complimentary',
-                'helpfulfacts',
-                'save_pocket',
-                'pocketPDF',
-                'save_environment',
-                'landmark',
-                'todo',
-                'offers',
-                'todovideo',
-                'eventmeeting',
-                'tourism_zone',
-                'social_links',
-                'tourism_zone_heading',
-                'tourismzonepdf',
-                'activities',
-                'room_amenities',
-                'transport',
-                'payment_mode',
-                'id_proofs',
-                'emergencyLinks',
-            ]));
+        $hotel->detail()->create($request->only([
+            'map_address',
+            'latitude',
+            'longitude',
+            'zoom_level',
+            'highlights',
+            'facilityAmenities',
+            'foods',
+            'drinks',
+            'complimentary',
+            'helpfulfacts',
+            'save_pocket',
+            'pocketPDF',
+            'save_environment',
+            'landmark',
+            'todo',
+            'offers',
+            'todovideo',
+            'eventmeeting',
+            'tourism_zone',
+            'social_links',
+            'tourism_zone_heading',
+            'tourismzonepdf',
+            'activities',
+            'room_amenities',
+            'transport',
+            'payment_mode',
+            'id_proofs',
+            'emergencyLinks',
+        ]));
 
 
-            $hotel->facilities()->attach($request->get('facilities'));
-            $hotel->amenities()->attach($request->get('amenities'));
-            $hotel->medicare_assistances()->attach($request->get('medicares'));
-            $hotel->top_services()->attach($request->get('topServices'));
-            $hotel->places()->attach($request->get('places'));
-            $hotel->propertyTypes()->attach($request->get('propertyTypes'));
-            $hotel->accessibles()->attach($request->get('accessibles'));
-            $hotel->meetingEvents()->attach($request->get('meetingAndEvents'));
-            $hotel->states()->attach($request->get('state_id'));
-            $hotel->occupancies()->attach($request->get('occupancies'));
-            $hotel->deals()->attach($request->get('deals'));
-            $hotel->activities()->attach($request->get('activitiescard'));
-            $hotel->locations()->attach($request->get('location_id'));
+        $hotel->facilities()->attach($request->get('facilities'));
+        $hotel->amenities()->attach($request->get('amenities'));
+        $hotel->medicare_assistances()->attach($request->get('medicares'));
+        $hotel->top_services()->attach($request->get('topServices'));
+        $hotel->places()->attach($request->get('places'));
+        $hotel->propertyTypes()->attach($request->get('propertyTypes'));
+        $hotel->accessibles()->attach($request->get('accessibles'));
+        $hotel->meetingEvents()->attach($request->get('meetingAndEvents'));
+        $hotel->states()->attach($request->get('state_id'));
+        $hotel->occupancies()->attach($request->get('occupancies'));
+        $hotel->deals()->attach($request->get('deals'));
+        $hotel->activities()->attach($request->get('activitiescard'));
+        $hotel->locations()->attach($request->get('location_id'));
             // activitiescard
-        }
+    }
         // return $hotel;
-        Session::flash('success','Hotel Created Successfully');
-        return redirect()->Route('admin.hotels.index');
+    Session::flash('success','Hotel Created Successfully');
+    return redirect()->Route('admin.hotels.index');
+}
+
+public function changeStatus(Request $request): JsonResponse
+{
+    $hotelId = $request->id;
+    $hotelDetails = [
+        'status' => $request->status,
+    ];
+    $this->hotelRepository->updateHotel($hotelId, $hotelDetails);
+
+    return response()->json(['success' => 'Status change successfully.']);
+}
+
+public function show(Request $request)
+{
+    $hotelId = $request->route('hotelId');
+
+    $hotel = $this->hotelRepository->getHotelById($hotelId);
+
+    if (empty($hotel)) {
+        return back();
     }
-
-    public function changeStatus(Request $request): JsonResponse
-    {
-        $hotelId = $request->id;
-        $hotelDetails = [
-            'status' => $request->status,
-        ];
-        $this->hotelRepository->updateHotel($hotelId, $hotelDetails);
-
-        return response()->json(['success' => 'Status change successfully.']);
-    }
-
-    public function show(Request $request)
-    {
-        $hotelId = $request->route('hotelId');
-
-        $hotel = $this->hotelRepository->getHotelById($hotelId);
-
-        if (empty($hotel)) {
-            return back();
-        }
 
         // return view('tasks.show', ['task' => $task]);
-    }
-    public function update(UpdateHotelRequest $request, Hotel $hotel)
-    {
+}
+public function update(UpdateHotelRequest $request, Hotel $hotel)
+{
 
 
        //    if (isset($request->featured_image)) {
@@ -287,46 +290,46 @@ class HotelController extends Controller
        //      'featured_image' => json_decode($request->featured_image,true),
        //  ]);
        // }
-        if($request->images == '' || empty($request->images) || $request->images == '"[]"' ) {
-           $request->merge([
-            'images' => "[]",
-        ]);
-       }
+    if($request->images == '' || empty($request->images) || $request->images == '"[]"' ) {
+       $request->merge([
+        'images' => "[]",
+    ]);
+   }
 
 
        // $images = json_decode($request->images);
-        $hotelDetails = [
-            'name' => $request->name,
-            'description' => $request->description,
+   $hotelDetails = [
+    'name' => $request->name,
+    'description' => $request->description,
            // 'slug' => (!empty($request->slug) && $hotel->slug != $request->slug)?SlugService::createSlug(Hotel::class, 'slug', $request->slug):$hotel->slug,
-            'external_link' => $request->external_link,
-            'food_dining' => $request->food_dining,
-            'is_featured' => $request->is_featured,
+    'external_link' => $request->external_link,
+    'food_dining' => $request->food_dining,
+    'is_featured' => $request->is_featured,
             // TODO: logo and featured_image ----> S3 Integration
-            'featured_image' => $request->featured_image,
-            'hotel_video' => $request->hotel_video,
-            'rating' => !empty($request->rating)?$request->rating:0,
-            'coupon_code' => $request->coupon_code,
-            'hotel_attributes' => $request->hotel_attributes,
-            'contact' => $request->contact,
-            'address' => $request->address,
-            'avg_price' => !empty($request->avg_price)?$request->avg_price:0,
-            'is_allowed_full_day' => $request->is_allowed_full_day,
+    'featured_image' => $request->featured_image,
+    'hotel_video' => $request->hotel_video,
+    'rating' => !empty($request->rating)?$request->rating:0,
+    'coupon_code' => $request->coupon_code,
+    'hotel_attributes' => $request->hotel_attributes,
+    'contact' => $request->contact,
+    'address' => $request->address,
+    'avg_price' => !empty($request->avg_price)?$request->avg_price:0,
+    'is_allowed_full_day' => $request->is_allowed_full_day,
             // TODO: check_in, check_out jquery plugin for time setup
-            'check_in' => $request->check_in,
-            'check_out' => $request->check_out,
-            'book_before_day' => $request->book_before_day,
-            'book_before_arrival' => $request->book_before_arrival,
-            'policies' => $request->policies,
-            'notices' => $request->notices,
-            'status' => $request->status,
-            'images' => !empty($request->images)?$request->images:Null
+    'check_in' => $request->check_in,
+    'check_out' => $request->check_out,
+    'book_before_day' => $request->book_before_day,
+    'book_before_arrival' => $request->book_before_arrival,
+    'policies' => $request->policies,
+    'notices' => $request->notices,
+    'status' => $request->status,
+    'images' => !empty($request->images)?$request->images:Null
             // TODO: created_by pending as Authentication is not Yet Completed
-        ];
+];
 
-        $this->hotelRepository->updateHotel($hotel->id, $hotelDetails);
+$this->hotelRepository->updateHotel($hotel->id, $hotelDetails);
 
-        if ($hotel) {
+if ($hotel) {
       //     dd( $request->todovideo);
       //       if ($request->has('todovideo') && $request->todovideo == 0) {
       //     $request->merge([
@@ -335,82 +338,150 @@ class HotelController extends Controller
       // }
 
             // TODO: Move this to Repository
-            $hotel->detail()->update($request->only([
-                'map_address',
-                'latitude',
-                'longitude',
-                'zoom_level',
-                'highlights',
-                'facilityAmenities',
-                'foods',
-                'drinks',
-                'complimentary',
-                'helpfulfacts',
-                'save_pocket',
-                'pocketPDF',
-                'save_environment',
-                'landmark',
-                'todo',
-                'offers',
-                'todovideo',
-                'eventmeeting',
-                'tourism_zone',
-                'tourism_zone_heading',
-                'tourismzonepdf',
-                'social_links',
-                'activities',
-                'room_amenities',
-                'transport',
-                'payment_mode',
-                'id_proofs',
-                'emergencyLinks',
-            ]));
+    $hotel->detail()->update($request->only([
+        'map_address',
+        'latitude',
+        'longitude',
+        'zoom_level',
+        'highlights',
+        'facilityAmenities',
+        'foods',
+        'drinks',
+        'complimentary',
+        'helpfulfacts',
+        'save_pocket',
+        'pocketPDF',
+        'save_environment',
+        'landmark',
+        'todo',
+        'offers',
+        'todovideo',
+        'eventmeeting',
+        'tourism_zone',
+        'tourism_zone_heading',
+        'tourismzonepdf',
+        'social_links',
+        'activities',
+        'room_amenities',
+        'transport',
+        'payment_mode',
+        'id_proofs',
+        'emergencyLinks',
+    ]));
 
 
-            $hotel->facilities()->sync($request->get('facilities'));
-            $hotel->amenities()->sync($request->get('amenities'));
-            $hotel->medicare_assistances()->sync($request->get('medicares'));
-            $hotel->top_services()->sync($request->get('topServices'));
-            $hotel->places()->sync($request->get('places'));
-            $hotel->propertyTypes()->sync($request->get('propertyTypes'));
-            $hotel->accessibles()->sync($request->get('accessibles'));
-            $hotel->meetingEvents()->sync($request->get('meetingAndEvents'));
-           
-            $hotel->states()->sync($request->get('state_id'));
-           
-            $hotel->occupancies()->sync($request->get('occupancies'));
-            $hotel->deals()->sync($request->get('deals'));
-            $hotel->activities()->sync($request->get('activitiescard'));
-            $hotel->locations()->sync($request->get('location_id'));
+    $hotel->facilities()->sync($request->get('facilities'));
+    $hotel->amenities()->sync($request->get('amenities'));
+    $hotel->medicare_assistances()->sync($request->get('medicares'));
+    $hotel->top_services()->sync($request->get('topServices'));
+    $hotel->places()->sync($request->get('places'));
+    $hotel->propertyTypes()->sync($request->get('propertyTypes'));
+    $hotel->accessibles()->sync($request->get('accessibles'));
+    $hotel->meetingEvents()->sync($request->get('meetingAndEvents'));
+
+    $hotel->states()->sync($request->get('state_id'));
+
+    $hotel->occupancies()->sync($request->get('occupancies'));
+    $hotel->deals()->sync($request->get('deals'));
+    $hotel->activities()->sync($request->get('activitiescard'));
+    $hotel->locations()->sync($request->get('location_id'));
             // activitiescard
-        }
+}
         // return $hotel;
-        Session::flash('success','Hotel Updated Successfully');
-        if(!is_null($request->iscompleted)) {
-            $hotel->freeEditing();
-            return redirect()->Route('admin.hotels.index');
-        }
-        return redirect()->Route('admin.hotels.edit',$hotel->id);
-    }
+Session::flash('success','Hotel Updated Successfully');
+if(!is_null($request->iscompleted)) {
+    $hotel->freeEditing();
+    return redirect()->Route('admin.hotels.index');
+}
+return redirect()->Route('admin.hotels.edit',$hotel->id);
+}
 
-    public function destroy(Hotel $hotel)
+public function destroy(Hotel $hotel)
+{
+    $hotelId = $hotel->id;
+
+    $this->hotelRepository->deleteHotel($hotelId);
+    Session::flash('success','Hotel Trashed Successfully');
+    return back();
+}
+
+
+public function bulk_delete(Request $request)
+{
+    if (!empty($request->ids)) {
+
+        $hotelIds = get_array_mapping(json_decode($request->ids));
+        $this->hotelRepository->deleteBulkHotel($hotelIds);
+        Session::flash('success', 'Hotel Bulk Trashed Successfully');
+    }
+    return back();
+}
+
+public function trashed_hotels(TrashedHotelDataTable $dataTable)
+{
+
+    $trashed_hotels = Hotel::onlyTrashed()->get();
+    $data['trashed_count'] = $trashed_hotels->count();
+        //$data['trashed_hotels'] = $trashed_hotels;
+    $data['title'] = 'Trash Hotel List';
+        // dump(Hotel::onlyTrashed()->get());
+        // dd( $data['trashed']);
+    return $dataTable->render('admin.hotels.trashed', $data);
+}
+
+public function restore_hotels(Request $request)
+{
+    $ids = [];
+    if (!empty($request->ids)) {
+       $ids =  get_array_mapping(json_decode($request->ids));
+
+   }
+
+   if (!empty($ids)) {
+     Hotel::whereIn('id',$ids)->withTrashed()->restore();
+ }else{
+   Hotel::onlyTrashed()->restore();
+}
+Session::flash('success','Hotel Restored Successfully');
+return redirect()->back();
+}
+
+public function restore_hotel(Request $request,$id)
+{
+    $hotel = Hotel::withTrashed()->find($id);
+    if ($hotel == null)
     {
-        $hotelId = $hotel->id;
-
-        $this->hotelRepository->deleteHotel($hotelId);
-        Session::flash('success','Hotel Deleted Successfully');
-        return back();
+        abort(404);
     }
 
+    $hotel->restore();
+    Session::flash('success','Hotel Restored Successfully');
+    return redirect()->back();
+}
+public function bulk_force_delete(Request $request)
+{
 
-    public function bulk_delete(Request $request)
-    {
-        if (!empty($request->ids)) {
 
-            $hotelIds = get_array_mapping(json_decode($request->ids));
-            $this->hotelRepository->deleteBulkHotel($hotelIds);
-            Session::flash('success', 'Hotel Bulk Deleted Successfully');
-        }
-        return back();
+    if (!empty($request->fd_ids)) {
+
+        $hotelIds = get_array_mapping(json_decode($request->fd_ids));
+        $this->hotelRepository->forceBulkDeleteHotel($hotelIds);
+        Session::flash('success', 'Hotel Bulk Permanent Deleted Successfully');
     }
+    return back();
+}
+
+public function permanent_delete($id)
+{
+    $this->hotelRepository->forceDeleteHotel($id);
+    Session::flash('success','Hotel Permanent Deleted Successfully');
+    return back();
+}
+public function empty_trashed(Request $request)
+{
+
+    Hotel::onlyTrashed()->forceDelete();
+    Session::flash('success','Hotel Empty Trashed Successfully');
+    return redirect()->back();
+}
 }

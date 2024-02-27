@@ -18,6 +18,7 @@ use App\Models\Terms\State;
 use App\Models\Terms\TermActivity;
 use App\Models\Terms\TopService;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -25,7 +26,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Hotel extends Model
 {
-    use HasFactory, Sluggable;
+    use HasFactory, Sluggable, SoftDeletes;
 
     const ACTIVE = 1;
     const INACTIVE = 0;

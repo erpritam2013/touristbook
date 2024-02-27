@@ -26,6 +26,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use App\DataTables\PageDataTable;
+use App\DataTables\TrashedPageDataTable;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use DB;
 use Auth;
@@ -50,70 +51,70 @@ public function index() {
  $data['post_type'] = 'Home';
  $data['title'] = 'Home';
  $data['body_class'] = 'home-page';
-
  
-  $page_id = Setting::get_setting('home_page');
-    
-    $page = Page::find($page_id);
-    if ($page) {
-        $data['page'] = $page;
-    }
 
-    $data = $this->home_page_content($data,$page);
- return view('sites.pages.home',$data);
+ $page_id = Setting::get_setting('home_page');
+
+ $page = Page::find($page_id);
+ if ($page) {
+    $data['page'] = $page;
+}
+
+$data = $this->home_page_content($data,$page);
+return view('sites.pages.home',$data);
 }
 public function home_page_content($data,$page_data)
 {     
-      if(!empty($page_data)){
+  if(!empty($page_data)){
       $existed_hotels = $page_data->extra_data['hotels'] ?? [];
       $existed_tours = $page_data->extra_data['tours'] ?? [];
       $existed_locations = $page_data->extra_data['locations'] ?? [];
       $existed_activities = $page_data->extra_data['activities'] ?? [];
       $existed_blogs = $page_data->extra_data['blogs'] ?? [];
 
-      }
+  }
 
-      $locations = Location::query();
-      $hotels = Hotel::query();
-      $activities = Activity::query();
-      $tours = Tour::query();
-      $posts = Post::query();
+  $locations = Location::query();
+  $hotels = Hotel::query();
+  $activities = Activity::query();
+  $tours = Tour::query();
+  $posts = Post::query();
 
-      if (isset($existed_hotels) && !empty($existed_hotels)) {
-           $hotels->whereIn('id',$existed_hotels);
-      }else{
-           $hotels->latest();
-      }
+  if (isset($existed_hotels) && !empty($existed_hotels)) {
+   $hotels->whereIn('id',$existed_hotels);
+}else{
+   $hotels->latest();
+}
 
-      if (isset($existed_tours) && !empty($existed_tours)) {
-          $tours->whereIn('id',$existed_tours);
-      }else{
-           $tours->latest();
-      }
-      if (isset($existed_locations) && !empty($existed_locations)) {
-             $locations->whereIn('id',$existed_locations);
-      }else{
-           $locations->latest();
-      }
-      if (isset($existed_blogs) && !empty($existed_blogs)) {
-           $posts->whereIn('id',$existed_blogs);
-      }else{
-           $posts->latest();
-      }
+if (isset($existed_tours) && !empty($existed_tours)) {
+  $tours->whereIn('id',$existed_tours);
+}else{
+   $tours->latest();
+}
+if (isset($existed_locations) && !empty($existed_locations)) {
+ $locations->whereIn('id',$existed_locations);
+}else{
+   $locations->latest();
+}
+if (isset($existed_blogs) && !empty($existed_blogs)) {
+   $posts->whereIn('id',$existed_blogs);
+}else{
+   $posts->latest();
+}
 
-      if (isset($existed_activities) && !empty($existed_activities)) {
-           $activities->whereIn('id',$existed_activities);
-      }else{
-           $activities->latest();
-      }
+if (isset($existed_activities) && !empty($existed_activities)) {
+   $activities->whereIn('id',$existed_activities);
+}else{
+   $activities->latest();
+}
 
-      $data['home_hotels'] = $hotels->limit(6)->get(['id','name','slug','featured_image','avg_price','address']);
-      $data['home_activities'] = $activities->limit(6)->get(['id','name','slug','featured_image','price']);
-      $data['home_tours'] = $tours->limit(6)->get(['id','name','slug','featured_image','price']);
-      $data['home_posts'] = $posts->limit(6)->get(['id','name','slug','featured_image','excerpt','description']);
-      $data['home_destinations'] =$locations->latest()->limit(5)->get(['id','name','slug','featured_image']);
+$data['home_hotels'] = $hotels->limit(6)->get(['id','name','slug','featured_image','avg_price','address']);
+$data['home_activities'] = $activities->limit(6)->get(['id','name','slug','featured_image','price']);
+$data['home_tours'] = $tours->limit(6)->get(['id','name','slug','featured_image','price']);
+$data['home_posts'] = $posts->limit(6)->get(['id','name','slug','featured_image','excerpt','description']);
+$data['home_destinations'] =$locations->latest()->limit(5)->get(['id','name','slug','featured_image']);
 
-      return $data;
+return $data;
 }
 
 
@@ -122,7 +123,8 @@ public function pages(PageDataTable $dataTable)
     $pages = $this->pageRepository->getAllPages();
     $data = [
         'title'     => 'Pages',
-        'pages'     => $pages->count()
+        'pages'     => $pages->count(),
+        'trashed' => Page::onlyTrashed()->count()
     ];
     return $dataTable->render('admin.pages.index',$data);
 }
@@ -143,7 +145,7 @@ public function hotels(Request $request) {
     $data['searchTerm'] = $request->get('search');
     $data['sourceType'] = $request->get('source_type');
     $data['sourceId'] = $request->get('source_id');
-     $page_id = Setting::get_setting('hotel_list_page');
+    $page_id = Setting::get_setting('hotel_list_page');
     
     $page = Page::find($page_id);
     if ($page) {
@@ -169,7 +171,7 @@ public function connecting_partners() {
     $data['title'] = 'Connecting Partners';
     $data['body_class'] = 'connecting-partners-page';
 
-     $page_id = Setting::get_setting('connecting_partner_page');
+    $page_id = Setting::get_setting('connecting_partner_page');
     
     $page = Page::find($page_id);
     if ($page) {
@@ -180,24 +182,24 @@ public function connecting_partners() {
 
 public function language_update(Request $request)
 {
-        App::setLocale($request->lang);
-        Session::put('locale',$request->lang);
-        Session::put('languageText',$request->languageText);
-        Session::put('img_src',$request->img_src);
+    App::setLocale($request->lang);
+    Session::put('locale',$request->lang);
+    Session::put('languageText',$request->languageText);
+    Session::put('img_src',$request->img_src);
 
-return response()->json(['message' => 'Change Language successfully', 'success' => true]);
+    return response()->json(['message' => 'Change Language successfully', 'success' => true]);
 }
 
 public function blogs(Request $request,$term='',$slug='') {
-    
+
     $data['post_type'] = 'Blog';
     $data['title'] = 'Blogs';
     $data['body_class'] = 'blog-page';
     if ($term == 'category') {
-    $data['category'] = $slug;
+        $data['category'] = $slug;
     }
     if ($term == 'tag') {
-    $data['tag'] = $slug;
+        $data['tag'] = $slug;
     }
 
     $page_id = Setting::get_setting('post_list_page');
@@ -256,39 +258,39 @@ public function page_templates(Request $request,$view)
         $category = Category::where('slug','blog')->first();
         $data['hotels'] = Hotel::where('status',1)->get(['id','name'])->map(function($item, $key){
 
-               return (object)[
-                    'id' => $item->id,
-                    'value' => $item->name,
-                ];
-        });
+           return (object)[
+            'id' => $item->id,
+            'value' => $item->name,
+        ];
+    });
         $data['blogs'] = $category->posts()->get()->map(function($item, $key){
 
-               return (object)[
-                    'id' => $item->id,
-                    'value' => $item->name,
-                ];
-        });
+           return (object)[
+            'id' => $item->id,
+            'value' => $item->name,
+        ];
+    });
         $data['tours'] = Tour::where('status',1)->get(['id','name'])->map(function($item, $key){
 
-               return (object)[
-                    'id' => $item->id,
-                    'value' => $item->name,
-                ];
-        });
+           return (object)[
+            'id' => $item->id,
+            'value' => $item->name,
+        ];
+    });
         $data['locations'] = Location::where('status',1)->get(['id','name'])->map(function($item, $key){
 
-               return (object)[
-                    'id' => $item->id,
-                    'value' => $item->name,
-                ];
-        });
+           return (object)[
+            'id' => $item->id,
+            'value' => $item->name,
+        ];
+    });
         $data['activities'] = Activity::where('status',1)->get(['id','name'])->map(function($item, $key){
 
-               return (object)[
-                    'id' => $item->id,
-                    'value' => $item->name,
-                ];
-        });
+           return (object)[
+            'id' => $item->id,
+            'value' => $item->name,
+        ];
+    });
     }
 
     return View::make('admin.pages.page_templates.'.$view,$data);
@@ -301,7 +303,7 @@ public function our_packages(Request $request) {
     $data['searchTerm'] = $request->get('search');
     $data['sourceType'] = $request->get('source_type');
     $data['sourceId'] = $request->get('source_id');
-     $page_id = Setting::get_setting('tour_list_page');
+    $page_id = Setting::get_setting('tour_list_page');
     
     $page = Page::find($page_id);
     if ($page) {
@@ -326,8 +328,8 @@ public function contact() {
 
 public function send_contact(Request $request)
 {
-     Session::flash('success','Contact Form Send Successfully');
-     redirect()->back();
+ Session::flash('success','Contact Form Send Successfully');
+ redirect()->back();
 }
 
 
@@ -354,12 +356,12 @@ public function hotelDetail(Request $request, $slug) {
     $data['tourismZone'] =  $state->tourism_zones()->first();
 }
         // dd($hotel);
- $page_id = Setting::get_setting('hotel_detail_list_page');
-    $page = Page::find($page_id);
-    if ($page) {
-        $data['page'] = $page;
-    }
-    
+$page_id = Setting::get_setting('hotel_detail_list_page');
+$page = Page::find($page_id);
+if ($page) {
+    $data['page'] = $page;
+}
+
 
 return view('sites.pages.hotel-detail', $data);
 }
@@ -463,7 +465,7 @@ public function postDetail(Request $request, $slug) {
     if(!$post) {
         abort(404);
     }
-  
+
     $data['post'] = $post;
     $data['title'] = ucwords($post->name).' :: '.ucwords($post->name);
     $data['body_class'] = 'post-detail-page';
@@ -475,8 +477,8 @@ public function postDetail(Request $request, $slug) {
     $data['related_posts'] = $postQuery->get();
     $data['related_tags'] = Tag::latest()->limit(12)->get();
     
-     $data['previous'] = Post::where('id', '<', $post->id)->max('slug');
-     $data['next'] = Post::where('id', '>', $post->id)->min('slug');
+    $data['previous'] = Post::where('id', '<', $post->id)->max('slug');
+    $data['next'] = Post::where('id', '>', $post->id)->min('slug');
 
     return view('sites.pages.post-detail', $data);
 
@@ -575,55 +577,55 @@ public function getposts(Request $request, $term = "",$slug = "",$view = "grid")
     $title = 'Blogs';
     if (!empty($slug)) {
      $title = purify_string($slug,'ucwords');
-    }
-    
-    $postQuery = Post::query();
-    $postQuery->selectRaw(' posts.*');
+ }
 
-    
-    if (!empty($term) && $term == 'category') {
+ $postQuery = Post::query();
+ $postQuery->selectRaw(' posts.*');
 
-       $category = Category::where('slug',$slug)->first();
-       $category_id = !empty($category)?$category->id:0;
-       $postQuery->join('post_categories','posts.id','=','post_categories.post_id');
-       $postQuery->where('post_categories.category_id',$category_id);
-    }elseif (!empty($term) && $term == 'tag') {
-       $tag = Tag::where('slug',$slug)->first();
-       $tag_id = !empty($tag)?$tag->id:0;
-       $postQuery->join('post_tags','posts.id','=','post_tags.post_id');
-       $postQuery->where('post_tags.tag_id',$tag_id);
-    }
+
+ if (!empty($term) && $term == 'category') {
+
+   $category = Category::where('slug',$slug)->first();
+   $category_id = !empty($category)?$category->id:0;
+   $postQuery->join('post_categories','posts.id','=','post_categories.post_id');
+   $postQuery->where('post_categories.category_id',$category_id);
+}elseif (!empty($term) && $term == 'tag') {
+   $tag = Tag::where('slug',$slug)->first();
+   $tag_id = !empty($tag)?$tag->id:0;
+   $postQuery->join('post_tags','posts.id','=','post_tags.post_id');
+   $postQuery->where('post_tags.tag_id',$tag_id);
+}
         // category
-    if($request->has('category') && !empty($request->get('category'))) {
-        $categoryValue = $request->get('category');
-        $category = $categoryValue;
-        $postQuery->where('post_categories.category_id', $category);
-    }
+if($request->has('category') && !empty($request->get('category'))) {
+    $categoryValue = $request->get('category');
+    $category = $categoryValue;
+    $postQuery->where('post_categories.category_id', $category);
+}
 
-   
+
 
         // Search Params
-    if($request->has('sourceType') && !empty($request->get('sourceType'))) {
+if($request->has('sourceType') && !empty($request->get('sourceType'))) {
             //search in address
-        $sourceType = $request->get('sourceType');
+    $sourceType = $request->get('sourceType');
             // TODO: JSON Treatment is Pending
             // TODO: title
-        $postQuery->where('posts.name', 'LIKE', '%'.$sourceType.'%');
-    }
+    $postQuery->where('posts.name', 'LIKE', '%'.$sourceType.'%');
+}
 
 
-    $pageNumber = 1;
-    if($request->has('pageNo') && !empty($request->get('pageNo'))) {
-        $pageNumber = $request->get('pageNo');
-    }
+$pageNumber = 1;
+if($request->has('pageNo') && !empty($request->get('pageNo'))) {
+    $pageNumber = $request->get('pageNo');
+}
 
 
-    $posts = $postQuery->groupBy('posts.id')->paginate(12, ['*'], 'page', $pageNumber);
-    
+$posts = $postQuery->groupBy('posts.id')->paginate(12, ['*'], 'page', $pageNumber);
+
         // TODO: Include Status Check
         // $postQuery->where('status', post::)
-    
-    return View::make('sites.partials.results.blog', ['posts' => $posts, 'view' => $view,'title'=>$title]);
+
+return View::make('sites.partials.results.blog', ['posts' => $posts, 'view' => $view,'title'=>$title]);
 
 }
 public function getHotels(Request $request, $view = "list") {
@@ -764,15 +766,15 @@ public function getTours(Request $request, $view = "list") {
     if($request->has('duration_day') && !empty($request->get('duration_day'))) {
         $duration_day = $request->get('duration_day');
             // TODO: Need Proper Validation
-  
+
             // $minimum = $duration_day[0];
             // $maximum = $duration_day[1];
-            $tourQuery->where("duration_day","like",'%'.$duration_day.'%');
-          
+        $tourQuery->where("duration_day","like",'%'.$duration_day.'%');
+
         
         
     }
-  
+
 
 
         // Package Types
@@ -783,11 +785,11 @@ public function getTours(Request $request, $view = "list") {
         $tourQuery->leftJoin('tour_package_types', 'tour_package_types.tour_id', '=', 'tours.id');
         $tourQuery->whereIn('tour_package_types.package_type_id', $package_types);
     }
-     
+
 
       //$tourQuery->toSql();
         // other_packages
-  
+
 
     if($request->has('other_packages') && !empty($request->get('other_packages'))) {
         $other_packagesValue = $request->get('other_packages');
@@ -795,64 +797,64 @@ public function getTours(Request $request, $view = "list") {
         $tourQuery->leftJoin('tour_other_packages', 'tour_other_packages.tour_id', '=', 'tours.id');
         $tourQuery->whereIn('tour_other_packages.other_package_id', $other_packages);
     }else{
-          if($request->has('other_package_parent') && !empty($request->get('other_package_parent'))) {
+      if($request->has('other_package_parent') && !empty($request->get('other_package_parent'))) {
         $other_package_parentValue = $request->get('other_package_parent');
         //$other_packages = explode(",", $other_packagesValue);
         $tourQuery->leftJoin('tour_other_packages', 'tour_other_packages.tour_id', '=', 'tours.id');
         $tourQuery->where('tour_other_packages.other_package_id', $other_package_parentValue);
     } 
-    }
+}
 
         // types
-    if($request->has('types') && !empty($request->get('types'))) {
-        $typesValue = $request->get('types');
-        $types = explode(",", $typesValue);
+if($request->has('types') && !empty($request->get('types'))) {
+    $typesValue = $request->get('types');
+    $types = explode(",", $typesValue);
             // No Need Data from Type
-        $tourQuery->leftJoin('tour_types', 'tour_types.tour_id', '=', 'tours.id');
-        $tourQuery->whereIn('tour_types.type_id', $types);
-    }
+    $tourQuery->leftJoin('tour_types', 'tour_types.tour_id', '=', 'tours.id');
+    $tourQuery->whereIn('tour_types.type_id', $types);
+}
 
         // languages
-    if($request->has('language') && !empty($request->get('language'))) {
-        $languagesValue = $request->get('language');
-        $languages = explode(",", $languagesValue);
+if($request->has('language') && !empty($request->get('language'))) {
+    $languagesValue = $request->get('language');
+    $languages = explode(",", $languagesValue);
             // No Need Data from Language
-        $tourQuery->leftJoin('tour_languages', 'tour_languages.tour_id', '=', 'tours.id');
-        $tourQuery->whereIn('tour_languages.language_id', $languages);
-    }
+    $tourQuery->leftJoin('tour_languages', 'tour_languages.tour_id', '=', 'tours.id');
+    $tourQuery->whereIn('tour_languages.language_id', $languages);
+}
 
         // Search Params
-    if($request->has('sourceType') && !empty($request->get('sourceType')) && $request->has('sourceId') && !empty($request->get('sourceId'))) {
-        $sourceType = $request->get('sourceType');
-        $sourceId = $request->get('sourceId');
-        if ($sourceType == "state") {
-            $tourQuery->leftJoin('tour_states', 'tour_states.tour_id', '=', 'tours.id');
-            $tourQuery->where('tour_states.state_id', $sourceId);
-        }else {
-            $tourQuery->leftJoin('tour_locations', 'tour_locations.tour_id', '=', 'tours.id');
-            $tourQuery->where('tour_locations.location_id', $sourceId);
-        }
+if($request->has('sourceType') && !empty($request->get('sourceType')) && $request->has('sourceId') && !empty($request->get('sourceId'))) {
+    $sourceType = $request->get('sourceType');
+    $sourceId = $request->get('sourceId');
+    if ($sourceType == "state") {
+        $tourQuery->leftJoin('tour_states', 'tour_states.tour_id', '=', 'tours.id');
+        $tourQuery->where('tour_states.state_id', $sourceId);
+    }else {
+        $tourQuery->leftJoin('tour_locations', 'tour_locations.tour_id', '=', 'tours.id');
+        $tourQuery->where('tour_locations.location_id', $sourceId);
+    }
 
 
-    }else if($request->has('searchTerm') && !empty($request->get('searchTerm'))) {
+}else if($request->has('searchTerm') && !empty($request->get('searchTerm'))) {
             //search in address
-        $searchTerm = $request->get('searchTerm');
+    $searchTerm = $request->get('searchTerm');
             // TODO: JSON Treatment is Pending
-        $tourQuery->where('tours.address', 'LIKE', '%'.$searchTerm.'%');
-        $tourQuery->orWhere('tours.name', 'LIKE', '%'.$searchTerm.'%');
-    }
+    $tourQuery->where('tours.address', 'LIKE', '%'.$searchTerm.'%');
+    $tourQuery->orWhere('tours.name', 'LIKE', '%'.$searchTerm.'%');
+}
 
 
-    $pageNumber = 1;
-    if($request->has('pageNo') && !empty($request->get('pageNo'))) {
-        $pageNumber = $request->get('pageNo');
-    }
+$pageNumber = 1;
+if($request->has('pageNo') && !empty($request->get('pageNo'))) {
+    $pageNumber = $request->get('pageNo');
+}
 
-    $tours = $tourQuery->groupBy('tours.id')->paginate(12, ['*'], 'page', $pageNumber);
+$tours = $tourQuery->groupBy('tours.id')->paginate(12, ['*'], 'page', $pageNumber);
         // TODO: Include Status Check
         // $tourQuery->where('status', tour::)
 
-    return View::make('sites.partials.results.tour', ['tours' => $tours, 'view' => $view]);
+return View::make('sites.partials.results.tour', ['tours' => $tours, 'view' => $view]);
 
 }
 public function getActivities(Request $request, $view = "list") {
@@ -1062,7 +1064,7 @@ public function set_extra_data_of_page($request)
     }
     if ($request->type == 'Connecting Partner') {
        $extra_data['connecting_partners'] = $request->connecting_partners;
-    }
+   }
 
 }
 $extra_data["page_sidebar_pos"] = $request->page_sidebar_pos;
@@ -1081,7 +1083,7 @@ function store(Request $request,)
  $request->merge([
     'featured_image' => json_decode($request->featured_image,true),
 ]);
- 
+
 
  $pageDetails = [
     'name' =>  ucwords($request->name),
@@ -1097,7 +1099,7 @@ function store(Request $request,)
     "type" => $request->type,
     "created_by"=> Auth::user()->id,
 ];
- 
+
 $this->pageRepository->createPage($pageDetails);
 Session::flash('success','Page Created Successfully');
 return redirect()->Route('admin.pages.pageIndex');
@@ -1161,7 +1163,9 @@ public function changeStatus(Request $request)
     
     return response()->json(['success'=>'Status change successfully.']);
 }
-function destroy(Page $page)
+
+
+public function destroy(Page $page)
 {
  $pageId = $page->id;
  $this->pageRepository->deletePage($pageId);
@@ -1188,5 +1192,75 @@ function destroy(Page $page)
     }
     return back();
 }
+
+
+public function trashed_pages(TrashedPageDataTable $dataTable)
+    {
+
+        $trashed_pages = Page::onlyTrashed()->get();
+        $data['trashed_count'] = $trashed_pages->count();
+        //$data['trashed_pages'] = $trashed_pages;
+        $data['title'] = 'Trash Page List';
+        // dump(Page::onlyTrashed()->get());
+        // dd( $data['trashed']);
+        return $dataTable->render('admin.Pages.trashed', $data);
+    }
+
+    public function restore_pages(Request $request)
+    {
+        $ids = [];
+        if (!empty($request->ids)) {
+           $ids =  get_array_mapping(json_decode($request->ids));
+
+        }
+      
+        if (!empty($ids)) {
+         Page::whereIn('id',$ids)->withTrashed()->restore();
+        }else{
+           Page::onlyTrashed()->restore();
+        }
+        Session::flash('success','Page Restored Successfully');
+         return redirect()->back();
+    }
+
+    public function restore_page(Request $request,$id)
+    {
+        $page = Page::withTrashed()->find($id);
+    if ($page == null)
+    {
+        abort(404);
+    }
+ 
+    $page->restore();
+     Session::flash('success','Page Restored Successfully');
+    return redirect()->back();
+    }
+  public function bulk_force_delete(Request $request)
+    {
+
+    
+        if (!empty($request->fd_ids)) {
+
+            $pageIds = get_array_mapping(json_decode($request->fd_ids));
+            $this->pageRepository->forceBulkDeletePage($pageIds);
+            Session::flash('success', 'Page Bulk Permanent Deleted Successfully');
+        }
+        return back();
+    }
+
+    public function permanent_delete($id)
+{
+    $this->pageRepository->forceDeletePage($id);
+    Session::flash('success','Page Permanent Deleted Successfully');
+    return back();
+}
+
+  public function empty_trashed(Request $request)
+    {
+
+        Page::onlyTrashed()->forceDelete();
+        Session::flash('success','Page Empty Trashed Successfully');
+       return redirect()->back();
+    }
 
 }
