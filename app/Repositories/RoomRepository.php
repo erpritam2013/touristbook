@@ -15,15 +15,6 @@ class RoomRepository implements RoomRepositoryInterface
     {
         return Room::findOrFail($roomId);
     }
-
-      public function forceDeleteRoom($roomId)
-    {
-         Room::onlyTrashed()->find($roomId)->forceDelete();
-    }
-    public function forceBulkDeleteRoom($roomId)
-    {
-         Room::onlyTrashed()->whereIn('id', $roomId)->forceDelete();
-    }
     public function deleteRoom($roomId)
     {
         Room::destroy($roomId);

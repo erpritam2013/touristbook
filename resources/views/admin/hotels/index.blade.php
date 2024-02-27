@@ -17,9 +17,6 @@
                       {{method_field('DELETE')}}
 
                   </form>@endif
-                  <a href="{{ route('admin.hotel.trashed') }}" class="btn btn-danger btn-xs {{($trashed == 0)?'disabled':''}}">
-                    <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;Trash ({{ $trashed }})
-                </a>
                   <a href="{{route('admin.hotels.create')}}" class="btn btn-outline-primary btn-xs">Add New hotel</a>
               </div>
           </div>

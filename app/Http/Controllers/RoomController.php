@@ -15,7 +15,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use App\DataTables\RoomDataTable;
-use App\DataTables\TrashedRoomDataTable;
 use Session;
 
 class RoomController extends Controller
@@ -70,7 +69,6 @@ class RoomController extends Controller
     {
         $data['rooms'] = Room::count();
         $data['title'] = 'Room List';
-        $data['trashed'] = Room::onlyTrashed()->count();
         return $dataTable->render('admin.rooms.index', $data);
     }
 
@@ -338,7 +336,7 @@ return redirect()->Route('admin.rooms.edit',$room->id);
       $roomId = $room->id;
 
       $this->roomRepository->deleteRoom($roomId);
-      Session::flash('success','Room Trashed Successfully');
+      Session::flash('success','Room Deleted Successfully');
       return back();
   }
 
@@ -349,77 +347,8 @@ return redirect()->Route('admin.rooms.edit',$room->id);
 
         $roomIds = get_array_mapping(json_decode($request->ids));
         $this->roomRepository->deleteBulkRoom($roomIds);
-        Session::flash('success', 'Room Bulk Trashed Successfully');
+        Session::flash('success', 'Room Bulk Deleted Successfully');
     }
     return back();
 }
-
-public function trashed_rooms(TrashedRoomDataTable $dataTable)
-    {
-
-        $trashed_rooms = Room::onlyTrashed()->get();
-        $data['trashed_count'] = $trashed_rooms->count();
-        //$data['trashed_rooms'] = $trashed_rooms;
-        $data['title'] = 'Trash Room List';
-        // dump(Room::onlyTrashed()->get());
-        // dd( $data['trashed']);
-        return $dataTable->render('admin.rooms.trashed', $data);
-    }
-
-    public function restore_rooms(Request $request)
-    {
-        $ids = [];
-        if (!empty($request->ids)) {
-           $ids =  get_array_mapping(json_decode($request->ids));
-
-        }
-      
-        if (!empty($ids)) {
-         Room::whereIn('id',$ids)->withTrashed()->restore();
-        }else{
-           Room::onlyTrashed()->restore();
-        }
-        Session::flash('success','Room Restored Successfully');
-         return redirect()->back();
-    }
-
-    public function restore_room(Request $request,$id)
-    {
-        $room = Room::withTrashed()->find($id);
-    if ($room == null)
-    {
-        abort(404);
-    }
- 
-    $room->restore();
-     Session::flash('success','Room Restored Successfully');
-    return redirect()->back();
-    }
-  public function bulk_force_delete(Request $request)
-    {
-
-    
-        if (!empty($request->fd_ids)) {
-
-            $roomIds = get_array_mapping(json_decode($request->fd_ids));
-            $this->roomRepository->forceBulkDeleteRoom($roomIds);
-            Session::flash('success', 'Room Bulk Permanent Deleted Successfully');
-        }
-        return back();
-    }
-
-    public function permanent_delete($id)
-{
-    $this->roomRepository->forceDeleteRoom($id);
-    Session::flash('success','Room Permanent Deleted Successfully');
-    return back();
-}
-
-public function empty_trashed(Request $request)
-    {
-
-        Room::onlyTrashed()->forceDelete();
-        Session::flash('success','Room Empty Trashed Successfully');
-       return redirect()->back();
-    }
 }

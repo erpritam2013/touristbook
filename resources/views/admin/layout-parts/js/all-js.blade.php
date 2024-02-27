@@ -57,7 +57,7 @@
 
         @endpush
         <!-- For list or index page js -->
-        @if(Route::getRoutes()->match(request())->methods[0] == 'GET' && (matchRouteNameMatch('index') || matchRouteNameMatch('pageIndex') || matchRouteNameMatch('trashed') || matchRouteNameMatch('media-used-object')))
+        @if(Route::getRoutes()->match(request())->methods[0] == 'GET' && (matchRouteNameMatch('index') || matchRouteNameMatch('pageIndex') || matchRouteNameMatch('media-used-object')))
         @push('dataTable_js')
         <!-- Datatable -->
         <script src="{!! asset('admin-part/vendor/datatables/js/jquery.dataTables.min.js') !!}"></script>

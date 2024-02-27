@@ -15,14 +15,6 @@ class TourRepository implements TourRepositoryInterface
     {
         return Tour::findOrFail($tourId);
     }
-     public function forceDeleteTour($tourId)
-    {
-         Tour::onlyTrashed()->find($tourId)->forceDelete();
-    }
-    public function forceBulkDeleteTour($tourId)
-    {
-         Tour::onlyTrashed()->whereIn('id', $tourId)->forceDelete();
-    }
     public function deleteTour($tourId)
     {
         Tour::destroy($tourId);

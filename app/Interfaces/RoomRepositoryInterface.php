@@ -6,8 +6,6 @@ interface RoomRepositoryInterface
 {
     public function getAllRooms();
     public function getRoomById($roomId);
-     public function forceDeleteRoom($roomId);
-    public function forceBulkDeleteRoom($roomId);
     public function deleteRoom($roomId);
     public function deleteBulkRoom($roomId);
     public function createRoom(array $roomDetails);

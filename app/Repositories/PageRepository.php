@@ -15,15 +15,6 @@ class PageRepository implements PageRepositoryInterface
     {
         return Page::findOrFail($pageId);
     }
-
-     public function forceDeletePage($pageId)
-    {
-         Page::onlyTrashed()->find($pageId)->forceDelete();
-    }
-    public function forceBulkDeletePage($pageId)
-    {
-         Page::onlyTrashed()->whereIn('id', $pageId)->forceDelete();
-    }
     public function deletePage($pageId)
     {
         Page::destroy($pageId);

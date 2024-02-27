@@ -33,7 +33,7 @@ class RoomDataTable extends DataTable
                    // return (!empty($row->hotels))?$row->hotels->name:'';
                     $a_html = 'Hotel Not Selected'; 
                     if (!empty($row->hotels)) {
-                        $a_html = '<a href="'.route('admin.hotels.edit',$row->hotels->id).'" class="btn btn-info btn-xs" title="'.$row->hotels->name.'" target="_blank">'.$row->hotels->name.'</a>';
+                        $a_html = '<a href="'.route('admin.hotels.edit',$row->hotels->id).'" class="btn btn-info" title="'.$row->hotels->name.'" target="_blank">'.$row->hotels->name.'</a>';
                     }
                     return $a_html;
                 })->editColumn('updated_at', function($row) {
@@ -43,7 +43,7 @@ class RoomDataTable extends DataTable
                     if ($row->status == 1) {
                        $checked = 'checked';
                     }
-                    return '<input data-id="'.$row->id.'" class="toggle-class" type="checkbox" data-size="xs" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url="'.route("admin.changeStatusRoom").'" data-on="Active" data-off="InActive" '.$checked.'>';
+                    return '<input data-id="'.$row->id.'" class="toggle-class" type="checkbox" data-size="sm" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url="'.route("admin.changeStatusRoom").'" data-on="Active" data-off="InActive" '.$checked.'>';
                 })->addColumn('address',function($row){
                     $hotelDetail = $row->detail;
                     return ($hotelDetail) ? $hotelDetail->map_address : '';

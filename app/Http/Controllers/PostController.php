@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use App\DataTables\PostDataTable;
-use App\DataTables\TrashedPostDataTable;
 use Session;
 use Auth;
 
@@ -55,62 +54,8 @@ class PostController extends Controller
     public function index(PostDataTable $dataTable)
     {
         $data['posts'] = Post::count();
-
-        $data['trashed'] = Post::onlyTrashed()->count();
         $data['title'] = 'Post List';
-        // dump(Post::onlyTrashed()->get());
-        // dd( $data['trashed']);
         return $dataTable->render('admin.posts.index', $data);
-    }
-
-    public function empty_trashed(Request $request)
-    {
-
-        Post::onlyTrashed()->forceDelete();
-        Session::flash('success','Post Empty Trashed Successfully');
-       return redirect()->back();
-    }
-
-    public function trashed_posts(TrashedPostDataTable $dataTable)
-    {
-
-        $trashed_posts = Post::onlyTrashed()->get();
-        $data['trashed_count'] = $trashed_posts->count();
-        //$data['trashed_posts'] = $trashed_posts;
-        $data['title'] = 'Trash Post List';
-        // dump(Post::onlyTrashed()->get());
-        // dd( $data['trashed']);
-        return $dataTable->render('admin.posts.trashed', $data);
-    }
-
-    public function restore_posts(Request $request)
-    {
-        $ids = [];
-        if (!empty($request->ids)) {
-           $ids =  get_array_mapping(json_decode($request->ids));
-
-        }
-      
-        if (!empty($ids)) {
-         Post::whereIn('id',$ids)->withTrashed()->restore();
-        }else{
-           Post::onlyTrashed()->restore();
-        }
-        Session::flash('success','Post Restored Successfully');
-         return redirect()->back();
-    }
-
-    public function restore_post(Request $request,$id)
-    {
-        $post = Post::withTrashed()->find($id);
-    if ($post == null)
-    {
-        abort(404);
-    }
- 
-    $post->restore();
-     Session::flash('success','Post Restored Successfully');
-    return redirect()->back();
     }
 
     /**
@@ -265,17 +210,10 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function permanent_delete($id)
-    {
-        $this->postRepository->forceDeletePost($id);
-        Session::flash('success','Post Permanent Deleted Successfully');
-        return back();
-    }
-
     public function destroy(Post $post)
     {
         $this->postRepository->deletePost($post->id);
-        Session::flash('success','Post Trashed Successfully');
+        Session::flash('success','Post Deleted Successfully');
         return back();
     }
 
@@ -285,19 +223,7 @@ class PostController extends Controller
 
             $postIds = get_array_mapping(json_decode($request->ids));
             $this->postRepository->deleteBulkPost($postIds);
-            Session::flash('success', 'Post Bulk Trashed Successfully');
-        }
-        return back();
-    }
-    public function bulk_force_delete(Request $request)
-    {
-
-    
-        if (!empty($request->fd_ids)) {
-
-            $postIds = get_array_mapping(json_decode($request->fd_ids));
-            $this->postRepository->forceBulkDeletePost($postIds);
-            Session::flash('success', 'Post Bulk Permanent Deleted Successfully');
+            Session::flash('success', 'Post Bulk Deleted Successfully');
         }
         return back();
     }
