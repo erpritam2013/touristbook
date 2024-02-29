@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class RoomDataTable extends DataTable
+class TrashedRoomDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -23,9 +23,9 @@ class RoomDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
        return (new EloquentDataTable($query))->addIndexColumn()->addColumn('action', function ($row) {
-                    $html = ' <a href="'.route("admin.rooms.edit",$row->id).'" class="btn btn-primary" title="Edit"><i class="fa fa-edit"></i></a>';
-                    $html .= '<a href="'.route("admin.rooms.show",$row->id).'" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>';
-                    $html .= '<a href="javascript:void(0);" class="btn btn-danger del_entity_form" title="Delete" item_id="'.$row->id.'" data-text="room"><i class="fa fa-trash"></i></a>';
+                     $html = ' <a href="javascript:void(0);" class="btn btn-primary restore_entity_form" title="Restore" item_id="'.$row->id.'" data-text="room"><i class="fas fa-trash-restore"></i></a>';
+                  
+                    $html .= '<a href="javascript:void(0);" class="btn btn-danger del_permanent_entity_form" title="Permanent Delete" item_id="'.$row->id.'" data-text="room"><i class="fa fa-trash"></i></a>';
                     return $html;
                 })->editColumn('created_at', function($row) {
                     return date('d-m-Y',strtotime($row->created_at));
@@ -33,23 +33,17 @@ class RoomDataTable extends DataTable
                    // return (!empty($row->hotels))?$row->hotels->name:'';
                     $a_html = 'Hotel Not Selected'; 
                     if (!empty($row->hotels)) {
-                        $a_html = '<a href="'.route('admin.hotels.edit',$row->hotels->id).'" class="btn btn-info btn-xs" title="'.$row->hotels->name.'" target="_blank">'.$row->hotels->name.'</a>';
+                        $a_html = '<a href="'.route('admin.hotels.edit',$row->hotels->id).'" class="btn btn-info" title="'.$row->hotels->name.'" target="_blank">'.$row->hotels->name.'</a>';
                     }
                     return $a_html;
                 })->editColumn('updated_at', function($row) {
                     return date('d-m-Y',strtotime($row->updated_at));
-                })->addColumn('status', function($row) {
-                    $checked = "";
-                    if ($row->status == 1) {
-                       $checked = 'checked';
-                    }
-                    return '<input data-id="'.$row->id.'" class="toggle-class" type="checkbox" data-size="xs" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url="'.route("admin.changeStatusRoom").'" data-on="Active" data-off="InActive" '.$checked.'>';
                 })->addColumn('address',function($row){
                     $hotelDetail = $row->detail;
                     return ($hotelDetail) ? $hotelDetail->map_address : '';
-                })->addColumn('del',function($row){
-                 return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'">';
-            })->rawColumns(['status','action','del','address','hotel_id']);
+                })->addColumn('restore',function($row){
+                 return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'" data-select_type="restore">';
+            })->rawColumns(['action','restore','address','hotel_id']);
     }
 
     /**
@@ -60,7 +54,7 @@ class RoomDataTable extends DataTable
      */
     public function query(Room $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->onlyTrashed();
     }
 
     /**
@@ -75,7 +69,7 @@ class RoomDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(7)
+                    ->orderBy(6)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -95,7 +89,7 @@ class RoomDataTable extends DataTable
     public function getColumns(): array
     {
        return [
-            Column::make('del')->title('<input type="checkbox" class="css-control-input mr-2 select-all text-center" onchange="CustomSelectCheckboxAll(this);" '.$this->disabledInput().'>')->searchable(false)
+            Column::make('restore')->title('<input type="checkbox" class="css-control-input mr-2 select-all text-center" onchange="CustomSelectCheckboxAll(this);" '.$this->disabledInput().' data-select_type="restore">')->searchable(false)
             ->orderable(false)
             ->exportable(false)
             ->printable(false)->width(5)
@@ -112,7 +106,6 @@ class RoomDataTable extends DataTable
             ->printable(false),
             Column::make('address'),
             Column::make('hotel_id')->title('Hotel'),
-            Column::make('status'),
             Column::make('created_at')->title('Created'),
             Column::make('updated_at')->title('Updated'),
             Column::make('action')

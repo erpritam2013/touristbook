@@ -587,6 +587,59 @@ $('.entity-list').on('click', '.del_entity_form', function(event) {
  }
 
 });
+$('.entity-list').on('click', '.del_permanent_entity_form', function(event) {
+
+    event.preventDefault();           
+
+    let id= $(this).attr('item_id');
+    let text= $(this).data('text');
+
+    if(confirm('Are You sure to permanent delete this '+text)){   
+
+     let action=$('#delete_entity_form').attr('action');
+
+     $('#delete_entity_form').attr('action', action+'/force-delete/'+id);
+
+     $('#delete_entity_form').submit();
+
+ }
+
+});
+$('.entity-list').on('click', '.restore_entity_form', function(event) {
+
+    event.preventDefault();           
+
+    let id= $(this).attr('item_id');
+    let text= $(this).data('text');
+
+    if(confirm('Are You sure to restore this '+text)){   
+
+     let action=$('#restore_entity_form').attr('action');
+
+     $('#restore_entity_form').attr('action', action+'/restore/'+id);
+
+     $('#restore_entity_form').submit();
+
+ }
+
+});
+$('.all-a').on('click', '#restore_all_entity_form', function(event) {
+
+    event.preventDefault();           
+
+    let text= $(this).data('text');
+
+    if(confirm('Are You sure to restore all '+text)){   
+
+     let action=$('#all_restore_entity_form').attr('action');
+
+     $('#all_restore_entity_form').attr('action', action);
+
+     $('#all_restore_entity_form').submit();
+
+ }
+
+});
 /*delete entity type js end*/ 
 /*bulk delete js start*/ 
 
@@ -596,31 +649,54 @@ $('.entity-list').on('click', '.del_entity_form', function(event) {
 // });
 
 window.CustomSelectCheckboxAll = function(ele){
+    let select_type = $(ele).data('select_type');
   if ($(ele).is(':checked')) {
       $('.select-id').prop('checked',true);
+      if (select_type == 'restore') {
+      $('.all-a .bulk-restore').show();
+      $('.all-a .bulk-force-delete').show();
+  }else{
       $('.all-a .bulk-delete').show();
+  }
+
   }else{
 
     $('.select-id').prop('checked',false);
-    $('.all-a .bulk-delete').hide();
+    if (select_type == 'restore') {
+      $('.all-a .bulk-restore').hide();
+      $('.all-a .bulk-force-delete').hide();
+  }else{
+      $('.all-a .bulk-delete').hide();
+  }
 }
 }
 
 window.CustomSelectCheckboxSingle = function(ele){
     let unchecked_cb = $('.select-id:not(:checked)').length;
     let checked_cb = $('.select-id:checked').length;
-    console.log(unchecked_cb);
-    console.log(checked_cb);
+    let select_type = $(ele).data('select_type');
     $('.select-id').each(function(){
 
       if (!$(ele).is(':checked')) {
         if (unchecked_cb != 0) {
             if (checked_cb != 0) {
+                if (select_type == 'restore') {
+                $('.all-a .bulk-restore').show();
+                $('.all-a .bulk-force-delete').show();
+                }else{
                 $('.all-a .bulk-delete').show();
+
+                }
                 checkbox_false();
             }else{
-
+                if (select_type == 'restore') {
+                $('.all-a .bulk-restore').hide();
+                $('.all-a .bulk-force-delete').hide();
+               
+                }else{
                 $('.all-a .bulk-delete').hide();
+
+                }
                 checkbox_false();
             }
 
@@ -629,7 +705,13 @@ window.CustomSelectCheckboxSingle = function(ele){
         if (unchecked_cb == 0) {
             checkbox_true();
         }
-        $('.all-a .bulk-delete').show();
+         if (select_type == 'restore') {
+                $('.all-a .bulk-restore').show();
+                $('.all-a .bulk-force-delete').show();
+                }else{
+                $('.all-a .bulk-delete').show();
+
+                }
     }
 });
 
@@ -661,15 +743,60 @@ $('.all-a').on('click', '.bulk-delete', function(event) {
     $('#bulk_delete_entity_form input#ids').val(JsonBulk_ids);
     if(confirm('Are You sure to bulk delete this '+text)){   
 
-         // let action=$('#delete_entity_form').attr('action');
-
-         // $('#delete_entity_form').attr('action', action);
-
      $('#bulk_delete_entity_form').submit();
 
  }else{
     bulk_ids = [];
     $('#bulk_delete_entity_form input#ids').val("");
+}
+
+});
+
+$('.all-a').on('click', '.bulk-force-delete', function(event) {
+
+    event.preventDefault();           
+    
+       // var id= $(this).attr('item_id');
+    let text= $('#bulk_force_delete_entity_form').data('text');
+    bulk_ids_fu();
+    if (bulk_ids.length == 0) {
+        alert('Please first check checkbox');
+        return false;
+    }
+
+    let JsonBulk_ids = JSON.stringify(bulk_ids);
+    $('#bulk_force_delete_entity_form input#fd-ids').val(JsonBulk_ids);
+    if(confirm('Are You sure to bulk permanent delete this '+text)){   
+
+     $('#bulk_force_delete_entity_form').submit();
+
+ }else{
+    bulk_ids = [];
+    $('#bulk_force_delete_entity_form input#fd-ids').val("");
+}
+
+});
+$('.all-a').on('click', '.bulk-restore', function(event) {
+
+    event.preventDefault();           
+    
+       // var id= $(this).attr('item_id');
+    let text= $('#bulk_restore_entity_form').data('text');
+    bulk_ids_fu();
+    if (bulk_ids.length == 0) {
+        alert('Please first check checkbox');
+        return false;
+    }
+
+    let JsonBulk_ids = JSON.stringify(bulk_ids);
+    $('#bulk_restore_entity_form input#ids').val(JsonBulk_ids);
+    if(confirm('Are You sure to bulk delete this '+text)){   
+
+     $('#bulk_restore_entity_form').submit();
+
+ }else{
+    bulk_ids = [];
+    $('#bulk_restore_entity_form input#ids').val("");
 }
 
 });

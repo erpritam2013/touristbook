@@ -16,6 +16,14 @@ class LocationRepository implements LocationRepositoryInterface
     {
         return Location::findOrFail($locationId);
     }
+      public function forceDeleteLocation($locationId)
+    {
+         Location::onlyTrashed()->find($locationId)->forceDelete();
+    }
+    public function forceBulkDeleteLocation($locationId)
+    {
+         Location::onlyTrashed()->whereIn('id', $locationId)->forceDelete();
+    }
     public function deleteLocation($locationId)
     {
         return Location::destroy($locationId);
