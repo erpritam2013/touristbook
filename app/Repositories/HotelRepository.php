@@ -15,6 +15,15 @@ class HotelRepository implements HotelRepositoryInterface
     {
         return Hotel::findOrFail($hotelId);
     }
+
+     public function forceDeleteHotel($hotelId)
+    {
+         Hotel::onlyTrashed()->find($hotelId)->forceDelete();
+    }
+    public function forceBulkDeleteHotel($hotelId)
+    {
+         Hotel::onlyTrashed()->whereIn('id', $hotelId)->forceDelete();
+    }
     public function deleteHotel($hotelId)
     {
         Hotel::destroy($hotelId);
