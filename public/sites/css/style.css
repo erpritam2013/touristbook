@@ -11486,9 +11486,18 @@ body.tour-list-page #package_types_filter .custom-checkbox .btn.btn-default {
 }
 
 .tour-list-page .st-highlight-info ul li {
-	display: inline-block;
-	padding: 1px 5px 1px 2px;
+    display: inline-block;
+/*    padding: 3px 5px 3px 2px;*/
+    font-size: 15px;
+    display: block;
+    margin-bottom: 0px!important;
+    padding: 10px;
 }
+body.tour-list-page .st-highlight .st-highlight-info ul li:nth-child(even) {
+    background-color: #dddddd;
+    list-style: none;
+}
+
 .tour-list-page .st-highlight-info ul li:before {
 	content: '\f111';
 	font-family: "Font Awesome 5 Free";
@@ -11524,6 +11533,7 @@ body.tour-list-page #st-include-exclude .st-include ul.include li {
 	display: block;
 	list-style-type: none;
 	vertical-align: middle;
+	font-size: 15px;
 }
 body.tour-list-page #st-include-exclude .st-exclude ul.exclude li {
 	display: block;
