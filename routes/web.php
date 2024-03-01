@@ -307,10 +307,19 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
 
     });
 
-
-
-    Route::delete('hotel/bulk-delete', [HotelController::class,'bulk_delete'])->name('hotel.bulk-delete');
+     Route::delete('hotel/bulk-delete', [HotelController::class,'bulk_delete'])->name('hotel.bulk-delete');
      Route::get('hotel/changeStatus', [HotelController::class,'changeStatus'])->name('changeStatusHotel');
+      /*trashed route hotel*/
+       Route::delete('hotel/empty-trashed',[HotelController::class,'empty_trashed'])->name('hotel.empty-trashed');
+     Route::get('hotel/trashed',[HotelController::class,'trashed_hotels'])->name('hotel.trashed');
+    Route::delete('hotels/force-delete/{id}',[HotelController::class,'permanent_delete'])->name('hotel.force-delete');
+    Route::put('hotel/trashed/restore/{id}',[HotelController::class,'restore_hotel'])->name('hotel.restore');
+    Route::post('hotel/restore-bulk',[HotelController::class,'restore_hotels'])->name('hotel.restore-bulk');
+    Route::post('hotel/restore-all',[HotelController::class,'restore_hotels'])->name('hotel.restore-all');
+    Route::delete('hotel/bulk-force-delete', [HotelController::class,'bulk_force_delete'])->name('hotel.bulk-force-delete');
+
+
+
 
      // Tour Resource
     Route::resource('tours', TourController::class);
@@ -323,10 +332,18 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
 
      // Post Resource
     Route::resource('posts', PostController::class);
+    /*trashed route post*/
+    Route::delete('post/empty-trashed',[PostController::class,'empty_trashed'])->name('post.empty-trashed');
+    Route::get('post/trashed',[PostController::class,'trashed_posts'])->name('post.trashed');
+    Route::delete('posts/force-delete/{id}',[PostController::class,'permanent_delete'])->name('post.force-delete');
+    Route::put('post/trashed/restore/{id}',[PostController::class,'restore_post'])->name('post.restore');
+    Route::post('post/restore-bulk',[PostController::class,'restore_posts'])->name('post.restore-bulk');
+    Route::post('post/restore-all',[PostController::class,'restore_posts'])->name('post.restore-all');
     Route::prefix('posts')->name('posts.')->group(function() {
-
+       
     });
 
+    Route::delete('post/bulk-force-delete', [PostController::class,'bulk_force_delete'])->name('post.bulk-force-delete');
     Route::delete('post/bulk-delete', [PostController::class,'bulk_delete'])->name('posts.bulk-delete');
      Route::get('post/changeStatus', [PostController::class,'changeStatus'])->name('changeStatusPost');
      // Page Resource
@@ -341,9 +358,19 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
         Route::delete('/{page}', [PagesController::class,'destroy'])->name('destroy');
 
     });
+     
 
     Route::delete('page/bulk-delete', [PagesController::class,'bulk_delete'])->name('pages.bulk-delete');
      Route::get('page/changeStatus', [PagesController::class,'changeStatus'])->name('changeStatusPage');
+
+      /*trashed route page*/
+       Route::delete('page/empty-trashed',[PagesController::class,'empty_trashed'])->name('page.empty-trashed');
+     Route::get('page/trashed',[PagesController::class,'trashed_pages'])->name('page.trashed');
+    Route::delete('pages/force-delete/{id}',[PagesController::class,'permanent_delete'])->name('page.force-delete');
+    Route::put('page/trashed/restore/{id}',[PagesController::class,'restore_page'])->name('page.restore');
+    Route::post('page/restore-bulk',[PagesController::class,'restore_pages'])->name('page.restore-bulk');
+    Route::post('page/restore-all',[PagesController::class,'restore_pages'])->name('page.restore-all');
+    Route::delete('page/bulk-force-delete', [PagesController::class,'bulk_force_delete'])->name('page.bulk-force-delete');
 
      // Room Resource
     Route::resource('rooms', RoomController::class);
@@ -352,6 +379,15 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
 
     Route::delete('room/bulk-delete', [RoomController::class,'bulk_delete'])->name('rooms.bulk-delete');
      Route::get('room/changeStatus', [RoomController::class,'changeStatus'])->name('changeStatusRoom');
+
+       /*trashed route room*/
+        Route::delete('room/empty-trashed',[RoomController::class,'empty_trashed'])->name('room.empty-trashed');
+     Route::get('room/trashed',[RoomController::class,'trashed_rooms'])->name('room.trashed');
+    Route::delete('rooms/force-delete/{id}',[RoomController::class,'permanent_delete'])->name('room.force-delete');
+    Route::put('room/trashed/restore/{id}',[RoomController::class,'restore_room'])->name('room.restore');
+    Route::post('room/restore-bulk',[RoomController::class,'restore_rooms'])->name('room.restore-bulk');
+    Route::post('room/restore-all',[RoomController::class,'restore_rooms'])->name('room.restore-all');
+    Route::delete('room/bulk-force-delete', [RoomController::class,'bulk_force_delete'])->name('room.bulk-force-delete');
 
      // Location Resource
     Route::resource('locations', locationController::class);
