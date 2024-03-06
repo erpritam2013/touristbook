@@ -40,6 +40,7 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
         // Using class based composers...
         Facades\View::composer('admin.*', BreadcrumbComposer::class);
 

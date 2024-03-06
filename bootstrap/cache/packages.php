@@ -17,6 +17,13 @@
       0 => 'Cviebrock\\EloquentSluggable\\ServiceProvider',
     ),
   ),
+  'fahlisaputra/laravel-minify' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Fahlisaputra\\Minify\\MinifyServiceProvider',
+    ),
+  ),
   'intervention/image' => 
   array (
     'providers' => 
