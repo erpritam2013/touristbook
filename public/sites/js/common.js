@@ -58,7 +58,7 @@ const showAmenities = (amenities) => {
 }
 
 const showMoreDataBody = (get_html_,chr_count) => {
- if(typeof(chr_count) != "undefined" && parseInt(chr_count) > 700){   
+ if(typeof(chr_count) != "undefined" && parseInt(chr_count) > 700){
     $('body #showMoreDataBody').css('overflow','auto').css('height','350px').html(get_html_);
 }else{
     $('body #showMoreDataBody').removeAttr('style').html(get_html_);
@@ -72,7 +72,7 @@ window.showMoreData = function(data){
     let showMoreData = $(data).data('more_data');
     let total_chr = $(data).data('total_chr');
     $('body #showMoreDataLabel').text(label);
-    
+
     if (isJSON(showMoreData)) {
         showMoreData = JSON.stringify(showMoreData);
         let result = JSON.parse(showMoreData);
@@ -80,9 +80,9 @@ window.showMoreData = function(data){
 
         if (label == 'Amenities') {
             let get_html = showAmenities(result);
-            
+
             showMoreDataBody(get_html,total_chr);
-            
+
         }else if (label == 'Activity List') {
            let get_html = showAmenities(result);
            showMoreDataBody(get_html,total_chr);
@@ -597,11 +597,11 @@ const buildContent = (hotel) => {
 //     if (content.classList.contains("highlight")) {
 //         content.classList.remove("highlight");
 //         content.classList.remove("right-box")
-       
+
 //     } else {
 //         content.classList.add("highlight");
 //         content.classList.add("right-box")
-        
+
 //     }
 // }
 
@@ -651,7 +651,7 @@ const processedResultInfo = (html) => {
 
         // });
               //    marker.addListener("click", () => {
-              //     
+              //
               // });
 
 
@@ -723,13 +723,21 @@ const fetchRecords = (view, options = {}) => {
 };
 
 
-    // Initially Load Hotels
-fetchRecords("list", fetchParameters());
 
-if(resultInfo.length > 0) {
+let listLoaded = true
+if(resultInfo.length > 0 && listLoaded == true) {
         // Initially Load Hotels
     fetchRecords("list", fetchParameters());
+    listLoaded = false
 }
+
+if(listLoaded) {
+    // Initially Load Hotels
+    fetchRecords("list", fetchParameters());
+
+}
+
+
 
 
     // Load Map
@@ -908,7 +916,7 @@ function loadStreetMap() {
     $("#input-search-box").autocomplete({
 
 
-     search: function(event, ui) { 
+     search: function(event, ui) {
        $('.map-content-loading-search-input').show();
    },
    response: function(event, ui) {
@@ -958,7 +966,7 @@ select: function (event, ui) {
  $(".input-search-box").autocomplete({
 
 
-     search: function(event, ui) { 
+     search: function(event, ui) {
        $('.map-content-loading-search-input').show();
    },
    response: function(event, ui) {
@@ -997,7 +1005,7 @@ select: function (event, ui) {
     $("input[name=source_id]").val(ui.item.id);
     let form_id = $(this).data('form_id');
     setTimeout(function(){
-        $(form_id).submit();      
+        $(form_id).submit();
     },0);
 },
 }).autocomplete("instance")._renderItem = function(ul, item) {
@@ -1139,7 +1147,7 @@ $("#languageChange .dropdown-item").on("click", function() {
 
     $('.goog-te-combo').change(function(){
         var data= $(this).val();
-        console.log(data);            
+        console.log(data);
     });
     // $('.goog-te-combo')
     //     .val(selectedLanguage)
