@@ -1790,6 +1790,8 @@ body.tour-list-page .st-highlight ul li:before {
 
 		height:auto;
 	}
+
+
 }
 .innerpage-banner.left .breadcrumb {
 	right: 15px;
@@ -10439,7 +10441,7 @@ img {
 	position: relative;
 	border-radius: 10px;
 	margin-bottom: 20px;
-	background-color: #fba009;
+/*	background-color: #fba009;*/
 	-webkit-transition: all 0.5s ease;
 	-moz-transition: all 0.5s ease;
 	-o-transition: all 0.5s ease;
@@ -16039,6 +16041,15 @@ body.home-page .home-blogs .post-title {
 	body.home-page .home-blogs .banner{
 	height: 160px!important;
 }
+
+
+body.home-page .tab_container label {	
+	padding: 6px 20px;	
+}
+
+.list-mig-lc-con1 {
+    margin-top: -90px;
+}
 }
 
 
@@ -16139,10 +16150,11 @@ body.home-page .ui-autocomplete.ui-menu {
   width:100%;
   height:auto;
 }*/
-body.home-page .home-destination-image{
-  width:100%;
+body.home-page .home-destination-image,body.home-page #home-destination-image{
+  width:100%!important;
   height:200px;
 }
+
 body.home-page .home-activities .listroBox{
 	height:100%;
 }
@@ -16152,6 +16164,7 @@ body.home-page .home-hotels .listroBox{
 body.home-page .home-tours .listroBox{
 	height:100%;
 }
+
 }
 /*home page css end*/
 

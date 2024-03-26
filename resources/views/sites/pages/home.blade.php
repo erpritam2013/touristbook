@@ -21,10 +21,18 @@ if(isset($page)) {
 }
 
 @endphp
+
+@section('home_banner')
+<style>
+      .home-main-img {
+    background: url('{{  $banner_image}}') no-repeat 65% 0%;
+    background-size: 110% 125%;
+    width: 100%
+</style>
+@endsection
     <!-- =======================
      Main Banner -->
-     <section class="p-0 height-475 parallax-bg"
-     style="background:url({{$banner_image ?? asset('sites/images/dummy/1200x400.jpg')}}) no-repeat 65% 0%; background-size:110% 125%;{!! $top ?? ''!!}">
+     <section class="p-0 height-475 parallax-bg home-main-img" style="{{$top ?? ''}}">
      <div class="container h-100">
       <div class="row justify-content-between align-items-center h-100">
         <div class="col-md-8 mb-7">
@@ -303,7 +311,7 @@ if(isset($page)) {
               <div class="col-md-6"> <a href="{{route('location',$home_destinations[0]->slug ?? '')}}">
                 <div class="list-mig-like-com">
                   <div class="list-mig-lc-img"> <img src="{{$first_destination_image ?? asset('sites/images/dummy/1200x400.jpg')}}" alt="{{touristbook_sanitize_title($home_destinations[0]->name ?? "")}}-image" id="home-destination-image"> </div>
-                  <div class="list-mig-lc-con">
+                  <div class="list-mig-lc-con list-mig-lc-con1">
                     <h5>{{$home_destinations[0]->name ?? ""}}</h5>
                     {{--<p>81 Cities </p>--}}
                   </div>
@@ -319,7 +327,7 @@ if(isset($page)) {
                   if(isJson($destination->featured_image)){
                     $destination->featured_image = json_decode($destination->featured_image,true);
                   }
-                  $destination_image = (!empty($destination->featured_image) && isset($destination->featured_image[0]['id']))?getConversionUrl($destination->featured_image[0]['id']):null;
+                  $destination_image = (!empty($destination->featured_image) && isset($destination->featured_image[0]['id']))?getConversionUrl($destination->featured_image[0]['id'],'450x417'):null;
                   @endphp
                   <div class="col-md-6"> <a href="{{route('location',$destination->slug ?? '')}}">
                     <div class="list-mig-like-com">
@@ -581,8 +589,8 @@ if(isset($page)) {
            <img src="{{$featured_image ?? asset('sites/images/dummy/600x250.jpg')}}" alt="post-image" class="post-image" width="768" height="368">               
          </a>
          <div class="card-body">
-          <h5 class="my-2"><a href="{{route('blog',$home_post->slug)}}" class="post-title text-dark">{{shortDescription($home_post->name ?? '',35)}}</a></h5>
-          <p class="text-gray-500 text-sm my-3 post-desc"><i class="far fa-clock mr-2"></i>{{date('M d, Y',strtotime($home_post->created_at))}}</p>
+          <h5 class="my-2"><a href="{{route('blog',$home_post->slug)}}" class="post-title text-dark">{{shortDescription($home_post->name ?? '',35)}}</a></h5> 
+          <p class="text-gray-500 text-sm my-3 post-desc"><i class="far fa-clock mr-2"></i>{{\Carbon\Carbon::parse($home_post->creaedt_a)->format('M d, Y')}}</p>
           {{--<p class="my-2 text-muted text-sm">{{shortDescription($home_post->excerpt ?? '',45)}}</p>--}}
           <a href="{{route('blog',$home_post->slug)}}" class="btn btn-link pl-0 post-read-more">Read more</a> </div>
         </div>
