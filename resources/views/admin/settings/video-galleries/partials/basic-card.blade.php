@@ -20,7 +20,7 @@
         {{--{!!selectBoxTemplate(['items' => $locations, 'name'=> 'location_id','selected'=>$video_gallery->location_id ?? "",'label'=>'Location','col'=>'col-lg-3','id'=>'vg-location-id','col_s' => 'col-lg-9'])!!}--}}
 
         <div class="form-group row">
-            <label class="col-lg-3 col-form-label" for="vg-location-id">accessible Type
+            <label class="col-lg-3 col-form-label" for="vg-location-id">Select Location / State
                 <span class="text-danger">*</span>
             </label>
             <div class="col-lg-9">
@@ -28,7 +28,7 @@
                     @if(!empty($locations))
                     <option value="">Select Location / State</option>
                     @foreach($locations as $location)
-                    <option value="{{$location['id']}}" l_s_name="{{$location['value']}}">{{$location['value']}}&nbsp;( {{$location['sourceType']}} )</option>
+                    <option value="{{$location['id']}}" l_s_name="{{$location['value']}}" {{ ($location['id'] == $video_gallery->location_id) ? 'selected' : ''  }} data-type="{{ucfirst($location['sourceType'])}}">{{$location['value']}}&nbsp;( {{$location['sourceType']}} )</option>
                     @endforeach
                     @endif
                 </select>

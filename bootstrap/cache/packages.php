@@ -17,13 +17,6 @@
       0 => 'Cviebrock\\EloquentSluggable\\ServiceProvider',
     ),
   ),
-  'fahlisaputra/laravel-minify' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Fahlisaputra\\Minify\\MinifyServiceProvider',
-    ),
-  ),
   'intervention/image' => 
   array (
     'providers' => 
@@ -98,6 +91,13 @@
     'aliases' => 
     array (
       'LaravelCloudflareTurnstile' => 'RyanChandler\\LaravelCloudflareTurnstile\\Facades\\LaravelCloudflareTurnstile',
+    ),
+  ),
+  'silber/page-cache' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Silber\\PageCache\\LaravelServiceProvider',
     ),
   ),
   'spatie/laravel-ignition' => 

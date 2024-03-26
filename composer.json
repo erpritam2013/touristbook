@@ -10,7 +10,6 @@
         "doctrine/dbal": "*",
         "erusev/parsedown": "^1.7",
         "ezyang/htmlpurifier": "^4.17",
-        "fahlisaputra/laravel-minify": "^1.1",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
         "laravel/framework": "^9.19",
@@ -19,6 +18,7 @@
         "laravelcollective/html": "*",
         "league/flysystem-aws-s3-v3": "^3.16",
         "ryangjchandler/laravel-cloudflare-turnstile": "^0.2.0",
+        "silber/page-cache": "^1.0",
         "spatie/laravel-medialibrary": "^10.0.0",
         "tehwave/laravel-shortcodes": "^1.4",
         "yajra/laravel-datatables": "^9.0"

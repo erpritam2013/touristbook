@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3fae4ac3e677563481c9e908122a79b8",
+    "content-hash": "b56d29c103067b7b761f449eaee3d144",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -1062,76 +1062,6 @@
                 "source": "https://github.com/ezyang/htmlpurifier/tree/v4.17.0"
             },
             "time": "2023-11-17T15:01:25+00:00"
-        },
-        {
-            "name": "fahlisaputra/laravel-minify",
-            "version": "v1.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fahlisaputra/laravel-minify.git",
-                "reference": "c066816efb8535e2d5be6addc18cec9c01e632d5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fahlisaputra/laravel-minify/zipball/c066816efb8535e2d5be6addc18cec9c01e632d5",
-                "reference": "c066816efb8535e2d5be6addc18cec9c01e632d5",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/http": "^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0",
-                "illuminate/support": "^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0",
-                "illuminate/view": "^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0",
-                "php": "^7.2.5 || ^8.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Fahlisaputra\\Minify\\MinifyServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/Helpers.php"
-                ],
-                "psr-4": {
-                    "Fahlisaputra\\Minify\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "fahlisaputra",
-                    "email": "saputra@fahli.net"
-                },
-                {
-                    "name": "DulLah",
-                    "email": "dulah755@gmail.com"
-                }
-            ],
-            "description": "Minify your blade views, html, css and js files on the fly for Laravel 6, 7, 8, 9 and 10",
-            "keywords": [
-                "css-minifier",
-                "html-minifier",
-                "js-minifier",
-                "js-obfuscate",
-                "laravel"
-            ],
-            "support": {
-                "issues": "https://github.com/fahlisaputra/laravel-minify/issues",
-                "source": "https://github.com/fahlisaputra/laravel-minify/tree/v1.1.2"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/fahlisaputra",
-                    "type": "github"
-                }
-            ],
-            "time": "2024-02-14T12:37:13+00:00"
         },
         {
             "name": "fruitcake/php-cors",
@@ -4379,6 +4309,69 @@
                 "source": "https://github.com/ryangjchandler/laravel-cloudflare-turnstile/tree/v0.2.0"
             },
             "time": "2022-12-13T13:40:49+00:00"
+        },
+        {
+            "name": "silber/page-cache",
+            "version": "v1.0.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JosephSilber/page-cache.git",
+                "reference": "af9bdacc20a2036b617a4c4c6d9e7eda7e4c3a8e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JosephSilber/page-cache/zipball/af9bdacc20a2036b617a4c4c6d9e7eda7e4c3a8e",
+                "reference": "af9bdacc20a2036b617a4c4c6d9e7eda7e4c3a8e",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "5.0 - 5.8|^6.0|^7.0|^8.0|^9.0|^10.0",
+                "illuminate/filesystem": "5.0 - 5.8|^6.0|^7.0|^8.0|^9.0|^10.0",
+                "php": ">=5.5.9",
+                "symfony/http-foundation": "2.6 - 4|^5.0|^6.0"
+            },
+            "require-dev": {
+                "illuminate/container": "5.0 - 5.8|^6.0|^7.0|^8.0|^9.0|^10.0",
+                "mockery/mockery": "^0.9.5|^1.4.4",
+                "phpunit/phpunit": "^4.8|^9.5",
+                "symfony/var-dumper": "^4.4|^5.0|^6.0"
+            },
+            "suggest": {
+                "illuminate/console": "Allows clearing the cache via artisan"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Silber\\PageCache\\LaravelServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Silber\\PageCache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Joseph Silber",
+                    "email": "contact@josephsilber.com"
+                }
+            ],
+            "description": "Caches responses as static files on disk for lightning fast page loads.",
+            "keywords": [
+                "cache",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/JosephSilber/page-cache/issues",
+                "source": "https://github.com/JosephSilber/page-cache/tree/v1.0.9"
+            },
+            "time": "2023-02-08T03:24:09+00:00"
         },
         {
             "name": "spatie/image",
