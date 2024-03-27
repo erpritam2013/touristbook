@@ -15,7 +15,7 @@ if(empty($id)){
   @endif
   <div class="col-lg-10">
      @endif
-     <textarea class="form-control {{$class ?? ''}}" id="{{$id}}" name="{{$name}}" rows="{{$rows ?? 8}}" placeholder="Enter {{$label}}..">{{$value ?? ''}}</textarea>
+     <textarea class="form-control {{$class ?? ''}}" id="{{$id}}" name="{{$name}}" rows="{{$rows ?? 8}}" placeholder="Enter {{$label}}..">{!!$value ?? ''!!}</textarea>
 
   </div>
 </div>

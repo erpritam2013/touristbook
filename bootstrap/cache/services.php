@@ -35,6 +35,7 @@
     31 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     32 => 'Termwind\\Laravel\\TermwindServiceProvider',
     33 => 'RyanChandler\\LaravelCloudflareTurnstile\\LaravelCloudflareTurnstileServiceProvider',
+
     34 => 'Spatie\\LaravelIgnition\\IgnitionServiceProvider',
     35 => 'Spatie\\MediaLibrary\\MediaLibraryServiceProvider',
     36 => 'tehwave\\Shortcodes\\Providers\\ShortcodesServiceProvider',
@@ -74,6 +75,7 @@
     16 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     17 => 'Termwind\\Laravel\\TermwindServiceProvider',
     18 => 'RyanChandler\\LaravelCloudflareTurnstile\\LaravelCloudflareTurnstileServiceProvider',
+
     19 => 'Spatie\\LaravelIgnition\\IgnitionServiceProvider',
     20 => 'Spatie\\MediaLibrary\\MediaLibraryServiceProvider',
     21 => 'tehwave\\Shortcodes\\Providers\\ShortcodesServiceProvider',
