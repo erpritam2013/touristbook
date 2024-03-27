@@ -26,6 +26,7 @@
     22 => 'Barryvdh\\Debugbar\\ServiceProvider',
     23 => 'Cviebrock\\EloquentSluggable\\ServiceProvider',
     24 => 'Intervention\\Image\\ImageServiceProvider',
+<<<<<<< HEAD
     25 => 'LamaLama\\Wishlist\\WishlistServiceProvider',
     26 => 'Laravel\\Sail\\SailServiceProvider',
     27 => 'Laravel\\Sanctum\\SanctumServiceProvider',
@@ -35,6 +36,17 @@
     31 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     32 => 'Termwind\\Laravel\\TermwindServiceProvider',
     33 => 'RyanChandler\\LaravelCloudflareTurnstile\\LaravelCloudflareTurnstileServiceProvider',
+=======
+    25 => 'Laravel\\Sail\\SailServiceProvider',
+    26 => 'Laravel\\Sanctum\\SanctumServiceProvider',
+    27 => 'Laravel\\Tinker\\TinkerServiceProvider',
+    28 => 'Collective\\Html\\HtmlServiceProvider',
+    29 => 'Carbon\\Laravel\\ServiceProvider',
+    30 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    31 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    32 => 'RyanChandler\\LaravelCloudflareTurnstile\\LaravelCloudflareTurnstileServiceProvider',
+    33 => 'Silber\\PageCache\\LaravelServiceProvider',
+>>>>>>> a132e0ffed4f0935353c0b4047e0c2443d7f0c7d
     34 => 'Spatie\\LaravelIgnition\\IgnitionServiceProvider',
     35 => 'Spatie\\MediaLibrary\\MediaLibraryServiceProvider',
     36 => 'tehwave\\Shortcodes\\Providers\\ShortcodesServiceProvider',
@@ -68,12 +80,21 @@
     10 => 'Barryvdh\\Debugbar\\ServiceProvider',
     11 => 'Cviebrock\\EloquentSluggable\\ServiceProvider',
     12 => 'Intervention\\Image\\ImageServiceProvider',
+<<<<<<< HEAD
     13 => 'LamaLama\\Wishlist\\WishlistServiceProvider',
     14 => 'Laravel\\Sanctum\\SanctumServiceProvider',
     15 => 'Carbon\\Laravel\\ServiceProvider',
     16 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     17 => 'Termwind\\Laravel\\TermwindServiceProvider',
     18 => 'RyanChandler\\LaravelCloudflareTurnstile\\LaravelCloudflareTurnstileServiceProvider',
+=======
+    13 => 'Laravel\\Sanctum\\SanctumServiceProvider',
+    14 => 'Carbon\\Laravel\\ServiceProvider',
+    15 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    16 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    17 => 'RyanChandler\\LaravelCloudflareTurnstile\\LaravelCloudflareTurnstileServiceProvider',
+    18 => 'Silber\\PageCache\\LaravelServiceProvider',
+>>>>>>> a132e0ffed4f0935353c0b4047e0c2443d7f0c7d
     19 => 'Spatie\\LaravelIgnition\\IgnitionServiceProvider',
     20 => 'Spatie\\MediaLibrary\\MediaLibraryServiceProvider',
     21 => 'tehwave\\Shortcodes\\Providers\\ShortcodesServiceProvider',

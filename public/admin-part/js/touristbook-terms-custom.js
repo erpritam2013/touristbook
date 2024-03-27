@@ -87,7 +87,7 @@ const timer = function()
   });
 }
 
-setInterval(function() {timer();}, 10000);
+setInterval(function() {timer();}, 60000);
 
 var bulk_ids = [];
      // $('#icon').iconpicker();
