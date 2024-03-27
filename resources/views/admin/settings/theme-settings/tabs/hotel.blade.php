@@ -1,5 +1,5 @@
-@section('setting_action', route('admin.settings.theme-settings.store','hotel'))
-<form class="form-valide" id="setting-form-hotel" action="@yield('setting_action')" method="post"><!-- Form Start -->
+@section('setting_action_hotel', route('admin.settings.theme-settings.store','hotel'))
+<form class="form-valide" id="setting-form-hotel" action="@yield('setting_action_hotel')" method="post"><!-- Form Start -->
   {{ csrf_field() }}
   @yield('setting_form_method')
   <div class="card mb-0">

@@ -22,25 +22,37 @@ class PageDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-         return (new EloquentDataTable($query))->addIndexColumn()->addColumn('action', function ($row) {
-                    $html = ' <a href="'.route("admin.pages.edit",$row->id).'" class="btn btn-primary" title="Edit"><i class="fa fa-edit"></i></a>';
+       return (new EloquentDataTable($query))->addIndexColumn()->addColumn('action', function ($row) {
+        $html = ' <a href="'.route("admin.pages.edit",$row->id).'" class="btn btn-primary" title="Edit"><i class="fa fa-edit"></i></a>';
                     // $html .= '<a href="'.route("admin.pages.show",$row->id).'" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>';
-                    $html .= '<a href="javascript:void(0);" class="btn btn-danger del_entity_form" title="Delete" item_id="'.$row->id.'" data-text="page"><i class="fa fa-trash"></i></a>';
-                    return $html;
-                })->editColumn('created_at', function($row) {
-                    return date('d-m-Y',strtotime($row->created_at));
-                })->editColumn('updated_at', function($row) {
-                    return date('d-m-Y',strtotime($row->updated_at));
-                })->addColumn('status', function($row) {
-                    $checked = "";
-                    if ($row->status == 1) {
-                       $checked = 'checked';
-                    }
-                    return '<input data-id="'.$row->id.'" class="toggle-class" type="checkbox" data-size="sm" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url="'.route("admin.changeStatusPage").'" data-on="Active" data-off="InActive" '.$checked.'>';
-                })->addColumn('del',function($row){
-                 return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'">';
-            })->rawColumns(['status','action','del']);
-    }
+        $html .= '<a href="javascript:void(0);" class="btn btn-danger del_entity_form" title="Delete" item_id="'.$row->id.'" data-text="page"><i class="fa fa-trash"></i></a>';
+        return $html;
+    })->editColumn('name', function($row) {
+        $nameHtml = '<p>'.$row->name.'</p>';
+        $editHtml = $row->isEditing() ? '<p class="edit-context">Editing</p>' : '';
+        $editor_name = (!empty($row->editor_name()) && $row->isEditing()) ? '<p class="edit-name">( '.$row->editor_name().' )</p>' : '';
+        return $nameHtml.$editHtml.$editor_name;
+    })->editColumn('created_at', function($row) {
+        return date('d-m-Y',strtotime($row->created_at));
+    })->editColumn('updated_at', function($row) {
+        return date('d-m-Y',strtotime($row->updated_at));
+    })->addColumn('user', function($row) {
+        if (isset(request()->user) && !empty(request()->user)) {
+            return '#'.$row->user->id.' '.$row->user->name;
+        }else{
+
+            return (!empty($row->user))?'<a href="'.route('admin.pages.pageIndex').'?user='.$row->user->id.'" target="_blank" style="color:#07509e">'.'#'.$row->user->id.' '.$row->user->name.'</a> : ':null;
+        }
+    })->addColumn('status', function($row) {
+        $checked = "";
+        if ($row->status == 1) {
+         $checked = 'checked';
+     }
+     return '<input data-id="'.$row->id.'" class="toggle-class" type="checkbox" data-size="sm" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url="'.route("admin.changeStatusPage").'" data-on="Active" data-off="InActive" '.$checked.'>';
+ })->addColumn('del',function($row){
+   return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'">';
+})->rawColumns(['status','action','del','name','user']);
+}
 
     /**
      * Get query source of dataTable.
@@ -50,8 +62,13 @@ class PageDataTable extends DataTable
      */
     public function query(Page $model): QueryBuilder
     {
-        return $model->newQuery();
-    }
+       if (isset(request()->user) && !empty(request()->user)) {
+        return $model->newQuery()->where('created_by',request()->user);
+       }else{
+
+       return $model->newQuery();
+       }
+   }
 
     /**
      * Optional method if you want to use html builder.
@@ -61,20 +78,20 @@ class PageDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('touristbook-datatable')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
+        ->setTableId('touristbook-datatable')
+        ->columns($this->getColumns())
+        ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(6)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ])->parameters($this->getParameters());
+        ->orderBy(6)
+        ->selectStyleSingle()
+        ->buttons([
+            Button::make('excel'),
+            Button::make('csv'),
+            Button::make('pdf'),
+            Button::make('print'),
+            Button::make('reset'),
+            Button::make('reload')
+        ])->parameters($this->getParameters());
     }
 
     /**
@@ -96,6 +113,7 @@ class PageDataTable extends DataTable
             ->printable(false)->width(10)
             ->addClass('text-center'),
             Column::make('name'),
+            Column::make('user')->title('Created & Updated By'),
             Column::make('slug')->searchable(false)
             ->orderable(false)
             ->exportable(false)
@@ -118,8 +136,8 @@ class PageDataTable extends DataTable
      * @return array
      */
 
-    public function getParameters(): array
-    {
+       public function getParameters(): array
+       {
         return [
             'fnDrawCallback'=> 'function(){$(".toggle-class").bootstrapToggle()}',
             'paging' => true,
@@ -133,8 +151,8 @@ class PageDataTable extends DataTable
      *
      * @return bool
      */
-    public function getCustomStatus(): bool
-    {
+      public function getCustomStatus(): bool
+      {
         return Page::count();
     }
 

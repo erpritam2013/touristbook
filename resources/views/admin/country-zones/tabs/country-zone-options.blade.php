@@ -1,7 +1,7 @@
 <!-- Country Zone Title -->
-@include('admin.partials.utils.input', ['name'=> 'sub_title','label'=>'Country Zone Title','value'=>$country_zone->sub_title ?? '','id' => ""])
+{!!inputTemplate(['name'=> 'sub_title','label'=>'Country Zone Title','value'=>$country_zone->sub_title ?? '','id' => ""])!!}
 <!-- country -->
-@include('admin.partials.utils.select_box', ['items' => $countries, 'name'=> 'country','selected'=>$country_zone->country ?? "",'label'=>'Country'])
+{!!selectBoxTemplate(['items' => $countries, 'name'=> 'country','selected'=>$country_zone->country ?? "",'label'=>'Country'])!!}
 <!-- Country Zone Icon -->
 {!!mediaTemplate(['name'=> 'icon','label'=>'Country Zone Icon','desc'=>"Upload Icon Image For Country Zone",'value'=>$country_zone->icon ?? '','id' => ""])!!}
 <!-- Country Zone Banner Image -->

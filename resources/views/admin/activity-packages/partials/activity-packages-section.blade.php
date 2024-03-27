@@ -4,11 +4,11 @@
     </div>
     <div class="card-body">
 
-        @include('admin.partials.utils.input', ['name'=> 'duration','label'=>'Duration','value'=>$activity_package->duration ?? '','id' => ""])
+     {!!inputTemplate(['name'=> 'duration','label'=>'Duration','value'=>$activity_package->duration ?? '','id' => ""])!!}
 
-        @include('admin.partials.utils.input', ['name'=> 'price','label'=>'Price','value'=>$activity_package->price ?? "0.00",'id' => "",'type' => 'number'])
+     {!!inputTemplate(['name'=> 'price','label'=>'Price','value'=>$activity_package->price ?? "0.00",'id' => "",'type' => 'number'])!!}
 
-        @include('admin.partials.utils.textarea', ['name'=> 'amenities','label'=>'Amenities','value'=>$activity_package->amenities ?? '','id' => ""])
+        {!!textareaTemplate(['name'=> 'amenities','label'=>'Amenities','value'=>$activity_package->amenities ?? '','id' => ""])!!}
 
     </div>
 </div>

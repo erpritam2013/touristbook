@@ -10,21 +10,21 @@
     var markers = [];
 
     function isMobile() {
-     if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-       return true;
-   }
-   return false;
-}
+       if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+         return true;
+     }
+     return false;
+ }
 
-$('body .div-desc *').removeAttr('style');
+ $('body .div-desc *').removeAttr('style');
 
  // Get the button:
-let mybutton = document.getElementById("topScrollSite");
+ let mybutton = document.getElementById("topScrollSite");
 
 // When the user scrolls down 20px from the top of the document, show the button
-window.onscroll = function() {scrollWindow()};
+ window.onscroll = function() {scrollWindow()};
 
-function scrollWindow() {
+ function scrollWindow() {
   if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
     mybutton.style.display = "block";
 } else {
@@ -34,9 +34,9 @@ function scrollWindow() {
 
 function isJSON(something) {
     if (typeof something != 'string')
-       something = JSON.stringify(something);
+     something = JSON.stringify(something);
 
-   try {
+ try {
     JSON.parse(something);
     return true;
 } catch (e) {
@@ -58,7 +58,7 @@ const showAmenities = (amenities) => {
 }
 
 const showMoreDataBody = (get_html_,chr_count) => {
- if(typeof(chr_count) != "undefined" && parseInt(chr_count) > 700){
+   if(typeof(chr_count) != "undefined" && parseInt(chr_count) > 700){
     $('body #showMoreDataBody').css('overflow','auto').css('height','350px').html(get_html_);
 }else{
     $('body #showMoreDataBody').removeAttr('style').html(get_html_);
@@ -84,24 +84,24 @@ window.showMoreData = function(data){
             showMoreDataBody(get_html,total_chr);
 
         }else if (label == 'Activity List') {
-           let get_html = showAmenities(result);
-           showMoreDataBody(get_html,total_chr);
-       }
+         let get_html = showAmenities(result);
+         showMoreDataBody(get_html,total_chr);
+     }
        // console.log(result);
-   }else{
+ }else{
     let html = '';
     if (label == 'Address') {
 
       html = `<p class="service-location"><i class="fa fa-map-marker" aria-hidden="true" style="color:#fba009;"></i>&nbsp;${showMoreData}</p>`;
   }else if(label == 'Package Route'){
-     html += '<div class="tour-routes">';
-     html += '<ul>';
-     html += '<li>';
-     html += `<span class="tour-route-span">${showMoreData}</span>`;
-     html += '</li>';
-     html += '</ul>';
-     html += '</div>';
- }else{
+   html += '<div class="tour-routes">';
+   html += '<ul>';
+   html += '<li>';
+   html += `<span class="tour-route-span">${showMoreData}</span>`;
+   html += '</li>';
+   html += '</ul>';
+   html += '</div>';
+}else{
     html = `<p class="service-location">${showMoreData}</p>`;
 }
 showMoreDataBody(html,total_chr);
@@ -132,8 +132,8 @@ $('#custom-tabs').on('click','a.nav-link',function(e){
     }
 });
 window.showActivityZoneTab = function(ele){
- let zone_tabs_div_section = $('#zone-tabs-div-section');
- if (zone_tabs_div_section.hasClass('d-none')) {
+   let zone_tabs_div_section = $('#zone-tabs-div-section');
+   if (zone_tabs_div_section.hasClass('d-none')) {
     zone_tabs_div_section.removeClass('d-none');
 }else{
     zone_tabs_div_section.addClass('d-none');
@@ -189,11 +189,11 @@ if (terms.length != 0) {
           }
       }else{
         if (show_text === 'more') {
-           $(value).removeClass('d-none');
-       }else{
-           $(value).addClass('d-none');
-       }
-   }
+         $(value).removeClass('d-none');
+     }else{
+         $(value).addClass('d-none');
+     }
+ }
 })
 }
 }
@@ -221,11 +221,11 @@ if (activity_list_item.length != 0) {
           }
       }else{
         if (show_text === 'more') {
-           $(value).removeClass('d-none');
-       }else{
-           $(value).addClass('d-none');
-       }
-   }
+         $(value).removeClass('d-none');
+     }else{
+         $(value).addClass('d-none');
+     }
+ }
 })
 }
 }
@@ -255,11 +255,11 @@ if (activity_package_item.length != 0) {
           }
       }else{
         if (show_text === 'more') {
-           $(value).removeClass('d-none');
-       }else{
-           $(value).addClass('d-none');
-       }
-   }
+         $(value).removeClass('d-none');
+     }else{
+         $(value).addClass('d-none');
+     }
+ }
 })
 }
 }
@@ -395,30 +395,30 @@ $('.form-inquiry').on('submit',function(e){
         complete: hideLoader,
         success: function (data,status,response) {
             if (response.status == 200) {
-             $('.form-success').show();
-             $('.form-success').find('.msg').text(data.msg);
-             console.log(data.msg);
-             $(form)[0].reset();
-         }else{
-             $('.form-error').show();
-             $('.form-error').find('.msg').text(data.msg);
-         }
+               $('.form-success').show();
+               $('.form-success').find('.msg').text(data.msg);
+               console.log(data.msg);
+               $(form)[0].reset();
+           }else{
+               $('.form-error').show();
+               $('.form-error').find('.msg').text(data.msg);
+           }
 
-         setTimeout(function() {
-             $('.form-success').hide();
-             $('.form-error').hide();
-         }, 3000);
+           setTimeout(function() {
+               $('.form-success').hide();
+               $('.form-error').hide();
+           }, 3000);
 
 
-     },
-     error:function(data){
-      $('.form-error').show();
-      $('.form-error').show().find('.msg').text(data.msg);
-      setTimeout(function() {
-         $('.form-error').hide();
-     }, 3000);
-  },
-});
+       },
+       error:function(data){
+          $('.form-error').show();
+          $('.form-error').show().find('.msg').text(data.msg);
+          setTimeout(function() {
+           $('.form-error').hide();
+       }, 3000);
+      },
+  });
 });
 
 const compiledCheckboxes = (selector) => {
@@ -874,17 +874,17 @@ function loadStreetMap() {
             // console.log(parent);
                 if ($(parent).hasClass('collapsed')) {
 
-                 $(".filter-other-package:checked").each(function () {
+                   $(".filter-other-package:checked").each(function () {
                     $(this).prop('checked', false).trigger('change');
                 });
 
-             }
-         }
+               }
+           }
 
 
-     }
-     fetchRecords(view, fetchParameters());
- });
+       }
+       fetchRecords(view, fetchParameters());
+   });
 
     resultInfo.on("click", ".page-link", function () {
         let view = $(".view-changer").attr("view-id");
@@ -910,104 +910,104 @@ function loadStreetMap() {
 
     }
     $('.tab_container').on('change','[id^="tab"]',function(){
-     home_page_search_input_add($(this).data('index'));
- })
+       home_page_search_input_add($(this).data('index'));
+   })
 
     $("#input-search-box").autocomplete({
 
 
-     search: function(event, ui) {
-       $('.map-content-loading-search-input').show();
-   },
-   response: function(event, ui) {
-       $('.map-content-loading-search-input').hide();
-   },
-   source: function (request, response) {
-    $("input[name=source_type]").val("");
-    $("input[name=source_id]").val("");
+       search: function(event, ui) {
+         $('.map-content-loading-search-input').show();
+     },
+     response: function(event, ui) {
+         $('.map-content-loading-search-input').hide();
+     },
+     source: function (request, response) {
+        $("input[name=source_type]").val("");
+        $("input[name=source_id]").val("");
 
-    $.ajax({
-        url: "/get-location-states",
-        dataType: "json",
-        data: {
-            term: request.term,
-        },
-        success: function (data) {
+        $.ajax({
+            url: "/get-location-states",
+            dataType: "json",
+            data: {
+                term: request.term,
+            },
+            success: function (data) {
 
-            response($.map(data, function(item) {
-             item.value =  $(`<span></span>`).html(item.value).text();
-             return item;
-         }));
+                response($.map(data, function(item) {
+                   item.value =  $(`<span></span>`).html(item.value).text();
+                   return item;
+               }));
 
-        },
-    });
-},
-open: function() {
-    $(this).autocomplete("widget")
-    .appendTo("#search-result-info")
-    .css({position: 'relative',top: '0px',left: '0px',width:'67%!important',marginTop:'0px',marginLeft:'0px',border: '1px solid #ddd'});
-},
-minLength: 2,
-select: function (event, ui) {
-    $("input[name=source_type]").val(ui.item.sourceType);
-    $("input[name=source_id]").val(ui.item.id);
-    $('.map-content-loading-search-input').show();
-    setTimeout(function(){
-        $('#search-form-result').submit();
-        $('.map-content-loading-search-input').hide();
-    },0);
-},
+            },
+        });
+    },
+    open: function() {
+        $(this).autocomplete("widget")
+        .appendTo("#search-result-info")
+        .css({position: 'relative',top: '0px',left: '0px',width:'67%!important',marginTop:'0px',marginLeft:'0px',border: '1px solid #ddd'});
+    },
+    minLength: 2,
+    select: function (event, ui) {
+        $("input[name=source_type]").val(ui.item.sourceType);
+        $("input[name=source_id]").val(ui.item.id);
+        $('.map-content-loading-search-input').show();
+        setTimeout(function(){
+            $('#search-form-result').submit();
+            $('.map-content-loading-search-input').hide();
+        },0);
+    },
 }).autocomplete("instance")._renderItem = function(ul, item) {
-     let icon = $('.map-icon').text();
-     return $("<li>")
-     .append(`<div>${item.label}<span style='float: left'>${icon}</span></div>`)
-     .appendTo(ul);
- };
- $(".input-search-box").autocomplete({
+       let icon = $('.map-icon').text();
+       return $("<li>")
+       .append(`<div>${item.label}<span style='float: left'>${icon}</span></div>`)
+       .appendTo(ul);
+   };
+   $(".input-search-box").autocomplete({
 
 
-     search: function(event, ui) {
-       $('.map-content-loading-search-input').show();
-   },
-   response: function(event, ui) {
-       $('.map-content-loading-search-input').hide();
-   },
-   source: function (request, response) {
-    $("input[name=source_type]").val("");
-    $("input[name=source_id]").val("");
-    $.ajax({
-        url: "/get-location-states",
-        dataType: "json",
-        data: {
-            term: request.term,
-        },
-        success: function (data) {
+       search: function(event, ui) {
+         $('.map-content-loading-search-input').show();
+     },
+     response: function(event, ui) {
+         $('.map-content-loading-search-input').hide();
+     },
+     source: function (request, response) {
+        $("input[name=source_type]").val("");
+        $("input[name=source_id]").val("");
+        $.ajax({
+            url: "/get-location-states",
+            dataType: "json",
+            data: {
+                term: request.term,
+            },
+            success: function (data) {
 
-            response($.map(data, function(item) {
-             item.value =  $('<span></span>').html(item.value).text();
-             return item;
-         }));
+                response($.map(data, function(item) {
+                   item.value =  $('<span></span>').html(item.value).text();
+                   return item;
+               }));
 
-        },
-    });
-},
+            },
+        });
+    },
 
 
     /* display: none; */
-open: function() {
-    $(this).autocomplete("widget")
-    .appendTo((!isMobile())?"#search-result-info":$(this).parent())
-    .css({position: 'relative',top: '0px',left: '0px',marginTop:'0px',marginLeft:'0px'});
-},
-minLength: 2,
-select: function (event, ui) {
-    $("input[name=source_type]").val(ui.item.sourceType);
-    $("input[name=source_id]").val(ui.item.id);
-    let form_id = $(this).data('form_id');
-    setTimeout(function(){
-        $(form_id).submit();
-    },0);
-},
+    open: function() {
+        $(this).autocomplete("widget")
+        .appendTo((!isMobile())?"#search-result-info":$(this).parent())
+        .css({position: 'relative',top: '0px',left: '0px',marginTop:'0px',marginLeft:'0px'});
+    },
+    minLength: 2,
+    select: function (event, ui) {
+        $("input[name=source_type]").val(ui.item.sourceType);
+        $("input[name=source_id]").val(ui.item.id);
+        let form_id = $(this).data('form_id');
+        setTimeout(function(){
+            $(form_id).submit();
+        },0);
+    },
 }).autocomplete("instance")._renderItem = function(ul, item) {
 
     return $("<li>")
@@ -1140,7 +1140,7 @@ $("#languageChange .dropdown-item").on("click", function() {
     let selectedLanguageImage = $(this).find('.dropdown-item-icon').first().attr('src');
     // let currencyIcon = getCurrencyIcon(selectedCurrency);
     let image_lang = `<img class="dropdown-item-icon"
-                          src="${selectedLanguageImage}" alt="">${selectedLanguageText}`;
+    src="${selectedLanguageImage}" alt="">${selectedLanguageText}`;
     document.getElementById('dropdownLanguage').innerHTML = image_lang
 
     // console.log(selectedLanguage)
@@ -1154,7 +1154,7 @@ $("#languageChange .dropdown-item").on("click", function() {
     //     .trigger('change');
     let select = document.querySelector('.goog-te-combo');
     select.value = selectedLanguage
-     triggerEvent(select,'change');
+    triggerEvent(select,'change');
     // $('#google_translate_element .goog-te-combo').val(selectedLanguage).trigger('onChange')
     // Send AJAX request to update session
     updateLanguageSession(selectedLanguage,selectedLanguageText,selectedLanguageImage);
@@ -1171,16 +1171,98 @@ window.ShowHidePassword = () => {
 }
 }
 
+$('body').on('click','.wishlist_btn',function(e){
+    e.preventDefault();
+    let current_ele = $(this);
+    let params = new Object();
+    let model_type = $(this).attr('data-model_type');
+    let model_id = $(this).attr('data-model_id');
+    let status = $(this).attr('data-status');
+    
+    params.model_type = model_type;
+    params.model_id = model_id;
+    params.status = status;
+    let endpoint = base_url + "/wishlist-add";
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    },
+});
+    $.ajax({
+        type: "POST",
+        data:params,
+        url: endpoint,
+        beforeSend: showLoader,
+        complete: hideLoader,
+        success: function (data) {
 
+            if (data.auth == false) {
+              alert('please login user add wishlist');
+              return false;
+            }
+            if (data.wishlist == true) {
+              params.status == 1;
+              $(current_ele).attr('data-status',1);
+              $(current_ele).find('i.fa-heart').css({color:'#000;'});
+              $(`#wishlist-title-${model_id}`).text('saved');
+            }else{
+              $(current_ele).attr('data-status',0);
+              $(current_ele).find('i.fa-heart').removeAttr('style');
+              $(`#wishlist-title-${model_id}`).text('save');
+            }
+        },
+        error:function(){
+            alert('something went wrong!');
+        }
+    });
+})
+$('body').on('click','.wishlist-remove',function(e){
+    e.preventDefault();
+    let current_ele = $(this);
+    let params = new Object();
+    let model_type = $(this).attr('data-model_type');
+    let model_id = $(this).attr('data-model_id');
+    let status = $(this).attr('data-status');
+    
+    params.model_type = model_type;
+    params.model_id = model_id;
+    params.status = status;
+    let endpoint = base_url + "/wishlist-remove";
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    },
+});
+    $.ajax({
+        type: "POST",
+        data:params,
+        url: endpoint,
+        beforeSend: showLoader,
+        complete: hideLoader,
+        success: function (data) {
+
+            if (data.auth == false) {
+              alert('please login user add wishlist');
+              return false;
+            }
+            if (data.wishlist_remove == true) {
+              window.location.reload();
+            }
+        },
+        error:function(){
+            alert('something went wrong!');
+        }
+    });
+})
 $('.hotel-detail-page .important-note-icon').on('click',function(){
     let parent_class = $(this).data('parent_title');
     if (!$(`body .${parent_class}`).hasClass('policy-child')) {
-    $(`body .${parent_class}`).addClass('policy-child');
+        $(`body .${parent_class}`).addClass('policy-child');
     }else{
-    $(`body .${parent_class}`).removeClass('policy-child');
+        $(`body .${parent_class}`).removeClass('policy-child');
 
     }
-})
+});
 // $('.hotel-detail-page .important-note-icon').mouseenter(function(){
 //     let parent_class = $(this).data('parent_title');
 //     $(`body .${parent_class}`).css({visibility:'visible',opacity:1});

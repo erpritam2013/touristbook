@@ -2,9 +2,60 @@
 
 use App\Models\Conversion;
 use App\Models\Setting;
+use App\Models\User;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+
+
+function imageOptimize($id,$con_type)
+{
+    
+    $NamespacedModelMedia = 'App\\Models\\Media';
+    $media = $NamespacedModelMedia::find($id);
+    if (!empty($media) && !empty($media->generated_conversions)) {
+      $generated_conversions = array_keys($media->generated_conversions);
+  
+      if (!in_array( $con_type,  $generated_conversions) && !empty($con_type)) {
+          if ($con_type == 'thumbnail') {
+              $con_type = '100x100';
+          }
+
+        $image_fullname = 
+        $url  = $media->getUrl();
+        if (Storage::disk('s3')->exists($url)) {
+        
+       $image_name = pathinfo($url, PATHINFO_FILENAME);
+       $ext = pathinfo($url, PATHINFO_EXTENSION);
+      
+       $customPrefix = "wp-content/uploads/". $media->created_at->year."/".date('m',strtotime($media->created_at));
+          $seprate_dimension = explode('x', $con_type);
+          $height = $seprate_dimension[0];
+          $width = $seprate_dimension[1];
+          $image_full_name = $image_name.'-'.$con_type.'.'.$ext;
+          $conversion_image =  \Image::make($url)
+                  ->resize($height, $width, function ($constraint) { $constraint->aspectRatio(); } )
+                  ->encode($ext,80);
+
+          $optimize_path = $customPrefix.'/'.$image_full_name;
+       
+          Storage::disk('s3')->put( $customPrefix.'/'.$image_full_name, $conversion_image);  
+          if (Storage::disk('s3')->exists($optimize_path)) {
+                 $con_array = $media->generated_conversions;
+                 $con_array[$con_type] = true;
+                  $media->generated_conversions = $con_array;
+                  $media->update();
+               } 
+        }
+              
+
+      }
+
+    }
+    return true;
+}
 // boolean (true)
 if (!function_exists('get_image_url')) {
  function get_image_url($value,$key)
@@ -26,6 +77,26 @@ if (!function_exists('get_image_url')) {
 }
 }
 return $url;
+}
+}
+if (!function_exists('wishlist_model')) {
+ function wishlist_model($type,$id)
+{
+
+    
+    $wishlist = false;
+    if (Auth::check()) {
+       $user = User::find(Auth::user()->id);
+       $wishlist_get = $user->wishlist($type);
+      
+       if (!empty($wishlist_get)) {
+          $single_wishlist = $wishlist_get->where('id',$id)->first();
+          if (!empty($single_wishlist)) {
+          $wishlist = true;
+          }
+       }
+    }
+    return $wishlist;
 }
 }
 if (!function_exists('get_a_link')) {
@@ -921,17 +992,22 @@ if (!function_exists('get_price')) {
 
 }
 }
+
 $price_html .=   $currency_symbal;
 if (is_float($price)) {
     $price_html .= ceil($price);
 }else{
     $price_html .= $price;
 }
+
+
          //$price_html .= number_format((float)$price, 2, '.', '');
 if (is_object($obj)) {
     $price_html .= '</span>';
 }
-
+if ($price == 0) {
+   $price_html = 0;
+}
 return $price_html;
 }
 }
@@ -1038,14 +1114,18 @@ if (!function_exists('getConversionUrl')) {
 
         $NamespacedModel = 'App\\Models\\File';
         $NamespacedModelMedia = 'App\\Models\\Media';
-        $conversion_arr = ["thumbnail","768x576","600x450","450x417"];
-        if (!in_array($conversion_type, $conversion_arr)) {
-            $conversion_type = "";
-        }
+        // $conversion_arr = ["thumbnail","768x576","600x450","450x417"];
+        // if (!in_array($conversion_type, $conversion_arr) && !empty($conversion_type)) {
+            
+        //     $conversion_type = imageOptimize($url);
+        // }
+       // imageOptimize($id,$conversion_type);
+
         $media = $NamespacedModelMedia::find($id);
         if (!empty($media)) {
             $file = $NamespacedModel::find($media->model_id);
             if (!empty($file)) {
+                
                 return $file->getFirstMediaUrl('images',$conversion_type);
             }
         }
@@ -1228,10 +1308,9 @@ if (!function_exists('GetVideoGallery')) {
         }
        
         $NamespacedModel = 'App\\Models\\VideoGallery';
-
-        $GetVideoGallery = $NamespacedModel::where('name',ucwords($location->name))->orWhere('location_id',$location->id)->first();
+        $GetVideoGallery = $NamespacedModel::where('name',ucwords($location->name))->orWhere('location_id',$location->id)->where('type',$location->type)->first();
         if (empty($GetVideoGallery)) {
-         $GetVideoGallery = $NamespacedModel::where('name',ucwords($state_name))->orWhere('location_id',$state_id)->first();
+         $GetVideoGallery = $NamespacedModel::where('name',ucwords($state_name))->orWhere('location_id',$state_id)->where('type',$location->type)->first();
         }
         return $GetVideoGallery;
     }
@@ -1462,7 +1541,7 @@ if(!function_exists('print_error_message')){
     function print_error_message($error){
 
         $errMsg='<div class="alert alert-danger alert-dismissible alert-alt solid fade show"><button type="button" class="close h-100" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
-        </button><strong>Success!</strong>&nbsp;'.$error.'</div>';
+        </button><strong>Error : </strong>&nbsp;'.$error.'!</div>';
 
         return  $errMsg;
     }

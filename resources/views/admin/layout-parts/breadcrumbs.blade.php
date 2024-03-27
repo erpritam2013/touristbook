@@ -14,7 +14,7 @@
               @if(!is_null($url) && !$loop->last)
               @if($key != 'admin')
               @if(!Route::has('admin.'.$key))
-              @php $url .= 's';@endphp
+              @php  $url .= (substr($url, -1, 1) != "s")?$url.'s':'';@endphp
               @endif
               @endif
                 <li class="breadcrumb-item"><a href="{{ url($url) }}">{{ ucwords(str_replace('-'," ",$key)) }}</a></li>

@@ -17,7 +17,7 @@ if(isset($page)) {
 if(isJson($page->featured_image)){
     $page->featured_image = json_decode($page->featured_image,true);
 }
-$banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]['id']))?getConversionUrl($page->featured_image[0]['id']):null;
+$banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]['id']))?getConversionUrl($page->featured_image[0]['id'],'1200x400'):null;
 }
 
 @endphp
@@ -48,27 +48,35 @@ $banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]
 					</h3>
 					<p>Send us a message and we'll respond as soon as possible
 					</p>
+					<div class="alert alert-danger contact-msg" style="display:none"></div>
 				</div>
-				<div class="contact-form">
-					<form id="contact-form" action="{{route('contact')}}" method="POST">
-						{{ csrf_field() }}
-						{{method_field('POST')}}
-						<!-- Email -->
+				
+					<form id="contact-form" action="{{route('store')}}" method="POST" class="contact-form">
+					
+						<!-- Name -->
 						<div class="form-group">
 
-							<input class="form-control" type="email" name="email" placeholder="Email">
+							<input class="form-control" type="text" name="name" placeholder="Name" id="name">
+							<div class="invalid-feedback animated fadeInUp" id="name_error"></div>
+						</div>
+						<div class="form-group">
+
+							<input class="form-control" type="email" name="email" placeholder="Email" id="email">
+							<div class="invalid-feedback animated fadeInUp" id="email_error"></div>
 						</div>
 
 						<!-- Password -->
 						<div class="form-group">
 
 							<input type="text" class="form-control" name="subject" id="subject" placeholder="Subject">
+							<div class="invalid-feedback animated fadeInUp" id="subject_error"></div>
 						</div>
 
 						<!-- Textarea -->
 						<div class="form-group">
 
-							<textarea class="form-control" rows="5" name="message" placeholder="Message"></textarea>
+							<textarea class="form-control" rows="5" name="message" placeholder="Message" id="message"></textarea>
+							<div class="invalid-feedback animated fadeInUp message_error"></div>
 						</div>
 
 
@@ -85,7 +93,7 @@ $banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]
 
 					</form>
 
-				</div>
+				    
 
 			</div>
 

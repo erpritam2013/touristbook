@@ -64,6 +64,7 @@
            @include('admin.partials.modals.file')
            @include('admin.partials.modals.gallery_sort')
            @include('admin.partials.modals.login-modal')
+           @include('admin.partials.modals.isEditing')
 
         <!--**********************************
            Support ticket button end

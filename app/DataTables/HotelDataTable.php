@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Hotel;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -41,12 +42,21 @@ class HotelDataTable extends DataTable
 
                     return $row->address;
                 })->editColumn('name', function($row) {
+                
                     $nameHtml = '<p>'.$row->name.'</p>';
                     $editHtml = $row->isEditing() ? '<p class="edit-context">Editing</p>' : '';
-                    return $nameHtml.$editHtml;
+                    $editor_name = (!empty($row->editor_name()) && $row->isEditing()) ? '<p class="edit-name">( '.$row->editor_name().' )</p>' : '';
+                    return $nameHtml.$editHtml.$editor_name;
+                })->addColumn('user', function($row) {
+                    if (isset(request()->user) && !empty(request()->user)) {
+                        return '#'.$row->user->id.' '.$row->user->name;
+                    }else{
+
+                    return (!empty($row->user))?'<a href="'.route('admin.hotels.index').'?user='.$row->user->id.'" target="_blank" style="color:#07509e">'.'#'.$row->user->id.' '.$row->user->name.'</a> : ':null;
+                    }
                 })->addColumn('del',function($row){
                  return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'">';
-            })->rawColumns(['status','action','del','address', 'name']);
+            })->rawColumns(['status','action','del','address','name','user']);
     }
 
     /**
@@ -57,7 +67,12 @@ class HotelDataTable extends DataTable
      */
     public function query(Hotel $model): QueryBuilder
     {
-        return $model->newQuery()->select(['id','name','slug','status','address','created_at','updated_at']);
+        if (isset(request()->user) && !empty(request()->user)) {
+           return $model->newQuery()->select(['id','name','slug','status','address','created_at','updated_at','created_by','editor_id','is_editing','editing_expiry_time'])->where('created_by',request()->user);
+        }else{
+
+        return $model->newQuery()->select(['id','name','slug','status','address','created_at','updated_at','created_by','editor_id','is_editing','editing_expiry_time']);
+        }
     }
 
     /**
@@ -103,6 +118,7 @@ class HotelDataTable extends DataTable
             ->printable(false)->width(10)
             ->addClass('text-center'),
             Column::make('name'),
+            Column::make('user')->title('Created & Updated By'),
             Column::make('slug')->searchable(false)
             ->orderable(false)
             ->exportable(false)

@@ -11,8 +11,8 @@
       @foreach($posts as $post)
       <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mb-4 post-item">
         <div class="card shadow  h-100"><a href="{{route('blog',$post->slug)}}">
-           @php $featured_image = (!empty($post->featured_image) && isset($post->featured_image[0]['id']))?getConversionUrl($post->featured_image[0]['id'],'600x250'):null;@endphp
-          <img src="{{$featured_image ?? asset('sites/images/dummy/600x250.jpg')}}" alt="post-image" class="post-image" width="768" height="368">               
+           @php $featured_image = (!empty($post->featured_image) && isset($post->featured_image[0]['id']))?getConversionUrl($post->featured_image[0]['id'],'600x450'):null;@endphp
+          <img src="{{$featured_image ?? asset('sites/images/dummy/600x450.jpg')}}" alt="post-image" class="post-image" width="768" height="368">               
         </a>
           <div class="card-body">
             <h5 class="my-2"><a href="{{route('blog',$post->slug)}}" class="post-title text-dark">{{shortDescription($post->name ?? '',35)}}</a></h5>

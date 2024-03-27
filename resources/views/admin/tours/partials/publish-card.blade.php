@@ -1,4 +1,4 @@
-<div class="card sticky-top" style="top: 100px;">
+<div class="card">
     <div class="card-header border-bottom">
         <h4 class="card-title">Publish</h4>
     </div>
@@ -16,6 +16,7 @@
             </div>
         </div> 
         <div class="form-group row">
+            
             <button type="submit" class="btn btn-primary">@isset($tour->id)Update @else Save @endisset</button>&nbsp;
             @if(isset($tour->id))
             <input type="submit" class="btn btn-success" name="iscompleted" value="Update and Complete Editing" style="color: #fff;" />

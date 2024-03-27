@@ -29,6 +29,7 @@ class FileController extends Controller
 
     public function index(MediaDataTable $dataTable)
     {
+
         $data['media'] = Media::count();
         $data['title'] = 'Media List';
         return $dataTable->render('admin.settings.media-object.index', $data);
@@ -66,6 +67,7 @@ class FileController extends Controller
         $file->save();
 
         $file->addMedia($uploadedFile)
+            ->withCustomProperties(['created_by'=>($user = auth()->getUser())?$user->id:null])
             ->toMediaCollection('images');
 
         $media = $file->getMedia('images')->first();

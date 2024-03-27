@@ -63,7 +63,7 @@ class ConversionDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('conversion-table')
+                    ->setTableId('touristbook-datatable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
@@ -76,7 +76,7 @@ class ConversionDataTable extends DataTable
                         Button::make('print'),
                         Button::make('reset'),
                         Button::make('reload')
-                    ]);
+                    ])->parameters($this->getParameters());
     }
 
     /**
@@ -111,6 +111,24 @@ class ConversionDataTable extends DataTable
             ->printable(false)
             ->width(120)
             ->addClass('text-center'),
+        ];
+    }
+
+
+
+       /**
+     * Get Parameters.
+     *
+     * @return array
+     */
+
+       public function getParameters(): array
+       {
+        return [
+            'fnDrawCallback'=> 'function(){$(".toggle-class").bootstrapToggle()}',
+            'paging' => true,
+            'searching' => true,
+            'info' => false,
         ];
     }
 

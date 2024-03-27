@@ -16011,9 +16011,7 @@ body.home-page .home-blogs .post-title {
 	text-decoration: none;
 }
 
-.disabled-link {
-	pointer-events: none;
-}
+
 
 @media (min-width:320px) and (max-width:768px){
 
@@ -16302,7 +16300,16 @@ div.skiptranslate, #google_translate_element{
 body{
 	top: 0px!important;
 }
+.comment-author{
+	font-size: 1.0rem;
+}
 
+span.price-on-request {
+    font-size: 16px;
+    display: block;
+    line-height: 42px;
+    color: black;
+}
 @media (min-width:320px) and (max-width:768px){
 	.map-error-div {
     padding: 0px 40px;
@@ -16323,6 +16330,8 @@ body a.navbar-brand img.web-logo{
    width: 210px;
 }
 }
+
+
 /*extra css locations end*/
 
 

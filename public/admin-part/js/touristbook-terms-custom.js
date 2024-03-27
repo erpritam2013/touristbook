@@ -22,6 +22,7 @@ return alr_html;
 
 let loginForm = $("#ajax-login-form");
 let login_action = $("#ajax-login-form").attr('action');
+
 loginForm.submit(function(e){
 
     e.preventDefault();
@@ -62,14 +63,25 @@ loginForm.submit(function(e){
 
 const timer = function()
 {
-    $.get( "/ajax/login-status",function( data )
+    // let params = new Object();
+    // params.id = $('input[name="id"]').val();
+    // params.model = $('input[name="id"]').data('model');
+
+    $.get( "/ajax/login-status",params,function( data )
     {
+
         if (data.auth == false) {
           $('.login-success').remove();
           $('.login-error').remove();
           $("#login-modal").modal("show");
           $("#login-modal").attr('data-csrf',data.token);
       }else{
+        
+        // if (typeof data.isEditor != 'undefined' && !data.isEditor) {
+        //     let editing_html = ``;
+        // editing_html += `<span class="editor-name">${data.editor.email}</span>`;
+        // editing_html += `<button class="btn btn-info btn-xm button-name" onclick="window.location.reload();">Refresh Now</button>`;
+        // }
           $("#login-modal").modal("hide");
       }
   });

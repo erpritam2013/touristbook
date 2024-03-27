@@ -59,6 +59,8 @@ $first_element = reset($typeData);
           value="{{ $value ?? '' }}"
           id="{{ $type . '-tsign-' . $key . '-tsign-' . $controlId }}"
           placeholder="Enter {{ $typeFields[$controlId]['label'] }}...">
+          @elseif($typeFields[$controlId]['control'] == "email")
+                <input type="email" class="form-control {{$elemClass}} " name="{{$type}}[{{$key}}][{{$controlId}}]" value="{{$value ?? ''}}" id="{{$type.'-tsign-'.$key.'-tsign-'.$controlId}}" placeholder="Enter {{$typeFields[$controlId]['label']}}...">
           @elseif($typeFields[$controlId]['control'] == 'url')
           <input type="url" class="form-control {{ $elemClass }} "
           name="{{ $type }}[{{ $key }}][{{ $controlId }}]"

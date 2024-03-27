@@ -4,4 +4,4 @@
     @include('admin.partials.utils.subform-wrapper', ["subformData" => $room->detail->add_new_facility ?? null, 'type' => 'add_new_facility', 'btnTitle' => 'Add New'])
 </div>
 
- @include('admin.partials.utils.textarea', ['name'=> 'room_description','label'=>'Room Description','rows'=>10,'value'=>$room->detail->room_description ?? '','id' => ""])
+{!!textareaTemplate(['name'=> 'room_description','label'=>'Room Description','rows'=>10,'value'=>$room->detail->room_description ?? '','id' => ""])!!}

@@ -17,6 +17,7 @@ use Cviebrock\EloquentSluggable\Services\SlugService;
 use App\DataTables\RoomDataTable;
 use App\DataTables\TrashedRoomDataTable;
 use Session;
+use Auth;
 
 class RoomController extends Controller
 {
@@ -68,23 +69,28 @@ class RoomController extends Controller
      */
     public function index(RoomDataTable $dataTable)
     {
+       if (isset(request()->user) && !empty(request()->user)) {
+        $created_by = request()->user;
+        $data['rooms'] = Room::where('created_by',$created_by)->count();
+    }else{
         $data['rooms'] = Room::count();
-        $data['title'] = 'Room List';
-        $data['trashed'] = Room::onlyTrashed()->count();
-        return $dataTable->render('admin.rooms.index', $data);
     }
+    $data['title'] = 'Room List';
+    $data['trashed'] = Room::onlyTrashed()->count();
+    return $dataTable->render('admin.rooms.index', $data);
+}
 
 
-    public function changeStatus(Request $request): JsonResponse
-    {
-        $roomId = $request->id;
-        $roomDetails = [
-            'status' => $request->status,
-        ];
-        $this->roomRepository->updateroom($roomId, $roomDetails);
+public function changeStatus(Request $request): JsonResponse
+{
+    $roomId = $request->id;
+    $roomDetails = [
+        'status' => $request->status,
+    ];
+    $this->roomRepository->updateroom($roomId, $roomDetails);
 
-        return response()->json(['success' => 'Status change successfully.']);
-    }
+    return response()->json(['success' => 'Status change successfully.']);
+}
 
 
     /**
@@ -94,12 +100,12 @@ class RoomController extends Controller
      */
     public function create()
     {
-     $data['title'] = 'Room Add';
-     $data['room'] = new Room();
-     $data = array_merge_recursive($data, $this->_prepareBasicData());
+       $data['title'] = 'Room Add';
+       $data['room'] = new Room();
+       $data = array_merge_recursive($data, $this->_prepareBasicData());
 
-     return view('admin.rooms.create', $data);
- }
+       return view('admin.rooms.create', $data);
+   }
 
     /**
      * Store a newly created resource in storage.
@@ -110,14 +116,14 @@ class RoomController extends Controller
     public function store(StoreRoomRequest $request)
     {
    //   if (isset($request->featured_image)) {
-         
+
    //     $request->merge([
    //      'featured_image' => json_decode($request->featured_image,true),
    //  ]);
    // }
-   $roomDetails = [
+     $roomDetails = [
 
-      
+
       'name' =>$request->name,
       'hotel_id' =>$request->hotel_id,
       'slug' => SlugService::createSlug(room::class, 'slug', $request->name),
@@ -136,6 +142,7 @@ class RoomController extends Controller
           // 'featured_image_id' =>$request->featured_image_id,
           // 'created_by' =>$request->created_by,
       'status' =>$request->status,
+      'created_by' => (Auth::check())?Auth::user()->id:null,
       
 
 
@@ -154,41 +161,41 @@ class RoomController extends Controller
   if ($room) {
             // TODO: Move this to Repository
 
-     if($request->gallery == '' || empty($request->gallery) || $request->gallery == '"[]"' ) {
-           $request->merge([
-            'gallery' => "[]",
-        ]);
-       }
-    $roomMetaData = [
+   if($request->gallery == '' || empty($request->gallery) || $request->gallery == '"[]"' ) {
+     $request->merge([
+        'gallery' => "[]",
+    ]);
+ }
+ $roomMetaData = [
 
-      "st_booking_option_type",
-      "gallery",
-      "hotel_alone_room_layout",
-      "disable_adult_name",
-      "disable_children_name",
+  "st_booking_option_type",
+  "gallery",
+  "hotel_alone_room_layout",
+  "disable_adult_name",
+  "disable_children_name",
 
           // "room_facility_preview_id",
-      "room_facility_preview",
+  "room_facility_preview",
 
-      "bed_number",
-      "room_footage",
-      "st_room_external_booking",
-      "st_room_external_booking_link",
-      "add_new_facility",
-      "room_description",
-      "social_links",
+  "bed_number",
+  "room_footage",
+  "st_room_external_booking",
+  "st_room_external_booking_link",
+  "add_new_facility",
+  "room_description",
+  "social_links",
 
-  ];
+];
 
-  $room->detail()->create($request->only($roomMetaData));
-
-
+$room->detail()->create($request->only($roomMetaData));
 
 
-  $room->facilities()->attach($request->get('facilities'));
-  $room->types()->attach($request->get('type'));
-  $room->locations()->attach($request->get('location_id'));
-  
+
+
+$room->facilities()->attach($request->get('facilities'));
+$room->types()->attach($request->get('type'));
+$room->locations()->attach($request->get('location_id'));
+
             // activitiescard
 }
 
@@ -217,13 +224,19 @@ return redirect()->Route('admin.rooms.index');
      */
     public function edit(Room $room)
     {
-       $room = Room::with([
+     $room = Room::with([
         'facilities', 'types', 'hotels', 'locations',])->find($room->id);
 
-       if (empty($room)) {
+     if (empty($room)) {
         return back();
     }
+    if($room->isEditing()) {
+        Session::flash('error','Room is being Edited. Please wait till its fully edited!');
+        return redirect()->Route('admin.rooms.index');
+    }
 
+        // Set Editing Status
+    $room->edited();
     $data['title'] = 'Room Edit';
     $data['room'] = $room;
     $data = array_merge_recursive($data, $this->_prepareBasicData());
@@ -240,55 +253,56 @@ return redirect()->Route('admin.rooms.index');
     public function update(UpdateRoomRequest $request, Room $room)
     {
      //  if (isset($request->featured_image)) {
-       
+
      //     $request->merge([
      //        'featured_image' => json_decode($request->featured_image,true),
      //    ]);
      // }
-     
-     $roomDetails = [
-      'name' =>$request->name,
-      'hotel_id' =>$request->hotel_id,
+
+       $roomDetails = [
+          'name' =>$request->name,
+          'hotel_id' =>$request->hotel_id,
           //'slug' => SlugService::createSlug(room::class, 'slug', $request->name),
-      'description' =>$request->description,
-      'excerpt' =>$request->excerpt,
-      'address' =>$request->address,
-      'price' =>!empty($request->price)?$request->price:0,
-      'number_room' =>$request->number_room,
-      'adult_number' =>$request->adult_number,
-      'children_number' =>$request->children_number,
-      'adult_price' =>$request->adult_price,
-      'child_price' =>$request->child_price,
-      'extra_price' =>$request->extra_price,
-      'extra_price_unit' =>$request->extra_price_unit,
-      'featured_image' =>$request->featured_image,
+          'description' =>$request->description,
+          'excerpt' =>$request->excerpt,
+          'address' =>$request->address,
+          'price' =>!empty($request->price)?$request->price:0,
+          'number_room' =>$request->number_room,
+          'adult_number' =>$request->adult_number,
+          'children_number' =>$request->children_number,
+          'adult_price' =>$request->adult_price,
+          'child_price' =>$request->child_price,
+          'extra_price' =>$request->extra_price,
+          'extra_price_unit' =>$request->extra_price_unit,
+          'featured_image' =>$request->featured_image,
           // 'featured_image_id' =>$request->featured_image_id,
           // 'created_by' =>$request->created_by,
-      'status' =>$request->status,
-      
+          'status' =>$request->status,
+          'created_by' => (Auth::check())?Auth::user()->id:null,
+
 
 
             // TODO: created_by pending as Authentication is not Yet Completed
-  ];
+      ];
 
 
-  if ($request->has('st_room_external_booking') && $request->st_room_external_booking == 0) {
-      $request->merge([
-        'st_room_external_booking_link' => null,
-    ]);
-  }
+      if ($request->has('st_room_external_booking') && $request->st_room_external_booking == 0) {
+          $request->merge([
+            'st_room_external_booking_link' => null,
+        ]);
+      }
 
-  $this->roomRepository->updateRoom($room->id,$roomDetails);
+      $this->roomRepository->updateRoom($room->id,$roomDetails);
 
-  if ($room) {
+      if ($room) {
             // TODO: Move this to Repository
 
-     if($request->gallery == '' || empty($request->gallery) || $request->gallery == '"[]"' ) {
-           $request->merge([
+       if($request->gallery == '' || empty($request->gallery) || $request->gallery == '"[]"' ) {
+         $request->merge([
             'gallery' => "[]",
         ]);
-       }
-    $roomMetaData = [
+     }
+     $roomMetaData = [
 
       "st_booking_option_type",
       "gallery",
@@ -309,7 +323,7 @@ return redirect()->Route('admin.rooms.index');
 
   ];
 
-  $room->detail()->update($request->only($roomMetaData));
+  $room->detail()->update($request->all($roomMetaData));
 
 
 
@@ -324,6 +338,11 @@ return redirect()->Route('admin.rooms.index');
 
         // return $room;
 Session::flash('success','Room Updated Successfully');
+
+if(!is_null($request->iscompleted)) {
+    $room->freeEditing();
+    return redirect()->Route('admin.rooms.index');
+}
 return redirect()->Route('admin.rooms.edit',$room->id);
 }
 
@@ -355,60 +374,60 @@ return redirect()->Route('admin.rooms.edit',$room->id);
 }
 
 public function trashed_rooms(TrashedRoomDataTable $dataTable)
-    {
+{
 
-        $trashed_rooms = Room::onlyTrashed()->get();
-        $data['trashed_count'] = $trashed_rooms->count();
+    $trashed_rooms = Room::onlyTrashed()->get();
+    $data['trashed_count'] = $trashed_rooms->count();
         //$data['trashed_rooms'] = $trashed_rooms;
-        $data['title'] = 'Trash Room List';
+    $data['title'] = 'Trash Room List';
         // dump(Room::onlyTrashed()->get());
         // dd( $data['trashed']);
-        return $dataTable->render('admin.rooms.trashed', $data);
-    }
+    return $dataTable->render('admin.rooms.trashed', $data);
+}
 
-    public function restore_rooms(Request $request)
-    {
-        $ids = [];
-        if (!empty($request->ids)) {
-           $ids =  get_array_mapping(json_decode($request->ids));
+public function restore_rooms(Request $request)
+{
+    $ids = [];
+    if (!empty($request->ids)) {
+     $ids =  get_array_mapping(json_decode($request->ids));
 
-        }
-      
-        if (!empty($ids)) {
-         Room::whereIn('id',$ids)->withTrashed()->restore();
-        }else{
-           Room::onlyTrashed()->restore();
-        }
-        Session::flash('success','Room Restored Successfully');
-         return redirect()->back();
-    }
+ }
 
-    public function restore_room(Request $request,$id)
-    {
-        $room = Room::withTrashed()->find($id);
+ if (!empty($ids)) {
+   Room::whereIn('id',$ids)->withTrashed()->restore();
+}else{
+ Room::onlyTrashed()->restore();
+}
+Session::flash('success','Room Restored Successfully');
+return redirect()->back();
+}
+
+public function restore_room(Request $request,$id)
+{
+    $room = Room::withTrashed()->find($id);
     if ($room == null)
     {
         abort(404);
     }
- 
+
     $room->restore();
-     Session::flash('success','Room Restored Successfully');
+    Session::flash('success','Room Restored Successfully');
     return redirect()->back();
+}
+public function bulk_force_delete(Request $request)
+{
+
+
+    if (!empty($request->fd_ids)) {
+
+        $roomIds = get_array_mapping(json_decode($request->fd_ids));
+        $this->roomRepository->forceBulkDeleteRoom($roomIds);
+        Session::flash('success', 'Room Bulk Permanent Deleted Successfully');
     }
-  public function bulk_force_delete(Request $request)
-    {
+    return back();
+}
 
-    
-        if (!empty($request->fd_ids)) {
-
-            $roomIds = get_array_mapping(json_decode($request->fd_ids));
-            $this->roomRepository->forceBulkDeleteRoom($roomIds);
-            Session::flash('success', 'Room Bulk Permanent Deleted Successfully');
-        }
-        return back();
-    }
-
-    public function permanent_delete($id)
+public function permanent_delete($id)
 {
     $this->roomRepository->forceDeleteRoom($id);
     Session::flash('success','Room Permanent Deleted Successfully');
@@ -416,10 +435,10 @@ public function trashed_rooms(TrashedRoomDataTable $dataTable)
 }
 
 public function empty_trashed(Request $request)
-    {
+{
 
-        Room::onlyTrashed()->forceDelete();
-        Session::flash('success','Room Empty Trashed Successfully');
-       return redirect()->back();
-    }
+    Room::onlyTrashed()->forceDelete();
+    Session::flash('success','Room Empty Trashed Successfully');
+    return redirect()->back();
+}
 }

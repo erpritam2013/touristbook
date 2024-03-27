@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Comment;
 use App\Models\Location;
-use App\Models\ActivityList;
+use App\Models\User;
 use App\Models\ActivityLists;
 use App\Models\ActivityDetail;
 use App\Models\Terms\Attraction;
@@ -13,10 +14,12 @@ use App\Models\Terms\TermActivityList;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 class Activity extends Model
 {
-    use HasFactory, Sluggable;
+    use HasFactory, Sluggable, SoftDeletes;
 
     protected $guarded = [];
 
@@ -41,6 +44,7 @@ class Activity extends Model
         'deposit_payment_amount'=>'float',
         'rating'=>'float',
         'featured_image' => 'array',
+        'editing_expiry_time' => 'datetime'
     ];
 
     public function sluggable(): Array
@@ -52,6 +56,41 @@ class Activity extends Model
         ];
     }
 
+       public function edited() {
+        $this->fill([
+            'editor_id' => Auth::user()->id,
+            'is_editing' => true,
+            'editing_expiry_time' => Carbon::now()->addMinutes(5)
+        ]);
+        $this->save();
+    }
+
+    public function freeEditing() {
+        $this->is_editing = false;
+        $this->save();
+    }
+
+    public function editor_name()
+    {
+        if ($this->is_editing && $this->editor_id && !$this->editing_expiry_time->isPast()) {
+            return User::find($this->editor_id)->name;
+        }
+
+
+    }
+    public function isEditing() {
+        return $this->is_editing && !$this->editing_expiry_time->isPast() && $this->editor_id != Auth::user()->id;
+    }
+
+     public function user()
+    {
+        return $this->belongsTo(User::class,'created_by','id');
+    }
+     public function comments()
+    {
+        return $this->hasMany(Comment::class,'model_id', 'id');
+        
+    }
      public function activity_zone() {
         return $this->belongsToMany(ActivityZone::class, 'activity_activity_zones', 'activity_id', 'activity_zone_id');
     }

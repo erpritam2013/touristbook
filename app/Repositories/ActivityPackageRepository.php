@@ -15,6 +15,14 @@ class ActivityPackageRepository implements ActivityPackageRepositoryInterface
     {
         return ActivityPackage::findOrFail($activityPackageId);
     }
+      public function forceDeleteActivityPackage($activityPackageId)
+    {
+         ActivityPackage::onlyTrashed()->find($activityPackageId)->forceDelete();
+    }
+    public function forceBulkDeleteActivityPackages($activityPackageId)
+    {
+         ActivityPackage::onlyTrashed()->whereIn('id', $activityPackageId)->forceDelete();
+    }
     public function deleteActivityPackage($activityPackageId)
     {
         ActivityPackage::destroy($activityPackageId);

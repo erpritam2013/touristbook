@@ -12,7 +12,7 @@
                             {{--<a href="activity-detailed.html" class="wishlist_bt"></a>--}}
                             {!!is_featured($activity->is_featured,'Featured')!!}
 
-                           @php $featured_image = (!empty($activity->featured_image) && isset($activity->featured_image[0]['id']))?getConversionUrl($activity->featured_image[0]['id'],'450x417'):null;@endphp
+                            @php $featured_image = (!empty($activity->featured_image) && isset($activity->featured_image[0]['id']))?getConversionUrl($activity->featured_image[0]['id'],'450x417'):null;@endphp
                             <a
                             href="{{route('activity',$activity->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/450x417.jpg')}}"
                             class="img-fluid" alt="">
@@ -21,12 +21,12 @@
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 Nopadding activity-content">
                         <div class="listroBoxmain">
-                             
+                           
                             <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{$activity->address ?? ''}}</p>
                             <h4 class="service-title"><a href="{{route('activity',$activity->slug)}}">{{ $activity->name }}</a></h4>
-                          
+                            
                             <div class="row">
-                               <div class="col-sm-12">
+                             <div class="col-sm-12">
                                 @if($activity->term_activity_lists->count())
                                 <div class="st-report-info">
                                     <ul>
@@ -50,11 +50,11 @@
 
                           </div>
                           <div class="col-sm-12">
-                          
+                              
                             @if(!empty($activity->detail->activity_zones))
 
                             <div class="st-highlight-info">
-                               <ul> 
+                             <ul> 
                                 @foreach($activity->detail->activity_zones as $key => $activity_zones)
 
                                 @if($key <=1)
@@ -77,175 +77,187 @@
                     </div>
                 </div>
 
-                    {{--<a class="address" href="#">Get directions</a>--}}
+                {{--<a class="address" href="#">Get directions</a>--}}
+            </div>
+            <div class="TravelGo-category-footer fl-wrap">
+
+                <div class="TravelGo-category-price btn-grad">
+                    <a data-toggle="collapse" href="#st-activity-content-{{ $activity->id }}" role="button" aria-expanded="false" aria-controls="st-activity-content-{{ $activity->id }}" style="text-decoration: none;" >More Info...
+                        <i class="fa fa-angle-down"></i>
+                    </a>
                 </div>
-                <div class="TravelGo-category-footer fl-wrap">
 
-                    <div class="TravelGo-category-price btn-grad">
-                        <a data-toggle="collapse" href="#st-activity-content-{{ $activity->id }}" role="button" aria-expanded="false" aria-controls="st-activity-content-{{ $activity->id }}" style="text-decoration: none;" >More Info...
-                            <i class="fa fa-angle-down"></i>
-                        </a>
-                    </div>
+                <div class="TravelGo-opt-list"> 
+                    {{--<a href="#" class="single-map-item"><i class="fas fa-map-marker-alt"></i><span class="TravelGo-opt-tooltip">On the map</span></a> --}}
+                    @php 
 
-                    <div class="TravelGo-opt-list"> 
-                        {{--<a href="#" class="single-map-item"><i class="fas fa-map-marker-alt"></i><span class="TravelGo-opt-tooltip">On the map</span></a> --}}
-                        <a href="#" class="TravelGo-js-favorite"><i class="fas fa-heart"></i><span class="TravelGo-opt-tooltip">Save</span></a> 
-                        <a data-toggle="collapse" href="#activity-social-links-{{ $activity->id }}" role="button" aria-expanded="false" aria-controls="activity-social-links-{{ $activity->id }}"  class="TravelGo-js-booking"><i class="fa fa-share"></i><span class="TravelGo-opt-tooltip">Show Social Links</span></a> 
-                    </div>
+                    $wishlist_status = (wishlist_model('Activity',$activity->id))?true:false;
 
-                </div>
-                <div class="activity-social-links collapse fl-wrap" id="activity-social-links-{{$activity->id}}">
-
-                    <a class="TravelGo-js-favorite"
-
-                    href="https://www.facebook.com/sharer/sharer.php?u={{route('activity',$activity->slug)}}&title={{$activity->name}}"
-
-                    target="_blank" ><i
-
-                    class="fab fa-facebook-f"></i><span class="TravelGo-opt-tooltip">Facebook Share</span></a>
-
-                    <a class="twitter"
-
-                    href="https://twitter.com/share?url={{route('activity',$activity->slug)}}&title={{$activity->name}}"
-
-                    target="_blank" rel="noopener" original-title="Twitter"><i
-
-                    class="fab fa-twitter"></i><span class="TravelGo-opt-tooltip">Twitter Share</span></a>
-
-                    <a class="google"
-
-                    href="https://plus.google.com/share?url={{route('activity',$activity->slug)}}&title={{$activity->name}}"
-
-                    target="_blank" rel="noopener" original-title="Google+"><i
-
-                    class="fab fa-google-plus "></i><span class="TravelGo-opt-tooltip">Google Plus Share</span></a>
-
-                    <a class="no-open pinterest"
-
-                    href="https://www.pinterest.com/pin/create/button/?url={{route('activity',$activity->slug)}}&amp;description={{$activity->name}}"
-
-                    target="_blank" rel="noopener" original-title="Pinterest"><i
-
-                    class="fab fa-pinterest "></i><span class="TravelGo-opt-tooltip">Pinterest Share</span></a>
-
-                    <a class="linkedin"
-
-                    href="https://www.linkedin.com/shareArticle?mini=true&url={{route('activity',$activity->slug)}}&title={{$activity->name}}"
-
-                    target="_blank" rel="noopener" original-title="LinkedIn"><i
-
-                    class="fab fa-linkedin "></i><span class="TravelGo-opt-tooltip">Linkedin Share</span></a>
-                    <a class="whatsapp"
-
-                    href="https://api.whatsapp.com/send?text={{$activity->name}} {{route('activity',$activity->slug)}}"
-
-                    target="_blank" rel="noopener" original-title="whatsapp"><i
-
-                    class="fab fa-whatsapp "></i><span class="TravelGo-opt-tooltip">Whatsapp Share</span></a>
-
-
-
-
+                    @endphp
+                    <a href="#" class="TravelGo-js-favorite wishlist_btn {{(!auth()->check())?'disabled-link':''}}" data-model_type="Activity" data-model_id="{{$activity->id}}" data-status="{{($wishlist_status)?1:0}}" title="{{(!auth()->check())?'Please Login User Wish activity':''}}"><i class="fas fa-heart" style="{{($wishlist_status)?'color:#000;':''}}"></i><span class="TravelGo-opt-tooltip" id="wishlist-title-{{$activity->id}}">{{($wishlist_status)?'saved':'save'}}</span></a>
+                    <a data-toggle="collapse" href="#activity-social-links-{{ $activity->id }}" role="button" aria-expanded="false" aria-controls="activity-social-links-{{ $activity->id }}"  class="TravelGo-js-booking"><i class="fa fa-share"></i><span class="TravelGo-opt-tooltip">Show Social Links</span></a> 
                 </div>
 
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 Nopadding section-footer">
+            <div class="activity-social-links collapse fl-wrap" id="activity-social-links-{{$activity->id}}">
 
-               <div class="activity-service-price">
+                <a class="TravelGo-js-favorite"
 
-                <span class="activity-avg">
-                    {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
-                    Avg
-                </span>
+                href="https://www.facebook.com/sharer/sharer.php?u={{route('activity',$activity->slug)}}&title={{$activity->name}}"
 
-                {!!get_price($activity)!!}
+                target="_blank" ><i
 
-                <span class="unit"><span class="price-ex"><i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;position: absolute;top: -3px;"><span class="TravelGo-opt-tooltip min-w-690px-fs-15fpx">Price usually vary or subject to change please visit website to view the best deal.</span></i></span></span>
+                class="fab fa-facebook-f"></i><span class="TravelGo-opt-tooltip">Facebook Share</span></a>
+
+                <a class="twitter"
+
+                href="https://twitter.com/share?url={{route('activity',$activity->slug)}}&title={{$activity->name}}"
+
+                target="_blank" rel="noopener" original-title="Twitter"><i
+
+                class="fab fa-twitter"></i><span class="TravelGo-opt-tooltip">Twitter Share</span></a>
+
+                <a class="google"
+
+                href="https://plus.google.com/share?url={{route('activity',$activity->slug)}}&title={{$activity->name}}"
+
+                target="_blank" rel="noopener" original-title="Google+"><i
+
+                class="fab fa-google-plus "></i><span class="TravelGo-opt-tooltip">Google Plus Share</span></a>
+
+                <a class="no-open pinterest"
+
+                href="https://www.pinterest.com/pin/create/button/?url={{route('activity',$activity->slug)}}&amp;description={{$activity->name}}"
+
+                target="_blank" rel="noopener" original-title="Pinterest"><i
+
+                class="fab fa-pinterest "></i><span class="TravelGo-opt-tooltip">Pinterest Share</span></a>
+
+                <a class="linkedin"
+
+                href="https://www.linkedin.com/shareArticle?mini=true&url={{route('activity',$activity->slug)}}&title={{$activity->name}}"
+
+                target="_blank" rel="noopener" original-title="LinkedIn"><i
+
+                class="fab fa-linkedin "></i><span class="TravelGo-opt-tooltip">Linkedin Share</span></a>
+                <a class="whatsapp"
+
+                href="https://api.whatsapp.com/send?text={{$activity->name}} {{route('activity',$activity->slug)}}"
+
+                target="_blank" rel="noopener" original-title="whatsapp"><i
+
+                class="fab fa-whatsapp "></i><span class="TravelGo-opt-tooltip">Whatsapp Share</span></a>
 
 
-            </div>
-
-            <div class="view-activity-btn"><a href="{{route('activity',$activity->slug)}}" class="btn btn-sm btn-grad text-white pt-2 pb-2 text-capitalize">VIEW ACTIVITY</a></div>
 
 
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 Nopadding st-more-information collapse" id="st-activity-content-{{ $activity->id }}">
-
-           @if(!empty($activity->detail->activity_zones))
-
-           <div class="st-highlight-info p-3">
-            <h3 class="st-section-title font-weight-bold">Highlight</h3>
-            <div class="row" >
-                @foreach($activity->detail->activity_zones as $key => $activity_zones_2)
-               
-
-                @if($activity_zones_2['activity_zones-url_link_status'] == 'slug')
-                <div class="col-xs-6 col-sm-6" style="color:#5e6d77;"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="font-size: 7px;color: transparent;"></i>&nbsp;<a href="{{route('activity',$activity->slug)}}?link={{$activity_zones_2['activity_zones-slug']}}" target="_blank">{{$activity_zones_2['activity_zones-title']}}</a></div>
-                @elseif($activity_zones_2['activity_zones-url_link_status'] == 'web-link')
-                <div class="col-xs-6 col-sm-6" style="color:#5e6d77;"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="font-size: 7px;color: transparent;"></i>&nbsp;<a href="{{$activity_zones_2['activity_zones-web_link']}}" target="_blank">{{$activity_zones_2['activity_zones-title']}}</a></div>
-
-                 @else
-                  <div class="col-xs-6 col-sm-6" style="color:#5e6d77;"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="font-size: 7px;color: transparent;"></i>&nbsp;<a href="{{$activity_zones_2['activity_zones-file']}}" target="_blank">{{$activity_zones_2['activity_zones-title']}}</a></div>
-
-                @endif
-
-                @endforeach
             </div>
 
         </div>
-        @endif
-        @php 
-        $include = $activity->detail->activity_include ?? '';
-        $exclude = $activity->detail->activity_exclude ?? '';
-        @endphp
-        @if(!empty($include) || !empty($exclude))
-        <div class="row p-3" id="st-include-exclude">  
-            <div class="col-xs-6 col-sm-6">
-                @if(!empty($include))
-                @php $include_arr = explode("\n", $include); @endphp
-                <div class="st-include">
-                    <h3 class="st-section-title font-weight-bold">Inclusions</h3>
-                    @if(!empty($include_arr))
-                    <ul class="include p-0" style="list-style:none;line-height: 2;">
-                        @foreach($include_arr as $in_k => $in_v)
-                        <li style="color:#000;">
-                            {!!getNewIcon('check-1', '#2ECC71', '14px', '14px', false)!!}
-                            {{$in_v}}
-                        </li>
-                        @endforeach
-                    </ul>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 Nopadding section-footer">
 
-                    @endif
-                </div>
-                @endif
-            </div>
-            <div class="col-xs-6 col-sm-6">
-                @if(!empty($exclude))
-                @php $exclude_arr = explode("\n", $exclude); @endphp
-                <div class="st-exclude">
-                    <h3 class="st-section-title font-weight-bold">Exclusions</h3>
-                    @if(!empty($include_arr))
-                    <ul class="exclude p-0" style="list-style:none;line-height: 2;">
-                        @foreach($exclude_arr as $ex_k => $ex_v)
-                        <li style="color:#000;">
-                            {!!getNewIcon('remove', '#ff0000', '14px', '14px', false)!!}
-                            {{$ex_v}}
-                        </li>
-                        @endforeach
-                    </ul>
+         <div class="activity-service-price">
+            @php $activity_price = get_price($activity);@endphp
+            
+            @if($activity_price == 0)
+            Price On Request
+            @else
+            <span class="activity-avg">
+                {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
+                Avg
+            </span>
 
-                    @endif
-                </div>
-                @endif
+            {!!$activity_price!!}
+            @endif
+            
+            
 
-            </div>
+            <span class="unit"><span class="price-ex"><i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;position: absolute;top: -3px;"><span class="TravelGo-opt-tooltip min-w-690px-fs-15fpx">Price usually vary or subject to change please visit website to view the best deal.</span></i></span></span>
+
+
         </div>
 
-        @endif
-
+        <div class="view-activity-btn"><a href="{{route('activity',$activity->slug)}}" class="btn btn-sm btn-grad text-white pt-2 pb-2 text-capitalize">VIEW ACTIVITY</a></div>
 
 
     </div>
+    <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 Nopadding st-more-information collapse" id="st-activity-content-{{ $activity->id }}">
+
+     @if(!empty($activity->detail->activity_zones))
+
+     <div class="st-highlight-info p-3">
+        <h3 class="st-section-title font-weight-bold">Highlight</h3>
+        <div class="row" >
+            @foreach($activity->detail->activity_zones as $key => $activity_zones_2)
+            
+
+            @if($activity_zones_2['activity_zones-url_link_status'] == 'slug')
+            <div class="col-xs-6 col-sm-6" style="color:#5e6d77;"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="font-size: 7px;color: transparent;"></i>&nbsp;<a href="{{route('activity',$activity->slug)}}?link={{$activity_zones_2['activity_zones-slug']}}" target="_blank">{{$activity_zones_2['activity_zones-title']}}</a></div>
+            @elseif($activity_zones_2['activity_zones-url_link_status'] == 'web-link')
+            <div class="col-xs-6 col-sm-6" style="color:#5e6d77;"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="font-size: 7px;color: transparent;"></i>&nbsp;<a href="{{$activity_zones_2['activity_zones-web_link']}}" target="_blank">{{$activity_zones_2['activity_zones-title']}}</a></div>
+
+            @else
+            <div class="col-xs-6 col-sm-6" style="color:#5e6d77;"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="font-size: 7px;color: transparent;"></i>&nbsp;<a href="{{$activity_zones_2['activity_zones-file']}}" target="_blank">{{$activity_zones_2['activity_zones-title']}}</a></div>
+
+            @endif
+
+            @endforeach
+        </div>
+
+    </div>
+    @endif
+    @php 
+    $include = $activity->detail->activity_include ?? '';
+    $exclude = $activity->detail->activity_exclude ?? '';
+    @endphp
+    @if(!empty($include) || !empty($exclude))
+    <div class="row p-3" id="st-include-exclude">  
+        <div class="col-xs-6 col-sm-6">
+            @if(!empty($include))
+            @php $include_arr = explode("\n", $include); @endphp
+            <div class="st-include">
+                <h3 class="st-section-title font-weight-bold">Inclusions</h3>
+                @if(!empty($include_arr))
+                <ul class="include p-0" style="list-style:none;line-height: 2;">
+                    @foreach($include_arr as $in_k => $in_v)
+                    <li style="color:#000;">
+                        {!!getNewIcon('check-1', '#2ECC71', '14px', '14px', false)!!}
+                        {{$in_v}}
+                    </li>
+                    @endforeach
+                </ul>
+
+                @endif
+            </div>
+            @endif
+        </div>
+        <div class="col-xs-6 col-sm-6">
+            @if(!empty($exclude))
+            @php $exclude_arr = explode("\n", $exclude); @endphp
+            <div class="st-exclude">
+                <h3 class="st-section-title font-weight-bold">Exclusions</h3>
+                @if(!empty($include_arr))
+                <ul class="exclude p-0" style="list-style:none;line-height: 2;">
+                    @foreach($exclude_arr as $ex_k => $ex_v)
+                    <li style="color:#000;">
+                        {!!getNewIcon('remove', '#ff0000', '14px', '14px', false)!!}
+                        {{$ex_v}}
+                    </li>
+                    @endforeach
+                </ul>
+
+                @endif
+            </div>
+            @endif
+
+        </div>
+    </div>
+
+    @endif
+
+
+
+</div>
 </div>
 </div>
 </div>

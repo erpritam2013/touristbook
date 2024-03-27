@@ -4,6 +4,6 @@
     </div>
 
     <div class="card-body">
-            @include('admin.partials.utils.select_box', ['items' => $activities, 'name'=> 'activity_id[]','selected'=>$activity_list->activity_list->pluck('id')->toArray() ?? [],'lebal'=>'Activity'])
+            {!!selectBoxTemplate(['items' => $activities, 'name'=> 'activity_id[]','selected'=>$activity_list->activity_list->pluck('id')->toArray() ?? [],'lebal'=>'Activity'])!!}
     </div>
 </div>

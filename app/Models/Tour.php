@@ -6,6 +6,7 @@ use App\Models\Location;
 use App\Models\TourDetail;
 use App\Models\User;
 use App\Models\CountryZone;
+use App\Models\Comment;
 use App\Models\Terms\Type;
 use App\Models\Terms\OtherPackage;
 use App\Models\Terms\PackageType;
@@ -16,9 +17,10 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Tour extends Model
 {
-    use HasFactory, Sluggable;
+    use HasFactory, Sluggable, SoftDeletes;
     const ACTIVE = 1;
     const INACTIVE = 0;
 
@@ -74,10 +76,15 @@ class Tour extends Model
 
     }
 
-
     public function freeEditing() {
         $this->is_editing = false;
         $this->save();
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class,'model_id', 'id');
+        
     }
 
 

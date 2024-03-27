@@ -16,7 +16,9 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\DataTables\ActivityDataTable;
+use App\DataTables\TrashedActivityDataTable;
 use Session;
+use Auth;
 
 class ActivityController extends Controller
 {
@@ -75,8 +77,15 @@ class ActivityController extends Controller
      */
     public function index(ActivityDataTable $dataTable)
     {
-        $data['activities'] = Activity::count();
+
+        if (isset(request()->user) && !empty(request()->user)) {
+            $created_by = request()->user;
+            $data['activities'] = Activity::where('created_by',$created_by)->count();
+        }else{
+            $data['activities'] = Activity::count();
+        }
         $data['title'] = 'Activity List';
+        $data['trashed'] = Activity::onlyTrashed()->count();
         return $dataTable->render('admin.activities.index', $data);
     }
 
@@ -104,7 +113,7 @@ class ActivityController extends Controller
     {
 
      //   if (isset($request->featured_image)) {
-       
+
      //     $request->merge([
      //        'featured_image' => json_decode($request->featured_image,true),
      //    ]);
@@ -152,6 +161,7 @@ class ActivityController extends Controller
       'status' =>$request->status,
       'logo' =>$request->logo,
       'featured_image' =>$request->featured_image,
+      'created_by' => (Auth::check())?Auth::user()->id:null,
 
 
 
@@ -167,16 +177,16 @@ class ActivityController extends Controller
             'activity_program' => [],
         ]);
      }
-     
+
      if (isset($request->activity_zones)) {
-        
+
         $request->merge([
             'activity_zones' => unsetValueActivityTourismZone($request->activity_zones)
         ]);
     }
 
     if (empty($request->activity_zone_id)) {
-        
+
         $request->merge([
             'activity_zone_id' => null
         ]);
@@ -307,6 +317,14 @@ public function changeStatus(Request $request): JsonResponse
             return back();
         }
 
+        if($activity->isEditing()) {
+            Session::flash('error','Activity is being Edited. Please wait till its fully edited!');
+            return redirect()->Route('admin.activities.index');
+        }
+
+        // Set Editing Status
+        $activity->edited();
+
         $data['title'] = 'Activity Edit';
         $data['activity'] = $activity;
         $data = array_merge_recursive($data, $this->_prepareBasicData());
@@ -368,6 +386,7 @@ public function changeStatus(Request $request): JsonResponse
           
           //'logo' =>$request->logo,
           'featured_image' =>$request->featured_image,
+          'created_by' => (Auth::check())?Auth::user()->id:null,
 
 
 
@@ -383,16 +402,16 @@ public function changeStatus(Request $request): JsonResponse
                 'activity_program' => [],
             ]);
          }
-         
+
          if (isset($request->activity_zones)) {
-            
+
             $request->merge([
                 'activity_zones' => unsetValueActivityTourismZone($request->activity_zones)
             ]);
         }
 
         if (empty($request->activity_zone_id)) {
-            
+
             $request->merge([
                 'activity_zone_id' => null
             ]);
@@ -453,7 +472,7 @@ public function changeStatus(Request $request): JsonResponse
   //     'check_editing',
 
   // ];
-       $activity->detail()->update($request->only([
+       $activity->detail()->update($request->all([
           'map_address',
           'latitude',
           'longitude',
@@ -498,21 +517,25 @@ public function changeStatus(Request $request): JsonResponse
           'check_editing',
 
       ]));
-       
-       
 
- $activity->activity_zone()->sync($request->get('activity_zone_id'));
- $activity->attractions()->sync($request->get('attraction'));
- $activity->locations()->sync($request->get('location_id'));
- $activity->languages()->sync($request->get('language'));
- $activity->term_activity_lists()->sync($request->get('term_activity_list'));
- $activity->states()->sync($request->get('state_id'));
+
+
+       $activity->activity_zone()->sync($request->get('activity_zone_id'));
+       $activity->attractions()->sync($request->get('attraction'));
+       $activity->locations()->sync($request->get('location_id'));
+       $activity->languages()->sync($request->get('language'));
+       $activity->term_activity_lists()->sync($request->get('term_activity_list'));
+       $activity->states()->sync($request->get('state_id'));
 
             // activitiescard
    }
         // return $activity;
    Session::flash('success','Activity Updated Successfully');
-   return redirect()->Route('admin.activities.edit',$activity->id);
+   if(!is_null($request->iscompleted)) {
+    $activity->freeEditing();
+    return redirect()->Route('admin.activities.index');
+}
+return redirect()->Route('admin.activities.edit',$activity->id);
 }
 
     /**
@@ -523,10 +546,10 @@ public function changeStatus(Request $request): JsonResponse
      */
     public function destroy(Request $request,$id)
     {
-     
+
         $activityId = $id;
         $this->activityRepository->deleteActivity($activityId);
-        Session::flash('success','Activity Deleted Successfully');
+        Session::flash('success','Activity Trashed Successfully');
         return back();
     }
 
@@ -537,8 +560,77 @@ public function changeStatus(Request $request): JsonResponse
 
             $activityIds = get_array_mapping(json_decode($request->ids));
             $this->activityRepository->deleteBulkActivity($activityIds);
-            Session::flash('success', 'Activity Bulk Deleted Successfully');
+            Session::flash('success', 'Activity Bulk Trashed Successfully');
         }
         return back();
     }
+
+    public function trashed_activities(TrashedActivityDataTable $dataTable)
+    {
+
+        $trashed_activities = Activity::onlyTrashed()->get();
+        $data['trashed_count'] = $trashed_activities->count();
+        //$data['trashed_activities'] = $trashed_activities;
+        $data['title'] = 'Trash Activity List';
+        // dump(Activity::onlyTrashed()->get());
+        // dd( $data['trashed']);
+        return $dataTable->render('admin.activities.trashed', $data);
+    }
+
+    public function restore_activities(Request $request)
+    {
+        $ids = [];
+        if (!empty($request->ids)) {
+           $ids =  get_array_mapping(json_decode($request->ids));
+
+       }
+
+       if (!empty($ids)) {
+         Activity::whereIn('id',$ids)->withTrashed()->restore();
+     }else{
+       Activity::onlyTrashed()->restore();
+   }
+   Session::flash('success','Activity Restored Successfully');
+   return redirect()->back();
+}
+
+public function restore_activity(Request $request,$id)
+{
+    $activity = Activity::withTrashed()->find($id);
+    if ($activity == null)
+    {
+        abort(404);
+    }
+
+    $activity->restore();
+    Session::flash('success','Activity Restored Successfully');
+    return redirect()->back();
+}
+public function bulk_force_delete(Request $request)
+{
+
+
+    if (!empty($request->fd_ids)) {
+
+        $activityIds = get_array_mapping(json_decode($request->fd_ids));
+        $this->activityRepository->forceBulkDeleteActivity($activityIds);
+        Session::flash('success', 'Activity Bulk Permanent Deleted Successfully');
+    }
+    return back();
+}
+
+public function permanent_delete($id)
+{
+    $this->activityRepository->forceDeleteActivity($id);
+    Session::flash('success','Activity Permanent Deleted Successfully');
+    return back();
+}
+public function empty_trashed(Request $request)
+{
+
+    Activity::onlyTrashed()->forceDelete();
+    Session::flash('success','Activity Empty Trashed Successfully');
+    return redirect()->back();
+}
+
 }

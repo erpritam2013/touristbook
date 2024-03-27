@@ -27,6 +27,11 @@ class LocationDataTable extends DataTable
                     //$html .= '<a href="'.route("admin.locations.show",$row->id).'" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>';
                     $html .= '<a href="javascript:void(0);" class="btn btn-danger del_entity_form" title="Delete" item_id="'.$row->id.'" data-text="location"><i class="fa fa-trash"></i></a>';
                     return $html;
+                })->editColumn('name', function($row) {
+                    $nameHtml = '<p>'.$row->name.'</p>';
+                    $editHtml = $row->isEditing() ? '<p class="edit-context">Editing</p>' : '';
+                    $editor_name = (!empty($row->editor_name()) && $row->isEditing()) ? '<p class="edit-name">( '.$row->editor_name().' )</p>' : '';
+                    return $nameHtml.$editHtml.$editor_name;
                 })->editColumn('created_at', function($row) {
                     return date('d-m-Y',strtotime($row->created_at));
                 })->editColumn('updated_at', function($row) {
@@ -37,11 +42,18 @@ class LocationDataTable extends DataTable
                        $checked = 'checked';
                     }
                     return '<input data-id="'.$row->id.'" class="toggle-class" type="checkbox" data-size="sm" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url="'.route("admin.changeStatusLocation").'" data-on="Active" data-off="InActive" '.$checked.'>';
+                })->addColumn('user', function($row) {
+                    if (isset(request()->user) && !empty(request()->user)) {
+                        return '#'.$row->user->id.' '.$row->user->name;
+                    }else{
+
+                    return (!empty($row->user))?'<a href="'.route('admin.locations.index').'?user='.$row->user->id.'" target="_blank" style="color:#07509e">'.'#'.$row->user->id.' '.$row->user->name.'</a> : ':null;
+                    }
                 })->addColumn('address',function($row){
                     return $row->map_address;
                 })->addColumn('del',function($row){
                  return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'">';
-            })->rawColumns(['status','action','del','address']);
+            })->rawColumns(['status','action','del','address','user','name']);
     }
 
     /**
@@ -52,7 +64,12 @@ class LocationDataTable extends DataTable
      */
     public function query(Location $model): QueryBuilder
     {
-        return $model->newQuery()->select(['id','name','slug','map_address','status','created_at','updated_at']);
+        if (isset(request()->user) && !empty(request()->user)) {
+        return $model->newQuery()->select(['id','name','slug','map_address','status','created_at','updated_at','created_by','editor_id','is_editing','editing_expiry_time'])->where('created_by',request()->user);
+       }else{
+
+        return $model->newQuery()->select(['id','name','slug','map_address','status','created_at','updated_at','created_by','editor_id','is_editing','editing_expiry_time']);
+       }
     }
 
     /**
@@ -98,6 +115,7 @@ class LocationDataTable extends DataTable
             ->printable(false)->width(10)
             ->addClass('text-center'),
             Column::make('name'),
+            Column::make('user')->title('Created & Updated By'),
             Column::make('slug')->searchable(false)
             ->orderable(false)
             ->exportable(false)

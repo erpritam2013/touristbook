@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Models\Room;
+use App\Models\User;
 use App\Models\HotelDetail;
 use App\Models\Location;
+use App\Models\Comment;
 use App\Models\Terms\Accessible;
 use App\Models\Terms\Amenity;
 use App\Models\Terms\DealsDiscount;
@@ -52,7 +54,6 @@ class Hotel extends Model
         ];
     }
 
-
     public function edited() {
         $this->fill([
             'editor_id' => Auth::user()->id,
@@ -62,14 +63,33 @@ class Hotel extends Model
         $this->save();
     }
 
+
     public function freeEditing() {
         $this->is_editing = false;
         $this->save();
     }
+       public function editor_name()
+    {
+        if ($this->is_editing && $this->editor_id && !$this->editing_expiry_time->isPast()) {
+            return User::find($this->editor_id)->name;
+        }
 
+
+    }
     public function isEditing() {
+        
         return $this->is_editing && !$this->editing_expiry_time->isPast() && $this->editor_id != Auth::user()->id;
     }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class,'model_id', 'id');
+        
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class,'created_by','id');
+    }
+
 
 
     public function facilities() {

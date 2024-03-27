@@ -27,6 +27,9 @@
             @if(Session::has('success'))
             {!!get_form_success_msg(Session::get('success'))!!}
             @endif
+            @if(Session::has('error'))
+            {!!print_error_message(Session::get('error'))!!}
+            @endif
 
             <div class="table-responsive">
                 {{ $dataTable->table() }}

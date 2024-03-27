@@ -4,6 +4,7 @@ namespace App\Models;
 use App\Models\Terms\Place;
 use App\Models\Terms\State;
 use App\Models\Terms\Type;
+use App\Models\User;
 use App\Models\LocationMeta;
 use App\Models\HotelLocation;
 use App\Models\TourLocation;
@@ -11,10 +12,13 @@ use App\Models\ActivityLocation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use DB;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 class Location extends Model
 {
-    use HasFactory,Sluggable;
+    use HasFactory,Sluggable, SoftDeletes;
 
     const ACTIVE = 1;
     const INACTIVE = 0;
@@ -29,6 +33,7 @@ class Location extends Model
     protected $casts = [
         'featured_image'=> 'array',
         'logo'=> 'array',
+        'editing_expiry_time' => 'datetime'
     ];
 
     public function sluggable(): Array
@@ -40,6 +45,33 @@ class Location extends Model
         ];
     }
 
+     public function edited() {
+        $this->fill([
+            'editor_id' => Auth::user()->id,
+            'is_editing' => true,
+            'editing_expiry_time' => Carbon::now()->addMinutes(5)
+        ]);
+        $this->save();
+    }
+   public function editor_name()
+    {
+        if ($this->is_editing && $this->editor_id && !$this->editing_expiry_time->isPast()) {
+            return User::find($this->editor_id)->name;
+        }
+
+
+    }
+    public function freeEditing() {
+        $this->is_editing = false;
+        $this->save();
+    }
+    public function isEditing() {
+        return $this->is_editing && !$this->editing_expiry_time->isPast() && $this->editor_id != Auth::user()->id;
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class,'created_by','id');
+    }
     
     public function hotels() {
         return $this->hasMany(HotelLocation::class);

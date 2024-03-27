@@ -27,10 +27,23 @@ class CountryZoneDataTable extends DataTable
                     //$html .= '<a href="'.route("admin.country-zones.show",$row->id).'" class="btn btn-info" title="View"><i class="fa fa-file"></i></a>';
                     $html .= '<a href="javascript:void(0);" class="btn btn-danger del_entity_form" title="Delete" item_id="'.$row->id.'" data-text="country zone"><i class="fa fa-trash"></i></a>';
                     return $html;
+                })->editColumn('title', function($row) {
+                     $nameHtml = '<p>'.$row->title.'</p>';
+
+                    $editHtml = $row->isEditing() ? '<p class="edit-context">Editing</p>' : '';
+                    $editor_name = (!empty($row->editor_name()) && $row->isEditing()) ? '<p class="edit-name">( '.$row->editor_name().' )</p>' : '';
+                    return $nameHtml.$editHtml.$editor_name;
                 })->editColumn('created_at', function($row) {
                     return date('d-m-Y',strtotime($row->created_at));
                 })->editColumn('updated_at', function($row) {
                     return date('d-m-Y',strtotime($row->updated_at));
+                })->addColumn('user', function($row) {
+                    if (isset(request()->user) && !empty(request()->user)) {
+                        return '#'.$row->user->id.' '.$row->user->name;
+                    }else{
+
+                    return (!empty($row->user))?'<a href="'.route('admin.country-zones.index').'?user='.$row->user->id.'" target="_blank" style="color:#07509e">'.'#'.$row->user->id.' '.$row->user->name.'</a> : ':null;
+                    }
                 })->addColumn('status', function($row) {
                     $checked = "";
                     if ($row->status == 1) {
@@ -39,7 +52,7 @@ class CountryZoneDataTable extends DataTable
                     return '<input data-id="'.$row->id.'" class="toggle-class" type="checkbox" data-size="sm" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url="'.route("admin.changeStatusCountryZone").'" data-on="Active" data-off="InActive" '.$checked.'>';
                 })->addColumn('del',function($row){
                  return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'">';
-            })->rawColumns(['status','action','del']);
+            })->rawColumns(['status','action','del','title','user']);
     }
 
     /**
@@ -50,7 +63,12 @@ class CountryZoneDataTable extends DataTable
      */
     public function query(CountryZone $model): QueryBuilder
     {
-        return $model->newQuery()->select(['id','title','slug','status','created_at','updated_at']);
+        if (isset(request()->user) && !empty(request()->user)) {
+        return $model->newQuery()->select(['id','title','slug','status','created_at','updated_at','editor_id','is_editing','editing_expiry_time'])->where('created_by',request()->user);
+       }else{
+
+        return $model->newQuery()->select(['id','title','slug','status','created_at','updated_at','editor_id','is_editing','editing_expiry_time']);
+       }
     }
 
     /**
@@ -65,7 +83,7 @@ class CountryZoneDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(6)
+                    ->orderBy(7)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -96,6 +114,7 @@ class CountryZoneDataTable extends DataTable
             ->printable(false)->width(10)
             ->addClass('text-center'),
             Column::make('title'),
+             Column::make('user')->title('Created & Updated By'),
             Column::make('slug')->searchable(false)
             ->orderable(false)
             ->exportable(false)

@@ -8,7 +8,7 @@
    
         <!-- Excerpt -->
       
- @include('admin.partials.utils.textarea', ['name'=> 'excerpt','label'=>'Excerpt','rows'=>5,'value'=>$page->excerpt ?? '','id' => ""])
+ {!!textareaTemplate(['name'=> 'excerpt','label'=>'Excerpt','rows'=>5,'value'=>$page->excerpt ?? '','id' => ""])!!}
        
 
     </div>

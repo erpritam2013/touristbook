@@ -54,64 +54,69 @@ class PostController extends Controller
 
     public function index(PostDataTable $dataTable)
     {
+       if (isset(request()->user) && !empty(request()->user)) {
+        $created_by = request()->user;
+        $data['posts'] = Post::where('created_by',$created_by)->count();
+    }else{
         $data['posts'] = Post::count();
+    }
 
-        $data['trashed'] = Post::onlyTrashed()->count();
-        $data['title'] = 'Post List';
+    $data['trashed'] = Post::onlyTrashed()->count();
+    $data['title'] = 'Post List';
         // dump(Post::onlyTrashed()->get());
         // dd( $data['trashed']);
-        return $dataTable->render('admin.posts.index', $data);
-    }
+    return $dataTable->render('admin.posts.index', $data);
+}
 
-    public function empty_trashed(Request $request)
-    {
+public function empty_trashed(Request $request)
+{
 
-        Post::onlyTrashed()->forceDelete();
-        Session::flash('success','Post Empty Trashed Successfully');
-       return redirect()->back();
-    }
+    Post::onlyTrashed()->forceDelete();
+    Session::flash('success','Post Empty Trashed Successfully');
+    return redirect()->back();
+}
 
-    public function trashed_posts(TrashedPostDataTable $dataTable)
-    {
+public function trashed_posts(TrashedPostDataTable $dataTable)
+{
 
-        $trashed_posts = Post::onlyTrashed()->get();
-        $data['trashed_count'] = $trashed_posts->count();
+    $trashed_posts = Post::onlyTrashed()->get();
+    $data['trashed_count'] = $trashed_posts->count();
         //$data['trashed_posts'] = $trashed_posts;
-        $data['title'] = 'Trash Post List';
+    $data['title'] = 'Trash Post List';
         // dump(Post::onlyTrashed()->get());
         // dd( $data['trashed']);
-        return $dataTable->render('admin.posts.trashed', $data);
-    }
+    return $dataTable->render('admin.posts.trashed', $data);
+}
 
-    public function restore_posts(Request $request)
-    {
-        $ids = [];
-        if (!empty($request->ids)) {
-           $ids =  get_array_mapping(json_decode($request->ids));
+public function restore_posts(Request $request)
+{
+    $ids = [];
+    if (!empty($request->ids)) {
+       $ids =  get_array_mapping(json_decode($request->ids));
 
-        }
-      
-        if (!empty($ids)) {
-         Post::whereIn('id',$ids)->withTrashed()->restore();
-        }else{
-           Post::onlyTrashed()->restore();
-        }
-        Session::flash('success','Post Restored Successfully');
-         return redirect()->back();
-    }
+   }
 
-    public function restore_post(Request $request,$id)
-    {
-        $post = Post::withTrashed()->find($id);
+   if (!empty($ids)) {
+     Post::whereIn('id',$ids)->withTrashed()->restore();
+ }else{
+   Post::onlyTrashed()->restore();
+}
+Session::flash('success','Post Restored Successfully');
+return redirect()->back();
+}
+
+public function restore_post(Request $request,$id)
+{
+    $post = Post::withTrashed()->find($id);
     if ($post == null)
     {
         abort(404);
     }
- 
+
     $post->restore();
-     Session::flash('success','Post Restored Successfully');
+    Session::flash('success','Post Restored Successfully');
     return redirect()->back();
-    }
+}
 
     /**
      * Show the form for creating a new resource.
@@ -154,7 +159,7 @@ class PostController extends Controller
         'featured_image' => $request->featured_image,
         'featured_image_id' => (!empty($request->featured_image_id))?$request->featured_image_id:0,
         'status' => $request->status,
-        'created_by'=>Auth::user()->id
+        'created_by' => (Auth::check())?Auth::user()->id:null,
             // TODO: created_by pending as Authentication is not Yet Completed
     ];
 
@@ -205,6 +210,14 @@ class PostController extends Controller
             return back();
         }
 
+        if($post->isEditing()) {
+            Session::flash('error','Post is being Edited. Please wait till its fully edited!');
+            return redirect()->Route('admin.posts.index');
+        }
+
+        // Set Editing Status
+        $post->edited();
+
         $data['title'] = 'Post';
         $data['post'] = $post;
         $data = array_merge_recursive($data, $this->_prepareBasicData());
@@ -228,7 +241,7 @@ class PostController extends Controller
      //        'featured_image' => json_decode($request->featured_image,true),
      //    ]);
      // }
-        
+
      $postDetails = [
         'name' => $request->name,
         'description' => $request->description,
@@ -241,6 +254,7 @@ class PostController extends Controller
         'featured_image' => $request->featured_image,
         'featured_image_id' => $request->featured_image_id,
         'status' => $request->status,
+        'created_by' => (Auth::check())?Auth::user()->id:null,
             // TODO: created_by pending as Authentication is not Yet Completed
     ];
 
@@ -255,6 +269,10 @@ class PostController extends Controller
     }
         // return $post;
     Session::flash('success','Post Updated Successfully');
+    if(!is_null($request->iscompleted)) {
+        $post->freeEditing();
+        return redirect()->Route('admin.posts.index');
+    }
     return redirect()->Route('admin.posts.edit',$post->id);
 }
 
@@ -271,6 +289,17 @@ class PostController extends Controller
         Session::flash('success','Post Permanent Deleted Successfully');
         return back();
     }
+
+      public function changeStatus(Request $request): JsonResponse
+{
+    $postId = $request->id;
+    $postDetails = [
+        'status' => $request->status,
+    ];
+    $this->postRepository->updatePost($postId, $postDetails);
+
+    return response()->json(['success' => 'Status change successfully.']);
+}
 
     public function destroy(Post $post)
     {
@@ -292,7 +321,7 @@ class PostController extends Controller
     public function bulk_force_delete(Request $request)
     {
 
-    
+
         if (!empty($request->fd_ids)) {
 
             $postIds = get_array_mapping(json_decode($request->fd_ids));

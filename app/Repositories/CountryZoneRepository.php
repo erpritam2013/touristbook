@@ -15,6 +15,14 @@ class CountryZoneRepository implements CountryZoneRepositoryInterface
     {
         return CountryZone::findOrFail($countryZoneId);
     }
+      public function forceDeleteCountryZone($countryZoneId)
+    {
+         CountryZone::onlyTrashed()->find($countryZoneId)->forceDelete();
+    }
+    public function forceBulkDeleteCountryZone($countryZoneId)
+    {
+         CountryZone::onlyTrashed()->whereIn('id', $countryZoneId)->forceDelete();
+    }
     public function deleteCountryZone($countryZoneId)
     {
         CountryZone::destroy($countryZoneId);

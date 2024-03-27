@@ -139,8 +139,13 @@
                 </div>
 
                 <div class="TravelGo-opt-list"> 
+                    @php 
+
+                     $wishlist_status = (wishlist_model('Tour',$tour->id))?true:false;
+
+                    @endphp
                     {{--<a href="#" class="single-map-item"><i class="fas fa-map-marker-alt"></i><span class="TravelGo-opt-tooltip">On the map</span></a> --}}
-                    <a href="#" class="TravelGo-js-favorite"><i class="fas fa-heart"></i><span class="TravelGo-opt-tooltip">Save</span></a> 
+                    <a href="#" class="TravelGo-js-favorite wishlist_btn {{(!auth()->check())?'disabled-link':''}}" data-model_type="Tour" data-model_id="{{$tour->id}}" data-status="{{($wishlist_status)?1:0}}" title="{{(!auth()->check())?'Please Login User Wish tour':''}}"><i class="fas fa-heart" style="{{($wishlist_status)?'color:#000;':''}}"></i><span class="TravelGo-opt-tooltip" id="wishlist-title-{{$tour->id}}">{{($wishlist_status)?'saved':'save'}}</span></a>
                     <a data-toggle="collapse" href="#tour-social-links-{{ $tour->id }}" role="button" aria-expanded="false" aria-controls="tour-social-links-{{ $tour->id }}"  class="TravelGo-js-booking"><i class="fa fa-share"></i><span class="TravelGo-opt-tooltip">Show Social Links</span></a> 
                 </div>
 
@@ -203,15 +208,20 @@
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 Nopadding section-footer">
 
            <div class="tour-service-price" >
-
+              @php $tour_price = get_price($tour);@endphp
+           @if($tour_price == 0)
+            Price On Request
+            <span class="unit"><span class="price-ex"><i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;position: absolute;top: -3px;"><span class="TravelGo-opt-tooltip min-w-690px-fs-15fpx">Price usually vary or subject to change please visit website to view the best deal.</span></i></span></span>
+           @else
             <span class="tour-avg">
                 {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
                 Avg
             </span>
 
-            {!!get_price($tour)!!}
+            {!!$tour_price!!}
 
             <span class="unit"><span class="price-ex"><i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;position: absolute;top: -3px;"><span class="TravelGo-opt-tooltip min-w-690px-fs-15fpx">Price usually vary or subject to change please visit website to view the best deal.</span></i></span></span>
+           @endif
 
 
         </div>

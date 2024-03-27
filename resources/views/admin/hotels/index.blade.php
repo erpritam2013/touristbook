@@ -7,7 +7,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">{{$title}}</h4>
+                <h4 class="card-title">{{$title}} ({{$hotels}})</h4>
                 <div align="right" class="all-a">
                     @if($hotels)<a href="javascript:void(0);" class="btn btn-outline-danger bulk-delete btn-xs" style="display: none;">Bulk Delete</a>
                     <form id='bulk_delete_entity_form' method="POST" action="{{route('admin.hotel.bulk-delete')}}" style="display: none" data-text="hotel">
@@ -21,6 +21,9 @@
                     <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;Trash ({{ $trashed }})
                 </a>
                   <a href="{{route('admin.hotels.create')}}" class="btn btn-outline-primary btn-xs">Add New hotel</a>
+                  @if(isset(request()->user) && !empty(request()->user))
+                  <a href="{{route('admin.hotels.index')}}" class="btn btn-dark btn-xs"><i class="fa fa-arrow-right"></i> Back</a>
+                  @endif
               </div>
           </div>
 
