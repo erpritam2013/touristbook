@@ -19,6 +19,14 @@ class TourismZoneRepository implements TourismZoneRepositoryInterface
     {
         return TourismZone::where('country',$country)->get(['id','title']);
     }
+      public function forceDeleteTourismZone($tourismZoneId)
+    {
+         TourismZone::onlyTrashed()->find($tourismZoneId)->forceDelete();
+    }
+    public function forceBulkDeleteTourismZones($tourismZoneId)
+    {
+         TourismZone::onlyTrashed()->whereIn('id', $tourismZoneId)->forceDelete();
+    }
     public function deleteTourismZone($tourismZoneId)
     {
         TourismZone::destroy($tourismZoneId);

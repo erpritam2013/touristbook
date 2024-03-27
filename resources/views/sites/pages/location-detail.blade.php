@@ -13,7 +13,7 @@ $top = 'top:32px;position:relative;';
 @endsection
 @endif 
 @endif
-@php $featured_image = (!empty($location->featured_image) && isset($location->featured_image[0]['id']))?getConversionUrl($location->featured_image[0]['id'],'450x350'):null;@endphp
+@php $featured_image = (!empty($location->featured_image) && isset($location->featured_image[0]['id']))?getConversionUrl($location->featured_image[0]['id'],'1350x500'):null;@endphp
 @if(empty($featured_image))
 @php $featured_image = asset('sites/images/dummy/1350x500.jpg'); @endphp
 @endif

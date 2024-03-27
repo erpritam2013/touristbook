@@ -18,7 +18,7 @@
 </div>
  @endif
 
- @include('admin.partials.utils.input', ['name'=> 'address','label'=>'Room address','desc'=>'Enter full address of room','value'=>$room->address ?? '','id' => "address",'class'=>'pac-target-input'])
+{!!inputTemplate(['name'=> 'address','label'=>'Room address','desc'=>'Enter full address of room','value'=>$room->address ?? '','id' => "address",'class'=>'pac-target-input'])!!}
 
 
 

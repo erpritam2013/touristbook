@@ -1,5 +1,5 @@
-@section('setting_action', route('admin.settings.theme-settings.store','profile'))
-<form class="form-valide" id="setting-form-profile" action="@yield('setting_action')" method="post">
+@section('setting_action_profile', route('admin.settings.theme-settings.store','profile'))
+<form class="form-valide" id="setting-form-profile" action="@yield('setting_action_profile')" method="post">
 	{{ csrf_field() }}
 	@yield('setting_form_method')
 	<div class="card mb-0">

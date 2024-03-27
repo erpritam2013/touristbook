@@ -15,5 +15,16 @@
                 </label>
             </div>
         </div> 
+
+         <div class="form-group row">
+            
+            <button type="submit" class="btn btn-primary">@isset($activity->id)Update @else Save @endisset</button>&nbsp;
+            @if(isset($activity->id))
+            <input type="submit" class="btn btn-success" name="iscompleted" value="Update and Complete Editing" style="color: #fff;" />
+            @endif
+            @if(!isset($activity->id))
+            <button type="button" class="btn btn-light" onclick="window.location.replace('{{ url()->previous() }}')">Cancel</button>
+            @endif
+        </div>
     </div>
 </div>

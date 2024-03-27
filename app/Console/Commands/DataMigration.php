@@ -12,6 +12,7 @@ use App\Models\CountryZone;
 use App\Models\Conversion;
 use App\Models\Hotel;
 use App\Models\Post;
+use App\Models\Comment;
 use App\Models\HotelDetail;
 use App\Models\LocationMeta;
 use App\Models\Activity;
@@ -1085,7 +1086,7 @@ class DataMigration extends Command
             if (!empty($nestedResults)) {
                 foreach ($nestedResults as $postId => $n_result) {
                     $post = [
-                        // "wp_id" => $postId,
+                        "wp_id" => $postId,
                         "name" => $n_result["post_title"],
                         "slug" => $n_result["post_name"],
                         "description" => $this->check_content($n_result["post_content"],$postId,'post'),
@@ -1095,6 +1096,7 @@ class DataMigration extends Command
                         "created_by" => $n_result["post_author"],
                         "created_at" => $n_result["post_date_gmt"],
                         "updated_at" => $n_result["post_modified_gmt"],
+                        
                         'status' => 1
 
                     ];
@@ -1120,6 +1122,102 @@ class DataMigration extends Command
             }
             return $result;
         }
+public function get_post_id($id)
+{
+    $post = ['post_id'=>0,'rating'=>0,'type'=>null];
+    $hotel = Hotel::where('wp_id',$id)->first();
+    $tour = Tour::where('wp_id',$id)->first();
+    $activity = Activity::where('wp_id',$id)->first();
+    $post_single = Post::where('wp_id',$id)->first();
+    if (!empty($hotel)) {
+       $post['post_id'] = $hotel->id;
+       $post['rating'] = $hotel->rating;
+       $post['type'] = class_basename(get_class($hotel));
+    }
+    if (!empty($tour)) {
+       $post['post_id'] = $tour->id;
+       $post['rating'] = $tour->rate_review;
+        $post['type'] = class_basename(get_class($tour));
+    }
+    if (!empty($activity)) {
+       $post['post_id'] = $activity->id;
+       $post['rating'] = $activity->rating;
+        $post['type'] = class_basename(get_class($activity));
+    }
+    if (!empty($post_single)) {
+       $post['post_id'] = $post_single->id;
+       $post['rating'] = 0;
+       $post['type'] = class_basename(get_class($post_single));
+    }
+    return $post;
+}
+
+        /* migrate comments */
+public function comment_migrate()
+{
+    $this->info("comment Data Loading...");
+    $comment_collections = DB::connection($this->wp_connection)->table("wp_comments")->select("comment_ID")->get();
+    $commentIds = $comment_collections->pluck('comment_ID')->toArray();
+
+    foreach (array_chunk($commentIds, 200) as $cIds) {
+
+        $cQuery = DB::connection($this->wp_connection)->table('wp_comments as wpc')
+        ->select('wpc.*')
+        ->whereIn('wpc.comment_ID', $cIds)
+        ->orderBy('wpc.comment_ID', 'desc');
+
+        $results = $cQuery->get();
+
+        $nestedResults = [];
+
+        foreach ($results as $result) {
+            $commentId = $result->comment_ID;
+                unset($result->comment_ID); // Remove the ID field from the main comment data
+
+                if (!isset($nestedResults[$commentId])) {
+                    $nestedResults[$commentId] = (array) $result;
+                    //$nestedResults[$commentId]['commentmeta'] = [];
+                }
+
+            }
+
+          
+            // TODO: Can think better way
+            // One more iteration for Laravel Specific
+            $comments = collect([]);
+            if (!empty($nestedResults)) {
+                foreach ($nestedResults as $commentId => $n_result) {
+                        $post_d = $this->get_post_id($n_result['comment_post_ID']); 
+                    $single_comment = [
+                        "model_id" =>  $post_d['post_id'],
+                        "model_type" =>  $post_d['type'],
+                        "user_id" =>  $n_result['user_id'],
+                        "name" =>  $n_result['comment_author'],
+                        "email" =>  $n_result['comment_author_email'],
+                        "ip" =>  $n_result['comment_author_IP'],
+                        "agent" =>  $n_result['comment_agent'],
+                        "comments" =>  $n_result['comment_content'],
+                        "star_rating" =>   $post_d['rating'],
+                        "status" =>  1,
+                        "comment_type" => ( $n_result['comment_type'] == 'st_reviews')?'review':'comment',
+                        "created_at" =>  $n_result['comment_date'],
+                        "updated_at" =>  $n_result['comment_date'],
+                        "parent_id" =>  $n_result['comment_parent'],
+                    ];
+
+                    $comments->push($single_comment);
+                }
+
+                Comment::insert($comments->toArray());
+
+                $this->info("200 record done");
+
+            }
+        }
+        // TODO: comment Details
+        $this->info("comment Data Loading Completed");
+    }
+
      /**
      * Room Module
      */
@@ -4348,7 +4446,7 @@ $this->info("File upload done ".$count);
             //$tables = ['posts'];
             //$tables = ['country_zones'];
 
-           $tables = ['conversions'];
+            $tables = ['comments'];
             // $tables = ['tourism_zones'];
             //$tables = ['rooms','room_details','hotels','hotel_details'];
 
@@ -4406,7 +4504,7 @@ $this->info("File upload done ".$count);
 
         // Setup Types
 
-       // $this->post_migrate();
+       $this->comment_migrate();
 
 //$this->setup_types();
      //   $this->setup_package_types();
@@ -4542,7 +4640,7 @@ $this->info("File upload done ".$count);
     //  $set_data['hotel_common_deals_discount'] =$deals_discount;
     //  $set_data['hotel_common_activities'] = $activities;
 
-       $this->add_data_conversion();
+       //$this->add_data_conversion();
 
        // $this->update_page_extra_data(1,$set_data);
 

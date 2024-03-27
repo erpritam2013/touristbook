@@ -73,8 +73,10 @@ function displayPopup() {
 
 $('#vg-location-id').on('change',function(){
     let location = $(this).children('option:selected').attr('l_s_name');
+    let vg_type = $(this).children('option:selected').data('type');
     $('#vg-name').val(location);
-})
+    $('#vg-type').val(vg_type);
+});
 
 
 

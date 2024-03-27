@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Media;
 use App\Models\File;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -24,26 +25,38 @@ class MediaDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))->addIndexColumn()->addColumn('action', function ($row) {
-                  
-                    $html = '<a href="javascript:void(0);" class="btn btn-danger del_entity_form" title="Permanent Delete" item_id="'.$row->id.'" data-text="media"><i class="fa fa-trash"></i></a>';
-                    return $html;
-                })->addColumn('media', function ($row) {
-                   $html = '<img src="'.getConversionUrl($row->id,'thumbnail').'" width="70" height="70">';
-                   return $html;
-                })->addColumn('used-media', function ($row) {
-                  $html = '<a href="'.route("admin.settings.media-used-object",$row->id).'" class="btn btn-info" title="Used Media"target="_blank">Used Media</a>';
-                  return $html;
-                })->addColumn('aws-media', function ($row) {
-                    $path  = $row->getPath();
-                    return (!Storage::disk('s3')->exists($path))?'image not existed on aws ':'';
-                })->editColumn('created_at', function($row) {
-                    return date('d-m-Y',strtotime($row->created_at));
-                })->editColumn('updated_at', function($row) {
-                    return date('d-m-Y',strtotime($row->updated_at));
-                })->addColumn('del',function($row){
-                 return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'" disabled>';
-            })->rawColumns(['action','del','media','used-media','aws-media']);
+
+            $html = '<a href="javascript:void(0);" class="btn btn-danger del_entity_form" title="Permanent Delete" item_id="'.$row->id.'" data-text="media"><i class="fa fa-trash"></i></a>';
+            return $html;
+        })->addColumn('media', function ($row) {
+         $html = '<img src="'.getConversionUrl($row->id,'thumbnail').'" width="70" height="70">';
+         return $html;
+     })->addColumn('user', function($row) {
+       $user = '';
+       
+       if (!empty($row->custom_properties) && in_array('created_by',array_keys($row->custom_properties))) {
+       $user = User::find($row->custom_properties['created_by']);
+    }  
+    if (isset(request()->user) && !empty(request()->user)) {
+        return '#'.$user->id.' '.$user->name;
+    }else{
+
+        return (!empty($user))?'<a href="'.route('admin.settings.media-object.index').'?user='.$user->id.'" target="_blank" style="color:#07509e">'.'#'.$user->id.' '.$user->name.'</a> : ':null;
     }
+})->addColumn('used-media', function ($row) {
+  $html = '<a href="'.route("admin.settings.media-used-object",$row->id).'" class="btn btn-info" title="Used Media"target="_blank">Used Media</a>';
+  return $html;
+})->addColumn('aws-media', function ($row) {
+    $path  = $row->getPath();
+    return (!Storage::disk('s3')->exists($path))?'image not existed on aws ':'';
+})->editColumn('created_at', function($row) {
+    return date('d-m-Y',strtotime($row->created_at));
+})->editColumn('updated_at', function($row) {
+    return date('d-m-Y',strtotime($row->updated_at));
+})->addColumn('del',function($row){
+   return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'" disabled>';
+})->rawColumns(['action','del','media','used-media','aws-media','user']);
+}
 
     /**
      * Get query source of dataTable.
@@ -53,7 +66,11 @@ class MediaDataTable extends DataTable
      */
     public function query(Media $model): QueryBuilder
     {
-        return $model->newQuery();
+        if (isset(request()->user) && !empty(request()->user)) {
+            return $model->newQuery()->orderBy('created_at','DESC')->where('custom_properties->created_by',request()->user);
+        }else{
+            return $model->newQuery()->orderBy('created_at','DESC');
+        }
     }
 
     /**
@@ -64,20 +81,20 @@ class MediaDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('touristbook-datatable')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
+        ->setTableId('touristbook-datatable')
+        ->columns($this->getColumns())
+        ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(6)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ])->parameters($this->getParameters());
+        ->orderBy(6)
+        ->selectStyleSingle()
+        ->buttons([
+            Button::make('excel'),
+            Button::make('csv'),
+            Button::make('pdf'),
+            Button::make('print'),
+            Button::make('reset'),
+            Button::make('reload')
+        ])->parameters($this->getParameters());
     }
 
     /**
@@ -87,31 +104,32 @@ class MediaDataTable extends DataTable
      */
     public function getColumns(): array
     {
-         return [
-            Column::make('del')->title('<input type="checkbox" class="css-control-input mr-2 select-all text-center" onchange="CustomSelectCheckboxAll(this);" '.$this->disabledInput().'disabled >')->searchable(false)
-            ->orderable(false)
-            ->exportable(false)
-            ->printable(false)->width(5)
-            ->addClass('text-center'),
-            Column::make('loopIndex')->title('S.No.')->searchable(false)
-            ->orderable(false)
-            ->exportable(false)
-            ->printable(false)->width(5)
-            ->addClass('text-center'),
-            Column::make('name'),
-            Column::make('file_name'),
-            Column::make('media'),
-            Column::make('used-media')->title('Used Media'),
-            Column::make('aws-media')->title('AWS Media'),
-            Column::make('created_at')->title('Created'),
-            Column::make('updated_at')->title('Updated'),
-            Column::make('action')
-            ->exportable(false)
-            ->printable(false)
-            ->width(5)
-            ->addClass('text-center'),
-        ];
-    }
+       return [
+        Column::make('del')->title('<input type="checkbox" class="css-control-input mr-2 select-all text-center" onchange="CustomSelectCheckboxAll(this);" '.$this->disabledInput().'disabled >')->searchable(false)
+        ->orderable(false)
+        ->exportable(false)
+        ->printable(false)->width(5)
+        ->addClass('text-center'),
+        Column::make('loopIndex')->title('S.No.')->searchable(false)
+        ->orderable(false)
+        ->exportable(false)
+        ->printable(false)->width(5)
+        ->addClass('text-center'),
+        Column::make('name'),
+        Column::make('file_name'),
+        Column::make('media'),
+        Column::make('user')->title('Created & Updated By'),
+        Column::make('used-media')->title('Used Media'),
+        Column::make('aws-media')->title('AWS Media'),
+        Column::make('created_at')->title('Created'),
+        Column::make('updated_at')->title('Updated'),
+        Column::make('action')
+        ->exportable(false)
+        ->printable(false)
+        ->width(5)
+        ->addClass('text-center'),
+    ];
+}
 
      /**
      * Get Parameters.
@@ -119,8 +137,8 @@ class MediaDataTable extends DataTable
      * @return array
      */
 
-    public function getParameters(): array
-    {
+     public function getParameters(): array
+     {
         return [
             'fnDrawCallback'=> 'function(){$(".toggle-class").bootstrapToggle()}',
             'paging' => true,
@@ -134,8 +152,8 @@ class MediaDataTable extends DataTable
      *
      * @return bool
      */
-    public function getCustomStatus(): bool
-    {
+      public function getCustomStatus(): bool
+      {
         return Media::count();
     }
 

@@ -17,7 +17,7 @@
 </div>
  @endif
 
- @include('admin.partials.utils.input', ['name'=> 'address','label'=>'Real tour address','desc'=>'Input your tour address detail','value'=>$tour->address ?? '','id' => "address",'class'=>'pac-target-input'])
+{!!inputTemplate(['name'=> 'address','label'=>'Real tour address','desc'=>'Input your tour address detail','value'=>$tour->address ?? '','id' => "address",'class'=>'pac-target-input'])!!}
 
 <div class="form-group row">
     <label class="col-lg-5 col-form-label" for="map_address">tour address</label>

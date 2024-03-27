@@ -3,22 +3,22 @@
     @if ($hotels->isNotEmpty())
 
     @foreach ($hotels as $key => $hotel)
-     @php 
+    @php 
 
-     $featured_image = (!empty($hotel->featured_image) && isset($hotel->featured_image[0]['id']))?getConversionUrl($hotel->featured_image[0]['id'],'450x417'):null;
+    $featured_image = (!empty($hotel->featured_image) && isset($hotel->featured_image[0]['id']))?getConversionUrl($hotel->featured_image[0]['id'],'450x417'):null;
 
     $address = (!empty($hotel->address ))?$hotel->address:$hotel->hotel_attributes['corporateAddress'];
 
-     $single_hotel = [
-     'name'=>$hotel->name,
-      'url'=>route('hotel',$hotel->slug),
-      'price'=>get_price($hotel),
-      'price_icon'=>getNewIcon('thunder', '#ffab53', '10px', '16px'),
-      'is_featured'=>is_featured($hotel->is_featured),
-      'map_icon'=>getNewIcon('Ico_maps', '#666666', '15px', '15px', true),
-      'address'=>$address,
-      'featured_image' => (!empty($featured_image))?$featured_image:asset('sites/images/dummy/450x417.jpg')
-     ];
+    $single_hotel = [
+    'name'=>$hotel->name,
+    'url'=>route('hotel',$hotel->slug),
+    'price'=>get_price($hotel),
+    'price_icon'=>getNewIcon('thunder', '#ffab53', '10px', '16px'),
+    'is_featured'=>is_featured($hotel->is_featured),
+    'map_icon'=>getNewIcon('Ico_maps', '#666666', '15px', '15px', true),
+    'address'=>$address,
+    'featured_image' => (!empty($featured_image))?$featured_image:asset('sites/images/dummy/450x417.jpg')
+    ];
     @endphp
     <div class="col-lg-12 col-md-12 col-sm-12 hotel-list-page">
         <div class="row">
@@ -28,7 +28,7 @@
                         <figure> 
                             {{--<a href="hotel-detailed.html" class="wishlist_bt"></a>--}}
                             {!!is_featured($hotel->is_featured)!!}
-                          
+
                             <a
                             href="{{route('hotel',$hotel->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/450x417.jpg')}}"
                             class="img-fluid" alt="">
@@ -38,11 +38,11 @@
                     <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 Nopadding hotel-content">
                         <div class="listroBoxmain">
                             <h4 class="service-title"><a href="{{route('hotel',$hotel->slug)}}">{{ $hotel->name }}</a></h4>
-                           
+
                             <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}{{$address}}</p>
-                           
+
                             <div class="row">
-                               <div class="col-sm-12">
+                             <div class="col-sm-12">
                                 @if($hotel->amenities->count())
                                 <div class="st-report-info">
                                     <ul>
@@ -69,7 +69,7 @@
                             @if(!empty($hotel->detail->highlights))
 
                             <div class="st-highlight-info">
-                               <ul> 
+                             <ul> 
                                 @foreach($hotel->detail->highlights as $key => $highlights)
                                 @if($key <=1)
                                 @php   $url_add = $highlights['highlights-url_link']; @endphp
@@ -100,7 +100,7 @@
 
                                 @endif
                                 @endif
-      
+
                                 @endforeach
                             </ul>
 
@@ -122,7 +122,12 @@
 
                 <div class="TravelGo-opt-list"> 
                     {{--<a href="#" class="single-map-item"><i class="fas fa-map-marker-alt"></i><span class="TravelGo-opt-tooltip">On the map</span></a> --}}
-                    <a href="#" class="TravelGo-js-favorite"><i class="fas fa-heart"></i><span class="TravelGo-opt-tooltip">Save</span></a> 
+                    @php 
+
+                    $wishlist_status = (wishlist_model('Hotel',$hotel->id))?true:false;
+
+                    @endphp
+                    <a href="#" class="TravelGo-js-favorite wishlist_btn {{(!auth()->check())?'disabled-link':''}}" data-model_type="Hotel" data-model_id="{{$hotel->id}}" data-status="{{( $wishlist_status)?1:0}}" title="{{(!auth()->check())?'Please Login User Wish Hotel':''}}"><i class="fas fa-heart" style="{{( $wishlist_status)?'color:#000;':''}}"></i><span class="TravelGo-opt-tooltip" id="wishlist-title-{{$hotel->id}}">{{( $wishlist_status)?'saved':'save'}}</span></a> 
                     <a data-toggle="collapse" href="#hotel-social-links-{{ $hotel->id }}" role="button" aria-expanded="false" aria-controls="hotel-social-links-{{ $hotel->id }}"  class="TravelGo-js-booking"><i class="fa fa-share"></i><span class="TravelGo-opt-tooltip">Show Social Links</span></a> 
                 </div>
 
@@ -183,47 +188,55 @@
 
         </div>
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 Nopadding section-footer">
-           <div class="view-hotel-btn"><a href="{{route('hotel',$hotel->slug)}}" class="btn btn-sm btn-grad text-white mb-0 padding">VIEW HOTEL</a></div>
-           <div class="hotel-service-price">
+         <div class="view-hotel-btn"><a href="{{route('hotel',$hotel->slug)}}" class="btn btn-sm btn-grad text-white mb-0 padding">VIEW HOTEL</a></div>
+         <div class="hotel-service-price">
+           @php $hotel_price = get_price($hotel);@endphp
+           @if($hotel_price == 0)
+           Price On Request
+           <span class="price-ex">
+            <i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;position: absolute;top: -3px;"><span class="TravelGo-opt-tooltip min-w-690px-fs-15fpx">Price usually vary or subject to change please visit website to view the best deal.</span></i></span>
+           @else
 
-            <span class="hotel-avg">
-                {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
-                Avg
-            </span>
+           <span class="hotel-avg">
+            {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
+            Avg
+        </span>
 
-            {!!get_price($hotel)!!}
+        {!!$hotel_price!!}
+        <span class="unit">per night<span class="price-ex">
+            <i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;position: absolute;top: -3px;"><span class="TravelGo-opt-tooltip min-w-690px-fs-15fpx">Price usually vary or subject to change please visit website to view the best deal.</span></i></span></span>
+        @endif
 
-            <span class="unit">per night<span class="price-ex"><i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;position: absolute;top: -3px;"><span class="TravelGo-opt-tooltip min-w-690px-fs-15fpx">Price usually vary or subject to change please visit website to view the best deal.</span></i></span></span>
-
-
-        </div>
 
 
     </div>
-    <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 Nopadding st-more-information collapse p-4" id="st-hotel-content-{{ $hotel->id }}">
 
-     @if($hotel->amenities()->count())
 
-     <div class="st-report">
+</div>
+<div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 Nopadding st-more-information collapse p-4" id="st-hotel-content-{{ $hotel->id }}">
 
-        <h3 class="st-section-title">Facilities</h3>
+   @if($hotel->amenities()->count())
 
-        <div class="row" >
-           @foreach($hotel->amenities()->get() as $key => $facility)
+   <div class="st-report">
 
-           <div class="col-xs-6 col-sm-6" style="color:#000000;"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="font-size: 7px;color:transparent;"></i>&nbsp;{{ucwords($facility->name)}}</div>
+    <h3 class="st-section-title">Facilities</h3>
 
-           @endforeach
+    <div class="row" >
+     @foreach($hotel->amenities()->get() as $key => $facility)
 
-       </div>
+     <div class="col-xs-6 col-sm-6" style="color:#000000;"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="font-size: 7px;color:transparent;"></i>&nbsp;{{ucwords($facility->name)}}</div>
 
-   </div>
+     @endforeach
 
-   @endif
-   
-   @if(!empty($hotel->detail->highlights))
+ </div>
 
-   <div class="st-highlight-info">
+</div>
+
+@endif
+
+@if(!empty($hotel->detail->highlights))
+
+<div class="st-highlight-info">
     <h3 class="st-section-title">Highlights</h3>
     <div class="row" >
         @foreach($hotel->detail->highlights as $key => $highlights)

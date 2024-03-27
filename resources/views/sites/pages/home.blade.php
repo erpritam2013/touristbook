@@ -17,7 +17,7 @@ if(isset($page)) {
   if(isJson($page->featured_image)){
     $page->featured_image = json_decode($page->featured_image,true);
   }
-  $banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]['id']))?getConversionUrl($page->featured_image[0]['id']):null;
+  $banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]['id']))?getConversionUrl($page->featured_image[0]['id'],'1356x475'):null;
 }
 
 @endphp
@@ -306,7 +306,7 @@ if(isset($page)) {
               if(isJson($home_destinations[0]->featured_image)){
                 $home_destinations[0]->featured_image = json_decode($home_destinations[0]->featured_image,true);
               }
-              $first_destination_image = (!empty($home_destinations[0]->featured_image) && isset($home_destinations[0]->featured_image[0]['id']))?getConversionUrl($home_destinations[0]->featured_image[0]['id']):null;
+              $first_destination_image = (!empty($home_destinations[0]->featured_image) && isset($home_destinations[0]->featured_image[0]['id']))?getConversionUrl($home_destinations[0]->featured_image[0]['id'],'1356x475'):null;
               @endphp
               <div class="col-md-6"> <a href="{{route('location',$home_destinations[0]->slug ?? '')}}">
                 <div class="list-mig-like-com">
@@ -407,7 +407,7 @@ if(isset($page)) {
                     if(isJson($home_hotel->featured_image)){
                       $home_hotel->featured_image = json_decode($home_hotel->featured_image,true);
                     }
-                    $home_hotel_image = (!empty($home_hotel->featured_image) && isset($home_hotel->featured_image[0]['id']))?getConversionUrl($home_hotel->featured_image[0]['id']):null;
+                    $home_hotel_image = (!empty($home_hotel->featured_image) && isset($home_hotel->featured_image[0]['id']))?getConversionUrl($home_hotel->featured_image[0]['id'],'450x417'):null;
                     @endphp
                     <div class="swiper-slide h-auto px-2">
                       <div class="listroBox">
@@ -425,15 +425,21 @@ if(isset($page)) {
                         </div>
                         <ul>
                           <li>
+ 
+                            <p class="card-text text-muted">
 
-                            <p class="card-text text-muted"><span class="hotel-avg">
+                              @php $home_hotel_price = get_price($home_hotel);@endphp
+                                  @if($home_hotel_price == 0)
+                                Price On Request
+                                @else
+                              <span class="hotel-avg">
                               {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
                               Avg
                             </span>
-
-                            {!!get_price($home_hotel)!!}
-
-                            <span class="unit">/per night</span></p>
+                            {!!$home_hotel_price!!}
+                            <span class="unit">/per night</span>
+                                @endif
+                          </p>
                           </li>
                           <li class="mt-0">
                             <a href="{{route('hotel',$home_hotel->slug ?? '')}}" class="btn btn-grad btn-sm">Hotel Detail</a>
@@ -470,7 +476,7 @@ if(isset($page)) {
                       if(isJson($home_tour->featured_image)){
                         $home_tour->featured_image = json_decode($home_tour->featured_image,true);
                       }
-                      $home_tour_image = (!empty($home_tour->featured_image) && isset($home_tour->featured_image[0]['id']))?getConversionUrl($home_tour->featured_image[0]['id']):null;
+                      $home_tour_image = (!empty($home_tour->featured_image) && isset($home_tour->featured_image[0]['id']))?getConversionUrl($home_tour->featured_image[0]['id'],'450x417'):null;
                       @endphp
                       <div class="swiper-slide h-auto px-2">
                         <div class="listroBox">
@@ -488,12 +494,19 @@ if(isset($page)) {
                           </div>
                           <ul>
                             <li>
-                              <p class="card-text text-muted"><span class="tour-avg">
+                              <p class="card-text text-muted">
+                                @php $home_tour_price = get_price($home_tour);@endphp
+                                    @if($home_tour_price == 0)
+                                  Price On Request
+                                  @else
+                                <span class="tour-avg">
                                 {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
                                 Avg
                               </span>
-                              {!!get_price($home_tour)!!}
-                              <span class="unit">/per night</span></p>
+                              {!!$home_tour_price!!}
+                              <span class="unit">/per night</span>
+                              @endif
+                            </p>
                             </li>
                             <li class="mt-0">
                               <a href="{{route('tour',$home_tour->slug ?? '')}}" class="btn btn-grad btn-sm">Tour Detail</a>
@@ -529,7 +542,7 @@ if(isset($page)) {
                         if(isJson($home_activity->featured_image)){
                           $home_activity->featured_image = json_decode($home_activity->featured_image,true);
                         }
-                        $home_activity_image = (!empty($home_activity->featured_image) && isset($home_activity->featured_image[0]['id']))?getConversionUrl($home_activity->featured_image[0]['id']):null;
+                        $home_activity_image = (!empty($home_activity->featured_image) && isset($home_activity->featured_image[0]['id']))?getConversionUrl($home_activity->featured_image[0]['id'],'450x417'):null;
                         @endphp
                         <div class="swiper-slide h-auto px-2">
                           <div class="listroBox">
@@ -547,11 +560,18 @@ if(isset($page)) {
                             </div>
                             <ul>
                               <li>
-                                <p class="card-text text-muted"><span class="activity-avg">
+                                <p class="card-text text-muted">
+                                   @php $home_activity_price = get_price($home_activity);@endphp
+                                  @if($home_activity_price == 0)
+                                  Price On Request
+                                  @else
+                                  <span class="activity-avg">
                                   {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
                                   Avg
                                 </span>
-                                {!!get_price($home_activity)!!}</p>
+                                {!!$home_activity_price!!}
+                                  @endif
+                              </p>
                               </li>
                               <li class="mt-0">
                                 <a href="{{route('activity',$home_activity->slug ?? '')}}" class="btn btn-grad btn-sm">Activity Detail</a>
@@ -585,8 +605,8 @@ if(isset($page)) {
         @foreach($home_posts as $home_post)
         <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mb-4 post-item">
           <div class="card shadow  h-100"><a href="{{route('blog',$home_post->slug)}}">
-           @php $featured_image = (!empty($home_post->featured_image) && isset($home_post->featured_image[0]['id']))?getConversionUrl($home_post->featured_image[0]['id'],'600x250'):null;@endphp
-           <img src="{{$featured_image ?? asset('sites/images/dummy/600x250.jpg')}}" alt="post-image" class="post-image" width="768" height="368">               
+           @php $featured_image = (!empty($home_post->featured_image) && isset($home_post->featured_image[0]['id']))?getConversionUrl($home_post->featured_image[0]['id'],'600x450'):null;@endphp
+           <img src="{{$featured_image ?? asset('sites/images/dummy/600x450.jpg')}}" alt="post-image" class="post-image" width="768" height="368">               
          </a>
          <div class="card-body">
           <h5 class="my-2"><a href="{{route('blog',$home_post->slug)}}" class="post-title text-dark">{{shortDescription($home_post->name ?? '',35)}}</a></h5> 

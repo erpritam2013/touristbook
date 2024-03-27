@@ -23,8 +23,8 @@ $top2 = 'top:152px;z-index:99;';
 
 
 
-   @if(!empty($hotel->images) && (is_array($hotel->images) || is_object($hotel->images)))
-     @php $hotel->images = touristbook_array_filter($hotel->images);@endphp
+      @if(!empty($hotel->images) && (is_array($hotel->images) || is_object($hotel->images)))
+      @php $hotel->images = touristbook_array_filter($hotel->images);@endphp
       @foreach($hotel->images as $gallery)
       @if(!empty($gallery) && isset($gallery['id']))
       <div class="swiper-slide"><a data-toggle="gallery-top" title="hotel gallery" style="width: 452px;height:300px;" ><img
@@ -58,6 +58,7 @@ $top2 = 'top:152px;z-index:99;';
 
 <section class="pt40 pb80 listingDetails Campaigns" style="{{$top ??''}}">
   <div class="container">
+
     <div class="row">
 
       <!-- Tab line -->
@@ -65,7 +66,7 @@ $top2 = 'top:152px;z-index:99;';
         @php
         $l_route = "";
         if(isset($hotel->locations[0])) {
-        $l_route = route('hotels').'?search='.$hotel->locations[0]->name.'&source_type=location&source_id='.$hotel->locations[0]->id;
+          $l_route = route('hotels').'?search='.$hotel->locations[0]->name.'&source_type=location&source_id='.$hotel->locations[0]->id;
 
         }
         @endphp
@@ -225,7 +226,14 @@ $top2 = 'top:152px;z-index:99;';
 
           <div class="col-lg-3 col-md-6 col-sm-12">
             <span class="hotel-price-avg" title="(i)price usually vary in nature and subject to change
-            ">Average price per night INR {!!get_price($room)!!}<i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;margin-left: 3px;"></i></span> <br>
+            ">
+            @php $room_price = get_price($room); @endphp
+            @if($room_price != 0)
+            Average price per night INR {!!get_price($room)!!}
+            @else
+            Price On Request
+            @endif
+            <i class="fa fa-exclamation-circle icon-4x important-note-icon-tax" aria-hidden="true" style="color: #07509E;font-size: 23px;margin-left: 3px;"></i></span> <br>
 
 
             <a href="#" class="btn btn-grad room-view-btn" onclick="window.open('{{$hotel->contact["website"]}}', '_blank');">View Details</a>
@@ -409,48 +417,48 @@ $top2 = 'top:152px;z-index:99;';
               @foreach ($hotel_policies as $policy)
               <h4 class="f18">{{ $policy['policies-title'] }}
                @if($policy['children']->isNotEmpty())
-                &nbsp;<i class="fa fa-exclamation-circle icon-4x important-note-icon" aria-hidden="true" style="color:#07509E;font-size: 20px;" data-parent_title="cancellation"></i>
+               &nbsp;<i class="fa fa-exclamation-circle icon-4x important-note-icon" aria-hidden="true" style="color:#07509E;font-size: 20px;" data-parent_title="cancellation"></i>
 
-                @endif
-              </h4>
-               @if($policy['children']->isNotEmpty())
+               @endif
+             </h4>
+             @if($policy['children']->isNotEmpty())
 
-              
-              <div class="important-note-hotel cancellation">
-                
+
+             <div class="important-note-hotel cancellation">
+
               @foreach($policy['children'] as $p_children)
-                <h4 class="f18">{{$p_children['policies-title']}}</h4>
-                <pre>{!!$p_children['policies-policy_description']!!}</pre>
-                @endforeach
-              </div>
-
-              @endif
-              <div class="row">
-               @if(empty($policy['policies-policy_parent']))
-               @php 
-               $policy_description_arr = explode("\n",trim($policy['policies-policy_description']));
-               @endphp
-               @foreach($policy_description_arr as $k_ipd => $v_ipd)
-               <div class="col-xs-12 col-sm-12" style="color:#000000"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="font-size: 5px;color: transparent;"></i> 
-                <span>{!!$v_ipd!!}</span>
-
-              </div>
+              <h4 class="f18">{{$p_children['policies-title']}}</h4>
+              <pre>{!!$p_children['policies-policy_description']!!}</pre>
               @endforeach
+            </div>
+
+            @endif
+            <div class="row">
+             @if(empty($policy['policies-policy_parent']))
+             @php 
+             $policy_description_arr = explode("\n",trim($policy['policies-policy_description']));
+             @endphp
+             @foreach($policy_description_arr as $k_ipd => $v_ipd)
+             <div class="col-xs-12 col-sm-12" style="color:#000000"> <i class="fa fa-light fa-circle fa-xs" aria-hidden="true" style="font-size: 5px;color: transparent;"></i> 
+              <span>{!!$v_ipd!!}</span>
 
             </div>
-            @endif
             @endforeach
-            @endif
+
+          </div>
+          @endif
+          @endforeach
+          @endif
 
 
-          </td>
-        </tr>
-      </table>
-
-    </div>
-
+        </td>
+      </tr>
+    </table>
 
   </div>
+
+
+</div>
 </div>
 
 
@@ -919,119 +927,154 @@ $top2 = 'top:152px;z-index:99;';
 @endif
 </div>
 <div class="tab-pane" id="reviews-tab">
+  <div class="map-content-loading">
+    <div class="st-loader"></div>
+  </div>
   <div class="text-block">
     <p class="st-heading-section">Reviews </p>
     <h5 class="mb-4 st-heading-section-short">Listing Reviews </h5>
-    <div class="media d-block d-sm-flex review">
-      <div class="text-md-center mr-4 mr-xl-5"><img src="{{asset('sites/images/dummy-user.jpeg')}}" alt="Padmé Amidala" class="avatar avatar-xl p-2 mb-2"></div>
-      <div class="media-body">
-        <h6 class="mt-2 mb-1">Monu yadav</h6>
-        <div class="mb-2"><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i> </div>
-        <p class="text-muted text-sm">Awesome experience...genuinely visit it..ur visit will be worth full....n u will enjoy the view,the food everything is perfect </p>
-      </div>
-    </div>
-    <div class="media d-block d-sm-flex review">
-      <div class="text-md-center mr-4 mr-xl-5"><img src="{{asset('sites/images/dummy-user.jpeg')}}" alt="Jabba Hut" class="avatar avatar-xl p-2 mb-2"></div>
-      <div class="media-body">
-        <h6 class="mt-2 mb-1">Kumar Sivaramakrishna</h6>
-        <div class="mb-2"><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i> </div>
-        <p class="text-muted text-sm">Delighted with the service we got at the venue.. The workers were very responsive and we got a good service and good food too...cumulatively it was a good quality resort that too in budget price.</p>
-      </div>
-    </div>
-    <div class="rebiew_section">
-      <div id="leaveReview" class="mt-4 collapse show" style="">
-        <h5 class="mb-4">Leave a review</h5>
-        <form id="contact-form" method="get" action="#" class="form">
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <input type="text" name="name" id="name" placeholder="Enter your name" required class="form-control">
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <select name="rating" id="rating" class="custom-select focus-shadow-0">
-                  <option value="5">★★★★★ (5/5)</option>
-                  <option value="4">★★★★☆ (4/5)</option>
-                  <option value="3">★★★☆☆ (3/5)</option>
-                  <option value="2">★★☆☆☆ (2/5)</option>
-                  <option value="1">★☆☆☆☆ (1/5)</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <input type="email" name="email" id="email" placeholder="Enter your  email" required class="form-control">
-          </div>
-          <div class="form-group">
-            <textarea rows="4" name="review" id="review" placeholder="Enter your review" required class="form-control"></textarea>
-          </div>
-          <button type="submit" class="btn btn-grad">Submit Review</button>
-        </form>
-      </div>
-    </div>
-  </div>
+    <div id="reviews-list">
 
-</div>
-</div>
-<div class="col-lg-3 col-md-12 col-sm-12 right_Details">
-  @if(!isMobileDevice())
-  <div class="st-hotel-header">
-    <div class="left"></div>
-    <div class="right">
-      <div class="review-score">
-        <div class="head clearfix">
-          <div class="left">
+      @if($comments->isNotEmpty())
+      @foreach($comments as $comment)
+      <div class="media d-block d-sm-flex review">
 
-            @if(!empty(round($hotel->rating,2)))
-            @if($hotel->rating < 3)
-            <span class="head-rating">Good</span>
-            @else
-            <span class="head-rating">Excellent</span>
-            @endif
-            @else
-            <span class="head-rating">Not Rated</span>
-            @endif
-            <span class="text-rating">from 7 reviews</span>
-          </div>
-          <div class="score">
-            {{ round($hotel->rating,2) ?? 0 }}<span>/5</span>
+        <div class="media-body">
+          <h6 class="mt-2 mb-1 comment-author">{{ucwords($comment->name ?? $comment->user->name)}}</h6>
+          <div class="mb-2">
+            @if(!empty($comment->star_rating))
+            @for($star_i=0; $star_i<$comment->star_rating; $star_i++)
+              <i class="fa fa-xs fa-star text-primary"></i>
+              @endfor
+              @endif
+            </div>
+
+            <p class="text-muted text-sm">{!!$comment->comments!!}</p>
           </div>
         </div>
-        <div class="foot">
-          100% of guests recommend
+        @endforeach
+
+        @endif
+
+      </div>
+      @if($comment_count > 5)
+      <div class="load-more-btn mt-3 mb-3">
+
+        <button id="load_more_button" data-page="{{ $comments->currentPage() + 1 }}"
+          class="btn btn-grad" data-model_id="{{$hotel->id}}" data-model_type="Hotel">Load More</button>
+        </div>
+        @endif
+        <div class="review_section">
+          <div id="leaveReview" class="mt-4 collapse show" style="">
+            <h5 class="mb-4">Leave a review</h5>
+            @if(auth()->check())
+            <form id="comment-form" method="post" action="{{route('review-store')}}" class="form">
+              <input type="hidden" name="model_id" value="{{$hotel->id}}">
+              <input type="hidden" name="model_type" value="Hotel">
+              <input type="hidden" name="comment_type" value="review">
+              <input type="hidden" name="comment_ip" value="{{$_SERVER['REMOTE_ADDR']}}">
+              <input type="hidden" name="comment_agent" value="{{$_SERVER['HTTP_USER_AGENT']}}">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <input type="text" name="name" id="name" placeholder="Enter your name" required class="form-control">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <select name="rating" id="rating" class="custom-select focus-shadow-0">
+                      <option value="5">★★★★★ (5/5)</option>
+                      <option value="4">★★★★☆ (4/5)</option>
+                      <option value="3">★★★☆☆ (3/5)</option>
+                      <option value="2">★★☆☆☆ (2/5)</option>
+                      <option value="1">★☆☆☆☆ (1/5)</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <input type="email" name="email" id="email" placeholder="Enter your  email" required class="form-control">
+              </div>
+              <div class="form-group">
+                <textarea rows="4" name="review" id="review" placeholder="Enter your review" required class="form-control"></textarea>
+              </div>
+              <button type="submit" class="btn btn-grad review-btn">Submit Review</button>
+            </form>
+            @else
+
+            <div class="login-btn">
+
+              <div class="row">
+                <div class="col-lg-6"><a href="{{route('login')}}?redirect_to={{route('hotel',$hotel->slug)}}" class="btn btn-grad w-50">LogIn</a></div>
+                <div class="col-lg-6"><a href="{{route('register')}}?redirect_to={{route('hotel',$hotel->slug)}}" class="btn btn-grad w-50 ">Sign Up</a></div>
+              </div>
+            </div>
+
+            @endif
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-12 col-sm-12 right_Details">
+    @if(!isMobileDevice())
+    <div class="st-hotel-header">
+      <div class="left"></div>
+      <div class="right">
+        <div class="review-score">
+          <div class="head clearfix">
+            <div class="left">
+
+              @if(!empty(round($hotel->rating,2)))
+              @if($hotel->rating < 3)
+              <span class="head-rating">Good</span>
+              @else
+              <span class="head-rating">Excellent</span>
+              @endif
+              @else
+              <span class="head-rating">Not Rated</span>
+              @endif
+              <span class="text-rating">from 7 reviews</span>
+            </div>
+            <div class="score">
+              {{ round($hotel->rating,2) ?? 0 }}<span>/5</span>
+            </div>
+          </div>
+          <div class="foot">
+            100% of guests recommend
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  @endif
-  <div class="ml-lg-4 sticky-top" style="top: 100px;">
-    <div class="view-on-map widget-box rounded mb-lg-4 border-solid-d7dce3">
-      @php
-      $map_image = null;
-      if(isset($page)) {
-       $map_image_arr = [];
-       if(isJson($page->extra_data['map_image'])){
-        $map_image_arr = json_decode($page->extra_data['map_image'],true);
-      }else{
-        $map_image_arr = $page->extra_data['map_image'];
+    @endif
+    <div class="ml-lg-4 sticky-top" style="{{$top2 ?? 'top: 120px;'}}">
+      <div class="view-on-map widget-box rounded mb-lg-4 border-solid-d7dce3">
+        @php
+        $map_image = null;
+        if(isset($page)) {
+         $map_image_arr = [];
+         if(isJson($page->extra_data['map_image'])){
+          $map_image_arr = json_decode($page->extra_data['map_image'],true);
+        }else{
+          $map_image_arr = $page->extra_data['map_image'];
+        }
+        $map_image = (!empty($map_image_arr) && isset($map_image_arr[0]['id']))?getConversionUrl($map_image_arr[0]['id'],'450x417'):null;
       }
-      $map_image = (!empty($map_image_arr) && isset($map_image_arr[0]['id']))?getConversionUrl($map_image_arr[0]['id'],'450x417'):null;
-    }
 
-    @endphp
+      @endphp
 
-    <img src="{{$map_image ?? asset('sites/images/dummy/450x417.jpg')}}" height="200">
-    <a href="" class="st-link font-medium view-street-map" id="view-map-hotel" data-toggle="modal" data-target="#streetModal"> View map</a>
+      <img src="{{$map_image ?? asset('sites/images/dummy/450x417.jpg')}}" height="200">
+      <a href="" class="st-link font-medium view-street-map" id="view-map-hotel" data-toggle="modal" data-target="#streetModal"> View map</a>
+    </div>
+
+
+    <div class="view-important-note p-4 rounded border-solid-d7dce3" style="color: #000000;">
+      <strong>IMPORTANT NOTES:-&nbsp;</strong><br>
+      {!!$page->extra_data['important_note'] ?? ''!!}
+    </div>
+
   </div>
-
-
-  <div class="view-important-note p-4 rounded border-solid-d7dce3" style="color: #000000;">
-    <strong>IMPORTANT NOTES:-&nbsp;</strong><br>
-    {!!$page->extra_data['important_note'] ?? ''!!}
-  </div>
-
-</div>
 </div>
 
 <div class="col-lg-12 col-md-12 col-sm-12">
@@ -1051,8 +1094,8 @@ $top2 = 'top:152px;z-index:99;';
         @foreach($nearByHotel as $near_hotel)
         <div class="col-md-3 col-sm-3  col-xs-12">
           <div class="listroBox">
-            @php $featured_image = (!empty($near_hotel->featured_image) && isset($near_hotel->featured_image[0]['id']))?getConversionUrl($near_hotel->featured_image[0]['id'],'400x417'):null;@endphp
-            <figure><a href="{{route('hotel',$near_hotel->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/400x417.jpg')}}" class="img-fluid" alt="{{strtolower($near_hotel->name)}} image">
+            @php $featured_image = (!empty($near_hotel->featured_image) && isset($near_hotel->featured_image[0]['id']))?getConversionUrl($near_hotel->featured_image[0]['id'],'270x200'):null;@endphp
+            <figure><a href="{{route('hotel',$near_hotel->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="{{strtolower($near_hotel->name)}} image">
               <div class="read_more"><span>{!!ucwords($near_hotel->name ?? '')!!}</span></div>
             </a> </figure>
             <div class="listroBoxmain p-2">
@@ -1072,152 +1115,170 @@ $top2 = 'top:152px;z-index:99;';
               <li class="mt-0 mb-0 near-price-block-1">
                 <p class="card-text text-muted ">
                   <span class="h6 text-primary">
-                    <span class="hotel-avg">
-                      {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
-                      Avg
-                    </span>
-                  {!!get_price($near_hotel)!!}</span> / per night</p>
-                </li>
-              </ul>
-            </div>
-          </div>
-          @endforeach
-          @else
-          <div class="col-md-8 col-sm-8 col-xs-12 alert alert-warning mt15">No Near By Hotels found.</div>
-          @endif
-        </div>
-      </div>
-    </section>
-    <div class="market-purpose">
-      <section class="Categories pt10 locationsamilar">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-8">
-              <p class="mt-0 mb-0 nopadding st-heading-section">Destinations You May Like</p>
-            </div>
-            <div class="col-md-4 d-lg-flex align-items-center justify-content-end"><a href="{{route('destinations')}}" class="blist text-sm ml-2"> See all locations<i class="fas fa-angle-double-right ml-2"></i></a></div>
-          </div>
-          <div class="row">
-            @if($nearByLocation->count() != 0)
-            @foreach($nearByLocation as $near_location)
-            <div class="col-md-3 col-sm-3  col-xs-12">
-              <div class="listroBox">
-               @php $featured_image = (!empty($near_location->featured_image) && isset($near_location->featured_image[0]['id']))?getConversionUrl($near_location->featured_image[0]['id'],'400x417'):null;@endphp
-               <figure><a href="{{route('location',$near_location->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/400x417.jpg')}}" class="img-fluid" alt="{{strtolower($near_location->name)}} image">
-                 <div class="read_more"><span>{!!ucwords($near_location->name ?? '')!!}</span></div>
-               </a> </figure>
-               <div class="listroBoxmain p-2">
-                <h2 class="service-title"><a href="{{route('location',$near_location->slug)}}">{!!ucwords($near_location->name ?? '')!!}</a></h2>
-                @php
-                $address = (!empty($near_location->address ))?$near_location->address:"";
-                @endphp
-                @if($address)<p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!shortDescription($address ?? '',30)!!}</span>@if(strlen($address) > 30)
-                  &nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$address}}" data-more_data_label="Address" style="color:#fba009;"></i>
-                @endif</p>@endif
-              </div>
-            </div>
-          </div>
-          @endforeach
-          @else
-          <div class="col-md-8 col-sm-8 col-xs-12 alert alert-warning mt15">No Near By Location found.</div>
-          @endif
-        </div>
-      </div>
-    </section>
-    <section class="Categories pt10 toursamilar">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-8">
-            <p class="mt-0 mb-0 nopadding st-heading-section">Packages You May Like</p>
-          </div>
-          <div class="col-md-4 d-lg-flex align-items-center justify-content-end"><a href="{{route('our-packages')}}" class="blist text-sm ml-2"> See all our packages<i class="fas fa-angle-double-right ml-2"></i></a></div>
-        </div>
-        <div class="row">
-          @if($nearByTour->count() != 0)
-          @foreach($nearByTour as $near_tour)
-          <div class="col-md-3 col-sm-3  col-xs-12">
-            <div class="listroBox">
-             @php $featured_image = (!empty($near_tour->featured_image) && isset($near_tour->featured_image[0]['id']))?getConversionUrl($near_tour->featured_image[0]['id'],'400x417'):null;@endphp
-             <figure><a href="{{route('tour',$near_tour->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/400x417.jpg')}}" class="img-fluid" alt="{{strtolower($near_tour->name)}} image">
-              <div class="read_more"><span>{!!ucwords($near_tour->name ?? '')!!}</span></div>
-            </a> </figure>
-            <div class="listroBoxmain p-2">
-              <h2 class="service-title pl-1"><a href="{{route('tour',$near_tour->slug)}}">{!!ucwords($near_tour->name ?? '')!!}</a></h2>
-              <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!shortDescription($near_tour->address ?? '',30)!!}</span>@if(strlen($near_tour->address) > 30)
-                &nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$near_tour->address}}" data-more_data_label="Address" style="color:#fba009;"></i>
-              @endif</p>
-              @if(!empty($near_tour->duration_day))
-              <p>
-                {!!getNewIcon('time-clock-circle-1', '#5E6D77', '17px', '17px')!!}&nbsp;{!!$near_tour->duration_day!!}</p>
+                    @php $near_hotel_price = get_price($near_hotel);@endphp
+                    @if($near_hotel_price == 0)
+                  Price On Request</span>
+                  @else
+                  <span class="hotel-avg">
+                    {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
+                    Avg
+                  </span>
+                {!!$near_hotel_price!!}</span> / per night
                 @endif
-              </div>
-              <ul class="near-price-block">
-                <li class="mt-0 mb-0 near-price-block-1">
-                  <p class="card-text text-muted ">
-                    <span class="h6 text-primary">
-                      <span class="location-avg">
-                       {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
-                       Avg
-                     </span>
-                   {!!get_price($near_tour)!!}</span> / per night</p>
-                 </li>
-               </ul>
-             </div>
-           </div>
-           @endforeach
-           @else
-           <div class="col-md-8 col-sm-8 col-xs-12 alert alert-warning mt15">No Near By Packages found.</div>
-           @endif
-         </div>
-       </div>
-     </section>
-
-     <section class="Categories pt10 activitysamilar">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-8">
-            <p class="mt-0 mb-0 nopadding st-heading-section">Activity You May Like</p>
-          </div>
-          <div class="col-md-4 d-lg-flex align-items-center justify-content-end"><a href="{{route('activities')}}" class="blist text-sm ml-2"> See all activities<i class="fas fa-angle-double-right ml-2"></i></a></div>
+              </p>
+            </li>
+          </ul>
         </div>
-        <div class="row">
-         @if($nearByActivity->count() != 0)
-         @foreach($nearByActivity as $near_activity)
-         <div class="col-md-3 col-sm-3  col-xs-12">
+      </div>
+      @endforeach
+      @else
+      <div class="col-md-8 col-sm-8 col-xs-12 alert alert-warning mt15">No Near By Hotels found.</div>
+      @endif
+    </div>
+  </div>
+</section>
+<div class="market-purpose">
+  <section class="Categories pt10 locationsamilar">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <p class="mt-0 mb-0 nopadding st-heading-section">Destinations You May Like</p>
+        </div>
+        <div class="col-md-4 d-lg-flex align-items-center justify-content-end"><a href="{{route('destinations')}}" class="blist text-sm ml-2"> See all locations<i class="fas fa-angle-double-right ml-2"></i></a></div>
+      </div>
+      <div class="row">
+        @if($nearByLocation->count() != 0)
+        @foreach($nearByLocation as $near_location)
+        <div class="col-md-3 col-sm-3  col-xs-12">
           <div class="listroBox">
-           @php $featured_image = (!empty($near_activity->featured_image) && isset($near_activity->featured_image[0]['id']))?getConversionUrl($near_activity->featured_image[0]['id'],'400x417'):null;@endphp
-           <figure><a href="{{route('activity',$near_activity->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/400x417.jpg')}}" class="img-fluid" alt="{{strtolower($near_activity->name)}} image">
-            <div class="read_more"><span>{!!ucwords($near_activity->name ?? '')!!}</span></div>
-          </a> </figure>
-          <div class="listroBoxmain p-2">
-            <h2 class="service-title"><a href="{{route('activity',$near_activity->slug)}}">{!!ucwords($near_activity->name ?? '')!!}</a></h2>
-            <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!shortDescription($near_activity->address ?? '',30)!!}</span>@if(strlen($near_activity->address) > 30)
-              &nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$near_activity->address}}" data-more_data_label="Address" style="color:#fba009;"></i>
-            @endif</p></div>
-            <ul>
-              <li class="mt-0 mb-0">
-                <p class="card-text text-muted ">
-                  <span class="h6 text-primary">
-                    <span class="location-avg">
-                     {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
-                     Avg
-                   </span>
-                 {!!get_price($near_activity)!!}</span></p>
-               </li>
-               <li class="mt-0 mb-0">
-                {{--<a href="{{route('activity',$near_activity->slug)}}" class="btn btn-grad text-white mt-0 mb-0 btn-sm">View Detail</a>--}}
-
-              </li>
-            </ul>
+           @php $featured_image = (!empty($near_location->featured_image) && isset($near_location->featured_image[0]['id']))?getConversionUrl($near_location->featured_image[0]['id'],'270x200'):null;@endphp
+           <figure><a href="{{route('location',$near_location->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="{{strtolower($near_location->name)}} image">
+             <div class="read_more"><span>{!!ucwords($near_location->name ?? '')!!}</span></div>
+           </a> </figure>
+           <div class="listroBoxmain p-2">
+            <h2 class="service-title"><a href="{{route('location',$near_location->slug)}}">{!!ucwords($near_location->name ?? '')!!}</a></h2>
+            @php
+            $address = (!empty($near_location->address ))?$near_location->address:"";
+            @endphp
+            @if($address)<p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!shortDescription($address ?? '',30)!!}</span>@if(strlen($address) > 30)
+              &nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$address}}" data-more_data_label="Address" style="color:#fba009;"></i>
+            @endif</p>@endif
           </div>
         </div>
-        @endforeach
-        @else
-        <div class="col-md-8 col-sm-8 col-xs-12 alert alert-warning mt15">No Near By Activities found.</div>
-        @endif
+      </div>
+      @endforeach
+      @else
+      <div class="col-md-8 col-sm-8 col-xs-12 alert alert-warning mt15">No Near By Location found.</div>
+      @endif
+    </div>
+  </div>
+</section>
+<section class="Categories pt10 toursamilar">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <p class="mt-0 mb-0 nopadding st-heading-section">Packages You May Like</p>
+      </div>
+      <div class="col-md-4 d-lg-flex align-items-center justify-content-end"><a href="{{route('our-packages')}}" class="blist text-sm ml-2"> See all our packages<i class="fas fa-angle-double-right ml-2"></i></a></div>
+    </div>
+    <div class="row">
+      @if($nearByTour->count() != 0)
+      @foreach($nearByTour as $near_tour)
+      <div class="col-md-3 col-sm-3  col-xs-12">
+        <div class="listroBox">
+         @php $featured_image = (!empty($near_tour->featured_image) && isset($near_tour->featured_image[0]['id']))?getConversionUrl($near_tour->featured_image[0]['id'],'270x200'):null;@endphp
+         <figure><a href="{{route('tour',$near_tour->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="{{strtolower($near_tour->name)}} image">
+          <div class="read_more"><span>{!!ucwords($near_tour->name ?? '')!!}</span></div>
+        </a> </figure>
+        <div class="listroBoxmain p-2">
+          <h2 class="service-title pl-1"><a href="{{route('tour',$near_tour->slug)}}">{!!ucwords($near_tour->name ?? '')!!}</a></h2>
+          <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!shortDescription($near_tour->address ?? '',30)!!}</span>@if(strlen($near_tour->address) > 30)
+            &nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$near_tour->address}}" data-more_data_label="Address" style="color:#fba009;"></i>
+          @endif</p>
+          @if(!empty($near_tour->duration_day))
+          <p>
+            {!!getNewIcon('time-clock-circle-1', '#5E6D77', '17px', '17px')!!}&nbsp;{!!$near_tour->duration_day!!}</p>
+            @endif
+          </div>
+          <ul class="near-price-block">
+            <li class="mt-0 mb-0 near-price-block-1">
+              <p class="card-text text-muted ">
+                <span class="h6 text-primary">
+                  @php $near_near_tour = get_price($near_tour);@endphp
+                  @if($near_near_tour == 0)
+                Price On Request</span>
+                @else
+                <span class="hotel-avg">
+                  {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
+                  Avg
+                </span>
+              {!!$near_near_tour!!}</span> / per night
+            @endif</p>
+          </li>
+        </ul>
       </div>
     </div>
-  </section>
+    @endforeach
+    @else
+    <div class="col-md-8 col-sm-8 col-xs-12 alert alert-warning mt15">No Near By Packages found.</div>
+    @endif
+  </div>
+</div>
+</section>
+
+<section class="Categories pt10 activitysamilar">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <p class="mt-0 mb-0 nopadding st-heading-section">Activity You May Like</p>
+      </div>
+      <div class="col-md-4 d-lg-flex align-items-center justify-content-end"><a href="{{route('activities')}}" class="blist text-sm ml-2"> See all activities<i class="fas fa-angle-double-right ml-2"></i></a></div>
+    </div>
+    <div class="row">
+     @if($nearByActivity->count() != 0)
+     @foreach($nearByActivity as $near_activity)
+     <div class="col-md-3 col-sm-3  col-xs-12">
+      <div class="listroBox">
+       @php $featured_image = (!empty($near_activity->featured_image) && isset($near_activity->featured_image[0]['id']))?getConversionUrl($near_activity->featured_image[0]['id'],'270x200'):null;@endphp
+       <figure><a href="{{route('activity',$near_activity->slug)}}"><img src="{{$featured_image ?? asset('sites/images/dummy/270x200.jpg')}}" class="img-fluid" alt="{{strtolower($near_activity->name)}} image">
+        <div class="read_more"><span>{!!ucwords($near_activity->name ?? '')!!}</span></div>
+      </a> </figure>
+      <div class="listroBoxmain p-2">
+        <h2 class="service-title"><a href="{{route('activity',$near_activity->slug)}}">{!!ucwords($near_activity->name ?? '')!!}</a></h2>
+        <p class="service-location">{!!getNewIcon('Ico_maps', '#666666', '15px', '15px', true)!!}<span>{!!shortDescription($near_activity->address ?? '',30)!!}</span>@if(strlen($near_activity->address) > 30)
+          &nbsp;<i class="fas fa-plus" data-toggle="modal" data-target="#showMoreData" onclick="showMoreData(this)" data-more_data="{{$near_activity->address}}" data-more_data_label="Address" style="color:#fba009;"></i>
+        @endif</p></div>
+        <ul>
+          <li class="mt-0 mb-0">
+           <p class="card-text text-muted ">
+            <span class="h6 text-primary">
+              @php $near_activity_price = get_price($near_activity);@endphp
+              @if($near_activity_price == 0)
+              Price On Request
+              @else
+              <span class="location-avg">
+                {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
+                Avg
+              </span>
+              {!!$near_activity_price!!}
+
+              @endif
+            </span></p>
+          </li>
+          <li class="mt-0 mb-0">
+            {{--<a href="{{route('activity',$near_activity->slug)}}" class="btn btn-grad text-white mt-0 mb-0 btn-sm">View Detail</a>--}}
+
+          </li>
+        </ul>
+      </div>
+    </div>
+    @endforeach
+    @else
+    <div class="col-md-8 col-sm-8 col-xs-12 alert alert-warning mt15">No Near By Activities found.</div>
+    @endif
+  </div>
+</div>
+</section>
 
 </div>
 

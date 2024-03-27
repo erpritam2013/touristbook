@@ -13,28 +13,36 @@ class ActivityZoneRepository implements ActivityZoneRepositoryInterface
     }
     public function getActivityZoneById($activityZoneId)
     {
-        return ActivityZone::findOrFail($ActivityZoneId);
+        return ActivityZone::findOrFail($activityZoneId);
     }
     public function getActivityZoneByCountry($country)
     {
         return ActivityZone::where('country',$country)->get(['id','title']);
     }
-    public function deleteActivityZone($ActivityZoneId)
+      public function forceDeleteActivityZone($activityZoneId)
     {
-        ActivityZone::destroy($ActivityZoneId);
+         ActivityZone::onlyTrashed()->find($activityZoneId)->forceDelete();
+    }
+    public function forceBulkDeleteActivityZones($activityZoneId)
+    {
+         ActivityZone::onlyTrashed()->whereIn('id', $activityZoneId)->forceDelete();
+    }
+    public function deleteActivityZone($activityZoneId)
+    {
+        ActivityZone::destroy($activityZoneId);
     }
 
-    public function deleteBulkActivityZone($ActivityZoneId)
+    public function deleteBulkActivityZone($activityZoneId)
     {
-         ActivityZone::whereIn('id', $ActivityZoneId)->delete();
+         ActivityZone::whereIn('id', $activityZoneId)->delete();
     }
-    public function createActivityZone(array $ActivityZoneDetails)
+    public function createActivityZone(array $activityZoneDetails)
     {
-        return ActivityZone::create($ActivityZoneDetails);
+        return ActivityZone::create($activityZoneDetails);
     }
-    public function updateActivityZone($ActivityZoneId, array $newDetails)
+    public function updateActivityZone($activityZoneId, array $newDetails)
     {
-        return ActivityZone::whereId($ActivityZoneId)->update($newDetails);
+        return ActivityZone::whereId($activityZoneId)->update($newDetails);
     }
 
 }

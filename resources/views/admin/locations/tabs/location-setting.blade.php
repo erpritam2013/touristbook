@@ -15,7 +15,7 @@
 
 <hr>
 <!-- Set location as feature -->
-@include('admin.partials.utils.radio_input', ['name'=> 'is_featured','label'=>'Set location as feature','desc'=>'ON: Set this location to be featured','item'=>$location ?? '','id' => "",'input' => ["On" => 1,"Off" => 0],'on_off_switch'=>true,'label_class'=>['off-switch','on-switch']])
+{!!radioInputTemplate(['name'=> 'is_featured','label'=>'Set location as feature','desc'=>'ON: Set this location to be featured','item'=>$location ?? '','id' => "",'input' => ["On" => 1,"Off" => 0],'on_off_switch'=>true,'label_class'=>['off-switch','on-switch']])!!}
 <hr>
 <div class="form-group row">
     

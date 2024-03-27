@@ -5,11 +5,11 @@
 
     <div class="card-body">
        <!-- Child Policy -->
-       @include('admin.partials.utils.textarea', ['name'=> 'child_policy','label'=>'Child Policy','value'=>$room->detail->child_policy ?? '','id' => "",'class'=>'ckeditor'])
+       {!!textareaTemplate(['name'=> 'child_policy','label'=>'Child Policy','value'=>$room->detail->child_policy ?? '','id' => "",'class'=>'ckeditor'])!!}
        <!-- Booking Policy -->
-       @include('admin.partials.utils.textarea', ['name'=> 'booking_policy','label'=>'Booking Policy','value'=>$room->detail->booking_policy ?? '','id' => "",'class'=>'ckeditor'])
+       {!!textareaTemplate(['name'=> 'booking_policy','label'=>'Booking Policy','value'=>$room->detail->booking_policy ?? '','id' => "",'class'=>'ckeditor'])!!}
        <!-- Refund and Cancellation Policy  -->
-       @include('admin.partials.utils.textarea', ['name'=> 'refund_and_cancellation_policy','label'=>'Refund and Cancellation Policy','value'=>$room->detail->refund_and_cancellation_policy ?? '','id' => "",'class'=>'ckeditor'])
+       {!!textareaTemplate(['name'=> 'refund_and_cancellation_policy','label'=>'Refund and Cancellation Policy','value'=>$room->detail->refund_and_cancellation_policy ?? '','id' => "",'class'=>'ckeditor'])!!}
 
    </div>
 </div>

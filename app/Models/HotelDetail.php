@@ -15,6 +15,7 @@ class HotelDetail extends Model
         'highlights' => 'array',
         'facilityAmenities' => 'array',
         'foods' => 'array',
+        'drinks' => 'array',
         'complimentary' => 'array',
         'helpfulfacts' => 'array',
         'pocketPDF' => 'array',

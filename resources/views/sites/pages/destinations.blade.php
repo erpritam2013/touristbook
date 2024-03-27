@@ -20,7 +20,7 @@ if(isset($page)) {
 if(isJson($page->featured_image)){
     $page->featured_image = json_decode($page->featured_image,true);
 }
-$banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]['id']))?getConversionUrl($page->featured_image[0]['id']):null;
+$banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]['id']))?getConversionUrl($page->featured_image[0]['id'],'1200x400'):null;
 }
 
 @endphp

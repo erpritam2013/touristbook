@@ -33,6 +33,11 @@ class UsersDataTable extends DataTable
                     return date('d-m-Y',strtotime($row->created_at));
                 })->editColumn('updated_at', function($row) {
                     return date('d-m-Y',strtotime($row->updated_at));
+                })->addColumn('asign-data', function($row) {
+                    if ($row->role == 'admin' || $row->role == 'editor') {
+                    return '<a href="'.route("admin.user.userAsgin",$row->id).'" class="btn btn-info" title="Asign data to click here"><i class="fa fa-file"></i> Asign Data</a>';
+                       
+                    }
                 })->addColumn('is_active', function($row) {
                     $checked = "";
                     if ($row->is_active == 1) {
@@ -41,7 +46,7 @@ class UsersDataTable extends DataTable
                     return '<input data-id="'.$row->id.'" class="toggle-class" type="checkbox" data-size="sm" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url="'.route("admin.users.changeStatus").'" data-on="Active" data-off="InActive" '.$checked.'>';
                 })->addColumn('del',function($row){
                  return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'">';
-            })->rawColumns(['is_active','action','del']);
+            })->rawColumns(['is_active','action','del','asign-data']);
     }
 
     /**
@@ -52,7 +57,7 @@ class UsersDataTable extends DataTable
      */
     public function query(User $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->whereNot('id',auth()->user()->id);
     }
 
     /**
@@ -103,6 +108,8 @@ class UsersDataTable extends DataTable
             ->orderable(true)
             ->exportable(false)
             ->printable(false),
+            Column::make('role'),
+            Column::make('asign-data'),
             Column::make('is_active')->title("Status"),
             Column::make('created_at')->title('Created'),
             Column::make('updated_at')->title('Updated'),

@@ -147,6 +147,7 @@ public function locationState()
        $videoDetails = [
         'name' =>ucwords($request->name),
         'location_id' =>$request->location_id
+        'type' => $request->type
     ];
 
     $video = VideoGallery::create($videoDetails);

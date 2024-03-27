@@ -46,8 +46,10 @@ class SettingController extends Controller
            $settings = Setting::all();
            $data['settings'] =$settings;
            $data['hotels'] =$this->pageRepository->getPageByType('','Hotel');
+           $data['activities'] =$this->pageRepository->getPageByType('','Activity');
            $data['homes'] =$this->pageRepository->getPageByType('','Home');
            $data['abouts'] =$this->pageRepository->getPageByType('','About');
+           $data['wishlists'] =$this->pageRepository->getPageByType('','Wishlist');
            $data['connecting_partners'] =$this->pageRepository->getPageByType('','Connecting Partner');
            $data['hotel_details'] =$this->pageRepository->getPageByType('','hotelDetail');
            $data['blogs'] =$this->pageRepository->getPageByType('','Blog');

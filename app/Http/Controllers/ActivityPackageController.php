@@ -12,7 +12,8 @@ use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Session;
 use App\DataTables\ActivityPackageDataTable;
-
+use App\DataTables\TrashedActivityPackageDataTable;
+use Auth;
 class ActivityPackageController extends Controller
 {
 
@@ -40,9 +41,14 @@ private function _prepareBasicData() {
      */
     public function index(ActivityPackageDataTable $dataTable)
     {
+         if (isset(request()->user) && !empty(request()->user)) {
+            $created_by = request()->user;
+        $data['activity_packages'] = ActivityPackage::where('created_by',$created_by)->count();
+        }else{
         $data['activity_packages'] = ActivityPackage::count();
+        }
        $data['title'] = 'Activity Package';
-
+    $data['trashed'] = ActivityPackage::onlyTrashed()->count();
        return $dataTable->render('admin.activity-packages.index', $data);
     }
 
@@ -88,6 +94,7 @@ private function _prepareBasicData() {
         'amenities' => $request->amenities,
         'custom_icon' => $request->custom_icon,
         'status' => $request->status,
+        'created_by' => (Auth::check())?Auth::user()->id:null,
             // TODO: created_by pending as Authentication is not Yet Completed
     ];
 
@@ -130,6 +137,14 @@ private function _prepareBasicData() {
         return back();
     }
 
+    if($activity_package->isEditing()) {
+            Session::flash('error','Activity Package is being Edited. Please wait till its fully edited!');
+            return redirect()->Route('admin.activity-packages.index');
+        }
+
+        // Set Editing Status
+        $activity_package->edited();
+
     $data['title'] = 'Activity Package Edit';
     $data['activity_package'] = $activity_package;
     $data = array_merge_recursive($data, $this->_prepareBasicData());
@@ -155,6 +170,7 @@ private function _prepareBasicData() {
         'amenities' => $request->amenities,
         'custom_icon' => $request->custom_icon,
         'status' => $request->status,
+        'created_by' => (Auth::check())?Auth::user()->id:null,
             // TODO: created_by pending as Authentication is not Yet Completed
     ];
 
@@ -163,6 +179,10 @@ private function _prepareBasicData() {
         $activityPackage->activity_list()->sync($request->get('activity_id'));
     }
     Session::flash('success','Activity Package Updated Successfully');
+    if(!is_null($request->iscompleted)) {
+    $activityPackage->freeEditing();
+    return redirect()->Route('admin.activity-packages.index');
+}
     return redirect()->Route('admin.activity-packages.edit',$activityPackage->id);
     }
 
@@ -175,7 +195,7 @@ private function _prepareBasicData() {
     public function destroy($id)
     {
         $this->activityPackageRepository->deleteActivityPackage($id);
-        Session::flash('success','Activity Package Deleted Successfully');
+        Session::flash('success','Activity Package Trashed Successfully');
         return back();
     }
 
@@ -185,8 +205,75 @@ private function _prepareBasicData() {
 
             $activityPackageIds = get_array_mapping(json_decode($request->ids));
             $this->activityPackageRepository->deleteBulkActivityPackage($activityPackageIds);
-            Session::flash('success', 'Activity Package Bulk Deleted Successfully');
+            Session::flash('success', 'Activity Package Bulk Trashed Successfully');
         }
         return back();
     }
+    public function trashed_activityPackages(TrashedActivityPackageDataTable $dataTable)
+{
+
+    $trashed_activityPackages = ActivityPackage::onlyTrashed()->get();
+    $data['trashed_count'] = $trashed_activityPackages->count();
+        //$data['trashed_activityPackages'] = $trashed_activityPackages;
+    $data['title'] = 'Trash Activity Package List';
+        // dump(ActivityPackage::onlyTrashed()->get());
+        // dd( $data['trashed']);
+    return $dataTable->render('admin.activity-packages.trashed', $data);
+}
+
+public function restore_activityPackages(Request $request)
+{
+    $ids = [];
+    if (!empty($request->ids)) {
+       $ids =  get_array_mapping(json_decode($request->ids));
+
+   }
+
+   if (!empty($ids)) {
+     ActivityPackage::whereIn('id',$ids)->withTrashed()->restore();
+ }else{
+   ActivityPackage::onlyTrashed()->restore();
+}
+Session::flash('success','Activity Package Restored Successfully');
+return redirect()->back();
+}
+
+public function restore_activityPackage(Request $request,$id)
+{
+     $activityPackage = ActivityPackage::withTrashed()->find($id);
+    if ( $activityPackage == null)
+    {
+        abort(404);
+    }
+
+     $activityPackage->restore();
+    Session::flash('success','Activity Package Restored Successfully');
+    return redirect()->back();
+}
+public function bulk_force_delete(Request $request)
+{
+
+
+    if (!empty($request->fd_ids)) {
+
+         $activityPackageIds = get_array_mapping(json_decode($request->fd_ids));
+        $this->activityPackageRepository->forceBulkDeleteActivityPackage( $activityPackageIds);
+        Session::flash('success', 'Activity Package Bulk Permanent Deleted Successfully');
+    }
+    return back();
+}
+
+public function permanent_delete($id)
+{
+    $this->activityPackageRepository->forceDeleteActivityPackage($id);
+    Session::flash('success','Activity Package Permanent Deleted Successfully');
+    return back();
+}
+public function empty_trashed(Request $request)
+{
+
+    ActivityPackage::onlyTrashed()->forceDelete();
+    Session::flash('success','Activity Package Empty Trashed Successfully');
+    return redirect()->back();
+}
 }

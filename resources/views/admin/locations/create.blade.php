@@ -15,7 +15,7 @@
                         <a href="{{route('location',$location->slug)}}" class="btn btn-info" target="_blank"><i class="fa fa-file"></i> view</a>
                         @endif
                         @endif
-                    <a href="{{route('admin.locations.index')}}" class="btn btn-dark"><i class="fa fa-arrow-right"></i> Back</a>
+                    <a href="{{route('admin.locations.index')}}" class="btn btn-dark btn-xs"><i class="fa fa-arrow-right"></i> Back</a>
                 </div>
             </div>
             <div class="card-body">

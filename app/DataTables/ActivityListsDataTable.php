@@ -30,6 +30,18 @@ class ActivityListsDataTable extends DataTable
                     return $html;
                 })->editColumn('created_at', function($row) {
                     return date('d-m-Y',strtotime($row->created_at));
+                })->editColumn('title', function($row) {
+                    $nameHtml = '<p>'.$row->title.'</p>';
+                    $editHtml = $row->isEditing() ? '<p class="edit-context">Editing</p>' : '';
+                    $editor_name = (!empty($row->editor_name()) && $row->isEditing()) ? '<p class="edit-name">( '.$row->editor_name().' )</p>' : '';
+                    return $nameHtml.$editHtml.$editor_name;
+                })->addColumn('user', function($row) {
+                    if (isset(request()->user) && !empty(request()->user)) {
+                        return '#'.$row->user->id.' '.$row->user->name;
+                    }else{
+
+                    return (!empty($row->user))?'<a href="'.route('admin.activity-lists.index').'?user='.$row->user->id.'" target="_blank" style="color:#07509e">'.'#'.$row->user->id.' '.$row->user->name.'</a> : ':null;
+                    }
                 })->addColumn('activity', function($row) {
                     $a_html = ''; 
                     if (!empty($row->activity_list)) {
@@ -46,7 +58,7 @@ class ActivityListsDataTable extends DataTable
                     return '<input data-id="'.$row->id.'" class="toggle-class" type="checkbox" data-size="sm" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-url="'.route("admin.changeStatusActivityLists").'" data-on="Active" data-off="InActive" '.$checked.'>';
                 })->addColumn('del',function($row){
                  return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'">';
-            })->rawColumns(['status','action','del','activity']);
+            })->rawColumns(['status','action','del','activity','title','user']);
     }
 
     /**
@@ -57,7 +69,12 @@ class ActivityListsDataTable extends DataTable
      */
     public function query(ActivityLists $model): QueryBuilder
     {
-        return $model->newQuery()->select(['id','title','slug','status','created_at','updated_at']);
+        if (isset(request()->user) && !empty(request()->user)) {
+        return $model->newQuery()->select(['id','title','slug','status','created_at','updated_at','editor_id','is_editing','editing_expiry_time'])->where('created_by',request()->user);
+       }else{
+
+        return $model->newQuery()->select(['id','title','slug','status','created_at','updated_at','editor_id','is_editing','editing_expiry_time']);
+       }
     }
 
     /**
@@ -72,7 +89,7 @@ class ActivityListsDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(7)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -103,6 +120,7 @@ class ActivityListsDataTable extends DataTable
             ->printable(false)->width(10)
             ->addClass('text-center'),
             Column::make('title'),
+             Column::make('user')->title('Created & Updated By'),
             Column::make('slug')->searchable(false)
             ->orderable(false)
             ->exportable(false)

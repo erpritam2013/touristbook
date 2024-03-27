@@ -10,6 +10,7 @@ use App\Models\Conversion;
 use App\Models\Terms\Country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Http\JsonResponse;
 
 class ConversionController extends Controller
 {
@@ -147,8 +148,15 @@ class ConversionController extends Controller
     }
 
 
-    public function changeStatus() {
-        // TODO
-    }
+  public function changeStatus(Request $request): JsonResponse
+{
+    $conversionId = $request->id;
+    $conversionDetails = [
+        'status' => $request->status,
+    ];
+    $this->conversionRepository->updateConversion($conversionId, $conversionDetails);
+
+    return response()->json(['success' => 'Status change successfully.']);
+}
 
 }

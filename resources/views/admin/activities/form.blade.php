@@ -20,7 +20,7 @@
         </div>
         <div class="col-xl-4">
             @include('admin.activities.partials.publish-card', ['activity'=>$activity ?? null])
-             @include('admin.partials.cards.featured-image', ['item'=> $activity])
+            @include('admin.partials.cards.featured-image', ['item'=> $activity])
             @include('admin.partials.cards.term-activity-lists', ['term_activity_lists'=> $term_activity_lists , 'selected'=> $activity->term_activity_lists->pluck('id')->toArray() ?? []])
 
 
@@ -28,7 +28,7 @@
 
             @include('admin.partials.cards.languages', ['languages'=> $languages , 'selected'=>$activity->languages->pluck('id')->toArray() ?? []])
 
-             @include('admin.partials.cards.states', ['states'=> $states , 'selected'=>$activity->states->pluck('id')->toArray() ?? []])
+            @include('admin.partials.cards.states', ['states'=> $states , 'selected'=>$activity->states->pluck('id')->toArray() ?? []])
 
 
 
@@ -36,7 +36,10 @@
     </div>
 
 
-    <button type="submit" class="btn btn-primary">@isset($activity->id)Update @else Save @endisset</button>
+    <button type="submit" class="btn btn-primary">@isset($activity->id)Update @else Save @endisset</button>&nbsp;
+    @if(isset($activity->id))
+    <input type="submit" class="btn btn-success" name="iscompleted" value="Update and Complete Editing" style="color: #fff;" />
+    @endif
     @if(!isset($activity->id))
     <button type="button" class="btn btn-light" onclick="window.location.replace('{{ url()->previous() }}')">Cancel</button>
     @endif

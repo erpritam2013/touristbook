@@ -17,16 +17,31 @@
                 </div>
                 <ul>
                     <li>
-                        <p class="card-text text-muted service-price"><span class="activity-avg">
+
+                        @php $activity_price = get_price($activity);@endphp
+                        <p class="card-text text-muted service-price">
+                            @if($activity_price == 0)
+                            Price On Request
+                            @else
+                            <span class="activity-avg">
                             {!!getNewIcon('thunder', '#ffab53', '10px', '16px')!!}
                             Avg
                         </span>
-                        {!!get_price($activity)!!}</p>
+
+                        {!!$activity_price!!}
+                            @endif
+                    </p>
                     </li>
                     <li>
                        <div class="social-link-list"> 
                         {{--<a href="#" class="single-map-item"><i class="fas fa-map-marker-alt"></i><span class="TravelGo-opt-tooltip">On the map</span></a> --}}
-                        <a href="#" class="TravelGo-js-favorite"><i class="fas fa-heart"></i><span class="TravelGo-opt-tooltip">Save</span></a> 
+                        @php 
+
+                     $wishlist_status = (wishlist_model('Activity',$activity->id))?true:false;
+
+                    @endphp
+                   
+                    <a href="#" class="TravelGo-js-favorite wishlist_btn {{(!auth()->check())?'disabled-link':''}}" data-model_type="Activity" data-model_id="{{$activity->id}}" data-status="{{($wishlist_status)?1:0}}" title="{{(!auth()->check())?'Please Login User Wish activity':''}}"><i class="fas fa-heart" style="{{($wishlist_status)?'color:#000;':''}}"></i><span class="TravelGo-opt-tooltip" id="wishlist-title-{{$activity->id}}">{{($wishlist_status)?'saved':'save'}}</span></a>
                         <a data-toggle="collapse" href="#activity-social-links-{{ $activity->id }}" role="button" aria-expanded="false" aria-controls="activity-social-links-{{ $activity->id }}"  class="TravelGo-js-booking"><i class="fa fa-share"></i><span class="TravelGo-opt-tooltip">Find Directions</span></a> 
                     </div>
                 </li>
