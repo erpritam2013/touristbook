@@ -15,6 +15,14 @@ class ActivityListsRepository implements ActivityListsRepositoryInterface
     {
         return ActivityLists::findOrFail($activityListsId);
     }
+      public function forceDeleteActivityLists($activityListsId)
+    {
+         ActivityLists::onlyTrashed()->find($activityListsId)->forceDelete();
+    }
+    public function forceBulkDeleteActivityLists($activityListsId)
+    {
+         ActivityLists::onlyTrashed()->whereIn('id', $activityListsId)->forceDelete();
+    }
     public function deleteActivityLists($activityListsId)
     {
         ActivityLists::destroy($activityListsId);

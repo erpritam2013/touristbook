@@ -28,7 +28,7 @@ return new class extends Migration
             $table->json('extra_data')->nullable();
             $table->longText('important_note')->nullable();
             $table->string('featured_image')->nullable();
-            // Hotel Created By
+            // Page Created By
             $table->unsignedBigInteger('created_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users');
 

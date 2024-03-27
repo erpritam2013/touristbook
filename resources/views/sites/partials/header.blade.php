@@ -67,8 +67,12 @@
                     <div class="dropdown-menu mt-2 shadow" aria-labelledby="dropdownAccount"> 
                        @if(auth()->user()->isAdmin() || auth()->user()->isEditor())
                       <a class="dropdown-item" href="{{route('admin.dashboard')}}">Dashboard</a>
+                       <a class="dropdown-item" href="{{route('wishlists')}}">Wishlist</a>
+
                        @else
+                      <a class="dropdown-item" href="{{route('wishlists')}}">Wishlist</a>
                       <a class="dropdown-item" href="#">Settings</a>
+
                        @endif
                     </div>
                   </div> 

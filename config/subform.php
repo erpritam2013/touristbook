@@ -1,6 +1,16 @@
 <?php
 return [
 
+    'email_address' => [
+            "fields" => [
+                "email" => [
+                    'label' => "Email",
+                    'control' => 'email',
+                    'desc' => 'Add Multiple Email For Mail'
+                ]
+            ]
+
+        ],
     'policies' => [
             "fields" => [
                 "policies-title" => [

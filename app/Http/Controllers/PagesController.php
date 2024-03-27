@@ -13,6 +13,7 @@ use App\Interfaces\PostRepositoryInterface;
 use App\Models\Hotel;
 use App\Models\Page;
 use App\Models\Tour;
+use App\Models\User;
 use App\Models\Post;
 use App\Models\Setting;
 use App\Models\VideoGallery;
@@ -51,7 +52,7 @@ public function index() {
  $data['post_type'] = 'Home';
  $data['title'] = 'Home';
  $data['body_class'] = 'home-page';
- 
+
 
  $page_id = Setting::get_setting('home_page');
 
@@ -120,13 +121,17 @@ return $data;
 
 public function pages(PageDataTable $dataTable)
 {
-    $pages = $this->pageRepository->getAllPages();
-    $data = [
-        'title'     => 'Pages',
-        'pages'     => $pages->count(),
-        'trashed' => Page::onlyTrashed()->count()
-    ];
-    return $dataTable->render('admin.pages.index',$data);
+
+ if (isset(request()->user) && !empty(request()->user)) {
+    $created_by = request()->user;
+  $data['pages'] = Page::where('created_by',$created_by)->count();
+}else{
+  $data['pages'] = Page::count();
+}
+    //$pages = $this->pageRepository->getAllPages();
+$data['title'] ='Pages';
+$data['trashed'] = Page::onlyTrashed()->count();
+return $dataTable->render('admin.pages.index',$data);
 }
 
 public function create()
@@ -165,6 +170,27 @@ public function about() {
     $data['body_class'] = 'about-page';
 
     return view('sites.pages.about',$data);
+}
+public function wishlists() {
+    $data['post_type'] = 'wishlist';
+    $data['title'] = 'Wishlist';
+    $page_id = Setting::get_setting('wishlist_page');
+    
+    $page = Page::find($page_id);
+    if ($page) {
+        $data['page'] = $page;
+    }
+    $data['body_class'] = 'wishlist-page';
+
+    if (Auth::check()) {
+       $user_id = Auth::id();
+       $user = User::find($user_id);
+       $data['activities'] = (!empty($user->wishlist('Activity')))?$user->wishlist('Activity'):[];
+       $data['tours'] = (!empty($user->wishlist('Tour')))?$user->wishlist('Tour'):[];
+       $data['hotels'] = (!empty($user->wishlist('Hotel')))?$user->wishlist('Hotel'):[];
+   }
+
+   return view('sites.pages.wishlist',$data);
 }
 public function connecting_partners() {
     $data['post_type'] = 'connecting_partners';
@@ -236,7 +262,12 @@ public function activities(Request $request) {
     $data['searchTerm'] = $request->get('search');
     $data['sourceType'] = $request->get('source_type');
     $data['sourceId'] = $request->get('source_id');
+    $page_id = Setting::get_setting('activity_list_page');
 
+    $page = Page::find($page_id);
+    if ($page) {
+        $data['page'] = $page;
+    } 
     return view('sites.pages.activities', $data);
 }
 
@@ -361,7 +392,9 @@ $page = Page::find($page_id);
 if ($page) {
     $data['page'] = $page;
 }
-
+$comments = $hotel->comments()->orderBy('created_at','DESC')->where('model_type','Hotel');
+$data['comment_count'] = $comments->count();
+$data['comments'] = $comments->paginate(5);
 
 return view('sites.pages.hotel-detail', $data);
 }
@@ -451,7 +484,7 @@ if($state) {
     $data['tourismZone'] =  $state->tourism_zones()->first();
 }
 
-
+$data['comments'] = $tour->comments()->orderBy('created_at','DESC')->where('model_type','Tour')->paginate(5);
 return view('sites.pages.tour-detail', $data);
 
         //return view('sites.pages.tour-detail', compact('hotel', 'tourismZone'));
@@ -479,6 +512,7 @@ public function postDetail(Request $request, $slug) {
     
     $data['previous'] = Post::where('id', '<', $post->id)->max('slug');
     $data['next'] = Post::where('id', '>', $post->id)->min('slug');
+    $data['comments'] = $post->comments()->orderBy('created_at','DESC')->where('model_type','Post')->paginate(5);
 
     return view('sites.pages.post-detail', $data);
 
@@ -486,15 +520,10 @@ public function postDetail(Request $request, $slug) {
 
 public function activityDetail(Request $request, $slug) {
 
-
-
     $activity = Activity::with(['activity_packages', 'attractions', 'locations', 'languages', 'term_activity_lists', 'states','detail','activity_lists'])->where('slug', $slug)->first();
     if(!$activity) {
         abort(404);
     }
-
-
-
     $data['activity'] = $activity;
     $data['title'] = 'Activity :: '.ucwords($activity->name);
     $data['body_class'] = 'activity-detail-page';
@@ -523,6 +552,7 @@ public function activityDetail(Request $request, $slug) {
     $data['tourismZone'] =  $state->tourism_zones->first();
 }
 
+$data['comments'] = $activity->comments()->orderBy('created_at','DESC')->where('model_type','Activity')->paginate(5);
 return view('sites.pages.activity-detail', $data);
 
         //return view('sites.pages.tour-detail', compact('hotel', 'tourismZone'));
@@ -620,10 +650,10 @@ if($request->has('pageNo') && !empty($request->get('pageNo'))) {
 }
 
 
+        $postQuery->where('status', 1);
 $posts = $postQuery->groupBy('posts.id')->paginate(12, ['*'], 'page', $pageNumber);
 
         // TODO: Include Status Check
-        // $postQuery->where('status', post::)
 
 return View::make('sites.partials.results.blog', ['posts' => $posts, 'view' => $view,'title'=>$title]);
 
@@ -730,10 +760,10 @@ public function getHotels(Request $request, $view = "list") {
         $pageNumber = $request->get('pageNo');
     }
 
+    // $hotelQuery->where('status',1);
 
     $hotels = $hotelQuery->groupBy('hotels.id')->paginate(12, ['*'], 'page', $pageNumber);
         // TODO: Include Status Check
-        // $hotelQuery->where('status', Hotel::)
 
     return View::make('sites.partials.results.hotel', ['hotels' => $hotels, 'view' => $view]);
 
@@ -850,9 +880,9 @@ if($request->has('pageNo') && !empty($request->get('pageNo'))) {
     $pageNumber = $request->get('pageNo');
 }
 
+        $tourQuery->where('status', 1);
 $tours = $tourQuery->groupBy('tours.id')->paginate(12, ['*'], 'page', $pageNumber);
         // TODO: Include Status Check
-        // $tourQuery->where('status', tour::)
 
 return View::make('sites.partials.results.tour', ['tours' => $tours, 'view' => $view]);
 
@@ -945,10 +975,10 @@ public function getActivities(Request $request, $view = "list") {
         $pageNumber = $request->get('pageNo');
     }
 
+         $activityQuery->where('status', 1);
 
     $activities = $activityQuery->groupBy('activities.id')->paginate(12, ['*'], 'page', $pageNumber);
         // TODO: Include Status Check
-        // $activityQuery->where('status', activity::)
 
     return View::make('sites.partials.results.activity', ['activities' => $activities, 'view' => $view]);
 
@@ -989,10 +1019,10 @@ public function getLocations(Request $request, $view = "grid")
         $pageNumber = $request->get('pageNo');
     }
 
+        $locationQuery->where('status',1);
 
     $locations = $locationQuery->groupBy('locations.id')->paginate(12, ['*'], 'page', $pageNumber);
         // TODO: Include Status Check
-        // $locationQuery->where('status', location::)
 
     return View::make('sites.partials.results.location', ['locations' => $locations, 'view' => $view]);
 
@@ -1097,7 +1127,7 @@ function store(Request $request,)
     "status" => $request->status,
     "featured_image" => $request->featured_image,
     "type" => $request->type,
-    "created_by"=> Auth::user()->id,
+    'created_by' => (Auth::check())?Auth::user()->id:null,
 ];
 
 $this->pageRepository->createPage($pageDetails);
@@ -1112,6 +1142,14 @@ public function edit(Page $page)
     if (empty($page)) {
         return back();
     }
+
+    if($page->isEditing()) {
+        Session::flash('error','Page is being Edited. Please wait till its fully edited!');
+        return redirect()->Route('admin.pages.pageIndex');
+    }
+
+        // Set Editing Status
+    $page->edited();
     
     $data['title'] = 'Page Edit';
     $data['page'] = $page;
@@ -1132,7 +1170,6 @@ function update(Request $request,Page $page)
     'extra_data' => $this->set_extra_data_of_page($request),
 ]);
 
-
  $pageDetails = [
     'name' => ucwords($request->name),
     //'slug' => SlugService::createSlug(Page::class, 'slug', $request->name),
@@ -1145,12 +1182,16 @@ function update(Request $request,Page $page)
     "status" => $request->status,
     "featured_image" => $request->featured_image,
     "type" => $request->type,
-    "created_by"=> Auth::user()->id,
+    'created_by' => (Auth::check())?Auth::user()->id:null,
 ];
 
 
 $this->pageRepository->updatePage($page->id,$pageDetails);
 Session::flash('success','Page Updated Successfully');
+if(!is_null($request->iscompleted)) {
+    $page->freeEditing();
+    return redirect()->Route('admin.pages.index');
+}
 return redirect()->Route('admin.pages.edit',$page->id);
 }
 public function changeStatus(Request $request)
@@ -1169,7 +1210,7 @@ public function destroy(Page $page)
 {
  $pageId = $page->id;
  $this->pageRepository->deletePage($pageId);
- Session::flash('success','Page Deleted Successfully');
+ Session::flash('success','Page Trashed Successfully');
  return back();
 }
 
@@ -1188,79 +1229,79 @@ public function destroy(Page $page)
         $pageIds = get_array_mapping(json_decode($request->ids));
 
         $this->pageRepository->deleteBulkPage($pageIds);
-        Session::flash('success','Page Bulk Deleted Successfully');
+        Session::flash('success','Page Bulk Trashed Successfully');
     }
     return back();
 }
 
 
 public function trashed_pages(TrashedPageDataTable $dataTable)
-    {
+{
 
-        $trashed_pages = Page::onlyTrashed()->get();
-        $data['trashed_count'] = $trashed_pages->count();
+    $trashed_pages = Page::onlyTrashed()->get();
+    $data['trashed_count'] = $trashed_pages->count();
         //$data['trashed_pages'] = $trashed_pages;
-        $data['title'] = 'Trash Page List';
+    $data['title'] = 'Trash Page List';
         // dump(Page::onlyTrashed()->get());
         // dd( $data['trashed']);
-        return $dataTable->render('admin.Pages.trashed', $data);
-    }
+    return $dataTable->render('admin.Pages.trashed', $data);
+}
 
-    public function restore_pages(Request $request)
-    {
-        $ids = [];
-        if (!empty($request->ids)) {
-           $ids =  get_array_mapping(json_decode($request->ids));
+public function restore_pages(Request $request)
+{
+    $ids = [];
+    if (!empty($request->ids)) {
+       $ids =  get_array_mapping(json_decode($request->ids));
 
-        }
-      
-        if (!empty($ids)) {
-         Page::whereIn('id',$ids)->withTrashed()->restore();
-        }else{
-           Page::onlyTrashed()->restore();
-        }
-        Session::flash('success','Page Restored Successfully');
-         return redirect()->back();
-    }
+   }
 
-    public function restore_page(Request $request,$id)
-    {
-        $page = Page::withTrashed()->find($id);
+   if (!empty($ids)) {
+     Page::whereIn('id',$ids)->withTrashed()->restore();
+ }else{
+   Page::onlyTrashed()->restore();
+}
+Session::flash('success','Page Restored Successfully');
+return redirect()->back();
+}
+
+public function restore_page(Request $request,$id)
+{
+    $page = Page::withTrashed()->find($id);
     if ($page == null)
     {
         abort(404);
     }
- 
+
     $page->restore();
-     Session::flash('success','Page Restored Successfully');
+    Session::flash('success','Page Restored Successfully');
     return redirect()->back();
+}
+public function bulk_force_delete(Request $request)
+{
+
+
+    if (!empty($request->fd_ids)) {
+
+        $pageIds = get_array_mapping(json_decode($request->fd_ids));
+        $this->pageRepository->forceBulkDeletePage($pageIds);
+        Session::flash('success', 'Page Bulk Permanent Deleted Successfully');
     }
-  public function bulk_force_delete(Request $request)
-    {
+    return back();
+}
 
-    
-        if (!empty($request->fd_ids)) {
-
-            $pageIds = get_array_mapping(json_decode($request->fd_ids));
-            $this->pageRepository->forceBulkDeletePage($pageIds);
-            Session::flash('success', 'Page Bulk Permanent Deleted Successfully');
-        }
-        return back();
-    }
-
-    public function permanent_delete($id)
+public function permanent_delete($id)
 {
     $this->pageRepository->forceDeletePage($id);
     Session::flash('success','Page Permanent Deleted Successfully');
     return back();
 }
 
-  public function empty_trashed(Request $request)
-    {
+public function empty_trashed(Request $request)
+{
 
-        Page::onlyTrashed()->forceDelete();
-        Session::flash('success','Page Empty Trashed Successfully');
-       return redirect()->back();
-    }
+    Page::onlyTrashed()->forceDelete();
+    Session::flash('success','Page Empty Trashed Successfully');
+    return redirect()->back();
+}
 
 }

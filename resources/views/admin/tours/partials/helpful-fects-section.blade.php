@@ -6,7 +6,7 @@
     <div class="card-body">
 
       
-        @include('admin.partials.utils.textarea', ['value' => $tour->detail->helpful_facts ?? trim($helpful_facts), 'name'=> 'helpful_facts','label'=>'Helpful Facts'])
+        {!!textareaTemplate(['value' => $tour->detail->helpful_facts ?? trim($helpful_facts), 'name'=> 'helpful_facts','label'=>'Helpful Facts'])!!}
 
 
     </div>

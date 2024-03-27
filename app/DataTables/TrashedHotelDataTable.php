@@ -51,7 +51,7 @@ class TrashedHotelDataTable extends DataTable
      */
     public function query(Hotel $model): QueryBuilder
     {
-        return $model->newQuery()->select(['id','name','slug','status','address','created_at','updated_at'])->onlyTrashed();
+        return $model->newQuery()->select(['id','name','slug','status','address','created_at','updated_at','created_by'])->onlyTrashed();
     }
 
     /**

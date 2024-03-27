@@ -6,6 +6,8 @@ interface ActivityZoneRepositoryInterface
 {
     public function getAllActivityZones();
     public function getActivityZoneById($activityZoneId);
+     public function forceDeleteActivityZone($activityZoneId);
+    public function forceBulkDeleteActivityZones($activityZoneId);
     public function deleteActivityZone($activityZoneId);
     public function deleteBulkActivityZone($activityZoneId);
     public function createActivityZone(array $activityZoneDetails);

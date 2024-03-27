@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\User;
 class LoginController extends Controller
 {
     /**
@@ -51,9 +51,21 @@ class LoginController extends Controller
         }
     }
 
-    public function getLoginStatus()
+    public function getLoginStatus(Request $request)
     {
         $data['auth'] = auth()->check();
+       //$data['isEditing'] = true;
+        // if ($request->has('id') && $request->has('model') && auth()->check()) {
+        // $NamespacedModel = 'App\\Models\\'.$request->get('model');
+        // $id = $request->get('id');
+        // $model_data = $NamespacedModel::find($id);
+        // if ($model_data->isEditing()) {
+        //   $editor = User::find($model_data->editor_id);
+        //   $data['isEditing'] = false;
+        //   $data['editor'] = $editor;
+        //   $data['user'] = true;
+        // }
+        // }
         if (!auth()->check()) {
             $data['token'] =csrf_token();
         }

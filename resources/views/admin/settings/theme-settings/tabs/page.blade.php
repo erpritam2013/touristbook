@@ -1,5 +1,5 @@
-@section('setting_action', route('admin.settings.theme-settings.store','page'))
-<form class="form-valide" id="setting-form-page" action="@yield('setting_action')" method="post"><!-- Form Start -->
+@section('setting_action_page', route('admin.settings.theme-settings.store','page'))
+<form class="form-valide" id="setting-form-page" action="@yield('setting_action_page')" method="post"><!-- Form Start -->
   {{ csrf_field() }}
   @yield('setting_form_method')
   <div class="card mb-0">
@@ -33,6 +33,22 @@
       @isset($abouts)
       @foreach($abouts as $about)
       <option value="{{$about->id}}" {!!get_edit_select_post_types_old_value($about->id,get_settings_option_value('about_page'),'select')!!} >{{$about->name}} ( #{{$about->id}})</option>
+      @endforeach
+      @endisset
+    </select>
+
+  </div>
+</div>
+  <div class="form-group row">
+   
+    <div class="col-lg-12">
+     <label class="col-lg- col-form-label" for="wishlist-page">Wishlist Page
+     </label>
+     <select class="form-control single-select-placeholder-touristbook" id="wishlist-page" name="wishlist_page" >
+      <option value="">Select Wishlist Page</option>
+      @isset($wishlists)
+      @foreach($wishlists as $wishlist)
+      <option value="{{$wishlist->id}}" {!!get_edit_select_post_types_old_value($wishlist->id,get_settings_option_value('wishlist_page'),'select')!!} >{{$wishlist->name}} ( #{{$wishlist->id}})</option>
       @endforeach
       @endisset
     </select>

@@ -28,6 +28,17 @@
       'Image' => 'Intervention\\Image\\Facades\\Image',
     ),
   ),
+  'lamalama/laravel-wishlist' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'LamaLama\\Wishlist\\WishlistServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Wishlist' => 'LamaLama\\Wishlist\\WishlistFacade',
+    ),
+  ),
   'laravel/sail' => 
   array (
     'providers' => 

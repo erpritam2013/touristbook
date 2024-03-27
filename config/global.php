@@ -2,7 +2,7 @@
 
 return [
 
-    'page_types' => ['Hotel', 'Tour', 'Activity','Room','Location','Post','hotelDetail', 'tourDetail', 'activityDetail','roomDetail','locationDetail','postDetail','About','Home','Blog','Connecting Partner','Contact Us','Other'],
+    'page_types' => ['Hotel', 'Tour', 'Activity','Room','Location','Post','hotelDetail', 'tourDetail', 'activityDetail','roomDetail','locationDetail','postDetail','About','Home','Blog','Connecting Partner','Contact Us','Wishlist','Other'],
     
     'post_types' => ['Hotel', 'Tour', 'Car', 'Activity','Room', 'Flight', 'Rental','Location','Post'],
     'booking_options' => [

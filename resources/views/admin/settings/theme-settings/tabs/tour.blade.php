@@ -1,5 +1,5 @@
-@section('setting_action', route('admin.settings.theme-settings.store','tour'))
-<form class="form-valide" id="setting-form-tour" action="@yield('setting_action')" method="post"><!-- Form Start -->
+@section('setting_action_tour', route('admin.settings.theme-settings.store','tour'))
+<form class="form-valide" id="setting-form-tour" action="@yield('setting_action_tour')" method="post"><!-- Form Start -->
   {{ csrf_field() }}
   @yield('setting_form_method')
   <div class="card mb-0">

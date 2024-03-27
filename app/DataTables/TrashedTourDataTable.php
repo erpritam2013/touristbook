@@ -2,7 +2,8 @@
 
 namespace App\DataTables;
 
-use App\Models\TrashedTour;
+use App\Models\Tour;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -11,7 +12,6 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
-
 class TrashedTourDataTable extends DataTable
 {
     /**
@@ -22,20 +22,34 @@ class TrashedTourDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        return (new EloquentDataTable($query))
-            ->addColumn('action', 'trashedtour.action')
-            ->setRowId('id');
+        
+         return (new EloquentDataTable($query))->addIndexColumn()->addColumn('action', function ($row) {
+
+                     $html = ' <a href="javascript:void(0);" class="btn btn-primary restore_entity_form" title="Restore" item_id="'.$row->id.'" data-text="tour"><i class="fas fa-trash-restore"></i></a>';
+                  
+                    $html .= '<a href="javascript:void(0);" class="btn btn-danger del_permanent_entity_form" title="Permanent Delete" item_id="'.$row->id.'" data-text="tour"><i class="fa fa-trash"></i></a>';
+                    return $html;
+                })->editColumn('created_at', function($row) {
+                    return date('d-m-Y',strtotime($row->created_at));
+                })->editColumn('updated_at', function($row) {
+                    return date('d-m-Y',strtotime($row->updated_at));
+                })->addColumn('address',function($row){
+                    //$tourDetail = $row->detail;
+                    return ($row->address) ? $row->address : '';
+                })->addColumn('restore',function($row){
+                 return '<input type="checkbox" class="css-control-input mr-2 select-id" name="id[]" onchange="CustomSelectCheckboxSingle(this);" value="'.$row->id.'" data-select_type="restore">';
+            })->rawColumns(['action','restore','address']);
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\TrashedTour $model
+     * @param \App\Models\Tour $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(TrashedTour $model): QueryBuilder
+    public function query(Tour $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->select(['id','name','slug','status','address','created_at','updated_at','created_by'])->onlyTrashed();
     }
 
     /**
@@ -45,12 +59,13 @@ class TrashedTourDataTable extends DataTable
      */
     public function html(): HtmlBuilder
     {
-        return $this->builder()
-                    ->setTableId('trashedtour-table')
+         return $this->builder()
+                    ->setTableId('touristbook-datatable')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(1)
+
+                    ->orderBy(2,'asc')
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -59,7 +74,8 @@ class TrashedTourDataTable extends DataTable
                         Button::make('print'),
                         Button::make('reset'),
                         Button::make('reload')
-                    ]);
+                    ])->parameters($this->getParameters());
+
     }
 
     /**
@@ -70,17 +86,76 @@ class TrashedTourDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+            Column::make('restore')->title('<input type="checkbox" class="css-control-input mr-2 select-all text-center" onchange="CustomSelectCheckboxAll(this);" '.$this->disabledInput().' data-select_type="restore">')->searchable(false)
+            ->orderable(false)
+            ->exportable(false)
+            ->printable(false)->width(5)
+            ->addClass('text-center'),
+            Column::make('loopIndex')->title('S.No.')->searchable(false)
+            ->orderable(false)
+            ->exportable(false)
+            ->printable(false)->width(10)
+            ->addClass('text-center'),
             Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::make('name'),
+            Column::make('slug')->searchable(false)
+            ->orderable(false)
+            ->exportable(false)
+            ->printable(false),
+            Column::make('address'),
+            Column::make('created_at')->title('Created'),
+            Column::make('updated_at')->title('Updated'),
+            Column::make('action')
+            ->exportable(false)
+            ->printable(false)
+            ->width(120)
+            ->addClass('text-center'),
         ];
     }
+
+
+     /**
+     * Get Parameters.
+     *
+     * @return array
+     */
+
+    public function getParameters(): array
+    {
+        return [
+            'fnDrawCallback'=> 'function(){$(".toggle-class").bootstrapToggle()}',
+            'paging' => true,
+            'searching' => true,
+            'info' => true,
+        ];
+    }
+
+      /**
+     * Get Status.
+     *
+     * @return bool
+     */
+    public function getCustomStatus(): bool
+    {
+        return Tour::count();
+    }
+
+    /**
+     * Get Disabled Status.
+     *
+     * @return string
+     */
+    public function disabledInput():string
+    {
+
+
+        $disabledInput = "";
+        if (!$this->getCustomStatus()) {
+            $disabledInput = "disabled";
+        }
+        return $disabledInput;
+    }
+
 
     /**
      * Get filename for export.
@@ -89,6 +164,6 @@ class TrashedTourDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'TrashedTour_' . date('YmdHis');
+        return 'Tour_' . date('YmdHis');
     }
 }

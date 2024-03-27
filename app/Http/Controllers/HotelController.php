@@ -25,6 +25,7 @@ use Illuminate\Http\Response;
 use App\DataTables\HotelDataTable;
 use App\DataTables\TrashedHotelDataTable;
 use Session;
+use Auth;
 
 class HotelController extends Controller
 {
@@ -108,10 +109,16 @@ class HotelController extends Controller
 
     }
 
-    public function index(HotelDataTable $dataTable)
+    public function index(HotelDataTable $dataTable,Request $request)
     {
-
+    
+        if (isset(request()->user) && !empty(request()->user)) {
+            $created_by = request()->user;
+        $data['hotels'] = Hotel::where('created_by',$created_by)->count();
+        }else{
         $data['hotels'] = Hotel::count();
+
+        }
         $data['title'] = 'Hotel List';
         $data['trashed'] = Hotel::onlyTrashed()->count();
         return $dataTable->render('admin.hotels.index', $data);
@@ -196,7 +203,8 @@ class HotelController extends Controller
         'policies' => $request->policies,
         'notices' => $request->notices,
         'status' => $request->status,
-        'images' => !empty($request->images)?$request->images:Null
+        'images' => !empty($request->images)?$request->images:Null,
+        'created_by' => (Auth::check())?Auth::user()->id:null,
             // TODO: created_by pending as Authentication is not Yet Completed
     ];
 
@@ -323,7 +331,8 @@ public function update(UpdateHotelRequest $request, Hotel $hotel)
     'policies' => $request->policies,
     'notices' => $request->notices,
     'status' => $request->status,
-    'images' => !empty($request->images)?$request->images:Null
+    'images' => !empty($request->images)?$request->images:Null,
+    'created_by' => (Auth::check())?Auth::user()->id:null,
             // TODO: created_by pending as Authentication is not Yet Completed
 ];
 
@@ -338,7 +347,7 @@ if ($hotel) {
       // }
 
             // TODO: Move this to Repository
-    $hotel->detail()->update($request->only([
+    $hotel->detail()->update($request->all([
         'map_address',
         'latitude',
         'longitude',

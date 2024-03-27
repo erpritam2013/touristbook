@@ -21,6 +21,9 @@
                 </div>
                 <div align="right">
                      <a href="javascript:void(0);" class="btn btn-outline-primary btn-xs" id="add-new-media">Add New Media</a>
+                      @if(isset(request()->user) && !empty(request()->user))
+                  <a href="{{route('admin.settings.media-object.index')}}" class="btn btn-dark btn-xs"><i class="fa fa-arrow-right"></i> Back</a>
+                  @endif
                 </div>
           </div>
 

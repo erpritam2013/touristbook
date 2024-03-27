@@ -36,11 +36,15 @@ class TourDataTable extends DataTable
                 })->editColumn('name', function($row) {
                     $nameHtml = '<p>'.$row->name.'</p>';
                     $editHtml = $row->isEditing() ? '<p class="edit-context">Editing</p>' : '';
-                    $editor_name = (!empty($row->editor_name())) ? '<p class="edit-name">( '.$row->editor_name().' )</p>' : '';
+                    $editor_name = (!empty($row->editor_name()) && $row->isEditing()) ? '<p class="edit-name">( '.$row->editor_name().' )</p>' : '';
                     return $nameHtml.$editHtml.$editor_name;
                 })->addColumn('user', function($row) {
-                   
-                    return (!empty($row->user))?'<a href="'.route('admin.users.edit',$row->user->id).'" target="_blank" style="color:#07509e">'.'#'.$row->user->id.' '.$row->user->name.'</a> : ':null;
+                    if (isset(request()->user) && !empty(request()->user)) {
+                        return '#'.$row->user->id.' '.$row->user->name;
+                    }else{
+
+                    return (!empty($row->user))?'<a href="'.route('admin.tours.index').'?user='.$row->user->id.'" target="_blank" style="color:#07509e">'.'#'.$row->user->id.' '.$row->user->name.'</a> : ':null;
+                    }
                 })->addColumn('status', function($row) {
                     $checked = "";
                     if ($row->status == 1) {
@@ -63,7 +67,12 @@ class TourDataTable extends DataTable
      */
     public function query(Tour $model): QueryBuilder
     {
-        return $model->newQuery()->select(['id','name','slug','status','address','created_at','updated_at','created_by']);
+        if (isset(request()->user) && !empty(request()->user)) {
+            return $model->newQuery()->select(['id','name','slug','status','address','created_at','updated_at','created_by','editor_id','is_editing','editing_expiry_time'])->where('created_by',request()->user);
+        }else{
+
+        return $model->newQuery()->select(['id','name','slug','status','address','created_at','updated_at','created_by','editor_id','is_editing','editing_expiry_time']);
+        }
     }
 
     /**

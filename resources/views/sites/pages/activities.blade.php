@@ -11,15 +11,26 @@
 @endsection
 @endif 
 @endif
+
+@php
+$banner_image = null;
+if(isset($page)) {
+    if(isJson($page->featured_image)){
+        $page->featured_image = json_decode($page->featured_image,true);
+    }
+    $banner_image = (!empty($page->featured_image) && isset($page->featured_image[0]['id']))?getConversionUrl($page->featured_image[0]['id'],'1200x400'):null;
+}
+
+@endphp
 @if(!isMobileDevice())
 @include('sites.partials.banner-2', [
-'bannerUrl' =>'https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2023/04/Screenshot-2023-04-02-202920.jpg',
+'bannerUrl' => $banner_image ?? asset('sites/images/dummy/1200x400.jpg'),
 'bannerTitle' => 'Activities',
 'bannerSubTitle' => '',
 ])
 @else
 @include('sites.partials.banner', [
-'bannerUrl' =>'https://touristbook.s3.ap-south-1.amazonaws.com/wp-content/uploads/2023/04/Screenshot-2023-04-02-202920.jpg',
+'bannerUrl' => $banner_image ?? asset('sites/images/dummy/1200x400.jpg'),
 'bannerTitle' => 'Activities',
 'bannerSubTitle' => '',
 ])

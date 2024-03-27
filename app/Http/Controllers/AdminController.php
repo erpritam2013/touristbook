@@ -22,6 +22,7 @@ class AdminController extends Controller
 {
      function dashboard()
      {
+       
 
          $data['title'] = "Dashboard";
          $data['activities'] = Activity::count();

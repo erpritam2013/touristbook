@@ -7,7 +7,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">{{$title}}</h4>
+                <h4 class="card-title">{{$title}} ({{$tours}})</h4>
                 <div align="right" class="all-a">
                 {{--<div class="form-group row">
 
@@ -25,7 +25,14 @@
 
                   </form>@endif
 
+                  <a href="{{ route('admin.tour.trashed') }}" class="btn btn-danger btn-xs {{($trashed == 0)?'disabled':''}}">
+                    <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;Trash ({{ $trashed }})
+                </a>
+
                   <a href="{{route('admin.tours.create')}}" class="btn btn-outline-primary btn-xs">Add New Activity</a>
+                   @if(isset(request()->user) && !empty(request()->user))
+                  <a href="{{route('admin.tours.index')}}" class="btn btn-dark btn-xs"><i class="fa fa-arrow-right"></i> Back</a>
+                  @endif
               </div>
           </div>
 

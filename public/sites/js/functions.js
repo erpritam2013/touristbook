@@ -541,14 +541,37 @@ var message = $('.contact-msg');
 var form_data;
         // Success function
 function done_func(response) {
+   
     message.fadeIn().removeClass('alert-danger').addClass('alert-success');
-    message.text(response);
+    message.text(response.success);
     setTimeout(function () {
         message.fadeOut();
     }, 50000);
-    form.find('input:not([type="submit"]), textarea').val('');
+    form.find('input:not([type="submit"]), textarea').val('').removeClass('is-valid').removeClass("is-invalid");
 }
         // fail function
+function error_func(data) {
+//    name_error
+// email_error
+// subject_error
+    $.each(data.responseJSON.error,function(i,value){
+    $(`#${i}`).removeClass('is-valid').addClass('is-invalid');
+    $(`#${i}`).next('div').first().removeClass('is-valid').addClass('is-invalid').text(value[0]);
+    // setTimeout(function () {
+    //     $(`#${i}`).removeClass("is-invalid").addClass("is-valid");
+    // }, 5000);
+        $(`#${i}`).on('input',function(){
+            $(`#${this.id}`).removeClass("is-invalid").addClass("is-valid");
+            $(`#${this.id}`).next('div').first().removeClass('is-valid').addClass('is-invalid');
+            if ($(`#${this.id}`).val() == "") {
+                $(`#${this.id}`).removeClass('is-valid').addClass('is-invalid');
+                $(`#${this.id}`).next('div').first().removeClass('is-valid').addClass('is-invalid');
+            }
+        });
+     });
+    
+
+}        // error function
 function fail_func(data) {
     message.fadeIn().removeClass('alert-success').addClass('alert-danger');
     message.text(data.responseText);
@@ -559,13 +582,20 @@ function fail_func(data) {
 form.submit(function (e) {
     e.preventDefault();
     form_data = $(this).serialize();
+    // console.log(this);
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+        }
+    });
     $.ajax({
         type: 'POST',
+        dataType: "json",
         url: form.attr('action'),
         data: form_data
     })
     .done(done_func)
-    .fail(fail_func);
+    .fail(error_func);
 });
         // END: Contact Form
 
