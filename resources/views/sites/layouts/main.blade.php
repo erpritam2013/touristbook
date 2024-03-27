@@ -31,7 +31,7 @@
     @if($body_class == 'activity-detail-page')
     <link rel="stylesheet" type="text/css" href="{{ asset('sites/css/activity-list.css')}}">
     @endif
-   
+    @yield('home_banner')
 </head>
 
 <body class="{{touristbook_sanitize_title($body_class ?? '') ?? ''}}">
@@ -68,8 +68,11 @@
     <script src="{{asset('sites/js/swiper.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('sites/js/main.js')}}" type="text/javascript"></script>
     <script src="{{asset('sites/js/jquery.fancybox.min.js')}}" type="text/javascript"></script>
+    @if(isset($body_class) && $body_class != 'home-page')
     <script src="{{asset('sites/js/bootstrap-datepicker.min.js')}}" type="text/javascript"></script>
+    @endif
     <script src="{{asset('sites/js/jquery-ui.min.js')}}" type="text/javascript"></script>
+    @if(isset($body_class) && $body_class != 'home-page')
 
 
 
@@ -78,12 +81,14 @@
     defer></script>
     <script src="{{asset('sites/js/common.js')}}" type="text/javascript" defer></script>
     <script src="{{asset('sites/js/comment.js')}}" type="text/javascript" defer></script>
+    @endif
     @if(isset($body_class) && $body_class == 'destination-detail-page')
     <script src="{{asset('sites/js/fetchDestinaitonDetail.js')}}" type="text/javascript" defer></script>
     
     @endif
 
     {{-- <script src="{{asset('sites/js/map_infobox.js')}}" type="text/javascript" defer></script>
+
     <script src="{{asset('sites/js/markerclusterer.js')}}" type="text/javascript" defer></script>
     <script src="{{asset('sites/js/maps.js')}}" type="text/javascript" defer></script> --}}
  <script src="https://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
