@@ -238,7 +238,7 @@ $top2 = 'top:152px;z-index:99;';
 										@foreach($include_arr as $in_k => $in_v)
 										<li style="color:#000;">
 											{!!getNewIcon('check-1', '#2ECC71', '14px', '14px', false)!!}
-											{{$in_v}}
+											{!!$in_v!!}
 										</li>
 										@endforeach
 									</ul>
@@ -257,7 +257,7 @@ $top2 = 'top:152px;z-index:99;';
 										@foreach($exclude_arr as $ex_k => $ex_v)
 										<li style="color:#000;">
 											{!!getNewIcon('remove', '#ff0000', '14px', '14px', false)!!}
-											{{$ex_v}}
+											{!!$ex_v!!}
 										</li>
 										@endforeach
 									</ul>

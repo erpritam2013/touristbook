@@ -154,7 +154,7 @@
               <nav class="navbar navbar-expand-lg">
                 <div class="container">
                   <!-- Logo -->
-                  <a class="navbar-brand" href="/"> <img src="{{get_image_url(get_settings_option_value('web_logo'),0) ?? ''}}" alt="Tourist Book" class="web-logo"> </a>
+                  <a class="navbar-brand" href="/"> <img src="{{get_image_url(get_settings_option_value('web_logo'),0) ?? ''}}" alt="Tourist Book" class="web-logo" width="{{(!isMobileDevice())?get_settings_option_value('header_logo_width'):200}}" height="{{get_settings_option_value('header_logo_height')}}"> </a>
                   <!-- Menu opener button -->
                   <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
                   data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"

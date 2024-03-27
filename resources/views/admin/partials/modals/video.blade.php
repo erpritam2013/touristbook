@@ -1,4 +1,4 @@
-@section('video_action', route('admin.settings.gallery-video'))
+@section('video_action', route('admin.settings.gallery-video-post'))
  <div class="modal fade" id="video-modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

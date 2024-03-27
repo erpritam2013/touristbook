@@ -104,6 +104,13 @@
       'LaravelCloudflareTurnstile' => 'RyanChandler\\LaravelCloudflareTurnstile\\Facades\\LaravelCloudflareTurnstile',
     ),
   ),
+  'silber/page-cache' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Silber\\PageCache\\LaravelServiceProvider',
+    ),
+  ),
   'spatie/laravel-ignition' => 
   array (
     'providers' => 

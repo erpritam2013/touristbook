@@ -269,7 +269,7 @@ $exclude = $tour->detail->tours_exclude ?? '';
             @foreach($include_arr as $in_k => $in_v)
             <li style="color:#000;">
                 {!!getNewIcon('check-1', '#2ECC71', '14px', '14px', false)!!}
-                {{$in_v}}
+                {!!$in_v!!}
             </li>
             @endforeach
         </ul>
@@ -288,7 +288,7 @@ $exclude = $tour->detail->tours_exclude ?? '';
         @foreach($exclude_arr as $ex_k => $ex_v)
         <li style="color:#000;">
             {!!getNewIcon('remove', '#ff0000', '14px', '14px', false)!!}
-            {{$ex_v}}
+            {!!$ex_v!!}
         </li>
         @endforeach
     </ul>
