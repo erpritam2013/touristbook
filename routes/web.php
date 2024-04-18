@@ -115,18 +115,12 @@ Route::get('/location-detail-fetch/{view}', [PagesController::class, 'locationDe
 Route::get('/term-conditions', [PagesController::class, 'termConditions'])->name('term-conditions');
 Route::get('/get-hotels/{view}', [PagesController::class, 'getHotels'])->name('get-hotels');
 Route::get('/get-posts/{view}', [PagesController::class, 'getPosts'])->name('get-posts');
-
-Route::get('/get-posts/{term}/{tag}/{view}', [PagesController::class, 'getPosts'])->name('get-post-term-tag');
-Route::get('/get-posts/{term}/{category}/{view}', [PagesController::class, 'getPosts'])->name('get-post-term-category');
-
+Route::get('/get-posts/{term}/{tag}/{view}', [PagesController::class, 'getPosts'])->name('term-tag-get-posts');
+Route::get('/get-posts/{term}/{category}/{view}', [PagesController::class, 'getPosts'])->name('term-category-get-posts');
 Route::get('/get-tours/{view}', [PagesController::class, 'getTours'])->name('get-tours');
 Route::get('/get-activities/{view}', [PagesController::class, 'getActivities'])->name('get-activities');
 Route::get('/get-locations/{view}', [PagesController::class, 'getLocations'])->name('get-locations');
 Route::get('/get-location-states', [PagesController::class, 'getLocationState'])->name('get-location-state');
-
- 
-
-
 Route::get('/ajax/login-status', [LoginController::class, 'getLoginStatus'])->name('login-status');
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/login-post', [LoginController::class, 'authenticate'])->name('login-post');
@@ -300,7 +294,8 @@ Route::name('admin.')->prefix('admin')->middleware(['auth'])->group(function () 
     Route::resource('video-galleries', VideoGalleryController::class);
     Route::get('gallery-video', [VideoGalleryController::class,'gallery_videos'])->name('gallery-video');
 
-    Route::post('gallery-video', [VideoGalleryController::class,'gallery_videos'])->name('gallery-video-post');
+    Route::post('gallery-video', [VideoGalleryController::class,'gallery_videos']);
+
     Route::delete('video-gallery/bulk-delete', [VideoGalleryController::class,'bulk_delete'])->name('video-galleries.bulk-delete'); 
 
     Route::prefix('custom-icons')->name('custom-icons.')->group(function() {
