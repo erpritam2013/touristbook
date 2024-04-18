@@ -12,6 +12,10 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+
+    const ACTIVE = 1;
+    const INACTIVE = 0;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +25,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_active',
+        'role',
+        'wp_id'
     ];
 
     /**
@@ -29,7 +36,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
+        // 'password',
         'remember_token',
     ];
 
@@ -40,5 +47,13 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'image' => 'array',
     ];
+
+    public function isAdmin() {
+        return $this->role == "admin";
+    }
+    public function isEditor() {
+        return $this->role == "editor";
+    }
 }

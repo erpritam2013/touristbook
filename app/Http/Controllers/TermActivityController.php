@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Session;
-
+use App\DataTables\TermActivityDataTable;
 class TermActivityController extends Controller
 {
 
@@ -27,12 +27,13 @@ class TermActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(TermActivityDataTable $dataTable)
     {
-        $data['term_activities'] = $this->termActivityRepository->getAllTermActivities();
+        // $data['term_activities'] = $this->termActivityRepository->getAllTermActivities();
+        $data['term_activities'] = TermActivity::count();
         $data['title'] = 'Term Activity List';
 
-        return view('admin.terms.term-activities.index', $data);
+        return $dataTable->render('admin.terms.term-activities.index', $data);
     }
 
     /**
@@ -148,7 +149,7 @@ class TermActivityController extends Controller
          
          $termActivityDetails = [
             'name' => $request->name,
-            //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
+             'slug' => (!empty($request->slug) && $termActivity->slug != $request->slug)?SlugService::createSlug(TermActivity::class, 'slug', $request->slug):$termActivity->slug,
             'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'term_activity_type' => $request->term_activity_type,

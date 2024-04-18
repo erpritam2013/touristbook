@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Session;
-
+use App\DataTables\MedicareAssistanceDataTable;
 class MedicareAssistanceController extends Controller
 {
 
@@ -26,12 +26,13 @@ class MedicareAssistanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(MedicareAssistanceDataTable $dataTable)
     {
-        $data['medicare_assistances'] = $this->MedicareAssistanceRepository->getAllMedicareAssistances();
+        // $data['medicare_assistances'] = $this->MedicareAssistanceRepository->getAllMedicareAssistances(); 
+        $data['medicare_assistances'] = MedicareAssistance::count();
         $data['title'] = 'Medicare Assistance List';
 
-        return view('admin.terms.medicare-assistances.index', $data);
+        return $dataTable->render('admin.terms.medicare-assistances.index', $data);
     }
 
     /**
@@ -145,7 +146,7 @@ class MedicareAssistanceController extends Controller
          
          $MedicareAssistanceDetails = [
             'name' => $request->name,
-            //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
+             'slug' => (!empty($request->slug) && $medicareAssistance->slug != $request->slug)?SlugService::createSlug(MedicareAssistance::class, 'slug', $request->slug):$medicareAssistance->slug,
             'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'medicare_assistance_type' => $request->medicare_assistance_type,

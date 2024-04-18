@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Session;
-
+use App\DataTables\StateDataTable;
 class StateController extends Controller
 {
 
@@ -28,12 +28,13 @@ class StateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(StateDataTable $dataTable)
     {
-        $data['states'] = $this->stateRepository->getAllStates();
+        // $data['states'] = $this->stateRepository->getAllStates();
+        $data['states'] = State::count();
         $data['title'] = 'State List';
 
-        return view('admin.terms.states.index', $data);
+       return $dataTable->render('admin.terms.states.index', $data);
     }
 
     /**
@@ -134,7 +135,7 @@ class StateController extends Controller
         $stateId = $state->id;
          $stateDetails = [
             'name' => $request->name,
-            //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
+             'slug' => (!empty($request->slug) && $state->slug != $request->slug)?SlugService::createSlug(State::class, 'slug', $request->slug):$state->slug,
             'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'extra_data' => json_encode($request->extra_data),

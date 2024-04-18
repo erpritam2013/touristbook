@@ -13,7 +13,7 @@ class UpdateOtherPackageRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class UpdateOtherPackageRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+               'name' => 'required|max:255|unique_custom:other_packages,name,other_package_type,'.request()->other_package_type.',id,'.request()->id,
+            'other_package_type' => 'required',
         ];
     }
 }

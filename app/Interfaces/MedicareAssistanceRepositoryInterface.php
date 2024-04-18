@@ -14,4 +14,5 @@ interface MedicareAssistanceRepositoryInterface
 
     public function getActiveMedicareAssistancesList($type);
     public function getActiveHotelMedicareAssistancesList();
+    public function getActiveHotelMedicareAssistancesListFilter();
 }

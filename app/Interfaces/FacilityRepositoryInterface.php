@@ -14,4 +14,5 @@ interface FacilityRepositoryInterface
 
     public function getActiveFacilitiesList($type);
     public function getActiveHotelFacilitiesList();
+    public function getActiveRoomFacilitiesList();
 }

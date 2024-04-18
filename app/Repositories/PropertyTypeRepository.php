@@ -4,12 +4,27 @@ namespace App\Repositories;
 
 use App\Interfaces\PropertyTypeRepositoryInterface;
 use App\Models\Terms\PropertyType;
+use App\Models\Setting;
+use App\Models\Page;
 
 class PropertyTypeRepository implements PropertyTypeRepositoryInterface 
 {
+
+     private $commanPropertyType = null;
+    public function __construct()
+    {
+        $page_id = Setting::get_setting('hotel_list_page');
+        if (!empty($page_id)) {   
+        $page = Page::find($page_id);
+          if (isset($page->extra_data['hotel_common_property_type'])) {
+              $this->commanPropertyType = $page->extra_data['hotel_common_property_type'];
+          }
+        }
+
+    }
     public function getAllPropertyTypes()
     {
-        return PropertyType::all();
+        return PropertyType::orderBy('id','desc')->get();
     }
     public function getPropertyTypesByType($type=null,$pt_id=null) 
     {
@@ -52,7 +67,27 @@ class PropertyTypeRepository implements PropertyTypeRepositoryInterface
 
     // Get all Active PropertyTypes or by Type
     public function getActivePropertyTypesList($type = null) {
-        $propertyTypeBuilder = PropertyType::where('status', PropertyType::ACTIVE);
+
+        $propertyTypeBuilder = PropertyType::orderBy('name','asc')->where('status', PropertyType::ACTIVE);
+
+        if($type)
+            $propertyTypeBuilder->where('property_type_type',$type);
+
+         $property_types = $propertyTypeBuilder->get(['id','name', 'parent_id']);
+
+        $nestedResult = $property_types->toNested();
+
+        return  $nestedResult;
+    }
+    public function getActiveHotelPropertyTypesListFilter($type = null) {
+
+        if (!empty($this->commanPropertyType)) {
+            
+        $propertyTypeBuilder = PropertyType::orderBy('name','asc')->where('status', PropertyType::ACTIVE)->whereIn('id',$this->commanPropertyType);
+        }else{
+
+        $propertyTypeBuilder = PropertyType::orderBy('name','asc')->where('status', PropertyType::ACTIVE);
+        }
 
         if($type)
             $propertyTypeBuilder->where('property_type_type',$type);

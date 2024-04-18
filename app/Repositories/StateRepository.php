@@ -9,7 +9,7 @@ class StateRepository implements StateRepositoryInterface
 {
     public function getAllStates()
     {
-        return State::all();
+        return State::orderBy('id','desc')->get();
     }
     
     public function getStateById($StateId) 
@@ -49,15 +49,13 @@ class StateRepository implements StateRepositoryInterface
        return $stateTypeBuilder;
     }
     // Get all Active States or by Type
-    public function getActiveStatesList($StateId=null) {
-        $stateBuilder = State::where('status', State::ACTIVE);
-
-        if($StateId)
-            $StateBuilder->where('id','!=',$StateId);
+    public function getActiveStatesList() {
+        $stateBuilder = State::orderBy('name','asc')->where('status', State::ACTIVE);
 
         $states = $stateBuilder->get(['id','name', 'parent_id']);
 
-        $nestedResult = $states->toNested();
+        // $nestedResult = $states->toNested();
+        $nestedResult = $states;
 
         return  $nestedResult;
     }

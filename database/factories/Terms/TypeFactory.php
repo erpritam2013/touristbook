@@ -30,7 +30,7 @@ class TypeFactory extends Factory
             'description' => $this->faker->text,
             'type' => "Location",
             'lebal_type' => $lebal_types[rand(0,$count_l)],
-            'parent_id' => rand(1,10)
+            //'parent_id' => rand(1,10)
             
         ];
     }

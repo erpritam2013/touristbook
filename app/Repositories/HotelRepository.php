@@ -9,15 +9,29 @@ class HotelRepository implements HotelRepositoryInterface
 {
     public function getAllHotels()
     {
-        return Hotel::all();
+        return Hotel::orderBy('id','desc')->get();
     }
     public function getHotelById($hotelId)
     {
         return Hotel::findOrFail($hotelId);
     }
+
+     public function forceDeleteHotel($hotelId)
+    {
+         Hotel::onlyTrashed()->find($hotelId)->forceDelete();
+    }
+    public function forceBulkDeleteHotel($hotelId)
+    {
+         Hotel::onlyTrashed()->whereIn('id', $hotelId)->forceDelete();
+    }
     public function deleteHotel($hotelId)
     {
         Hotel::destroy($hotelId);
+    }
+
+    public function deleteBulkHotel($hotelId)
+    {
+         Hotel::whereIn('id', $hotelId)->delete();
     }
     public function createHotel(array $hotelDetails)
     {
@@ -27,5 +41,12 @@ class HotelRepository implements HotelRepositoryInterface
     {
         return Hotel::whereId($hotelId)->update($newDetails);
     }
-    
+
+    public function getActiveHotelList()
+    {
+        $typeBuilder = Hotel::where('status', Hotel::ACTIVE)->get(['id','name']);
+
+        return  $typeBuilder;
+    }
+
 }

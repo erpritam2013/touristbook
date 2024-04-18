@@ -1,0 +1,28 @@
+[21-Dec-2023 06:09:19 UTC] PHP Parse error:  Unclosed '(' on line 717 does not match '}' in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 718
+[21-Dec-2023 06:09:24 UTC] PHP Parse error:  Unclosed '(' on line 717 does not match '}' in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 718
+[21-Dec-2023 06:09:43 UTC] PHP Parse error:  syntax error, unexpected token ";" in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 717
+[21-Dec-2023 06:10:10 UTC] PHP Parse error:  syntax error, unexpected token ";" in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 717
+[21-Dec-2023 06:10:16 UTC] PHP Parse error:  syntax error, unexpected token ";" in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 717
+[19-Jan-2024 10:10:56 UTC] PHP Parse error:  syntax error, unexpected identifier "type" in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 412
+[19-Jan-2024 10:11:30 UTC] PHP Parse error:  syntax error, unexpected identifier "type" in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 412
+[19-Jan-2024 10:11:36 UTC] PHP Parse error:  syntax error, unexpected identifier "type" in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 412
+[19-Jan-2024 10:11:39 UTC] PHP Parse error:  syntax error, unexpected identifier "type" in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 412
+[10-Feb-2024 11:37:31 UTC] PHP Parse error:  syntax error, unexpected string content "h", expecting ")" in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 926
+[10-Feb-2024 11:37:32 UTC] PHP Parse error:  Unclosed '{' on line 1143 in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 1586
+[10-Feb-2024 11:37:33 UTC] PHP Parse error:  Unclosed '{' on line 1143 in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 1586
+[10-Feb-2024 11:37:35 UTC] PHP Parse error:  Unclosed '{' on line 1143 in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 1586
+[10-Feb-2024 11:37:41 UTC] PHP Parse error:  Unclosed '{' on line 1143 in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 1586
+[10-Feb-2024 11:37:42 UTC] PHP Parse error:  Unclosed '{' on line 1143 in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 1586
+[10-Feb-2024 11:37:44 UTC] PHP Parse error:  Unclosed '{' on line 1143 in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 1586
+[10-Feb-2024 11:37:46 UTC] PHP Parse error:  Unclosed '{' on line 1143 in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 1586
+[10-Feb-2024 11:37:51 UTC] PHP Parse error:  Unclosed '{' on line 1143 in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 1586
+[10-Feb-2024 11:37:51 UTC] PHP Parse error:  Unclosed '{' on line 1143 in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 1586
+[10-Feb-2024 11:37:52 UTC] PHP Parse error:  Unclosed '{' on line 1143 in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 1586
+[10-Feb-2024 11:38:03 UTC] PHP Parse error:  Unclosed '{' on line 1143 in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 1586
+[10-Feb-2024 11:38:06 UTC] PHP Parse error:  Unclosed '{' on line 1143 in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 1586
+[10-Feb-2024 11:38:06 UTC] PHP Parse error:  Unclosed '{' on line 1143 in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 1586
+[10-Feb-2024 11:38:08 UTC] PHP Parse error:  Unclosed '{' on line 1143 in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 1586
+[10-Feb-2024 11:38:08 UTC] PHP Parse error:  Unclosed '{' on line 1143 in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 1586
+[10-Feb-2024 11:38:10 UTC] PHP Parse error:  Unclosed '{' on line 1143 in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 1586
+[12-Feb-2024 12:21:12 UTC] PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /home1/atestimc/public_html/touristbook/storage/framework/views/0807a765d70c0aeee36c95a1bf4ebb5ec0b576e0.php on line 18
+[18-Feb-2024 19:40:47 UTC] PHP Parse error:  Unclosed '{' on line 489 in /home1/atestimc/public_html/touristbook/app/Helper/touristbook_helper.php on line 496

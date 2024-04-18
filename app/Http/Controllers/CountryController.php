@@ -6,6 +6,8 @@ use App\Models\Terms\Country;
 use App\Http\Requests\StoreCountryRequest;
 use App\Http\Requests\UpdateCountryRequest;
 use Illuminate\Http\Request;
+use App\DataTables\CountryDataTable;
+use Illuminate\Support\Facades\Session;
 
 class CountryController extends Controller
 {
@@ -21,12 +23,13 @@ class CountryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(CountryDataTable $dataTable)
     {
-        $data['countries'] = $this->countryRepository->getAllCountries();
+        // $data['countries'] = $this->countryRepository->getAllCountries();
+        $data['countries'] = Country::count();
         $data['title'] = 'Country List';
 
-        return view('admin.terms.countries.index', $data);
+        return $dataTable->render('admin.terms.countries.index', $data);
     }
 
     /**
@@ -135,7 +138,7 @@ class CountryController extends Controller
     public function bulk_delete(Request $request)
     {
          if (!empty($request->ids)) {
-        
+
         $countryIds = get_array_mapping(json_decode($request->ids));
         $this->countryRepository->deleteBulkCountry($countryIds);
          Session::flash('success','Country Bulk Deleted Successfully');

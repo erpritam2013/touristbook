@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Session;
-
+use App\DataTables\FacilityDataTable;
 class FacilityController extends Controller
 {
 
@@ -27,13 +27,15 @@ class FacilityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(FacilityDataTable $dataTable)
     {
-        $data['facilities'] = $this->facilityRepository->getAllFacilities();
+        //$facilities = $this->facilityRepository->getAllFacilities();
+        $data['facilities'] = Facility::count();
         $data['title'] = 'Facility List';
 
-        return view('admin.terms.facilities.index', $data);
+        return $dataTable->render('admin.terms.facilities.index', $data);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -47,7 +49,7 @@ class FacilityController extends Controller
         return view('admin.terms.facilities.create',$data);
     }
 
-     public function getFacilitiesAjax(Request $request): JsonResponse 
+     public function getFacilitiesAjax(Request $request): JsonResponse
     {
         $type = $request->term_type;
         $id = isset($request->id)?$request->id:"";
@@ -69,7 +71,7 @@ class FacilityController extends Controller
             'status' => $request->status,
         ];
         $this->facilityRepository->updateFacility($facilityId, $facilityDetails);
-  
+
         return response()->json(['success'=>'Status change successfully.']);
     }
 
@@ -145,10 +147,10 @@ class FacilityController extends Controller
     public function update(UpdateFacilityRequest $request, Facility $facility)
     {
          $facilityId = $facility->id;
-         
+
          $facilityDetails = [
             'name' => $request->name,
-            //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
+           'slug' => (!empty($request->slug) && $facility->slug != $request->slug)?SlugService::createSlug(Facility::class, 'slug', $request->slug):$facility->slug,
             'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'facility_type' => $request->facility_type,
@@ -184,7 +186,7 @@ class FacilityController extends Controller
     public function bulk_delete(Request $request)
     {
          if (!empty($request->ids)) {
-        
+
         $facilityIds = get_array_mapping(json_decode($request->ids));
         $this->facilityRepository->deleteBulkFacility($facilityIds);
          Session::flash('success','Facility Bulk Deleted Successfully');

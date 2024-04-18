@@ -11,11 +11,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Session;
+use App\DataTables\PlacesDataTable;
 
 class PlaceController extends Controller
 {
 
-      private PlaceRepositoryInterface $PlaceRepository;
+      private PlaceRepositoryInterface $placeRepository;
 
     public function __construct(PlaceRepositoryInterface $placeRepository)
     {
@@ -26,12 +27,14 @@ class PlaceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(PlacesDataTable $dataTable)
     {
-        $data['places'] = $this->placeRepository->getAllPlaces();
-        $data['title'] = 'Place List';
-
-        return view('admin.terms.places.index', $data);
+        $places = $this->placeRepository->getAllPlaces();
+        $data = [
+            'title'     => 'Place List',
+            'places'     => $places->count()
+        ];
+        return $dataTable->render('admin.terms.places.index',$data);
     }
 
     /**
@@ -43,6 +46,7 @@ class PlaceController extends Controller
     {
          $data['title'] = 'Add Place';
         //$data['places'] = $this->placeRepository->getPlacesByType();
+         $data['places'] = $this->placeRepository->getPlacesByType();
         return view('admin.terms.places.create',$data);
     }
 
@@ -84,7 +88,7 @@ class PlaceController extends Controller
             'slug' => SlugService::createSlug(Place::class, 'slug', $request->name),
             'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
-            'place_type' => $request->place_type,
+            // 'place_type' => $request->place_type,
             'description' => $request->description,
         ];
         $this->placeRepository->createPlace($placeDetails);
@@ -127,7 +131,7 @@ class PlaceController extends Controller
         if (empty($data['place'])) {
             return back();
         }
-        $data['places'] = $this->placeRepository->getPlacesByType($data['place']->place_type,$placeId);
+        $data['places'] = $this->placeRepository->getPlacesByType(null,$placeId);
         return view('admin.terms.places.edit', $data);
     }
 
@@ -144,10 +148,10 @@ class PlaceController extends Controller
          
          $placeDetails = [
             'name' => $request->name,
-            //'slug' => SlugService::createSlug(Place::class, 'slug', $request->name),
+             'slug' => (!empty($request->slug) && $place->slug != $request->slug)?SlugService::createSlug(Place::class, 'slug', $request->slug):$place->slug,
             'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
-            'place_type' => $request->place_type,
+            // 'place_type' => $request->place_type,
             'description' => $request->description,
             'status' => $request->status,
         ];

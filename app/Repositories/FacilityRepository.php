@@ -9,7 +9,7 @@ class FacilityRepository implements FacilityRepositoryInterface
 {
     public function getAllFacilities() 
     {
-        return Facility::all();
+        return Facility::orderBy('id','desc')->get();
     }
     public function getFacilitiesByType($type=null,$f_id = null) 
     {
@@ -51,7 +51,7 @@ class FacilityRepository implements FacilityRepositoryInterface
 
     // Get all Active Facilities or by Type
     public function getActiveFacilitiesList($type = null) {
-        $facilityBuilder = Facility::where('status', Facility::ACTIVE);
+        $facilityBuilder = Facility::orderBy('name','asc')->where('status', Facility::ACTIVE);
 
         if($type)
             $facilityBuilder->where('facility_type',$type);
@@ -68,6 +68,12 @@ class FacilityRepository implements FacilityRepositoryInterface
     // Get Active Hotel Type Facilities
     public function getActiveHotelFacilitiesList() {
         $type = Facility::HOTEL_TYPE;
+        return $this->getActiveFacilitiesList($type);
+    }
+ // Get Active Room Type Facilities
+    public function getActiveRoomFacilitiesList()
+    {
+        $type = Facility::ROOM_TYPE;
         return $this->getActiveFacilitiesList($type);
     }
 }

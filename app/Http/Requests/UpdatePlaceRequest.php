@@ -24,8 +24,9 @@ class UpdatePlaceRequest extends FormRequest
     public function rules()
     {
         return [
-             'name' => 'required|max:255',
-            'place_type' => 'required',
+             'name' => 'required|max:255|unique_custom:places,name,id,'.request()->id,
+             // 'name' => 'required|max:255|unique_custom:places,name,place_type,'.request()->place_type.',id,'.request()->id,
+            // 'place_type' => 'required',
         ];
     }
 }

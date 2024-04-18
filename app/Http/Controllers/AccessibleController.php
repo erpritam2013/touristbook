@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Session;
-
+use App\DataTables\AccessibleDataTable;
 class AccessibleController extends Controller
 {
 
@@ -25,12 +25,13 @@ class AccessibleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(AccessibleDataTable $dataTable)
     {
-        $data['accessibles'] = $this->accessibleRepository->getAllAccessibles();
+        // $data['accessibles'] = $this->accessibleRepository->getAllAccessibles();
+        $data['accessibles'] = Accessible::count();
         $data['title'] = 'Accessible List';
 
-        return view('admin.terms.accessibles.index', $data);
+        return $dataTable->render('admin.terms.accessibles.index', $data);
     }
 
     /**
@@ -78,14 +79,17 @@ class AccessibleController extends Controller
      */
     public function store(StoreAccessibleRequest $request)
     {
+
         $accessibleDetails = [
             'name' => $request->name,
             'slug' => SlugService::createSlug(Accessible::class, 'slug', $request->name),
-            'parent_accessible' => (!empty($request->parent_accessible))?$request->parent_accessible:0,
+            'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'accessible_type' => $request->accessible_type,
             'description' => $request->description,
         ];
+      
+
         $this->accessibleRepository->createAccessible($accessibleDetails);
         Session::flash('success','Accessible Created Successfully');
         return redirect()->Route('admin.terms.accessibles.index');
@@ -143,14 +147,14 @@ class AccessibleController extends Controller
          
          $accessibleDetails = [
             'name' => $request->name,
-            //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
-            'parent_accessible' => (!empty($request->parent_accessible))?$request->parent_accessible:0,
+           'slug' => (!empty($request->slug) && $accessible->slug != $request->slug)?SlugService::createSlug(Accessible::class, 'slug', $request->slug):$accessible->slug,
+            'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'accessible_type' => $request->accessible_type,
             'description' => $request->description,
             'status' => $request->status,
         ];
-
+   
         $this->accessibleRepository->updateAccessible($accessibleId, $accessibleDetails);
          Session::flash('success','Accessible Updated Successfully');
         return redirect()->Route('admin.terms.accessibles.edit',$accessibleId);

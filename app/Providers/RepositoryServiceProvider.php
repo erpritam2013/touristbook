@@ -34,7 +34,45 @@ use App\Interfaces\LocationRepositoryInterface;
 use App\Repositories\LocationRepository;
 use App\Interfaces\HotelRepositoryInterface;
 use App\Repositories\HotelRepository;
+use App\Interfaces\CountryZoneRepositoryInterface;
+use App\Repositories\CountryZoneRepository;
+use App\Interfaces\ActivityZoneRepositoryInterface;
+use App\Repositories\ActivityZoneRepository;
+use App\Interfaces\ActivityListsRepositoryInterface;
+use App\Repositories\ActivityListsRepository;
+use App\Interfaces\ActivityPackageRepositoryInterface;
+use App\Repositories\ActivityPackageRepository;
+use App\Interfaces\TermActivityListRepositoryInterface;
+use App\Repositories\TermActivityListRepository;
+use App\Interfaces\AttractionRepositoryInterface;
+use App\Repositories\AttractionRepository;
+use App\Interfaces\LanguageRepositoryInterface;
+use App\Repositories\LanguageRepository;
+use App\Interfaces\ActivityRepositoryInterface;
+use App\Repositories\ActivityRepository;
+use App\Interfaces\RoomRepositoryInterface;
+use App\Repositories\RoomRepository;
+use App\Interfaces\CategoryRepositoryInterface;
+use App\Interfaces\ConversionRepositoryInterface;
+use App\Repositories\CategoryRepository;
+use App\Interfaces\TagRepositoryInterface;
+use App\Repositories\TagRepository;
 use Illuminate\Support\ServiceProvider;
+use App\Interfaces\TourismZoneRepositoryInterface;
+use App\Repositories\TourismZoneRepository;
+use App\Interfaces\PostRepositoryInterface;
+use App\Repositories\PostRepository;
+use App\Interfaces\PackageTypeRepositoryInterface;
+use App\Repositories\PackageTypeRepository;
+use App\Interfaces\OtherPackageRepositoryInterface;
+use App\Interfaces\PageRepositoryInterface;
+use App\Repositories\PageRepository;
+use App\Repositories\OtherPackageRepository;
+use App\Interfaces\TourRepositoryInterface;
+use App\Interfaces\UserRepositoryInterface;
+use App\Repositories\ConversionRepository;
+use App\Repositories\TourRepository;
+use App\Repositories\UserRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -61,6 +99,27 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(LocationRepositoryInterface::class, LocationRepository::class);
         $this->app->bind(TypeRepositoryInterface::class, TypeRepository::class);
         $this->app->bind(HotelRepositoryInterface::class, HotelRepository::class);
+        $this->app->bind(CountryZoneRepositoryInterface::class, CountryZoneRepository::class);
+        $this->app->bind(ActivityZoneRepositoryInterface::class, ActivityZoneRepository::class);
+        $this->app->bind(ActivityListsRepositoryInterface::class, ActivityListsRepository::class);
+        $this->app->bind(ActivityPackageRepositoryInterface::class, ActivityPackageRepository::class);
+        $this->app->bind(TermActivityListRepositoryInterface::class, TermActivityListRepository::class);
+        $this->app->bind(TermActivityListRepositoryInterface::class, TermActivityListRepository::class);
+        $this->app->bind(LanguageRepositoryInterface::class, LanguageRepository::class);
+        $this->app->bind(ActivityRepositoryInterface::class, ActivityRepository::class);
+        $this->app->bind(AttractionRepositoryInterface::class, AttractionRepository::class);
+        $this->app->bind(TourismZoneRepositoryInterface::class, TourismZoneRepository::class);
+        $this->app->bind(RoomRepositoryInterface::class, RoomRepository::class);
+        $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
+        $this->app->bind(TagRepositoryInterface::class, TagRepository::class);
+        $this->app->bind(PostRepositoryInterface::class, PostRepository::class);
+        $this->app->bind(PackageTypeRepositoryInterface::class, PackageTypeRepository::class);
+        $this->app->bind(OtherPackageRepositoryInterface::class, OtherPackageRepository::class);
+        $this->app->bind(TourRepositoryInterface::class, TourRepository::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(PageRepositoryInterface::class, PageRepository::class);
+        $this->app->bind(ConversionRepositoryInterface::class, ConversionRepository::class);
+
 
     }
 

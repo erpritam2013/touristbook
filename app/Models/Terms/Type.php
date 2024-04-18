@@ -17,6 +17,7 @@ class Type extends Model
     const HOTEL_TYPE = "Hotel";
     const LOCATION_TYPE = "Location";
     const TOUR_TYPE = "Tour";
+    const ROOM_TYPE = "Room";
 
       protected $fillable = [
        'name',
@@ -28,6 +29,8 @@ class Type extends Model
        'lebal_type',
        'type',
        'status',
+       'wp_term_id',
+       'wp_taxonomy_id'
    ];
     public function sluggable(): Array
    {

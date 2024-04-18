@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Session;
-
+use App\DataTables\TopServiceDataTable;
 class TopServiceController extends Controller
 {
 
@@ -26,12 +26,13 @@ class TopServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(TopServiceDataTable $dataTable)
     {
-         $data['top_services'] = $this->topserviceRepository->getAllTopServices();
+         //$data['top_services'] = $this->topserviceRepository->getAllTopServices();
+         $data['top_services'] = TopService::count();
         $data['title'] = 'Top Service List';
 
-        return view('admin.terms.top-services.index', $data);
+        return $dataTable->render('admin.terms.top-services.index', $data);
     }
 
     /**
@@ -144,7 +145,7 @@ class TopServiceController extends Controller
          
          $TopServiceDetails = [
             'name' => $request->name,
-            //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
+             'slug' => (!empty($request->slug) && $topService->slug != $request->slug)?SlugService::createSlug(TopService::class, 'slug', $request->slug):$topService->slug,
             'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'top_service_type' => $request->top_service_type,

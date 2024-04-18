@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Session;
-
+use App\DataTables\PropertyTypeDataTable;
 class PropertyTypeController extends Controller
 {
 
@@ -25,12 +25,13 @@ class PropertyTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(PropertyTypeDataTable $dataTable)
     {
-       $data['property_types'] = $this->propertyTypeRepository->getAllPropertyTypes();
+       // $data['property_types'] = $this->propertyTypeRepository->getAllPropertyTypes();
+       $data['property_types'] = PropertyType::count();
         $data['title'] = 'Property Type List';
 
-        return view('admin.terms.property-types.index', $data);
+        return $dataTable->render('admin.terms.property-types.index', $data);
     }
 
     /**
@@ -145,7 +146,7 @@ class PropertyTypeController extends Controller
          
          $propertyTypeDetails = [
             'name' => $request->name,
-            //'slug' => SlugService::createSlug(PropertyType::class, 'slug', $request->name),
+             'slug' => (!empty($request->slug) && $propertyType->slug != $request->slug)?SlugService::createSlug(PropertyType::class, 'slug', $request->slug):$propertyType->slug,
             'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'property_type_type' => $request->property_type_type,

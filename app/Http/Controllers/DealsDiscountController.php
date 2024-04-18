@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Session;
-
+use App\DataTables\DealsDiscountDataTable;
 class DealsDiscountController extends Controller
 {
 
@@ -26,12 +26,14 @@ class DealsDiscountController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(DealsDiscountDataTable $dataTable)
     {
-        $data['deal_discounts'] = $this->dealsDiscountRepository->getAllDealsDiscounts();
+        // $data['deal_discounts'] = $this->dealsDiscountRepository->getAllDealsDiscounts();
+        $data['deal_discounts'] = DealsDiscount::count();
         $data['title'] = 'Deals & Discount List';
 
-        return view('admin.terms.deal-discounts.index', $data);
+       return $dataTable->render('admin.terms.deal-discounts.index', $data);
+
     }
 
     /**
@@ -150,7 +152,7 @@ class DealsDiscountController extends Controller
          
          $dealsDiscountDetails = [
             'name' => $request->name,
-            //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
+           'slug' => (!empty($request->slug) && $dealsDiscount->slug != $request->slug)?SlugService::createSlug(DealsDiscount::class, 'slug', $request->slug):$dealsDiscount->slug,
             'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'deals_discount_type' => $request->deals_discount_type,

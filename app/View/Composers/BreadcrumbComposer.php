@@ -33,9 +33,22 @@ class BreadcrumbComposer
      */
     public function compose(View $view)
     {
+       
         $view->with('breadcrumbs', $this->parseSegments());
         $view->with('post_types', config('global.post_types'));
+        $view->with('page_types', tourist_array_mapping(config('global.page_types')));
         $view->with('lebal_types', config('global.lebal_types'));
+        $view->with('stays', config('global.stay'));
+        $view->with('important_note', config('global.important_note'));
+        $view->with('booking_options', get_array_mapping(config('global.booking_options'),true));
+        $view->with('type_activity', get_array_mapping(config('global.type_activity'),true));
+        $view->with('type_tour', get_array_mapping(config('global.type_tour'),true));
+        $view->with('show_agent_contact_info', get_array_mapping(config('global.show_agent_contact_info'),true));
+        $view->with('discount_by_people_type', get_array_mapping(config('global.discount_by_people_type'),true));
+        $view->with('calculator_discount_by_people_type', get_array_mapping(config('global.calculator_discount_by_people_type'),true));
+        $view->with('activity_program_style', get_array_mapping(config('global.activity_program_style'),true));
+        $view->with('helpful_facts', config('global.helpful_facts'));
+        $view->with('term_activity_list_parent', config('global.term_activity_list_parent'));
         
     }
 

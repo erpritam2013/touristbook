@@ -4,16 +4,18 @@ namespace App\Repositories;
 
 use App\Interfaces\PlaceRepositoryInterface;
 use App\Models\Terms\Place;
-
+use DataTables;
 class PlaceRepository implements PlaceRepositoryInterface 
 {
     public function getAllPlaces() 
     {
-        return Place::all();
+        return Place::orderBy('id','desc')->get();
     }
     public function getPlacesByType($type=null,$p_id=null) 
     {
-         $placeTypeBuilder = [];
+        $placeTypeBuilder = [];
+
+        $placeTypeBuilder = Place::where('status', Place::ACTIVE)->get(['id','name','parent_id']);
         if (!empty($type)){
         $placeTypeBuilder = Place::where('status', Place::ACTIVE)->where('place_type',$type)->get(['id','name','parent_id']);
         }
@@ -50,7 +52,7 @@ class PlaceRepository implements PlaceRepositoryInterface
 
     // Get all Active Places or by Type
     public function getActivePlacesList($type = null) {
-        $placeBuilder = Place::where('status', Place::ACTIVE);
+        $placeBuilder = Place::orderBy('name','asc')->where('status', Place::ACTIVE);
 
         if($type)
             $placeBuilder->where('place_type',$type);
@@ -65,6 +67,13 @@ class PlaceRepository implements PlaceRepositoryInterface
     // Get Active Hotel Type Places
     public function getActiveHotelPlacesList() {
         $type = Place::HOTEL_TYPE;
-        return $this->getActivePlacesList($type);
+        // return $this->getActivePlacesList($type);
+        return $this->getActivePlacesList();
+    }
+    // Get Active Loction Type Places
+    public function getActiveLocationPlacesList() {
+        $type = Place::LOCATION_TYPE;
+        // return $this->getActivePlacesList($type);
+        return $this->getActivePlacesList();
     }
 }

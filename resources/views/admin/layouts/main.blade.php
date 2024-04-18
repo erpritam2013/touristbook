@@ -2,12 +2,12 @@
 <html lang="en">
 
 <head>
- @include('admin.layout-parts.head')
+   @include('admin.layout-parts.head')
 
 </head>
 
 <body>
-
+    <input type="hidden" id="base-admin-url" value="{{route('admin.dashboard')}}" />
     <!--*******************
         Preloader start
         ********************-->
@@ -21,17 +21,27 @@
     <!--*******************
         Preloader end
         ********************-->
-
+        @if(!isMobileDevice())
+     @if(auth()->check())
+    @if(auth()->user()->isAdmin() || auth()->user()->isEditor())
+    @php
+     $top_32_p_r = 'top:32px;position:relative;';
+     $top_32 = 'top:32px;';
+     @endphp
+    @include('admin.adminbar')
+    @endif 
+    @endif
+    @endif
 
     <!--**********************************
         Main wrapper start
         ***********************************-->
-        <div id="main-wrapper">
-
+        <div id="main-wrapper" style="{{$top_32 ?? ''}}">
+        
             @include('admin.layout-parts.nav')
             @include('admin.layout-parts.header')
             @include('admin.layout-parts.sidebar')
-          
+
 
         <!--**********************************
             Content body start
@@ -41,6 +51,7 @@
 
                 @yield('content')
                 
+
             </div>
         <!--**********************************
             Content body end
@@ -48,20 +59,27 @@
             @include('admin.layout-parts.footer')
 
         <!--**********************************
-           Support ticket button start
+           Include Modals
            ***********************************-->
+           @include('admin.partials.modals.file')
+           @include('admin.partials.modals.gallery_sort')
+           @include('admin.partials.modals.login-modal')
 
         <!--**********************************
            Support ticket button end
            ***********************************-->
 
+          
 
        </div>
+       
     <!--**********************************
         Main wrapper end
         ***********************************-->
         @include('admin.layout-parts.foot')
 
-    </body>
+        @include('admin.partials.modals.video')
 
-    </html>
+</body>
+
+</html>

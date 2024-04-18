@@ -20,10 +20,10 @@
             <div class="col-xl-9">
                 <div class="tab-content">
                     <div id="v-pills-location" class="tab-pane fade active show">
-                        <p>Location - Coming Soon</p>
+                        @include('admin.hotels.tabs.location', ["hotel" => $hotel])
                     </div>
                     <div id="v-pills-hotel-detail" class="tab-pane fade">
-                        
+
                         @include('admin.hotels.tabs.hotel-detail', ["hotel" => $hotel])
 
                     </div>
@@ -39,11 +39,13 @@
                     <div id="v-pills-otheroptions" class="tab-pane fade">
                         @include('admin.hotels.tabs.other-options', ["hotel" => $hotel])
                     </div>
+                   
                     <div id="v-pills-policy" class="tab-pane fade">
-                        @include('admin.hotels.tabs.policy.policies', ["hotel" => $hotel])
+                        @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotel->policies ?? null, 'type' => 'policies', 'btnTitle' => 'Add Policy'])
                     </div>
                     <div id="v-pills-notices" class="tab-pane fade">
-                        @include('admin.hotels.tabs.notices', ["hotel" => $hotel])
+                        @include('admin.partials.utils.subform-wrapper', ["subformData" => $hotel->notices ?? null, 'type' => 'notices', 'btnTitle' => 'Add New'])
+
                     </div>
                 </div>
             </div>

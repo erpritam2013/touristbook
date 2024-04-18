@@ -9,7 +9,7 @@ class AccessibleRepository implements AccessibleRepositoryInterface
 {
     public function getAllAccessibles()
     {
-        return Accessible::all();
+        return Accessible::orderBy('id','desc')->get();
     }
     public function getAccessiblesByType($type=null,$a_id=null) 
     {
@@ -44,12 +44,15 @@ class AccessibleRepository implements AccessibleRepositoryInterface
 
     // Get all Active Accessibles or by Type
     public function getActiveAccessiblesList($type = null) {
-        $accessibleBuilder = Accessible::where('status', Accessible::ACTIVE);
+        $accessibleBuilder = Accessible::orderBy('name','asc')->where('status', Accessible::ACTIVE);
 
         if($type)
             $accessibleBuilder->where('accessible_type',$type);
 
-        return $accessibleBuilder->get(['id','name','parent_id']);
+        $accessibles = $accessibleBuilder->get(['id','name','parent_id']);
+
+        $nestedResult = $accessibles->toNested();
+        return $nestedResult;
     }
 
     // Get Active Hotel Type Accessibles

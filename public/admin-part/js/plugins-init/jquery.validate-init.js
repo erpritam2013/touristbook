@@ -61,13 +61,50 @@ jQuery(".form-valide").validate({
             required: !0,
             maxlength: 255,
         },
+         "title": {
+            required: !0,
+            maxlength: 255,
+        },
         "medicare_assistance_type": {
+            required: !0
+        },
+        "categories[]": {
             required: !0
         },
         "facility_type": {
             required: !0
         },
         "amenity_type": {
+            required: !0
+        },
+        "accessible_type": {
+            required: !0
+        },
+        "deals_discount_type": {
+            required: !0
+        },
+        "meeting_and_event_type": {
+            required: !0
+        },
+        "occupancy_type": {
+            required: !0
+        },
+        "place_type": {
+            required: !0
+        },
+        "property_type_type": {
+            required: !0
+        },
+        "term_activity_type": {
+            required: !0
+        },
+        "top_service_type": {
+            required: !0
+        },
+        "type": {
+            required: !0
+        },
+        "st_tours_country": {
             required: !0
         },
 
@@ -92,6 +129,15 @@ jQuery(".form-valide").validate({
             required: "Please enter a name",
             minlength: "Your name must consist of maximum 255 characters"
         },
+
+        "categories[]": {
+            required: "Please enter a valid categories",
+        },
+
+        "title": {
+            required: "Please enter a title",
+            minlength: "Your title must consist of maximum 255 characters"
+        },
            
         "val-select2": "Please select a value!",
         "val-select2-multiple": "Please select at least 2 values!",
@@ -107,13 +153,29 @@ jQuery(".form-valide").validate({
         "medicare_assistance_type":"Please enter a valid medicare assistance type",
         "facility_type":"Please enter a valid facility type",
         "amenity_type":"Please enter a valid amenity type",
+        "accessible_type":"Please enter a valid accessible type",
+        "deals_discount_type":"Please enter a valid deals discount type",
+        "meeting_and_event_type":"Please enter a valid meeting and event type",
+        "occupancy_type":"Please enter a valid occupancy type",
+        "place_type":"Please enter a valid place type",
+        "property_type_type":"Please enter a valid property type",
+        "term_activity_type":"Please enter a valid term activity type",
+        "top_service_type":"Please enter a valid top service type",
+        "type":"Please enter a valid type",
+        "st_tours_country":"Please enter a valid country",
     },
 
     ignore: [],
     errorClass: "invalid-feedback animated fadeInUp",
     errorElement: "div",
     errorPlacement: function(e, a) {
+        if (a.attr('name') == 'categories[]') {
+        jQuery(a).parents(".form-group > ul").append(e)
+
+        }else{
         jQuery(a).parents(".form-group > div").append(e)
+
+        }
     },
     highlight: function(e) {
         jQuery(e).closest(".form-group").removeClass("is-invalid").addClass("is-invalid")

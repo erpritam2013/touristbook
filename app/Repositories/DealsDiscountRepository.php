@@ -4,12 +4,26 @@ namespace App\Repositories;
 
 use App\Interfaces\DealsDiscountRepositoryInterface;
 use App\Models\Terms\DealsDiscount;
-
+use App\Models\Setting;
+use App\Models\Page;
 class DealsDiscountRepository implements DealsDiscountRepositoryInterface 
 {
+
+    private $commanDealsDiscount = null;
+    public function __construct()
+    {
+        $page_id = Setting::get_setting('hotel_list_page');
+        if (!empty($page_id)) {   
+        $page = Page::find($page_id);
+          if (isset($page->extra_data['hotel_common_deals_discount'])) {
+              $this->commanDealsDiscount = $page->extra_data['hotel_common_deals_discount'];
+          }
+        }
+
+    }
     public function getAllDealsDiscounts() 
     {
-        return DealsDiscount::all();
+        return DealsDiscount::orderBy('id','desc')->get();
     }
     public function getDealsDiscountsByType($type=null,$dd_id=null) 
     {
@@ -51,14 +65,36 @@ class DealsDiscountRepository implements DealsDiscountRepositoryInterface
 
     // Get all Active Top Services or by Type
     public function getActiveDealsDiscountsList($type = null) {
-        $DealsDiscountBuilder = DealsDiscount::where('status', DealsDiscount::ACTIVE);
+
+       
+
+        $dealsDiscountBuilder = DealsDiscount::orderBy('name','asc')->where('status', DealsDiscount::ACTIVE);
 
         if($type)
-            $DealsDiscountBuilder->where('deals_discount_type',$type);
+            $dealsDiscountBuilder->where('deals_discount_type',$type);
 
-         $top_services = $DealsDiscountBuilder->get(['id','name', 'parent_id']);
+         $dealsDiscounts = $dealsDiscountBuilder->get(['id','name', 'parent_id']);
 
-        $nestedResult = $top_services->toNested();
+        $nestedResult = $dealsDiscounts->toNested();
+
+        return  $nestedResult;
+    }
+    public function getActiveHotelDealsDiscountsListFilter($type = null) {
+
+        if(!empty($this->commanDealsDiscount)){
+
+        $dealsDiscountBuilder = DealsDiscount::orderBy('name','asc')->where('status', DealsDiscount::ACTIVE)->whereIn('id',$this->commanDealsDiscount);
+    }else{
+
+        $dealsDiscountBuilder = DealsDiscount::orderBy('name','asc')->where('status', DealsDiscount::ACTIVE);
+    }
+
+        if($type)
+            $dealsDiscountBuilder->where('deals_discount_type',$type);
+
+         $dealsDiscounts = $dealsDiscountBuilder->get(['id','name', 'parent_id']);
+
+        $nestedResult = $dealsDiscounts->toNested();
 
         return  $nestedResult;
     }

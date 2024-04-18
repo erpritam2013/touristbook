@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Session;
-
+use App\DataTables\OccupancyDataTable;
 class OccupancyController extends Controller
 { 
     private OccupancyRepositoryInterface $OccupancyRepository;
@@ -25,12 +25,13 @@ class OccupancyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(OccupancyDataTable $dataTable)
     {
-        $data['occupancies'] = $this->OccupancyRepository->getAllOccupancies();
+        // $data['occupancies'] = $this->OccupancyRepository->getAllOccupancies();
+        $data['occupancies'] = Occupancy::count();
         $data['title'] = 'Occupancy List';
 
-        return view('admin.terms.occupancies.index', $data);
+        return $dataTable->render('admin.terms.occupancies.index', $data);
     }
 
     /**
@@ -146,7 +147,7 @@ class OccupancyController extends Controller
          
          $occupancyDetails = [
             'name' => $request->name,
-            //'slug' => SlugService::createSlug(Post::class, 'slug', $request->name),
+             'slug' => (!empty($request->slug) && $occupancy->slug != $request->slug)?SlugService::createSlug(Occupancy::class, 'slug', $request->slug):$occupancy->slug,
             'parent_id' => (!empty($request->parent_id))?$request->parent_id:0,
             'icon' => (!empty($request->icon))?$request->icon:"",
             'occupancy_type' => $request->occupancy_type,

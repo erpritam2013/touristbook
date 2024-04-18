@@ -9,7 +9,7 @@ class TypeRepository implements TypeRepositoryInterface
 {
     public function getAllTypes() 
     {
-        return Type::all();
+        return Type::orderBy('id','desc')->get();
     }
     public function getTypesByType($type=null,$t_id=null) 
     {
@@ -50,7 +50,7 @@ class TypeRepository implements TypeRepositoryInterface
 
     // Get all Active Types or by Type
     public function getActiveTypesList($type = null) {
-        $typeBuilder = Type::where('status', Type::ACTIVE);
+        $typeBuilder = Type::orderBy('name','asc')->where('status', Type::ACTIVE);
 
         if($type)
             $typeBuilder->where('type',$type);
@@ -62,9 +62,19 @@ class TypeRepository implements TypeRepositoryInterface
         return  $nestedResult;
     }
 
-    // Get Active Hotel Type Types
-    public function getActiveHotelTypesList() {
-        $type = Type::HOTEL_TYPE;
+    // Get Active Location Type Types
+    public function getActiveLocationTypesList() {
+        $type = Type::LOCATION_TYPE;
+        return $this->getActiveTypesList($type);
+    }
+    // Get Active Location Type Types
+    public function getActiveRoomTypesList() {
+        $type = Type::ROOM_TYPE;
+        return $this->getActiveTypesList($type);
+    }
+    // Get Active Location Type Types
+    public function getActiveTourTypesList() {
+        $type = Type::TOUR_TYPE;
         return $this->getActiveTypesList($type);
     }
 }
